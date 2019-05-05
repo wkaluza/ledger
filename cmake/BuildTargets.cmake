@@ -39,7 +39,7 @@ macro (setup_compiler)
 
   # platform configuration
   if (WIN32)
-    message(FATAL_ERROR "Windows platform not currently supported")
+    add_definitions(-DFETCH_PLATFORM_WINDOWS)
   elseif (APPLE)
     add_definitions(-DFETCH_PLATFORM_MACOS)
   else () # assume linux flavour
