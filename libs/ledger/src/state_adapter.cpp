@@ -54,7 +54,7 @@ StateAdapter::Status StateAdapter::Read(std::string const &key, void *data, uint
 {
   FETCH_LOG_DEBUG(LOGGING_NAME, "Read: ", key);
 
-  Status status{Status::ERROR};
+  Status status{Status::damnyouwindows_ERROR};
 
   auto new_key = WrapKeyWithScope(key);
 
@@ -125,7 +125,7 @@ StateAdapter::Status StateAdapter::Exists(std::string const &key)
 {
   FETCH_LOG_DEBUG(LOGGING_NAME, "Exists: ", key);
 
-  Status status{Status::ERROR};
+  Status status{Status::damnyouwindows_ERROR};
 
   auto new_key = WrapKeyWithScope(key);
 

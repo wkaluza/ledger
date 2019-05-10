@@ -223,7 +223,7 @@ private:
     }
 
     if (!EC_POINT_mul(group, public_key.get(), private_key_as_BN, NULL, NULL,
-                      session.context().get()))
+                      session.context()))
     {
       throw std::runtime_error("ECDSAPrivateKey::DerivePublicKey(...): EC_POINT_mul(...) failed.");
     }

@@ -20,6 +20,25 @@
 #include "meta/type_traits.hpp"
 #include "vectorise/vectorise.hpp"
 
+#ifdef WIN32
+#define NOMINMAX
+#include <Windows.h>
+#include <intrin.h>
+#endif
+
+// TODO Move to header or find std replacement
+#ifdef WIN32
+#define FETCH_BYTESWAP_UINT64 _byteswap_uint64
+#define FETCH_COUNT_LEADING_ZEROES64(num) \
+(static_cast<uint64_t>(__lzcnt64(num)))
+#define FETCH_COUNT_LEADING_ZEROES32 __lzcnt
+#else
+#define FETCH_BYTESWAP_UINT64 __builtin_bswap64
+#define FETCH_COUNT_LEADING_ZEROES64(num)\
+(static_cast<uint64_t>(__builtin_clzll(num)))
+#define FETCH_COUNT_LEADING_ZEROES32 __builtin_clz
+#endif
+
 namespace fetch {
 namespace platform {
 
@@ -156,13 +175,18 @@ constexpr bool has_sse42()
 
 #if (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) ||             \
     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)) || \
-    defined(__BIG_ENDIAN__)
+    defined(__BIG_ENDIAN__) ||                                               \
+    (defined(REG_DWORD) && defined(REG_DWORD_BIG_ENDIAN) &&                  \
+                                          REG_DWORD == REG_DWORD_BIG_ENDIAN)
+
 
 #define FETCH_PLATFORM_BIG_ENDIAN
 
 #elif (defined(__BYTE_ORDER) && (__BYTE_ORDER == __LITTLE_ENDIAN)) ||           \
     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || \
-    defined(__LITTLE_ENDIAN__)
+    defined(__LITTLE_ENDIAN__) ||                                               \
+    (defined(REG_DWORD) && defined(REG_DWORD_LITTLE_ENDIAN) &&                  \
+                                          REG_DWORD == REG_DWORD_LITTLE_ENDIAN)
 
 #define FETCH_PLATFORM_LITTLE_ENDIAN
 
@@ -182,13 +206,13 @@ inline uint64_t ConvertToBigEndian(uint64_t x)
 #if defined(FETCH_PLATFORM_LITTLE_ENDIAN)
 inline uint64_t ConvertToBigEndian(uint64_t x)
 {
-  return __builtin_bswap64(x);
+  return FETCH_BYTESWAP_UINT64(x);
 }
 #endif
 
 inline uint64_t CountLeadingZeroes64(uint64_t x)
 {
-  return static_cast<uint64_t>(__builtin_clzll(x));
+  return FETCH_COUNT_LEADING_ZEROES64(x);
 }
 
 inline uint64_t CountTrailingZeroes64(uint64_t x)
@@ -217,7 +241,7 @@ inline uint32_t ToLog2(uint32_t value)
 {
   static constexpr uint32_t VALUE_SIZE_IN_BITS = sizeof(value) << 3;
   return static_cast<uint32_t>(VALUE_SIZE_IN_BITS -
-                               static_cast<uint32_t>(__builtin_clz(value) + 1));
+                               static_cast<uint32_t>(FETCH_COUNT_LEADING_ZEROES32(value) + 1));
 }
 
 inline uint64_t ToLog2(uint64_t value)

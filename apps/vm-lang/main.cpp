@@ -194,7 +194,7 @@ public:
   /// @{
   Status Read(std::string const &key, void *data, uint64_t &size) override
   {
-    Status status{Status::ERROR};
+    Status status{Status::damnyouwindows_ERROR};
 
     if (data_.Has(key))
     {
@@ -228,7 +228,7 @@ public:
 
   Status Exists(std::string const &key) override
   {
-    return (data_.Has(key) ? Status::OK : Status::ERROR);
+    return (data_.Has(key) ? Status::OK : Status::damnyouwindows_ERROR);
   }
   /// @}
 

@@ -28,15 +28,15 @@ namespace detail {
 template <typename T>
 using FunctionPtr = void (*)(T *);
 
-// template <typename T>
-// struct SessionPrimitive;
-//
-// template <>
-// struct SessionPrimitive<BN_CTX>
-//{
-//    static const FunctionPtr<BN_CTX> start;
-//    static const FunctionPtr<BN_CTX> end;
-//};
+ template <typename T>
+ struct SessionPrimitive;
+
+ template <>
+ struct SessionPrimitive<BN_CTX>
+{
+    static const FunctionPtr<BN_CTX> start;
+    static const FunctionPtr<BN_CTX> end;
+};
 
 template <typename T>
 struct SessionPrimitive
@@ -46,9 +46,9 @@ struct SessionPrimitive
 };
 
 template <>
-const FunctionPtr<BN_CTX> SessionPrimitive<BN_CTX>::start;
+const FunctionPtr<BN_CTX> SessionPrimitive<BN_CTX>::start = &BN_CTX_start;
 template <>
-const FunctionPtr<BN_CTX> SessionPrimitive<BN_CTX>::end;
+const FunctionPtr<BN_CTX> SessionPrimitive<BN_CTX>::end = &BN_CTX_end;
 
 }  // namespace detail
 }  // namespace context

@@ -18,6 +18,7 @@
 
 #include "network/muddle/network_id.hpp"
 
+#include <cctype>
 #include <iomanip>
 #include <sstream>
 

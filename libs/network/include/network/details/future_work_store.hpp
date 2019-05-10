@@ -76,8 +76,8 @@ public:
    * @param visitor The dispatching function
    * @return The number of items processed
    */
-  template <typename CALLBACK>
-  std::size_t Dispatch(CALLBACK const &visitor)
+  template <typename damnyouwindows_CALLBACK>
+  std::size_t Dispatch(damnyouwindows_CALLBACK const &visitor)
   {
     std::size_t num_processed = 0;
 

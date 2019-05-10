@@ -109,7 +109,8 @@ function(configure_openssl)
 #  set(FETCH_OPENSSL_VERSION 1.1.1c)
 
   # Configure OpenSSL library lookup
-  set(OPENSSL_ROOT_DIR ${FETCH_ROOT_VENDOR_DIR}/openssl/dist/openssl)
+  set(OPENSSL_ROOT_DIR "C:/openssl")
+#  set(OPENSSL_ROOT_DIR ${FETCH_ROOT_VENDOR_DIR}/openssl/dist/openssl)
 
 #  unset(OPENSSL_CRYPTO_LIBRARY CACHE)
 #  unset(OPENSSL_INCLUDE_DIR CACHE)
@@ -117,16 +118,16 @@ function(configure_openssl)
 #  find_package(OpenSSL)
 #  if(NOT (OPENSSL_FOUND AND (OPENSSL_VERSION STREQUAL FETCH_OPENSSL_VERSION)))
 #    message("OpenSSL not found or unexpected version: building from source")
-    _build_and_install_openssl(
-      ${OPENSSL_ROOT_DIR}
-      ${FETCH_ROOT_VENDOR_DIR}/openssl
-    )
+#    _build_and_install_openssl(
+#      ${OPENSSL_ROOT_DIR}
+#      ${FETCH_ROOT_VENDOR_DIR}/openssl
+#    )
 #  endif()
 
   # Confirm successful installation and version correctness
-  unset(OPENSSL_CRYPTO_LIBRARY CACHE)
-  unset(OPENSSL_INCLUDE_DIR CACHE)
-  unset(OPENSSL_SSL_LIBRARY CACHE)
+#  unset(OPENSSL_CRYPTO_LIBRARY CACHE)
+#  unset(OPENSSL_INCLUDE_DIR CACHE)
+#  unset(OPENSSL_SSL_LIBRARY CACHE)
   find_package(OpenSSL REQUIRED)
 #  if(NOT (OPENSSL_VERSION STREQUAL FETCH_OPENSSL_VERSION))
 #    message(FATAL_ERROR "Unexpected version of OpenSSL: ${OPENSSL_VERSION} instead of ${FETCH_OPENSSL_VERSION}")

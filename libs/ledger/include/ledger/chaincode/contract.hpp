@@ -287,7 +287,7 @@ bool Contract::GetStateRecord(T &record, ConstByteArray const &key)
     success = true;
     break;
   }
-  case vm::IoObserverInterface::Status::ERROR:
+  case vm::IoObserverInterface::Status::damnyouwindows_ERROR:
     break;
   case vm::IoObserverInterface::Status::PERMISSION_DENIED:
     break;

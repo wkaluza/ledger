@@ -28,6 +28,13 @@
 #include <immintrin.h>
 #include <smmintrin.h>
 
+// TODO move to header or find cross-platform replacement
+#ifdef WIN32
+#define FETCH_MM_LOAD_PDL(c) _mm_set1_pd(c)
+#else
+#define FETCH_MM_LOAD_PDL(c) _mm_load_pd1(&c)
+#endif
+
 namespace fetch {
 namespace vectorize {
 
@@ -203,7 +210,7 @@ public:
   {}
   VectorRegister(type const &c)
   {
-    data_ = _mm_load_pd1(&c);
+    data_ = FETCH_MM_LOAD_PDL(c);
   }
 
   explicit operator mm_register_type()
@@ -412,7 +419,7 @@ FETCH_ADD_OPERATOR(<, float, __m128, _mm_cmplt_ps)
     L              imm  = fnc(a.data(), b.data());                                 \
     __m128i        ival = _mm_castpd_si128(imm);                                   \
     constexpr type done = type(1);                                                 \
-    const __m128i  one  = _mm_castpd_si128(_mm_load_pd1(&done));                   \
+    const __m128i  one  = _mm_castpd_si128(FETCH_MM_LOAD_PDL(done));               \
     __m128i        ret  = _mm_and_si128(ival, one);                                \
     return VectorRegister<type, 128>(_mm_castsi128_pd(ret));                       \
   }

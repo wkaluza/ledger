@@ -265,7 +265,9 @@ void yyfree ( void * , yyscan_t yyscanner );
  * down here because we want the user's section 1 to have been scanned first.
  * The user has a chance to override it with an option.
  */
+#ifndef WIN32
 #include <unistd.h>
+#endif
 #endif
 
 #ifndef YY_EXTRA_TYPE

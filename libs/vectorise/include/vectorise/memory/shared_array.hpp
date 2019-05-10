@@ -30,8 +30,19 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
-#include <mm_malloc.h>
 #include <type_traits>
+
+//TODO pull out aligned mallocs to header or find std replacement
+#ifdef WIN32
+#include <malloc.h>
+#define FETCH_ALIGNED_MALLOC _aligned_malloc
+#define FETCH_ALIGNED_FREE _aligned_free
+#else
+#include <mm_malloc.h>
+#define FETCH_ALIGNED_MALLOC _mm_malloc
+#define FETCH_ALIGNED_FREE _mm_free
+#endif
+
 namespace fetch {
 namespace memory {
 
@@ -58,7 +69,7 @@ public:
     if (n > 0)
     {
       data_ = std::shared_ptr<T>(
-          reinterpret_cast<type *>(_mm_malloc(this->padded_size() * sizeof(type), 64)), _mm_free);
+          reinterpret_cast<type *>(FETCH_ALIGNED_MALLOC(this->padded_size() * sizeof(type), 64)), FETCH_ALIGNED_FREE);
 
       this->pointer_ = data_.get();
     }

@@ -47,28 +47,31 @@ struct DeleterPrimitive
 };
 
 template <>
-const FreeFunctionPtr<BN_CTX> DeleterPrimitive<BN_CTX>::function;
+const FreeFunctionPtr<BN_CTX> DeleterPrimitive<BN_CTX>::function = &BN_CTX_free;
 
 template <>
-const FreeFunctionPtr<EC_KEY> DeleterPrimitive<EC_KEY>::function;
+const FreeFunctionPtr<EC_KEY> DeleterPrimitive<EC_KEY>::function = &EC_KEY_free;
 
 template <>
-const FreeFunctionPtr<BIGNUM> DeleterPrimitive<BIGNUM>::function;
+const FreeFunctionPtr<BIGNUM> DeleterPrimitive<BIGNUM>::function = &BN_free;
 template <>
-const FreeFunctionPtr<BIGNUM> DeleterPrimitive<BIGNUM, eDeleteStrategy::clearing>::function;
+const FreeFunctionPtr<BIGNUM> DeleterPrimitive<BIGNUM, eDeleteStrategy::clearing>::function =
+    &BN_clear_free;
 
 template <>
-const FreeFunctionPtr<EC_POINT> DeleterPrimitive<EC_POINT>::function;
+const FreeFunctionPtr<EC_POINT> DeleterPrimitive<EC_POINT>::function = &EC_POINT_free;
 template <>
-const FreeFunctionPtr<EC_POINT> DeleterPrimitive<EC_POINT, eDeleteStrategy::clearing>::function;
+const FreeFunctionPtr<EC_POINT> DeleterPrimitive<EC_POINT, eDeleteStrategy::clearing>::function =
+    &EC_POINT_clear_free;
 
 template <>
-const FreeFunctionPtr<EC_GROUP> DeleterPrimitive<EC_GROUP>::function;
+const FreeFunctionPtr<EC_GROUP> DeleterPrimitive<EC_GROUP>::function = &EC_GROUP_free;
 template <>
-const FreeFunctionPtr<EC_GROUP> DeleterPrimitive<EC_GROUP, eDeleteStrategy::clearing>::function;
+const FreeFunctionPtr<EC_GROUP> DeleterPrimitive<EC_GROUP, eDeleteStrategy::clearing>::function =
+    &EC_GROUP_clear_free;
 
 template <>
-const FreeFunctionPtr<ECDSA_SIG> DeleterPrimitive<ECDSA_SIG>::function;
+const FreeFunctionPtr<ECDSA_SIG> DeleterPrimitive<ECDSA_SIG>::function = &ECDSA_SIG_free;
 
 template <typename T, eDeleteStrategy P_DeleteStrategy = eDeleteStrategy::canonical,
           typename T_DeleterPrimitive =

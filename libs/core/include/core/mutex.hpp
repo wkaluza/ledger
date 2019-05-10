@@ -109,7 +109,7 @@ class DebugMutex : public AbstractMutex
                       line_);
 
       // Send a sigint to ourselves since we have a handler for this
-      kill(0, SIGINT);
+//???      kill(0, SIGINT);
     }
 
   private:

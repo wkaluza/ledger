@@ -360,25 +360,25 @@ protected:
    * @zero_reserved_space If true then the amount of new memory reserved/allocated (if any) ABOVE
    * of already allocated will be zeroed byte by byte.
    */
-  void Resize(std::size_t const &n, ResizeParadigm const resize_paradigm = ResizeParadigm::ABSOLUTE,
+  void Resize(std::size_t const &n, ResizeParadigm const resize_paradigm = ResizeParadigm::damnyouwindows_ABSOLUTE,
               bool const zero_reserved_space = true)
   {
     std::size_t new_length{0};
 
     switch (resize_paradigm)
     {
-    case ResizeParadigm::RELATIVE:
+    case ResizeParadigm::damnyouwindows_RELATIVE:
       new_length = length_ + n;
       break;
 
-    case ResizeParadigm::ABSOLUTE:
+    case ResizeParadigm::damnyouwindows_ABSOLUTE:
       new_length = n;
       break;
     }
 
     auto const new_capacity_for_reserve = start_ + new_length;
 
-    Reserve(new_capacity_for_reserve, ResizeParadigm::ABSOLUTE, zero_reserved_space);
+    Reserve(new_capacity_for_reserve, ResizeParadigm::damnyouwindows_ABSOLUTE, zero_reserved_space);
     length_ = new_length;
   }
 
@@ -401,19 +401,19 @@ protected:
    * @zero_reserved_space If true then the amount of new memory reserved/allocated (if any) ABOVE
    * of already allocated will be zeroed byte by byte.
    */
-  void Reserve(std::size_t const &  n,
-               ResizeParadigm const resize_paradigm     = ResizeParadigm::ABSOLUTE,
+  void Reserve(std::size_t const &n,
+               ResizeParadigm const resize_paradigm     = ResizeParadigm::damnyouwindows_ABSOLUTE,
                bool const           zero_reserved_space = true)
   {
     std::size_t new_capacity_for_reserve{0};
 
     switch (resize_paradigm)
     {
-    case ResizeParadigm::RELATIVE:
+    case ResizeParadigm::damnyouwindows_RELATIVE:
       new_capacity_for_reserve = data_.size() + n;
       break;
 
-    case ResizeParadigm::ABSOLUTE:
+    case ResizeParadigm::damnyouwindows_ABSOLUTE:
       new_capacity_for_reserve = n;
       break;
     }

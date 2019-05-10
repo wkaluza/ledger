@@ -629,7 +629,9 @@ int Set(fetch::vm::Token* token, const fetch::vm::Token::Kind kind, const char* 
  * down here because we want the user's section 1 to have been scanned first.
  * The user has a chance to override it with an option.
  */
+#ifndef WIN32
 #include <unistd.h>
+#endif
 #endif
 
 #ifndef YY_EXTRA_TYPE
@@ -1991,8 +1993,9 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
         b->yy_bs_column = 0;
     }
 
-        b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
-    
+        b->yy_is_interactive = 0;
+//        b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;???
+
 	errno = oerrno;
 }
 

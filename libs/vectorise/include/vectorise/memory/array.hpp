@@ -29,8 +29,14 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
-#include <mm_malloc.h>
 #include <type_traits>
+
+//TODO pull out aligned mallocs to header or find std replacement, see also shared_array
+#ifdef WIN32
+#include <malloc.h>
+#else
+#include <mm_malloc.h>
+#endif
 
 namespace fetch {
 namespace memory {

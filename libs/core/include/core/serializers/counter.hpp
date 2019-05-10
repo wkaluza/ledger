@@ -22,6 +22,7 @@
 #include "core/macros.hpp"
 #include "core/serializers/stl_types.hpp"
 #include "core/serializers/type_register.hpp"
+
 #include <type_traits>
 
 namespace fetch {
@@ -35,11 +36,11 @@ public:
 
   void Allocate(std::size_t const &delta)
   {
-    Resize(delta, ResizeParadigm::RELATIVE);
+    Resize(delta, ResizeParadigm::damnyouwindows_RELATIVE);
   }
 
   void Resize(std::size_t const &   size,
-              ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+              ResizeParadigm const &resize_paradigm     = ResizeParadigm::damnyouwindows_RELATIVE,
               bool const            zero_reserved_space = true)
   {
     FETCH_UNUSED(zero_reserved_space);
@@ -48,11 +49,11 @@ public:
 
     switch (resize_paradigm)
     {
-    case ResizeParadigm::RELATIVE:
+    case ResizeParadigm::damnyouwindows_RELATIVE:
       size_ += size;
       break;
 
-    case ResizeParadigm::ABSOLUTE:
+    case ResizeParadigm::damnyouwindows_ABSOLUTE:
       size_ = size;
       if (pos_ > size)
       {
@@ -63,18 +64,18 @@ public:
   }
 
   void Reserve(std::size_t const &   size,
-               ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+               ResizeParadigm const &resize_paradigm     = ResizeParadigm::damnyouwindows_RELATIVE,
                bool const            zero_reserved_space = true)
   {
     (void)zero_reserved_space;
 
     switch (resize_paradigm)
     {
-    case ResizeParadigm::RELATIVE:
+    case ResizeParadigm::damnyouwindows_RELATIVE:
       reserved_size_ += size;
       break;
 
-    case ResizeParadigm::ABSOLUTE:
+    case ResizeParadigm::damnyouwindows_ABSOLUTE:
       if (reserved_size_ < size)
       {
         reserved_size_ = size;

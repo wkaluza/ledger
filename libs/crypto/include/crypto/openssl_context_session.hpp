@@ -28,7 +28,7 @@ namespace openssl {
 namespace context {
 
 template <typename T, typename T_SessionPrimitive = detail::SessionPrimitive<T>,
-          typename T_ContextSmartPtr = memory::OsslSharedPtr<T>>
+          typename T_ContextSmartPtr = memory::ossl_unique_ptr<T>>
 class Session
 {
 public:
@@ -39,17 +39,19 @@ public:
 private:
   context_smart_ptr context_;
   bool              is_started_;
+  constexpr static bool const CTOR_DEFAULT_is_already_started = false;
 
 public:
-  explicit Session(context_smart_ptr context, const bool is_already_started = false)
+  explicit Session(context_smart_ptr context, const bool is_already_started = CTOR_DEFAULT_is_already_started)
     : context_(std::move(context))
     , is_started_(is_already_started)
   {
     start();
   }
 
-  explicit Session()
-    : Session(context_smart_ptr(BN_CTX_new()))
+  Session()
+      : context_(BN_CTX_new())
+      , is_started_(CTOR_DEFAULT_is_already_started)
   {}
 
   ~Session()
@@ -79,9 +81,9 @@ public:
     session_primitive_type::end(context_.get());
   }
 
-  context_smart_ptr context() const
+  T* context() const
   {
-    return context_;
+    return context_.get();
   }
 
   bool isStarted() const

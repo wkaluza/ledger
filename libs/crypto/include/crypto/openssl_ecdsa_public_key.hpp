@@ -180,10 +180,10 @@ private:
                                                  EC_GROUP const *const           group,
                                                  context::Session<BN_CTX> const &session)
   {
-    shrd_ptr_type<BIGNUM> x{BN_new()};
-    shrd_ptr_type<BIGNUM> y{BN_new()};
+    uniq_ptr_type<BIGNUM> x{BN_new()};
+    uniq_ptr_type<BIGNUM> y{BN_new()};
     EC_POINT_get_affine_coordinates_GFp(group, public_key, x.get(), y.get(),
-                                        session.context().get());
+                                        session.context());
     return affine_coord_conversion_type::Convert2Canonical(x.get(), y.get());
   }
 
@@ -191,9 +191,9 @@ private:
                                            EC_GROUP const *const           group,
                                            context::Session<BN_CTX> const &session)
   {
-    shrd_ptr_type<BIGNUM> public_key_as_BN{BN_new()};
+    uniq_ptr_type<BIGNUM> public_key_as_BN{BN_new()};
     if (!EC_POINT_point2bn(group, public_key, ECDSAPublicKey::conversionForm,
-                           public_key_as_BN.get(), session.context().get()))
+                           public_key_as_BN.get(), session.context()))
     {
       throw std::runtime_error(
           "ECDSAPublicKey::Convert(...): "
@@ -217,13 +217,13 @@ private:
     uniq_ptr_type<EC_POINT>  public_key{EC_POINT_new(group.get())};
     context::Session<BN_CTX> session;
 
-    shrd_ptr_type<BIGNUM> x{BN_new()};
-    shrd_ptr_type<BIGNUM> y{BN_new()};
+    uniq_ptr_type<BIGNUM> x{BN_new()};
+    uniq_ptr_type<BIGNUM> y{BN_new()};
 
     affine_coord_conversion_type::ConvertFromCanonical(key_data, x.get(), y.get());
 
     if (!EC_POINT_set_affine_coordinates_GFp(group.get(), public_key.get(), x.get(), y.get(),
-                                             session.context().get()))
+                                             session.context()))
     {
       throw std::runtime_error(
           "ECDSAPublicKey::ConvertFromCanonical(...): "
@@ -235,7 +235,7 @@ private:
 
   static uniq_ptr_type<EC_POINT> ConvertFromBin(byte_array::ConstByteArray const &key_data)
   {
-    shrd_ptr_type<BIGNUM> pub_key_as_BN{BN_new()};
+    uniq_ptr_type<BIGNUM> pub_key_as_BN{BN_new()};
     if (!BN_bin2bn(static_cast<const unsigned char *>(key_data.pointer()), int(key_data.size()),
                    pub_key_as_BN.get()))
     {
@@ -247,7 +247,7 @@ private:
     context::Session<BN_CTX> session;
 
     if (!EC_POINT_bn2point(group.get(), pub_key_as_BN.get(), public_key.get(),
-                           session.context().get()))
+                           session.context()))
     {
       throw std::runtime_error(
           "ECDSAPublicKey::ConvertToECPOINT(...): "

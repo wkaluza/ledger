@@ -135,8 +135,8 @@ public:
    * @param visitor The callback function
    * @return The number of processed elements
    */
-  template <typename CALLBACK>
-  std::size_t Visit(CALLBACK const &visitor) const
+  template <typename damnyouwindows_CALLBACK>
+  std::size_t Visit(damnyouwindows_CALLBACK const &visitor) const
   {
     std::size_t num_processed = 0;
 

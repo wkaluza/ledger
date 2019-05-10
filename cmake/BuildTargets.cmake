@@ -68,8 +68,11 @@ macro (setup_compiler)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${_compiler_arch}")
 
   # warnings
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wconversion -Wpedantic")
-
+  if (WIN32 AND MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W4")#???W4?
+  else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wpedantic")
+  endif()
   # Suppress visibility link warnings
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 
@@ -78,9 +81,13 @@ macro (setup_compiler)
   endif ()
 
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-  if (FETCH_WARNINGS_AS_ERRORS)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
-  endif (FETCH_WARNINGS_AS_ERRORS)
+  if(FETCH_WARNINGS_AS_ERRORS)
+    if (MSVC)
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")#???warnings as errors
+    else()
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+    endif()
+  endif(FETCH_WARNINGS_AS_ERRORS)
 
   # prefer PIC
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -186,6 +193,11 @@ function (configure_vendor_targets)
                              ASIO_STANDALONE
                              ASIO_HEADER_ONLY
                              ASIO_HAS_STD_SYSTEM_ERROR)
+  if(WIN32)
+    target_compile_definitions(vendor-asio INTERFACE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
+#//#define _WIN32_WINNT_WIN10 0x0A00 //???
+#//#define _WIN32_WINNT _WIN32_WINNT_WIN10 //???
+  endif(WIN32)
 
   # required for latest version of Xcode: Apple LLVM version 10.0.1 (clang-1001.0.46.3). In this
   # version the string view has been removed from: <experimental/string_view>. This will need to be

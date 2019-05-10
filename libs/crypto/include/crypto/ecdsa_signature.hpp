@@ -189,11 +189,11 @@ private:
   {}
 
   template <eECDSAEncoding BIN_ENC, point_conversion_form_t POINT_CONV_FORM>
-  static shrd_ptr_type<ECDSA_SIG> CreateSignature(
+  static uniq_ptr_type<ECDSA_SIG> CreateSignature(
       private_key_type<BIN_ENC, POINT_CONV_FORM> const &private_key,
       byte_array::ConstByteArray const &                hash)
   {
-    shrd_ptr_type<ECDSA_SIG> signature{ECDSA_do_sign(
+    uniq_ptr_type<ECDSA_SIG> signature{ECDSA_do_sign(
         static_cast<const unsigned char *>(hash.pointer()), static_cast<int>(hash.size()),
         const_cast<EC_KEY *>(private_key.key().get()))};
 

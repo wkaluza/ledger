@@ -21,8 +21,8 @@ namespace fetch {
 
 enum class ResizeParadigm
 {
-  RELATIVE,
-  ABSOLUTE
+  damnyouwindows_RELATIVE,
+  damnyouwindows_ABSOLUTE
 };
 
 }  // namespace fetch

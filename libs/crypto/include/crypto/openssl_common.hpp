@@ -43,13 +43,13 @@ template <int P_ECDSA_Curve_NID>
 const int ECDSACurve<P_ECDSA_Curve_NID>::nid = P_ECDSA_Curve_NID;
 
 template <>
-const char *const ECDSACurve<NID_secp256k1>::sn;
+char const *const ECDSACurve<NID_secp256k1>::sn = SN_secp256k1;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::privateKeySize;
+std::size_t const ECDSACurve<NID_secp256k1>::privateKeySize = 32;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::publicKeySize;
+std::size_t const ECDSACurve<NID_secp256k1>::publicKeySize = 64;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::signatureSize;
+std::size_t const ECDSACurve<NID_secp256k1>::signatureSize = 64;
 
 using del_strat_type = memory::eDeleteStrategy;
 

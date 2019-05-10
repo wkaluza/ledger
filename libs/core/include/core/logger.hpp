@@ -20,8 +20,6 @@
 #include "core/abstract_mutex.hpp"
 #include "core/commandline/vt100.hpp"
 
-#include <execinfo.h>
-
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
@@ -37,6 +35,10 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
+#ifndef WIN32
+#include <execinfo.h>
+#endif
 
 namespace fetch {
 namespace log {
