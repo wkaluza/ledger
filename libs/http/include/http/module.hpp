@@ -49,35 +49,35 @@ public:
   {
     LOG_STACK_TRACE_POINT;
 
-    AddView(Method::POST, path, view);
+    AddView(Method::damnyouwindows_POST, path, view);
   }
 
   void Get(byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
-    AddView(Method::GET, path, view);
+    AddView(Method::damnyouwindows_GET, path, view);
   }
 
   void Put(byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
-    AddView(Method::PUT, path, view);
+    AddView(Method::damnyouwindows_PUT, path, view);
   }
 
   void Patch(byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
-    AddView(Method::PATCH, path, view);
+    AddView(Method::damnyouwindows_PATCH, path, view);
   }
 
   void Delete(byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
-    AddView(Method::DELETE, path, view);
+    AddView(Method::damnyouwindows_DELETE, path, view);
   }
 
   void AddView(Method method, byte_array::ByteArray const &path, view_type const &view)

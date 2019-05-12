@@ -19,8 +19,8 @@ target_link_libraries(fetch-network
                       PUBLIC fetch-core
                              fetch-crypto
                              fetch-math
-                             vendor-asio
-                             pthread)
+                             vendor-asio)
+#                             pthread)
 
 # Test targets
 add_test_target()

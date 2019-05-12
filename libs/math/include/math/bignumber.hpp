@@ -20,11 +20,14 @@
 #include "core/assert.hpp"
 #include "core/byte_array/byte_array.hpp"
 #include "core/byte_array/const_byte_array.hpp"
+
 #include <algorithm>
 #include <cmath>
 #include <vector>
+
 namespace fetch {
 namespace math {
+
 /* Implements a subset of big number functionality.
  *
  * The purpose of this library is to implement a subset of number
@@ -241,7 +244,8 @@ inline double Log(BigUnsigned const &x)
 
   assert(fraction.value != 0);
 
-  uint64_t tz       = uint64_t(__builtin_ctz(fraction.value));
+  uint64_t tz       = uint64_t(fraction.value);
+//  uint64_t tz       = uint64_t(__builtin_ctz(fraction.value));???
   uint64_t exponent = (last_byte << 3) - tz;
 
   return double(exponent) + std::log(double(fraction.value << tz) * (1. / double(uint32_t(-1))));
@@ -267,8 +271,9 @@ inline double ToDouble(BigUnsigned const &x)
   fraction.bytes[3] = x[j + 3];
 
   assert(fraction.value != 0);
-  uint16_t tz       = uint16_t(__builtin_ctz(
-      fraction.value));  // TODO(issue 31): Wrap in function for cross compiler portability
+  uint16_t tz       = uint16_t(
+//  uint16_t tz       = uint16_t(__builtin_ctz(???
+      fraction.value);  // TODO(issue 31): Wrap in function for cross compiler portability
   uint16_t exponent = uint16_t((last_byte << 3) - tz);
 
   assert(exponent < 1023);

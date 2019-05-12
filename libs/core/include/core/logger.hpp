@@ -189,10 +189,10 @@ public:
 
   enum class Level
   {
-    ERROR     = 0,
-    WARNING   = 1,
-    INFO      = 2,
-    DEBUG     = 3,
+    damnyouwindows_ERROR     = 0,
+    damnyouwindows_WARNING   = 1,
+    damnyouwindows_INFO      = 2,
+    damnyouwindows_DEBUG     = 3,
     HIGHLIGHT = 4
   };
 
@@ -210,19 +210,19 @@ public:
     char const *level_name = "UNKNWN";
     switch (level)
     {
-    case Level::INFO:
+    case Level::damnyouwindows_INFO:
       color      = 3;
       level_name = "INFO  ";
       break;
-    case Level::WARNING:
+    case Level::damnyouwindows_WARNING:
       color      = 6;
       level_name = "WARN  ";
       break;
-    case Level::ERROR:
+    case Level::damnyouwindows_ERROR:
       color      = 1;
       level_name = "ERROR ";
       break;
-    case Level::DEBUG:
+    case Level::damnyouwindows_DEBUG:
       level_name = "DEBUG ";
       color      = 7;
       break;
@@ -330,9 +330,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::INFO, nullptr, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_INFO, nullptr, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::INFO);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_INFO);
     }
   }
 
@@ -342,9 +342,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::INFO, name, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_INFO, name, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::INFO);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_INFO);
     }
   }
 
@@ -354,9 +354,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::WARNING, nullptr, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_WARNING, nullptr, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::WARNING);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_WARNING);
     }
   }
 
@@ -366,9 +366,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::WARNING, name, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_WARNING, name, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::WARNING);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_WARNING);
     }
   }
 
@@ -402,9 +402,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::ERROR, nullptr, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_ERROR, nullptr, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::ERROR);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_ERROR);
 
       StackTrace();
     }
@@ -418,9 +418,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::ERROR, name, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_ERROR, name, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::ERROR);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_ERROR);
 
       StackTrace();
     }
@@ -434,9 +434,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::DEBUG, nullptr, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_DEBUG, nullptr, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::DEBUG);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_DEBUG);
     }
   }
 
@@ -446,9 +446,9 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::DEBUG, name, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_DEBUG, name, TopContextImpl());
       Unroll<Args...>::Append(this, std::forward<Args>(args)...);
-      this->log_->CloseEntry(DefaultLogger::Level::DEBUG);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_DEBUG);
     }
   }
 
@@ -457,12 +457,12 @@ public:
     std::lock_guard<std::mutex> lock(mutex_);
     if (this->log_ != nullptr)
     {
-      this->log_->StartEntry(DefaultLogger::Level::DEBUG, nullptr, TopContextImpl());
+      this->log_->StartEntry(DefaultLogger::Level::damnyouwindows_DEBUG, nullptr, TopContextImpl());
       for (auto &item : items)
       {
         this->log_->Append(item);
       }
-      this->log_->CloseEntry(DefaultLogger::Level::DEBUG);
+      this->log_->CloseEntry(DefaultLogger::Level::damnyouwindows_DEBUG);
     }
   }
 

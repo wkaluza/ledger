@@ -34,7 +34,7 @@ int main()
     std::cout << static_cast<uint16_t>(res.status()) << " " << req.uri() << std::endl;
   });
 
-  server.AddView(Method::GET, "/", [](ViewParameters const &, HTTPRequest const &) {
+  server.AddView(Method::damnyouwindows_GET, "/", [](ViewParameters const &, HTTPRequest const &) {
     HTTPResponse res("Hello world -- this is a render of the view");
 
     return res;
@@ -43,7 +43,7 @@ int main()
   // Add atomic to slightly slow down parallel http calls
   std::atomic<int> pages_count{0};
 
-  server.AddView(Method::GET, "/pages",
+  server.AddView(Method::damnyouwindows_GET, "/pages",
                  [&pages_count](ViewParameters const &, HTTPRequest const &) {
                    std::ostringstream ret;
                    ret << "pages index. You have called " << pages_count++ << " times.";
@@ -53,32 +53,32 @@ int main()
                    return res;
                  });
 
-  server.AddView(Method::GET, "/pages/sub", [](ViewParameters const &, HTTPRequest const &) {
+  server.AddView(Method::damnyouwindows_GET, "/pages/sub", [](ViewParameters const &, HTTPRequest const &) {
     HTTPResponse res("pages sub index");
 
     return res;
   });
 
-  server.AddView(Method::GET, "/pages/sub/", [](ViewParameters const &, HTTPRequest const &) {
+  server.AddView(Method::damnyouwindows_GET, "/pages/sub/", [](ViewParameters const &, HTTPRequest const &) {
     HTTPResponse res("pages sub index with slash");
 
     return res;
   });
 
-  server.AddView(Method::GET, "/pages/(id=\\d+)/", [](ViewParameters const &, HTTPRequest const &) {
+  server.AddView(Method::damnyouwindows_GET, "/pages/(id=\\d+)/", [](ViewParameters const &, HTTPRequest const &) {
     HTTPResponse res("Secret page 1");
 
     return res;
   });
 
-  server.AddView(Method::GET, "/other/(name=\\w+)",
+  server.AddView(Method::damnyouwindows_GET, "/other/(name=\\w+)",
                  [](ViewParameters const &, HTTPRequest const &) {
                    HTTPResponse res("Secret page with name");
 
                    return res;
                  });
 
-  server.AddView(Method::GET, "/other/(name=\\w+)/(number=\\d+)",
+  server.AddView(Method::damnyouwindows_GET, "/other/(name=\\w+)/(number=\\d+)",
                  [](ViewParameters const &params, HTTPRequest const &) {
                    HTTPResponse res("Secret page with name and number: " + params["name"] +
                                     " and " + params["number"]);
@@ -86,7 +86,7 @@ int main()
                    return res;
                  });
 
-  server.AddView(Method::GET, "/static/(filename=.+)",
+  server.AddView(Method::damnyouwindows_GET, "/static/(filename=.+)",
                  [](ViewParameters const &params, HTTPRequest const &) {
                    std::string filename = std::string(params["filename"]);
                    std::size_t pos      = filename.find_last_of('.');

@@ -156,7 +156,8 @@ int StringConsumerSSE(byte_array::ConstByteArray const &str, uint64_t &pos)
     found        = uint16_t(_mm_movemask_epi8(mret));
   }
 
-  pos += uint64_t(__builtin_ctz(found));
+  pos += uint64_t(found);
+//  pos += uint64_t(__builtin_ctz(found));???
 
   if (pos >= str.size())
   {

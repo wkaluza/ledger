@@ -210,7 +210,7 @@ private:
     IDLE,
     RUNNING,
     STALLED,
-    ERROR
+      damnyouwindows_ERROR
   };
 
   static constexpr uint64_t COMMON_PATH_TO_ANCESTOR_LENGTH_LIMIT = 1000;

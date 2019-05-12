@@ -27,22 +27,22 @@ char const *ToString(Method method)
   char const *text = "ERR";
   switch (method)
   {
-  case Method::GET:
+  case Method::damnyouwindows_GET:
     text = "GET";
     break;
-  case Method::POST:
+  case Method::damnyouwindows_POST:
     text = "POST";
     break;
-  case Method::PUT:
+  case Method::damnyouwindows_PUT:
     text = "PUT";
     break;
-  case Method::PATCH:
+  case Method::damnyouwindows_PATCH:
     text = "PATCH";
     break;
-  case Method::DELETE:
+  case Method::damnyouwindows_DELETE:
     text = "DELETE";
     break;
-  case Method::OPTIONS:
+  case Method::damnyouwindows_OPTIONS:
     text = "OPTIONS";
     break;
   }
@@ -56,27 +56,27 @@ bool FromString(byte_array::ConstByteArray const &text, Method &method)
 
   if (text == "get")
   {
-    method = Method::GET;
+    method = Method::damnyouwindows_GET;
   }
   else if (text == "post")
   {
-    method = Method::POST;
+    method = Method::damnyouwindows_POST;
   }
   else if (text == "put")
   {
-    method = Method::PUT;
+    method = Method::damnyouwindows_PUT;
   }
   else if (text == "patch")
   {
-    method = Method::PATCH;
+    method = Method::damnyouwindows_PATCH;
   }
   else if (text == "delete")
   {
-    method = Method::DELETE;
+    method = Method::damnyouwindows_DELETE;
   }
   else if (text == "options")
   {
-    method = Method::OPTIONS;
+    method = Method::damnyouwindows_OPTIONS;
   }
   else
   {

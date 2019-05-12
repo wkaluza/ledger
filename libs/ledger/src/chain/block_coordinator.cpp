@@ -544,7 +544,7 @@ BlockCoordinator::State BlockCoordinator::OnWaitForExecution()
     break;
 
   case ExecutionStatus::STALLED:
-  case ExecutionStatus::ERROR:
+  case ExecutionStatus::damnyouwindows_ERROR:
     next_state = State::RESET;
     break;
   }
@@ -693,7 +693,7 @@ BlockCoordinator::State BlockCoordinator::OnWaitForNewBlockExecution()
     break;
 
   case ExecutionStatus::STALLED:
-  case ExecutionStatus::ERROR:
+  case ExecutionStatus::damnyouwindows_ERROR:
     next_state = State::RESET;
     break;
   }
@@ -822,7 +822,7 @@ bool BlockCoordinator::ScheduleBlock(Block const &block)
 
 BlockCoordinator::ExecutionStatus BlockCoordinator::QueryExecutorStatus()
 {
-  ExecutionStatus status{ExecutionStatus::ERROR};
+  ExecutionStatus status{ExecutionStatus::damnyouwindows_ERROR};
 
   // based on the state of the execution manager determine
   auto const execution_state = execution_manager_.GetState();
@@ -845,7 +845,7 @@ BlockCoordinator::ExecutionStatus BlockCoordinator::QueryExecutorStatus()
   case ExecutionState::EXECUTION_ABORTED:
   case ExecutionState::EXECUTION_FAILED:
     FETCH_LOG_WARN(LOGGING_NAME, "Execution in error state: ", ledger::ToString(execution_state));
-    status = ExecutionStatus::ERROR;
+    status = ExecutionStatus::damnyouwindows_ERROR;
     break;
   }
 
@@ -936,7 +936,7 @@ char const *BlockCoordinator::ToString(ExecutionStatus state)
   case ExecutionStatus::STALLED:
     text = "Stalled";
     break;
-  case ExecutionStatus::ERROR:
+  case ExecutionStatus::damnyouwindows_ERROR:
     text = "Error";
     break;
   }

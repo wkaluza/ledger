@@ -43,10 +43,10 @@ public:
 
   enum
   {
-    GET = 0,
+      damnyouwindows_GET = 0,
     GET_OR_CREATE,
     LAZY_GET,
-    SET,
+      damnyouwindows_SET,
 
     COMMIT,
     REVERT_TO_HASH,
@@ -62,9 +62,9 @@ public:
     : fetch::service::Protocol()
     , doc_store_(doc_store)
   {
-    this->Expose(GET, doc_store, &NewRevertibleDocumentStore::Get);
+    this->Expose(damnyouwindows_GET, doc_store, &NewRevertibleDocumentStore::Get);
     this->Expose(GET_OR_CREATE, doc_store, &NewRevertibleDocumentStore::GetOrCreate);
-    this->Expose(SET, doc_store, &NewRevertibleDocumentStore::Set);
+    this->Expose(damnyouwindows_SET, doc_store, &NewRevertibleDocumentStore::Set);
 
     // Functionality for hashing/state
     this->Expose(COMMIT, doc_store, &NewRevertibleDocumentStore::Commit);
@@ -72,8 +72,8 @@ public:
     this->Expose(CURRENT_HASH, doc_store, &NewRevertibleDocumentStore::CurrentHash);
     this->Expose(HASH_EXISTS, doc_store, &NewRevertibleDocumentStore::HashExists);
 
-    this->ExposeWithClientContext(LOCK, this, &RevertibleDocumentStoreProtocol::LockResource);
-    this->ExposeWithClientContext(UNLOCK, this, &RevertibleDocumentStoreProtocol::UnlockResource);
+    this->ExposeWithClientContext(LOCK, this, &RevertibleDocumentStoreProtocol::damnyouwindows_LockResource);
+    this->ExposeWithClientContext(UNLOCK, this, &RevertibleDocumentStoreProtocol::damnyouwindows_UnlockResource);
     this->ExposeWithClientContext(HAS_LOCK, this, &RevertibleDocumentStoreProtocol::HasLock);
   }
 
@@ -103,7 +103,7 @@ public:
     return has_lock;
   }
 
-  bool LockResource(CallContext const *context)
+  bool damnyouwindows_LockResource(CallContext const *context)
   {
     if (!context)
     {
@@ -132,7 +132,7 @@ public:
     return success;
   }
 
-  bool UnlockResource(CallContext const *context)
+  bool damnyouwindows_UnlockResource(CallContext const *context)
   {
     if (!context)
     {
@@ -224,7 +224,8 @@ private:
 
   void SetLaneLog2(lane_type const &count)
   {
-    log2_lanes_ = uint32_t((sizeof(uint32_t) << 3) - uint32_t(__builtin_clz(uint32_t(count)) + 1));
+    log2_lanes_ = uint32_t((sizeof(uint32_t) << 3) - uint32_t(count)+ 1);
+//    log2_lanes_ = uint32_t((sizeof(uint32_t) << 3) - uint32_t(__builtin_clz(uint32_t(count)) + 1));???
   }
 
   NewRevertibleDocumentStore *doc_store_;

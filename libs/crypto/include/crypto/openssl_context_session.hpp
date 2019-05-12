@@ -52,7 +52,9 @@ public:
   Session()
       : context_(BN_CTX_new())
       , is_started_(CTOR_DEFAULT_is_already_started)
-  {}
+  {
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-5-1");
+  }
 
   ~Session()
   {

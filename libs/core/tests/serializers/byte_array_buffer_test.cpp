@@ -230,7 +230,7 @@ TEST_F(ByteArrayBufferTest, test_stream_relative_resize_with_preexisting_offset)
   ByteArrayBuffer       stream;
 
   //* Production code under test
-  stream.Resize(preallocated_amount, ResizeParadigm::RELATIVE);
+  stream.Resize(preallocated_amount, ResizeParadigm::damnyouwindows_RELATIVE);
   stream.seek(preallocated_amount);
 
   EXPECT_EQ(preallocated_amount, stream.size());
@@ -239,7 +239,7 @@ TEST_F(ByteArrayBufferTest, test_stream_relative_resize_with_preexisting_offset)
 
   constexpr std::size_t delta_size = 10;
   //* Production code under test
-  stream.Resize(delta_size, ResizeParadigm::RELATIVE);
+  stream.Resize(delta_size, ResizeParadigm::damnyouwindows_RELATIVE);
 
   EXPECT_EQ(preallocated_amount + delta_size, stream.size());
   EXPECT_EQ(preallocated_amount + delta_size, stream.data().capacity());
@@ -277,7 +277,7 @@ TEST_F(ByteArrayBufferTest, test_stream_absolute_resize_with_preexisting_offset)
   stream.seek(offset);
 
   //* Production code under test
-  stream.Resize(small_size, ResizeParadigm::ABSOLUTE);
+  stream.Resize(small_size, ResizeParadigm::damnyouwindows_ABSOLUTE);
 
   //* Expectations
   EXPECT_EQ(small_size, stream.size());

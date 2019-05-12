@@ -27,12 +27,12 @@ namespace http {
 
 enum class Method
 {
-  GET     = 1,
-  POST    = 2,
-  PUT     = 3,
-  PATCH   = 4,
-  DELETE  = 5,
-  OPTIONS = 6
+    damnyouwindows_GET     = 1,
+    damnyouwindows_POST    = 2,
+    damnyouwindows_PUT     = 3,
+    damnyouwindows_PATCH   = 4,
+    damnyouwindows_DELETE  = 5,
+    damnyouwindows_OPTIONS = 6
 };
 
 char const *ToString(Method method);

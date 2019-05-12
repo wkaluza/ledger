@@ -54,7 +54,7 @@ public:
     std::size_t lane = res.lane(uint32_t(lanes_.size()));
     //    std::cout << "Getting " << key << " from lane " << lane <<  " " <<
     //    byte_array::ToBase64(res.id()) << std::endl;
-    auto promise = lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::GET, res);
+    auto promise = lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_GET, res);
 
     return promise.As<storage::Document>().document;
   }
@@ -90,7 +90,7 @@ public:
     //    std::cout << "Setting " << key <<  " on lane " << lane << " " <<
     //    byte_array::ToBase64(res.id()) << std::endl;
     auto promise =
-        lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::SET, res, value);
+        lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_SET, res, value);
     promise.Wait(2000);
   }
 

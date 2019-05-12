@@ -242,23 +242,43 @@ private:
 
   static ECDSAPrivateKey Generate()
   {
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-1");
     uniq_ptr_type<EC_KEY> key{GenerateKeyPair()};
-    public_key_type       public_key{ExtractPublicKey(key.get())};
-    return ECDSAPrivateKey{std::move(key), std::move(public_key)};
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2");
+    auto uuu = ExtractPublicKey(key.get());
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-3");
+    public_key_type       public_key{uuu};
+    FETCH_LOG_WARN("WK???", "CHECKPOINT 005-2-4");
+    auto ttt = ECDSAPrivateKey{std::move(key), std::move(public_key)};
+    FETCH_LOG_WARN("WK???", "CHECKPOINT 005-2-5");
+    return ttt;
   }
 
   static public_key_type ExtractPublicKey(const EC_KEY *private_key)
   {
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-1");
+
     EC_GROUP const *group             = EC_KEY_get0_group(private_key);
     EC_POINT const *pub_key_reference = EC_KEY_get0_public_key(private_key);
 
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-2");
+
     uniq_ptr_type<EC_POINT> public_key{EC_POINT_dup(pub_key_reference, group)};
+
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-3");
+
     if (!public_key)
     {
       throw std::runtime_error("ECDSAPrivateKey::ExtractPublicKey(...): EC_POINT_dup(...) failed.");
     }
 
-    return public_key_type{std::move(public_key), group, context::Session<BN_CTX>{}};
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-4");
+
+    auto ppp = public_key_type{std::move(public_key), group, context::Session<BN_CTX>{}};
+
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2-5");
+
+    return std::move(ppp);
   }
 
   static uniq_ptr_type<EC_KEY> GenerateKeyPair()

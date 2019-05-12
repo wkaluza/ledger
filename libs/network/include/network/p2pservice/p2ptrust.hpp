@@ -70,15 +70,15 @@ inline TrustModifier const &LookupTrustModifier(TrustSubject subject, TrustQuali
       .at(static_cast<std::size_t>(quality));
 }
 
-template <typename IDENTITY>
-class P2PTrust : public P2PTrustInterface<IDENTITY>
+template <typename damnyouwindows_IDENTITY>
+class P2PTrust : public P2PTrustInterface<damnyouwindows_IDENTITY>
 {
 protected:
   struct PeerTrustRating
   {
-    IDENTITY    peer_identity;
-    double      trust;
-    std::time_t last_modified;
+      damnyouwindows_IDENTITY peer_identity;
+    double   trust;
+    std::time_t   last_modified;
 
     double ComputeCurrentTrust(std::time_t current_time) const
     {
@@ -94,14 +94,14 @@ protected:
   };
 
   using TrustStore   = std::vector<PeerTrustRating>;
-  using RankingStore = std::unordered_map<IDENTITY, size_t>;
+  using RankingStore = std::unordered_map<damnyouwindows_IDENTITY, size_t>;
   using Mutex        = mutex::Mutex;
-  using PeerTrusts   = typename P2PTrustInterface<IDENTITY>::PeerTrusts;
+  using PeerTrusts   = typename P2PTrustInterface<damnyouwindows_IDENTITY>::PeerTrusts;
 
 public:
   using ConstByteArray = byte_array::ConstByteArray;
-  using IdentitySet    = typename P2PTrustInterface<IDENTITY>::IdentitySet;
-  using PeerTrust      = typename P2PTrustInterface<IDENTITY>::PeerTrust;
+  using IdentitySet    = typename P2PTrustInterface<damnyouwindows_IDENTITY>::IdentitySet;
+  using PeerTrust      = typename P2PTrustInterface<damnyouwindows_IDENTITY>::PeerTrust;
 
   static constexpr char const *LOGGING_NAME = "Trust";
 
@@ -114,12 +114,12 @@ public:
   virtual void Debug() const override
   {}
 
-  void AddFeedback(IDENTITY const &peer_ident, TrustSubject subject, TrustQuality quality) override
+  void AddFeedback(damnyouwindows_IDENTITY const &peer_ident, TrustSubject subject, TrustQuality quality) override
   {
     AddFeedback(peer_ident, ConstByteArray{}, subject, quality);
   }
 
-  void AddFeedback(IDENTITY const &peer_ident, ConstByteArray const & /*object_ident*/,
+  void AddFeedback(damnyouwindows_IDENTITY const &peer_ident, ConstByteArray const & /*object_ident*/,
                    TrustSubject subject, TrustQuality quality) override
   {
     FETCH_LOCK(mutex_);
@@ -155,7 +155,7 @@ public:
     SortIfNeeded();
   }
 
-  bool IsPeerKnown(IDENTITY const &peer_ident) const override
+  bool IsPeerKnown(damnyouwindows_IDENTITY const &peer_ident) const override
   {
     FETCH_LOCK(mutex_);
     return ranking_store_.find(peer_ident) != ranking_store_.end();
@@ -226,7 +226,7 @@ public:
     return result;
   }
 
-  std::size_t GetRankOfPeer(IDENTITY const &peer_ident) const override
+  std::size_t GetRankOfPeer(damnyouwindows_IDENTITY const &peer_ident) const override
   {
     FETCH_LOCK(mutex_);
 
@@ -241,7 +241,7 @@ public:
     }
   }
 
-  double GetTrustRatingOfPeer(IDENTITY const &peer_ident) const override
+  double GetTrustRatingOfPeer(damnyouwindows_IDENTITY const &peer_ident) const override
   {
     double ranking = 0.0;
 
@@ -259,7 +259,7 @@ public:
     return ranking;
   }
 
-  bool IsPeerTrusted(IDENTITY const &peer_ident) const override
+  bool IsPeerTrusted(damnyouwindows_IDENTITY const &peer_ident) const override
   {
     return GetTrustRatingOfPeer(peer_ident) > 0.0;
   }

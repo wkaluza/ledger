@@ -472,7 +472,7 @@ StorageUnitClient::Document StorageUnitClient::Get(ResourceAddress const &key)
   {
     // make the request to the RPC server
     auto promise = rpc_client_.CallSpecificAddress(
-        LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::GET,
+        LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_GET,
         key.as_resource_id());
 
     // wait for the document response
@@ -497,7 +497,7 @@ void StorageUnitClient::Set(ResourceAddress const &key, StateValue const &value)
   {
     // make the request to the RPC server
     auto promise = rpc_client_.CallSpecificAddress(
-        LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::SET,
+        LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_SET,
         key.as_resource_id(), value);
 
     FETCH_LOG_PROMISE();

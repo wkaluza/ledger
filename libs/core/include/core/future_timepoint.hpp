@@ -18,6 +18,7 @@
 //------------------------------------------------------------------------------
 
 #include <chrono>
+#include <string>
 #include <thread>
 
 namespace fetch {

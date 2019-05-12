@@ -19,7 +19,7 @@
 
 #include "vm_modules/ml/tensor.hpp"
 
-#include "ml/graph.hpp"
+#include "../../../../ml/include/ml/graph.hpp"
 #include "ml/layers/fully_connected.hpp"
 #include "ml/ops/activation.hpp"
 

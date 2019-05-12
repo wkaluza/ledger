@@ -143,11 +143,11 @@ public:
     }
   }
 
-  enum
+  enum : int64_t
   {
     UNDEFINED_POSITION = int64_t(-1)
   };
-  enum
+  enum : uint64_t
   {
     HEADER_OBJECT = uint64_t(-2)
   };
@@ -246,7 +246,7 @@ public:
    */
   void Clear()
   {
-    assert(filename_ != "");
+    assert(filename_ != "");//???
     std::fstream fin(filename_, std::ios::out | std::ios::binary);
     fin.seekg(0, fin.beg);
 

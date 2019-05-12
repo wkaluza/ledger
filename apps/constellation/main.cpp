@@ -135,7 +135,8 @@ uint32_t Log2(uint32_t value)
 {
   static constexpr uint32_t VALUE_SIZE_IN_BITS = sizeof(value) << 3u;
   return static_cast<uint32_t>(VALUE_SIZE_IN_BITS -
-                               static_cast<uint32_t>(__builtin_clz(value) + 1));
+                               static_cast<uint32_t>(value+ 1));
+//                               static_cast<uint32_t>(__builtin_clz(value) + 1));???
 }
 
 bool EnsureLog2(uint32_t value)
@@ -561,13 +562,20 @@ ProverPtr GenerateP2PKey()
   static constexpr char const *KEY_FILENAME = "p2p.key";
 
   std::string key_path{KEY_FILENAME};
+
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-1");
+
   UpdateConfigFromEnvironment(key_path, "CONSTELLATION_KEY_PATH");
 
   using Signer    = fetch::crypto::ECDSASigner;
   using SignerPtr = std::shared_ptr<Signer>;
 
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2");
+
   SignerPtr certificate        = std::make_shared<Signer>();
   bool      certificate_loaded = false;
+
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-3");
 
   // Step 1. Attempt to load the existing key
   {
@@ -660,6 +668,8 @@ bool HasVersionFlag(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 001");
+
   int exit_code = EXIT_FAILURE;
 
   // Special case for the version flag
@@ -669,12 +679,18 @@ int main(int argc, char **argv)
     return 0;
   }
 
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 002");
+
   fetch::commandline::DisplayCLIHeader("Constellation");
+
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 003");
 
   if (!fetch::version::VALID)
   {
     FETCH_LOG_WARN(LOGGING_NAME, "Unsupported version - git working tree is dirty");
   }
+
+  FETCH_LOG_WARN("WK???", "WK CHECKPOINT 004");
 
   try
   {
@@ -682,11 +698,20 @@ int main(int argc, char **argv)
     fetch::metrics::Metrics::Instance().ConfigureFileHandler("metrics.csv");
 #endif  // FETCH_ENABLE_METRICS
 
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005");
+
     // create and load the main certificate for the bootstrapper
     ProverPtr p2p_key = GenerateP2PKey();
 
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 006");
+
     BootstrapPtr bootstrap_monitor;
+
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 007");
+
     auto         args = CommandLineArguments::Parse(argc, argv, bootstrap_monitor, p2p_key);
+
+    FETCH_LOG_WARN("WK???", "WK CHECKPOINT 008");
 
     FETCH_LOG_INFO(LOGGING_NAME, "Configuration:\n", args);
 

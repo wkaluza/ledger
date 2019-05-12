@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
   // make the request
   fetch::http::HTTPRequest req;
-  req.SetMethod(fetch::http::Method::GET);
+  req.SetMethod(fetch::http::Method::damnyouwindows_GET);
   req.SetURI(endpoint);
 
   fetch::http::HTTPResponse response;

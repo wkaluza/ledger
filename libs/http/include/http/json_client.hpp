@@ -97,7 +97,7 @@ private:
  */
 inline bool JsonClient::Get(ConstByteArray const &endpoint, Variant &response)
 {
-  return Request(Method::GET, endpoint, nullptr, nullptr, response);
+  return Request(Method::damnyouwindows_GET, endpoint, nullptr, nullptr, response);
 }
 
 /**
@@ -111,7 +111,7 @@ inline bool JsonClient::Get(ConstByteArray const &endpoint, Variant &response)
 inline bool JsonClient::Get(ConstByteArray const &endpoint, Headers const &headers,
                             Variant &response)
 {
-  return Request(Method::GET, endpoint, &headers, nullptr, response);
+  return Request(Method::damnyouwindows_GET, endpoint, &headers, nullptr, response);
 }
 
 /**
@@ -125,7 +125,7 @@ inline bool JsonClient::Get(ConstByteArray const &endpoint, Headers const &heade
 inline bool JsonClient::Post(ConstByteArray const &endpoint, Variant const &request,
                              Variant &response)
 {
-  return Request(Method::POST, endpoint, nullptr, &request, response);
+  return Request(Method::damnyouwindows_POST, endpoint, nullptr, &request, response);
 }
 
 /**
@@ -137,7 +137,7 @@ inline bool JsonClient::Post(ConstByteArray const &endpoint, Variant const &requ
  */
 inline bool JsonClient::Post(ConstByteArray const &endpoint, Variant &response)
 {
-  return Request(Method::POST, endpoint, nullptr, nullptr, response);
+  return Request(Method::damnyouwindows_POST, endpoint, nullptr, nullptr, response);
 }
 
 /**
@@ -152,7 +152,7 @@ inline bool JsonClient::Post(ConstByteArray const &endpoint, Variant &response)
 inline bool JsonClient::Post(ConstByteArray const &endpoint, Headers const &headers,
                              Variant const &request, Variant &response)
 {
-  return Request(Method::POST, endpoint, &headers, &request, response);
+  return Request(Method::damnyouwindows_POST, endpoint, &headers, &request, response);
 }
 
 /**
@@ -166,7 +166,7 @@ inline bool JsonClient::Post(ConstByteArray const &endpoint, Headers const &head
 inline bool JsonClient::Post(ConstByteArray const &endpoint, Headers const &headers,
                              Variant &response)
 {
-  return Request(Method::POST, endpoint, &headers, nullptr, response);
+  return Request(Method::damnyouwindows_POST, endpoint, &headers, nullptr, response);
 }
 
 /**

@@ -120,7 +120,7 @@ public:
     LOG_STACK_TRACE_POINT;
 
     // TODO(issue 35): Need to actually add better support for the options here
-    if (req.method() == Method::OPTIONS)
+    if (req.method() == Method::damnyouwindows_OPTIONS)
     {
 
       HTTPResponse res("", fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
