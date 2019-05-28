@@ -72,7 +72,7 @@ Contract::Status Contract::DispatchQuery(ContractName const &name, Query const &
  * @param tx The input transaction
  * @return The corresponding status result for the operation
  */
-Contract::Status Contract::DispatchTransaction(byte_array::ConstByteArray const &name,
+Contract::Status Contract::DispatchTransaction(damnyouwindows_byte_array::ConstByteArray const &name,
                                                Transaction const &tx, BlockIndex block_index)
 {
   Status status{Status::NOT_FOUND};

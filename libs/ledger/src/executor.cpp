@@ -37,7 +37,7 @@
 static constexpr char const *LOGGING_NAME    = "Executor";
 static constexpr uint64_t    TRANSFER_CHARGE = 1;
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 using fetch::storage::ResourceAddress;
 
 #ifdef FETCH_ENABLE_METRICS
@@ -109,7 +109,7 @@ Executor::Executor(StorageUnitPtr storage)
 Executor::Result Executor::Execute(Digest const &digest, BlockIndex block, SliceIndex slice,
                                    BitVector const &shards)
 {
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Executing tx ", byte_array::ToBase64(hash));
+  FETCH_LOG_DEBUG(LOGGING_NAME, "Executing tx ", damnyouwindows_byte_array::ToBase64(hash));
 
   Result result{Status::INEXPLICABLE_FAILURE, 0, 0, 0};
 
@@ -314,7 +314,7 @@ bool Executor::ExecuteTransactionContract(Result &result)
     Metrics::Timestamp const completed = Metrics::Clock::now();
 #endif  // FETCH_ENABLE_METRICS
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Executing tx ", byte_array::ToBase64(hash), " (success)");
+    FETCH_LOG_DEBUG(LOGGING_NAME, "Executing tx ", damnyouwindows_byte_array::ToBase64(hash), " (success)");
 
     FETCH_METRIC_TX_EXEC_STARTED_EX(hash, started);
     FETCH_METRIC_TX_EXEC_COMPLETE_EX(hash, completed);

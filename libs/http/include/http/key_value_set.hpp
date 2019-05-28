@@ -23,12 +23,12 @@
 namespace fetch {
 namespace http {
 
-class KeyValueSet : private std::map<byte_array::ConstByteArray, byte_array::ConstByteArray>
+class KeyValueSet : private std::map<damnyouwindows_byte_array::ConstByteArray, damnyouwindows_byte_array::ConstByteArray>
 {
 public:
-  using super_type      = std::map<byte_array::ConstByteArray, byte_array::ConstByteArray>;
-  using byte_array_type = byte_array::ConstByteArray;
-  using map_type        = std::map<byte_array_type, byte_array_type>;
+  using super_type      = std::map<damnyouwindows_byte_array::ConstByteArray, damnyouwindows_byte_array::ConstByteArray>;
+  using damnyouwindows_byte_array_type = damnyouwindows_byte_array::ConstByteArray;
+  using map_type        = std::map<damnyouwindows_byte_array_type, damnyouwindows_byte_array_type>;
   using iterator        = map_type::iterator;
   using const_iterator  = map_type::const_iterator;
 
@@ -57,7 +57,7 @@ public:
     return map_type::cend();
   }
 
-  void Add(byte_array_type const &name, byte_array_type const &value)
+  void Add(damnyouwindows_byte_array_type const &name, damnyouwindows_byte_array_type const &value)
   {
     LOG_STACK_TRACE_POINT;
 
@@ -65,30 +65,30 @@ public:
   }
 
   template <typename T>
-  typename std::enable_if<std::is_integral<T>::value, void>::type Add(byte_array_type const &name,
+  typename std::enable_if<std::is_integral<T>::value, void>::type Add(damnyouwindows_byte_array_type const &name,
                                                                       T const &              n)
   {
     LOG_STACK_TRACE_POINT;
     // TODO(issue 35): Can be improved.
-    byte_array_type value(std::to_string(n));
+    damnyouwindows_byte_array_type value(std::to_string(n));
     insert({name, value});
   }
 
-  bool Has(byte_array_type const &key) const
+  bool Has(damnyouwindows_byte_array_type const &key) const
   {
     LOG_STACK_TRACE_POINT;
 
     return this->find(key) != this->end();
   }
 
-  byte_array::ConstByteArray &operator[](byte_array::ConstByteArray const &name)
+  damnyouwindows_byte_array::ConstByteArray &operator[](damnyouwindows_byte_array::ConstByteArray const &name)
   {
     LOG_STACK_TRACE_POINT;
 
     return super_type::operator[](name);
   }
 
-  byte_array::ConstByteArray operator[](byte_array::ConstByteArray const &name) const
+  damnyouwindows_byte_array::ConstByteArray operator[](damnyouwindows_byte_array::ConstByteArray const &name) const
   {
     LOG_STACK_TRACE_POINT;
 

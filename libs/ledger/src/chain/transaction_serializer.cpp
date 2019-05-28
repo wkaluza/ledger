@@ -29,8 +29,8 @@ namespace fetch {
 namespace ledger {
 namespace {
 
-using byte_array::ByteArray;
-using byte_array::ConstByteArray;
+using damnyouwindows_byte_array::ByteArray;
+using damnyouwindows_byte_array::ConstByteArray;
 using crypto::Identity;
 using serializers::ByteArrayBuffer;
 

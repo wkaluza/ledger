@@ -20,7 +20,7 @@
 #include "core/byte_array/details/encode_decode.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 ConstByteArray ToBase64(ConstByteArray const &str)
 {
@@ -176,5 +176,5 @@ ConstByteArray ToBinReverse(ConstByteArray const &str)
   return std::move(ret);
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

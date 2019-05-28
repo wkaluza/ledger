@@ -35,7 +35,7 @@ namespace p2p {
 class Resolver
 {
 public:
-  using Address  = byte_array::ConstByteArray;
+  using Address  = damnyouwindows_byte_array::ConstByteArray;
   using Mutex    = mutex::Mutex;
   using PeerList = std::vector<network::Peer>;
   using PeerMap  = std::unordered_map<Address, PeerList>;
@@ -55,7 +55,7 @@ public:
   {
     Uri uri;
 
-    FETCH_LOG_INFO("Resolver", "Lookup address: ", byte_array::ToBase64(address));
+    FETCH_LOG_INFO("Resolver", "Lookup address: ", damnyouwindows_byte_array::ToBase64(address));
 
     if (address == address_)
     {

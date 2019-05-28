@@ -29,7 +29,7 @@
 
 static constexpr char const *LOGGING_NAME = "TxQueryAPI";
 
-using fetch::byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::FromHex;
 using fetch::variant::Variant;
 
 namespace fetch {

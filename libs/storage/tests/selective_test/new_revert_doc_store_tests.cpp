@@ -42,8 +42,8 @@ using namespace fetch::testing;
 
 using fetch::random::LinearCongruentialGenerator;
 
-using ByteArray      = fetch::byte_array::ByteArray;
-using ConstByteArray = fetch::byte_array::ConstByteArray;
+using ByteArray      = fetch::damnyouwindows_byte_array::ByteArray;
+using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
 
 char NewChar(LinearCongruentialGenerator &rng)
 {

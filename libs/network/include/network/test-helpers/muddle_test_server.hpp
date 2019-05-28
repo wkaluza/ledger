@@ -24,7 +24,7 @@
 #include "network/test-helpers/muddle_test_definitions.hpp"
 
 using namespace fetch::service;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 class MuddleTestServer
 {

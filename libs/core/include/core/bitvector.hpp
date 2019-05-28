@@ -20,6 +20,10 @@
 #include "vectorise/memory/shared_array.hpp"
 #include "vectorise/platform.hpp"
 
+#ifdef WIN32
+#include <intrin.h>
+#endif
+
 #include <initializer_list>
 #include <type_traits>
 
@@ -488,7 +492,11 @@ inline std::size_t BitVector::PopCount() const
 
   for (std::size_t i = 0; i < blocks_; ++i)
   {
+#ifdef WIN32
+    ret += static_cast<std::size_t>(__popcnt64(data_[i]));
+#else
     ret += static_cast<std::size_t>(__builtin_popcountl(data_[i]));
+#endif
   }
 
   return std::min(ret, size_);

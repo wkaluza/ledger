@@ -33,19 +33,19 @@
 
 using namespace fetch;
 using namespace fetch::storage;
-using cached_kvi_type = KeyValueIndex<KeyValuePair<>, CachedRandomAccessStack<KeyValuePair<>>>;
-using kvi_type        = KeyValueIndex<KeyValuePair<>, RandomAccessStack<KeyValuePair<>>>;
+using cached_kvi_type = KeyValueIndex<KeyValuePair<256u, 32u>, CachedRandomAccessStack<KeyValuePair<256u, 32u>>>;
+using kvi_type        = KeyValueIndex<KeyValuePair<256u, 32u>, RandomAccessStack<KeyValuePair<256u, 32u>>>;
 
 cached_kvi_type key_index;
 kvi_type        ref_index;
 
 struct TestData
 {
-  byte_array::ByteArray key;
+  damnyouwindows_byte_array::ByteArray key;
   uint64_t              value;
 };
 
-std::map<byte_array::ConstByteArray, uint64_t> reference;
+std::map<damnyouwindows_byte_array::ConstByteArray, uint64_t> reference;
 fetch::random::LaggedFibonacciGenerator<>      lfg;
 
 bool ValueConsistency()
@@ -53,7 +53,7 @@ bool ValueConsistency()
   std::vector<TestData> values;
   for (std::size_t i = 0; i < 10000; ++i)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -100,7 +100,7 @@ bool LoadSaveValueConsistency()
   std::vector<TestData> values;
   for (std::size_t i = 0; i < 10000; ++i)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -166,7 +166,7 @@ bool RandomInsertHashConsistency()
   std::vector<TestData> values;
   for (std::size_t i = 0; i < 10000; ++i)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -220,7 +220,7 @@ bool IntermediateFlushHashConsistency()
   std::vector<TestData> values;
   for (std::size_t i = 0; i < 1000; ++i)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -274,9 +274,9 @@ bool IntermediateFlushHashConsistency()
 
   auto hash3 = key_index.Hash();
   //  std::cout << std::endl;
-  //  std::cout << byte_array::ToBase64(hash1) << std::endl;
-  //  std::cout << byte_array::ToBase64(hash2) << std::endl;
-  //  std::cout << byte_array::ToBase64(hash3) << std::endl;
+  //  std::cout << damnyouwindows_byte_array::ToBase64(hash1) << std::endl;
+  //  std::cout << damnyouwindows_byte_array::ToBase64(hash2) << std::endl;
+  //  std::cout << damnyouwindows_byte_array::ToBase64(hash3) << std::endl;
   return (hash1 == hash2) && (hash2 == hash3);
 
   return true;
@@ -287,7 +287,7 @@ bool DoubleInsertionhConsistency()
   std::vector<TestData> values;
   for (std::size_t i = 0; i < 10000; ++i)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -324,8 +324,8 @@ bool DoubleInsertionhConsistency()
 
   //  std::cout << std::endl;
   //  std::cout << size1 <<  " " << size2 << std::endl;
-  //  std::cout << byte_array::ToBase64( hash1 ) << std::endl;
-  //  std::cout << byte_array::ToBase64( hash2 ) << std::endl;
+  //  std::cout << damnyouwindows_byte_array::ToBase64( hash1 ) << std::endl;
+  //  std::cout << damnyouwindows_byte_array::ToBase64( hash2 ) << std::endl;
 
   return (hash1 == hash2) && (size1 == size2);
 }
@@ -339,7 +339,7 @@ bool LoadSaveVsBulk()
   std::size_t           i = 0, k = 0;
   while (i < total)
   {
-    byte_array::ByteArray key;
+    damnyouwindows_byte_array::ByteArray key;
     key.Resize(256 / 8);
     for (std::size_t j = 0; j < key.size(); ++j)
     {
@@ -383,7 +383,7 @@ bool LoadSaveVsBulk()
   }
 
   std::size_t           batched_size;
-  byte_array::ByteArray batched_hash;
+  damnyouwindows_byte_array::ByteArray batched_hash;
   {
     kvi_type test;
     test.Load("test1.db");
@@ -421,7 +421,7 @@ bool LoadSaveVsBulk()
     }
   }
   std::size_t           random_batched_size;
-  byte_array::ByteArray random_batched_hash;
+  damnyouwindows_byte_array::ByteArray random_batched_hash;
   {
     kvi_type test;
     test.Load("test1.db");

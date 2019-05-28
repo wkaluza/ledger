@@ -58,13 +58,13 @@ int main(int argc, char *argv[])
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
 
-      fetch::byte_array::ByteArray msg0("Testing rapid string pushing");
+      fetch::damnyouwindows_byte_array::ByteArray msg0("Testing rapid string pushing");
       client.Send(msg0.Copy());
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     Client                       client(argv[1], argv[2], tmanager);
-    fetch::byte_array::ByteArray msg;
+    fetch::damnyouwindows_byte_array::ByteArray msg;
     msg.Resize(512);
 
     while (std::cin.getline(msg.char_pointer(), 512))

@@ -244,7 +244,7 @@ private:
           if (!PushProtocolRequest(connection_handle_type(-1), msg))
           {
             throw serializers::SerializableException(error::UNKNOWN_MESSAGE,
-                                                     byte_array::ConstByteArray("Unknown message"));
+                                                     damnyouwindows_byte_array::ConstByteArray("Unknown message"));
           }
         }
       }

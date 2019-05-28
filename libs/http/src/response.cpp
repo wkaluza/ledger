@@ -29,9 +29,9 @@ namespace fetch {
 namespace http {
 namespace {
 
-byte_array::ByteArray CopyBuffer(asio::streambuf &buffer, std::size_t length)
+damnyouwindows_byte_array::ByteArray CopyBuffer(asio::streambuf &buffer, std::size_t length)
 {
-  byte_array::ByteArray data;
+  damnyouwindows_byte_array::ByteArray data;
   data.Resize(length);
 
   std::istream                   is(&buffer);

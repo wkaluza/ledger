@@ -61,12 +61,12 @@ public:
     LOG_STACK_TRACE_POINT;
   }
 
-  void Connect(byte_array::ConstByteArray const &host, uint16_t port)
+  void Connect(damnyouwindows_byte_array::ConstByteArray const &host, uint16_t port)
   {
     pointer_->Connect(host, port);
   }
 
-  void Connect(byte_array::ConstByteArray const &host, byte_array::ConstByteArray const &port)
+  void Connect(damnyouwindows_byte_array::ConstByteArray const &host, damnyouwindows_byte_array::ConstByteArray const &port)
   {
     pointer_->Connect(host, port);
   }

@@ -45,7 +45,7 @@ public:
   {
     assert((end_ == nullptr) || (ptr_ < end_));
 
-    m.data() = *ptr_;
+    //m.data() = *ptr_;
     ++ptr_;
   }
 

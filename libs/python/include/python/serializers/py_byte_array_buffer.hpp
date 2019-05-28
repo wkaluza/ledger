@@ -28,7 +28,7 @@ void BuildByteArrayBuffer(pybind11::module &module)
   namespace py = pybind11;
   py::class_<ByteArrayBuffer>(module, "ByteArrayBuffer")
       .def(py::init<>())
-      .def(py::init<byte_array::ByteArray>())
+      .def(py::init<damnyouwindows_byte_array::ByteArray>())
       .def("WriteBytes", &ByteArrayBuffer::WriteBytes)
       .def("bytes_left", &ByteArrayBuffer::bytes_left)
       .def("data", &ByteArrayBuffer::data)

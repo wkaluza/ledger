@@ -35,8 +35,8 @@
 #include <vector>
 
 using testing::_;
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::FromHex;
 using fetch::vm::VM;
 using fetch::vm::IR;
 using fetch::vm::Executable;

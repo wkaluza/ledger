@@ -17,11 +17,11 @@
 //------------------------------------------------------------------------------
 
 #include "core/byte_array/byte_array.hpp"
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 #include <gtest/gtest.h>
 
-TEST(reference_byte_array_gtest, ensuring_subbyte_arrays_come_out_correctly)
+TEST(reference_damnyouwindows_byte_array_gtest, ensuring_subdamnyouwindows_byte_arrays_come_out_correctly)
 {
   char const *base    = "hello world";
   std::string basecpp = base;
@@ -35,7 +35,7 @@ TEST(reference_byte_array_gtest, ensuring_subbyte_arrays_come_out_correctly)
   EXPECT_EQ(str.SubArray(6, str.size() - 6), basecpp.substr(6, basecpp.size() - 6));
 }
 
-TEST(reference_byte_array_gtest, testing_that_referencing_persists_after_subbyte_arraying)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_referencing_persists_after_subdamnyouwindows_byte_arraying)
 {
   char const *base    = "hello world";
   std::string basecpp = base;
@@ -50,7 +50,7 @@ TEST(reference_byte_array_gtest, testing_that_referencing_persists_after_subbyte
   EXPECT_EQ(str, "hello kitty");
 }
 
-TEST(reference_byte_array_gtest, testing_sub_array_of_sub_array)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_sub_array_of_sub_array)
 {
   char const *base = "hello world";
   ByteArray   bc{base};
@@ -68,7 +68,7 @@ TEST(reference_byte_array_gtest, testing_sub_array_of_sub_array)
   EXPECT_EQ(sub_array_2, "tt");
 }
 
-TEST(reference_byte_array_gtest, testing_that_ConstByteArray_r_value_moved_if_unique)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_ConstByteArray_r_value_moved_if_unique)
 {
   char const *   base = "hello world";
   ConstByteArray expected_to_be_moved{base};
@@ -85,7 +85,7 @@ TEST(reference_byte_array_gtest, testing_that_ConstByteArray_r_value_moved_if_un
   EXPECT_EQ(copy, "kitty world");
 }
 
-TEST(reference_byte_array_gtest, testing_that_ConstByteArray_r_value_not_moved_if_not_unique)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_ConstByteArray_r_value_not_moved_if_not_unique)
 {
   char const *   base = "hello world";
   ConstByteArray expected_to_remain_unchanged{base};
@@ -107,7 +107,7 @@ TEST(reference_byte_array_gtest, testing_that_ConstByteArray_r_value_not_moved_i
   EXPECT_EQ(expected_to_remain_unchanged_2, base);  // NOLINT(bugprone-use-after-move)
 }
 
-TEST(reference_byte_array_gtest,
+TEST(reference_damnyouwindows_byte_array_gtest,
      testing_that_instantiation_of_ByteArray_is_done_by_referencee_and_NOT_by_value)
 {
   char const *base = "hello world";
@@ -125,7 +125,7 @@ TEST(reference_byte_array_gtest,
   EXPECT_EQ(cba, expected);
 }
 
-TEST(reference_byte_array_gtest,
+TEST(reference_damnyouwindows_byte_array_gtest,
      testing_assignment_from_ByteArray_is_done_by_referencee_and_NOT_by_value)
 {
   char const *base = "hello world";
@@ -144,7 +144,7 @@ TEST(reference_byte_array_gtest,
   EXPECT_EQ(cba, expected);
 }
 
-TEST(reference_byte_array_gtest, testing_that_instantiation_from_ConstByteArray_is_done_by_value)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_instantiation_from_ConstByteArray_is_done_by_value)
 {
   char const *   base = "hello world";
   ByteArray      str(base);
@@ -160,7 +160,7 @@ TEST(reference_byte_array_gtest, testing_that_instantiation_from_ConstByteArray_
   EXPECT_EQ(copy, "kitty world");
 }
 
-TEST(reference_byte_array_gtest, testing_that_assignemnt_from_ConstByteArray_is_done_by_value)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_assignemnt_from_ConstByteArray_is_done_by_value)
 {
   char const *   base = "hello world";
   ByteArray      str(base);
@@ -177,7 +177,7 @@ TEST(reference_byte_array_gtest, testing_that_assignemnt_from_ConstByteArray_is_
   EXPECT_EQ(copy, "kitty world");
 }
 
-TEST(reference_byte_array_gtest, testing_that_referencing_vanishes_after_copying)
+TEST(reference_damnyouwindows_byte_array_gtest, testing_that_referencing_vanishes_after_copying)
 {
   char const *base = "hello kitty";
   ByteArray   str(base);
@@ -191,14 +191,14 @@ TEST(reference_byte_array_gtest, testing_that_referencing_vanishes_after_copying
   EXPECT_EQ(copy, "Zippy");
   EXPECT_EQ(str, "hello kitty");
 }
-TEST(reference_byte_array_gtest, basic_concat_operations)
+TEST(reference_damnyouwindows_byte_array_gtest, basic_concat_operations)
 {
   char const *base = "hello kitty";
   ByteArray   str(base);
   EXPECT_EQ((str + " kat"), "hello kitty kat");
   EXPECT_EQ(("Big " + str), "Big hello kitty");
 }
-TEST(reference_byte_array_gtest, basic_append_operations)
+TEST(reference_damnyouwindows_byte_array_gtest, basic_append_operations)
 {
   ByteArray      v0("hello");
   ConstByteArray v1("pretty");
@@ -229,7 +229,7 @@ TEST(reference_byte_array_gtest, basic_append_operations)
   EXPECT_EQ(array, "hello pretty kitty :)");
 }
 
-TEST(reference_byte_array_gtest, size_of_loaded_C_strings)
+TEST(reference_damnyouwindows_byte_array_gtest, size_of_loaded_C_strings)
 {
   EXPECT_EQ(ByteArray("any carnal pleas").size(), 16);
   EXPECT_EQ(ByteArray("any carnal pleasu").size(), 17);

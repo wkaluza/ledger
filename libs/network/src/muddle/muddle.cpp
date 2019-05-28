@@ -30,8 +30,8 @@
 #include <sstream>
 #include <thread>
 
-using fetch::byte_array::ByteArray;
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 namespace fetch {
 namespace muddle {

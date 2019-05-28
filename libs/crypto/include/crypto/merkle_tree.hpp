@@ -27,7 +27,7 @@ namespace crypto {
 class MerkleTree
 {
 public:
-  using Digest        = byte_array::ConstByteArray;
+  using Digest        = damnyouwindows_byte_array::ConstByteArray;
   using Container     = std::vector<Digest>;
   using Iterator      = Container::iterator;
   using ConstIterator = Container::const_iterator;

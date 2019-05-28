@@ -34,7 +34,7 @@ class Metrics
 public:
   using Clock          = MetricHandler::Clock;
   using Timestamp      = Clock::time_point;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using Instrument     = MetricHandler::Instrument;
   using Event          = MetricHandler::Event;
 

@@ -24,12 +24,12 @@ namespace storage {
 
 struct Document
 {
-  explicit operator byte_array::ConstByteArray()
+  explicit operator damnyouwindows_byte_array::ConstByteArray()
   {
     return document;
   }
 
-  byte_array::ByteArray document;
+  damnyouwindows_byte_array::ByteArray document;
   bool                  was_created = false;
   bool                  failed      = false;
 };

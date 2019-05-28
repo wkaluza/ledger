@@ -27,8 +27,8 @@
 
 static constexpr char const *LOGGING_NAME = "TxStatusHttp";
 
-using fetch::byte_array::FromHex;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::variant::Variant;
 
 namespace fetch {

@@ -226,7 +226,7 @@ void Variant::Reset()
  */
 std::ostream &operator<<(std::ostream &stream, Variant const &variant)
 {
-  using fetch::byte_array::ConstByteArray;
+  using fetch::damnyouwindows_byte_array::ConstByteArray;
 
   switch (variant.type_)
   {

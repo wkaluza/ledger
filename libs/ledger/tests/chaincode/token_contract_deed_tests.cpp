@@ -34,7 +34,7 @@ using fetch::ledger::TransactionBuilder;
 using AddressArray = std::vector<Address>;
 using PrivateKey   = crypto::ECDSASigner;
 
-using byte_array::ConstByteArray;
+using damnyouwindows_byte_array::ConstByteArray;
 using variant::Variant;
 using Amount = uint64_t;
 

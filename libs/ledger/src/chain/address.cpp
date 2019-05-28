@@ -32,8 +32,8 @@ namespace fetch {
 namespace ledger {
 namespace {
 
-using byte_array::ToBase58;
-using byte_array::FromBase58;
+using damnyouwindows_byte_array::ToBase58;
+using damnyouwindows_byte_array::FromBase58;
 
 /**
  * Helper function to calculation the address checksum

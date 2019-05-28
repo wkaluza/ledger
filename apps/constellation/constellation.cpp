@@ -40,7 +40,7 @@
 #include <thread>
 #include <utility>
 
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::ledger::Executor;
 using fetch::network::Manifest;
 using fetch::network::ServiceType;

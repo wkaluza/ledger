@@ -35,7 +35,7 @@ using ::testing::_;
 using ::testing::InSequence;
 using fetch::crypto::SHA256;
 using fetch::ledger::SmartContract;
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 using fetch::storage::ResourceAddress;
 using fetch::variant::Variant;
 using fetch::serializers::ByteArrayBuffer;

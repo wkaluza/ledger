@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 
 using namespace fetch::math;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 TEST(big_number_gtest, elemntary_left_shift)
 {
   BigUnsigned n1(0);

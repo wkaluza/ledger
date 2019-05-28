@@ -30,10 +30,10 @@ using vector_type = typename array_type::VectorRegisterType;
 
 void RelativeDifference(array_type const &A, array_type const &B, array_type &C)
 {
-  vector_type cst(0.5);
-  C.in_parallel().Apply([cst](vector_type const &a, vector_type const &b,
-                              vector_type &c) { c = cst * (a - b) / (a + b); },
-                        A, B);
+  //vector_type cst(0.5);
+  //C.in_parallel().Apply([cst](vector_type const &a, vector_type const &b,
+  //                            vector_type &c) { c = cst * (a - b) / (a + b); },
+  //                      A, B);
 }
 
 int main(int argc, char const **argv)

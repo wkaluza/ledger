@@ -64,12 +64,12 @@ inline std::ostream &operator<<(std::ostream &os, StringProxy const &m)
 
 // Generate unique hashes that are very close together to stress unit tests. Do this by creating a
 // random reference and then for each hash required flipping a single bit of this reference hash
-inline std::unordered_set<fetch::byte_array::ByteArray> GenerateUniqueHashes(uint64_t size,
+inline std::unordered_set<fetch::damnyouwindows_byte_array::ByteArray> GenerateUniqueHashes(uint64_t size,
                                                                              uint64_t seed = 0)
 {
   random::LinearCongruentialGenerator lcg(seed);
-  fetch::byte_array::ByteArray reference = crypto::Hash<crypto::SHA256>(std::to_string(lcg()));
-  std::unordered_set<fetch::byte_array::ByteArray> ret;
+  fetch::damnyouwindows_byte_array::ByteArray reference = crypto::Hash<crypto::SHA256>(std::to_string(lcg()));
+  std::unordered_set<fetch::damnyouwindows_byte_array::ByteArray> ret;
   ret.reserve(size);
   uint32_t bit_flip_position      = 0;
   uint32_t byte_flip_position     = 0;
@@ -79,7 +79,7 @@ inline std::unordered_set<fetch::byte_array::ByteArray> GenerateUniqueHashes(uin
   while (ret.size() < size)
   {
     // Copy reference
-    fetch::byte_array::ByteArray to_push = reference.Copy();
+    fetch::damnyouwindows_byte_array::ByteArray to_push = reference.Copy();
 
     // Flip one bit
     byte_flip_position          = bit_flip_position >> 3;
@@ -109,7 +109,7 @@ inline std::unordered_set<storage::ResourceID> GenerateUniqueIDs(uint64_t size, 
 
   for (auto const &i : hashes)
   {
-    byte_array::ConstByteArray as_const{i};
+    damnyouwindows_byte_array::ConstByteArray as_const{i};
     ret.emplace(as_const);
   }
 

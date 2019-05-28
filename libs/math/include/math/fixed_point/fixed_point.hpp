@@ -32,8 +32,6 @@ namespace fixed_point {
 template <std::uint16_t I, std::uint16_t F>
 class FixedPoint;
 
-namespace {
-
 // struct for inferring what underlying types to use
 template <int T>
 struct TypeFromSize
@@ -164,8 +162,6 @@ constexpr inline int32_t HighestSetBit(T n_input)
          static_cast<int32_t>(platform::CountLeadingZeroes64(n));
 }
 
-}  // namespace
-
 struct BaseFixedpointType
 {
 };
@@ -176,23 +172,23 @@ class FixedPoint : public BaseFixedpointType
   static_assert(TypeFromSize<I + F>::is_valid, "invalid combination of sizes");
 
 public:
-  enum
-  {
-    FRACTIONAL_BITS = F,
-    TOTAL_BITS      = I + F
-  };
+  //enum
+  //{
+  static const int FRACTIONAL_BITS = F;
+  static const int TOTAL_BITS                       = I + F;
+  //};
 
   using BaseTypeInfo = TypeFromSize<TOTAL_BITS>;
   using Type         = typename BaseTypeInfo::ValueType;
   using NextType     = typename BaseTypeInfo::NextSize::ValueType;
   using UnsignedType = typename BaseTypeInfo::UnsignedType;
 
-  enum
-  {
-    FRACTIONAL_MASK = Type(((1ull << FRACTIONAL_BITS) - 1)),
-    INTEGER_MASK    = Type(~FRACTIONAL_MASK),
-    ONE_MASK        = Type(1) << FRACTIONAL_BITS
-  };
+  // enum
+  //{
+  static const int FRACTIONAL_MASK = Type(((1ull << FRACTIONAL_BITS) - 1));
+  static const int INTEGER_MASK    = Type(~FRACTIONAL_MASK);
+  static const int ONE_MASK        = Type(1) << FRACTIONAL_BITS;
+  //};
 
   ////////////////////////
   /// Constants/Limits ///
@@ -498,14 +494,14 @@ public:
 
   constexpr FixedPoint operator*(FixedPoint const &n) const
   {
-    if (isNaN(n))
-    {
-      return NaN;
-    }
-    NextType prod = NextType(data_) * NextType(n.Data());
-    assert(CheckNoOverflow(Type(prod >> FRACTIONAL_BITS)));
-    Type fp = Type(prod >> FRACTIONAL_BITS);
-    return FromBase(fp);
+    //if (isNaN(n))
+    //{
+    //  return NaN;
+    //}
+    //NextType damnyouwindows_prod = NextType(data_) * NextType(n.Data());
+    //assert(CheckNoOverflow(Type(damnyouwindows_prod >> FRACTIONAL_BITS)));
+    //Type fp = Type(damnyouwindows_prod >> FRACTIONAL_BITS);
+    return {}; //FromBase(fp);
   }
 
   template <typename T>
@@ -522,9 +518,10 @@ public:
     }
     FixedPoint sign      = Sign(*this);
     FixedPoint abs_n     = Abs(*this);
-    NextType   numerator = NextType(abs_n.Data()) << FRACTIONAL_BITS;
-    NextType   quotient  = numerator / NextType(n.Data());
-    return sign * FromBase(Type(quotient));
+    //NextType   numerator{};  // = NextType(abs_n.Data()) << FRACTIONAL_BITS;
+    //NextType   quotient{};   // / NextType(n.Data());
+    return
+    {};  // sign *FromBase(Type(quotient));
   }
 
   template <typename T>

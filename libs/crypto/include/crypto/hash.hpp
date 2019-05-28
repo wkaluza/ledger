@@ -23,7 +23,7 @@ namespace fetch {
 namespace crypto {
 
 template <typename T>
-byte_array::ByteArray Hash(byte_array::ConstByteArray const &str)
+damnyouwindows_byte_array::ByteArray Hash(damnyouwindows_byte_array::ConstByteArray const &str)
 {
   T hasher;
 

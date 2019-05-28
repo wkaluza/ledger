@@ -21,7 +21,7 @@
 #include "core/byte_array/details/encode_decode.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 ConstByteArray FromBase64(ConstByteArray const &str) noexcept
 {
@@ -110,5 +110,5 @@ ConstByteArray FromHex(ConstByteArray const &str) noexcept
   return std::move(ret);
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

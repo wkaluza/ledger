@@ -91,7 +91,7 @@ PYBIND11_MODULE(fetch, module)
   py::module ns_fetch_math_spline      = ns_fetch_math.def_submodule("spline");
   py::module ns_fetch_math_tensor      = ns_fetch_math.def_submodule("tensor");
   py::module ns_fetch_memory           = module.def_submodule("memory");
-  py::module ns_fetch_byte_array       = module.def_submodule("byte_array");
+  py::module ns_fetch_damnyouwindows_byte_array       = module.def_submodule("damnyouwindows_byte_array");
   py::module ns_fetch_math_linalg      = ns_fetch_math.def_submodule("linalg");
   py::module ns_fetch_auctions         = module.def_submodule("auctions");
   py::module ns_fetch_serializer       = module.def_submodule("serializers");
@@ -137,8 +137,8 @@ PYBIND11_MODULE(fetch, module)
   // fetch::math::clustering::BuildKMeansClustering("KMeans", ns_fetch_math_clustering);
 
   ////////////
-  fetch::byte_array::BuildConstByteArray(ns_fetch_byte_array);
-  fetch::byte_array::BuildByteArray(ns_fetch_byte_array);
+  fetch::damnyouwindows_byte_array::BuildConstByteArray(ns_fetch_damnyouwindows_byte_array);
+  fetch::damnyouwindows_byte_array::BuildByteArray(ns_fetch_damnyouwindows_byte_array);
 
   fetch::random::BuildLaggedFibonacciGenerator<418, 1279>("LaggedFibonacciGenerator",
                                                           ns_fetch_random);

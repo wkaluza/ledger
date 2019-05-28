@@ -31,7 +31,7 @@ class ProofOfWork : public math::BigUnsigned
 {
 public:
   using super_type  = math::BigUnsigned;
-  using header_type = byte_array::ConstByteArray;
+  using header_type = damnyouwindows_byte_array::ConstByteArray;
 
   // Construction / Destruction
   ProofOfWork() = default;
@@ -42,7 +42,7 @@ public:
 
   void SetTarget(std::size_t zeros);
   void SetTarget(math::BigUnsigned &&target);
-  void SetHeader(byte_array::ByteArray header);
+  void SetHeader(damnyouwindows_byte_array::ByteArray header);
 
   header_type const &      header() const;
   math::BigUnsigned const &digest() const;
@@ -51,10 +51,10 @@ public:
 private:
   math::BigUnsigned          digest_;
   math::BigUnsigned          target_;
-  byte_array::ConstByteArray header_;
+  damnyouwindows_byte_array::ConstByteArray header_;
 };
 
-inline byte_array::ConstByteArray const &ProofOfWork::header() const
+inline damnyouwindows_byte_array::ConstByteArray const &ProofOfWork::header() const
 {
   return header_;
 }
@@ -78,7 +78,7 @@ inline void Serialize(T &serializer, ProofOfWork const &p)
 template <typename T>
 inline void Deserialize(T &serializer, ProofOfWork &p)
 {
-  byte_array::ConstByteArray header;
+  damnyouwindows_byte_array::ConstByteArray header;
   math::BigUnsigned          target;
 
   serializer >> header >> target;

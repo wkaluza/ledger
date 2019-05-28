@@ -29,12 +29,12 @@ namespace {
 class ECDCSASignatureTest : public testing::Test
 {
 protected:
-  const fetch::byte_array::ConstByteArray priv_key_data_ = {
+  const fetch::damnyouwindows_byte_array::ConstByteArray priv_key_data_ = {
       0x92, 0xad, 0x61, 0xcf, 0xfc, 0xb9, 0x2a, 0x17, 0x02, 0xa3, 0xd6,
       0x03, 0xa0, 0x0d, 0x6e, 0xb3, 0xad, 0x92, 0x0f, 0x8c, 0xec, 0x43,
       0xda, 0x41, 0x8f, 0x01, 0x04, 0xc6, 0xc6, 0xc9, 0xe0, 0x5e};
 
-  const fetch::byte_array::ConstByteArray test_data_ = {
+  const fetch::damnyouwindows_byte_array::ConstByteArray test_data_ = {
       0x2a, 0xc8, 0xa5, 0xb0, 0x45, 0xfc, 0x3e, 0xa4, 0xaf, 0x70, 0xf7, 0x34,
       0xaa, 0xda, 0x83, 0xe5, 0x0b, 0x16, 0xff, 0x16, 0x73, 0x62, 0x27, 0xf3,
       0xf9, 0xe9, 0x2b, 0xdd, 0x3a, 0x1d, 0xdc, 0x42, 0x01, 0xaa, 0x05};
@@ -87,7 +87,7 @@ protected:
     using ecdsa_signature_type = ECDSASignature<ENCODING>;
     ecdsa_signature_type signature{ecdsa_signature_type::Sign(priv_key, test_data_)};
 
-    byte_array::ByteArray inv_sig_enc{signature.signature()};
+    damnyouwindows_byte_array::ByteArray inv_sig_enc{signature.signature()};
 
     ASSERT_TRUE(inv_sig_enc.size() > 0);
 
@@ -135,7 +135,7 @@ protected:
     ASSERT_TRUE(signature.Verify(priv_key.publicKey(), test_data_));
 
     //* Invalidating signature by modifying it's first byte of it's format
-    byte_array::ByteArray inv_sig_enc{signature.signature().Copy()};
+    damnyouwindows_byte_array::ByteArray inv_sig_enc{signature.signature().Copy()};
 
     ASSERT_TRUE(inv_sig_enc.size() > 0);
 
@@ -170,7 +170,7 @@ protected:
     //* Verify that acquired signature is correct:
     ASSERT_TRUE(signature.Verify(priv_key.publicKey(), test_data_));
 
-    byte_array::ByteArray modified_data = test_data_.Copy();
+    damnyouwindows_byte_array::ByteArray modified_data = test_data_.Copy();
     ASSERT_TRUE(modified_data.size() > 0);
 
     //* Modify original data to make verification fail

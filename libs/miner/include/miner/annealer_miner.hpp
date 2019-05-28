@@ -43,7 +43,7 @@ public:
 
     auto stx = std::make_shared<TransactionItem>(tx, transaction_index_++);
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "EnqueueTransaction: ", byte_array::ToBase64(tx.transaction_hash),
+    FETCH_LOG_DEBUG(LOGGING_NAME, "EnqueueTransaction: ", damnyouwindows_byte_array::ToBase64(tx.transaction_hash),
                     " (fee: ", tx.fee, ")");
     pending_queue_.push_back(stx);
   }
@@ -59,7 +59,7 @@ public:
       for (auto &tx : pending_queue_)
       {
         FETCH_LOG_DEBUG(LOGGING_NAME, "Pushing Transaction: ",
-                        byte_array::ToBase64(tx->summary().transaction_hash));
+                        damnyouwindows_byte_array::ToBase64(tx->summary().transaction_hash));
         generator_.PushTransactionSummary(tx);
       }
       pending_queue_.clear();

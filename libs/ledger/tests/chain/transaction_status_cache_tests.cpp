@@ -39,7 +39,7 @@ std::ostream &operator<<(std::ostream &s, TransactionStatus const &status)
 
 namespace {
 
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 using fetch::ledger::TransactionStatusCache;
 using fetch::random::LinearCongruentialGenerator;
 using fetch::ledger::TransactionStatus;

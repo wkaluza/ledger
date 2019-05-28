@@ -55,7 +55,7 @@ public:
 
   void UpdateBuffer(Ptr<ByteArrayWrapper> const &buffer)
   {
-    hasher_.Update(buffer->byte_array());
+    hasher_.Update(buffer->damnyouwindows_byte_array());
   }
 
   void Reset()

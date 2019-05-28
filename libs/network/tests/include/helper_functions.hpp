@@ -36,10 +36,10 @@ uint32_t GetRandom()
   return dis(gen);
 }
 
-byte_array::ConstByteArray GetRandomByteArray(std::size_t length)
+damnyouwindows_byte_array::ConstByteArray GetRandomByteArray(std::size_t length)
 {
   // convert to byte array
-  byte_array::ByteArray data;
+  damnyouwindows_byte_array::ByteArray data;
   data.Resize(length);
 
   for (std::size_t i = 0; i < length; ++i)
@@ -102,7 +102,7 @@ template <typename T>
 void MakeString(T &str, std::size_t N = 4)
 {
   static fetch::random::LaggedFibonacciGenerator<> lfg;
-  byte_array::ByteArray                            entry;
+  damnyouwindows_byte_array::ByteArray                            entry;
   entry.Resize(N);
 
   for (std::size_t j = 0; j < N; ++j)
@@ -120,7 +120,7 @@ std::size_t Size(const T &item)
   return counter.size();
 }
 
-std::size_t Hash(fetch::byte_array::ConstByteArray const &arr)
+std::size_t Hash(fetch::damnyouwindows_byte_array::ConstByteArray const &arr)
 {
   std::size_t hash = 2166136261;
   for (std::size_t i = 0; i < arr.size(); ++i)

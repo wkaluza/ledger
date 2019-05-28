@@ -23,9 +23,9 @@
 #include <string>
 #include <vector>
 
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
-bool equals(Tokenizer const &tokenizer, std::vector<fetch::byte_array::ConstByteArray> const &ref)
+bool equals(Tokenizer const &tokenizer, std::vector<fetch::damnyouwindows_byte_array::ConstByteArray> const &ref)
 {
   if (ref.size() != tokenizer.size())
   {
@@ -73,7 +73,7 @@ enum
 TEST(tokenizer_testing_individual_consumers_gtest, any_character)
 {
   Tokenizer test;
-  test.AddConsumer(fetch::byte_array::consumers::AnyChar<E_CATCH_ALL>);
+  test.AddConsumer(fetch::damnyouwindows_byte_array::consumers::AnyChar<E_CATCH_ALL>);
   std::string test_str;
 
   test_str = "hello world";
@@ -94,8 +94,8 @@ TEST(tokenizer_testing_individual_consumers_gtest, any_character)
 TEST(tokenizer_testing_individual_consumers_gtest, any_character_test)
 {
   Tokenizer test;
-  test.AddConsumer(fetch::byte_array::consumers::NumberConsumer<E_INTEGER, E_FLOATING_POINT>);
-  test.AddConsumer(fetch::byte_array::consumers::AnyChar<E_CATCH_ALL>);
+  test.AddConsumer(fetch::damnyouwindows_byte_array::consumers::NumberConsumer<E_INTEGER, E_FLOATING_POINT>);
+  test.AddConsumer(fetch::damnyouwindows_byte_array::consumers::AnyChar<E_CATCH_ALL>);
 
   std::string test_str;
 

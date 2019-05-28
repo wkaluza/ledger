@@ -43,25 +43,24 @@ namespace storage {
  *
  */
 template <std::size_t BLOCK_SIZE = 2048, typename A = FileBlockType<BLOCK_SIZE>,
-          typename B = KeyValueIndex<>, typename C = VersionedRandomAccessStack<A>,
-          typename D = FileObject<C>>
+          typename B = KeyValueIndex<>, typename C = FileObject<VersionedRandomAccessStack<A>>>
 class DocumentStore
 {
 public:
-  using self_type       = DocumentStore<BLOCK_SIZE, A, B, C, D>;
-  using byte_array_type = byte_array::ByteArray;
+  using self_type                      = DocumentStore<BLOCK_SIZE, A, B, C>;
+  using damnyouwindows_byte_array_type = damnyouwindows_byte_array::ByteArray;
 
   using file_block_type      = A;
   using key_value_index_type = B;
-  using file_object_type     = D;
+  using file_object_type     = C;
 
-  using hash_type = byte_array::ConstByteArray;
+  using hash_type = damnyouwindows_byte_array::ConstByteArray;
 
   using index_type = typename key_value_index_type::index_type;
 
   static constexpr char const *LOGGING_NAME = "DocumentStore";
 
-  DocumentStore(){};
+  DocumentStore()                         = default;
   DocumentStore(DocumentStore const &rhs) = delete;
   DocumentStore(DocumentStore &&rhs)      = delete;
   DocumentStore &operator=(DocumentStore const &rhs) = delete;
@@ -99,8 +98,8 @@ public:
 
   Document GetOrCreate(ResourceID const &rid, bool create = true)
   {
-    byte_array::ConstByteArray const &address = rid.id();
-    index_type                        index   = 0;
+    damnyouwindows_byte_array::ConstByteArray const &address = rid.id();
+    index_type                                       index   = 0;
 
     std::lock_guard<mutex::Mutex> lock(mutex_);
 
@@ -129,10 +128,10 @@ public:
     return GetOrCreate(rid, false);
   }
 
-  void Set(ResourceID const &rid, byte_array::ConstByteArray const &value)
+  void Set(ResourceID const &rid, damnyouwindows_byte_array::ConstByteArray const &value)
   {
-    byte_array::ConstByteArray const &address = rid.id();
-    index_type                        index   = 0;
+    damnyouwindows_byte_array::ConstByteArray const &address = rid.id();
+    index_type                                       index   = 0;
 
     std::lock_guard<mutex::Mutex> lock(mutex_);
 
@@ -158,8 +157,8 @@ public:
 
   void Erase(ResourceID const &rid)
   {
-    byte_array::ConstByteArray const &address = rid.id();
-    index_type                        index   = 0;
+    damnyouwindows_byte_array::ConstByteArray const &address = rid.id();
+    index_type                                       index   = 0;
 
     std::lock_guard<mutex::Mutex> lock(mutex_);
 
@@ -243,8 +242,8 @@ public:
 
   self_type::Iterator Find(ResourceID const &rid)
   {
-    byte_array::ConstByteArray const &address = rid.id();
-    auto                              it      = key_index_.Find(address);
+    damnyouwindows_byte_array::ConstByteArray const &address = rid.id();
+    auto                                             it      = key_index_.Find(address);
 
     return Iterator(this, it);
   }
@@ -261,8 +260,8 @@ public:
    */
   self_type::Iterator GetSubtree(ResourceID const &rid, uint64_t bits)
   {
-    byte_array::ConstByteArray const &address = rid.id();
-    auto                              it      = key_index_.GetSubtree(address, bits);
+    damnyouwindows_byte_array::ConstByteArray const &address = rid.id();
+    auto                                             it      = key_index_.GetSubtree(address, bits);
 
     return Iterator(this, it);
   }
@@ -279,50 +278,51 @@ public:
 
   // Hash based functionality - note this will only work if both underlying files
   // have commit functionality
-  byte_array_type Commit()
+  damnyouwindows_byte_array_type Commit()
   {
-    std::lock_guard<mutex::Mutex> lock(mutex_);
-    byte_array_type               hash = key_index_.Hash();
+    std::lock_guard<mutex::Mutex>  lock(mutex_);
+    damnyouwindows_byte_array_type hash = key_index_.Hash();
 
-    if (key_index_.underlying_stack().HashExists(hash) ||
-        file_object_.underlying_stack().HashExists(hash))
-    {
-      FETCH_LOG_WARN(LOGGING_NAME, "Attempted to commit an already committed hash");
-      return hash;
-    }
+    //if (key_index_.underlying_stack().HashExists(hash) ||
+    //    file_object_.underlying_stack().HashExists(hash))
+    //{
+    //  FETCH_LOG_WARN(LOGGING_NAME, "Attempted to commit an already committed hash");
+    //  return hash;
+    //}
 
-    key_index_.underlying_stack().Commit(hash);
-    file_object_.underlying_stack().Commit(hash);
+    //key_index_.underlying_stack().Commit(hash);
+    //file_object_.underlying_stack().Commit(hash);
 
     return hash;
   }
 
-  bool RevertToHash(byte_array_type const &hash)
+  bool RevertToHash(damnyouwindows_byte_array_type const &hash)
   {
     std::lock_guard<mutex::Mutex> lock(mutex_);
 
     // TODO(private issue 615): HashExists implement
-    if (!(key_index_.underlying_stack().HashExists(hash) &&
-          file_object_.underlying_stack().HashExists(hash)))
-    {
-      FETCH_LOG_WARN(LOGGING_NAME, "Attempted to revert to a hash that doesn't exist");
-      return false;
-    }
+    //if (!(key_index_.underlying_stack().HashExists(hash) &&
+    //      file_object_.underlying_stack().HashExists(hash)))
+    //{
+    //  FETCH_LOG_WARN(LOGGING_NAME, "Attempted to revert to a hash that doesn't exist");
+    //  return false;
+    //}
 
-    key_index_.underlying_stack().RevertToHash(hash);
-    file_object_.underlying_stack().RevertToHash(hash);
+    //key_index_.underlying_stack().RevertToHash(hash);
+    //file_object_.underlying_stack().RevertToHash(hash);
 
     key_index_.UpdateVariables();
-    file_object_.UpdateVariables();
+//    file_object_.UpdateVariables();
 
     return true;
   }
 
-  bool HashExists(byte_array_type const &hash)
+  bool HashExists(damnyouwindows_byte_array_type const &hash)
   {
     std::lock_guard<mutex::Mutex> lock(mutex_);
-    return key_index_.underlying_stack().HashExists(hash) &&
-           file_object_.underlying_stack().HashExists(hash);
+    return false;
+    // key_index_.underlying_stack().HashExists(hash) &&
+    // file_object_.underlying_stack().HashExists(hash);
   }
 
   hash_type CurrentHash()

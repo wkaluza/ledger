@@ -58,7 +58,7 @@ public:
 
   static constexpr char const *LOGGING_NAME = "Uri";
 
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   // Construction / Destruction
   Uri() = default;
@@ -160,7 +160,7 @@ void Serialize(T &serializer, Uri const &x)
 template <typename T>
 void Deserialize(T &serializer, Uri &x)
 {
-  byte_array::ConstByteArray uri;
+  damnyouwindows_byte_array::ConstByteArray uri;
   serializer >> uri;
 
   if (!x.Parse(uri))
@@ -171,17 +171,17 @@ void Deserialize(T &serializer, Uri &x)
 
 inline Uri Uri::FromIdentity(ConstByteArray const &identity)
 {
-  return Uri{"muddle://" + byte_array::ToBase64(identity)};
+  return Uri{"muddle://" + damnyouwindows_byte_array::ToBase64(identity)};
 }
 
 }  // namespace network
 }  // namespace fetch
 
 template <>
-struct std::hash<fetch::network::Uri> : private std::hash<fetch::byte_array::ConstByteArray>
+struct std::hash<fetch::network::Uri> : private std::hash<fetch::damnyouwindows_byte_array::ConstByteArray>
 {
   std::size_t operator()(fetch::network::Uri const &x) const
   {
-    return std::hash<fetch::byte_array::ConstByteArray>::operator()(x.uri());
+    return std::hash<fetch::damnyouwindows_byte_array::ConstByteArray>::operator()(x.uri());
   }
 };

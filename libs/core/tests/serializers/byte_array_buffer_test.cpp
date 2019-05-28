@@ -29,8 +29,8 @@ namespace {
 template <typename T>
 struct A
 {
-  using ba_type  = byte_array::ByteArray;
-  using cba_type = byte_array::ConstByteArray;
+  using ba_type  = damnyouwindows_byte_array::ByteArray;
+  using cba_type = damnyouwindows_byte_array::ConstByteArray;
 
   A()          = default;
   A(A const &) = default;
@@ -63,8 +63,8 @@ struct A
 template <>
 struct A<void>
 {
-  using ba_type  = byte_array::ByteArray;
-  using cba_type = byte_array::ConstByteArray;
+  using ba_type  = damnyouwindows_byte_array::ByteArray;
+  using cba_type = damnyouwindows_byte_array::ConstByteArray;
 
   A()          = default;
   A(A const &) = default;

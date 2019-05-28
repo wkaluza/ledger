@@ -18,7 +18,7 @@
 //------------------------------------------------------------------------------
 
 #include <cstring>
-#include <dirent.h>
+//#include <dirent.h>
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -51,21 +51,21 @@ inline bool ends_with(std::string const &value, std::string const &ending)
 std::vector<std::string> GetAllTextFiles(std::string const &dir_name)
 {
   std::vector<std::string> ret;
-  DIR *                    d;
-  struct dirent *          ent;
-  std::string              p1;
-  if ((d = opendir(dir_name.c_str())) != nullptr)
-  {
-    while ((ent = readdir(d)) != nullptr)
-    {
-      p1 = ent->d_name;
-      if (ends_with(p1, ".txt"))
-      {
-        ret.emplace_back(ent->d_name);
-      }
-    }
-    closedir(d);
-  }
+  //DIR *                    d;
+  //struct dirent *          ent;
+  //std::string              p1;
+  //if ((d = opendir(dir_name.c_str())) != nullptr)
+  //{
+  //  while ((ent = readdir(d)) != nullptr)
+  //  {
+  //    p1 = ent->d_name;
+  //    if (ends_with(p1, ".txt"))
+  //    {
+  //      ret.emplace_back(ent->d_name);
+  //    }
+  //  }
+  //  closedir(d);
+  //}
   return ret;
 }
 

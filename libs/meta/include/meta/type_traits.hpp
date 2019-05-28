@@ -24,10 +24,10 @@
 
 namespace fetch {
 
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 class ByteArray;
 class ConstByteArray;
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 
 namespace fixed_point {
 struct BaseFixedpointType;
@@ -57,11 +57,11 @@ template <typename T>
 constexpr bool IsNotFixedPoint = !IsFixedPoint<T>;
 
 template <typename T>
-constexpr bool IsConstByteArray = std::is_same<T, fetch::byte_array::ConstByteArray>::value;
+constexpr bool IsConstByteArray = std::is_same<T, fetch::damnyouwindows_byte_array::ConstByteArray>::value;
 
 template <typename T>
-constexpr bool IsAByteArray = (std::is_same<T, byte_array::ByteArray>::value ||
-                               std::is_same<T, byte_array::ConstByteArray>::value);
+constexpr bool IsAByteArray = (std::is_same<T, damnyouwindows_byte_array::ByteArray>::value ||
+                               std::is_same<T, damnyouwindows_byte_array::ConstByteArray>::value);
 
 template <typename T>
 constexpr bool IsStdString = std::is_same<T, std::string>::value;

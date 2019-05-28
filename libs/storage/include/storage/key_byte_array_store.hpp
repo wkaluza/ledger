@@ -28,7 +28,7 @@ namespace details {
 template <std::size_t BLOCK_SIZE = 2048>
 struct ByteArrayMapConfigurator
 {
-  using kvi_pair_type  = KeyValuePair<>;
+  using kvi_pair_type  = KeyValuePair<256u, 32u>;
   using kvi_stack_type = RandomAccessStack<kvi_pair_type, uint64_t>;
 
   using kvi_store_type = KeyValueIndex<kvi_pair_type, kvi_stack_type>;
@@ -37,8 +37,7 @@ struct ByteArrayMapConfigurator
   using document_stack_type = RandomAccessStack<file_block_type>;
   using file_object_type    = FileObject<document_stack_type>;
 
-  using type = DocumentStore<BLOCK_SIZE, file_block_type, kvi_store_type, document_stack_type,
-                             file_object_type>;
+  using type = DocumentStore<BLOCK_SIZE, file_block_type, kvi_store_type, file_object_type>;
 };
 
 }  // namespace details

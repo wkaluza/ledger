@@ -29,8 +29,8 @@
 using namespace fetch;
 using namespace fetch::crypto;
 
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 
 static ConstByteArray CalculateHash(ConstByteArray const &a, ConstByteArray const &b)
 {

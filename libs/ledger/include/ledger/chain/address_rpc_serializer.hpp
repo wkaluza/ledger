@@ -34,7 +34,7 @@ template <typename T>
 void Deserialize(T &s, Address &address)
 {
   // extract the data from the stream
-  byte_array::ConstByteArray data;
+  damnyouwindows_byte_array::ConstByteArray data;
   s >> data;
 
   // create the address

@@ -43,7 +43,7 @@ public:
   using TokenAmount    = uint64_t;
   using BlockIndex     = uint64_t;
   using TransactionPtr = std::shared_ptr<Transaction>;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   /**
    * Special version of builder only allowing signing. This pattern ensures that the user can not
@@ -84,10 +84,10 @@ public:
   /// @{
   TransactionBuilder &TargetSmartContract(Address const &digest, Address const &address,
                                           BitVector const &shard_mask);
-  TransactionBuilder &TargetChainCode(byte_array::ConstByteArray const &ref,
+  TransactionBuilder &TargetChainCode(damnyouwindows_byte_array::ConstByteArray const &ref,
                                       BitVector const &                 shard_mask);
-  TransactionBuilder &Action(byte_array::ConstByteArray const &action);
-  TransactionBuilder &Data(byte_array::ConstByteArray const &data);
+  TransactionBuilder &Action(damnyouwindows_byte_array::ConstByteArray const &action);
+  TransactionBuilder &Data(damnyouwindows_byte_array::ConstByteArray const &data);
   /// @}
 
   /// @name Signing Operations

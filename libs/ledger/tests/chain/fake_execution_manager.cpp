@@ -22,7 +22,7 @@
 #include "fake_execution_manager.hpp"
 #include "fake_storage_unit.hpp"
 
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::ledger::Digest;
 
 FakeExecutionManager::FakeExecutionManager(FakeStorageUnit &storage)

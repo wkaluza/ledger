@@ -110,7 +110,7 @@ public:
     Resize({0});
   }
 
-  static Tensor FromString(byte_array::ConstByteArray const &c);
+  static Tensor FromString(damnyouwindows_byte_array::ConstByteArray const &c);
   explicit Tensor(SizeType const &n);
   Tensor(Tensor &&other)      = default;
   Tensor(Tensor const &other) = default;
@@ -714,7 +714,7 @@ private:
  * @return Return Tensor with the specified values
  */
 template <typename T, typename C>
-Tensor<T, C> Tensor<T, C>::FromString(byte_array::ConstByteArray const &c)
+Tensor<T, C> Tensor<T, C>::FromString(damnyouwindows_byte_array::ConstByteArray const &c)
 {
   Tensor            ret;
   SizeType          n = 1;
@@ -740,7 +740,7 @@ Tensor<T, C> Tensor<T, C>::FromString(byte_array::ConstByteArray const &c)
       ++i;
       break;
     default:
-      if (byte_array::consumers::NumberConsumer<1, 2>(c, i) == -1)
+      if (damnyouwindows_byte_array::consumers::NumberConsumer<1, 2>(c, i) == -1)
       {
         failed = true;
       }

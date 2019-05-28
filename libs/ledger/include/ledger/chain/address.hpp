@@ -70,7 +70,7 @@ public:
   static constexpr std::size_t TOTAL_LENGTH    = RAW_LENGTH + CHECKSUM_LENGTH;
 
   using RawAddress     = std::array<uint8_t, RAW_LENGTH>;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   // Helpers
   static bool Parse(ConstByteArray const &input, Address &output);

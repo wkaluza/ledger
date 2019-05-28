@@ -356,7 +356,7 @@ struct Matrix : public IMatrix
     T *ptr = Find(row, column);
     if (ptr)
     {
-      *ptr = value.Get<T>();
+//      *ptr = value.Get<T>();
     }
   }
 

@@ -40,7 +40,7 @@ using fetch::ledger::BlockCoordinator;
 using fetch::ledger::MainChain;
 using fetch::ledger::BlockStatus;
 using fetch::ledger::Block;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::ledger::GENESIS_DIGEST;
 using fetch::crypto::ECDSASigner;
 using fetch::ledger::testing::BlockGenerator;

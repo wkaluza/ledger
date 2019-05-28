@@ -21,7 +21,7 @@
 #include <gtest/gtest.h>
 
 using namespace fetch::ledger::consensus;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 ProofOfWork Test1(ByteArray tx, uint64_t diff)
 {

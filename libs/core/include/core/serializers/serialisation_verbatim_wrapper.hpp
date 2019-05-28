@@ -34,9 +34,9 @@ namespace serializers {
  * the (Const)ByteArray instance and it is just necessary to extend or insert
  * it in another serialisation process.
  */
-struct Verbatim : public std::reference_wrapper<byte_array::ConstByteArray const>
+struct Verbatim : public std::reference_wrapper<damnyouwindows_byte_array::ConstByteArray const>
 {
-  using Base = std::reference_wrapper<byte_array::ConstByteArray const>;
+  using Base = std::reference_wrapper<damnyouwindows_byte_array::ConstByteArray const>;
   using Base::Base;
 };
 

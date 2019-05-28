@@ -102,9 +102,9 @@ TEST_F(OpenSSLContextSessionTest, test_Session_basic_scenario_constructro_and_de
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
+//    ossl_shared_ptr__for_Testing<> x(&testValue);
 
-    Session__for_Testing session(x);
+  //  Session__for_Testing session(x);
   }
 }
 
@@ -118,10 +118,10 @@ TEST_F(OpenSSLContextSessionTest, test_Session_constructor_and_end)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
+  //  ossl_shared_ptr__for_Testing<> x(&testValue);
 
-    Session__for_Testing session(x);
-    session.end();
+//    Session__for_Testing session(x);
+  //  session.end();
   }
 }
 
@@ -134,9 +134,9 @@ TEST_F(OpenSSLContextSessionTest, test_Session_started_and_destructor)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
+//    ossl_shared_ptr__for_Testing<> x(&testValue);
 
-    Session__for_Testing session(x, true);
+    //Session__for_Testing session(x, true);
   }
 }
 
@@ -149,10 +149,10 @@ TEST_F(OpenSSLContextSessionTest, test_Session_started_and_end)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
 
-    Session__for_Testing session(x, true);
-    session.end();
+    //Session__for_Testing session(x, true);
+    //session.end();
   }
 }
 
@@ -166,10 +166,10 @@ TEST_F(OpenSSLContextSessionTest, test_Session_constructor_and_start_and_destruc
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
 
-    Session__for_Testing session(x);
-    session.start();
+    //Session__for_Testing session(x);
+    //session.start();
   }
 }
 

@@ -40,7 +40,7 @@ public:
   using ConnectionPtr         = std::weak_ptr<network::AbstractConnection>;
   using ConnectionMap         = std::unordered_map<ConnectionHandle, ConnectionPtr>;
   using ConnectionMapCallback = std::function<void(ConnectionMap const &)>;
-  using ConstByteArray        = byte_array::ConstByteArray;
+  using ConstByteArray        = damnyouwindows_byte_array::ConstByteArray;
   using Mutex                 = mutex::Mutex;
 
   static constexpr char const *LOGGING_NAME = "MuddleReg";

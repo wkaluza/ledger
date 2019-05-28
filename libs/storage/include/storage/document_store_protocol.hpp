@@ -37,7 +37,7 @@ public:
   using lane_type              = uint32_t;  // TODO(issue 12): Fetch from some other palce
   using CallContext            = service::CallContext;
 
-  using Identifier = byte_array::ConstByteArray;
+  using Identifier = damnyouwindows_byte_array::ConstByteArray;
 
   static constexpr char const *LOGGING_NAME = "RevertibleDocumentStoreProtocol";
 
@@ -92,7 +92,7 @@ public:
     if (!context)
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type(std::string("No context for HasLock.")));
+          0, damnyouwindows_byte_array_type(std::string("No context for HasLock.")));
     }
 
     bool has_lock = false;
@@ -108,7 +108,7 @@ public:
     if (!context)
     {
       // TODO(issue 11): set exception number
-      throw serializers::SerializableException(0, byte_array_type{"No context for HasLock."});
+      throw serializers::SerializableException(0, damnyouwindows_byte_array_type{"No context for HasLock."});
     }
 
     // attempt to lock this shard
@@ -137,7 +137,7 @@ public:
     if (!context)
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type(std::string("No context for HasLock.")));
+          0, damnyouwindows_byte_array_type(std::string("No context for HasLock.")));
     }
 
     // attempt to unlock this shard
@@ -167,10 +167,10 @@ private:
     {
       FETCH_LOG_DEBUG(LOGGING_NAME, "Lane assignment is ", lane_assignment_, " vs ",
                       rid.lane(log2_lanes_));
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Address:", byte_array::ToHex(rid.id()));
+      FETCH_LOG_DEBUG(LOGGING_NAME, "Address:", damnyouwindows_byte_array::ToHex(rid.id()));
 
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type("Get: Resource located on other lane. TODO, set error number"));
+          0, damnyouwindows_byte_array_type("Get: Resource located on other lane. TODO, set error number"));
     }
 
     return doc_store_->Get(rid);
@@ -182,10 +182,10 @@ private:
     {
       FETCH_LOG_DEBUG(LOGGING_NAME, "Lane assignment is ", lane_assignment_, " vs ",
                       rid.lane(log2_lanes_));
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Address:", byte_array::ToHex(rid.id()));
+      FETCH_LOG_DEBUG(LOGGING_NAME, "Address:", damnyouwindows_byte_array::ToHex(rid.id()));
 
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type("GetOrCreate: Resource located on other lane. "
+          0, damnyouwindows_byte_array_type("GetOrCreate: Resource located on other lane. "
                              "TODO, set error number"));
     }
 
@@ -193,12 +193,12 @@ private:
   }
 
   void SetLaneChecked(CallContext const *context, ResourceID const &rid,
-                      byte_array::ConstByteArray const &value)
+                      damnyouwindows_byte_array::ConstByteArray const &value)
   {
     if (!context)
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type(std::string("No context for SetLaneChecked.")));
+          0, damnyouwindows_byte_array_type(std::string("No context for SetLaneChecked.")));
     }
 
     Identifier  identifier           = context->sender_address;
@@ -207,7 +207,7 @@ private:
     if (lane_assignment_ != rid.lane(log2_lanes_))
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, byte_array_type(std::string("Set: Resource located on other lane:") + rid.ToString()));
+          0, damnyouwindows_byte_array_type(std::string("Set: Resource located on other lane:") + rid.ToString()));
     }
 
     // determine if this client has the lock on this resource
@@ -215,7 +215,7 @@ private:
     {
       // TODO(issue 11): set exception number
       throw serializers::SerializableException(
-          0, byte_array_type("This shard is locked by another client"));
+          0, damnyouwindows_byte_array_type("This shard is locked by another client"));
     }
 
     // finally once all checks has passed we can set the value on the document store

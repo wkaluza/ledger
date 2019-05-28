@@ -34,13 +34,13 @@ namespace math {
  * functionalities that is handy when for instance computing
  * proof-of-work or other big uint manipulations.
  *
- * The implementation subclasses a <byte_array::ConstByteArray> such
+ * The implementation subclasses a <damnyouwindows_byte_array::ConstByteArray> such
  * one easily use this in combination with hashes etc.
  */
-class BigUnsigned : public byte_array::ByteArray
+class BigUnsigned : public damnyouwindows_byte_array::ByteArray
 {
 public:
-  using super_type = byte_array::ByteArray;
+  using super_type = damnyouwindows_byte_array::ByteArray;
 
   static constexpr char const *LOGGING_NAME = "BigUnsigned";
 
@@ -84,13 +84,13 @@ public:
     return *this;
   }
 
-  BigUnsigned &operator=(byte_array::ByteArray const &v)
+  BigUnsigned &operator=(damnyouwindows_byte_array::ByteArray const &v)
   {
     super_type::operator=(v);
     return *this;
   }
 
-  BigUnsigned &operator=(byte_array::ConstByteArray const &v)
+  BigUnsigned &operator=(damnyouwindows_byte_array::ConstByteArray const &v)
   {
     super_type::operator=(v);
     return *this;

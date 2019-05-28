@@ -52,7 +52,7 @@ public:
         .CreateMemberFunction("size", &BigNumberWrapper::size);
   }
 
-  BigNumberWrapper(fetch::vm::VM *vm, fetch::vm::TypeId type_id, byte_array::ByteArray data)
+  BigNumberWrapper(fetch::vm::VM *vm, fetch::vm::TypeId type_id, damnyouwindows_byte_array::ByteArray data)
     : fetch::vm::Object(vm, type_id)
     , number_(data)
   {}
@@ -60,7 +60,7 @@ public:
   static fetch::vm::Ptr<BigNumberWrapper> Constructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
                                                       fetch::vm::Ptr<ByteArrayWrapper> const &ba)
   {
-    return new BigNumberWrapper(vm, type_id, ba->byte_array());
+    return new BigNumberWrapper(vm, type_id, ba->damnyouwindows_byte_array());
   }
 
   double ToFloat64()

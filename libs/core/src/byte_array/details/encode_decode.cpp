@@ -19,7 +19,7 @@
 #include "core/byte_array/details/encode_decode.hpp"
 #include <stdexcept>
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 namespace details {
 
 const char base64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -63,5 +63,5 @@ uint8_t DecodeHexChar(char const &c)
 }
 
 }  // namespace details
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

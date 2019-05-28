@@ -19,6 +19,7 @@
 
 #include "storage/document_store.hpp"
 #include "storage/new_versioned_random_access_stack.hpp"
+#include "storage/resource_mapper.hpp"
 
 #include <string>
 
@@ -28,19 +29,19 @@ namespace storage {
 class NewRevertibleDocumentStore
 {
 public:
-  using Hash           = byte_array::ConstByteArray;
-  using ByteArray      = byte_array::ConstByteArray;
-  using UnderlyingType = storage::Document;
+  using Hash           = damnyouwindows_byte_array::ConstByteArray;
+  using ByteArray      = damnyouwindows_byte_array::ConstByteArray;
+  using UnderlyingType = ::fetch::storage::Document;
 
   bool New(std::string const &state, std::string const &state_history, std::string const &index,
            std::string const &index_history, bool create_if_not_exist);
   bool Load(std::string const &state, std::string const &state_history, std::string const &index,
             std::string const &index_history, bool create_if_not_exist);
 
-  UnderlyingType Get(ResourceID const &rid);
-  UnderlyingType GetOrCreate(ResourceID const &rid);
-  void           Set(ResourceID const &rid, ByteArray const &value);
-  void           Erase(ResourceID const &rid);
+  UnderlyingType Get(::fetch::storage::ResourceID const &rid);
+  UnderlyingType GetOrCreate(::fetch::storage::ResourceID const &rid);
+  void Set(::fetch::storage::ResourceID const &rid, ByteArray const &value);
+  void Erase(::fetch::storage::ResourceID const &rid);
 
   Hash Commit();
   bool RevertToHash(Hash const &hash);
@@ -50,11 +51,10 @@ public:
   std::size_t size() const;
 
 private:
-  using Storage = storage::DocumentStore<
+  using Storage = ::fetch::storage::DocumentStore<
       2048,                 // block size
       FileBlockType<2048>,  // file block type
-      KeyValueIndex<KeyValuePair<>, NewVersionedRandomAccessStack<KeyValuePair<>>>,  // Key value
-                                                                                     // index
+      KeyValueIndex<KeyValuePair<256u, 32u>, NewVersionedRandomAccessStack<KeyValuePair<256u, 32u>>>,  // Key value index
       NewVersionedRandomAccessStack<FileBlockType<2048>>>;                           // File store
 
   std::string state_path_;

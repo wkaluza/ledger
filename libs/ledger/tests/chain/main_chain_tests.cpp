@@ -36,7 +36,7 @@ using fetch::ledger::MainChain;
 using fetch::ledger::BlockStatus;
 using fetch::ledger::testing::BlockGenerator;
 using fetch::ledger::Address;
-using fetch::byte_array::ToBase64;  // NOLINT - needed for debug messages
+using fetch::damnyouwindows_byte_array::ToBase64;  // NOLINT - needed for debug messages
 
 using Rng               = std::mt19937_64;
 using MainChainPtr      = std::unique_ptr<MainChain>;

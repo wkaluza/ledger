@@ -41,7 +41,7 @@ class Executor : public ExecutorInterface
 {
 public:
   using StorageUnitPtr = std::shared_ptr<StorageUnitInterface>;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   // Construction / Destruction
   explicit Executor(StorageUnitPtr storage);

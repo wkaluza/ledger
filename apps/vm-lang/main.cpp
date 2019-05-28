@@ -44,9 +44,9 @@ using fetch::vm::TypeId;
 using fetch::vm_modules::VMFactory;
 using fetch::variant::Variant;
 using fetch::json::JSONDocument;
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::FromHex;
-using fetch::byte_array::ToHex;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::ToHex;
 
 class Parameters
 {

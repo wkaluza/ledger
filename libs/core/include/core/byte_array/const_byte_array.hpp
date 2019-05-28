@@ -34,7 +34,7 @@
 #include <string>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 class ConstByteArray
 {
@@ -239,7 +239,7 @@ public:
     }
     if (pos >= length_)
     {
-      return NPOS;
+      return static_cast<std::size_t>(NPOS);
     }
     return pos;
   }
@@ -517,5 +517,5 @@ inline ConstByteArray operator+(char const *a, ConstByteArray const &b)
   return s;
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

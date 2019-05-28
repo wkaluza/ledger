@@ -28,8 +28,8 @@ namespace ledger {
 
 using variant::Variant;
 using variant::Extract;
-using byte_array::ConstByteArray;
-using byte_array::FromBase64;
+using damnyouwindows_byte_array::ConstByteArray;
+using damnyouwindows_byte_array::FromBase64;
 
 static constexpr char const *LOGGING_NAME        = "JsonTx";
 static const ConstByteArray  JSON_FORMAT_VERSION = "1.2";

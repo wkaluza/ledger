@@ -35,7 +35,7 @@ class StorageInterface
 public:
   using Document        = storage::Document;
   using ResourceAddress = storage::ResourceAddress;
-  using StateValue      = byte_array::ConstByteArray;
+  using StateValue      = damnyouwindows_byte_array::ConstByteArray;
   using ShardIndex      = uint32_t;
 
   // Construction / Destruction
@@ -55,8 +55,8 @@ public:
 class StorageUnitInterface : public StorageInterface
 {
 public:
-  using Hash           = byte_array::ConstByteArray;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using Hash           = damnyouwindows_byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using TxLayouts      = std::vector<TransactionLayout>;
 
   // Construction / Destruction

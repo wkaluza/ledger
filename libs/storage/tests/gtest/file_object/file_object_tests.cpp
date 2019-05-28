@@ -26,7 +26,7 @@
 #include "storage/storage_exception.hpp"
 
 using namespace fetch;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 using namespace fetch::storage;
 
 using ::testing::StrictMock;

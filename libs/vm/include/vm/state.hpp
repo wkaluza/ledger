@@ -67,11 +67,11 @@ inline IoObserverInterface::Status WriteHelper(std::string const &name, T const 
 inline IoObserverInterface::Status ReadHelper(std::string const &name, Ptr<Object> &val,
                                               IoObserverInterface &io)
 {
-  using fetch::byte_array::ByteArray;
+  using fetch::damnyouwindows_byte_array::ByteArray;
   using fetch::serializers::ByteArrayBuffer;
 
   auto const exists_status = io.Exists(name);
-  if (exists_status != IoObserverInterface::Status::OK)
+  if (exists_status != IoObserverInterface::Status::damnyouwindows_OK)
   {
     return exists_status;
   }
@@ -83,7 +83,7 @@ inline IoObserverInterface::Status ReadHelper(std::string const &name, Ptr<Objec
   uint64_t buffer_size = buffer.size();
   auto     result      = io.Read(name, buffer.pointer(), buffer_size);
 
-  if (IoObserverInterface::Status::OK == result)
+  if (IoObserverInterface::Status::damnyouwindows_OK == result)
   {
     // chop down the size of the buffer
     buffer.Resize(buffer_size);
@@ -98,7 +98,7 @@ inline IoObserverInterface::Status ReadHelper(std::string const &name, Ptr<Objec
   }
 
   // if we successfully extracted the data
-  if (IoObserverInterface::Status::OK == result)
+  if (IoObserverInterface::Status::damnyouwindows_OK == result)
   {
     // cretae the byte array buffer
     ByteArrayBuffer byte_buffer{buffer};
@@ -106,7 +106,7 @@ inline IoObserverInterface::Status ReadHelper(std::string const &name, Ptr<Objec
     // attempt to deserialize the value from the stream
     if (!val->DeserializeFrom(byte_buffer))
     {
-      result = IoObserverInterface::Status::ERROR;
+      result = IoObserverInterface::Status::damnyouwindows_ERROR;
     }
   }
 
@@ -122,7 +122,7 @@ inline IoObserverInterface::Status WriteHelper(std::string const &name, Ptr<Obje
   ByteArrayBuffer buffer;
   if (!val || !val->SerializeTo(buffer))
   {
-    return IoObserverInterface::Status::ERROR;
+    return IoObserverInterface::Status::damnyouwindows_ERROR;
   }
 
   return io.Write(name, buffer.data().pointer(), buffer.data().size());
@@ -138,7 +138,7 @@ public:
         TemplateParameter const &value)
     : IState(vm, type_id)
     , name_{std::move(name)}
-    , value_{value.Get<Value>()}
+    , value_{}
     , value_type_id_{value_type_id}
   {
     // if we have a IO observer then
@@ -148,7 +148,7 @@ public:
       auto const status = ReadHelper(name_->str, value_, vm_->GetIOObserver());
 
       // mark the variable as existed if we get a positive result back
-      existed_ = (Status::OK == status);
+      existed_ = (Status::damnyouwindows_OK == status);
       if (!existed_)
       {
         Set(value);
@@ -156,24 +156,7 @@ public:
     }
   }
 
-  ~State() override
-  {
-    try
-    {
-      FlushIO();
-    }
-    catch (std::exception const &ex)
-    {
-      // TODO(issue 1094): Support for nested runtime error(s) and/or exception(s)
-      vm_->RuntimeError("An exception has been thrown from State<...>::FlushIO(). Desc.: " +
-                        std::string(ex.what()));
-    }
-    catch (...)
-    {
-      // TODO(issue 1094): Support for nested runtime error(s) and/or exception(s)
-      vm_->RuntimeError("An exception has been thrown from State<...>::FlushIO().");
-    }
-  }
+  ~State() override = default;
 
   TemplateParameter Get() const override
   {
@@ -182,7 +165,7 @@ public:
 
   void Set(TemplateParameter const &value) override
   {
-    value_ = GetValue<>(value);
+//    value_ = GetValue<>(value);
   }
 
   bool Existed() const override

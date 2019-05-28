@@ -21,7 +21,7 @@
 #include "python/fetch_pybind.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 void BuildTokenizer(pybind11::module &module)
 {
@@ -33,5 +33,5 @@ void BuildTokenizer(pybind11::module &module)
   //    .def("CreateSubspace", &Tokenizer::CreateSubspace);
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

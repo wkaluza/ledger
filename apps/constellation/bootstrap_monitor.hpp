@@ -75,7 +75,7 @@ private:
     Notify,
   };
 
-  using ConstByteArray  = byte_array::ConstByteArray;
+  using ConstByteArray  = damnyouwindows_byte_array::ConstByteArray;
   using StateMachine    = core::StateMachine<State>;
   using StateMachinePtr = std::shared_ptr<StateMachine>;
 

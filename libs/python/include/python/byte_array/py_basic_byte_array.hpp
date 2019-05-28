@@ -21,12 +21,12 @@
 #include "python/fetch_pybind.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
-fetch::byte_array::ConstByteArray BytesToFetchBytes(py::bytes const &b)
+fetch::damnyouwindows_byte_array::ConstByteArray BytesToFetchBytes(py::bytes const &b)
 {
   std::string s{b};
-  using ConstByteArray = fetch::byte_array::ConstByteArray;
+  using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
   return ConstByteArray(reinterpret_cast<ConstByteArray::container_type const *>(s.c_str()),
                         s.size());
 }
@@ -41,27 +41,27 @@ void BuildConstByteArray(pybind11::module &module)
       .def(py::init<const unsigned char *const, std::size_t>())
       .def(py::init<std::initializer_list<ConstByteArray::container_type>>())
       .def(py::init<const std::string &>())
-      .def(py::init<const fetch::byte_array::ConstByteArray::self_type &>())
-      .def(py::init<const fetch::byte_array::ConstByteArray::self_type &, const std::size_t &,
+      .def(py::init<const fetch::damnyouwindows_byte_array::ConstByteArray::self_type &>())
+      .def(py::init<const fetch::damnyouwindows_byte_array::ConstByteArray::self_type &, const std::size_t &,
                     const std::size_t &>())
       .def("AsInt", &ConstByteArray::AsInt)
-      .def(py::self != fetch::byte_array::ConstByteArray::self_type())
-      .def(py::self < fetch::byte_array::ConstByteArray::self_type())
-      .def(py::self > fetch::byte_array::ConstByteArray::self_type())
+      .def(py::self != fetch::damnyouwindows_byte_array::ConstByteArray::self_type())
+      .def(py::self < fetch::damnyouwindows_byte_array::ConstByteArray::self_type())
+      .def(py::self > fetch::damnyouwindows_byte_array::ConstByteArray::self_type())
       .def("AsFloat", &ConstByteArray::AsFloat)
-      .def(py::self == fetch::byte_array::ConstByteArray::self_type())
-      .def(py::self + fetch::byte_array::ConstByteArray::self_type())
+      .def(py::self == fetch::damnyouwindows_byte_array::ConstByteArray::self_type())
+      .def(py::self + fetch::damnyouwindows_byte_array::ConstByteArray::self_type())
       .def("SubArray",
            static_cast<ConstByteArray (ConstByteArray::*)(std::size_t, std::size_t) const>(
                &ConstByteArray::SubArray))
       .def("capacity", &ConstByteArray::capacity)
       .def("Copy", &ConstByteArray::Copy)
       .def("Find", &ConstByteArray::Find)
-      .def("Match", (bool (ConstByteArray::*)(const fetch::byte_array::ConstByteArray::self_type &,
+      .def("Match", (bool (ConstByteArray::*)(const fetch::damnyouwindows_byte_array::ConstByteArray::self_type &,
                                               std::size_t) const) &
                         ConstByteArray::Match)
       .def("Match",
-           (bool (ConstByteArray::*)(const fetch::byte_array::ConstByteArray::container_type *,
+           (bool (ConstByteArray::*)(const fetch::damnyouwindows_byte_array::ConstByteArray::container_type *,
                                      std::size_t) const) &
                ConstByteArray::Match)
       .def("size", &ConstByteArray::size)
@@ -71,5 +71,5 @@ void BuildConstByteArray(pybind11::module &module)
   module.def("BytesToFetchBytes", &BytesToFetchBytes, "Convertion utility");
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

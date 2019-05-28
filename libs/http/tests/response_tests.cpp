@@ -26,7 +26,7 @@
 class ResponseTests : public ::testing::Test
 {
 protected:
-  using ConstByteArray = fetch::byte_array::ConstByteArray;
+  using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
   using Response       = fetch::http::HTTPResponse;
   using ResponsePtr    = std::unique_ptr<Response>;
 

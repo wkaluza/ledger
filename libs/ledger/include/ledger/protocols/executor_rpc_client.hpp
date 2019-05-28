@@ -46,7 +46,7 @@ public:
   using ClientPtr       = std::shared_ptr<Client>;
   using ServicePtr      = std::unique_ptr<service::ServiceClient>;
   using NetworkManager  = fetch::network::NetworkManager;
-  using ConstByteArray  = byte_array::ConstByteArray;
+  using ConstByteArray  = damnyouwindows_byte_array::ConstByteArray;
   using Uri             = Muddle::Uri;
   using PromiseState    = fetch::service::PromiseState;
   using FutureTimepoint = core::FutureTimepoint;

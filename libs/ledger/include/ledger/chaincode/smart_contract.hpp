@@ -42,7 +42,7 @@ class Address;
 class SmartContract : public Contract
 {
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using Executable     = fetch::vm::Executable;
   using ExecutablePtr  = std::shared_ptr<Executable>;
 

@@ -27,8 +27,8 @@
 
 namespace {
 
-using fetch::byte_array::ByteArray;
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 using Index = fetch::storage::KeyValueIndex<>;
 using RNG   = fetch::random::LaggedFibonacciGenerator<>;
@@ -85,7 +85,7 @@ TestDataArray GenerateTestData(RNG &rng, ReferenceMap &ref_map)
   return values;
 }
 
-using KV = fetch::storage::KeyValuePair<>;
+using KV = fetch::storage::KeyValuePair<256u, 32u>;
 
 TEST(versioned_kvi_gtest, basic_test)
 {

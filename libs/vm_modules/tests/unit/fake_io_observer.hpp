@@ -28,7 +28,7 @@
 class FakeIoObserver : public fetch::vm::IoObserverInterface
 {
 public:
-  using ConstByteArray = fetch::byte_array::ConstByteArray;
+  using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
 
   /// @name IO Observer Interface
   /// @{

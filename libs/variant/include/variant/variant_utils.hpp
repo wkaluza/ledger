@@ -32,7 +32,7 @@ namespace variant {
  * @return true if successful, otherwise false
  */
 template <typename T>
-bool Extract(Variant const &object, byte_array::ConstByteArray const &key, T &value)
+bool Extract(Variant const &object, damnyouwindows_byte_array::ConstByteArray const &key, T &value)
 {
   bool success{false};
 
@@ -65,7 +65,7 @@ bool Extract(Variant const &object, byte_array::ConstByteArray const &key, T &va
  * @return
  */
 template <typename T>
-bool Extract(Variant const &object, byte_array::ConstByteArray const &key, std::vector<T> &value)
+bool Extract(Variant const &object, damnyouwindows_byte_array::ConstByteArray const &key, std::vector<T> &value)
 {
   bool success{false};
 

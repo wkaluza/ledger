@@ -83,15 +83,15 @@ protected:
 
 TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_construction)
 {
-  TestType testValue;
+  auto testValue = new TestType();
 
   //* Expectation
-  EXPECT_CALL(*mock_, free_TestType(&testValue)).WillOnce(Return());
+  EXPECT_CALL(*mock_, free_TestType(testValue)).WillOnce(Return());
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    (void)x;
+  //  ossl_shared_ptr__for_Testing<> x(testValue);
+    //(void)x;
   }
 }
 
@@ -113,8 +113,8 @@ TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_reset)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    x.reset();
+//    ossl_shared_ptr__for_Testing<> x(&testValue);
+    //x.reset();
   }
 }
 
@@ -129,8 +129,8 @@ TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_reset_with_specific_point
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    x.reset(&testValue2);
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
+    //x.reset(&testValue2);
   }
 }
 
@@ -143,9 +143,9 @@ TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_swap)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    ossl_shared_ptr__for_Testing<> y{};
-    x.swap(y);
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
+    //ossl_shared_ptr__for_Testing<> y{};
+    //x.swap(y);
   }
 }
 
@@ -158,9 +158,9 @@ TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_assign)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    ossl_shared_ptr__for_Testing<> y{};
-    x = y;
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
+    //ossl_shared_ptr__for_Testing<> y{};
+  //  x = y;
   }
 }
 
@@ -173,8 +173,8 @@ TEST_F(OpenSSLSharedPtrTest, test_Deleter_called_after_copy_construct)
 
   {
     //* Production code
-    ossl_shared_ptr__for_Testing<> x(&testValue);
-    ossl_shared_ptr__for_Testing<> y(x);
+    //ossl_shared_ptr__for_Testing<> x(&testValue);
+  //  ossl_shared_ptr__for_Testing<> y(x);
   }
 }
 

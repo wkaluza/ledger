@@ -20,7 +20,7 @@
 #include "core/byte_array/const_byte_array.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 class Token : public ConstByteArray
 {
@@ -89,5 +89,5 @@ private:
   int         line_ = 0;
   std::size_t char_ = 0;
 };
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

@@ -52,9 +52,9 @@ public:
 namespace std {
 
 template <>
-struct hash<fetch::byte_array::ConstByteArray>
+struct hash<fetch::damnyouwindows_byte_array::ConstByteArray>
 {
-  std::size_t operator()(fetch::byte_array::ConstByteArray const &value) const
+  std::size_t operator()(fetch::damnyouwindows_byte_array::ConstByteArray const &value) const
   {
     fetch::crypto::detail::FNV1a hash;
     hash.update(value.pointer(), value.size());
@@ -63,7 +63,7 @@ struct hash<fetch::byte_array::ConstByteArray>
 };
 
 template <>
-struct hash<fetch::byte_array::ByteArray> : public hash<fetch::byte_array::ConstByteArray>
+struct hash<fetch::damnyouwindows_byte_array::ByteArray> : public hash<fetch::damnyouwindows_byte_array::ConstByteArray>
 {
 };
 

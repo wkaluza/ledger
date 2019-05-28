@@ -74,12 +74,12 @@ public:
   static const std::size_t x_size;
   static const std::size_t y_size;
 
-  static byte_array::ByteArray Convert2Canonical(BIGNUM const *const x, BIGNUM const *const y)
+  static damnyouwindows_byte_array::ByteArray Convert2Canonical(BIGNUM const *const x, BIGNUM const *const y)
   {
     const auto xBytes = static_cast<std::size_t>(BN_num_bytes(x));
     const auto yBytes = static_cast<std::size_t>(BN_num_bytes(y));
 
-    byte_array::ByteArray canonical_data;
+    damnyouwindows_byte_array::ByteArray canonical_data;
     canonical_data.Resize(x_size + y_size);
 
     const std::size_t x_data_start_index = x_size - xBytes;
@@ -117,7 +117,7 @@ public:
     return canonical_data;
   }
 
-  static void ConvertFromCanonical(byte_array::ConstByteArray const &bin_data, BIGNUM *const x,
+  static void ConvertFromCanonical(damnyouwindows_byte_array::ConstByteArray const &bin_data, BIGNUM *const x,
                                    BIGNUM *const y)
   {
 
@@ -125,14 +125,14 @@ public:
     {
       throw std::runtime_error(
           "Convert<...,eECDSASignatureBinaryDataFormat::canonical,...>(const "
-          "byte_array::ConstByteArray&): i2d_ECDSA_SIG(..., r) failed.");
+          "damnyouwindows_byte_array::ConstByteArray&): i2d_ECDSA_SIG(..., r) failed.");
     }
 
     if (!BN_bin2bn(bin_data.pointer() + x_size, static_cast<int>(y_size), y))
     {
       throw std::runtime_error(
           "Convert<...,eECDSASignatureBinaryDataFormat::canonical,...>(const "
-          "byte_array::ConstByteArray&): i2d_ECDSA_SIG(..., s) failed.");
+          "damnyouwindows_byte_array::ConstByteArray&): i2d_ECDSA_SIG(..., s) failed.");
     }
   }
 };

@@ -58,7 +58,7 @@ TEST(PromiseTests, CheckNormalPromiseCycle)
   EXPECT_FALSE(failure);
   EXPECT_FALSE(complete);
 
-  prom->Fulfill(fetch::byte_array::ConstByteArray{});
+  prom->Fulfill(fetch::damnyouwindows_byte_array::ConstByteArray{});
 
   EXPECT_TRUE(success);
   EXPECT_FALSE(failure);
@@ -97,7 +97,7 @@ TEST(PromiseTests, CheckImmediateSuccess)
   bool failure  = false;
   bool complete = false;
 
-  prom->Fulfill(fetch::byte_array::ConstByteArray{});
+  prom->Fulfill(fetch::damnyouwindows_byte_array::ConstByteArray{});
 
   EXPECT_FALSE(success);
   EXPECT_FALSE(failure);

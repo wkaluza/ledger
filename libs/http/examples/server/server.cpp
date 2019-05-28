@@ -99,7 +99,7 @@ int main()
                    int64_t length = fin.tellg();
                    fin.seekg(0, fin.beg);
 
-                   fetch::byte_array::ByteArray data;
+                   fetch::damnyouwindows_byte_array::ByteArray data;
                    data.Resize(std::size_t(length));
                    fin.read(reinterpret_cast<char *>(data.pointer()), length);
 

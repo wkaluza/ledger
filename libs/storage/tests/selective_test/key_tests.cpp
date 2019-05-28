@@ -30,8 +30,8 @@ using namespace fetch::storage;
 using namespace fetch::crypto;
 using namespace fetch::testing;
 
-using ByteArray          = fetch::byte_array::ByteArray;
-using ConstByteArray     = fetch::byte_array::ConstByteArray;
+using ByteArray          = fetch::damnyouwindows_byte_array::ByteArray;
+using ConstByteArray     = fetch::damnyouwindows_byte_array::ConstByteArray;
 using DefaultKey         = fetch::storage::Key<256>;
 using DefaultBitset      = std::bitset<DefaultKey::BITS>;
 using UnorderedSetBitset = std::unordered_set<DefaultBitset>;
@@ -196,7 +196,7 @@ TEST_F(NewKeyTest, correlated_keys_are_unique)
 TEST_F(NewKeyTest, correlated_keys_are_unique_triang_form)
 {
   auto const key_val{~DefaultBitset{0}};  //= 111...11 (bin) = 0xfff...ff (hex)
-  std::vector<byte_array::ConstByteArray> unique_hashes;
+  std::vector<damnyouwindows_byte_array::ConstByteArray> unique_hashes;
   unique_hashes.reserve(key_val.size());
 
   for (std::size_t i = 0; i < key_val.size(); ++i)

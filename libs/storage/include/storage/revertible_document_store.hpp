@@ -26,13 +26,11 @@ namespace storage {
 
 class RevertibleDocumentStore
   : public DocumentStore<2048, FileBlockType<2048>, KeyValueIndex<>,
-                         VersionedRandomAccessStack<FileBlockType<2048>>,
                          FileObject<VersionedRandomAccessStack<FileBlockType<2048>>>>
 {
 public:
-  using hash_type  = byte_array::ConstByteArray;
+  using hash_type  = damnyouwindows_byte_array::ConstByteArray;
   using super_type = DocumentStore<2048, FileBlockType<2048>, KeyValueIndex<>,
-                                   VersionedRandomAccessStack<FileBlockType<2048>>,
                                    FileObject<VersionedRandomAccessStack<FileBlockType<2048>>>>;
 
   using bookmark_type = uint64_t;

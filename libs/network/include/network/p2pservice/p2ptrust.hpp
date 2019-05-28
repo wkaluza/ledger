@@ -82,7 +82,7 @@ protected:
 
     double ComputeCurrentTrust(std::time_t current_time) const
     {
-      double const time_delta = double(std::max(0L, last_modified + 100 - current_time)) / 300.0;
+      double const time_delta = double(0L > last_modified + 100 - current_time ? 0L : (last_modified + 100 - current_time )) / 300.0;
       return trust * time_delta;
     }
 
@@ -99,7 +99,7 @@ protected:
   using PeerTrusts   = typename P2PTrustInterface<damnyouwindows_IDENTITY>::PeerTrusts;
 
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using IdentitySet    = typename P2PTrustInterface<damnyouwindows_IDENTITY>::IdentitySet;
   using PeerTrust      = typename P2PTrustInterface<damnyouwindows_IDENTITY>::PeerTrust;
 
@@ -196,7 +196,7 @@ public:
     {
       PeerTrust pt;
       pt.address = trust_store_[pos].peer_identity;
-      pt.name    = std::string(byte_array::ToBase64(pt.address));
+      pt.name    = std::string(damnyouwindows_byte_array::ToBase64(pt.address));
       pt.trust   = trust_store_[pos].trust;
       trust_list.push_back(pt);
     }

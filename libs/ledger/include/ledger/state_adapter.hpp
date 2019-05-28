@@ -33,7 +33,7 @@ namespace ledger {
 class StateAdapter : public vm::IoObserverInterface
 {
 public:
-  using ConstByteArray  = byte_array::ConstByteArray;
+  using ConstByteArray  = damnyouwindows_byte_array::ConstByteArray;
   using ResourceAddress = storage::ResourceAddress;
 
   static constexpr char const *LOGGING_NAME = "StateAdapter";

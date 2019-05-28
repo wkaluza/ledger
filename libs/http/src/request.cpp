@@ -26,7 +26,7 @@ bool HTTPRequest::ParseBody(asio::streambuf &buffer)
   LOG_STACK_TRACE_POINT;
 
   // TODO(issue 35): Handle encoding
-  body_data_ = byte_array::ByteArray();
+  body_data_ = damnyouwindows_byte_array::ByteArray();
   body_data_.Resize(content_length());
   if (buffer.size() < body_data_.size())
   {
@@ -49,7 +49,7 @@ bool HTTPRequest::ParseHeader(asio::streambuf &buffer, std::size_t const &end)
 {
   LOG_STACK_TRACE_POINT;
 
-  header_data_ = byte_array::ByteArray();
+  header_data_ = damnyouwindows_byte_array::ByteArray();
   header_data_.Resize(end);
 
   std::istream is(&buffer);
@@ -63,7 +63,7 @@ bool HTTPRequest::ParseHeader(asio::streambuf &buffer, std::size_t const &end)
 
   std::size_t           last_pos = 0, split_key_at = 0, split_val_at = 0;
   std::size_t           line = 0;
-  byte_array::ByteArray key, value, start_line;
+  damnyouwindows_byte_array::ByteArray key, value, start_line;
 
   // loop through the header contents character by character
   for (std::size_t i = 0; i < end; ++i)
@@ -129,7 +129,7 @@ bool HTTPRequest::ParseHeader(asio::streambuf &buffer, std::size_t const &end)
           if (key == "content-type")
           {
             auto const pos = value.Find(';', 0);
-            if (pos != byte_array::ConstByteArray::NPOS)
+            if (pos != damnyouwindows_byte_array::ConstByteArray::NPOS)
             {
               value = value.SubArray(0, pos);
             }
@@ -192,7 +192,7 @@ bool HTTPRequest::ToStream(asio::streambuf &buffer, std::string const &host, uin
   return true;
 }
 
-bool HTTPRequest::ParseStartLine(byte_array::ByteArray &line)
+bool HTTPRequest::ParseStartLine(damnyouwindows_byte_array::ByteArray &line)
 {
   LOG_STACK_TRACE_POINT;
 
@@ -213,7 +213,7 @@ bool HTTPRequest::ParseStartLine(byte_array::ByteArray &line)
     ++i;
   }
 
-  byte_array_type method = line.SubArray(0, i);
+  damnyouwindows_byte_array_type method = line.SubArray(0, i);
   FromString(method, method_);
 
   ++i;
@@ -246,7 +246,7 @@ bool HTTPRequest::ParseStartLine(byte_array::ByteArray &line)
   uri_ = line.SubArray(j, k - j);
 
   std::size_t           last = k + 1, equal = std::size_t(-1);
-  byte_array::ByteArray key, value;
+  damnyouwindows_byte_array::ByteArray key, value;
 
   while (k < i)
   {

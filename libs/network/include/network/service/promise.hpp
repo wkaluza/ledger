@@ -56,7 +56,7 @@ public:
   PromiseImplementation() = default;
 
   using Counter               = uint64_t;
-  using ConstByteArray        = byte_array::ConstByteArray;
+  using ConstByteArray        = damnyouwindows_byte_array::ConstByteArray;
   using SerializableException = serializers::SerializableException;
   using ExceptionPtr          = std::unique_ptr<SerializableException>;
   using Callback              = std::function<void()>;

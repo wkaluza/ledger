@@ -23,7 +23,7 @@
 #include <mutex>
 #include <utility>
 
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 
 namespace fetch {
 namespace metrics {

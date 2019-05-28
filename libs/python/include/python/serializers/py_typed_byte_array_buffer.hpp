@@ -29,7 +29,7 @@ void BuildTypedByteArrayBuffer(pybind11::module &module)
   namespace py = pybind11;
   py::class_<TypedByteArrayBuffer>(module, "TypedByteArrayBuffer")
       .def(py::init<>())
-      .def(py::init<fetch::serializers::TypedByteArrayBuffer::byte_array_type>())
+      .def(py::init<fetch::serializers::TypedByteArrayBuffer::damnyouwindows_byte_array_type>())
       .def("WriteBytes", &TypedByteArrayBuffer::WriteBytes)
       .def("bytes_left", &TypedByteArrayBuffer::bytes_left)
       .def("data", &TypedByteArrayBuffer::data)

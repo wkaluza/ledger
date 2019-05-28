@@ -70,13 +70,13 @@ public:
     }
   }
 
-  void Connect(byte_array::ConstByteArray const &host, uint16_t port)
+  void Connect(damnyouwindows_byte_array::ConstByteArray const &host, uint16_t port)
   {
     LOG_STACK_TRACE_POINT;
-    Connect(host, byte_array::ConstByteArray(std::to_string(port)));
+    Connect(host, damnyouwindows_byte_array::ConstByteArray(std::to_string(port)));
   }
 
-  void Connect(byte_array::ConstByteArray const &host, byte_array::ConstByteArray const &port)
+  void Connect(damnyouwindows_byte_array::ConstByteArray const &host, damnyouwindows_byte_array::ConstByteArray const &port)
   {
     LOG_STACK_TRACE_POINT;
     self_type self = shared_from_this();
@@ -278,7 +278,7 @@ private:
 
     self_type             self   = shared_from_this();
     auto                  socket = socket_.lock();
-    byte_array::ByteArray header;
+    damnyouwindows_byte_array::ByteArray header;
     header.Resize(2 * sizeof(uint64_t));
 
     auto cb = [this, self, socket, header, strand](std::error_code ec, std::size_t) {
@@ -321,7 +321,7 @@ private:
     }
   }
 
-  void ReadBody(byte_array::ByteArray const &header) noexcept
+  void ReadBody(damnyouwindows_byte_array::ByteArray const &header) noexcept
   {
     LOG_STACK_TRACE_POINT;
     auto strand = strand_.lock();
@@ -333,17 +333,17 @@ private:
 
     if (magic != networkMagic_)
     {
-      byte_array::ByteArray dummy;
+      damnyouwindows_byte_array::ByteArray dummy;
       SetHeader(dummy, 0);
       dummy.Resize(16);
 
       FETCH_LOG_ERROR(LOGGING_NAME,
                       "Magic incorrect during network read:\ngot:      ", ToHex(header),
-                      "\nExpected: ", ToHex(byte_array::ByteArray(dummy)));
+                      "\nExpected: ", ToHex(damnyouwindows_byte_array::ByteArray(dummy)));
       return;
     }
 
-    byte_array::ByteArray message;
+    damnyouwindows_byte_array::ByteArray message;
     message.Resize(size);
 
     self_type self   = shared_from_this();
@@ -381,7 +381,7 @@ private:
     }
   }
 
-  static void SetHeader(byte_array::ByteArray &header, uint64_t bufSize)
+  static void SetHeader(damnyouwindows_byte_array::ByteArray &header, uint64_t bufSize)
   {
     header.Resize(16);
 
@@ -426,7 +426,7 @@ private:
       write_queue_.pop_front();
     }
 
-    byte_array::ByteArray header;
+    damnyouwindows_byte_array::ByteArray header;
     SetHeader(header, buffer.size());
 
     std::vector<asio::const_buffer> buffers{asio::buffer(header.pointer(), header.size()),

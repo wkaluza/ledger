@@ -38,7 +38,7 @@ class JsonClient
 {
 public:
   using Variant        = variant::Variant;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using Headers        = std::unordered_map<std::string, std::string>;
 
   enum class ConnectionMode

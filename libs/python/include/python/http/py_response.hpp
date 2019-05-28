@@ -28,7 +28,7 @@ void BuildHTTPResponse(pybind11::module &module)
 {
   namespace py = pybind11;
   py::class_<HTTPResponse>(module, "HTTPResponse")
-      .def(py::init<byte_array::ByteArray, const fetch::http::MimeType &,
+      .def(py::init<damnyouwindows_byte_array::ByteArray, const fetch::http::MimeType &,
                     const fetch::http::Status &>())
       .def("body", &HTTPResponse::body)
       .def("status", (const fetch::http::Status &(HTTPResponse::*)() const) & HTTPResponse::status)

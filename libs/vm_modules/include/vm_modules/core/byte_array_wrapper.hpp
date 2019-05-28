@@ -36,47 +36,47 @@ public:
   }
 
   ByteArrayWrapper(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
-                   byte_array::ByteArray const &bytearray)
+                   damnyouwindows_byte_array::ByteArray const &bytearray)
     : fetch::vm::Object(vm, type_id)
-    , byte_array_(bytearray)
+    , damnyouwindows_byte_array_(bytearray)
   {}
 
   static fetch::vm::Ptr<ByteArrayWrapper> Constructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
                                                       int32_t n)
   {
-    return new ByteArrayWrapper(vm, type_id, byte_array::ByteArray(std::size_t(n)));
+    return new ByteArrayWrapper(vm, type_id, damnyouwindows_byte_array::ByteArray(std::size_t(n)));
   }
 
   static fetch::vm::Ptr<ByteArrayWrapper> Constructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
-                                                      byte_array::ByteArray bytearray)
+                                                      damnyouwindows_byte_array::ByteArray bytearray)
   {
     return new ByteArrayWrapper(vm, type_id, bytearray);
   }
 
   fetch::vm::Ptr<ByteArrayWrapper> Copy()
   {
-    return vm_->CreateNewObject<ByteArrayWrapper>(byte_array_.Copy());
+    return vm_->CreateNewObject<ByteArrayWrapper>(damnyouwindows_byte_array_.Copy());
   }
 
-  byte_array::ByteArray byte_array()
+  damnyouwindows_byte_array::ByteArray damnyouwindows_byte_array()
   {
-    return byte_array_;
+    return damnyouwindows_byte_array_;
   }
 
   bool SerializeTo(vm::ByteArrayBuffer &buffer) override
   {
-    buffer << byte_array_;
+    buffer << damnyouwindows_byte_array_;
     return true;
   }
 
   bool DeserializeFrom(vm::ByteArrayBuffer &buffer) override
   {
-    buffer >> byte_array_;
+    buffer >> damnyouwindows_byte_array_;
     return true;
   }
 
 private:
-  byte_array::ByteArray byte_array_;
+  damnyouwindows_byte_array::ByteArray damnyouwindows_byte_array_;
 };
 
 }  // namespace vm_modules

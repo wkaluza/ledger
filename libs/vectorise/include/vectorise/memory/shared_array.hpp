@@ -17,11 +17,11 @@
 //
 //------------------------------------------------------------------------------
 
+#include "meta/type_traits.hpp"
 #include "meta/log2.hpp"
 #include "vectorise/memory/iterator.hpp"
 #include "vectorise/memory/parallel_dispatcher.hpp"
 #include "vectorise/memory/vector_slice.hpp"
-//#include "meta/type_traits.hpp"
 
 #include <algorithm>
 #include <atomic>

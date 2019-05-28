@@ -126,8 +126,8 @@ private:
 
     Variant response     = Variant::Object();
     response["chain"]    = GenerateBlockList(include_transactions, chain_length);
-    response["identity"] = fetch::byte_array::ToBase64(muddle_.identity().identifier());
-    response["block"]    = fetch::byte_array::ToBase64(chain_.GetHeaviestBlockHash());
+    response["identity"] = fetch::damnyouwindows_byte_array::ToBase64(muddle_.identity().identifier());
+    response["block"]    = fetch::damnyouwindows_byte_array::ToBase64(chain_.GetHeaviestBlockHash());
 
     return http::CreateJsonResponse(response);
   }
@@ -144,7 +144,7 @@ private:
     {
       Variant object = Variant::Object();
 
-      object["identity"] = byte_array::ToBase64(entry.first);
+      object["identity"] = damnyouwindows_byte_array::ToBase64(entry.first);
       object["uri"]      = entry.second.uri();
 
       response[index++] = object;
@@ -177,7 +177,7 @@ private:
       peer_data["value"]         = pt.trust;
       peer_data["active"]        = muddle_.IsConnected(pt.address);
       peer_data["desired"]       = p2p_.IsDesired(pt.address);
-      peer_data["source"]        = byte_array::ToBase64(muddle_.identity().identifier());
+      peer_data["source"]        = damnyouwindows_byte_array::ToBase64(muddle_.identity().identifier());
 
       peer_data_list.push_back(peer_data);
     }
@@ -189,7 +189,7 @@ private:
     }
 
     Variant response     = Variant::Object();
-    response["identity"] = fetch::byte_array::ToBase64(muddle_.identity().identifier());
+    response["identity"] = fetch::damnyouwindows_byte_array::ToBase64(muddle_.identity().identifier());
     response["trusts"]   = trust_list;
 
     return http::CreateJsonResponse(response);
@@ -287,7 +287,7 @@ private:
     {
       // format the individual entries
       auto cache_entry        = Variant::Object();
-      cache_entry["identity"] = byte_array::ToBase64(entry.first);
+      cache_entry["identity"] = damnyouwindows_byte_array::ToBase64(entry.first);
       cache_entry["uri"]      = entry.second.uri.uri();
 
       // add it to the main cache representation

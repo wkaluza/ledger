@@ -37,8 +37,8 @@
 #include <stdexcept>
 #include <string>
 
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::FromBase64;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::FromBase64;
 
 namespace fetch {
 namespace ledger {

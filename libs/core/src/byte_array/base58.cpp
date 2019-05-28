@@ -38,7 +38,7 @@
 #include <vector>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 namespace {
 
 /** All alphanumeric characters except for "0", "I", "O", and "l" */
@@ -197,5 +197,5 @@ ConstByteArray ToBase58(ConstByteArray const &str)
 }
 // clang-format on
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

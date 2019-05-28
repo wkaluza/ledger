@@ -30,7 +30,7 @@
 
 namespace {
 
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 using fetch::storage::ResourceID;
 using fetch::ledger::Transaction;
 using fetch::ledger::TransactionBuilder;

@@ -29,19 +29,19 @@ namespace {
 class FVNTest : public testing::Test
 {
 protected:
-  void test_basic_hash(byte_array::ConstByteArray const &data_to_hash,
-                       byte_array::ConstByteArray const &expected_hash)
+  void test_basic_hash(damnyouwindows_byte_array::ConstByteArray const &data_to_hash,
+                       damnyouwindows_byte_array::ConstByteArray const &expected_hash)
   {
     FNV x;
     x.Reset();
     bool const retval = x.Update(data_to_hash);
     ASSERT_TRUE(retval);
-    byte_array::ConstByteArray const hash = x.Final();
+    damnyouwindows_byte_array::ConstByteArray const hash = x.Final();
 
     EXPECT_EQ(expected_hash, hash);
   }
 
-  void test_basic_hash_value(byte_array::ConstByteArray const &data_to_hash,
+  void test_basic_hash_value(damnyouwindows_byte_array::ConstByteArray const &data_to_hash,
                              FNV::context_type const &         expected_hash)
   {
     FNV x;
@@ -55,7 +55,7 @@ protected:
 
   template <typename FNV_CONFIG, detail::eFnvAlgorithm ALGORITHM>
   void testFnvHash(detail::FNV<FNV_CONFIG, ALGORITHM> &    fnv,
-                   byte_array::ConstByteArray const &      data_to_hash,
+                   damnyouwindows_byte_array::ConstByteArray const &      data_to_hash,
                    typename FNV_CONFIG::number_type const &expected_hash)
   {
     fnv.reset();
@@ -64,14 +64,14 @@ protected:
     EXPECT_EQ(expected_hash, resulting_hash);
   }
 
-  byte_array::ConstByteArray const data_to_hash_{"asdfghjkl"};
+  damnyouwindows_byte_array::ConstByteArray const data_to_hash_{"asdfghjkl"};
 };
 
 TEST_F(FVNTest, test_basic)
 {
   FNV::context_type const          expected_hash = 0x406e475017aa7737;
-  byte_array::ConstByteArray const expected_hash_array(
-      reinterpret_cast<byte_array::ConstByteArray::container_type const *>(&expected_hash),
+  damnyouwindows_byte_array::ConstByteArray const expected_hash_array(
+      reinterpret_cast<damnyouwindows_byte_array::ConstByteArray::container_type const *>(&expected_hash),
       sizeof(expected_hash));
   test_basic_hash("abcdefg", expected_hash_array);
   test_basic_hash_value("abcdefg", expected_hash);

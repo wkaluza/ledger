@@ -20,7 +20,7 @@
 #include <cstdint>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 namespace details {
 // After
 // https://en.wikibooks.org/wiki/Algorithm_Implementation/Miscellaneous/Base64
@@ -45,5 +45,5 @@ enum
   B64_INVALID    = 66
 };
 }  // namespace details
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

@@ -42,10 +42,10 @@ public:
 
   // Construction
   ResourceID() = default;
-  explicit ResourceID(byte_array::ConstByteArray id);
+  explicit ResourceID(damnyouwindows_byte_array::ConstByteArray id);
 
   // Accessors
-  byte_array::ConstByteArray id() const;
+  damnyouwindows_byte_array::ConstByteArray id() const;
   Group                      resource_group() const;
   Group                      lane(std::size_t log2_num_lanes) const;
 
@@ -62,7 +62,7 @@ public:
   static constexpr std::size_t RESOURCE_ID_SIZE_IN_BYTES = RESOURCE_ID_SIZE_IN_BITS / 8;
 
 private:
-  byte_array::ConstByteArray id_;  ///< The byte array containing the hashed resource address
+  damnyouwindows_byte_array::ConstByteArray id_;  ///< The byte array containing the hashed resource address
 
   template <typename T>
   friend inline void Serialize(T &, ResourceID const &);
@@ -75,7 +75,7 @@ private:
  *
  * @param id The hashed array
  */
-inline ResourceID::ResourceID(byte_array::ConstByteArray id)
+inline ResourceID::ResourceID(damnyouwindows_byte_array::ConstByteArray id)
   : id_(std::move(id))
 {
   assert(id.size() == RESOURCE_ID_SIZE_IN_BYTES);
@@ -86,7 +86,7 @@ inline ResourceID::ResourceID(byte_array::ConstByteArray id)
  *
  * @return The id value
  */
-inline byte_array::ConstByteArray ResourceID::id() const
+inline damnyouwindows_byte_array::ConstByteArray ResourceID::id() const
 {
   return id_;
 }
@@ -112,7 +112,8 @@ inline ResourceID::Group ResourceID::resource_group() const
  * be 2
  * @return The lane index
  */
-inline ResourceID::Group ResourceID::lane(std::size_t log2_num_lanes) const
+inline ResourceID::Group ResourceID::lane(
+    std::size_t log2_num_lanes) const
 {
   // define the group mask
   Group const group_mask = (1u << log2_num_lanes) - 1u;
@@ -162,7 +163,7 @@ void Deserialize(T &serializer, ResourceID &b)
 class ResourceAddress : public ResourceID
 {
 public:
-  explicit ResourceAddress(byte_array::ConstByteArray const &address)
+  explicit ResourceAddress(damnyouwindows_byte_array::ConstByteArray const &address)
     : ResourceID(crypto::Hash<crypto::SHA256>(address))
   {
     address_ = address;
@@ -175,7 +176,7 @@ public:
    *
    * @return The byte array containing the address
    */
-  byte_array::ConstByteArray address() const
+  damnyouwindows_byte_array::ConstByteArray address() const
   {
     return address_;
   }
@@ -201,7 +202,7 @@ public:
   }
 
 private:
-  byte_array::ByteArray address_;  ///< The canonical resource address
+  damnyouwindows_byte_array::ByteArray address_;  ///< The canonical resource address
 };
 
 }  // namespace storage

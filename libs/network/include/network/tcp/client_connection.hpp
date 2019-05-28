@@ -261,7 +261,7 @@ private:
       return;
     }
 
-    byte_array::ByteArray message;
+    damnyouwindows_byte_array::ByteArray message;
 
     if (header_.content.magic != networkMagic_)
     {
@@ -303,7 +303,7 @@ private:
     asio::async_read(*socket_ptr, asio::buffer(message.pointer(), message.size()), cb);
   }
 
-  static void SetHeader(byte_array::ByteArray &header, uint64_t bufSize)
+  static void SetHeader(damnyouwindows_byte_array::ByteArray &header, uint64_t bufSize)
   {
     header.Resize(16);
 
@@ -348,7 +348,7 @@ private:
       write_queue_.pop_front();
     }
 
-    byte_array::ByteArray header;
+    damnyouwindows_byte_array::ByteArray header;
     SetHeader(header, buffer.size());
 
     std::vector<asio::const_buffer> buffers{asio::buffer(header.pointer(), header.size()),

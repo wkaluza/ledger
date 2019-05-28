@@ -119,7 +119,7 @@ public:
 
   bool DeserializeFrom(ByteArrayBuffer &buffer) override
   {
-    fetch::byte_array::ConstByteArray raw_address{};
+    fetch::damnyouwindows_byte_array::ConstByteArray raw_address{};
     buffer >> raw_address;
     address_ = ledger::Address{raw_address};
     return true;

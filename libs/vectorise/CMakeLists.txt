@@ -16,6 +16,7 @@ setup_compiler()
 
 setup_library(fetch-vectorise)
 target_link_libraries(fetch-vectorise INTERFACE fetch-meta)
+
 #target_link_libraries(fetch-vectorise INTERFACE fetch-meta pthread)
 
 # Define all the test targets

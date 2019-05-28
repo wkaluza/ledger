@@ -30,7 +30,7 @@ class MetricHandler
 public:
   using Clock          = std::chrono::high_resolution_clock;
   using Timestamp      = Clock::time_point;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   enum class Instrument
   {

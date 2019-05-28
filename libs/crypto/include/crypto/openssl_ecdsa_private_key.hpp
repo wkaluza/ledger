@@ -72,7 +72,7 @@ public:
     : ECDSAPrivateKey(Generate())
   {}
 
-  ECDSAPrivateKey(const byte_array::ConstByteArray &key_data)
+  ECDSAPrivateKey(const damnyouwindows_byte_array::ConstByteArray &key_data)
     : ECDSAPrivateKey(Convert(key_data))
   {}
 
@@ -116,7 +116,7 @@ public:
     return private_key_;
   }
 
-  byte_array::ByteArray KeyAsBin() const
+  damnyouwindows_byte_array::ByteArray KeyAsBin() const
   {
     switch (binaryDataFormat)
     {
@@ -127,6 +127,8 @@ public:
     case eECDSAEncoding::DER:
       return Convert2DER(private_key_.get());
     }
+
+    return {};
   }
 
   const public_key_type &publicKey() const
@@ -140,7 +142,7 @@ private:
     , public_key_{std::move(public_key)}
   {}
 
-  static ECDSAPrivateKey Convert(byte_array::ConstByteArray const &key_data)
+  static ECDSAPrivateKey Convert(damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     switch (binaryDataFormat)
     {
@@ -151,16 +153,18 @@ private:
     case eECDSAEncoding::DER:
       return ConvertFromDER(key_data);
     }
+
+    return {};
   }
 
   static uniq_ptr_type<BIGNUM, del_strat_type::clearing> Convert2BIGNUM(
-      byte_array::ConstByteArray const &key_data)
+      damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     if (ecdsa_curve_type::privateKeySize < key_data.size())
     {
       throw std::runtime_error(
           "ECDSAPrivateKey::Convert2BIGNUM(const "
-          "byte_array::ConstByteArray&): Length of "
+          "damnyouwindows_byte_array::ConstByteArray&): Length of "
           "provided "
           "byte array does not correspond to expected "
           "length for selected elliptic curve");
@@ -174,7 +178,7 @@ private:
     {
       throw std::runtime_error(
           "ECDSAPrivateKey::Convert2BIGNUM(const "
-          "byte_array::ConstByteArray&): BN_bin2bn(...) "
+          "damnyouwindows_byte_array::ConstByteArray&): BN_bin2bn(...) "
           "failed.");
     }
 
@@ -222,8 +226,7 @@ private:
           "EC_POINT_(new/dup)(...) failed.");
     }
 
-    if (!EC_POINT_mul(group, public_key.get(), private_key_as_BN, NULL, NULL,
-                      session.context()))
+    if (!EC_POINT_mul(group, public_key.get(), private_key_as_BN, NULL, NULL, session.context()))
     {
       throw std::runtime_error("ECDSAPrivateKey::DerivePublicKey(...): EC_POINT_mul(...) failed.");
     }
@@ -247,7 +250,7 @@ private:
     FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-2");
     auto uuu = ExtractPublicKey(key.get());
     FETCH_LOG_WARN("WK???", "WK CHECKPOINT 005-2-3");
-    public_key_type       public_key{uuu};
+    public_key_type public_key{uuu};
     FETCH_LOG_WARN("WK???", "CHECKPOINT 005-2-4");
     auto ttt = ECDSAPrivateKey{std::move(key), std::move(public_key)};
     FETCH_LOG_WARN("WK???", "CHECKPOINT 005-2-5");
@@ -303,7 +306,7 @@ private:
     return key_pair;
   }
 
-  static byte_array::ByteArray Convert2Bin(EC_KEY const *const key)
+  static damnyouwindows_byte_array::ByteArray Convert2Bin(EC_KEY const *const key)
   {
     const BIGNUM *key_as_BN = EC_KEY_get0_private_key(key);
     if (!key_as_BN)
@@ -311,7 +314,7 @@ private:
       throw std::runtime_error("ECDSAPrivateKey::keyAsBin(): EC_KEY_get0_private_key(...) failed.");
     }
 
-    byte_array::ByteArray key_as_bin;
+    damnyouwindows_byte_array::ByteArray key_as_bin;
     key_as_bin.Resize(static_cast<std::size_t>(BN_num_bytes(key_as_BN)));
 
     if (!BN_bn2bin(key_as_BN, static_cast<unsigned char *>(key_as_bin.pointer())))
@@ -322,7 +325,7 @@ private:
     return key_as_bin;
   }
 
-  static byte_array::ByteArray Convert2DER(EC_KEY *key)
+  static damnyouwindows_byte_array::ByteArray Convert2DER(EC_KEY *key)
   {
     const int est_size = i2d_ECPrivateKey(key, nullptr);
     if (est_size < 1)
@@ -332,7 +335,7 @@ private:
           "i2d_ECPrivateKey(..., nullptr) failed.");
     }
 
-    byte_array::ByteArray key_as_bin;
+    damnyouwindows_byte_array::ByteArray key_as_bin;
     key_as_bin.Resize(static_cast<std::size_t>(est_size));
 
     unsigned char *key_as_bin_ptr = static_cast<unsigned char *>(key_as_bin.pointer());
@@ -347,7 +350,7 @@ private:
     return key_as_bin;
   }
 
-  static ECDSAPrivateKey ConvertFromBin(byte_array::ConstByteArray const &key_data)
+  static ECDSAPrivateKey ConvertFromBin(damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     uniq_ptr_type<BIGNUM, del_strat_type::clearing> priv_key_as_BN{Convert2BIGNUM(key_data)};
 
@@ -357,7 +360,7 @@ private:
     return ECDSAPrivateKey{std::move(private_key), std::move(public_key)};
   }
 
-  static ECDSAPrivateKey ConvertFromDER(byte_array::ConstByteArray const &key_data)
+  static ECDSAPrivateKey ConvertFromDER(damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     uniq_ptr_type<EC_KEY> key{EC_KEY_new_by_curve_name(ecdsa_curve_type::nid)};
     EC_KEY_set_conv_form(key.get(), conversionForm);

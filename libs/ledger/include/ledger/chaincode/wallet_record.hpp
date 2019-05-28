@@ -22,22 +22,22 @@
 
 // TODO(HUT): doesn't putting this here pollute the namespace?
 using fetch::variant::Variant;
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::FromBase64;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::FromBase64;
 
 namespace fetch {
 namespace ledger {
 
 namespace {
 
-byte_array::ConstByteArray const ADDRESS_NAME{"address"};
-byte_array::ConstByteArray const FROM_NAME{"from"};
-byte_array::ConstByteArray const TO_NAME{"to"};
-byte_array::ConstByteArray const AMOUNT_NAME{"amount"};
-byte_array::ConstByteArray const TRANSFER_NAME{"transfer"};
-byte_array::ConstByteArray const AMEND_NAME{"amend"};
-byte_array::ConstByteArray const THRESHOLDS_NAME{"thresholds"};
-byte_array::ConstByteArray const SIGNEES_NAME{"signees"};
+damnyouwindows_byte_array::ConstByteArray const ADDRESS_NAME{"address"};
+damnyouwindows_byte_array::ConstByteArray const FROM_NAME{"from"};
+damnyouwindows_byte_array::ConstByteArray const TO_NAME{"to"};
+damnyouwindows_byte_array::ConstByteArray const AMOUNT_NAME{"amount"};
+damnyouwindows_byte_array::ConstByteArray const TRANSFER_NAME{"transfer"};
+damnyouwindows_byte_array::ConstByteArray const AMEND_NAME{"amend"};
+damnyouwindows_byte_array::ConstByteArray const THRESHOLDS_NAME{"thresholds"};
+damnyouwindows_byte_array::ConstByteArray const SIGNEES_NAME{"signees"};
 
 using DeedShrdPtr = std::shared_ptr<Deed>;
 
@@ -80,7 +80,7 @@ bool DeedFromVariant(Variant const &variant_deed, DeedShrdPtr &deed)
   }
 
   Deed::OperationTresholds thresholds;
-  v_thresholds.IterateObject([&thresholds](byte_array::ConstByteArray const &operation,
+  v_thresholds.IterateObject([&thresholds](damnyouwindows_byte_array::ConstByteArray const &operation,
                                            variant::Variant const &          v_threshold) -> bool {
     thresholds[operation] = v_threshold.As<Deed::Weight>();
     return true;
@@ -93,7 +93,7 @@ bool DeedFromVariant(Variant const &variant_deed, DeedShrdPtr &deed)
   }
 
   Deed::Signees signees;
-  v_signees.IterateObject([&signees](byte_array::ConstByteArray const &display_address,
+  v_signees.IterateObject([&signees](damnyouwindows_byte_array::ConstByteArray const &display_address,
                                      variant::Variant const &          v_weight) -> bool {
     Address address{};
     if (Address::Parse(display_address, address))

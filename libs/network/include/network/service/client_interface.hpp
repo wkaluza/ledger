@@ -93,7 +93,7 @@ public:
 
       prom->Fail(serializers::SerializableException(
           error::COULD_NOT_DELIVER,
-          byte_array::ConstByteArray("Could not deliver request in " __FILE__)));
+          damnyouwindows_byte_array::ConstByteArray("Could not deliver request in " __FILE__)));
 
       RemovePromise(prom->id());
     }
@@ -103,7 +103,7 @@ public:
 
   Promise CallWithPackedArguments(protocol_handler_type const &protocol,
                                   function_handler_type const &function,
-                                  byte_array::ByteArray const &args);
+                                  damnyouwindows_byte_array::ByteArray const &args);
 
   /// @name Subscriptions
   /// @{

@@ -24,9 +24,9 @@
 #include <utility>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 class ConstByteArray;
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 namespace serializers {
 
 namespace error {
@@ -41,10 +41,10 @@ public:
   /// @{
   SerializableException();
   SerializableException(std::string explanation);
-  SerializableException(byte_array::ConstByteArray const &explanation);
+  SerializableException(damnyouwindows_byte_array::ConstByteArray const &explanation);
   SerializableException(error::error_type error_code, std::string explanation);
   SerializableException(error::error_type                 error_code,
-                        byte_array::ConstByteArray const &explanation);
+                        damnyouwindows_byte_array::ConstByteArray const &explanation);
   ~SerializableException() override;
   /// @}
 

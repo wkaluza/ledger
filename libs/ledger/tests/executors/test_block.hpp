@@ -42,7 +42,7 @@ struct TestBlock
   static Digest GenerateHash(RNG &rng)
   {
     static constexpr std::size_t HASH_SIZE = 32;
-    fetch::byte_array::ByteArray digest;
+    fetch::damnyouwindows_byte_array::ByteArray digest;
     digest.Resize(HASH_SIZE);
     for (std::size_t i = 0; i < HASH_SIZE; ++i)
     {
@@ -63,7 +63,7 @@ struct TestBlock
     FETCH_LOG_DEBUG(LOGGING_NAME, "Generating block: ", num_lanes, " x ", num_slices);
 
     // generate the block hash and assign the previous hash
-    fetch::byte_array::ByteArray digest;
+    fetch::damnyouwindows_byte_array::ByteArray digest;
     digest.Resize(std::size_t(HASH_LENGTH));
     for (std::size_t i = 0; i < std::size_t(HASH_LENGTH); ++i)
     {

@@ -30,7 +30,7 @@
 #include <vector>
 
 using namespace fetch::serializers;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 using namespace fetch::service;
 using namespace std::chrono;
 

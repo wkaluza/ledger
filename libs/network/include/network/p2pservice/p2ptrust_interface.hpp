@@ -59,7 +59,7 @@ public:
   using PeerTrusts = std::vector<PeerTrust>;
 
   using IdentitySet    = typename std::unordered_set<IDENTITY>;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   P2PTrustInterface(const P2PTrustInterface &rhs) = delete;
   P2PTrustInterface(P2PTrustInterface &&rhs)      = delete;

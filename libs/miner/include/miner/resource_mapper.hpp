@@ -27,14 +27,14 @@
 namespace fetch {
 namespace miner {
 
-inline uint32_t MapResourceToLane(byte_array::ConstByteArray const &resource,
-                                  byte_array::ConstByteArray const &contract,
+inline uint32_t MapResourceToLane(damnyouwindows_byte_array::ConstByteArray const &resource,
+                                  damnyouwindows_byte_array::ConstByteArray const &contract,
                                   uint32_t                          log2_num_lanes)
 {
   ledger::Identifier identifier(contract);
 
   return storage::ResourceAddress{
-      byte_array::ByteArray{}.Append(identifier.name_space(), ".state.", resource)}
+      damnyouwindows_byte_array::ByteArray{}.Append(identifier.name_space(), ".state.", resource)}
       .lane(log2_num_lanes);
 }
 

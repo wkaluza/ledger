@@ -79,7 +79,8 @@ bool NewRevertibleDocumentStore::New(std::string const &state, std::string const
   return true;
 }
 
-UnderlyingType NewRevertibleDocumentStore::Get(ResourceID const &rid)
+UnderlyingType NewRevertibleDocumentStore::Get(
+    ::fetch::storage::ResourceID const &rid)
 {
   return storage_.Get(rid);
 }

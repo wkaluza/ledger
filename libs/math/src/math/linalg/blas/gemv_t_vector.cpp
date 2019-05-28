@@ -92,7 +92,7 @@ void Blas<S, Signature(_y <= _alpha, _A, _x, _n, _beta, _y, _m),
         ret_slice.in_parallel().Apply(
             range,
             [vec_beta](VectorRegisterType const &vr_v_y, VectorRegisterType &vw_v_y) {
-              vw_v_y = vec_beta * vr_v_y;
+//              vw_v_y = vec_beta * vr_v_y;
             },
             slice_v_y);
       }
@@ -138,7 +138,8 @@ void Blas<S, Signature(_y <= _alpha, _A, _x, _n, _beta, _y, _m),
       temp = slice_a_j.in_parallel().SumReduce(
           range,
           [](VectorRegisterType const &vr_a_j, VectorRegisterType const &vr_v_x) {
-            return vr_a_j * vr_v_x;
+            return VectorRegisterType{};
+            //vr_a_j *vr_v_x;
           },
           slice_v_x);
       y[jy] = y[jy] + alpha * temp;

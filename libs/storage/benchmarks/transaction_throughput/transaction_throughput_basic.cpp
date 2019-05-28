@@ -28,7 +28,7 @@
 #include <benchmark/benchmark.h>
 #include <vector>
 
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 using fetch::storage::ResourceID;
 using fetch::ledger::Transaction;
 using fetch::ledger::TransactionBuilder;

@@ -41,31 +41,31 @@ public:
 
   // Fully relying on caller that it will behave = will NOT modify value passed
   // (Const)ByteArray(s)
-  Identity(byte_array::ConstByteArray identity_parameters, byte_array::ConstByteArray identifier)
+  Identity(damnyouwindows_byte_array::ConstByteArray identity_parameters, damnyouwindows_byte_array::ConstByteArray identifier)
     : identity_parameters_{std::move(identity_parameters)}
     , identifier_{std::move(identifier)}
   {}
 
-  Identity(byte_array::ConstByteArray identifier)
+  Identity(damnyouwindows_byte_array::ConstByteArray identifier)
     : identifier_{std::move(identifier)}
   {}
 
-  byte_array::ConstByteArray const &parameters() const
+  damnyouwindows_byte_array::ConstByteArray const &parameters() const
   {
     return identity_parameters_;
   }
 
-  byte_array::ConstByteArray const &identifier() const
+  damnyouwindows_byte_array::ConstByteArray const &identifier() const
   {
     return identifier_;
   }
 
-  void SetIdentifier(byte_array::ConstByteArray const &ident)
+  void SetIdentifier(damnyouwindows_byte_array::ConstByteArray const &ident)
   {
     identifier_ = ident;
   }
 
-  void SetParameters(byte_array::ConstByteArray const &params)
+  void SetParameters(damnyouwindows_byte_array::ConstByteArray const &params)
   {
     identity_parameters_ = params;
   }
@@ -108,8 +108,8 @@ public:
   }
 
 private:
-  byte_array::ConstByteArray identity_parameters_{edcsa_curve_type::sn};
-  byte_array::ConstByteArray identifier_;
+  damnyouwindows_byte_array::ConstByteArray identity_parameters_{edcsa_curve_type::sn};
+  damnyouwindows_byte_array::ConstByteArray identifier_;
 };
 
 static inline Identity InvalidIdentity()
@@ -129,7 +129,7 @@ T &Serialize(T &serializer, Identity const &data)
 template <typename T>
 T &Deserialize(T &serializer, Identity &data)
 {
-  byte_array::ByteArray params, id;
+  damnyouwindows_byte_array::ByteArray params, id;
   serializer >> id;
   serializer >> params;
 

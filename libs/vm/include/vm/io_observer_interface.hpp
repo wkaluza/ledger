@@ -35,7 +35,7 @@ public:
 
   enum class Status
   {
-    OK,
+    damnyouwindows_OK,
     damnyouwindows_ERROR,
     PERMISSION_DENIED,
     BUFFER_TOO_SMALL

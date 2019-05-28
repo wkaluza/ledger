@@ -24,7 +24,7 @@
 #include <gtest/gtest.h>
 
 using namespace fetch::storage;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 using namespace fetch::testing;
 
 /**

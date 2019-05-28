@@ -38,7 +38,7 @@
 #include <stdexcept>
 #include <string>
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 namespace fetch {
 namespace ledger {
@@ -550,49 +550,49 @@ SmartContract::Status SmartContract::InvokeQuery(std::string const &name, Query 
     return Status::FAILED;
   }
 
-  // extract the result from the contract output
-  switch (output.type_id)
-  {
-  case vm::TypeIds::Bool:
-    response["result"] = output.Get<bool>();
-    break;
-  case vm::TypeIds::Int8:
-    response["result"] = output.Get<int8_t>();
-    break;
-  case vm::TypeIds::Byte:
-    response["result"] = output.Get<uint8_t>();
-    break;
-  case vm::TypeIds::Int16:
-    response["result"] = output.Get<int16_t>();
-    break;
-  case vm::TypeIds::UInt16:
-    response["result"] = output.Get<uint16_t>();
-    break;
-  case vm::TypeIds::Int32:
-    response["result"] = output.Get<int32_t>();
-    break;
-  case vm::TypeIds::UInt32:
-    response["result"] = output.Get<uint32_t>();
-    break;
-  case vm::TypeIds::Int64:
-    response["result"] = output.Get<int64_t>();
-    break;
-  case vm::TypeIds::UInt64:
-    response["result"] = output.Get<uint64_t>();
-    break;
-  case vm::TypeIds::Float32:
-    response["result"] = output.Get<float>();
-    break;
-  case vm::TypeIds::Float64:
-    response["result"] = output.Get<double>();
-    break;
-  case vm::TypeIds::String:
-    response["result"] = output.Get<vm::Ptr<vm::String>>()->str;
-    break;
-  default:
-    // TODO(private 900): Deal with general data structures
-    break;
-  }
+  //// extract the result from the contract output
+  //switch (output.type_id)
+  //{
+  //case vm::TypeIds::Bool:
+  //  response["result"] = output.Get<bool>();
+  //  break;
+  //case vm::TypeIds::Int8:
+  //  response["result"] = output.Get<int8_t>();
+  //  break;
+  //case vm::TypeIds::Byte:
+  //  response["result"] = output.Get<uint8_t>();
+  //  break;
+  //case vm::TypeIds::Int16:
+  //  response["result"] = output.Get<int16_t>();
+  //  break;
+  //case vm::TypeIds::UInt16:
+  //  response["result"] = output.Get<uint16_t>();
+  //  break;
+  //case vm::TypeIds::Int32:
+  //  response["result"] = output.Get<int32_t>();
+  //  break;
+  //case vm::TypeIds::UInt32:
+  //  response["result"] = output.Get<uint32_t>();
+  //  break;
+  //case vm::TypeIds::Int64:
+  //  response["result"] = output.Get<int64_t>();
+  //  break;
+  //case vm::TypeIds::UInt64:
+  //  response["result"] = output.Get<uint64_t>();
+  //  break;
+  //case vm::TypeIds::Float32:
+  //  response["result"] = output.Get<float>();
+  //  break;
+  //case vm::TypeIds::Float64:
+  //  response["result"] = output.Get<double>();
+  //  break;
+  //case vm::TypeIds::String:
+  //  response["result"] = output.Get<vm::Ptr<vm::String>>()->str;
+  //  break;
+  //default:
+  //  // TODO(private 900): Deal with general data structures
+  //  break;
+  //}
 
   // update the status response to be successful
   response["status"] = "success";

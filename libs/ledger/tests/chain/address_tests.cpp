@@ -28,13 +28,13 @@
 #include <algorithm>
 #include <memory>
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 using fetch::crypto::Identity;
 using fetch::crypto::ECDSASigner;
 using fetch::crypto::SHA256;
 using fetch::crypto::Hash;
 using fetch::ledger::Address;
-using fetch::byte_array::ToBase58;
+using fetch::damnyouwindows_byte_array::ToBase58;
 
 class AddressTests : public ::testing::Test
 {

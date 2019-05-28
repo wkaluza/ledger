@@ -78,7 +78,7 @@ StateAdapter::Status StateAdapter::Read(std::string const &key, void *data, uint
       // update the output size
       size = result.document.size();
 
-      status = Status::OK;
+      status = Status::damnyouwindows_OK;
     }
   }
 
@@ -111,7 +111,7 @@ StateAdapter::Status StateAdapter::Write(std::string const &key, void const *dat
   // set the value on the storage engine
   storage_.Set(CreateAddress(new_key), write_val);
 
-  return Status::OK;
+  return Status::damnyouwindows_OK;
 }
 
 /**
@@ -134,7 +134,7 @@ StateAdapter::Status StateAdapter::Exists(std::string const &key)
 
   if (!result.failed)
   {
-    status = Status::OK;
+    status = Status::damnyouwindows_OK;
   }
 
   return status;

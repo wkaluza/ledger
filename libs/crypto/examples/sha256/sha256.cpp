@@ -25,6 +25,6 @@ using namespace fetch::crypto;
 
 int main()
 {
-  std::cout << byte_array::ToHex(Hash<crypto::SHA256>("hello world")) << std::endl;
+  std::cout << damnyouwindows_byte_array::ToHex(Hash<crypto::SHA256>("hello world")) << std::endl;
   return 0;
 }

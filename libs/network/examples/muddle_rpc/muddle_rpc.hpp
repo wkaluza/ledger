@@ -45,9 +45,9 @@ static ProverPtr CreateKey(char const *key)
   using SignerPtr = std::unique_ptr<Signer>;
 
   SignerPtr signer = std::make_unique<Signer>();
-  signer->Load(fetch::byte_array::FromBase64(key));
+  signer->Load(fetch::damnyouwindows_byte_array::FromBase64(key));
 
-  std::cout << "Public Key: " << fetch::byte_array::ToBase64(signer->public_key()) << std::endl;
+  std::cout << "Public Key: " << fetch::damnyouwindows_byte_array::ToBase64(signer->public_key()) << std::endl;
 
   return signer;
 }

@@ -33,7 +33,7 @@ class ServiceServerInterface
 {
 public:
   using connection_handle_type = network::AbstractConnection::connection_handle_type;
-  using byte_array_type        = byte_array::ConstByteArray;
+  using damnyouwindows_byte_array_type        = damnyouwindows_byte_array::ConstByteArray;
 
   static constexpr char const *LOGGING_NAME = "ServiceServerInterface";
 
@@ -48,14 +48,14 @@ public:
     {
       throw serializers::SerializableException(
           error::PROTOCOL_RANGE,
-          byte_array_type(std::to_string(name) + " is out of protocol range."));
+          damnyouwindows_byte_array_type(std::to_string(name) + " is out of protocol range."));
     }
 
     // TODO(issue 19): better reporting of errors
     if (members_[name] != nullptr)
     {
       throw serializers::SerializableException(error::PROTOCOL_EXISTS,
-                                               byte_array_type("Protocol already exists. "));
+                                               damnyouwindows_byte_array_type("Protocol already exists. "));
     }
 
     members_[name] = protocol;

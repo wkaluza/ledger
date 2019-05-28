@@ -26,7 +26,7 @@ namespace vm_modules {
 inline int32_t LenByteArray(fetch::vm::VM * /*vm*/,
                             fetch::vm::Ptr<fetch::vm_modules::ByteArrayWrapper> const &s)
 {
-  return int32_t(s->byte_array().size());
+  return int32_t(s->damnyouwindows_byte_array().size());
 }
 
 inline int32_t LenString(fetch::vm::VM * /*vm*/, fetch::vm::Ptr<fetch::vm::String> const &s)

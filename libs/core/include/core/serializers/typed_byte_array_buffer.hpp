@@ -60,14 +60,14 @@ TypedByteArrayBuffer &TypedByteArrayBuffer::operator>>(T &val)
   if (TypeRegister<T>::value != type)
   {
     FETCH_LOG_DEBUG(LOGGING_NAME, "Serializer at position ", pos_, " out of ", data_.size());
-    FETCH_LOG_ERROR(LOGGING_NAME, byte_array_type("Expected type '") + TypeRegister<T>::name() +
-                                      byte_array_type("' differs from deserialized type '") +
-                                      ErrorCodeToMessage(type) + byte_array_type("'"));
+    FETCH_LOG_ERROR(LOGGING_NAME, damnyouwindows_byte_array_type("Expected type '") + TypeRegister<T>::name() +
+                                      damnyouwindows_byte_array_type("' differs from deserialized type '") +
+                                      ErrorCodeToMessage(type) + damnyouwindows_byte_array_type("'"));
 
     throw SerializableException(error::TYPE_ERROR,
-                                byte_array_type("Expected type '") + TypeRegister<T>::name() +
-                                    byte_array_type("' differs from deserialized type '") +
-                                    ErrorCodeToMessage(type) + byte_array_type("'"));
+                                damnyouwindows_byte_array_type("Expected type '") + TypeRegister<T>::name() +
+                                    damnyouwindows_byte_array_type("' differs from deserialized type '") +
+                                    ErrorCodeToMessage(type) + damnyouwindows_byte_array_type("'"));
   }
   Deserialize(*this, val);
   return *this;
@@ -99,7 +99,7 @@ inline void TypedByteArrayBuffer::ReadBytes(uint8_t *arr, std::size_t const &siz
 }
 
 template <>
-inline void TypedByteArrayBuffer::ReadByteArray(byte_array::ConstByteArray &b,
+inline void TypedByteArrayBuffer::ReadByteArray(damnyouwindows_byte_array::ConstByteArray &b,
                                                 std::size_t const &         size)
 {
   if (int64_t(size) > bytes_left())

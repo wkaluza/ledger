@@ -27,7 +27,7 @@ using fetch::storage::ResourceID;
 using fetch::storage::RevertibleDocumentStoreProtocol;
 using fetch::muddle::MuddleEndpoint;
 using fetch::service::Promise;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 
 namespace fetch {
 namespace ledger {
@@ -70,7 +70,7 @@ StorageUnitClient::StorageUnitClient(MuddleEndpoint &muddle, ShardConfigs const 
 }
 
 // Get the current hash of the world state (merkle tree root)
-byte_array::ConstByteArray StorageUnitClient::CurrentHash()
+damnyouwindows_byte_array::ConstByteArray StorageUnitClient::CurrentHash()
 {
   MerkleTree                    tree{num_lanes()};
   std::vector<service::Promise> promises;
@@ -87,7 +87,7 @@ byte_array::ConstByteArray StorageUnitClient::CurrentHash()
   for (auto &p : promises)
   {
     FETCH_LOG_PROMISE();
-    tree[index] = p->As<byte_array::ByteArray>();
+    tree[index] = p->As<damnyouwindows_byte_array::ByteArray>();
 
     FETCH_LOG_DEBUG(LOGGING_NAME, "Merkle Hash ", index, ": 0x", tree[index].ToHex());
 
@@ -102,7 +102,7 @@ byte_array::ConstByteArray StorageUnitClient::CurrentHash()
 }
 
 // return the last committed hash (should correspond to the state hash before you began execution)
-byte_array::ConstByteArray StorageUnitClient::LastCommitHash()
+damnyouwindows_byte_array::ConstByteArray StorageUnitClient::LastCommitHash()
 {
   ConstByteArray last_commit_hash = GENESIS_MERKLE_ROOT;
 
@@ -223,7 +223,7 @@ bool StorageUnitClient::RevertToHash(Hash const &hash, uint64_t index)
 }
 
 // We have finished execution presumably, commit this state
-byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t commit_index)
+damnyouwindows_byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t commit_index)
 {
   FETCH_LOG_DEBUG(LOGGING_NAME, "Committing: ", commit_index);
 
@@ -246,7 +246,7 @@ byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t commit_index)
   for (auto &p : promises)
   {
     FETCH_LOG_PROMISE();
-    tree[index] = p->As<byte_array::ByteArray>();
+    tree[index] = p->As<damnyouwindows_byte_array::ByteArray>();
 
     ++index;
   }
@@ -370,7 +370,7 @@ StorageUnitClient::TxLayouts StorageUnitClient::PollRecentTx(uint32_t max_to_pol
   return layouts;
 }
 
-bool StorageUnitClient::GetTransaction(byte_array::ConstByteArray const &digest, Transaction &tx)
+bool StorageUnitClient::GetTransaction(damnyouwindows_byte_array::ConstByteArray const &digest, Transaction &tx)
 {
   bool success{false};
 

@@ -27,7 +27,7 @@ namespace {
 constexpr char const *LOGGING_NAME = "TransactionLayout";
 
 using storage::ResourceAddress;
-using byte_array::ConstByteArray;
+using damnyouwindows_byte_array::ConstByteArray;
 
 void UpdateMaskWithTokenAddress(BitVector &shards, Address const &address, uint32_t log2_num_lanes)
 {

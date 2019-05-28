@@ -39,9 +39,9 @@ namespace ledger {
 namespace {
 
 using fetch::variant::Variant;
-using fetch::byte_array::ByteArray;
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::ledger::FromJsonTransaction;
 
 ConstByteArray const API_PATH_CONTRACT_PREFIX("/api/contract/");
@@ -237,7 +237,7 @@ http::HTTPResponse ContractHttpInterface::OnTransaction(http::HTTPRequest const 
     SubmitTxStatus submitted{};
 
     // detect the content format, defaulting to json
-    byte_array::ConstByteArray content_type = "application/json";
+    damnyouwindows_byte_array::ConstByteArray content_type = "application/json";
     if (request.header().Has("content-type"))
     {
       content_type = request.header()["content-type"];

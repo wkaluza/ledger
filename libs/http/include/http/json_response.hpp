@@ -25,7 +25,7 @@
 namespace fetch {
 namespace http {
 
-inline http::HTTPResponse CreateJsonResponse(byte_array::ConstByteArray const &body,
+inline http::HTTPResponse CreateJsonResponse(damnyouwindows_byte_array::ConstByteArray const &body,
                                              Status status = Status::SUCCESS_OK)
 {
   static const auto jsonMimeType = mime_types::GetMimeTypeFromExtension(".json");

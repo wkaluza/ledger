@@ -50,8 +50,8 @@ class YMLDocument
   };
 
 public:
-  using string_type       = byte_array::ByteArray;
-  using const_string_type = byte_array::ConstByteArray;
+  using string_type       = damnyouwindows_byte_array::ByteArray;
+  using const_string_type = damnyouwindows_byte_array::ConstByteArray;
 
   YMLDocument()
   {}
@@ -72,12 +72,12 @@ public:
     return root()[i];
   }
 
-  typename script::Variant::variant_proxy_type operator[](byte_array::ConstByteArray const &key)
+  typename script::Variant::variant_proxy_type operator[](damnyouwindows_byte_array::ConstByteArray const &key)
   {
     return root()[key];
   }
 
-  script::Variant const &operator[](byte_array::ConstByteArray const &key) const
+  script::Variant const &operator[](damnyouwindows_byte_array::ConstByteArray const &key) const
   {
     return root()[key];
   }

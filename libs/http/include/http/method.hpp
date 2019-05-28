@@ -18,11 +18,11 @@
 //------------------------------------------------------------------------------
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 class ConstByteArray;
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 namespace http {
 
 enum class Method
@@ -36,7 +36,7 @@ enum class Method
 };
 
 char const *ToString(Method method);
-bool        FromString(byte_array::ConstByteArray const &text, Method &method);
+bool        FromString(damnyouwindows_byte_array::ConstByteArray const &text, Method &method);
 
 }  // namespace http
 }  // namespace fetch

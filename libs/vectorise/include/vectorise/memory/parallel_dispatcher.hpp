@@ -335,9 +335,9 @@ public:
       {
         if (Q <= i)
         {
-          ret += first_element(tmp);
+//          ret += first_element(tmp);
         }
-        tmp = shift_elements_right(tmp);
+ //       tmp = shift_elements_right(tmp);
       }
     }
 
@@ -349,7 +349,7 @@ public:
       c   = c + tmp;
     }
 
-    ret += reduce(c);
+//    ret += reduce(c);
 
     // Taking care of the tail
     if (STU != ST)
@@ -361,8 +361,8 @@ public:
       int Q = (int(range.to()) - ST - 1);
       for (int i = 0; i <= Q; ++i)
       {
-        ret += first_element(tmp);
-        tmp = shift_elements_right(tmp);
+//        ret += first_element(tmp);
+  //      tmp = shift_elements_right(tmp);
       }
     }
 
@@ -672,12 +672,12 @@ public:
       int Q = VectorRegisterType::E_BLOCK_COUNT - (SF - int(range.from()));
       for (int i = 0; i < VectorRegisterType::E_BLOCK_COUNT; ++i)
       {
-        type value = first_element(c);
-        c          = shift_elements_right(c);
-        if (Q <= i)
-        {
-          this->pointer()[SFL + i] = value;
-        }
+        //type value = first_element(c);
+        //c          = shift_elements_right(c);
+        //if (Q <= i)
+        //{
+        //  this->pointer()[SFL + i] = value;
+        //}
       }
     }
 
@@ -694,9 +694,9 @@ public:
       int Q = (int(range.to()) - ST - 1);
       for (int i = 0; i <= Q; ++i)
       {
-        type value              = first_element(c);
-        c                       = shift_elements_right(c);
-        this->pointer()[ST + i] = value;
+        //type value              = first_element(c);
+        //c                       = shift_elements_right(c);
+        //this->pointer()[ST + i] = value;
       }
     }
   }
@@ -732,12 +732,12 @@ public:
       int Q = VectorRegisterType::E_BLOCK_COUNT - (SF - int(range.from()));
       for (int i = 0; i < VectorRegisterType::E_BLOCK_COUNT; ++i)
       {
-        type value = first_element(c);
-        c          = shift_elements_right(c);
+//        type value = first_element(c);
+//        c          = shift_elements_right(c);
         if (Q <= i)
         {
 
-          this->pointer()[SFL + i] = value;
+          //this->pointer()[SFL + i] = value;
         }
       }
     }
@@ -762,9 +762,9 @@ public:
       int Q = (int(range.to()) - ST - 1);
       for (int i = 0; i <= Q; ++i)
       {
-        type value              = first_element(c);
-        c                       = shift_elements_right(c);
-        this->pointer()[ST + i] = value;
+        //type value              = first_element(c);
+        //c                       = shift_elements_right(c);
+        //this->pointer()[ST + i] = value;
       }
     }
   }

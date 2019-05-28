@@ -136,11 +136,11 @@ public:
 
   void Resize(uint64_t size);
 
-  void Write(byte_array::ConstByteArray const &arr);
+  void Write(damnyouwindows_byte_array::ConstByteArray const &arr);
 
   void Write(uint8_t const *bytes, uint64_t const &num);
 
-  void Read(byte_array::ByteArray &arr);
+  void Read(damnyouwindows_byte_array::ByteArray &arr);
 
   void Read(uint8_t *bytes, uint64_t const &m);
 
@@ -148,7 +148,7 @@ public:
 
   uint64_t FileObjectSize() const;
 
-  byte_array::ConstByteArray Hash();
+  damnyouwindows_byte_array::ConstByteArray Hash();
 
   void UpdateHash(crypto::StreamHasher &hasher);
 
@@ -333,7 +333,7 @@ void FileObject<S>::Resize(uint64_t size)
 }
 
 template <typename S>
-void FileObject<S>::Write(byte_array::ConstByteArray const &arr)
+void FileObject<S>::Write(damnyouwindows_byte_array::ConstByteArray const &arr)
 {
   Write(arr.pointer(), arr.size());
 }
@@ -400,7 +400,7 @@ void FileObject<S>::Write(uint8_t const *bytes, uint64_t const &num)
 }
 
 template <typename S>
-void FileObject<S>::Read(byte_array::ByteArray &arr)
+void FileObject<S>::Read(damnyouwindows_byte_array::ByteArray &arr)
 {
   Read(arr.pointer(), arr.size());
 }
@@ -425,7 +425,7 @@ uint64_t FileObject<S>::FileObjectSize() const
 }
 
 template <typename S>
-byte_array::ConstByteArray FileObject<S>::Hash()
+damnyouwindows_byte_array::ConstByteArray FileObject<S>::Hash()
 {
   hasher_type hasher;
   hasher.Reset();
@@ -438,7 +438,7 @@ template <typename S>
 void FileObject<S>::UpdateHash(crypto::StreamHasher &hasher)
 {
   Seek(0);
-  byte_array::ByteArray arr;
+  damnyouwindows_byte_array::ByteArray arr;
   arr.Resize(length_);
   Read(arr);
 

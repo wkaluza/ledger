@@ -31,7 +31,7 @@ class UnrecognisedJSONSymbolException : public std::exception
   std::string str_;
 
 public:
-  UnrecognisedJSONSymbolException(byte_array::Token const &token)
+  UnrecognisedJSONSymbolException(damnyouwindows_byte_array::Token const &token)
   {
     std::stringstream msg;
     msg << "Unrecognised symbol '";

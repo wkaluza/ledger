@@ -22,7 +22,7 @@
 #include "core/byte_array/decoders.hpp"
 #include "core/byte_array/encoders.hpp"
 
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 TEST(core_encode_decode_gtest, Hex_encode_decode_self_consistentcy)
 {

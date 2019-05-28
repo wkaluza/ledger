@@ -18,13 +18,13 @@
 //------------------------------------------------------------------------------
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 class ConstByteArray;
 }
 
 namespace crypto {
 
-bool IsFetchIdentity(byte_array::ConstByteArray const &identity);
+bool IsFetchIdentity(damnyouwindows_byte_array::ConstByteArray const &identity);
 
 }  // namespace crypto
 }  // namespace fetch

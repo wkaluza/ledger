@@ -39,9 +39,9 @@ meta::IfIsSignedInteger<T, uint64_t> ToU64(T value)
 }
 
 template <typename T>
-meta::IfIsInteger<T, fetch::byte_array::ConstByteArray> EncodeInteger(T value)
+meta::IfIsInteger<T, fetch::damnyouwindows_byte_array::ConstByteArray> EncodeInteger(T value)
 {
-  using fetch::byte_array::ByteArray;
+  using fetch::damnyouwindows_byte_array::ByteArray;
 
   bool const is_signed = meta::IsSignedInteger<T> && (value < 0);
 

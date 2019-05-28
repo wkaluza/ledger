@@ -39,7 +39,7 @@ namespace http {
 class HTTPRequest
 {
 public:
-  using byte_array_type = byte_array::ConstByteArray;
+  using damnyouwindows_byte_array_type = damnyouwindows_byte_array::ConstByteArray;
 
   static constexpr char const *LOGGING_NAME = "HTTPRequest";
 
@@ -53,12 +53,12 @@ public:
     return method_;
   }
 
-  byte_array_type const &uri() const
+  damnyouwindows_byte_array_type const &uri() const
   {
     return uri_;
   }
 
-  byte_array_type const &protocol() const
+  damnyouwindows_byte_array_type const &protocol() const
   {
     return protocol_;
   }
@@ -88,7 +88,7 @@ public:
     return content_length_;
   }
 
-  byte_array::ConstByteArray body() const
+  damnyouwindows_byte_array::ConstByteArray body() const
   {
     return body_data_;
   }
@@ -105,17 +105,17 @@ public:
     method_ = method;
   }
 
-  void SetURI(byte_array_type const &uri)
+  void SetURI(damnyouwindows_byte_array_type const &uri)
   {
     uri_ = uri;
   }
 
-  void SetBody(byte_array::ByteArray const &body)
+  void SetBody(damnyouwindows_byte_array::ByteArray const &body)
   {
     body_data_ = body;
   }
 
-  void AddHeader(byte_array::ConstByteArray const &key, byte_array::ConstByteArray const &value)
+  void AddHeader(damnyouwindows_byte_array::ConstByteArray const &key, damnyouwindows_byte_array::ConstByteArray const &value)
   {
     header_.Add(key, value);
   }
@@ -139,21 +139,21 @@ public:
   }
 
 private:
-  bool ParseStartLine(byte_array::ByteArray &line);
+  bool ParseStartLine(damnyouwindows_byte_array::ByteArray &line);
 
   std::string originating_address_{};
   uint16_t    originating_port_{0};
 
-  byte_array::ByteArray header_data_;
-  byte_array::ByteArray body_data_;
+  damnyouwindows_byte_array::ByteArray header_data_;
+  damnyouwindows_byte_array::ByteArray body_data_;
 
   Header   header_;
   QuerySet query_;
 
   Method          method_;
-  byte_array_type full_uri_;
-  byte_array_type uri_;
-  byte_array_type protocol_;
+  damnyouwindows_byte_array_type full_uri_;
+  damnyouwindows_byte_array_type uri_;
+  damnyouwindows_byte_array_type protocol_;
 
   bool is_valid_ = true;
 

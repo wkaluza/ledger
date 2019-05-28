@@ -20,17 +20,17 @@
 #include "core/byte_array/encoders.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 ConstByteArray ConstByteArray::ToBase64() const
 {
-  return ::fetch::byte_array::ToBase64(*this);
+  return ::fetch::damnyouwindows_byte_array::ToBase64(*this);
 }
 
 ConstByteArray ConstByteArray::ToHex() const
 {
-  return ::fetch::byte_array::ToHex(*this);
+  return ::fetch::damnyouwindows_byte_array::ToHex(*this);
 }
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

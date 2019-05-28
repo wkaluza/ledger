@@ -211,7 +211,7 @@ TransactionStoreSyncService::State TransactionStoreSyncService::OnQuerySubtree()
     auto root = roots_to_sync_.front();
     roots_to_sync_.pop();
 
-    byte_array::ByteArray transactions_prefix;
+    damnyouwindows_byte_array::ByteArray transactions_prefix;
 
     transactions_prefix.Resize(std::size_t{ResourceID::RESOURCE_ID_SIZE_IN_BYTES});
     transactions_prefix[0] = root;

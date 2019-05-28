@@ -60,7 +60,7 @@ void FeedSubscriptionManager::AttachToService(ServiceServerInterface *service)
 
   auto feed = feed_;
   publisher_->create_publisher(feed_,
-                               [service, feed, this](fetch::byte_array::ConstByteArray const &msg) {
+                               [service, feed, this](fetch::damnyouwindows_byte_array::ConstByteArray const &msg) {
                                  serializer_type params;
                                  params << SERVICE_FEED << feed;
 

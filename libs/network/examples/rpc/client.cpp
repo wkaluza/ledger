@@ -35,7 +35,7 @@
 #include <vector>
 
 using namespace fetch::service;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 using fetch::muddle::Muddle;
 using fetch::muddle::NetworkId;

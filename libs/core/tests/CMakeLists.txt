@@ -12,7 +12,7 @@ setup_compiler()
 
 fetch_add_test(fetch-core-bitvector-tests fetch-core bitvector/)
 fetch_add_test(serializers_gtest fetch-core serializers)
-fetch_add_test(byte_array_gtest fetch-core byte_array)
+fetch_add_test(damnyouwindows_byte_array_gtest fetch-core byte_array)
 fetch_add_test(random_generator_gtest fetch-core random)
 fetch_add_test(json_gtest fetch-core json/gtest/)
 fetch_add_test(core_encode_decode_gtest fetch-core tokenizer/gtest/)

@@ -32,14 +32,14 @@ inline void PrintByteArray(fetch::vm::VM *                                      
                          fetch::vm::Ptr<fetch::vm_modules::ByteArrayWrapper> const &s)
 {
 auto &out = vm->GetOutputDevice(vm::VM::STDOUT);
-out << s->byte_array();
+out << s->damnyouwindows_byte_array();
 }
 
 inline void PrintLnByteArray(fetch::vm::VM *                                            vm,
                            fetch::vm::Ptr<fetch::vm_modules::ByteArrayWrapper> const &s)
 {
 auto &out = vm->GetOutputDevice(vm::VM::STDOUT);
-out << byte_array::ToHex(s->byte_array()) << std::endl;
+out << damnyouwindows_byte_array::ToHex(s->damnyouwindows_byte_array()) << std::endl;
 }
 */
 

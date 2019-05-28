@@ -241,8 +241,8 @@ public:
 
     // format and generate the time
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-    std::cout << "[ " << GetColor(color, bg_color) << std::put_time(std::localtime(&now_c), "%F %T")
-              << "." << std::setw(3) << millis << DefaultAttributes();
+    //std::cout << "[ " << GetColor(color, bg_color) << std::put_time(std::localtime(&now_c), "%F %T")
+    //          << "." << std::setw(3) << millis << DefaultAttributes();
 
     // thread information
     std::cout << ", #" << std::setw(2) << thread_number << ' ' << level_name;

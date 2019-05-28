@@ -40,6 +40,8 @@ macro (setup_compiler)
   # platform configuration
   if (WIN32)
     add_definitions(-DFETCH_PLATFORM_WINDOWS)
+    add_definitions(-DNOMINMAX)
+    add_definitions(-DWIN32_LEAN_AND_MEAN)
   elseif (APPLE)
     add_definitions(-DFETCH_PLATFORM_MACOS)
   else () # assume linux flavour
@@ -64,17 +66,17 @@ macro (setup_compiler)
     set(_compiler_arch "avx2")
   endif ()
 
-  # update actual compiler configuration
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${_compiler_arch}")
+#  # update actual compiler configuration
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${_compiler_arch}")
 
   # warnings
   if (WIN32 AND MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W4")#???W4?
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3")#???W4?
   else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wpedantic")
   endif()
-  # Suppress visibility link warnings
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+#  # Suppress visibility link warnings
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 
   if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-pragmas")
@@ -89,8 +91,13 @@ macro (setup_compiler)
     endif()
   endif(FETCH_WARNINGS_AS_ERRORS)
 
-  # prefer PIC
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+      if (MSVC)
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")#???warnings as errors
+    endif()
+
+
+#  # prefer PIC
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
   set(_is_clang_compiler FALSE)
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"

@@ -91,7 +91,7 @@ public:
     handle_type           client;
     network::message_type message;
   };
-  using byte_array_type = byte_array::ConstByteArray;
+  using damnyouwindows_byte_array_type = damnyouwindows_byte_array::ConstByteArray;
 
   ServiceServer(uint16_t port, network_manager_type network_manager)
     : super_type(port, network_manager)
@@ -198,7 +198,7 @@ private:
               FETCH_LOG_ERROR(LOGGING_NAME, "Possibly a response to a client?");
 
               throw serializers::SerializableException(
-                  error::UNKNOWN_MESSAGE, byte_array::ConstByteArray("Unknown message"));
+                  error::UNKNOWN_MESSAGE, damnyouwindows_byte_array::ConstByteArray("Unknown message"));
               TODO_FAIL("call type not implemented yet");
             }
           }

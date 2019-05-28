@@ -20,11 +20,11 @@
 #include "core/byte_array/byte_array.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 ConstByteArray FromBase64(ConstByteArray const &str) noexcept;
 ConstByteArray FromHex(ConstByteArray const &str) noexcept;
 ConstByteArray FromBase58(ConstByteArray const &str);
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

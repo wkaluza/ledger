@@ -22,7 +22,7 @@
 #include "crypto/ecdsa.hpp"
 
 using fetch::crypto::ECDSASigner;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 
 int main()
 {

@@ -94,7 +94,7 @@ private:
   uint64_t ObjectCount();
   TxArray  PullObjects(service::CallContext const *call_context);
 
-  TxArray PullSubtree(byte_array::ConstByteArray const &rid, uint64_t mask);
+  TxArray PullSubtree(damnyouwindows_byte_array::ConstByteArray const &rid, uint64_t mask);
   TxArray PullSpecificObjects(std::vector<storage::ResourceID> const &rids);
 
   ObjectStore *store_;  ///< The pointer to the object store

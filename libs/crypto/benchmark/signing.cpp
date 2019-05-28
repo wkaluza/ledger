@@ -26,8 +26,8 @@
 
 using fetch::crypto::ECDSASigner;
 using fetch::crypto::ECDSAVerifier;
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 using fetch::random::LinearCongruentialGenerator;
 
 namespace {

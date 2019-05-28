@@ -50,7 +50,7 @@ char const *ToString(Method method)
   return text;
 }
 
-bool FromString(byte_array::ConstByteArray const &text, Method &method)
+bool FromString(damnyouwindows_byte_array::ConstByteArray const &text, Method &method)
 {
   bool success = true;
 

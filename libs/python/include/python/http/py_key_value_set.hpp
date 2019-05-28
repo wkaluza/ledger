@@ -27,7 +27,7 @@ namespace http {
 void BuildKeyValueSet(pybind11::module &module)
 {
   namespace py = pybind11;
-  py::class_<KeyValueSet, std::map<byte_array::ConstByteArray, byte_array::ConstByteArray>>(
+  py::class_<KeyValueSet, std::map<damnyouwindows_byte_array::ConstByteArray, damnyouwindows_byte_array::ConstByteArray>>(
       module, "KeyValueSet")
       .def(py::init<>()) /* No constructors found */
       .def("begin",
@@ -39,17 +39,17 @@ void BuildKeyValueSet(pybind11::module &module)
                       KeyValueSet::end)
       .def("Clear", &KeyValueSet::Clear)
       .def("cbegin", &KeyValueSet::cbegin)
-      .def("Add", (void (KeyValueSet::*)(const fetch::http::KeyValueSet::byte_array_type &,
-                                         const fetch::http::KeyValueSet::byte_array_type &)) &
+      .def("Add", (void (KeyValueSet::*)(const fetch::http::KeyValueSet::damnyouwindows_byte_array_type &,
+                                         const fetch::http::KeyValueSet::damnyouwindows_byte_array_type &)) &
                       KeyValueSet::Add)
       .def("Add",
-           (void (KeyValueSet::*)(const fetch::http::KeyValueSet::byte_array_type &, const int &)) &
+           (void (KeyValueSet::*)(const fetch::http::KeyValueSet::damnyouwindows_byte_array_type &, const int &)) &
                KeyValueSet::Add)
       .def("operator[]",
-           (byte_array::ConstByteArray & (KeyValueSet::*)(const byte_array::ConstByteArray &)) &
+           (damnyouwindows_byte_array::ConstByteArray & (KeyValueSet::*)(const damnyouwindows_byte_array::ConstByteArray &)) &
                KeyValueSet::operator[])
-      .def("operator[]", (const byte_array::ConstByteArray &(
-                             KeyValueSet::*)(const byte_array::ConstByteArray &)const) &
+      .def("operator[]", (const damnyouwindows_byte_array::ConstByteArray &(
+                             KeyValueSet::*)(const damnyouwindows_byte_array::ConstByteArray &)const) &
                              KeyValueSet::operator[])
       .def("Has", &KeyValueSet::Has)
       .def("cend", &KeyValueSet::cend);

@@ -31,7 +31,7 @@ static constexpr char const *LOGGING_NAME = "TxBuilder";
 namespace fetch {
 namespace ledger {
 
-using byte_array::ConstByteArray;
+using damnyouwindows_byte_array::ConstByteArray;
 
 /**
  * Construct the sealed builder from a given transaction pointer
@@ -246,7 +246,7 @@ TransactionBuilder &TransactionBuilder::TargetSmartContract(Address const &  dig
   partial_transaction_->contract_mode_    = Transaction::ContractMode::PRESENT;
   partial_transaction_->contract_digest_  = digest;
   partial_transaction_->contract_address_ = address;
-  partial_transaction_->chain_code_       = byte_array::ConstByteArray{};
+  partial_transaction_->chain_code_       = damnyouwindows_byte_array::ConstByteArray{};
   partial_transaction_->shard_mask_       = shard_mask;
   return *this;
 }
@@ -258,7 +258,7 @@ TransactionBuilder &TransactionBuilder::TargetSmartContract(Address const &  dig
  * @param shard_mask The resource shard mask
  * @return The current builder instance
  */
-TransactionBuilder &TransactionBuilder::TargetChainCode(byte_array::ConstByteArray const &ref,
+TransactionBuilder &TransactionBuilder::TargetChainCode(damnyouwindows_byte_array::ConstByteArray const &ref,
                                                         BitVector const &shard_mask)
 {
   partial_transaction_->contract_mode_    = Transaction::ContractMode::CHAIN_CODE;
@@ -275,7 +275,7 @@ TransactionBuilder &TransactionBuilder::TargetChainCode(byte_array::ConstByteArr
  * @param action The action to be triggered
  * @return The current builder instance
  */
-TransactionBuilder &TransactionBuilder::Action(byte_array::ConstByteArray const &action)
+TransactionBuilder &TransactionBuilder::Action(damnyouwindows_byte_array::ConstByteArray const &action)
 {
   partial_transaction_->action_ = action;
   return *this;
@@ -287,7 +287,7 @@ TransactionBuilder &TransactionBuilder::Action(byte_array::ConstByteArray const 
  * @param data The data buffer for the transaction
  * @return The current builder instance
  */
-TransactionBuilder &TransactionBuilder::Data(byte_array::ConstByteArray const &data)
+TransactionBuilder &TransactionBuilder::Data(damnyouwindows_byte_array::ConstByteArray const &data)
 {
   partial_transaction_->data_ = data;
   return *this;

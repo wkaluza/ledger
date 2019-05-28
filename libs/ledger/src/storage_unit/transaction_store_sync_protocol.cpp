@@ -19,7 +19,7 @@
 #include "ledger/storage_unit/transaction_store_sync_protocol.hpp"
 #include "ledger/chain/transaction_rpc_serializers.hpp"
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 // TODO(issue 7): Make cache configurable
 constexpr uint32_t MAX_CACHE_LIFETIME_MS = 20000;
@@ -126,7 +126,7 @@ uint64_t TransactionStoreSyncProtocol::ObjectCount()
  * @return: the subtree the client is requesting as a vector (size limited)
  */
 TransactionStoreSyncProtocol::TxArray TransactionStoreSyncProtocol::PullSubtree(
-    byte_array::ConstByteArray const &rid, uint64_t bit_count)
+    damnyouwindows_byte_array::ConstByteArray const &rid, uint64_t bit_count)
 {
   return store_->PullSubtree(rid, bit_count, PULL_LIMIT_);
 }

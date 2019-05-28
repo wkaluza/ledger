@@ -88,7 +88,7 @@ protected:
     if (lookup_success)
     {
       // inform the world
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Sending message to: ", byte_array::ToBase64(target),
+      FETCH_LOG_DEBUG(LOGGING_NAME, "Sending message to: ", damnyouwindows_byte_array::ToBase64(target),
                       " on: ", service, ':', channel, ':', counter);
 
       // send the message back to the server
@@ -106,8 +106,8 @@ private:
   void OnMessage(Address const &from, uint16_t service, uint16_t channel, uint16_t counter,
                  Packet::Payload const &payload, Address const &transmitter)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Recv message from: ", byte_array::ToBase64(from),
-                    " via:", byte_array::ToBase64(transmitter), " on: ", service, ':', channel, ':',
+    FETCH_LOG_DEBUG(LOGGING_NAME, "Recv message from: ", damnyouwindows_byte_array::ToBase64(from),
+                    " via:", damnyouwindows_byte_array::ToBase64(transmitter), " on: ", service, ':', channel, ':',
                     counter);
 
     // insert data into the metadata
@@ -129,7 +129,7 @@ private:
     }
     catch (std::exception const &ex)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME, "Recv message from: ", byte_array::ToBase64(from),
+      FETCH_LOG_ERROR(LOGGING_NAME, "Recv message from: ", damnyouwindows_byte_array::ToBase64(from),
                       " on: ", service, ':', channel, ':', counter, " -- ", ex.what());
     }
   }

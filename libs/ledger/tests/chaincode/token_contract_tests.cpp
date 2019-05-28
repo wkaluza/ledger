@@ -48,7 +48,7 @@ struct Entity
   Address             address{signer.identity()};
 };
 
-using ConstByteArray = byte_array::ConstByteArray;
+using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 using Entities       = std::vector<Entity>;
 using SigneesPtr     = std::shared_ptr<Deed::Signees>;
 using ThresholdsPtr  = std::shared_ptr<Deed::OperationTresholds>;

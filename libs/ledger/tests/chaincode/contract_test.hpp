@@ -37,8 +37,8 @@ class ContractTest : public ::testing::Test
 protected:
   using Identity             = fetch::crypto::Identity;
   using Identifier           = fetch::ledger::Identifier;
-  using ConstByteArray       = fetch::byte_array::ConstByteArray;
-  using ByteArray            = fetch::byte_array::ByteArray;
+  using ConstByteArray       = fetch::damnyouwindows_byte_array::ConstByteArray;
+  using ByteArray            = fetch::damnyouwindows_byte_array::ByteArray;
   using Contract             = fetch::ledger::Contract;
   using ContractPtr          = std::shared_ptr<Contract>;
   using MockStorageUnitPtr   = std::unique_ptr<MockStorageUnit>;

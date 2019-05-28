@@ -26,7 +26,7 @@ namespace crypto {
 class Prover
 {
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   // Construction / Destruction
   Prover()          = default;

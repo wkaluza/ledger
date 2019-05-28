@@ -29,7 +29,7 @@ class Bid;
 
 using ItemId        = std::size_t;
 using BidId         = std::size_t;
-using BlockId       = fetch::byte_array::ByteArray;
+using BlockId       = fetch::damnyouwindows_byte_array::ByteArray;
 using Value         = double;
 using AgentId       = std::size_t;
 using ItemContainer = std::unordered_map<ItemId, Item>;

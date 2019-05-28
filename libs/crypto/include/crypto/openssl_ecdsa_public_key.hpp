@@ -33,7 +33,7 @@ class ECDSAPublicKey
 {
   shrd_ptr_type<EC_POINT>    key_EC_POINT_;
   shrd_ptr_type<EC_KEY>      key_EC_KEY_;
-  byte_array::ConstByteArray key_binary_;
+  damnyouwindows_byte_array::ConstByteArray key_binary_;
 
 public:
   using ecdsa_curve_type = ECDSACurve<P_ECDSA_Curve_NID>;
@@ -54,7 +54,7 @@ public:
     , key_binary_{Convert(public_key.get(), group, session, binaryDataFormat)}
   {}
 
-  ECDSAPublicKey(byte_array::ConstByteArray key_data)
+  ECDSAPublicKey(damnyouwindows_byte_array::ConstByteArray key_data)
     : key_EC_POINT_{Convert(key_data, binaryDataFormat)}
     , key_EC_KEY_{ConvertToECKEY(key_EC_POINT_.get())}
     , key_binary_{std::move(key_data)}
@@ -106,7 +106,7 @@ public:
     return key_EC_KEY_;
   }
 
-  const byte_array::ConstByteArray &keyAsBin() const
+  const damnyouwindows_byte_array::ConstByteArray &keyAsBin() const
   {
     return key_binary_;
   }
@@ -114,7 +114,7 @@ public:
 private:
   using affine_coord_conversion_type = ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>;
 
-  static byte_array::ByteArray Convert(EC_POINT const *const           public_key,
+  static damnyouwindows_byte_array::ByteArray Convert(EC_POINT const *const           public_key,
                                        EC_GROUP const *const           group,
                                        context::Session<BN_CTX> const &session,
                                        eECDSAEncoding const            binaryDataFormat)
@@ -137,7 +137,7 @@ private:
     return {};
   }
 
-  static byte_array::ByteArray Convert(EC_POINT const *const public_key,
+  static damnyouwindows_byte_array::ByteArray Convert(EC_POINT const *const public_key,
                                        eECDSAEncoding const  binaryDataFormat)
   {
     uniq_ptr_type<EC_GROUP>  group{createGroup()};
@@ -156,7 +156,7 @@ private:
     return {};
   }
 
-  static uniq_ptr_type<EC_POINT> Convert(byte_array::ConstByteArray const &key_data,
+  static uniq_ptr_type<EC_POINT> Convert(damnyouwindows_byte_array::ConstByteArray const &key_data,
                                          eECDSAEncoding const              binaryDataFormat)
   {
     switch (binaryDataFormat)
@@ -176,7 +176,7 @@ private:
     return {};
   }
 
-  static byte_array::ByteArray Convert2Canonical(EC_POINT const *const           public_key,
+  static damnyouwindows_byte_array::ByteArray Convert2Canonical(EC_POINT const *const           public_key,
                                                  EC_GROUP const *const           group,
                                                  context::Session<BN_CTX> const &session)
   {
@@ -187,7 +187,7 @@ private:
     return affine_coord_conversion_type::Convert2Canonical(x.get(), y.get());
   }
 
-  static byte_array::ByteArray Convert2Bin(EC_POINT const *const           public_key,
+  static damnyouwindows_byte_array::ByteArray Convert2Bin(EC_POINT const *const           public_key,
                                            EC_GROUP const *const           group,
                                            context::Session<BN_CTX> const &session)
   {
@@ -200,7 +200,7 @@ private:
           "`EC_POINT_point2bn(...)` functioni failed.");
     }
 
-    byte_array::ByteArray pub_key_as_bin;
+    damnyouwindows_byte_array::ByteArray pub_key_as_bin;
     pub_key_as_bin.Resize(static_cast<std::size_t>(BN_num_bytes(public_key_as_BN.get())));
 
     if (!BN_bn2bin(public_key_as_BN.get(), static_cast<unsigned char *>(pub_key_as_bin.pointer())))
@@ -211,7 +211,7 @@ private:
     return pub_key_as_bin;
   }
 
-  static uniq_ptr_type<EC_POINT> ConvertFromCanonical(byte_array::ConstByteArray const &key_data)
+  static uniq_ptr_type<EC_POINT> ConvertFromCanonical(damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     uniq_ptr_type<EC_GROUP>  group{createGroup()};
     uniq_ptr_type<EC_POINT>  public_key{EC_POINT_new(group.get())};
@@ -233,7 +233,7 @@ private:
     return public_key;
   }
 
-  static uniq_ptr_type<EC_POINT> ConvertFromBin(byte_array::ConstByteArray const &key_data)
+  static uniq_ptr_type<EC_POINT> ConvertFromBin(damnyouwindows_byte_array::ConstByteArray const &key_data)
   {
     uniq_ptr_type<BIGNUM> pub_key_as_BN{BN_new()};
     if (!BN_bin2bn(static_cast<const unsigned char *>(key_data.pointer()), int(key_data.size()),

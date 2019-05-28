@@ -25,7 +25,7 @@
 #include <algorithm>
 #include <utility>
 
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 using fetch::generics::MilliTimer;
 
 namespace fetch {
@@ -962,7 +962,7 @@ BlockStatus MainChain::InsertBlock(IntBlockPtr const &block, bool evaluate_loose
       block->is_loose = true;
 
       FETCH_LOG_DEBUG(LOGGING_NAME, "Previous block not found: ",
-                      byte_array::ToBase64(block->body.previous_hash));
+                      damnyouwindows_byte_array::ToBase64(block->body.previous_hash));
     }
   }
   else  // special case - being called from inside CompleteLooseBlocks
@@ -1292,7 +1292,7 @@ bool MainChain::HeaviestTip::Update(Block const &block)
 
 MainChain::BlockHash MainChain::GetHeadHash()
 {
-  byte_array::ByteArray buffer;
+  damnyouwindows_byte_array::ByteArray buffer;
 
   // determine is the hash has already been stored once
   head_store_.seekg(0, std::ios::end);

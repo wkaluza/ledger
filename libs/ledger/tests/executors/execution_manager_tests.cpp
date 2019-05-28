@@ -180,7 +180,7 @@ TEST_P(ExecutionManagerTests, CheckIncrementalExecution)
   // start the execution manager
   manager_->Start();
 
-  fetch::byte_array::ConstByteArray prev_hash;
+  fetch::damnyouwindows_byte_array::ConstByteArray prev_hash;
 
   // execute the block
   ASSERT_EQ(manager_->Execute(block.block), ExecutionManager::ScheduleStatus::SCHEDULED);

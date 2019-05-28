@@ -46,12 +46,12 @@ namespace storage {
  * this map.
  *
  */
-template <typename T, typename D = uint64_t, typename STACK = RandomAccessStack<T, D>>
+template <typename T, typename D = uint64_t, typename damnyouwindows_STACK = RandomAccessStack<T, D>>
 class CachedRandomAccessStack
 {
 public:
   using event_handler_type = std::function<void()>;
-  using stack_type         = STACK;
+  using stack_type         = damnyouwindows_STACK;
   using header_extra_type  = D;
   using type               = T;
 

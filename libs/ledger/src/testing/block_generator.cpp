@@ -43,7 +43,7 @@ void BlockGenerator::Reset()
 
 BlockGenerator::BlockPtr BlockGenerator::Generate(BlockPtr const &from, uint64_t weight)
 {
-  using fetch::byte_array::ByteArray;
+  using fetch::damnyouwindows_byte_array::ByteArray;
 
   auto block = std::make_shared<Block>();
 

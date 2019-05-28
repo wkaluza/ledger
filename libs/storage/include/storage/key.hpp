@@ -72,7 +72,7 @@ struct Key
 
   // TODO(private issue 957): There are a number of implicit conversions for this key, in many
   //                          places it might be a bug.
-  /*explicit*/ Key(byte_array::ConstByteArray const &key)
+  /*explicit*/ Key(damnyouwindows_byte_array::ConstByteArray const &key)
   {
     assert(key.size() == BYTES);
 
@@ -158,9 +158,9 @@ struct Key
    *
    * @return: the byte array
    */
-  byte_array::ByteArray ToByteArray() const
+  damnyouwindows_byte_array::ByteArray ToByteArray() const
   {
-    byte_array::ByteArray ret;
+    damnyouwindows_byte_array::ByteArray ret;
     ret.Resize(BYTES);
 
     KeyArrayNative &ret_reinterpret{*reinterpret_cast<KeyArrayNative *>(ret.pointer())};

@@ -66,7 +66,7 @@ protected:
   using PeerTrusts   = typename P2PTrustInterface<IDENTITY>::PeerTrusts;
 
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using IdentitySet    = typename P2PTrustInterface<IDENTITY>::IdentitySet;
   using PeerTrust      = typename P2PTrustInterface<IDENTITY>::PeerTrust;
 
@@ -103,7 +103,7 @@ public:
       pos = ranking->second;
     }
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Feedback: ", byte_array::ToBase64(peer_ident),
+    FETCH_LOG_DEBUG(LOGGING_NAME, "Feedback: ", damnyouwindows_byte_array::ToBase64(peer_ident),
                     " subj=", ToString(subject), " qual=", ToString(quality));
     if (quality == TrustQuality::NEW_PEER)
     {
@@ -213,7 +213,7 @@ public:
     {
       PeerTrust pt;
       pt.address        = trust_store_[pos].peer_identity;
-      pt.name           = std::string(byte_array::ToBase64(pt.address));
+      pt.name           = std::string(damnyouwindows_byte_array::ToBase64(pt.address));
       pt.trust          = trust_store_[pos].score;
       pt.has_transacted = trust_store_[pos].scored;
       trust_list.push_back(pt);
@@ -251,7 +251,7 @@ public:
     for (std::size_t pos = 0; pos < trust_store_.size(); ++pos)
     {
       FETCH_LOG_WARN(LOGGING_NAME, "trust_store_ ",
-                     byte_array::ToBase64(trust_store_[pos].peer_identity), " => ",
+                     damnyouwindows_byte_array::ToBase64(trust_store_[pos].peer_identity), " => ",
                      trust_store_[pos].score);
     }
   }

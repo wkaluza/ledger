@@ -23,7 +23,7 @@
 #include <utility>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 class ByteArray : public ConstByteArray
 {
@@ -56,5 +56,5 @@ public:
   }
 };
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

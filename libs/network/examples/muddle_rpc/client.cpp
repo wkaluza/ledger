@@ -48,7 +48,7 @@ int main()
   sleep_for(milliseconds{2000});
   FETCH_LOG_INFO("RpcClientMain", "============================");
 
-  auto const server_key = fetch::byte_array::FromBase64(SERVER_PUBLIC_KEY);
+  auto const server_key = fetch::damnyouwindows_byte_array::FromBase64(SERVER_PUBLIC_KEY);
 
   auto client = std::make_shared<Client>("Client", muddle.AsEndpoint(), server_key, 1, 1);
 

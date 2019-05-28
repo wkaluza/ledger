@@ -31,8 +31,8 @@ public:
   virtual void        Final(uint8_t *hash, std::size_t const &size)                = 0;
   virtual std::size_t GetSizeInBytes() const                                       = 0;
 
-  bool                  Update(byte_array::ConstByteArray const &data);
-  byte_array::ByteArray Final();
+  bool                  Update(damnyouwindows_byte_array::ConstByteArray const &data);
+  damnyouwindows_byte_array::ByteArray Final();
 
   template <typename T>
   meta::IfIsPod<T, T> Final()

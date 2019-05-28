@@ -83,7 +83,7 @@ public:
 
   std::size_t Size() const;
 
-  TxArray PullSubtree(byte_array::ConstByteArray const &rid, uint64_t bit_count,
+  TxArray PullSubtree(damnyouwindows_byte_array::ConstByteArray const &rid, uint64_t bit_count,
                       uint64_t pull_limit);
 
   WeakRunnable GetWeakRunnable() const;
@@ -158,7 +158,7 @@ std::size_t TransientObjectStore<O>::Size() const
 
 template <typename O>
 typename TransientObjectStore<O>::TxArray TransientObjectStore<O>::PullSubtree(
-    byte_array::ConstByteArray const &rid, uint64_t bit_count, uint64_t pull_limit)
+    damnyouwindows_byte_array::ConstByteArray const &rid, uint64_t bit_count, uint64_t pull_limit)
 {
   TxArray ret{};
 
@@ -342,7 +342,7 @@ bool TransientObjectStore<O>::Get(ResourceID const &rid, O &object)
 
   if (!success)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Unable to retrieve TX: ", byte_array::ToBase64(rid.id()));
+    FETCH_LOG_INFO(LOGGING_NAME, "Unable to retrieve TX: ", damnyouwindows_byte_array::ToBase64(rid.id()));
   }
 
   return success;
@@ -405,7 +405,7 @@ void TransientObjectStore<O>::Set(ResourceID const &rid, O const &object, bool n
 {
   static core::Tickets::Count prev_count{0};
 
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Adding TX: ", byte_array::ToBase64(rid.id()));
+  FETCH_LOG_DEBUG(LOGGING_NAME, "Adding TX: ", damnyouwindows_byte_array::ToBase64(rid.id()));
 
   {
     FETCH_LOCK(cache_mutex_);

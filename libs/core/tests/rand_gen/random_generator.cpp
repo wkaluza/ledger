@@ -31,7 +31,7 @@ uint32_t GetRandom()
   return dis(gen);
 }
 
-using message_type    = byte_array::ByteArray;
+using message_type    = damnyouwindows_byte_array::ByteArray;
 const int MID_CYCLES  = 50;
 const int PACKET_SIZE = 1000000
 

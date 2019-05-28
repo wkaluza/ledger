@@ -23,7 +23,7 @@
 
 namespace {
 
-using fetch::byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::FromHex;
 using fetch::serializers::ByteArrayBuffer;
 using fetch::ledger::detail::EncodeInteger;
 using fetch::ledger::detail::DecodeInteger;

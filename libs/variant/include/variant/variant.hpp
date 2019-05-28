@@ -50,7 +50,7 @@ namespace variant {
 class Variant
 {
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
 
   enum class Type
   {

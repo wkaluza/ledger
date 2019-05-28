@@ -21,7 +21,7 @@
 #include "vectorise/vectorise.hpp"
 
 #ifdef WIN32
-#define NOMINMAX
+//#define NOMINMAX
 #include <Windows.h>
 #include <intrin.h>
 #endif
@@ -33,7 +33,8 @@
 (static_cast<uint64_t>(__lzcnt64(num)))
 #define FETCH_COUNT_LEADING_ZEROES32 __lzcnt
 #else
-#define FETCH_BYTESWAP_UINT64 __builtin_bswap64
+#define FETCH_BYTESWAP_UINT64(num) \
+(__builtin_bswap64(num))
 #define FETCH_COUNT_LEADING_ZEROES64(num)\
 (static_cast<uint64_t>(__builtin_clzll(num)))
 #define FETCH_COUNT_LEADING_ZEROES32 __builtin_clz
@@ -212,12 +213,26 @@ inline uint64_t ConvertToBigEndian(uint64_t x)
 
 inline uint64_t CountLeadingZeroes64(uint64_t x)
 {
-  return FETCH_COUNT_LEADING_ZEROES64(x);
+  return static_cast<uint64_t>(FETCH_COUNT_LEADING_ZEROES64(x));
 }
 
 inline uint64_t CountTrailingZeroes64(uint64_t x)
 {
-  return static_cast<uint64_t>(__builtin_ctzll(x));
+#ifdef WIN32
+    if (x == 0)
+    {
+      return -1;
+    }
+    unsigned count = 0;
+    while (x % 2 == 0)
+    {
+      count++;
+      x >>= 1;
+    }
+    return count;
+#else
+    return static_cast<uint64_t>(__builtin_ctzll(x));
+#endif
 }
 
 // Return the minimum number of bits required to represent x
@@ -247,7 +262,7 @@ inline uint32_t ToLog2(uint32_t value)
 inline uint64_t ToLog2(uint64_t value)
 {
   static constexpr uint64_t VALUE_SIZE_IN_BITS = sizeof(value) << 3;
-  return VALUE_SIZE_IN_BITS - static_cast<uint64_t>(__builtin_clzll(value) + 1);
+  return VALUE_SIZE_IN_BITS - static_cast<uint64_t>(FETCH_COUNT_LEADING_ZEROES64(value) + 1);
 }
 
 // https://graphics.stanford.edu/~seander/bithacks.html

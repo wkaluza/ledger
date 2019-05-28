@@ -22,7 +22,7 @@
 
 #include <unordered_set>
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 namespace fetch {
 namespace crypto {
@@ -51,7 +51,7 @@ const std::unordered_set<ConstByteArray> FETCH_IDENTITIES{
     "2m5bhKu4SrRqJpbeKk3Th3gc5gedYDPfT7BELhLnpvTugjmS4r"};
 }
 
-bool IsFetchIdentity(byte_array::ConstByteArray const &identity)
+bool IsFetchIdentity(damnyouwindows_byte_array::ConstByteArray const &identity)
 {
   return FETCH_IDENTITIES.find(identity) != FETCH_IDENTITIES.end();
 }

@@ -47,7 +47,7 @@ inline void Deserialize(T &serializer, SerializableException &s)
   serializer.ReadBytes(reinterpret_cast<uint8_t *>(&code), sizeof(error::error_type));
   serializer.ReadBytes(reinterpret_cast<uint8_t *>(&size), sizeof(uint64_t));
 
-  byte_array::ByteArray buffer;
+  damnyouwindows_byte_array::ByteArray buffer;
   buffer.Resize(size);
   serializer.ReadBytes(buffer.pointer(), size);
   s = SerializableException(code, buffer);

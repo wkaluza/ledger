@@ -57,7 +57,7 @@ private:
     Timepoint   timestamp{Clock::now()};
   };
 
-  using UnderlyingCache = std::unordered_map<byte_array::ConstByteArray, Element>;
+  using UnderlyingCache = std::unordered_map<damnyouwindows_byte_array::ConstByteArray, Element>;
 
   static constexpr uint64_t CLEANUP_PERIOD = 16;
   static constexpr uint64_t CLEANUP_MASK   = CLEANUP_PERIOD - 1u;

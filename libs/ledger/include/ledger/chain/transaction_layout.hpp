@@ -33,8 +33,8 @@ class Transaction;
 class TransactionLayout
 {
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
-  using Digest         = byte_array::ConstByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
+  using Digest         = damnyouwindows_byte_array::ConstByteArray;
   using TokenAmount    = uint64_t;
   using BlockIndex     = uint64_t;
 

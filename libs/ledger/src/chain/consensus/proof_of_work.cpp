@@ -55,7 +55,7 @@ void ProofOfWork::SetTarget(math::BigUnsigned &&target)
   target_ = std::move(target);
 }
 
-void ProofOfWork::SetHeader(byte_array::ByteArray header)
+void ProofOfWork::SetHeader(damnyouwindows_byte_array::ByteArray header)
 {
   header_ = header;
   assert(header_ == header);

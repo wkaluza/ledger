@@ -34,7 +34,7 @@ using namespace fetch::storage;
 using namespace fetch::crypto;
 using namespace fetch::testing;
 
-using ByteArray = fetch::byte_array::ByteArray;
+using ByteArray = fetch::damnyouwindows_byte_array::ByteArray;
 
 TEST(versioned_random_access_stack_gtest, basic_example_of_commit_revert2)
 {

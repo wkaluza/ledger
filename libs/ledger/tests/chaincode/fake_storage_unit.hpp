@@ -32,14 +32,14 @@ class FakeStorageUnit final : public fetch::ledger::StorageUnitInterface
 {
 public:
   using transaction_store_type =
-      std::unordered_map<fetch::byte_array::ConstByteArray, fetch::ledger::Transaction>;
+      std::unordered_map<fetch::damnyouwindows_byte_array::ConstByteArray, fetch::ledger::Transaction>;
   using state_store_type =
-      std::unordered_map<fetch::byte_array::ConstByteArray, fetch::byte_array::ConstByteArray>;
+      std::unordered_map<fetch::damnyouwindows_byte_array::ConstByteArray, fetch::damnyouwindows_byte_array::ConstByteArray>;
   /*using state_archive_type = std::unordered_map<bookmark_type, state_store_type>; */
   using lock_store_type = std::unordered_set<ShardIndex>;
   using mutex_type      = std::mutex;
   using lock_guard_type = std::lock_guard<mutex_type>;
-  using hash_type       = fetch::byte_array::ConstByteArray;
+  using hash_type       = fetch::damnyouwindows_byte_array::ConstByteArray;
 
   static constexpr char const *LOGGING_NAME = "FakeStorageUnit";
 
@@ -121,7 +121,7 @@ public:
     transactions_[tx.digest()] = tx;
   }
 
-  bool GetTransaction(fetch::byte_array::ConstByteArray const &digest,
+  bool GetTransaction(fetch::damnyouwindows_byte_array::ConstByteArray const &digest,
                       fetch::ledger::Transaction &             tx) override
   {
     lock_guard_type lock(mutex_);

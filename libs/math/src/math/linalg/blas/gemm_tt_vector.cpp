@@ -68,7 +68,7 @@ void Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
         ret_slice.in_parallel().Apply(
             range,
             [vec_beta](VectorRegisterType const &vr_c_j, VectorRegisterType &vw_c_j) {
-              vw_c_j = vec_beta * vr_c_j;
+              //vw_c_j = vec_beta * vr_c_j;
             },
             slice_c_j);
       }

@@ -37,7 +37,7 @@ template <typename T>
 void Deserialize(T &s, Transaction &tx)
 {
   // extract the data from the stream
-  byte_array::ConstByteArray data;
+  damnyouwindows_byte_array::ConstByteArray data;
   s >> data;
 
   // create and extract the serializer

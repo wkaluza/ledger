@@ -43,19 +43,19 @@ public:
   using VectorRegisterType          = typename ParallelDispatcherType::VectorRegisterType;
   using VectorRegisterIteratorType  = typename ParallelDispatcherType::VectorRegisterIteratorType;
 
-  enum
-  {
-    E_TYPE_SIZE     = type_size,
-    E_SIMD_SIZE     = (platform::VectorRegisterSize<Type>::value >> 3),
-    E_SIMD_COUNT_IM = E_SIMD_SIZE / type_size,
-    E_SIMD_COUNT =
-        (E_SIMD_COUNT_IM > 0 ? E_SIMD_COUNT_IM
-                             : 1),  // Note that if a type is too big to fit, we pretend it can
-    E_LOG_SIMD_COUNT = meta::Log2(E_SIMD_COUNT),
-    IS_SHARED        = 0
-  };
+  //enum
+  //{
+static const int     E_TYPE_SIZE     = type_size;
+  static int const        E_SIMD_SIZE     = (platform::VectorRegisterSize<Type>::value >> 3);
+static int const            E_SIMD_COUNT_IM = E_SIMD_SIZE / type_size;
+  static int const          E_SIMD_COUNT =
+      (E_SIMD_COUNT_IM > 0 ? E_SIMD_COUNT_IM
+                           : 1);  // Note that if a type is too big to fit, we pretend it can
+static int const E_LOG_SIMD_COUNT = fetch::meta::Log2(E_SIMD_COUNT);
+  static int const  IS_SHARED        = 0;
+  //};
 
-  static_assert(E_SIMD_COUNT == (1ull << E_LOG_SIMD_COUNT), "type does not fit in SIMD");
+  //static_assert(E_SIMD_COUNT == (1ull << E_LOG_SIMD_COUNT), "type does not fit in SIMD");
 
   VectorSlice(PointerType ptr = nullptr, std::size_t const &n = 0)
     : pointer_(ptr)

@@ -31,7 +31,7 @@ struct Deed
 {
   using Weight             = std::size_t;
   using Threshold          = Weight;
-  using DeedOperation      = byte_array::ConstByteArray;
+  using DeedOperation      = damnyouwindows_byte_array::ConstByteArray;
   using Signees            = std::unordered_map<Address, Weight>;
   using OperationTresholds = std::unordered_map<DeedOperation, Threshold>;
   using Weights            = std::unordered_map<Weight, std::size_t>;

@@ -35,7 +35,7 @@ class ByteArrayBufferEx
 
 public:
   using self_type         = ByteArrayBufferEx;
-  using byte_array_type   = byte_array::ByteArray;
+  using damnyouwindows_byte_array_type   = damnyouwindows_byte_array::ByteArray;
   using size_counter_type = serializers::SizeCounter<self_type>;
 
   ByteArrayBufferEx()                         = default;
@@ -54,7 +54,7 @@ public:
    * @param s Input mutable instance of ByteArray to copy content from (by
    *          value as explained above)
    */
-  ByteArrayBufferEx(byte_array::ByteArray const &s)
+  ByteArrayBufferEx(damnyouwindows_byte_array::ByteArray const &s)
     : data_{s.Copy()}
   {}
 
@@ -120,7 +120,7 @@ public:
     pos_ += size;
   }
 
-  void ReadByteArray(byte_array::ConstByteArray &b, std::size_t const &size)
+  void ReadByteArray(damnyouwindows_byte_array::ConstByteArray &b, std::size_t const &size)
   {
     b = data_.SubArray(pos_, size);
     pos_ += size;
@@ -194,7 +194,7 @@ public:
   {
     return int64_t(data_.size()) - int64_t(pos_);
   }
-  byte_array::ByteArray const &data() const
+  damnyouwindows_byte_array::ByteArray const &data() const
   {
     return data_;
   }
@@ -230,7 +230,7 @@ private:
   void AppendInternal()
   {}
 
-  byte_array_type   data_;
+  damnyouwindows_byte_array_type   data_;
   std::size_t       pos_ = 0;
   size_counter_type size_counter_;
 };

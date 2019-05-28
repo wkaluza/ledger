@@ -44,7 +44,7 @@ SerializableException::SerializableException(std::string explanation)
   LOG_SET_CONTEXT_VARIABLE(stack_trace_)
 }
 
-SerializableException::SerializableException(byte_array::ConstByteArray const &explanation)
+SerializableException::SerializableException(damnyouwindows_byte_array::ConstByteArray const &explanation)
   : error_code_(error::TYPE_ERROR)
   , explanation_(std::string(explanation))
 {
@@ -63,9 +63,9 @@ SerializableException::SerializableException(error::error_type error_code, std::
 }
 
 SerializableException::SerializableException(error::error_type                 error_code,
-                                             byte_array::ConstByteArray const &explanation)
+                                             damnyouwindows_byte_array::ConstByteArray const &explanation)
   : error_code_(error_code)
-  , explanation_(std::string(explanation))
+  , explanation_(static_cast<std::string>(explanation))
 {
   LOG_STACK_TRACE_POINT;
 

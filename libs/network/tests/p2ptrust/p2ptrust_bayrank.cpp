@@ -23,7 +23,7 @@
 #include <gtest/gtest.h>
 
 using namespace fetch::p2p;
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 using Gaussian = fetch::math::statistics::Gaussian<double>;
 
 template <typename IDENTITY>

@@ -26,7 +26,7 @@ namespace fetch {
 namespace serializers {
 
 template <typename T>
-inline void Serialize(T &serializer, byte_array::ConstByteArray const &s)
+inline void Serialize(T &serializer, damnyouwindows_byte_array::ConstByteArray const &s)
 {
   serializer.Allocate(sizeof(uint64_t) + s.size());
   uint64_t size = s.size();
@@ -36,7 +36,7 @@ inline void Serialize(T &serializer, byte_array::ConstByteArray const &s)
 }
 
 template <typename T>
-inline void Deserialize(T &serializer, byte_array::ConstByteArray &s)
+inline void Deserialize(T &serializer, damnyouwindows_byte_array::ConstByteArray &s)
 {
   uint64_t size = 0;
 

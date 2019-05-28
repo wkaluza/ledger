@@ -41,9 +41,9 @@ void BuildJSONDocument(pybind11::module &module)
       .def("operator[]", (const script::Variant &(JSONDocument::*)(const std::size_t &)const) &
                              JSONDocument::operator[]);
   //.def("operator[]", ( script::Variant & (JSONDocument::*)(const
-  // byte_array::BasicByteArray &) ) &JSONDocument::operator[])
+  // damnyouwindows_byte_array::BasicByteArray &) ) &JSONDocument::operator[])
   //.def("operator[]", ( const script::Variant & (JSONDocument::*)(const
-  // byte_array::BasicByteArray &) const ) &JSONDocument::operator[]);
+  // damnyouwindows_byte_array::BasicByteArray &) const ) &JSONDocument::operator[]);
 }
 };  // namespace json
 };  // namespace fetch

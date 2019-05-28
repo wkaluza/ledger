@@ -25,7 +25,7 @@ namespace crypto {
 
 namespace {
 
-using ConstByteArray = fetch::byte_array::ConstByteArray;
+using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
 
 class ECDSASignerVerifierTest : public testing::Test
 {

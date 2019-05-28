@@ -56,7 +56,7 @@ public:
 
   using BlockIndex            = TransactionLayout::BlockIndex;
   using Identity              = crypto::Identity;
-  using ConstByteArray        = byte_array::ConstByteArray;
+  using ConstByteArray        = damnyouwindows_byte_array::ConstByteArray;
   using ContractName          = ConstByteArray;
   using Query                 = variant::Variant;
   using InitialiseHandler     = std::function<Status(Address const &)>;
@@ -255,7 +255,7 @@ void Contract::OnQuery(std::string const &name, C *instance,
 template <typename T>
 bool Contract::GetStateRecord(T &record, ConstByteArray const &key)
 {
-  using fetch::byte_array::ByteArray;
+  using fetch::damnyouwindows_byte_array::ByteArray;
 
   bool success{false};
 
@@ -263,7 +263,7 @@ bool Contract::GetStateRecord(T &record, ConstByteArray const &key)
   buffer.Resize(std::size_t{DEFAULT_BUFFER_SIZE});  // initial guess, can be tuned over time
 
   uint64_t buffer_length = buffer.size();
-  auto     status        = state().Read(std::string{key}, buffer.pointer(), buffer_length);
+  auto     status        = state().Read(static_cast<std::string>(key), buffer.pointer(), buffer_length);
 
   // in rare cases the initial buffer might be too small in this case we need to reallocate and then
   // re-query
@@ -278,7 +278,7 @@ bool Contract::GetStateRecord(T &record, ConstByteArray const &key)
 
   switch (status)
   {
-  case vm::IoObserverInterface::Status::OK:
+  case vm::IoObserverInterface::Status::damnyouwindows_OK:
   {
     // adapt the buffer for deserialization
     serializers::ByteArrayBuffer adapter{buffer};
@@ -316,7 +316,7 @@ void Contract::SetStateRecord(T const &record, ConstByteArray const &key)
   auto const &data = buffer.data();
 
   // store the buffer
-  state().Write(std::string{key}, data.pointer(), data.size());
+  state().Write(static_cast<std::string>(key), data.pointer(), data.size());
 }
 
 }  // namespace ledger

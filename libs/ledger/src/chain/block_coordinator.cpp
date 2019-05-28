@@ -30,7 +30,7 @@
 
 #include <chrono>
 
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 
 using ScheduleStatus = fetch::ledger::ExecutionManagerInterface::ScheduleStatus;
 using ExecutionState = fetch::ledger::ExecutionManagerInterface::State;

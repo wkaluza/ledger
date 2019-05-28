@@ -27,14 +27,14 @@
 using fetch::BitVector;
 
 template <typename T>
-fetch::byte_array::ConstByteArray Convert(T const &value)
+fetch::damnyouwindows_byte_array::ConstByteArray Convert(T const &value)
 {
   auto const *raw = reinterpret_cast<uint8_t const *>(&value);
 
   return {raw, sizeof(T)};
 }
 
-fetch::byte_array::ConstByteArray Convert(BitVector const &value)
+fetch::damnyouwindows_byte_array::ConstByteArray Convert(BitVector const &value)
 {
   auto const *raw = reinterpret_cast<uint8_t const *>(value.data().pointer());
 
@@ -45,13 +45,13 @@ TEST(BitVectorTests, ExpandWildcard0)
 {
   BitVector wildcard{};
 
-  BitVector small{4};
-  ASSERT_TRUE(wildcard.RemapTo(small));
+  BitVector damnyouwindows_small{4};
+  ASSERT_TRUE(wildcard.RemapTo(damnyouwindows_small));
 
-  EXPECT_EQ(small.bit(0), 1);
-  EXPECT_EQ(small.bit(1), 1);
-  EXPECT_EQ(small.bit(2), 1);
-  EXPECT_EQ(small.bit(3), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(0), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(1), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(2), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(3), 1);
 
   BitVector large{16};
   ASSERT_TRUE(wildcard.RemapTo(large));
@@ -78,13 +78,13 @@ TEST(BitVectorTests, ExpandWildcard1)
 {
   BitVector wildcard{};
 
-  BitVector small{4};
-  ASSERT_TRUE(wildcard.RemapTo(small));
+  BitVector damnyouwindows_small{4};
+  ASSERT_TRUE(wildcard.RemapTo(damnyouwindows_small));
 
-  EXPECT_EQ(small.bit(0), 1);
-  EXPECT_EQ(small.bit(1), 1);
-  EXPECT_EQ(small.bit(2), 1);
-  EXPECT_EQ(small.bit(3), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(0), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(1), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(2), 1);
+  EXPECT_EQ(damnyouwindows_small.bit(3), 1);
 
   BitVector large{16};
   ASSERT_TRUE(wildcard.RemapTo(large));

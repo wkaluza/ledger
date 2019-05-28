@@ -57,8 +57,8 @@ using fetch::ledger::Address;
 using Prover         = fetch::crypto::Prover;
 using BootstrapPtr   = std::unique_ptr<fetch::BootstrapMonitor>;
 using ProverPtr      = std::shared_ptr<Prover>;
-using ConstByteArray = fetch::byte_array::ConstByteArray;
-using ByteArray      = fetch::byte_array::ByteArray;
+using ConstByteArray = fetch::damnyouwindows_byte_array::ConstByteArray;
+using ByteArray      = fetch::damnyouwindows_byte_array::ByteArray;
 using NetworkMode    = fetch::Constellation::NetworkMode;
 
 std::unordered_set<std::string> const BOOL_TRUE_STRINGS{"true", "enabled", "on", "yes", "1"};
@@ -497,7 +497,7 @@ struct CommandLineArguments
     if (manifest_data != nullptr)
     {
       // decode the manifest data
-      ConstByteArray config = fetch::byte_array::FromBase64(manifest_data);
+      ConstByteArray config = fetch::damnyouwindows_byte_array::FromBase64(manifest_data);
 
       ManifestPtr local_manifest = std::make_unique<Manifest>();
       if (!local_manifest->Parse(config))
@@ -583,7 +583,7 @@ ProverPtr GenerateP2PKey()
 
     if (input_file.is_open())
     {
-      fetch::byte_array::ByteArray private_key_data;
+      fetch::damnyouwindows_byte_array::ByteArray private_key_data;
       private_key_data.Resize(Signer::PrivateKey::ecdsa_curve_type::privateKeySize);
 
       // attempt to read in the private key

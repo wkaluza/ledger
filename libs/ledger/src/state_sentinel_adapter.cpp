@@ -76,7 +76,7 @@ StateSentinelAdapter::Status StateSentinelAdapter::Read(std::string const &key, 
   auto const status = StateAdapter::Read(key, data, size);
 
   // update the counters
-  if (Status::OK == status)
+  if (Status::damnyouwindows_OK == status)
   {
     bytes_read_ += size;
   }
@@ -108,7 +108,7 @@ StateSentinelAdapter::Status StateSentinelAdapter::Write(std::string const &key,
   auto const status = StateAdapter::Write(key, data, size);
 
   // update the counters
-  if (Status::OK == status)
+  if (Status::damnyouwindows_OK == status)
   {
     bytes_written_ += size;
   }

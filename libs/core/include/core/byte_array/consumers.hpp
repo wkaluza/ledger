@@ -24,7 +24,7 @@
 
 #include <emmintrin.h>
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 namespace consumers {
 /* Consumes an integer from a byte array if found.
  * @param str is a constant byte array.
@@ -36,7 +36,7 @@ namespace consumers {
  * points.
  */
 template <int NUMBER_INT, int NUMBER_FLOAT = NUMBER_INT>
-int NumberConsumer(byte_array::ConstByteArray const &str, uint64_t &pos)
+int NumberConsumer(damnyouwindows_byte_array::ConstByteArray const &str, uint64_t &pos)
 {
   /* ┌┐ ┌┐
   ** ││                   ┌──────────────────────┐ ││
@@ -125,7 +125,7 @@ int NumberConsumer(byte_array::ConstByteArray const &str, uint64_t &pos)
  * formatted.
  */
 template <int STRING>
-int StringConsumerSSE(byte_array::ConstByteArray const &str, uint64_t &pos)
+int StringConsumerSSE(damnyouwindows_byte_array::ConstByteArray const &str, uint64_t &pos)
 {
   if (str[pos] != '"')
   {
@@ -168,7 +168,7 @@ int StringConsumerSSE(byte_array::ConstByteArray const &str, uint64_t &pos)
 }
 
 template <int STRING>
-int StringConsumer(byte_array::ConstByteArray const &str, uint64_t &pos)
+int StringConsumer(damnyouwindows_byte_array::ConstByteArray const &str, uint64_t &pos)
 {
   if (str[pos] != '"')
   {
@@ -194,7 +194,7 @@ int StringConsumer(byte_array::ConstByteArray const &str, uint64_t &pos)
 }
 
 template <int TOKEN>
-int Token(byte_array::ConstByteArray const &str, uint64_t &pos)
+int Token(damnyouwindows_byte_array::ConstByteArray const &str, uint64_t &pos)
 {
   uint8_t c = str[pos];
 
@@ -221,11 +221,11 @@ int Token(byte_array::ConstByteArray const &str, uint64_t &pos)
 }
 
 template <int CATCH_ALL>
-int AnyChar(byte_array::ConstByteArray const & /*str*/, uint64_t &pos)
+int AnyChar(damnyouwindows_byte_array::ConstByteArray const & /*str*/, uint64_t &pos)
 {
   ++pos;
   return CATCH_ALL;
 }
 }  // namespace consumers
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

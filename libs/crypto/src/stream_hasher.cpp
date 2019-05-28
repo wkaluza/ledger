@@ -21,14 +21,14 @@
 namespace fetch {
 namespace crypto {
 
-bool StreamHasher::Update(byte_array::ConstByteArray const &s)
+bool StreamHasher::Update(damnyouwindows_byte_array::ConstByteArray const &s)
 {
   return Update(s.pointer(), s.size());
 }
 
-byte_array::ByteArray StreamHasher::Final()
+damnyouwindows_byte_array::ByteArray StreamHasher::Final()
 {
-  byte_array::ByteArray digest;
+  damnyouwindows_byte_array::ByteArray digest;
   digest.Resize(GetSizeInBytes());
   Final(digest.pointer(), digest.size());
   return digest;

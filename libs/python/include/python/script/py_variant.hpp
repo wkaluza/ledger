@@ -38,7 +38,7 @@ void BuildVariant(pybind11::module &module)
       .def(py::init<const float &>())
       .def(py::init<const double &>())
       //    .def(py::init< const char * >())
-      //    .def(py::init< const fetch::script::Variant::byte_array_type & >())
+      //    .def(py::init< const fetch::script::Variant::damnyouwindows_byte_array_type & >())
       //    .def(py::init< const char & >())
       //    .def(py::init< const std::initializer_list<Variant> & >())
       //    .def(py::init< const fetch::script::Variant & >())
@@ -50,12 +50,12 @@ void BuildVariant(pybind11::module &module)
       //    .def(py::self = std::nullptr_t*() )
       //    .def(py::self = bool() )
       //    .def(py::self = char() )
-      //    .def(py::self = fetch::script::Variant::byte_array_type() )
+      //    .def(py::self = fetch::script::Variant::damnyouwindows_byte_array_type() )
       /*
-      .def("as_byte_array", ( const fetch::script::Variant::byte_array_type &
-      (Variant::*)() const ) &Variant::as_byte_array) .def("as_byte_array", (
-      fetch::script::Variant::byte_array_type & (Variant::*)() )
-      &Variant::as_byte_array)
+      .def("as_damnyouwindows_byte_array", ( const fetch::script::Variant::damnyouwindows_byte_array_type &
+      (Variant::*)() const ) &Variant::as_damnyouwindows_byte_array) .def("as_damnyouwindows_byte_array", (
+      fetch::script::Variant::damnyouwindows_byte_array_type & (Variant::*)() )
+      &Variant::as_damnyouwindows_byte_array)
       //    .def("is_null", &Variant::is_null)
       //    .def("as_array", ( fetch::memory::SharedArray<Variant>
       (Variant::*)() ) &Variant::as_array)
@@ -69,9 +69,9 @@ void BuildVariant(pybind11::module &module)
       &Variant::operator[]) .def("operator[]", ( const fetch::script::Variant &
       (Variant::*)(const std::size_t &) const ) &Variant::operator[])
       .def("operator[]", ( fetch::script::Variant & (Variant::*)(const
-      byte_array::BasicByteArray &) ) &Variant::operator[]) .def("operator[]", (
+      damnyouwindows_byte_array::BasicByteArray &) ) &Variant::operator[]) .def("operator[]", (
       const fetch::script::Variant & (Variant::*)(const
-      byte_array::BasicByteArray &) const ) &Variant::operator[])
+      damnyouwindows_byte_array::BasicByteArray &) const ) &Variant::operator[])
       .def("as_double", ( const double & (Variant::*)() const )
       &Variant::as_double) .def("as_double", ( double & (Variant::*)() )
       &Variant::as_double)

@@ -402,7 +402,7 @@ void JSONDocument::Tokenise(ConstByteArray const &document)
     case '"':
       ++objects_;
       ++element_counter;
-      byte_array::consumers::StringConsumer<STRING>(document, pos);
+      damnyouwindows_byte_array::consumers::StringConsumer<STRING>(document, pos);
       tokens_.push_back({oldpos + 1, pos - 1, STRING});
       break;
     case '{':
@@ -471,7 +471,7 @@ void JSONDocument::Tokenise(ConstByteArray const &document)
 
       ++element_counter;
       type =
-          uint8_t(byte_array::consumers::NumberConsumer<NUMBER_INT, NUMBER_FLOAT>(document, pos));
+          uint8_t(damnyouwindows_byte_array::consumers::NumberConsumer<NUMBER_INT, NUMBER_FLOAT>(document, pos));
       if (type == uint8_t(-1))
       {
         throw JSONParseException("Unable to parse integer.");

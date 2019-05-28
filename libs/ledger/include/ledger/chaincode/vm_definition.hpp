@@ -33,7 +33,7 @@ nullptr)
   std::unique_ptr<vm::Module> module;
   module = std::make_unique<vm::Module>();
 
-  module->ExportClass<byte_array::ByteArray>("ByteArray").Constructor<std::string>();
+  module->ExportClass<damnyouwindows_byte_array::ByteArray>("ByteArray").Constructor<std::string>();
 
   module->ExportClass<variant::Variant>("Variant").Constructor();
 

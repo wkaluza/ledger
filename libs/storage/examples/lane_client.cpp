@@ -30,7 +30,7 @@
 using namespace fetch;
 
 using namespace fetch::service;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 class MultiLaneDBClient  //: private
 {
@@ -53,7 +53,7 @@ public:
     auto        res  = fetch::storage::ResourceAddress(key);
     std::size_t lane = res.lane(uint32_t(lanes_.size()));
     //    std::cout << "Getting " << key << " from lane " << lane <<  " " <<
-    //    byte_array::ToBase64(res.id()) << std::endl;
+    //    damnyouwindows_byte_array::ToBase64(res.id()) << std::endl;
     auto promise = lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_GET, res);
 
     return promise.As<storage::Document>().document;
@@ -88,7 +88,7 @@ public:
     auto        res  = fetch::storage::ResourceAddress(key);
     std::size_t lane = res.lane(uint32_t(lanes_.size()));
     //    std::cout << "Setting " << key <<  " on lane " << lane << " " <<
-    //    byte_array::ToBase64(res.id()) << std::endl;
+    //    damnyouwindows_byte_array::ToBase64(res.id()) << std::endl;
     auto promise =
         lanes_[lane]->Call(0, fetch::storage::RevertibleDocumentStoreProtocol::damnyouwindows_SET, res, value);
     promise.Wait(2000);

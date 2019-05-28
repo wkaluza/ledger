@@ -30,7 +30,7 @@
 
 static constexpr char const *LOGGING_NAME = "ChainCodeFactory";
 
-using fetch::byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
 
 namespace fetch {
 namespace ledger {

@@ -29,7 +29,7 @@
 // Test of the client and server.
 
 using namespace fetch::network;
-using namespace fetch::byte_array;
+using namespace fetch::damnyouwindows_byte_array;
 
 static constexpr char const *LOGGING_NAME = "TcpClientServerStressTests";
 

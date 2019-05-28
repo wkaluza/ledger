@@ -56,7 +56,7 @@ public:
   bool Contains(const RawAddress &raw_address) const
   {
     Packet::Address       address;
-    byte_array::ByteArray buffer;
+    damnyouwindows_byte_array::ByteArray buffer;
     buffer.Resize(raw_address.size());
     std::memcpy(buffer.pointer(), raw_address.data(), raw_address.size());
     address = buffer;

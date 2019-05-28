@@ -103,7 +103,7 @@ private:
     {
       FETCH_LOG_WARN(LOGGING_NAME, "port = ", this->port());
       FETCH_LOG_WARN(LOGGING_NAME, "byte array size = ", msg.size());
-      FETCH_LOG_WARN(LOGGING_NAME, "byte array = ", byte_array::ToHex(msg));
+      FETCH_LOG_WARN(LOGGING_NAME, "byte array = ", damnyouwindows_byte_array::ToHex(msg));
       FETCH_LOG_ERROR(LOGGING_NAME, "Error processing packet from ", client, " error: ", ex.what());
       throw;
     }

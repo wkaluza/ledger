@@ -174,7 +174,7 @@ void PackCall(S &serializer, protocol_handler_type const &protocol,
 template <typename S>
 void PackCallWithPackedArguments(S &serializer, protocol_handler_type const &protocol,
                                  function_handler_type const &function,
-                                 byte_array::ByteArray const &args)
+                                 damnyouwindows_byte_array::ByteArray const &args)
 {
   LOG_STACK_TRACE_POINT;
 

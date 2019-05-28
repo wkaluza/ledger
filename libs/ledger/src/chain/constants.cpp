@@ -22,7 +22,7 @@
 namespace fetch {
 namespace ledger {
 
-using byte_array::FromBase64;
+using damnyouwindows_byte_array::FromBase64;
 
 extern const Digest GENESIS_DIGEST = FromBase64("0+++++++++++++++++Genesis+++++++++++++++++0=");
 extern const Digest GENESIS_MERKLE_ROOT =

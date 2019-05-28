@@ -24,7 +24,7 @@
 #include <set>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 namespace {
 
@@ -107,5 +107,5 @@ TEST(ByteArrayTest, std_set)
 
 }  // namespace
 
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

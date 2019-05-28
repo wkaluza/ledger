@@ -112,9 +112,9 @@ REGISTER_SERIALIZE_SYMBOL_TYPE("int8_t", char, 9);
 
 REGISTER_SERIALIZE_TYPE("bool", bool, 11);
 
-REGISTER_SERIALIZE_TYPE("str", byte_array::ConstByteArray, 12);
-REGISTER_SERIALIZE_SYMBOL_TYPE("str", byte_array::ByteArray, 12);
-// REGISTER_SERIALIZE_SYMBOL_TYPE("str", byte_array::ConstByteArray, 12);
+REGISTER_SERIALIZE_TYPE("str", damnyouwindows_byte_array::ConstByteArray, 12);
+REGISTER_SERIALIZE_SYMBOL_TYPE("str", damnyouwindows_byte_array::ByteArray, 12);
+// REGISTER_SERIALIZE_SYMBOL_TYPE("str", damnyouwindows_byte_array::ConstByteArray, 12);
 REGISTER_SERIALIZE_SYMBOL_TYPE("str", std::string, 12);
 REGISTER_SERIALIZE_SYMBOL_TYPE("str", char const *, 12);
 REGISTER_SERIALIZE_SYMBOL_TYPE("str", char *, 12);
@@ -124,7 +124,7 @@ REGISTER_SERIALIZE_TYPE("contextp", CallContext const *, 14);
 
 #undef REGISTER_SERIALIZE_TYPE
 #undef REGISTER_SERIALIZE_SYMBOL_TYPE
-inline byte_array::ConstByteArray ErrorCodeToMessage(std::size_t n)
+inline damnyouwindows_byte_array::ConstByteArray ErrorCodeToMessage(std::size_t n)
 {
   switch (n)
   {

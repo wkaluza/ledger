@@ -25,7 +25,7 @@
 namespace fetch {
 namespace ledger {
 
-using Digest = byte_array::ConstByteArray;
+using Digest = damnyouwindows_byte_array::ConstByteArray;
 
 struct DigestHashAdapter
 {

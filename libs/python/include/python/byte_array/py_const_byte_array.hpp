@@ -21,6 +21,6 @@
 #include "python/fetch_pybind.hpp"
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 };
 };  // namespace fetch

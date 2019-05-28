@@ -56,8 +56,8 @@ public:
     KEY = 16
   };
 
-  using ByteArray      = byte_array::ByteArray;
-  using ConstByteArray = byte_array::ConstByteArray;
+  using ByteArray      = damnyouwindows_byte_array::ByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
   using Variant        = variant::Variant;
 
   explicit JSONDocument(ConstByteArray const &document)
@@ -110,7 +110,7 @@ public:
   JSONDocument &operator=(JSONDocument const &) = delete;
   JSONDocument &operator=(JSONDocument &&) = default;
 
-  bool Has(byte_array::ConstByteArray const &key)
+  bool Has(damnyouwindows_byte_array::ConstByteArray const &key)
   {
     return variant_.Has(key);
   }

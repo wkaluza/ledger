@@ -204,7 +204,7 @@ public:
     post_view_middleware_.push_back(middleware);
   }
 
-  void AddView(Method method, byte_array::ByteArray const &path, view_type const &view)
+  void AddView(Method method, damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     views_.push_back({method, Route::FromString(path), view});
   }

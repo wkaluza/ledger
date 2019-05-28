@@ -41,46 +41,46 @@ public:
   struct UnmountedView
   {
     Method                method;
-    byte_array::ByteArray route;
+    damnyouwindows_byte_array::ByteArray route;
     view_type             view;
   };
 
-  void Post(byte_array::ByteArray const &path, view_type const &view)
+  void Post(damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
     AddView(Method::damnyouwindows_POST, path, view);
   }
 
-  void Get(byte_array::ByteArray const &path, view_type const &view)
+  void Get(damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
     AddView(Method::damnyouwindows_GET, path, view);
   }
 
-  void Put(byte_array::ByteArray const &path, view_type const &view)
+  void Put(damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
     AddView(Method::damnyouwindows_PUT, path, view);
   }
 
-  void Patch(byte_array::ByteArray const &path, view_type const &view)
+  void Patch(damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
     AddView(Method::damnyouwindows_PATCH, path, view);
   }
 
-  void Delete(byte_array::ByteArray const &path, view_type const &view)
+  void Delete(damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 
     AddView(Method::damnyouwindows_DELETE, path, view);
   }
 
-  void AddView(Method method, byte_array::ByteArray const &path, view_type const &view)
+  void AddView(Method method, damnyouwindows_byte_array::ByteArray const &path, view_type const &view)
   {
     LOG_STACK_TRACE_POINT;
 

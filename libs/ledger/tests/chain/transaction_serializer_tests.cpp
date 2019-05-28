@@ -29,8 +29,8 @@
 #include <random>
 #include <string>
 
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::FromHex;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::FromHex;
 using fetch::crypto::ECDSASigner;
 using fetch::crypto::ECDSAVerifier;
 using fetch::ledger::Address;

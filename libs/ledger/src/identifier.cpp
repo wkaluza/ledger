@@ -21,8 +21,8 @@
 
 #include <stdexcept>
 
-using fetch::byte_array::ConstByteArray;
-using fetch::byte_array::ByteArray;
+using fetch::damnyouwindows_byte_array::ConstByteArray;
+using fetch::damnyouwindows_byte_array::ByteArray;
 
 static constexpr char const *LOGGING_NAME = "Identifier";
 

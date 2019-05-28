@@ -48,7 +48,7 @@ public:
   };
 
   using Variant           = variant::Variant;
-  using ConstByteArray    = byte_array::ConstByteArray;
+  using ConstByteArray    = damnyouwindows_byte_array::ConstByteArray;
   using ServiceType       = network::ServiceType;
   using ServiceIdentifier = network::ServiceIdentifier;
   using ServiceMap        = std::unordered_map<ServiceIdentifier, Entry>;

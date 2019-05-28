@@ -25,15 +25,15 @@
 #include <vector>
 
 namespace fetch {
-namespace byte_array {
+namespace damnyouwindows_byte_array {
 
 class Tokenizer : public std::vector<Token>
 {
 public:
-  using byte_array_type        = ConstByteArray;
-  using consumer_function_type = std::function<int(byte_array_type const &, uint64_t &)>;
+  using damnyouwindows_byte_array_type        = ConstByteArray;
+  using consumer_function_type = std::function<int(damnyouwindows_byte_array_type const &, uint64_t &)>;
   using indexer_function_type =
-      std::function<int(byte_array_type const &, uint64_t const &, int const &)>;
+      std::function<int(damnyouwindows_byte_array_type const &, uint64_t const &, int const &)>;
 
   static constexpr char const *LOGGING_NAME = "Tokenizer";
 
@@ -49,12 +49,12 @@ public:
     return ret;
   }
 
-  bool Parse(byte_array_type const &contents, bool clear = true)
+  bool Parse(damnyouwindows_byte_array_type const &contents, bool clear = true)
   {
     uint64_t                               pos        = 0;
     int                                    line       = 0;
     uint64_t                               char_index = 0;
-    byte_array_type::container_type const *str        = contents.pointer();
+    damnyouwindows_byte_array_type::container_type const *str        = contents.pointer();
     if (clear)
     {
       this->clear();
@@ -185,5 +185,5 @@ private:
   std::vector<consumer_function_type> consumers_;
   indexer_function_type               indexer_;
 };
-}  // namespace byte_array
+}  // namespace damnyouwindows_byte_array
 }  // namespace fetch

@@ -227,9 +227,9 @@ void Graph<ArrayType>::ResetGraphCache(NodePtrType const &n, bool input_size_cha
  * @return  d is the StateDict of all trainable params
  */
 template <typename ArrayType>
-struct fetch::ml::StateDict<ArrayType> Graph<ArrayType>::StateDict() const
+typename fetch::ml::StateDict<ArrayType> Graph<ArrayType>::StateDict() const
 {
-  struct fetch::ml::StateDict<ArrayType> d;
+  typename fetch::ml::StateDict<ArrayType> d;
   for (auto const &t : trainable_)
   {
     d.dict_.emplace(t.first, t.second->StateDict());

@@ -37,7 +37,7 @@ namespace ledger {
 namespace {
 
 using fetch::muddle::Packet;
-using fetch::byte_array::ToBase64;
+using fetch::damnyouwindows_byte_array::ToBase64;
 
 using BlockSerializer        = fetch::serializers::ByteArrayBuffer;
 using BlockSerializerCounter = fetch::serializers::SizeCounter<BlockSerializer>;

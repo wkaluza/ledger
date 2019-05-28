@@ -58,10 +58,10 @@ class Protocol
 public:
   using callable_type          = AbstractCallable *;
   using stored_type            = std::shared_ptr<AbstractCallable>;
-  using byte_array_type        = byte_array::ConstByteArray;
+  using damnyouwindows_byte_array_type        = damnyouwindows_byte_array::ConstByteArray;
   using connection_handle_type = typename network::AbstractConnection::connection_handle_type;
   using middleware_type =
-      std::function<void(connection_handle_type const &, byte_array::ByteArray const &)>;
+      std::function<void(connection_handle_type const &, damnyouwindows_byte_array::ByteArray const &)>;
 
   static constexpr char const *LOGGING_NAME = "Protocol";
 
@@ -92,7 +92,7 @@ public:
       FETCH_LOG_ERROR(LOGGING_NAME, "Failed to lookup function handler: ", n);
 
       throw serializers::SerializableException(
-          error::MEMBER_NOT_FOUND, byte_array_type("Could not find protocol member function"));
+          error::MEMBER_NOT_FOUND, damnyouwindows_byte_array_type("Could not find protocol member function"));
     }
     return iter->second.get();
   }
@@ -120,7 +120,7 @@ public:
     if (iter != members_.end())
     {
       throw serializers::SerializableException(
-          error::MEMBER_EXISTS, byte_array_type("Protocol member function already exists: "));
+          error::MEMBER_EXISTS, damnyouwindows_byte_array_type("Protocol member function already exists: "));
     }
 
     members_[n] = fnc;
@@ -136,7 +136,7 @@ public:
     if (iter != members_.end())
     {
       throw serializers::SerializableException(
-          error::MEMBER_EXISTS, byte_array_type("Protocol member function already exists: "));
+          error::MEMBER_EXISTS, damnyouwindows_byte_array_type("Protocol member function already exists: "));
     }
 
     members_[n] = fnc;
@@ -153,7 +153,7 @@ public:
     if (iter != members_.end())
     {
       throw serializers::SerializableException(
-          error::MEMBER_EXISTS, byte_array_type("Protocol member function already exists: "));
+          error::MEMBER_EXISTS, damnyouwindows_byte_array_type("Protocol member function already exists: "));
     }
 
     members_[n] = fnc;
@@ -255,7 +255,7 @@ public:
     middleware_.push_back(m);
   }
 
-  void ApplyMiddleware(connection_handle_type const &id, byte_array::ByteArray const &msg)
+  void ApplyMiddleware(connection_handle_type const &id, damnyouwindows_byte_array::ByteArray const &msg)
   {
     for (auto &m : middleware_)
     {

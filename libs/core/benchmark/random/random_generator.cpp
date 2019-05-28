@@ -32,7 +32,7 @@
 
 namespace {
 
-using ByteArray       = fetch::byte_array::ByteArray;
+using ByteArray       = fetch::damnyouwindows_byte_array::ByteArray;
 const int ITERATIONS  = 2;
 const int MID_CYCLES  = 10;
 const int PACKET_SIZE = 100000;

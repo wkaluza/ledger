@@ -107,10 +107,10 @@ int main(int argc, char **argv)
   // create the muddle and attach all the RPC services
   auto muddle = Muddle::CreateMuddle(NetworkId{"TEST"}, tm);
 
-  Client client{"Client", muddle->AsEndpoint(), Muddle::Address(), SERVICE_TEST, CHANNEL_RPC};
+  Client client("Client", muddle->AsEndpoint(), Muddle::Address(), SERVICE_TEST, CHANNEL_RPC);
 
   // register the RPC server
-  Server server{muddle->AsEndpoint(), SERVICE_TEST, CHANNEL_RPC};
+  Server server(muddle->AsEndpoint(), SERVICE_TEST, CHANNEL_RPC);
   server.Add(FetchProtocols::NODE_TO_AEA, &aea_protocol);
 
   // start the muddle and wait for the connection to establish

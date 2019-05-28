@@ -32,8 +32,8 @@ class Transaction;
 class TransactionSerializer
 {
 public:
-  using ConstByteArray = byte_array::ConstByteArray;
-  using ByteArray      = byte_array::ByteArray;
+  using ConstByteArray = damnyouwindows_byte_array::ConstByteArray;
+  using ByteArray      = damnyouwindows_byte_array::ByteArray;
 
   static constexpr char const *LOGGING_NAME = "TxSerializer";
 

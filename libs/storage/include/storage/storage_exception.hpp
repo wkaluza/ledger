@@ -65,7 +65,7 @@ public:
     LOG_SET_CONTEXT_VARIABLE(stack_trace_)
   }
 
-  StorageException(byte_array::ConstByteArray const &explanation)
+  StorageException(damnyouwindows_byte_array::ConstByteArray const &explanation)
     : error_code_(error::TYPE_ERROR)
     , explanation_(std::string(explanation))
   {
@@ -83,7 +83,7 @@ public:
     LOG_SET_CONTEXT_VARIABLE(stack_trace_)
   }
 
-  StorageException(error::error_type error_code, byte_array::ConstByteArray const &explanation)
+  StorageException(error::error_type error_code, damnyouwindows_byte_array::ConstByteArray const &explanation)
     : error_code_(error_code)
     , explanation_(std::string(explanation))
   {

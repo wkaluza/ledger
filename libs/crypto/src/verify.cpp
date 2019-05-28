@@ -64,8 +64,8 @@ bool Verifier::Verify(Identity const &identity, ConstByteArray const &data,
  * @param signature The signature to be checked
  * @return true if signature is valid, otherwise false
  */
-bool Verify(byte_array::ConstByteArray key, byte_array::ConstByteArray const &data,
-            byte_array::ConstByteArray const &signature)
+bool Verify(damnyouwindows_byte_array::ConstByteArray key, damnyouwindows_byte_array::ConstByteArray const &data,
+            damnyouwindows_byte_array::ConstByteArray const &signature)
 {
   return Verifier::Verify(Identity(std::move(key)), data, signature);
 }

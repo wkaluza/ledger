@@ -36,7 +36,7 @@ inline uint64_t GetRandom()
   return dis(gen);
 }
 
-inline byte_array::ConstByteArray GetRandomByteArray()
+inline damnyouwindows_byte_array::ConstByteArray GetRandomByteArray()
 {
   return {std::to_string(GetRandom())};
 }
@@ -81,22 +81,22 @@ inline MutableTransaction RandomTransaction(std::size_t   num_of_resources  = 3,
 inline std::ostream &operator<<(std::ostream &os, MutableTransaction const &transaction)
 {
   os << "contract name: " << transaction.contract_name() << std::endl;
-  os << "hash:          " << byte_array::ToHex(transaction.summary().transaction_hash) << std::endl;
-  os << "data:          " << byte_array::ToHex(transaction.data()) << std::endl;
+  os << "hash:          " << damnyouwindows_byte_array::ToHex(transaction.summary().transaction_hash) << std::endl;
+  os << "data:          " << damnyouwindows_byte_array::ToHex(transaction.data()) << std::endl;
   os << "fee:           " << transaction.fee() << std::endl;
 
   os << "=== Resources ===========================================" << std::endl;
   for (auto const &res : transaction.resources())
   {
-    os << "resource:        " << byte_array::ToHex(res) << std::endl;
+    os << "resource:        " << damnyouwindows_byte_array::ToHex(res) << std::endl;
   }
 
   os << "=== Signatures ==========================================" << std::endl;
   for (auto const &sig : transaction.signatures())
   {
-    os << "identity:        " << byte_array::ToHex(sig.first.identifier()) << std::endl;
+    os << "identity:        " << damnyouwindows_byte_array::ToHex(sig.first.identifier()) << std::endl;
     os << "identity params: " << sig.first.parameters() << std::endl;
-    os << "signature:       " << byte_array::ToHex(sig.second.signature_data) << std::endl;
+    os << "signature:       " << damnyouwindows_byte_array::ToHex(sig.second.signature_data) << std::endl;
     os << "signature type:  " << sig.second.type << std::endl;
   }
   // os << "=========================================================" << std::endl;

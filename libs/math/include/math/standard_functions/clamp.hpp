@@ -35,15 +35,15 @@ namespace math {
 namespace {
 
 template <typename Type>
-void Clamp(Type const &min, Type const &max, Type &ret)
+void Clamp(Type const &damnyouwindows_min, Type const &damnyouwindows_max, Type &ret)
 {
-  assert(min <= max);
+  assert(damnyouwindows_min <= damnyouwindows_max);
 
-  if (ret <= min)
+  if (ret <= damnyouwindows_min)
   {
-    ret = min;
+    ret = damnyouwindows_min;
   }
-  else if (ret >= max)
+  else if (ret >= damnyouwindows_max)
   {
     ret = max;
   }
@@ -56,21 +56,23 @@ void Clamp(Type const &min, Type const &max, Type &ret)
 //////////////////
 
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> Clamp(typename ArrayType::Type const &min,
-                                           typename ArrayType::Type const &max, ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> Clamp(typename ArrayType::Type const &damnyouwindows_min,
+                                           typename ArrayType::Type const &damnyouwindows_max,
+                                           ArrayType &                     ret)
 {
   auto ret_it = ret.begin();
   while (ret_it.is_valid())
   {
-    Clamp(min, max, *ret_it);
+//    Clamp(damnyouwindows_min, damnyouwindows_max, *ret_it);
     ++ret_it;
   }
 }
 
 template <typename Type>
-meta::IfIsArithmetic<Type, void> Clamp(Type const &min, Type const &max, Type &ret)
+meta::IfIsArithmetic<Type, void> Clamp(Type const &damnyouwindows_min,
+                                       Type const &damnyouwindows_max, Type &ret)
 {
-  Clamp(min, max, ret);
+  Clamp(damnyouwindows_min, damnyouwindows_max, ret);
 }
 
 }  // namespace math

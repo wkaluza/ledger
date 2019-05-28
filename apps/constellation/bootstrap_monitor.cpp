@@ -36,7 +36,7 @@ using variant::Variant;
 using variant::Extract;
 using network::Uri;
 using http::JsonClient;
-using byte_array::ConstByteArray;
+using damnyouwindows_byte_array::ConstByteArray;
 
 const char *               BOOTSTRAP_HOST = "https://bootstrap.fetch.ai";
 const std::chrono::seconds UPDATE_INTERVAL{30};
