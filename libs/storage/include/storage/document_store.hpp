@@ -164,7 +164,7 @@ public:
 
     if (key_index_.GetIfExists(address, index))
     {
-      file_object_.SeekFile(index);
+//      file_object_.SeekFile(index);
     }
     else
     {
@@ -174,7 +174,7 @@ public:
     key_index_.Erase(address);
     key_index_.Flush();
 
-    file_object_.Erase();
+//    file_object_.Erase();
     file_object_.Flush();
   }
 
