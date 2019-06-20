@@ -26,6 +26,12 @@ LABELS_TO_EXCLUDE_FOR_FAST_TESTS = [
     SLOW_TEST_LABEL,
     INTEGRATION_TEST_LABEL]
 
+VENDOR_TARGETS = [
+    'benchmark',
+    'gtest',
+    'gmock'
+]
+
 
 def output(*args):
     text = ' '.join(map(str, args))
@@ -141,6 +147,9 @@ def parse_commandline():
         help='The prefix to be used for the naming of the build folder')
     parser.add_argument('-B', '--build', action='store_true',
                         help='Build the project')
+    parser.add_argument('--iwyu', action='store_true', help='Run IWYU')
+    parser.add_argument('--vendor_only', action='store_true',
+                        help='Only build vendor (third-party) targets')
     parser.add_argument('-j', '--jobs', type=int, default=CONCURRENCY,
                         help=('The number of jobs to do in parallel. If \'0\' then number of '
                               'available CPU cores will be used. '
@@ -165,7 +174,10 @@ def parse_commandline():
     return parser.parse_args()
 
 
-def build_project(project_root, build_root, options, concurrency):
+def build_project(project_root, build_root, options, use_iwyu, vendor_only, concurrency):
+    if use_iwyu:
+        options['CMAKE_CXX_INCLUDE_WHAT_YOU_USE'] = '/usr/local/bin/include-what-you-use;-Xiwyu;--max_line_length=300;-Xiwyu;--verbose=2'
+
     output('Source.:', project_root)
     output('Build..:', build_root)
     output('Options:')
@@ -205,10 +217,18 @@ def build_project(project_root, build_root, options, concurrency):
 
     output('Building project with command: {} (detected cpus: {})'.format(
         ' '.join(cmd), AVAILABLE_CPUS))
-    exit_code = subprocess.call(cmd, cwd=build_root)
-    if exit_code != 0:
-        output('Failed to make the project')
-        sys.exit(exit_code)
+
+    if vendor_only:
+        exit_code = subprocess.call(
+            cmd + VENDOR_TARGETS, cwd=build_root)
+        if exit_code != 0:
+            output('Failed to make vendor project(s)')
+            sys.exit(exit_code)
+    else:
+        exit_code = subprocess.call(cmd, cwd=build_root)
+        if exit_code != 0:
+            output('Failed to make the project')
+            sys.exit(exit_code)
 
 
 def clean_files(build_root):
@@ -316,7 +336,8 @@ def main():
         options['FETCH_ENABLE_METRICS'] = 1
 
     if args.build:
-        build_project(project_root, build_root, options, concurrency)
+        build_project(project_root, build_root, options,
+                      args.iwyu, args.vendor_only, concurrency)
 
     if args.test:
         test_project(

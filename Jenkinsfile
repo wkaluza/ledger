@@ -63,6 +63,61 @@ def static_analysis()
   }
 }
 
+def environment(platform)
+{
+  return [
+    "CC=${platform.env_cc}",
+    "CXX=${platform.env_cxx}"
+  ]
+}
+
+def include_analysis()
+{
+  def iwyu_config = Configuration.RELEASE
+  def iwyu_platform = Platform.CLANG6
+  def iwyu_llvm_root_path = '/usr/lib/llvm-6.0'
+  def iwyu_dependencies = [
+    'libncurses5-dev',
+    'libncursesw5-dev',
+    'libclang-6.0-dev']
+
+  return {
+    stage('Include Analysis') {
+      node(HIGH_LOAD_NODE_LABEL) {
+        timeout(120) {
+          stage("SCM IWYU") {
+            checkout scm
+          }
+
+          withEnv(environment(iwyu_platform)) {
+            docker.image(DOCKER_IMAGE_NAME).inside {
+              stage('Install IWYU dependencies') {
+                sh "apt-get install -y ${iwyu_dependencies.join(' ')}"
+              }
+
+              stage('Build and install IWYU') {
+                sh """\
+                  cd ./vendor/iwyu
+                  mkdir build-iwyu
+                  cd build-iwyu
+                  cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${iwyu_config.label} -DIWYU_LLVM_ROOT_PATH=${iwyu_llvm_root_path} -DCURSES_NEED_NCURSES=TRUE ..
+                  make -j4
+                  make install
+                """
+              }
+
+              stage("Run IWYU") {
+                sh "./scripts/ci-tool.py -B ${iwyu_config.label} --iwyu --vendor_only"
+                sh "./scripts/ci-tool.py -B ${iwyu_config.label} --iwyu"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 def SLOW_stage(name, steps)
 {
   if (should_run_slow_tests())
@@ -75,13 +130,6 @@ def create_build(Platform platform, Configuration config)
 {
   def suffix = "${platform.label} ${config.label}"
 
-  def environment = {
-    return [
-      "CC=${platform.env_cc}",
-      "CXX=${platform.env_cxx}"
-    ]
-  }
-
   return {
     stage(suffix) {
       node(HIGH_LOAD_NODE_LABEL) {
@@ -90,7 +138,7 @@ def create_build(Platform platform, Configuration config)
             checkout scm
           }
 
-          withEnv(environment()) {
+          withEnv(environment(platform)) {
             docker.image(DOCKER_IMAGE_NAME).inside {
               stage("Build ${suffix}") {
                 sh "./scripts/ci-tool.py -B ${config.label}"
@@ -131,6 +179,11 @@ def run_builds_in_parallel()
   }
 
   stages['Static Analysis'] = static_analysis()
+
+  if (should_run_slow_tests())
+  {
+    stages['Include Analysis'] = include_analysis()
+  }
 
   stage('Build and Test') {
     // Execute stages
