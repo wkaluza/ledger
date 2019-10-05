@@ -262,9 +262,14 @@ function (configure_vendor_targets)
 
   # Pybind11
   add_subdirectory(${FETCH_ROOT_VENDOR_DIR}/pybind11)
+  # ???profile targets
 
   # Google Test
   add_subdirectory(${FETCH_ROOT_VENDOR_DIR}/googletest)
+  profile_target(gtest)
+  profile_target(gtest_main)
+  profile_target(gmock)
+  profile_target(gmock_main)
 
   # MCL TODO: Work out how to get this to work with the already found version of OpenSSL
   set(USE_GMP OFF CACHE BOOL "use gmp" FORCE)
@@ -278,15 +283,26 @@ function (configure_vendor_targets)
                              -DMCL_VINT_FIXED_BUFFER
                              -DMCLBN_FP_UNIT_SIZE=4)
 
-  # TODO(HUT): remove unit size
-
   add_library(vendor-mcl INTERFACE)
   target_link_libraries(vendor-mcl INTERFACE mcl_st)
+
+  profile_target(mcl)
+  profile_target(mcl_st)
+  profile_target(mclbn256)
+  profile_target(mclbn384)
+  profile_target(mclbn512)
+  profile_target(mclbn384_256)
+  profile_target(bn_c256_test)
+  profile_target(bn_c384_test)
+  profile_target(bn_c512_test)
+  profile_target(bn_c384_256_test)
 
   # Google Benchmark Do not build the google benchmark library tests
   if (FETCH_ENABLE_BENCHMARKS)
     set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Suppress google benchmark default tests" FORCE)
     add_subdirectory(${FETCH_ROOT_VENDOR_DIR}/benchmark)
+    profile_target(benchmark)
+    profile_target(benchmark_main)
   endif (FETCH_ENABLE_BENCHMARKS)
 
   # mio vendor library

@@ -6,5 +6,5 @@ project(muddle-node)
 
 setup_compiler()
 
-add_executable(muddle-node main.cpp)
+fetch_add_executable(muddle-node main.cpp)
 target_link_libraries(muddle-node PRIVATE fetch-muddle fetch-http)

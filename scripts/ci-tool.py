@@ -17,6 +17,7 @@ from os.path import abspath, dirname, exists, isdir, isfile, join
 
 import fetchai_code_quality
 
+PROFILE_DATA_DIR_NAME = 'fetch_build_profile'
 BUILD_TYPES = ('Debug', 'Release', 'RelWithDebInfo', 'MinSizeRel')
 MAX_CPUS = 7  # as defined by CI workflow
 AVAILABLE_CPUS = multiprocessing.cpu_count()
@@ -139,17 +140,18 @@ def build_type(text):
 
 def parse_commandline():
     parser = argparse.ArgumentParser()
-    parser.add_argument('build_type', metavar='TYPE',
-                        type=build_type, help='The type of build to be used')
-    parser.add_argument(
-        '-p', '--build-path-prefix', default='build-',
-        help='The prefix to be used for the naming of the build folder')
+    parser.add_argument('build_type', metavar='TYPE', type=build_type,
+                        help='The type of build to be used')
+    parser.add_argument('-p', '--build-path-prefix', default='build-',
+                        help='The prefix to be used for the naming of the build folder')
     parser.add_argument('-B', '--build', action='store_true',
                         help='Build the project')
     parser.add_argument('-j', '--jobs', type=int, default=CONCURRENCY,
-                        help=('The number of jobs to do in parallel. If \'0\' then number of '
-                              'available CPU cores will be used. '
-                              'Defaults to {CONCURRENCY}'.format(CONCURRENCY=CONCURRENCY)))
+                        help='The number of jobs to do in parallel. If \'0\' then number of '
+                             'available CPU cores will be used. '
+                             'Defaults to {CONCURRENCY}'.format(CONCURRENCY=CONCURRENCY))
+    parser.add_argument('-P', '--profile', action='store_true',
+                        help='???profile build')
     parser.add_argument('-T', '--test', action='store_true',
                         help='Run unit tests. Skips tests marked with the following CTest '
                              'labels: {labels}'.format(labels=", ".join(LABELS_TO_EXCLUDE_FOR_FAST_TESTS)))
@@ -167,11 +169,8 @@ def parse_commandline():
                         help='Run clang-tidy')
     parser.add_argument('-A', '--all', action='store_true',
                         help='Run build and all tests')
-    parser.add_argument(
-        '-f', '--force-build-folder',
-        help='Specify the folder directly that should be used for the build / test')
-    parser.add_argument('-m', '--metrics',
-                        action='store_true', help='Store the metrics')
+    parser.add_argument('-f', '--force-build-folder',
+                        help='Specify the folder directly that should be used for the build / test')
 
     return parser.parse_args()
 
@@ -192,9 +191,7 @@ def cmake_configure(project_root, build_root, options):
 
     cmake_cmd = ['cmake']
 
-    # determine if this system has the ninja build system
-    if new_build_folder and shutil.which('ninja') is not None:
-        cmake_cmd += ['-G', 'Ninja']
+    cmake_cmd += ['-G', 'Unix Makefiles']
 
     # add all the configuration options
     cmake_cmd += ['-D{k}={v}'.format(k=k, v=v) for k, v in options.items()]
@@ -208,8 +205,20 @@ def cmake_configure(project_root, build_root, options):
 
 
 def build_project(build_root, concurrency):
-    build_cmd = ['ninja'] if exists(
-        join(build_root, 'build.ninja')) else ['make']
+    build_cmd = ['make']
+    build_cmd += ['-j{concurrency}'.format(concurrency=concurrency)]
+
+    output(
+        'Building project with command: {cmd} (detected cpus: {AVAILABLE_CPUS})'.format(cmd=" ".join(build_cmd),
+                                                                                        AVAILABLE_CPUS=AVAILABLE_CPUS))
+    exit_code = subprocess.call(build_cmd, cwd=build_root)
+    if exit_code != 0:
+        output('Failed to make the project')
+        sys.exit(exit_code)
+
+
+def touch_project(build_root, concurrency):
+    build_cmd = ['make', '-t']
     build_cmd += ['-j{concurrency}'.format(concurrency=concurrency)]
 
     output(
@@ -329,6 +338,44 @@ def main():
     if args.build or args.lint or args.all:
         cmake_configure(project_root, build_root, options)
 
+    if args.profile:
+        # build_root???add profiling suffix so profiling build always gets its own folder
+        profile_data_root = join(abspath(build_root), PROFILE_DATA_DIR_NAME)
+        processed_output_file = join(build_root, 'fetch_build_profile.json')
+        output('Profiling data will be saved in {}/ and {}'.format(
+            profile_data_root, processed_output_file))
+
+        options['FETCH_PROFILE_BUILD'] = 1
+        options['FETCH_ENABLE_CCACHE'] = 0
+        options['FETCH_PROFILE_DATA_DIR_NAME'] = profile_data_root
+
+        if isdir(build_root):
+            shutil.rmtree(build_root)
+        os.makedirs(build_root)
+        cmake_configure(project_root, build_root, options)
+
+        # start_ms = time.time() * 1000
+        # build_project(build_root, concurrency)
+        # end_ms = time.time() * 1000
+
+        # # ???unify with profiler using schema or python class. import profiler as module
+        # with open(join(profile_data_root, 'BUILD_ROOT.json'), 'w+') as f:
+        #     json.dump({
+        #         'start_ms': start_ms,
+        #         'duration_ms': end_ms - start_ms,
+        #         'project_name': 'BUILD_AGGREGATE',
+        #         'target_name': 'BUILD_AGGREGATE',
+        #         'target_type': 'BUILD_AGGREGATE',
+        #         'build_action': 'BUILD_AGGREGATE'
+        #     }, f)
+
+        profiling_output = subprocess.check_output(
+            ['python3', './scripts/build_profiler.py',
+             '--profile_data_root={}'.format(profile_data_root)])
+
+        with open(processed_output_file, 'w+') as f:
+            f.write(profiling_output.decode('utf-8'))
+
     if args.build or args.all:
         build_project(build_root, concurrency)
 
@@ -354,8 +401,18 @@ def main():
         test_end_to_end(project_root, build_root)
 
     if args.lint or args.all:
-        fetchai_code_quality.static_analysis(
-            project_root, build_root, False, concurrency)
+        touch_project(build_root, concurrency)
+        build_project(build_root, concurrency)
+
+        # fetchai_code_quality.static_analysis(
+        #     project_root, build_root, False, concurrency)
+
+    if args.profile:
+        output2 = subprocess.check_output(
+            ['python3', './scripts/build_profiler.py',
+             '--profile_data_root={}'.format(join(abspath(build_root), PROFILE_DATA_DIR_NAME))])
+        with open(os.path.join(build_root, 'fetch_build_profile.json'), 'w+') as f:
+            f.write(output2.decode('utf-8'))
 
 
 if __name__ == '__main__':

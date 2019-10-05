@@ -6,25 +6,25 @@ project(fetch-constellation)
 
 setup_compiler()
 
-add_executable(constellation
-               bootstrap_monitor.cpp
-               bootstrap_monitor.hpp
-               config_builder.cpp
-               config_builder.hpp
-               constellation.cpp
-               constellation.hpp
-               health_check_http_module.hpp
-               logging_http_module.hpp
-               main.cpp
-               manifest_builder.cpp
-               manifest_builder.hpp
-               muddle_status_http_module.cpp
-               muddle_status_http_module.hpp
-               open_api_http_module.cpp
-               open_api_http_module.hpp
-               settings.cpp
-               settings.hpp
-               telemetry_http_module.hpp)
+fetch_add_executable(constellation
+                     bootstrap_monitor.cpp
+                     bootstrap_monitor.hpp
+                     config_builder.cpp
+                     config_builder.hpp
+                     constellation.cpp
+                     constellation.hpp
+                     health_check_http_module.hpp
+                     logging_http_module.hpp
+                     main.cpp
+                     manifest_builder.cpp
+                     manifest_builder.hpp
+                     muddle_status_http_module.cpp
+                     muddle_status_http_module.hpp
+                     open_api_http_module.cpp
+                     open_api_http_module.hpp
+                     settings.cpp
+                     settings.hpp
+                     telemetry_http_module.hpp)
 target_link_libraries(constellation
                       PRIVATE fetch-ledger
                               fetch-miner

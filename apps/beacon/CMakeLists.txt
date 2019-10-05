@@ -6,5 +6,5 @@ project(beacon)
 
 setup_compiler()
 
-add_executable(beacon_standalone main.cpp)
+fetch_add_executable(beacon_standalone main.cpp)
 target_link_libraries(beacon_standalone PRIVATE fetch-version fetch-beacon)
