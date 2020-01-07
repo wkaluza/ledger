@@ -2,6 +2,31 @@
 #
 # By looking at the folder structure it is possible to determine what type of library it is i.e.
 # header only or static library.
+macro (profile_target target_name)
+  if (FETCH_PROFILE_BUILD)
+
+    if (FETCH_ENABLE_CCACHE)
+      message(
+        FATAL_ERROR
+          "CCache is incompatible with build profiling; disable FETCH_ENABLE_CCACHE to proceed")
+    endif ()
+
+    get_target_property(target_type "${target_name}" TYPE)
+    set_property(
+      TARGET "${target_name}"
+      PROPERTY
+        RULE_LAUNCH_COMPILE
+        "python3 ${FETCH_BUILD_PROFILER_PATH} --mode COLLECT --build_action COMPILE --source_dir ${CMAKE_SOURCE_DIR} --profile_data_root ${FETCH_PROFILE_DATA_DIR_NAME} --project_name ${PROJECT_NAME} --target_name ${target_name} --target_type ${target_type} -- "
+      )
+    set_property(
+      TARGET "${target_name}"
+      PROPERTY
+        RULE_LAUNCH_LINK
+        "python3 ${FETCH_BUILD_PROFILER_PATH} --mode COLLECT --build_action LINK --source_dir ${CMAKE_SOURCE_DIR} --profile_data_root ${FETCH_PROFILE_DATA_DIR_NAME} --project_name ${PROJECT_NAME} --target_name ${target_name} --target_type ${target_type} -- "
+      )
+  endif ()
+endmacro ()
+
 function (setup_library name)
 
   # look up the files for the library
@@ -36,6 +61,8 @@ function (setup_library name)
       target_link_libraries(${name} PUBLIC "-framework CoreFoundation")
     endif ()
 
+    profile_target(${name})
+
   endif ()
 endfunction ()
 
@@ -49,6 +76,8 @@ function (fetch_add_executable name)
   if (APPLE)
     target_link_libraries(${name} PRIVATE "-framework CoreFoundation")
   endif ()
+
+  profile_target(${name})
 
 endfunction ()
 
@@ -97,7 +126,7 @@ function (setup_library_examples library)
             file(GLOB_RECURSE example_headers ${example_path}/*.hpp)
             file(GLOB_RECURSE example_srcs ${example_path}/*.cpp)
 
-            add_executable(${example_name} ${example_headers} ${example_srcs})
+            fetch_add_executable(${example_name} ${example_headers} ${example_srcs})
             target_link_libraries(${example_name} PRIVATE ${library})
             target_include_directories(${example_name} PRIVATE ${example_path})
             target_include_directories(${example_name} PRIVATE ${examples_root})
@@ -145,7 +174,7 @@ function (_internal_add_fetch_test
     file(GLOB_RECURSE srcs ${directory}/*.cpp)
 
     # define the target
-    add_executable(${name} ${headers} ${srcs})
+    fetch_add_executable(${name} ${headers} ${srcs})
     target_link_libraries(${name} PRIVATE ${library} gmock gmock_main)
     target_include_directories(${name}
                                PRIVATE ${FETCH_ROOT_VENDOR_DIR}/googletest/googletest/include)
@@ -261,7 +290,7 @@ function (add_fetch_gbench
       file(GLOB_RECURSE srcs ${directory}/*.cpp)
 
       # define the target
-      add_executable(${name} ${headers} ${srcs})
+      fetch_add_executable(${name} ${headers} ${srcs})
 
       target_link_libraries(${name}
                             PRIVATE ${library}

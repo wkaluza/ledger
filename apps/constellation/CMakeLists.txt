@@ -6,16 +6,16 @@ project(fetch-constellation)
 
 setup_compiler()
 
-add_executable(constellation
-               bootstrap_monitor.cpp
-               bootstrap_monitor.hpp
-               config_builder.cpp
-               config_builder.hpp
-               main.cpp
-               manifest_builder.cpp
-               manifest_builder.hpp
-               settings.cpp
-               settings.hpp)
+fetch_add_executable(constellation
+                     bootstrap_monitor.cpp
+                     bootstrap_monitor.hpp
+                     config_builder.cpp
+                     config_builder.hpp
+                     main.cpp
+                     manifest_builder.cpp
+                     manifest_builder.hpp
+                     settings.cpp
+                     settings.hpp)
 target_link_libraries(constellation
                       PRIVATE fetch-ledger
                               fetch-constellation

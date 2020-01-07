@@ -17,7 +17,7 @@ setup_compiler()
 setup_library_examples(fetch-oef-core)
 
 if (FETCH_ENABLE_EXAMPLES)
-  add_executable(example-standalone-core standalone_core/main.cpp)
+  fetch_add_executable(example-standalone-core standalone_core/main.cpp)
   target_link_libraries(example-standalone-core PRIVATE fetch-oef-core fetch-oef-base)
   # target_include_directories(example-network-subscribe PRIVATE subscribe)
 endif (FETCH_ENABLE_EXAMPLES)

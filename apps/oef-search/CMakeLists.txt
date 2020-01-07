@@ -6,5 +6,8 @@ project(fetch-oef-core)
 
 setup_compiler()
 
-add_executable(oef-search MtSearch.cpp MtSearch.hpp main.cpp)
+fetch_add_executable(oef-search
+                     MtSearch.cpp
+                     MtSearch.hpp
+                     main.cpp)
 target_link_libraries(oef-search PRIVATE fetch-oef-search fetch-oef-messages)

@@ -6,10 +6,10 @@ project(storage-unit-cli)
 
 setup_compiler()
 
-add_executable(tx-ctl
-               tx_ctl.cpp
-               tx_storage_client.cpp
-               tx_storage_client.hpp
-               tx_storage_tool.cpp
-               tx_storage_tool.hpp)
+fetch_add_executable(tx-ctl
+                     tx_ctl.cpp
+                     tx_storage_client.cpp
+                     tx_storage_client.hpp
+                     tx_storage_tool.cpp
+                     tx_storage_tool.hpp)
 target_link_libraries(tx-ctl PRIVATE fetch-ledger)

@@ -6,5 +6,5 @@ project(muddle-probe)
 
 setup_compiler()
 
-add_executable(muddle-test-net main.cpp)
+fetch_add_executable(muddle-test-net main.cpp)
 target_link_libraries(muddle-test-net PRIVATE fetch-muddle fetch-constellation)

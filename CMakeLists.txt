@@ -22,6 +22,7 @@ option(FETCH_ENABLE_COVERAGE            "Enable coverage generation"            
 option(FETCH_DISABLE_COLOUR_LOG         "Disable the colour logging"            OFF)
 option(FETCH_STATIC_LINK                "Enable static linking"                 OFF)
 option(FETCH_ENABLE_LTO                 "Enable link-time optimisation"         ON)
+option(FETCH_PROFILE_BUILD              "Collect build timings for analysis"    OFF)
 option(FETCH_ENABLE_BACKTRACE           "Enable backtrace on errors"            ON)
 option(FETCH_FIXEDPOINT_DEBUG_HEX       "Print Hex value of FixedPoint numbers" OFF)
 option(FETCH_FORCE_COLORED_OUTPUT       "Always produce ANSI-colored output."   ON)
@@ -96,6 +97,14 @@ if (FETCH_ENABLE_CCACHE)
 endif (FETCH_ENABLE_CCACHE)
 
 conditionally_enable_lto()
+
+# ???
+get_filename_component(FETCH_BUILD_PROFILER_PATH
+                       scripts/build_profiler.py
+                       ABSOLUTE
+                       BASE_DIR
+                       ${CMAKE_SOURCE_DIRECTORY})
+# set_property(GLOBAL PROPERTY RULE_MESSAGES OFF) # ???
 
 # ------------------------------------------------------------------------------
 # System / Vendor Targets

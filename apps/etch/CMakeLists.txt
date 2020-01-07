@@ -6,5 +6,5 @@ project(etch)
 
 setup_compiler()
 
-add_executable(etch main.cpp)
+fetch_add_executable(etch main.cpp)
 target_link_libraries(etch PRIVATE fetch-version fetch-vm-modules)

@@ -6,6 +6,7 @@
 
 import argparse
 import fnmatch
+import json
 import multiprocessing
 import os
 import re
@@ -19,6 +20,7 @@ from os.path import abspath, dirname, exists, isdir, isfile, join
 
 import fetchai_code_quality
 
+PROFILE_DATA_DIR_NAME = 'fetch_build_profile'
 BUILD_TYPES = ('Debug', 'Release', 'RelWithDebInfo', 'MinSizeRel')
 LOG_LEVELS = ('trace', 'debug', 'info', 'warn', 'error', 'critical', 'none')
 MAX_CPUS = 7  # as defined by CI workflow
@@ -164,6 +166,8 @@ def parse_commandline():
                         help=('The number of jobs to do in parallel. If \'0\' then number of '
                               'available CPU cores will be used. '
                               'Defaults to {CONCURRENCY}'.format(CONCURRENCY=CONCURRENCY)))
+    parser.add_argument('-P', '--profile', action='store_true',
+                        help='Collect build profile')
     parser.add_argument('-T', '--test', action='store_true',
                         help='Run unit tests. Skips tests marked with the following CTest '
                              'labels: {labels}'.format(labels=", ".join(LABELS_TO_EXCLUDE_FOR_FAST_TESTS)))
@@ -386,6 +390,17 @@ def main():
         # allow the sccache server to start up
         time.sleep(5)
 
+    if args.profile:
+        # build_root???add profiling suffix so profiling build always gets its own folder
+        profile_data_root = join(abspath(build_root), PROFILE_DATA_DIR_NAME)
+        processed_output_file = join(build_root, 'fetch_build_profile.json')
+        output('Profiling data will be saved in {}/ and {}'.format(
+            profile_data_root, processed_output_file))
+
+        options['FETCH_PROFILE_BUILD'] = 1
+        options['FETCH_ENABLE_CCACHE'] = 0
+        options['FETCH_PROFILE_DATA_DIR_NAME'] = profile_data_root
+
     if args.build or args.lint or args.all:
         # choose the generater initially based on what already exists there
         if isdir(build_root):
@@ -421,6 +436,33 @@ def main():
                 '\n😭 Failed to configure the cmake project. This is usually because of a mismatch between generators.\n\nTry removing the build folder: {} and try again'.format(
                     build_root))
             sys.exit(1)
+
+    if args.profile:
+        if isdir(build_root):
+            shutil.rmtree(build_root)
+        os.makedirs(build_root)
+
+        # start_ms = time.time() * 1000
+        build_project(build_root, concurrency)
+        # end_ms = time.time() * 1000
+
+        # # ???unify with profiler using schema or python class. import profiler as module
+        # with open(join(profile_data_root, 'BUILD_ROOT.json'), 'w+') as f:
+        #     json.dump({
+        #         'start_ms': start_ms,
+        #         'duration_ms': end_ms - start_ms,
+        #         'project_name': 'BUILD_AGGREGATE',
+        #         'target_name': 'BUILD_AGGREGATE',
+        #         'target_type': 'BUILD_AGGREGATE',
+        #         'build_action': 'BUILD_AGGREGATE'
+        #     }, f)
+
+        profiling_output = subprocess.check_output(
+            ['python3', './scripts/build_profiler.py',
+             '--profile_data_root={}'.format(profile_data_root)])
+
+        with open(processed_output_file, 'w+') as f:
+            f.write(profiling_output.decode('utf-8'))
 
     if args.build or args.all or args.commit:
         build_project(build_root, concurrency)
