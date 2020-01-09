@@ -41,13 +41,17 @@ TransactionArchiver::TransactionArchiver(uint32_t lane, TransactionPoolInterface
   , pool_{pool}
   , archive_{archive}
   , state_machine_{std::make_shared<StateMachine>(LOGGING_NAME, State::COLLECTING, ToString)}
-  // clang-format off
-  , confirmed_total_{CreateCounter("ledger_txarchiver_confirmed_total", "The total number of transactions added to the confirmed queue")}
-  , duplicate_total_{CreateCounter("ledger_txarchiver_duplicate_total", "The total number of transactions duplicate transactions processed")}
-  , additions_total_{CreateCounter("ledger_txarchiver_additions_total", "The total number of transactions archived by the archiver")}
-  , lost_total_{CreateCounter("ledger_txarchiver_lost_total", "The total number of transactions lost by the archiver")}
-  , processed_total_{CreateCounter("ledger_txarchiver_processed_total", "The total number of transactions processed by the archiver")}
-// clang-format on
+  , confirmed_total_{CreateCounter("ledger_txarchiver_confirmed_total",
+                                   "The total number of transactions added to the confirmed queue")}
+  , duplicate_total_{CreateCounter(
+        "ledger_txarchiver_duplicate_total",
+        "The total number of transactions duplicate transactions processed")}
+  , additions_total_{CreateCounter("ledger_txarchiver_additions_total",
+                                   "The total number of transactions archived by the archiver")}
+  , lost_total_{CreateCounter("ledger_txarchiver_lost_total",
+                              "The total number of transactions lost by the archiver")}
+  , processed_total_{CreateCounter("ledger_txarchiver_processed_total",
+                                   "The total number of transactions processed by the archiver")}
 {
   // make the reservation
   digests_.reserve(BATCH_SIZE);

@@ -125,22 +125,29 @@ BeaconSetupService::BeaconSetupService(MuddleInterface &       muddle,
                    {BeaconSetupService::State::COMPUTE_PUBLIC_SIGNATURE, 1},
                    {BeaconSetupService::State::DRY_RUN_SIGNING, 1.5}}
 {
-  // clang-format off
   state_machine_->RegisterHandler(State::IDLE, this, &BeaconSetupService::OnIdle);
   state_machine_->RegisterHandler(State::RESET, this, &BeaconSetupService::OnReset);
   state_machine_->RegisterHandler(State::CONNECT_TO_ALL, this, &BeaconSetupService::OnConnectToAll);
-  state_machine_->RegisterHandler(State::WAIT_FOR_READY_CONNECTIONS, this, &BeaconSetupService::OnWaitForReadyConnections);
-  state_machine_->RegisterHandler(State::WAIT_FOR_NOTARISATION_KEYS, this, &BeaconSetupService::OnWaitForNotarisationKeys);
-  state_machine_->RegisterHandler(State::WAIT_FOR_SHARES, this, &BeaconSetupService::OnWaitForShares);
-  state_machine_->RegisterHandler(State::WAIT_FOR_COMPLAINTS, this, &BeaconSetupService::OnWaitForComplaints);
-  state_machine_->RegisterHandler(State::WAIT_FOR_COMPLAINT_ANSWERS, this, &BeaconSetupService::OnWaitForComplaintAnswers);
-  state_machine_->RegisterHandler(State::WAIT_FOR_QUAL_SHARES, this, &BeaconSetupService::OnWaitForQualShares);
-  state_machine_->RegisterHandler(State::WAIT_FOR_QUAL_COMPLAINTS, this, &BeaconSetupService::OnWaitForQualComplaints);
-  state_machine_->RegisterHandler(State::WAIT_FOR_RECONSTRUCTION_SHARES, this, &BeaconSetupService::OnWaitForReconstructionShares);
-  state_machine_->RegisterHandler(State::COMPUTE_PUBLIC_SIGNATURE, this, &BeaconSetupService::OnComputePublicSignature);
+  state_machine_->RegisterHandler(State::WAIT_FOR_READY_CONNECTIONS, this,
+                                  &BeaconSetupService::OnWaitForReadyConnections);
+  state_machine_->RegisterHandler(State::WAIT_FOR_NOTARISATION_KEYS, this,
+                                  &BeaconSetupService::OnWaitForNotarisationKeys);
+  state_machine_->RegisterHandler(State::WAIT_FOR_SHARES, this,
+                                  &BeaconSetupService::OnWaitForShares);
+  state_machine_->RegisterHandler(State::WAIT_FOR_COMPLAINTS, this,
+                                  &BeaconSetupService::OnWaitForComplaints);
+  state_machine_->RegisterHandler(State::WAIT_FOR_COMPLAINT_ANSWERS, this,
+                                  &BeaconSetupService::OnWaitForComplaintAnswers);
+  state_machine_->RegisterHandler(State::WAIT_FOR_QUAL_SHARES, this,
+                                  &BeaconSetupService::OnWaitForQualShares);
+  state_machine_->RegisterHandler(State::WAIT_FOR_QUAL_COMPLAINTS, this,
+                                  &BeaconSetupService::OnWaitForQualComplaints);
+  state_machine_->RegisterHandler(State::WAIT_FOR_RECONSTRUCTION_SHARES, this,
+                                  &BeaconSetupService::OnWaitForReconstructionShares);
+  state_machine_->RegisterHandler(State::COMPUTE_PUBLIC_SIGNATURE, this,
+                                  &BeaconSetupService::OnComputePublicSignature);
   state_machine_->RegisterHandler(State::DRY_RUN_SIGNING, this, &BeaconSetupService::OnDryRun);
   state_machine_->RegisterHandler(State::BEACON_READY, this, &BeaconSetupService::OnBeaconReady);
-  // clang-format on
 
   // Set subscription for receiving shares
   shares_subscription_->SetMessageHandler(this, &BeaconSetupService::OnNewSharesPacket);

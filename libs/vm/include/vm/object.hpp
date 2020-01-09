@@ -83,17 +83,12 @@ using IsFixed128 = std::is_base_of<Fixed128, std::decay_t<T>>;
 template <typename T, typename R = void>
 using IfIsPtrFixed128 = std::enable_if_t<IsFixed128<T>::value, R>;
 
-// clang-format off
 template <typename T, typename R = void>
-using IfIsExternal = std::enable_if_t<
-    !IsPtr<std::decay_t<T>> &&
-    !IsObject<std::decay_t<T>> &&
-    !IsVariant<std::decay_t<T>> &&
-    !IsPrimitive<std::decay_t<T>> &&
-    !IsString<std::decay_t<T>> &&
-    !IsAddress<std::decay_t<T>>,
-    R>;
-// clang-format on
+using IfIsExternal =
+    std::enable_if_t<!IsPtr<std::decay_t<T>> && !IsObject<std::decay_t<T>> &&
+                         !IsVariant<std::decay_t<T>> && !IsPrimitive<std::decay_t<T>> &&
+                         !IsString<std::decay_t<T>> && !IsAddress<std::decay_t<T>>,
+                     R>;
 
 template <typename T>
 using IsNonconstRef = std::is_same<T, std::decay_t<T> &>;
