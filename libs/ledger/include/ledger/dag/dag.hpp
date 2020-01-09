@@ -155,14 +155,19 @@ private:
                                   // val = epoch)
   DAGNodeStore finalised_dag_nodes_;  // Once an epoch arrives, all dag nodes in between go here
 
-  // clang-format off
-  // volatile state
-  std::unordered_map<DAGTipID, DAGTipPtr>               all_tips_;  // All tips are here
-  std::unordered_map<NodeHash, DAGTipPtr>               tips_;  // look up tips of the dag pointing at a certain node hash
-  std::unordered_map<NodeHash, DAGNodePtr>              node_pool_;  // dag nodes that are not finalised but are still valid
-  std::unordered_map<NodeHash, DAGNodePtr>              loose_nodes_;  // nodes that are missing one or more references (waiting on NodeHash)
-  std::unordered_map<NodeHash, std::vector<DAGNodePtr>> loose_nodes_lookup_;  // nodes that are missing one or more references (waiting on NodeHash)
-  // clang-format on
+  /// @name Volatile state
+  /// @{
+  /// All tips are here
+  std::unordered_map<DAGTipID, DAGTipPtr> all_tips_;
+  /// look up tips of the dag pointing at a certain node hash
+  std::unordered_map<NodeHash, DAGTipPtr> tips_;
+  /// dag nodes that are not finalised but are still valid
+  std::unordered_map<NodeHash, DAGNodePtr> node_pool_;
+  /// nodes that are missing one or more references (waiting on NodeHash)
+  std::unordered_map<NodeHash, DAGNodePtr> loose_nodes_;
+  /// nodes that are missing one or more references (waiting on NodeHash)
+  std::unordered_map<NodeHash, std::vector<DAGNodePtr>> loose_nodes_lookup_;
+  /// @}
 
   // TODO(1642): loose nodes management scheme
   // std::unordered_map<NodeHash, uint64_t> loose_nodes_ttl_;

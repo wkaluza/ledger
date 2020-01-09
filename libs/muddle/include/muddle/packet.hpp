@@ -82,19 +82,17 @@ public:
 
   struct RoutingHeader
   {
-    // clang-format off
-    uint32_t version   : 4;   ///< Flag to signal the current version of the muddle protocol
-    uint32_t direct    : 1;   ///< Flag to signal that a direct message is being sent (no routing)
-    uint32_t broadcast : 1;   ///< Flag to signal that the packet is a broadcast packet
-    uint32_t exchange  : 1;   ///< Flag to signal that this is an exchange packet
-    uint32_t stamped   : 1;   ///< Flag to signal that the packet is signed by sender
-    uint32_t ttl       : 7;   ///< The time to live counter
-    uint32_t encrypted : 1;   ///< Flag to signal that the packet payload is encrypted
-    uint32_t service   : 16;  ///< The service number
-    uint32_t channel   : 16;  ///< The channel number
-    uint32_t msg_num   : 16;  ///< Incremented message counter for detecting duplicate packets
-    uint32_t network   : 32;  ///< The originating network id
-    // clang-format on
+    uint32_t version : 4;    ///< Flag to signal the current version of the muddle protocol
+    uint32_t direct : 1;     ///< Flag to signal that a direct message is being sent (no routing)
+    uint32_t broadcast : 1;  ///< Flag to signal that the packet is a broadcast packet
+    uint32_t exchange : 1;   ///< Flag to signal that this is an exchange packet
+    uint32_t stamped : 1;    ///< Flag to signal that the packet is signed by sender
+    uint32_t ttl : 7;        ///< The time to live counter
+    uint32_t encrypted : 1;  ///< Flag to signal that the packet payload is encrypted
+    uint32_t service : 16;   ///< The service number
+    uint32_t channel : 16;   ///< The channel number
+    uint32_t msg_num : 16;   ///< Incremented message counter for detecting duplicate packets
+    uint32_t network : 32;   ///< The originating network id
 
     RawAddress target;  ///< The address of the packet target
     RawAddress sender;  ///< The address of the packet sender

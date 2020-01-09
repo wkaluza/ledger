@@ -123,14 +123,17 @@ MainChainRpcService::MainChainRpcService(MuddleEndpoint &             endpoint,
   Add(RPC_MAIN_CHAIN, &main_chain_protocol_);
 
   // configure the state machine
-  // clang-format off
-  state_machine_->RegisterHandler(State::SYNCHRONISING,           this, &MainChainRpcService::OnSynchronising);
-  state_machine_->RegisterHandler(State::SYNCHRONISED,            this, &MainChainRpcService::OnSynchronised);
-  state_machine_->RegisterHandler(State::START_SYNC_WITH_PEER,    this, &MainChainRpcService::OnStartSyncWithPeer);
-  state_machine_->RegisterHandler(State::REQUEST_NEXT_BLOCKS,     this, &MainChainRpcService::OnRequestNextSetOfBlocks);
-  state_machine_->RegisterHandler(State::WAIT_FOR_NEXT_BLOCKS,    this, &MainChainRpcService::OnWaitForBlocks);
-  state_machine_->RegisterHandler(State::COMPLETE_SYNC_WITH_PEER, this, &MainChainRpcService::OnCompleteSyncWithPeer);
-  // clang-format on
+  state_machine_->RegisterHandler(State::SYNCHRONISING, this,
+                                  &MainChainRpcService::OnSynchronising);
+  state_machine_->RegisterHandler(State::SYNCHRONISED, this, &MainChainRpcService::OnSynchronised);
+  state_machine_->RegisterHandler(State::START_SYNC_WITH_PEER, this,
+                                  &MainChainRpcService::OnStartSyncWithPeer);
+  state_machine_->RegisterHandler(State::REQUEST_NEXT_BLOCKS, this,
+                                  &MainChainRpcService::OnRequestNextSetOfBlocks);
+  state_machine_->RegisterHandler(State::WAIT_FOR_NEXT_BLOCKS, this,
+                                  &MainChainRpcService::OnWaitForBlocks);
+  state_machine_->RegisterHandler(State::COMPLETE_SYNC_WITH_PEER, this,
+                                  &MainChainRpcService::OnCompleteSyncWithPeer);
 
   state_machine_->OnStateChange([](State current, State previous) {
     FETCH_UNUSED(current);

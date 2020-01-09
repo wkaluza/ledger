@@ -71,7 +71,6 @@ struct UnrollSet<T, 0>
 };
 }  // namespace details
 
-// clang-format off
 // NOLINTNEXTLINE
 #define APPLY_OPERATOR_LIST(FUNCTION) \
   FUNCTION(*)                         \
@@ -80,8 +79,7 @@ struct UnrollSet<T, 0>
   FUNCTION(-)                         \
   FUNCTION(&)                         \
   FUNCTION(|)                         \
-  FUNCTION(^)
-// clang-format on
+  FUNCTION (^)
 
 template <typename T, std::size_t N = 8 * sizeof(T)>
 class VectorRegister : public BaseVectorRegisterType

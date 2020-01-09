@@ -130,14 +130,17 @@ BeaconService::BeaconService(MuddleInterface &muddle, const CertificatePtr &cert
   rpc_server_ = std::make_shared<Server>(endpoint_, SERVICE_DKG, CHANNEL_RPC);
   rpc_server_->Add(RPC_BEACON, &beacon_protocol_);
 
-  // clang-format off
-  state_machine_->RegisterHandler(State::RELOAD_ON_STARTUP, this, &BeaconService::OnReloadOnStartup);
-  state_machine_->RegisterHandler(State::WAIT_FOR_SETUP_COMPLETION, this, &BeaconService::OnWaitForSetupCompletionState);
-  state_machine_->RegisterHandler(State::PREPARE_ENTROPY_GENERATION, this, &BeaconService::OnPrepareEntropyGeneration);
-  state_machine_->RegisterHandler(State::COLLECT_SIGNATURES, this, &BeaconService::OnCollectSignaturesState);
-  state_machine_->RegisterHandler(State::VERIFY_SIGNATURES, this, &BeaconService::OnVerifySignaturesState);
+  state_machine_->RegisterHandler(State::RELOAD_ON_STARTUP, this,
+                                  &BeaconService::OnReloadOnStartup);
+  state_machine_->RegisterHandler(State::WAIT_FOR_SETUP_COMPLETION, this,
+                                  &BeaconService::OnWaitForSetupCompletionState);
+  state_machine_->RegisterHandler(State::PREPARE_ENTROPY_GENERATION, this,
+                                  &BeaconService::OnPrepareEntropyGeneration);
+  state_machine_->RegisterHandler(State::COLLECT_SIGNATURES, this,
+                                  &BeaconService::OnCollectSignaturesState);
+  state_machine_->RegisterHandler(State::VERIFY_SIGNATURES, this,
+                                  &BeaconService::OnVerifySignaturesState);
   state_machine_->RegisterHandler(State::COMPLETE, this, &BeaconService::OnCompleteState);
-  // clang-format on
 
   state_machine_->OnStateChange([this](State current, State previous) {
     FETCH_UNUSED(this);

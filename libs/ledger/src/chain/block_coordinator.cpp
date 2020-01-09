@@ -199,28 +199,35 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
         "current_block_coord_state", "Current block coord state")}
 {
   // configure the state machine
-  // clang-format off
-  state_machine_->RegisterHandler(State::RELOAD_STATE,                 this, &BlockCoordinator::OnReloadState);
-  state_machine_->RegisterHandler(State::SYNCHRONISING,                this, &BlockCoordinator::OnSynchronising);
-  state_machine_->RegisterHandler(State::SYNCHRONISED,                 this, &BlockCoordinator::OnSynchronised);
+  state_machine_->RegisterHandler(State::RELOAD_STATE, this, &BlockCoordinator::OnReloadState);
+  state_machine_->RegisterHandler(State::SYNCHRONISING, this, &BlockCoordinator::OnSynchronising);
+  state_machine_->RegisterHandler(State::SYNCHRONISED, this, &BlockCoordinator::OnSynchronised);
 
   // Pipe 1
-  state_machine_->RegisterHandler(State::PRE_EXEC_BLOCK_VALIDATION,    this, &BlockCoordinator::OnPreExecBlockValidation);
-  state_machine_->RegisterHandler(State::SYNERGETIC_EXECUTION,         this, &BlockCoordinator::OnSynergeticExecution);
-  state_machine_->RegisterHandler(State::WAIT_FOR_TRANSACTIONS,        this, &BlockCoordinator::OnWaitForTransactions);
-  state_machine_->RegisterHandler(State::SCHEDULE_BLOCK_EXECUTION,     this, &BlockCoordinator::OnScheduleBlockExecution);
-  state_machine_->RegisterHandler(State::WAIT_FOR_EXECUTION,           this, &BlockCoordinator::OnWaitForExecution);
-  state_machine_->RegisterHandler(State::POST_EXEC_BLOCK_VALIDATION,   this, &BlockCoordinator::OnPostExecBlockValidation);
+  state_machine_->RegisterHandler(State::PRE_EXEC_BLOCK_VALIDATION, this,
+                                  &BlockCoordinator::OnPreExecBlockValidation);
+  state_machine_->RegisterHandler(State::SYNERGETIC_EXECUTION, this,
+                                  &BlockCoordinator::OnSynergeticExecution);
+  state_machine_->RegisterHandler(State::WAIT_FOR_TRANSACTIONS, this,
+                                  &BlockCoordinator::OnWaitForTransactions);
+  state_machine_->RegisterHandler(State::SCHEDULE_BLOCK_EXECUTION, this,
+                                  &BlockCoordinator::OnScheduleBlockExecution);
+  state_machine_->RegisterHandler(State::WAIT_FOR_EXECUTION, this,
+                                  &BlockCoordinator::OnWaitForExecution);
+  state_machine_->RegisterHandler(State::POST_EXEC_BLOCK_VALIDATION, this,
+                                  &BlockCoordinator::OnPostExecBlockValidation);
 
   // Pipe 2
-  state_machine_->RegisterHandler(State::PACK_NEW_BLOCK,               this, &BlockCoordinator::OnPackNewBlock);
-  state_machine_->RegisterHandler(State::NEW_SYNERGETIC_EXECUTION,     this, &BlockCoordinator::OnNewSynergeticExecution);
-  state_machine_->RegisterHandler(State::EXECUTE_NEW_BLOCK,            this, &BlockCoordinator::OnExecuteNewBlock);
-  state_machine_->RegisterHandler(State::WAIT_FOR_NEW_BLOCK_EXECUTION, this, &BlockCoordinator::OnWaitForNewBlockExecution);
+  state_machine_->RegisterHandler(State::PACK_NEW_BLOCK, this, &BlockCoordinator::OnPackNewBlock);
+  state_machine_->RegisterHandler(State::NEW_SYNERGETIC_EXECUTION, this,
+                                  &BlockCoordinator::OnNewSynergeticExecution);
+  state_machine_->RegisterHandler(State::EXECUTE_NEW_BLOCK, this,
+                                  &BlockCoordinator::OnExecuteNewBlock);
+  state_machine_->RegisterHandler(State::WAIT_FOR_NEW_BLOCK_EXECUTION, this,
+                                  &BlockCoordinator::OnWaitForNewBlockExecution);
 
-  state_machine_->RegisterHandler(State::TRANSMIT_BLOCK,               this, &BlockCoordinator::OnTransmitBlock);
-  state_machine_->RegisterHandler(State::RESET,                        this, &BlockCoordinator::OnReset);
-  // clang-format on
+  state_machine_->RegisterHandler(State::TRANSMIT_BLOCK, this, &BlockCoordinator::OnTransmitBlock);
+  state_machine_->RegisterHandler(State::RESET, this, &BlockCoordinator::OnReset);
 
   assert(consensus_);
 

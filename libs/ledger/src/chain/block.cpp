@@ -88,7 +88,6 @@ void Block::UpdateDigest()
   // Generate hash stream
   serializers::MsgPackSerializer buf;
 
-  // clang-format off
   buf << previous_hash;
   buf << merkle_hash;
   buf << tx_merkle_tree.root();
@@ -99,7 +98,6 @@ void Block::UpdateDigest()
   buf << timestamp;
   buf << block_entropy;
   buf << weight;
-  // clang-format on
 
   // Generate the hash
   crypto::SHA256 hash_builder;

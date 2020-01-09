@@ -51,13 +51,14 @@ NotarisationService::NotarisationService(MuddleInterface &muddle, CertificatePtr
   rpc_server_ = std::make_shared<Server>(endpoint_, SERVICE_MAIN_CHAIN, CHANNEL_RPC);
   rpc_server_->Add(RPC_NOTARISATION, &notarisation_protocol_);
 
-  // clang-format off
   state_machine_->RegisterHandler(State::KEY_ROTATION, this, &NotarisationService::OnKeyRotation);
-  state_machine_->RegisterHandler(State::NOTARISATION_SYNCHRONISATION, this, &NotarisationService::OnNotarisationSynchronisation);
-  state_machine_->RegisterHandler(State::COLLECT_NOTARISATIONS, this, &NotarisationService::OnCollectNotarisations);
-  state_machine_->RegisterHandler(State::VERIFY_NOTARISATIONS, this, &NotarisationService::OnVerifyNotarisations);
+  state_machine_->RegisterHandler(State::NOTARISATION_SYNCHRONISATION, this,
+                                  &NotarisationService::OnNotarisationSynchronisation);
+  state_machine_->RegisterHandler(State::COLLECT_NOTARISATIONS, this,
+                                  &NotarisationService::OnCollectNotarisations);
+  state_machine_->RegisterHandler(State::VERIFY_NOTARISATIONS, this,
+                                  &NotarisationService::OnVerifyNotarisations);
   state_machine_->RegisterHandler(State::COMPLETE, this, &NotarisationService::OnComplete);
-  // clang-format on
 }
 
 NotarisationService::State NotarisationService::OnKeyRotation()
