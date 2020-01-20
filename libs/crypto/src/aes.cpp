@@ -98,7 +98,7 @@ void LogAllErrors()
 {
   for (;;)
   {
-    unsigned long const error_code = ERR_get_error();
+    auto const error_code = ERR_get_error();
 
     // exit if no further errors are present
     if (error_code == 0)

@@ -306,7 +306,7 @@ private:
 
   static byte_array::ByteArray Convert2DER(EC_KEY *key)
   {
-    const int est_size = i2d_ECPrivateKey(key, nullptr);
+    int const est_size = i2d_ECPrivateKey(key, nullptr);
     if (est_size < 1)
     {
       throw std::runtime_error(
@@ -318,7 +318,7 @@ private:
     key_as_bin.Resize(static_cast<std::size_t>(est_size));
 
     auto *    key_as_bin_ptr = static_cast<uint8_t *>(key_as_bin.pointer());
-    const int res_size       = i2d_ECPrivateKey(key, &key_as_bin_ptr);
+    int const res_size       = i2d_ECPrivateKey(key, &key_as_bin_ptr);
     if (res_size < 1 || res_size > est_size)
     {
       throw std::runtime_error("ECDSAPrivateKey::Convert2DER(...): i2d_ECPrivateKey(...) failed.");

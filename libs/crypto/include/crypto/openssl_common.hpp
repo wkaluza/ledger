@@ -33,24 +33,24 @@ namespace openssl {
 template <int P_ECDSA_Curve_NID = NID_secp256k1>
 struct ECDSACurve
 {
-  static const int         nid;
-  static const uint8_t     sn;
-  static const std::size_t privateKeySize;
-  static const std::size_t publicKeySize;
-  static const std::size_t signatureSize;
+  static int const         nid;
+  static uint8_t const     sn;
+  static std::size_t const privateKeySize;
+  static std::size_t const publicKeySize;
+  static std::size_t const signatureSize;
 };
 
 template <int P_ECDSA_Curve_NID>
-const int ECDSACurve<P_ECDSA_Curve_NID>::nid = P_ECDSA_Curve_NID;
+int const ECDSACurve<P_ECDSA_Curve_NID>::nid = P_ECDSA_Curve_NID;
 
 template <>
-const uint8_t ECDSACurve<NID_secp256k1>::sn;
+uint8_t const ECDSACurve<NID_secp256k1>::sn;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::privateKeySize;
+std::size_t const ECDSACurve<NID_secp256k1>::privateKeySize;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::publicKeySize;
+std::size_t const ECDSACurve<NID_secp256k1>::publicKeySize;
 template <>
-const std::size_t ECDSACurve<NID_secp256k1>::signatureSize;
+std::size_t const ECDSACurve<NID_secp256k1>::signatureSize;
 
 using DeleteStrategyType = memory::eDeleteStrategy;
 
@@ -72,8 +72,8 @@ class ECDSAAffineCoordinatesConversion
 {
 public:
   using EcdsaCurveType = ECDSACurve<P_ECDSA_Curve_NID>;
-  static const std::size_t x_size;
-  static const std::size_t y_size;
+  static std::size_t const x_size;
+  static std::size_t const y_size;
 
   static byte_array::ByteArray Convert2Canonical(BIGNUM const *const x, BIGNUM const *const y)
   {
@@ -139,11 +139,11 @@ public:
 };
 
 template <int P_ECDSA_Curve_NID>
-const std::size_t ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::x_size =
+std::size_t const ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::x_size =
     ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::EcdsaCurveType::publicKeySize >> 1u;
 
 template <int P_ECDSA_Curve_NID>
-const std::size_t ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::y_size =
+std::size_t const ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::y_size =
     ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>::x_size;
 
 }  // namespace openssl

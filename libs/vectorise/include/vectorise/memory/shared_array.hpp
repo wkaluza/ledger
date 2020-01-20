@@ -140,7 +140,7 @@ public:
 
   uint64_t UseCount() const noexcept
   {
-    long const use_count = data_.use_count();
+    auto const use_count = data_.use_count();
     return use_count < 0 ? 0 : static_cast<uint64_t>(use_count);
   }
 

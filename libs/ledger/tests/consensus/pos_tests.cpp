@@ -168,7 +168,7 @@ protected:
   fetch::crypto::mcl::details::MCLInitialiser init_before_others_{};
 
   // Run this before any of the tests.
-  const int speedup_ = []() {
+  int const speedup_ = []() {
     fetch::chain::InitialiseTestConstants();
     return 0;
   }();

@@ -39,8 +39,8 @@ public:
   using VocabPtrType = std::shared_ptr<VocabType>;
   using ReturnType   = std::pair<TensorType, std::vector<TensorType>>;
 
-  const int8_t   BufferPositionUnusedDataType = fetch::math::numeric_max<int8_t>();
-  const SizeType BufferPositionUnusedSizeType = fetch::math::numeric_max<SizeType>();
+  int8_t const   BufferPositionUnusedDataType = fetch::math::numeric_max<int8_t>();
+  SizeType const BufferPositionUnusedSizeType = fetch::math::numeric_max<SizeType>();
 
   GraphW2VLoader(SizeType const &window_size, SizeType const &negative_samples,
                  fixed_point::fp64_t const &freq_thresh, SizeType const &max_word_count,

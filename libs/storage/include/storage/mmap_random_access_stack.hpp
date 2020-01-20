@@ -55,7 +55,7 @@ namespace storage {
  *
  * MAX is the count of map-able Objects at one time
  */
-template <typename T, typename D = uint64_t, unsigned long MAX = 256>  // NOLINT
+template <typename T, typename D = uint64_t, uint32_t MAX = 256>  // NOLINT
 class MMapRandomAccessStack
 {
 private:

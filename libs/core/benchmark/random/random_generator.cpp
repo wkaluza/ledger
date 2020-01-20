@@ -36,9 +36,9 @@
 namespace {
 
 using ByteArray       = fetch::byte_array::ByteArray;
-const int ITERATIONS  = 2;
-const int MID_CYCLES  = 10;
-const int PACKET_SIZE = 100000;
+int const ITERATIONS  = 2;
+int const MID_CYCLES  = 10;
+int const PACKET_SIZE = 100000;
 
 uint32_t GetRandom()
 {

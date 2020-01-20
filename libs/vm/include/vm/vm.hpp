@@ -595,9 +595,9 @@ public:
   void UpdateCharges(std::unordered_map<std::string, ChargeAmount> const &opcode_static_charges);
 
 private:
-  static const int FRAME_STACK_SIZE = 50;
-  static const int STACK_SIZE       = 1024;
-  static const int MAX_RANGE_LOOPS  = 16;
+  static int const FRAME_STACK_SIZE = 50;
+  static int const STACK_SIZE       = 1024;
+  static int const MAX_RANGE_LOOPS  = 16;
 
   using OpcodeInfoArray = std::vector<OpcodeInfo>;
   using OpcodeMap       = std::unordered_map<std::string, uint16_t>;

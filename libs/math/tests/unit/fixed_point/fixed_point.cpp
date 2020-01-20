@@ -33,7 +33,7 @@ namespace fetch {
 namespace math {
 namespace test {
 
-static const int64_t N{10000};
+static int64_t const N{10000};
 
 using namespace fetch::fixed_point;
 

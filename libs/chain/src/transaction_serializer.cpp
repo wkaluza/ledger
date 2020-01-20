@@ -47,17 +47,17 @@ using serializers::MsgPackSerializer;
 using TokenAmount  = Transaction::TokenAmount;
 using ContractMode = Transaction::ContractMode;
 
-const uint8_t MAGIC              = 0xA1;
-const uint8_t VERSION            = 3u;
-const int8_t  UNIT_MEGA          = -2;
-const int8_t  UNIT_KILO          = -1;
-const int8_t  UNIT_DEFAULT       = 0;
-const int8_t  UNIT_MILLI         = 1;
-const int8_t  UNIT_MICRO         = 2;
-const int8_t  UNIT_NANO          = 3;
-const int8_t  CONTRACT_PRESENT   = 1;
-const int8_t  CHAIN_CODE_PRESENT = 2;
-const int8_t  SYNERGETIC_PRESENT = 3;
+uint8_t const MAGIC              = 0xA1;
+uint8_t const VERSION            = 3u;
+int8_t const  UNIT_MEGA          = -2;
+int8_t const  UNIT_KILO          = -1;
+int8_t const  UNIT_DEFAULT       = 0;
+int8_t const  UNIT_MILLI         = 1;
+int8_t const  UNIT_MICRO         = 2;
+int8_t const  UNIT_NANO          = 3;
+int8_t const  CONTRACT_PRESENT   = 1;
+int8_t const  CHAIN_CODE_PRESENT = 2;
+int8_t const  SYNERGETIC_PRESENT = 3;
 
 uint8_t Map(ContractMode mode)
 {

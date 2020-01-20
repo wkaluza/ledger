@@ -124,8 +124,8 @@ public:
   bool VerifyHash(PublicKeyType<BIN_ENC, POINT_CONV_FORM> const &public_key,
                   byte_array::ConstByteArray const &             hash_to_verify) const
   {
-    const int res =
-        ECDSA_do_verify(static_cast<const uint8_t *>(hash_to_verify.pointer()),
+    int const res =
+        ECDSA_do_verify(static_cast<uint8_t const *>(hash_to_verify.pointer()),
                         static_cast<int>(hash_to_verify.size()), signature_ecdsa_ptr_.get(),
                         const_cast<EC_KEY *>(public_key.key().get()));
 
