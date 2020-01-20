@@ -45,7 +45,7 @@ MaskFill<TensorType>::MaskFill(MaskFill::DataType fill_value)
 {}
 
 template <typename TensorType>
-MaskFill<TensorType>::MaskFill(const MaskFill::SPType &sp)
+MaskFill<TensorType>::MaskFill(MaskFill::SPType const &sp)
   : Ops<TensorType>(sp)
 {
   fill_value_ = sp.fill_value;
@@ -69,7 +69,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> MaskFill<TensorType>::MakeShare
  * @return
  */
 template <typename TensorType>
-void MaskFill<TensorType>::Forward(const MaskFill::VecTensorType &inputs,
+void MaskFill<TensorType>::Forward(MaskFill::VecTensorType const &inputs,
                                    MaskFill::TensorType &         output)
 {
   assert(inputs.size() == 2);
@@ -87,8 +87,8 @@ void MaskFill<TensorType>::Forward(const MaskFill::VecTensorType &inputs,
  */
 
 template <typename TensorType>
-std::vector<TensorType> MaskFill<TensorType>::Backward(const VecTensorType &inputs,
-                                                       const TensorType &   error_signal)
+std::vector<TensorType> MaskFill<TensorType>::Backward(VecTensorType const &inputs,
+                                                       TensorType const &   error_signal)
 {
   assert(inputs.size() == 2);
   assert(error_signal.size() == inputs.at(1)->size());
@@ -105,7 +105,7 @@ std::vector<TensorType> MaskFill<TensorType>::Backward(const VecTensorType &inpu
 
 template <typename TensorType>
 std::vector<fetch::math::SizeType> MaskFill<TensorType>::ComputeOutputShape(
-    const std::vector<math::SizeVector> &inputs) const
+    std::vector<math::SizeVector> const &inputs) const
 {
   return inputs.at(1);
 }

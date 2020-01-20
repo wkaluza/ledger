@@ -129,7 +129,7 @@ public:
   BeaconService()                      = delete;
   BeaconService(BeaconService const &) = delete;
 
-  BeaconService(MuddleInterface &muddle, const CertificatePtr &certificate,
+  BeaconService(MuddleInterface &muddle, CertificatePtr const &certificate,
                 BeaconSetupService &beacon_setup, SharedEventManager event_manager,
                 bool load_and_reload_on_crash = false);
 

@@ -89,7 +89,7 @@ void VMDataLoader::Bind(Module &module, bool const enable_experimental)
     module.CreateClassType<VMDataLoader>("DataLoader")
         .CreateConstructor(&VMDataLoader::Constructor, FIXED_CONSTRUCTION_CHARGE)
         .CreateSerializeDefaultConstructor([](VM *vm, TypeId /*type_id*/) -> Ptr<VMDataLoader> {
-            return vm->CreateNewObject<VMDataLoader>();
+          return vm->CreateNewObject<VMDataLoader>();
         })
         .CreateMemberFunction("addData", &VMDataLoader::AddDataByData,
                               UseMemberEstimator(&VMDataLoader::EstimateAddDataByData))

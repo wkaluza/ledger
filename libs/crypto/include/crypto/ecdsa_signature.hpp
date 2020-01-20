@@ -204,7 +204,7 @@ private:
     return signature;
   }
 
-  static byte_array::ByteArray ConvertDER(SharedPointerType<const ECDSA_SIG> &&signature)
+  static byte_array::ByteArray ConvertDER(SharedPointerType<ECDSA_SIG const> &&signature)
   {
     byte_array::ByteArray der_sig;
     auto const est_size = static_cast<std::size_t>(i2d_ECDSA_SIG(signature.get(), nullptr));
@@ -255,7 +255,7 @@ private:
     return signature;
   }
 
-  static byte_array::ByteArray ConvertCanonical(SharedPointerType<const ECDSA_SIG> &&signature)
+  static byte_array::ByteArray ConvertCanonical(SharedPointerType<ECDSA_SIG const> &&signature)
   {
     BIGNUM const *r;
     BIGNUM const *s;
@@ -286,7 +286,7 @@ private:
     return signature;
   }
 
-  static byte_array::ByteArray Convert(SharedPointerType<const ECDSA_SIG> &&signature,
+  static byte_array::ByteArray Convert(SharedPointerType<ECDSA_SIG const> &&signature,
                                        eECDSAEncoding ouput_signature_binary_data_dype)
   {
     switch (ouput_signature_binary_data_dype)

@@ -26,7 +26,7 @@ namespace ml {
 namespace ops {
 
 template <typename T>
-OneHot<T>::OneHot(const OneHot::SPType &sp)
+OneHot<T>::OneHot(OneHot::SPType const &sp)
   : Ops<T>(sp)
 {
   depth_     = sp.depth;
@@ -66,7 +66,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> OneHot<TensorType>::MakeSharedC
 }
 
 template <typename T>
-void OneHot<T>::Forward(const VecTensorType &inputs, TensorType &output)
+void OneHot<T>::Forward(VecTensorType const &inputs, TensorType &output)
 {
   assert(inputs.size() == 1);
   assert(output.shape() == ComputeOutputShape(fetch::ml::utilities::TensorPtrsToSizes(inputs)));
@@ -75,8 +75,8 @@ void OneHot<T>::Forward(const VecTensorType &inputs, TensorType &output)
 }
 
 template <typename TensorType>
-std::vector<TensorType> OneHot<TensorType>::Backward(const VecTensorType &inputs,
-                                                     const TensorType &   error_signal)
+std::vector<TensorType> OneHot<TensorType>::Backward(VecTensorType const &inputs,
+                                                     TensorType const &   error_signal)
 {
   FETCH_UNUSED(error_signal);
   assert(inputs.size() == 1);
@@ -89,7 +89,7 @@ std::vector<TensorType> OneHot<TensorType>::Backward(const VecTensorType &inputs
 
 template <typename T>
 std::vector<fetch::math::SizeType> OneHot<T>::ComputeOutputShape(
-    const std::vector<math::SizeVector> &inputs) const
+    std::vector<math::SizeVector> const &inputs) const
 {
   assert(inputs.size() == 1);
 

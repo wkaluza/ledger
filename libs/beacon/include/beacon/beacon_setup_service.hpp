@@ -222,7 +222,7 @@ protected:
   SharedAeonExecutionUnit                                    beacon_;
   SharedNotarisationManager                                  notarisation_manager_;
   std::unordered_map<MuddleAddress, std::set<MuddleAddress>> ready_connections_;
-  std::map<MuddleAddress, const NotarisationKeyMessage>      notarisation_key_msgs_;
+  std::map<MuddleAddress, NotarisationKeyMessage const>      notarisation_key_msgs_;
 
   std::map<MuddleAddress, ConstByteArray> final_state_payload_;
 
@@ -242,7 +242,7 @@ private:
       0;  ///< The expected time it will take for all DKG states to complete
   bool condition_to_proceed_ = false;  ///< Whether the state the DKG is in has been successful
 
-  const std::map<BeaconSetupService::State, double> time_slot_map_;
+  std::map<BeaconSetupService::State, double> const time_slot_map_;
   double                                            time_slots_in_dkg_ = 0;
 
   uint16_t failures_{0};
@@ -259,7 +259,7 @@ private:
   /// @name Handlers for messages
   /// @{
   void OnDkgMessage(MuddleAddress const &from, const std::shared_ptr<DKGMessage> &msg_ptr);
-  void OnNewShares(const MuddleAddress &from, std::pair<MessageShare, MessageShare> const &shares);
+  void OnNewShares(MuddleAddress const &from, std::pair<MessageShare, MessageShare> const &shares);
   void OnNewSharesPacket(muddle::Packet const &packet, MuddleAddress const &last_hop);
   void OnNewCoefficients(CoefficientsMessage const &msg, MuddleAddress const &from);
   void OnComplaints(ComplaintsMessage const &msg, MuddleAddress const &from);

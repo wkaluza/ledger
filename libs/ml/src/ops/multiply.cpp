@@ -59,7 +59,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> Multiply<TensorType>::MakeShare
  * @return
  */
 template <typename T>
-void Multiply<T>::Forward(const VecTensorType &inputs, TensorType &output)
+void Multiply<T>::Forward(VecTensorType const &inputs, TensorType &output)
 {
   assert(inputs.size() == 2);
   assert(inputs.at(0)->shape().size() <=
@@ -77,8 +77,8 @@ void Multiply<T>::Forward(const VecTensorType &inputs, TensorType &output)
  * f'(input1)=input0*error_signal
  */
 template <typename TensorType>
-std::vector<TensorType> Multiply<TensorType>::Backward(const VecTensorType &inputs,
-                                                       const TensorType &   error_signal)
+std::vector<TensorType> Multiply<TensorType>::Backward(VecTensorType const &inputs,
+                                                       TensorType const &   error_signal)
 {
   assert(inputs.size() == 2);
   assert(inputs.at(0)->shape().size() <=
@@ -128,7 +128,7 @@ std::vector<TensorType> Multiply<TensorType>::Backward(const VecTensorType &inpu
 
 template <typename T>
 std::vector<fetch::math::SizeType> Multiply<T>::ComputeOutputShape(
-    const std::vector<math::SizeVector> &inputs) const
+    std::vector<math::SizeVector> const &inputs) const
 {
   return inputs.front();
 }

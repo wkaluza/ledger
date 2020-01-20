@@ -36,7 +36,7 @@ using DataType = fetch::vm_modules::math::DataType;
 
 /// A minimal compileable etch code to test construction of an Optimizer.
 /// Note: the constructed optimiser can not be used.
-const char *OPTIMIZER_MINIMAL_CONSTRUCTION = R"(
+char const *OPTIMIZER_MINIMAL_CONSTRUCTION = R"(
      function main()
          var graph = Graph();
          var dataloader = DataLoader("tensor");

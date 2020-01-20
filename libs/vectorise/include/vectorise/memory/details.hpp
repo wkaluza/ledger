@@ -48,7 +48,7 @@ struct MatrixApplyFreeFunction
   template <typename T>
   struct Unroll<T>
   {
-    using signature_type = std::function<R(Args..., const B &, B &ret)>;
+    using signature_type = std::function<R(Args..., B const &, B &ret)>;
     static R Apply(B const *regs, signature_type const &fnc, B &ret, Args &&... args)
     {
       return fnc(std::forward<Args>(args)..., *regs, ret);

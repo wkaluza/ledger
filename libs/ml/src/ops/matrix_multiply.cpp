@@ -29,7 +29,7 @@ namespace ml {
 namespace ops {
 
 template <typename T>
-MatrixMultiply<T>::MatrixMultiply(const SPType &sp)
+MatrixMultiply<T>::MatrixMultiply(SPType const &sp)
   : Ops<T>(sp)
 {
   transpose_a_ = sp.transpose_a;

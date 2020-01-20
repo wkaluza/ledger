@@ -512,7 +512,7 @@ private:
   {
   };
 
-  constexpr FixedPoint(Type n, const NoScale & /*unused*/)
+  constexpr FixedPoint(Type n, NoScale const & /*unused*/)
     : data_(n)
   {}
 

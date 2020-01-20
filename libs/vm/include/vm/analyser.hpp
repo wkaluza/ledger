@@ -248,7 +248,7 @@ private:
       , line{line__}
       , message{std::move(message__)}
     {}
-    const char *what() const noexcept override
+    char const *what() const noexcept override
     {
       return message.c_str();
     }

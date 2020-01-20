@@ -98,7 +98,7 @@ protected:
 TEST_F(OpenSSLDeleterTest, test_that_DeleterPrimitive_function_is_called_for_CONST_qualified_type)
 {
   TestType        testValue;
-  const TestType &const_testValue = testValue;
+  TestType const &const_testValue = testValue;
 
   //* Expectation
   EXPECT_CALL(*mock_, free_TestType(&testValue)).WillOnce(Return());
@@ -125,7 +125,7 @@ TEST_F(OpenSSLDeleterTest,
        test_that_clearing_DeleterPrimitive_function_is_called_for_CONST_qualified_type)
 {
   TestType        testValue;
-  const TestType &const_testValue = testValue;
+  TestType const &const_testValue = testValue;
 
   //* Expectation
   EXPECT_CALL(*mock_, free_clearing_TestType(&testValue)).WillOnce(Return());

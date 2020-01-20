@@ -1164,7 +1164,7 @@ void BeaconSetupService::OnNewSharesPacket(muddle::Packet const &packet,
  * @param from Muddle address of sender
  * @param shares Pair of secret shares
  */
-void BeaconSetupService::OnNewShares(const MuddleAddress &                        from,
+void BeaconSetupService::OnNewShares(MuddleAddress const &                        from,
                                      std::pair<MessageShare, MessageShare> const &shares)
 {
   FETCH_LOCK(mutex_);
@@ -1434,7 +1434,7 @@ bool BeaconSetupService::BuildQual()
 void BeaconSetupService::CheckQualComplaints()
 {
   std::set<MuddleAddress> qual{beacon_->manager.qual()};
-  for (const auto &complaint : qual_complaints_manager_.ComplaintsReceived())
+  for (auto const &complaint : qual_complaints_manager_.ComplaintsReceived())
   {
     MuddleAddress sender = complaint.first;
     for (auto const &share : complaint.second)

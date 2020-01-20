@@ -131,7 +131,7 @@ public:
     }
   }
 
-  const PublicKeyType &PublicKey() const
+  PublicKeyType const &PublicKey() const
   {
     return public_key_;
   }

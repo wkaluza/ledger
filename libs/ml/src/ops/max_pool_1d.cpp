@@ -25,7 +25,7 @@ namespace ml {
 namespace ops {
 
 template <typename T>
-MaxPool1D<T>::MaxPool1D(const SPType &sp)
+MaxPool1D<T>::MaxPool1D(SPType const &sp)
   : Ops<T>(sp)
 {
   kernel_size_ = sp.kernel_size;
@@ -68,7 +68,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> MaxPool1D<TensorType>::MakeShar
  * @return: output tensor parameter
  */
 template <typename T>
-void MaxPool1D<T>::Forward(const VecTensorType &inputs, TensorType &output)
+void MaxPool1D<T>::Forward(VecTensorType const &inputs, TensorType &output)
 {
   assert(inputs.size() == 1);
   // Input must be a 3D tensor [C x W x N]
@@ -120,8 +120,8 @@ void MaxPool1D<T>::Forward(const VecTensorType &inputs, TensorType &output)
  * output[0]=input_error[inputs[0].shape]
  */
 template <typename TensorType>
-std::vector<TensorType> MaxPool1D<TensorType>::Backward(const VecTensorType &inputs,
-                                                        const TensorType &   error_signal)
+std::vector<TensorType> MaxPool1D<TensorType>::Backward(VecTensorType const &inputs,
+                                                        TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() ==
@@ -170,7 +170,7 @@ std::vector<TensorType> MaxPool1D<TensorType>::Backward(const VecTensorType &inp
 
 template <typename T>
 std::vector<fetch::math::SizeType> MaxPool1D<T>::ComputeOutputShape(
-    const std::vector<math::SizeVector> &inputs) const
+    std::vector<math::SizeVector> const &inputs) const
 {
   std::vector<SizeType> output_shape;
 

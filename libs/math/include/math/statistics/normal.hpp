@@ -212,7 +212,7 @@ private:
 };
 
 template <typename T>
-Gaussian<T> operator*(T s, const Gaussian<T> &g)
+Gaussian<T> operator*(T s, Gaussian<T> const &g)
 {
   return g * s;
 }

@@ -244,7 +244,7 @@ Promise MakePromise();
 Promise MakePromise(uint64_t pro, uint64_t func);
 
 char const *         ToString(PromiseState state);
-const PromiseStates &GetAllPromiseStates();
+PromiseStates const &GetAllPromiseStates();
 
 }  // namespace service
 }  // namespace fetch

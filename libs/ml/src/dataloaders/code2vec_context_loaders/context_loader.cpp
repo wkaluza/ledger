@@ -248,7 +248,7 @@ void C2VLoader<TypeParam>::SetValidationRatio(fixed_point::fp32_t new_validation
  */
 template <typename TensorType>
 void C2VLoader<TensorType>::addValueToCounter(typename C2VLoader<TensorType>::umap_str_int &umap,
-                                              const std::string &                           word)
+                                              std::string const &                           word)
 {
   if (umap.find(word) == umap.end())
   {

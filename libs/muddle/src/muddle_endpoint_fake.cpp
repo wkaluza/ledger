@@ -32,7 +32,7 @@ using AddressSet      = FakeMuddleEndpoint::AddressSet;
 // Convenience function - note shares similarities with real muddle
 PacketPtr FormatPacket(Packet::Address from, NetworkId const &network, uint16_t service,
                        uint16_t channel, uint16_t counter, uint8_t ttl,
-                       const Packet::Payload &payload)
+                       Packet::Payload const &payload)
 {
   auto packet = std::make_shared<Packet>(std::move(from), network.value());
   packet->SetService(service);

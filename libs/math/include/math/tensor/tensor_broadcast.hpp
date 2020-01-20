@@ -146,7 +146,7 @@ std::vector<SizeVector> PrepareRange(Tensor<T, C> const &a)
  * @return bool true if broadcasting was successful
  */
 template <typename F, typename T, typename C>
-bool Broadcast(F function, const Tensor<T, C> &a, const Tensor<T, C> &b, Tensor<T, C> &ret)
+bool Broadcast(F function, Tensor<T, C> const &a, Tensor<T, C> const &b, Tensor<T, C> &ret)
 {
   // Compute output shape
   SizeVector ret_shape;
@@ -200,7 +200,7 @@ bool Broadcast(F function, const Tensor<T, C> &a, const Tensor<T, C> &b, Tensor<
  * @return bool true if broadcasting was successful
  */
 template <typename F, typename T, typename C>
-bool Broadcast(F function, const Tensor<T, C> &a, Tensor<T, C> &ret)
+bool Broadcast(F function, Tensor<T, C> const &a, Tensor<T, C> &ret)
 {
   // Prepare ranges
   std::vector<SizeVector> a_range   = PrepareRange(a);

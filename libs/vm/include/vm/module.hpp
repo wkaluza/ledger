@@ -466,7 +466,7 @@ public:
     return registered_types_;
   }
 
-  const TypeInfoArray &GetTypeInfoArray() const
+  TypeInfoArray const &GetTypeInfoArray() const
   {
     return type_info_array_;
   }

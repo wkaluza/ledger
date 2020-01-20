@@ -29,7 +29,7 @@ void BuildUnrecognisedJSONSymbolException(pybind11::module &module)
   namespace py = pybind11;
   py::class_<UnrecognisedJSONSymbolException, std::exception>(module,
                                                               "UnrecognisedJSONSymbolException")
-      .def(py::init<const byte_array::Token &>())
+      .def(py::init<byte_array::Token const &>())
       .def("what", &UnrecognisedJSONSymbolException::what);
 }
 

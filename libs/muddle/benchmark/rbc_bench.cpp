@@ -134,7 +134,7 @@ struct AbstractRBCNode
 struct RBCNode : public AbstractRBCNode
 {
   using RBC                                 = fetch::muddle::RBC;
-  static constexpr const char *LOGGING_NAME = "RBCNode";
+  static constexpr char const *LOGGING_NAME = "RBCNode";
 
   RBCNode(uint16_t port_number, uint16_t index)
     : AbstractRBCNode(port_number, index)
@@ -175,7 +175,7 @@ struct RBCNode : public AbstractRBCNode
 struct PBCNode : public AbstractRBCNode
 {
   using PBC                                 = fetch::muddle::PunishmentBroadcastChannel;
-  static constexpr const char *LOGGING_NAME = "PBCNode";
+  static constexpr char const *LOGGING_NAME = "PBCNode";
 
   PBCNode(uint16_t port_number, uint16_t index)
     : AbstractRBCNode(port_number, index)

@@ -251,7 +251,7 @@ struct Executable
       }
       return *this;
     }
-    void Copy(const LargeConstant &other)
+    void Copy(LargeConstant const &other)
     {
       type_id = other.type_id;
       if (type_id == TypeIds::Fixed128)
@@ -384,7 +384,7 @@ private:
     explicit FatalException(std::string message__)
       : message{std::move(message__)}
     {}
-    const char *what() const noexcept override
+    char const *what() const noexcept override
     {
       return message.c_str();
     }

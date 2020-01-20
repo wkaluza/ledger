@@ -487,7 +487,7 @@ bool BeaconManager::RunReconstruction()
     }
     std::vector<PrivateKey> points;
     std::vector<PrivateKey> shares_f;
-    for (const auto &index : parties)
+    for (auto const &index : parties)
     {
       FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_, " run reconstruction for node ",
                       victim_index, " with shares from node ", index);

@@ -82,7 +82,7 @@ struct BeaconServiceSerializeWrapper
   uint16_t       current_state{0};
 };
 
-BeaconService::BeaconService(MuddleInterface &muddle, const CertificatePtr &certificate,
+BeaconService::BeaconService(MuddleInterface &muddle, CertificatePtr const &certificate,
                              BeaconSetupService &beacon_setup, SharedEventManager event_manager,
                              bool load_and_reload_on_crash)
   : certificate_{certificate}

@@ -30,7 +30,7 @@ using fetch::shards::ServiceIdentifier;
 
 TEST(ManifestParseTests, CheckFullManifestParse)
 {
-  static const char *FULL_MANIFEST = R"(
+  static char const *FULL_MANIFEST = R"(
 {
     "http": { "uri": "tcp://127.0.0.1:8000", "port": 50000},
     "p2p": { "uri": "tcp://127.0.0.1:8001", "port": 50001},

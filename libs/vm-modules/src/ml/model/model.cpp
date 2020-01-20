@@ -685,7 +685,7 @@ void VMModel::LayerAddConvActivationImplementation(fetch::vm::Ptr<fetch::vm::Str
   }
 }
 
-void VMModel::LayerAddFlatten(const fetch::vm::Ptr<String> &layer)
+void VMModel::LayerAddFlatten(fetch::vm::Ptr<String> const &layer)
 {
   try
   {
@@ -703,8 +703,8 @@ void VMModel::LayerAddFlatten(const fetch::vm::Ptr<String> &layer)
   }
 }
 
-void VMModel::LayerAddDropout(const fetch::vm::Ptr<String> &layer,
-                              const math::DataType &        probability)
+void VMModel::LayerAddDropout(fetch::vm::Ptr<String> const &layer,
+                              math::DataType const &        probability)
 {
   try
   {
@@ -733,8 +733,8 @@ void VMModel::LayerAddDropout(const fetch::vm::Ptr<String> &layer,
   }
 }
 
-void VMModel::LayerAddActivation(const fetch::vm::Ptr<String> &layer,
-                                 const fetch::vm::Ptr<String> &activation_name)
+void VMModel::LayerAddActivation(fetch::vm::Ptr<String> const &layer,
+                                 fetch::vm::Ptr<String> const &activation_name)
 {
   try
   {
@@ -781,8 +781,8 @@ void VMModel::LayerAddActivation(const fetch::vm::Ptr<String> &layer,
   }
 }
 
-void VMModel::LayerAddReshape(const fetch::vm::Ptr<String> &                                layer,
-                              const fetch::vm::Ptr<fetch::vm::Array<TensorType::SizeType>> &shape)
+void VMModel::LayerAddReshape(fetch::vm::Ptr<String> const &                                layer,
+                              fetch::vm::Ptr<fetch::vm::Array<TensorType::SizeType>> const &shape)
 {
   try
   {

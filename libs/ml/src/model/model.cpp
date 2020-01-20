@@ -32,7 +32,7 @@ namespace ml {
 namespace model {
 
 template <typename TensorType>
-Model<TensorType>::Model(const Model &other)
+Model<TensorType>::Model(Model const &other)
 {
   graph_ptr_.reset(other.graph_ptr_.get());
   dataloader_ptr_.reset(other.dataloader_ptr_.get());
