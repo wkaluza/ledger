@@ -65,16 +65,16 @@ VMDataLoader::VMDataLoader(VM *vm, TypeId type_id, Ptr<String> const &mode)
   }
 }
 
-Ptr<VMDataLoader> VMDataLoader::Constructor(VM *vm, TypeId type_id, Ptr<String> const &mode)
+Ptr<VMDataLoader> VMDataLoader::Constructor(VM *vm, TypeId /*type_id*/, Ptr<String> const &mode)
 {
   try
   {
-    return Ptr<VMDataLoader>{new VMDataLoader(vm, type_id, mode)};
+    return vm->CreateNewObject<VMDataLoader>(mode);
   }
   catch (std::exception const &e)
   {
     vm->RuntimeError(e.what());
-    return Ptr<VMDataLoader>{new VMDataLoader(vm, type_id)};
+    return vm->CreateNewObject<VMDataLoader>();
   }
 }
 
@@ -88,8 +88,8 @@ void VMDataLoader::Bind(Module &module, bool const enable_experimental)
 
     module.CreateClassType<VMDataLoader>("DataLoader")
         .CreateConstructor(&VMDataLoader::Constructor, FIXED_CONSTRUCTION_CHARGE)
-        .CreateSerializeDefaultConstructor([](VM *vm, TypeId type_id) -> Ptr<VMDataLoader> {
-          return Ptr<VMDataLoader>{new VMDataLoader(vm, type_id)};
+        .CreateSerializeDefaultConstructor([](VM *vm, TypeId /*type_id*/) -> Ptr<VMDataLoader> {
+          return vm->CreateNewObject<VMDataLoader>();
         })
         .CreateMemberFunction("addData", &VMDataLoader::AddDataByData,
                               UseMemberEstimator(&VMDataLoader::EstimateAddDataByData))

@@ -18,6 +18,7 @@
 
 #include "vm/fixed.hpp"
 #include "vm/opcode_charges.hpp"
+#include "vm/vm.hpp"
 
 #include <algorithm>
 
@@ -41,7 +42,7 @@ Fixed128::Fixed128(vm::VM *vm, vm::TypeId /*type_id*/, byte_array::ByteArray con
 
 Ptr<Fixed128> Fixed128::Copy() const
 {
-  return Ptr<Fixed128>{new Fixed128{this->vm_, this->data_}};
+  return vm_->CreateNewObject<Fixed128>(this->data_);
 }
 
 bool Fixed128::IsEqual(Ptr<Object> const &lhso, Ptr<Object> const &rhso)

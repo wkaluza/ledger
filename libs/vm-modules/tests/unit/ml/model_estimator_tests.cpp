@@ -40,7 +40,7 @@ using VMPtr        = std::shared_ptr<fetch::vm::VM>;
 
 fetch::vm::Ptr<fetch::vm::String> VmString(VMPtr &vm, std::string const &str)
 {
-  return fetch::vm::Ptr<fetch::vm::String>{new fetch::vm::String{vm.get(), str}};
+  return vm->CreateNewObject<fetch::vm::String>(str);
 }
 
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> VmTensor(

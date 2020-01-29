@@ -152,7 +152,7 @@ int32_t Argc(VM * /*vm*/, TypeId /*type_id*/)
 
 Ptr<String> Argv(VM *vm, TypeId /*type_id*/, int32_t index)
 {
-  return Ptr<String>{new String{vm, params.script().at(static_cast<std::size_t>(index))}};
+  return vm->CreateNewObject<String>(params.script().at(static_cast<std::size_t>(index)));
 }
 
 // placeholder class

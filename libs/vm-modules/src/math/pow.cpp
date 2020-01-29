@@ -47,7 +47,7 @@ IfIsPtrFixed128<T, Ptr<T>> PowPtr(VM *vm, Ptr<T> const &a, Ptr<T> const &b)
   fixed_point::fp128_t x = a->data_;
   fixed_point::fp128_t y = b->data_;
   fetch::math::Pow(x, x, y);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 }  // namespace

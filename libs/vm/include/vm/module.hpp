@@ -515,7 +515,7 @@ private:
     AddCompilerSetupFunction(compiler_setup_function);
   }
 
-  void CompilerSetup(Compiler *compiler)
+  void CompilerSetup(Compiler *const compiler)
   {
     for (auto const &compiler_setup_function : compiler_setup_functions_)
     {

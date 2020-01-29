@@ -33,14 +33,14 @@ public:
 
   using Buffer = std::vector<uint8_t>;
 
-  static Ptr<Address> Constructor(VM *vm, TypeId type_id)
+  static Ptr<Address> Constructor(VM *vm, TypeId /*type_id*/)
   {
-    return Ptr<Address>{new Address{vm, type_id}};
+    return vm->CreateNewObject<Address>();
   }
 
-  static Ptr<Address> ConstructorFromString(VM *vm, TypeId type_id, Ptr<String> const &address)
+  static Ptr<Address> ConstructorFromString(VM *vm, TypeId /*type_id*/, Ptr<String> const &address)
   {
-    return Ptr<Address>{new Address{vm, type_id, address}};
+    return vm->CreateNewObject<Address>(address);
   }
 
   static Ptr<String> ToString(VM * /*vm*/, Ptr<Address> const &address)
@@ -73,7 +73,7 @@ public:
 
   Ptr<String> AsString()
   {
-    return Ptr<String>{new String{vm_, std::string{address_.display()}}};
+    return vm_->CreateNewObject<String>(static_cast<std::string>(address_.display()));
   }
 
   std::vector<uint8_t> ToBytes() const

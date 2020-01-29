@@ -47,7 +47,7 @@ IfIsPtrFixed128<T, Ptr<T>> SinPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::Sin(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -66,7 +66,7 @@ IfIsPtrFixed128<T, Ptr<T>> CosPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::Cos(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -85,7 +85,7 @@ IfIsPtrFixed128<T, Ptr<T>> TanPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::Tan(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -104,7 +104,7 @@ IfIsPtrFixed128<T, Ptr<T>> ASinPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ASin(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -123,7 +123,7 @@ IfIsPtrFixed128<T, Ptr<T>> ACosPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ACos(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -142,7 +142,7 @@ IfIsPtrFixed128<T, Ptr<T>> ATanPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ATan(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -161,7 +161,7 @@ IfIsPtrFixed128<T, Ptr<T>> ATan2Ptr(VM *vm, Ptr<T> const &a, Ptr<T> const &b)
 {
   fixed_point::fp128_t x;
   fetch::math::ATan2(a->data_, b->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -180,7 +180,7 @@ IfIsPtrFixed128<T, Ptr<T>> SinHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::SinH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -199,7 +199,7 @@ IfIsPtrFixed128<T, Ptr<T>> CosHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::CosH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -218,7 +218,7 @@ IfIsPtrFixed128<T, Ptr<T>> TanHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::TanH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -237,7 +237,7 @@ IfIsPtrFixed128<T, Ptr<T>> ASinHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ASinH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -256,7 +256,7 @@ IfIsPtrFixed128<T, Ptr<T>> ACosHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ACosH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 /**
@@ -275,7 +275,7 @@ IfIsPtrFixed128<T, Ptr<T>> ATanHPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x;
   fetch::math::ATanH(a->data_, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 }  // namespace

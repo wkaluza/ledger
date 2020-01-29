@@ -25,7 +25,7 @@
 namespace fetch {
 namespace vm {
 
-Compiler::Compiler(Module *module)
+Compiler::Compiler(Module *const module)
 {
   analyser_.Initialise(module->IsUsingTestAnnotations());
   module->CompilerSetup(this);

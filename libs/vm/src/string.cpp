@@ -92,6 +92,10 @@ String::String(VM *vm, std::string str__)
   , utf8_str_(std::move(str__))
 {}
 
+String::String(VM *vm, TypeId /*type_id*/, std::string str__)
+  : String(vm, std::move(str__))
+{}
+
 Ptr<String> String::Trim()
 {
   if (IsTemporary())
@@ -104,7 +108,7 @@ Ptr<String> String::Trim()
   std::string new_string{utf8_str_.string()};
   fetch::string::Trim(new_string);
 
-  return Ptr<String>{new String(vm_, new_string)};
+  return vm_->CreateNewObject<String>(new_string);
 }
 
 int32_t String::Find(Ptr<String> const &substring) const
@@ -156,7 +160,7 @@ Ptr<String> String::Substring(int32_t start_index, int32_t end_index)
   // using *unchecked* version to enable index to point at the str.end()
   utf8::unchecked::advance(end, end_index);  // unchecked
 
-  return Ptr<String>{new String(vm_, std::string{start, end})};
+  return vm_->CreateNewObject<String>(std::string{start, end});
 }
 
 Ptr<String> String::Reverse()
@@ -175,7 +179,7 @@ Ptr<String> String::Reverse()
 
   auto const reversed = reverse_utf8_string_by_copy(utf8_str_.string());
 
-  return Ptr<String>{new String(vm_, reversed)};
+  return vm_->CreateNewObject<String>(reversed);
 }
 
 Ptr<Array<Ptr<String>>> String::Split(Ptr<String> const &separator) const
@@ -209,7 +213,7 @@ Ptr<Array<Ptr<String>>> String::Split(Ptr<String> const &separator) const
   {
     auto ret = Ptr<Array<Ptr<String>>>{
         new Array<Ptr<String>>(vm_, vm_->GetTypeId<Array<Ptr<String>>>(), type_id_, 1)};
-    ret->elements[0] = Ptr<String>{new String(vm_, utf8_str_.string())};
+    ret->elements[0] = vm_->CreateNewObject<String>(utf8_str_.string());
 
     return ret;
   }
@@ -226,7 +230,7 @@ Ptr<Array<Ptr<String>>> String::Split(Ptr<String> const &separator) const
   {
     std::size_t begin = segment_boundaries[i];
     std::size_t len   = segment_boundaries[i + 1] - begin - separator->utf8_str_.string().size();
-    ret->elements[i]  = Ptr<String>{new String(vm_, utf8_str_.string().substr(begin, len))};
+    ret->elements[i]  = vm_->CreateNewObject<String>(utf8_str_.string().substr(begin, len));
   }
 
   return ret;

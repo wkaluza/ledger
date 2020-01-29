@@ -97,7 +97,7 @@ IfIsPtrFixed128<T, Ptr<T>> Rand(VM *vm, Ptr<T> const &a_, Ptr<T> const &b_)
   if (a->data_ >= b->data_)
   {
     vm->RuntimeError("Invalid argument: rand(a, b) must satisfy a < b");
-    return Ptr<Fixed128>(new Fixed128(vm, fixed_point::fp128_t{0}));
+    return vm->CreateNewObject<Fixed128>(fixed_point::fp128_t{0});
   }
 
   std::random_device rd;
@@ -107,7 +107,7 @@ IfIsPtrFixed128<T, Ptr<T>> Rand(VM *vm, Ptr<T> const &a_, Ptr<T> const &b_)
   auto b_dbl = static_cast<double>(b->data_);
   auto x     = fetch::math::AsType<fixed_point::fp128_t>(
       std::uniform_real_distribution<double>{a_dbl, b_dbl}(mt));
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 template <typename T>

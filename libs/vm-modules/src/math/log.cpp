@@ -46,7 +46,7 @@ IfIsPtrFixed128<T, Ptr<T>> LogPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Log(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 template <typename T>
@@ -62,7 +62,7 @@ IfIsPtrFixed128<T, Ptr<T>> Log2Ptr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Log2(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 template <typename T>
@@ -78,7 +78,7 @@ IfIsPtrFixed128<T, Ptr<T>> Log10Ptr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Log10(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 }  // namespace

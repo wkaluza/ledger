@@ -79,7 +79,7 @@ private:
       return {};
     }
 
-    return Ptr<String>{new String{vm_, name_ + "." + key->string()}};
+    return vm_->CreateNewObject<String>(name_ + "." + key->string());
   }
 
   TemplateParameter1 GetIndexedValueInternal(Ptr<String> const &index)
@@ -160,7 +160,7 @@ Ptr<IShardedState> IShardedState::ConstructorFromString(VM *vm, TypeId type_id,
   {
     TypeInfo const &type_info     = vm->GetTypeInfo(type_id);
     TypeId const    value_type_id = type_info.template_parameter_type_ids[0];
-    return Ptr<IShardedState>{new ShardedState(vm, type_id, name, value_type_id)};
+    return vm->CreateNewObject<ShardedState>(name, value_type_id);
   }
 
   vm->RuntimeError("Failed to construct ShardedState instance: the 'name' is null reference.");

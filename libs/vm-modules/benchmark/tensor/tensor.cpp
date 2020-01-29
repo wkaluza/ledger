@@ -46,7 +46,7 @@ void SetUp(std::shared_ptr<VM> &vm)
 
 Ptr<String> CreateString(std::shared_ptr<VM> &vm, std::string const &str)
 {
-  return Ptr<String>{new String{vm.get(), str}};
+  return vm->CreateNewObject<String>(str);
 }
 
 Ptr<Array<uint64_t>> CreateArray(std::shared_ptr<VM> &vm, std::vector<uint64_t> const &values)

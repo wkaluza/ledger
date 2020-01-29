@@ -148,10 +148,10 @@ void VMModel::Init(std::string const &model_category)
   compiled_ = false;
 }
 
-Ptr<VMModel> VMModel::Constructor(VM *vm, TypeId type_id,
+Ptr<VMModel> VMModel::Constructor(VM *                                     vm, TypeId /*type_id*/,
                                   fetch::vm::Ptr<fetch::vm::String> const &model_category)
 {
-  return Ptr<VMModel>{new VMModel(vm, type_id, model_category)};
+  return vm->CreateNewObject<VMModel>(model_category);
 }
 /**
  * @brief VMModel::CompileSequential
@@ -288,9 +288,8 @@ void VMModel::Bind(Module &module, bool const experimental_enabled)
 
   module.CreateClassType<VMModel>("Model")
       .CreateConstructor(&VMModel::Constructor, FIXED_CONSTRUCTION_CHARGE)
-      .CreateSerializeDefaultConstructor([](VM *vm, TypeId type_id) -> Ptr<VMModel> {
-        return Ptr<VMModel>{new VMModel(vm, type_id)};
-      })
+      .CreateSerializeDefaultConstructor(
+          [](VM *vm, TypeId /*type_id*/) -> Ptr<VMModel> { return vm->CreateNewObject<VMModel>(); })
       .CreateMemberFunction("add", &VMModel::LayerAddDense,
                             UseMemberEstimator(&VMModel::EstimateLayerAddDense))
       .CreateMemberFunction("add", &VMModel::LayerAddDenseActivation,
@@ -496,7 +495,7 @@ fetch::vm::Ptr<fetch::vm::String> VMModel::SerializeToString()
   serializers::MsgPackSerializer b;
   SerializeTo(b);
   auto byte_array_data = b.data().ToBase64();
-  return Ptr<String>{new fetch::vm::String(vm_, static_cast<std::string>(byte_array_data))};
+  return vm_->CreateNewObject<String>(static_cast<std::string>(byte_array_data));
 }
 
 fetch::vm::Ptr<VMModel> VMModel::DeserializeFromString(
@@ -507,7 +506,7 @@ fetch::vm::Ptr<VMModel> VMModel::DeserializeFromString(
   MsgPackSerializer buffer(b);
   DeserializeFrom(buffer);
 
-  auto vm_model = fetch::vm::Ptr<VMModel>(new VMModel(vm_, type_id_));
+  auto vm_model = vm_->CreateNewObject<VMModel>();
   vm_model->SetModel(model_);
 
   return vm_model;

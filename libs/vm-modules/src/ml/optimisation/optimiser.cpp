@@ -101,8 +101,8 @@ void VMOptimiser::Bind(Module &module, bool const enable_experimental)
   {
     module.CreateClassType<VMOptimiser>("Optimiser")
         .CreateConstructor(&VMOptimiser::Constructor, vm::MAXIMUM_CHARGE)
-        .CreateSerializeDefaultConstructor([](VM *vm, TypeId type_id) -> Ptr<VMOptimiser> {
-          return Ptr<VMOptimiser>{new VMOptimiser(vm, type_id)};
+        .CreateSerializeDefaultConstructor([](VM *vm, TypeId /*type_id*/) -> Ptr<VMOptimiser> {
+          return vm->CreateNewObject<VMOptimiser>();
         })
         .CreateMemberFunction("run", &VMOptimiser::RunData, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("run", &VMOptimiser::RunLoader, vm::MAXIMUM_CHARGE)
@@ -113,7 +113,7 @@ void VMOptimiser::Bind(Module &module, bool const enable_experimental)
 }
 
 Ptr<VMOptimiser> VMOptimiser::Constructor(
-    VM *vm, TypeId type_id, Ptr<String> const &mode, Ptr<VMGraph> const &graph,
+    VM *vm, TypeId /*type_id*/, Ptr<String> const &mode, Ptr<VMGraph> const &graph,
     Ptr<VMDataLoader> const &                            loader,
     Ptr<fetch::vm::Array<Ptr<fetch::vm::String>>> const &input_node_names,
     Ptr<String> const &label_node_name, Ptr<String> const &output_node_names)
@@ -127,9 +127,8 @@ Ptr<VMOptimiser> VMOptimiser::Constructor(
     input_names.at(i)                 = (ptr_string)->string();
   }
 
-  return Ptr<VMOptimiser>{new VMOptimiser(vm, type_id, mode->string(), graph->GetGraph(), loader,
-                                          input_names, label_node_name->string(),
-                                          output_node_names->string())};
+  return vm->CreateNewObject<VMOptimiser>(mode->string(), graph->GetGraph(), loader, input_names,
+                                          label_node_name->string(), output_node_names->string());
 }
 
 VMOptimiser::DataType VMOptimiser::RunData(Ptr<fetch::vm_modules::math::VMTensor> const &data,

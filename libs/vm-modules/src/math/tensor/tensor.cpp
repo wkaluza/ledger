@@ -77,27 +77,27 @@ VMTensor::VMTensor(VM *vm, TypeId type_id, std::string const &str)
   }
 }
 
-Ptr<VMTensor> VMTensor::Constructor(VM *vm, TypeId type_id, Ptr<Array<SizeType>> const &shape)
+Ptr<VMTensor> VMTensor::Constructor(VM *vm, TypeId /*type_id*/, Ptr<Array<SizeType>> const &shape)
 {
   for (SizeType axis_size : shape->elements)
   {
     if (axis_size == 0)
     {
       vm->RuntimeError("Can not create a Tensor : axis of size 0 found in new shape!");
-      return Ptr<VMTensor>{new VMTensor(vm, type_id)};
+      return vm->CreateNewObject<VMTensor>();
     }
   }
-  return Ptr<VMTensor>{new VMTensor(vm, type_id, shape->elements)};
+  return vm->CreateNewObject<VMTensor>(shape->elements);
 }
 
-Ptr<VMTensor> VMTensor::StringConstructor(VM *vm, TypeId type_id, Ptr<String> const &str)
+Ptr<VMTensor> VMTensor::StringConstructor(VM *vm, TypeId /*type_id*/, Ptr<String> const &str)
 {
-  return Ptr<VMTensor>{new VMTensor(vm, type_id, str->string())};
+  return vm->CreateNewObject<VMTensor>(str->string());
 }
 
-Ptr<VMTensor> VMTensor::EmptyConstructor(VM *vm, TypeId type_id)
+Ptr<VMTensor> VMTensor::EmptyConstructor(VM *vm, TypeId /*type_id*/)
 {
-  return Ptr<VMTensor>{new VMTensor(vm, type_id)};
+  return vm->CreateNewObject<VMTensor>();
 }
 
 void VMTensor::Bind(Module &module, bool const enable_experimental)
@@ -127,8 +127,8 @@ void VMTensor::Bind(Module &module, bool const enable_experimental)
   auto interface =
       module.CreateClassType<VMTensor>("Tensor")
           .CreateConstructor(&VMTensor::Constructor, tensor_constructor_charge_estimate)
-          .CreateSerializeDefaultConstructor([](VM *vm, TypeId type_id) -> Ptr<VMTensor> {
-            return Ptr<VMTensor>{new VMTensor(vm, type_id)};
+          .CreateSerializeDefaultConstructor([](VM *vm, TypeId /*type_id*/) -> Ptr<VMTensor> {
+            return vm->CreateNewObject<VMTensor>();
           })
           .CreateMemberFunction("copy", &VMTensor::Copy, UseEstimator(&TensorEstimator::Copy))
           .CreateMemberFunction("at", &VMTensor::At<Index>, UseEstimator(&TensorEstimator::AtOne))
@@ -258,7 +258,7 @@ void VMTensor::SetAt(Args... args)
 
 vm::Ptr<VMTensor> VMTensor::Copy()
 {
-  Ptr<VMTensor> ret = Ptr<VMTensor>{new VMTensor(this->vm_, this->type_id_, shape())};
+  Ptr<VMTensor> ret = vm_->CreateNewObject<VMTensor>(shape());
   (ret->GetTensor()).Copy(GetTensor());
   return ret;
 }
@@ -284,14 +284,14 @@ Ptr<VMTensor> VMTensor::Squeeze() const
   {
     vm_->RuntimeError("Squeeze failed: " + std::string(e.what()));
   }
-  return fetch::vm::Ptr<VMTensor>(new VMTensor(vm_, type_id_, squeezed_tensor));
+  return vm_->CreateNewObject<VMTensor>(squeezed_tensor);
 }
 
 Ptr<VMTensor> VMTensor::Unsqueeze() const
 {
   auto unsqueezed_tensor = tensor_.Copy();
   unsqueezed_tensor.Unsqueeze();
-  return fetch::vm::Ptr<VMTensor>(new VMTensor(vm_, type_id_, unsqueezed_tensor));
+  return vm_->CreateNewObject<VMTensor>(unsqueezed_tensor);
 }
 
 bool VMTensor::Reshape(Ptr<Array<SizeType>> const &new_shape)
@@ -366,7 +366,7 @@ ChargeAmount VMTensor::IsNotEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Ob
 void VMTensor::Negate(fetch::vm::Ptr<Object> &object)
 {
   Ptr<VMTensor> operand = object;
-  Ptr<VMTensor> t       = Ptr<VMTensor>{new VMTensor(this->vm_, this->type_id_, shape())};
+  Ptr<VMTensor> t       = vm_->CreateNewObject<VMTensor>(shape());
   fetch::math::Multiply(operand->GetTensor(), DataType(-1), t->GetTensor());
   object = std::move(t);
 }
@@ -510,14 +510,14 @@ vm::Ptr<VMTensor> VMTensor::ArgMaxNoIndices()
 vm::Ptr<VMTensor> VMTensor::ArgMax(SizeType const &indices)
 {
   auto          ret_tensor = fetch::math::ArgMax(GetTensor(), indices);
-  Ptr<VMTensor> ret        = Ptr<VMTensor>{new VMTensor(this->vm_, this->type_id_, ret_tensor)};
+  Ptr<VMTensor> ret        = vm_->CreateNewObject<VMTensor>(ret_tensor);
   return ret;
 }
 
 vm::Ptr<VMTensor> VMTensor::Dot(vm::Ptr<VMTensor> const &other)
 {
   auto          ret_tensor = fetch::math::Dot(GetTensor(), other->GetTensor());
-  Ptr<VMTensor> ret        = Ptr<VMTensor>{new VMTensor(this->vm_, this->type_id_, ret_tensor)};
+  Ptr<VMTensor> ret        = vm_->CreateNewObject<VMTensor>(ret_tensor);
   return ret;
 }
 
@@ -550,7 +550,7 @@ Ptr<String> VMTensor::ToString() const
   {
     vm_->RuntimeError(std::string(e.what()));
   }
-  return Ptr<String>{new String(vm_, as_string)};
+  return vm_->CreateNewObject<String>(as_string);
 }
 
 ArrayType &VMTensor::GetTensor()

@@ -228,7 +228,7 @@ Ptr<Fixed128> toFixed128(VM *vm, AnyPrimitive const &from)
   }
   }  // switch
 
-  return Ptr<Fixed128>(new Fixed128(vm, fixed));
+  return vm->CreateNewObject<Fixed128>(fixed);
 }
 
 }  // namespace
@@ -308,10 +308,10 @@ Module::Module()
 
   GetClassInterface<String>()
       .CreateSerializeDefaultConstructor(
-          [](VM *vm, TypeId) -> Ptr<String> { return Ptr<String>{new String(vm, "")}; })
+          [](VM *vm, TypeId) -> Ptr<String> { return vm->CreateNewObject<String>(""); })
       .CreateCPPCopyConstructor<std::string>(
           [](VM *vm, TypeId, std::string const &s) -> Ptr<String> {
-            return Ptr<String>{new String(vm, s)};
+            return vm->CreateNewObject<String>(s);
           })
       .CreateMemberFunction("find", &String::Find)
       .CreateMemberFunction("length", &String::Length)
@@ -363,7 +363,7 @@ Module::Module()
 
   GetClassInterface<Fixed128>()
       .CreateSerializeDefaultConstructor([](VM *vm, TypeId) -> Ptr<Fixed128> {
-        return Ptr<Fixed128>{new Fixed128(vm, fixed_point::fp128_t::_0)};
+        return vm->CreateNewObject<Fixed128>(fixed_point::fp128_t::_0);
       })
       .CreateMemberFunction("copy", &Fixed128::Copy);
 }
