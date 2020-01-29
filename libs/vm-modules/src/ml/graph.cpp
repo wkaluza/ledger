@@ -50,9 +50,9 @@ VMGraph::VMGraph(VM *vm, TypeId type_id)
   : Object(vm, type_id)
 {}
 
-Ptr<VMGraph> VMGraph::Constructor(VM *vm, TypeId type_id)
+Ptr<VMGraph> VMGraph::Constructor(VM *vm, TypeId /*type_id*/)
 {
-  return Ptr<VMGraph>{new VMGraph(vm, type_id)};
+  return vm->CreateNewObject<VMGraph>();
 }
 
 void VMGraph::SetInput(VMPtrString const &name, Ptr<VMTensorType> const &input)
@@ -156,8 +156,8 @@ void VMGraph::Bind(Module &module, bool const enable_experimental)
   {
     module.CreateClassType<VMGraph>("Graph")
         .CreateConstructor(&VMGraph::Constructor, vm::MAXIMUM_CHARGE)
-        .CreateSerializeDefaultConstructor([](VM *vm, TypeId type_id) -> Ptr<VMGraph> {
-          return Ptr<VMGraph>{new VMGraph(vm, type_id)};
+        .CreateSerializeDefaultConstructor([](VM *vm, TypeId /*type_id*/) -> Ptr<VMGraph> {
+          return vm->CreateNewObject<VMGraph>();
         })
         .CreateMemberFunction("setInput", &VMGraph::SetInput, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("evaluate", &VMGraph::Evaluate, vm::MAXIMUM_CHARGE)
@@ -213,7 +213,7 @@ fetch::vm::Ptr<fetch::vm::String> VMGraph::SerializeToString()
   serializers::MsgPackSerializer b;
   SerializeTo(b);
   auto byte_array_data = b.data().ToBase64();
-  return Ptr<String>{new fetch::vm::String(vm_, static_cast<std::string>(byte_array_data))};
+  return vm_->CreateNewObject<String>(static_cast<std::string>(byte_array_data));
 }
 
 fetch::vm::Ptr<VMGraph> VMGraph::DeserializeFromString(
@@ -224,11 +224,12 @@ fetch::vm::Ptr<VMGraph> VMGraph::DeserializeFromString(
   MsgPackSerializer buffer(b);
   DeserializeFrom(buffer);
 
-  auto vm_graph        = fetch::vm::Ptr<VMGraph>(new VMGraph(vm_, type_id_));
+  auto vm_graph        = vm_->CreateNewObject<VMGraph>();
   vm_graph->GetGraph() = graph_;
 
   return vm_graph;
 }
+
 }  // namespace ml
 }  // namespace vm_modules
 }  // namespace fetch

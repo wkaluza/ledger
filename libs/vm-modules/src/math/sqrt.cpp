@@ -45,7 +45,7 @@ fetch::meta::EnableIfSame<T, Ptr<Fixed128>, T> SqrtPtr(VM *vm, T const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Sqrt(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 }  // namespace

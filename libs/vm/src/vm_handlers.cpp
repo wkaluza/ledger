@@ -827,7 +827,7 @@ void VM::Handler__ContractVariableDeclareAssign()
   }
   std::string identity = Ptr<String>(sv.object)->string();
   // Clone the identity string
-  sv.object         = Ptr<String>(new String(this, identity));
+  sv.object         = CreateNewObject<String>(identity);
   Variant &variable = GetLocalVariable(instruction_->index);
   variable          = std::move(sv);
   live_object_stack_.emplace_back(frame_sp_, instruction_->index, instruction_->data);
@@ -892,7 +892,7 @@ void VM::Handler__PushLargeConstant()
   {
     Executable::LargeConstant const &constant = executable_->large_constants[instruction_->index];
     assert(constant.type_id == TypeIds::Fixed128);
-    auto object = Ptr<Fixed128>(new Fixed128(this, constant.fp128));
+    auto object = CreateNewObject<Fixed128>(constant.fp128);
     Top().Construct(object, TypeIds::Fixed128);
     return;
   }

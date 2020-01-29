@@ -46,7 +46,7 @@ IfIsPtrFixed128<T, Ptr<T>> ExpPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Exp(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 }  // namespace

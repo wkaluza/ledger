@@ -49,7 +49,7 @@ IfIsPtrFixed128<T, Ptr<T>> AbsPtr(VM *vm, Ptr<T> const &a)
 {
   fixed_point::fp128_t x = a->data_;
   fetch::math::Abs(x, x);
-  return Ptr<Fixed128>(new Fixed128(vm, x));
+  return vm->CreateNewObject<Fixed128>(x);
 }
 
 template <typename T, typename R = void>

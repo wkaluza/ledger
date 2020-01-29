@@ -74,9 +74,9 @@ SHA256Wrapper::SHA256Wrapper(VM *vm, TypeId type_id)
   : Object(vm, type_id)
 {}
 
-Ptr<SHA256Wrapper> SHA256Wrapper::Constructor(VM *vm, TypeId type_id)
+Ptr<SHA256Wrapper> SHA256Wrapper::Constructor(VM *vm, TypeId /*type_id*/)
 {
-  return Ptr<SHA256Wrapper>{new SHA256Wrapper(vm, type_id)};
+  return vm->CreateNewObject<SHA256Wrapper>();
 }
 
 }  // namespace vm_modules

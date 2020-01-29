@@ -58,9 +58,9 @@ ByteArrayWrapper::ByteArrayWrapper(VM *vm, TypeId type_id, byte_array::ByteArray
   , byte_array_(std::move(bytearray))
 {}
 
-Ptr<ByteArrayWrapper> ByteArrayWrapper::Constructor(VM *vm, TypeId type_id, int32_t n)
+Ptr<ByteArrayWrapper> ByteArrayWrapper::Constructor(VM *vm, TypeId /*type_id*/, int32_t n)
 {
-  return Ptr<ByteArrayWrapper>{new ByteArrayWrapper(vm, type_id, ByteArray(std::size_t(n)))};
+  return vm->CreateNewObject<ByteArrayWrapper>(ByteArray(std::size_t(n)));
 }
 
 Ptr<ByteArrayWrapper> ByteArrayWrapper::Copy()
@@ -70,7 +70,7 @@ Ptr<ByteArrayWrapper> ByteArrayWrapper::Copy()
 
 Ptr<vm::String> ByteArrayWrapper::ToBase64()
 {
-  return Ptr<vm::String>{new String{vm_, static_cast<std::string>(byte_array_.ToBase64())}};
+  return vm_->CreateNewObject<vm::String>(static_cast<std::string>(byte_array_.ToBase64()));
 }
 
 bool ByteArrayWrapper::FromBase64(fetch::vm::Ptr<vm::String> const &value_b64)
@@ -100,7 +100,7 @@ bool ByteArrayWrapper::FromBase64(fetch::vm::Ptr<vm::String> const &value_b64)
 
 fetch::vm::Ptr<vm::String> ByteArrayWrapper::ToHex()
 {
-  return Ptr<vm::String>{new String{vm_, static_cast<std::string>(byte_array_.ToHex())}};
+  return vm_->CreateNewObject<vm::String>(static_cast<std::string>(byte_array_.ToHex()));
 }
 
 bool ByteArrayWrapper::FromHex(fetch::vm::Ptr<vm::String> const &value_hex)

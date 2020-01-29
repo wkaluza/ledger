@@ -43,9 +43,9 @@ VMScaler::VMScaler(VM *vm, TypeId type_id)
   , scaler_(std::make_shared<MinMaxScalerType>())
 {}
 
-Ptr<VMScaler> VMScaler::Constructor(VM *vm, TypeId type_id)
+Ptr<VMScaler> VMScaler::Constructor(VM *vm, TypeId /*type_id*/)
 {
-  return Ptr<VMScaler>{new VMScaler(vm, type_id)};
+  return vm->CreateNewObject<VMScaler>();
 }
 
 void VMScaler::SetScaleByData(Ptr<VMTensorType> const &reference_tensor, Ptr<String> const &mode)

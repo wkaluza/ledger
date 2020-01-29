@@ -37,7 +37,7 @@ namespace {
 
 Ptr<String> ToString(VM *vm, Ptr<UInt256Wrapper> const &n)
 {
-  return Ptr<String>{new String{vm, static_cast<std::string>(n->number())}};
+  return vm->CreateNewObject<String>(static_cast<std::string>(n->number()));
 }
 
 template <typename T>
@@ -118,11 +118,11 @@ UInt256Wrapper::UInt256Wrapper(VM *vm, TypeId type_id, uint64_t data)
   , number_(data)
 {}
 
-Ptr<UInt256Wrapper> UInt256Wrapper::Constructor(VM *vm, TypeId type_id, uint64_t val)
+Ptr<UInt256Wrapper> UInt256Wrapper::Constructor(VM *vm, TypeId /*type_id*/, uint64_t val)
 {
   try
   {
-    return Ptr<UInt256Wrapper>{new UInt256Wrapper(vm, type_id, val)};
+    return vm->CreateNewObject<UInt256Wrapper>(val);
   }
   catch (std::exception const &e)
   {
@@ -133,7 +133,7 @@ Ptr<UInt256Wrapper> UInt256Wrapper::Constructor(VM *vm, TypeId type_id, uint64_t
 
 vm::Ptr<UInt256Wrapper> UInt256Wrapper::Copy() const
 {
-  return Ptr<UInt256Wrapper>{new UInt256Wrapper(this->vm_, UInt256{number_})};
+  return vm_->CreateNewObject<UInt256Wrapper>(UInt256{number_});
 }
 
 fetch::math::SizeType UInt256Wrapper::size() const

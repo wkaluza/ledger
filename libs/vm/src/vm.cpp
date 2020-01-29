@@ -27,7 +27,7 @@
 namespace fetch {
 namespace vm {
 
-VM::VM(Module *module)
+VM::VM(Module const *const module)
 {
   live_object_stack_.reserve(100);
 

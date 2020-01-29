@@ -52,8 +52,7 @@ meta::EnableIf<vm::IsString<meta::Decay<T>>, Ptr<T>> FromByteArray(VM *vm,
                                                                    Ptr<String> const & /*name*/,
                                                                    ConstByteArray const &array)
 {
-  ConstByteArray value_array;
-  return Ptr<T>{new T{vm, static_cast<std::string>(array)}};
+  return vm->CreateNewObject<T>(static_cast<std::string>(array));
 }
 
 template <typename T>
@@ -208,9 +207,9 @@ void StructuredData::Bind(Module &module)
   module.GetClassInterface<IArray>().CreateInstantiationType<Array<Ptr<StructuredData>>>();
 }
 
-Ptr<StructuredData> StructuredData::Constructor(VM *vm, TypeId type_id)
+Ptr<StructuredData> StructuredData::Constructor(VM *vm, TypeId /*type_id*/)
 {
-  return Ptr<StructuredData>{new StructuredData(vm, type_id)};
+  return vm->CreateNewObject<StructuredData>();
 }
 
 vm::Ptr<StructuredData> StructuredData::ConstructorFromVariant(vm::VM *vm, vm::TypeId type_id,

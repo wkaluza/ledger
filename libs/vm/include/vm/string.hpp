@@ -63,6 +63,7 @@ struct String : public Object
   ~String() override = default;
 
   String(VM *vm, std::string str__);
+  String(VM *vm, TypeId /*type_id*/, std::string str__);
 
   int32_t                 Length() const;
   int32_t                 SizeInBytes() const;

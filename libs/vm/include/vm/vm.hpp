@@ -250,7 +250,7 @@ public:
   using InputDeviceMap  = std::unordered_map<std::string, std::istream *>;
   using OutputDeviceMap = std::unordered_map<std::string, std::ostream *>;
 
-  explicit VM(Module *module);
+  explicit VM(Module const *module);
   ~VM() = default;
 
   static constexpr char const *const STDOUT = "stdout";
@@ -471,7 +471,7 @@ public:
     for (std::size_t i = 0; i < num_strings; ++i)
     {
       std::string const &str = executable_->strings[i];
-      strings_[i]            = Ptr<String>(new String(this, str));
+      strings_[i]            = CreateNewObject<String>(str);
     }
 
     std::size_t const num_local_types = executable_->types.size();
