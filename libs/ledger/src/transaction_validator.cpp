@@ -35,9 +35,9 @@ TransactionValidator::TransactionValidator(StorageInterface &storage, TokenContr
 /**
  * Validate if a transaction can be included at the specified block index.
  *
- * This will also perform deed validation on if applicable
+ * This will also perform deed validation if applicable
  *
- * @param tx The target transaciotn
+ * @param tx The target transaction
  * @param block_index The designated block index
  * @return SUCCESS if successful, otherwise a corresponding error code
  */
