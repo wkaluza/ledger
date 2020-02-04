@@ -40,8 +40,8 @@ public:
   Reactor(Reactor &&)      = delete;
   ~Reactor();
 
-  bool Attach(WeakRunnable runnable);   // NOLINT
-  bool Attach(WeakRunnables runnable);  // NOLINT
+  bool Attach(WeakRunnable runnable);
+  bool Attach(WeakRunnables runnables);
   bool Detach(Runnable const &runnable);
 
   void Start();
