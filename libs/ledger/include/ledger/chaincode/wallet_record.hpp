@@ -88,8 +88,8 @@ public:
     }
   }
 
-  template <typename ArrayDeserializer>
-  static void Deserialize(ArrayDeserializer &map, Type &b)
+  template <typename MapDeserializer>
+  static void Deserialize(MapDeserializer &map, Type &b)
   {
     bool const has_deed = map.size() == 4;
 

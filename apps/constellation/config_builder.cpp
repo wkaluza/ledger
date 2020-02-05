@@ -22,7 +22,6 @@
 
 #include "chain/address.hpp"
 #include "core/filesystem/read_file_contents.hpp"
-#include "ledger/chaincode/contract_context.hpp"
 #include "vectorise/platform.hpp"
 
 using namespace fetch::constellation;
