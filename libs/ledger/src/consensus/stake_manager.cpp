@@ -105,7 +105,7 @@ bool StakeManager::Save(StorageInterface &storage)
   return success;
 }
 
-bool StakeManager::Load(StorageInterface &storage)
+bool StakeManager::Load(StorageInterface const &storage)
 {
   bool success{false};
 
@@ -175,6 +175,21 @@ StakeManager::StakeSnapshotPtr StakeManager::LookupStakeSnapshot(BlockIndex bloc
   // we are not interested in the upper bound, but the preceding historical element i.e.
   // the previous block change
   return (--upper_bound)->second;
+}
+
+StakeUpdateQueue &StakeManager::update_queue()
+{
+  return update_queue_;
+}
+
+StakeUpdateQueue const &StakeManager::update_queue() const
+{
+  return update_queue_;
+}
+
+std::shared_ptr<StakeSnapshot const> StakeManager::GetCurrentStakeSnapshot() const
+{
+  return current_;
 }
 
 }  // namespace ledger

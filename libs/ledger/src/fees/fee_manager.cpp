@@ -70,7 +70,7 @@ bool FeeManager::CalculateChargeAndValidate(TransactionDetails &             tx,
                                             std::vector<Chargeable *> const &chargeables,
                                             Result &                         result)
 {
-  bool success = true;
+  result.status = Status::SUCCESS;
 
   uint64_t base_charge = 0;
   for (auto &chargeable : chargeables)
@@ -91,15 +91,9 @@ bool FeeManager::CalculateChargeAndValidate(TransactionDetails &             tx,
     FETCH_LOG_INFO(LOGGING_NAME, "Insufficient charge, charge (", result.charge,
                    ") greater then limit (", tx.charge_limit, ")");
     result.status = Status::INSUFFICIENT_CHARGE;
-    success       = false;
   }
 
-  if (success)
-  {
-    result.status = Status::SUCCESS;
-  }
-
-  return success;
+  return result.status == Status::SUCCESS;
 }
 
 void FeeManager::Execute(TransactionDetails &tx, Result &result, BlockIndex const &block,

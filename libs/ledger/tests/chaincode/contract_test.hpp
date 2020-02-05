@@ -56,7 +56,6 @@ protected:
   using StateAdapter          = fetch::ledger::StateAdapter;
   using StateSentinelAdapter  = fetch::ledger::StateSentinelAdapter;
   using Query                 = Contract::Query;
-  using IdentifierPtr         = std::shared_ptr<ConstByteArray>;
   using CachedStorageAdapter  = fetch::ledger::CachedStorageAdapter;
   using TransactionPtr        = fetch::chain::TransactionBuilder::TransactionPtr;
 
@@ -148,7 +147,7 @@ protected:
               .Build();
 
     // adapt the storage engine for this execution
-    StateSentinelAdapter storage_adapter{*storage_, *contract_name_, shards_};
+    StateSentinelAdapter storage_adapter{*storage_, contract_name_, shards_};
 
     // dispatch the transaction to the contract
     fetch::ledger::ContractContext         context{nullptr, tx_->contract_address(), nullptr,
@@ -194,7 +193,7 @@ protected:
   Contract::Status SendQuery(ConstByteArray const &query, Query const &request, Query &response)
   {
     // adapt the storage engine for queries
-    StateAdapter storage_adapter{*storage_, *contract_name_};
+    StateAdapter storage_adapter{*storage_, contract_name_};
 
     // Current block index does not apply to queries - set to 0
     fetch::ledger::ContractContext         context{nullptr, fetch::chain::Address{}, nullptr,
@@ -208,7 +207,7 @@ protected:
   Contract::Result InvokeInit(Identity const &                 owner,
                               fetch::chain::Transaction const &tx = fetch::chain::Transaction{})
   {
-    StateSentinelAdapter storage_adapter{*storage_, *contract_name_, shards_};
+    StateSentinelAdapter storage_adapter{*storage_, contract_name_, shards_};
 
     fetch::ledger::ContractContext         context{nullptr, tx.contract_address(), nullptr,
                                            &storage_adapter, block_number_};
@@ -230,9 +229,9 @@ protected:
 
   /// @name User populated
   /// @{
-  ContractPtr   contract_;
-  AddressPtr    contract_address_;
-  IdentifierPtr contract_name_;
+  ContractPtr    contract_;
+  AddressPtr     contract_address_;
+  ConstByteArray contract_name_;
   /// @}
 
   fetch::BitVector     shards_{FullShards(1)};

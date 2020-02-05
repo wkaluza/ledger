@@ -53,15 +53,9 @@ public:
   explicit SmartContract(std::string const &source);
   ~SmartContract() override = default;
 
-  ConstByteArray contract_digest() const
-  {
-    return digest_;
-  }
+  ConstByteArray contract_digest() const;
 
-  ExecutablePtr executable()
-  {
-    return executable_;
-  }
+  ExecutablePtr executable();
 
 private:
   using ModulePtr = std::shared_ptr<vm::Module>;

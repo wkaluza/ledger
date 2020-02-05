@@ -76,7 +76,7 @@ protected:
 
     // create the
     contract_      = std::make_unique<TokenContract>();
-    contract_name_ = std::make_shared<ConstByteArray>(std::string{TokenContract::NAME});
+    contract_name_ = TokenContract::NAME;
   }
 
   static ConstByteArray CreateTxDeedData(SigneesPtr const &signees, ThresholdsPtr const &thresholds,

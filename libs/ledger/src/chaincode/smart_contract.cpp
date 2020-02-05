@@ -897,5 +897,15 @@ SmartContract::Status SmartContract::InvokeQuery(std::string const &name, Query 
   return Status::OK;
 }
 
+ConstByteArray SmartContract::contract_digest() const
+{
+  return digest_;
+}
+
+SmartContract::ExecutablePtr SmartContract::executable()
+{
+  return executable_;
+}
+
 }  // namespace ledger
 }  // namespace fetch

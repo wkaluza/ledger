@@ -140,13 +140,14 @@ protected:
   bool ParseAsJson(chain::Transaction const &tx, variant::Variant &output);
 
   template <typename T>
-  bool GetStateRecord(T &record, ConstByteArray const &key);
+  bool GetStateRecord(T &record, ConstByteArray const &key);  //???nodiscard
   template <typename T>
-  bool GetStateRecord(T &record, chain::Address const &address);
+  bool GetStateRecord(T &record, chain::Address const &address);  //???nodiscard
   template <typename T>
-  StateAdapter::Status SetStateRecord(T const &record, ConstByteArray const &key);
+  StateAdapter::Status SetStateRecord(T const &record, ConstByteArray const &key);  //???nodiscard
   template <typename T>
-  StateAdapter::Status SetStateRecord(T const &record, chain::Address const &address);
+  StateAdapter::Status SetStateRecord(T const &             record,
+                                      chain::Address const &address);  //???nodiscard
 
   ledger::StateAdapter &state();
   /// @}

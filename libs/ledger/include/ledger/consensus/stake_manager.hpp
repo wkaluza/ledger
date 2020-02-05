@@ -81,7 +81,7 @@ public:
   /// @name Persistence
   /// @{
   bool Save(StorageInterface &storage);
-  bool Load(StorageInterface &storage);
+  bool Load(StorageInterface const &storage);
   /// @}
 
   // Accessors for the executor
@@ -115,21 +115,6 @@ private:
   template <typename T, typename D>
   friend struct serializers::MapSerializer;
 };
-
-inline StakeUpdateQueue &StakeManager::update_queue()
-{
-  return update_queue_;
-}
-
-inline StakeUpdateQueue const &StakeManager::update_queue() const
-{
-  return update_queue_;
-}
-
-inline std::shared_ptr<StakeSnapshot const> StakeManager::GetCurrentStakeSnapshot() const
-{
-  return current_;
-}
 
 }  // namespace ledger
 
