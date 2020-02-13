@@ -36,7 +36,7 @@ IncludeCategories:
     Priority: 5
   - Regex: '^<.*>$'
     Priority: 6
-  - Regex: '^"(gtest)|(gmock)|(benchmark)/.*"$'
+  - Regex: '^"(benchmark)|(gmock)|(gtest)|(openssl)/.*"$'
     Priority: 4
   - Regex: '.*/.*'
     Priority: 3

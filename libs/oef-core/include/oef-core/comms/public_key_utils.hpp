@@ -19,6 +19,7 @@
 
 #include "logging/logging.hpp"
 #include "network/fetch_asio.hpp"
+
 #include "openssl/crypto.h"
 #include "openssl/evp.h"
 #include "openssl/rsa.h"

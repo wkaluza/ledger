@@ -26,6 +26,7 @@
 #include "oef-base/comms/ISocketOwner.hpp"
 #include "oef-base/comms/RingBuffer.hpp"
 #include "oef-core/comms/public_key_utils.hpp"
+
 #include "openssl/evp.h"
 
 template <typename TXType>
