@@ -104,7 +104,8 @@ TEST(tensor_iterator, broadcast_shape_size_test)
   std::vector<SizeType> ref_shape;
   ShapeFromBroadcast(a.shape(), b.shape(), ref_shape);
   ASSERT_TRUE(ref_shape == ret_shape);
-  ASSERT_TRUE(Tensor<double>::SizeFromShape(ref_shape) ==
-              std::accumulate(std::begin(ret_shape), std::end(ret_shape), SizeType(1),
-                              std::multiplies<>()));
+  ASSERT_TRUE(
+      Tensor<double>::SizeFromShape(ref_shape) ==
+      std::accumulate(
+          std::begin(ret_shape), std::end(ret_shape), SizeType(1), std::multiplies<>()));
 }

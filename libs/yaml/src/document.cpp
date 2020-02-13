@@ -39,8 +39,10 @@ namespace yaml {
  * @param token The token to be converted
  * @param document The whole document
  */
-void YamlDocument::ExtractPrimitive(Variant &variant, YamlToken const &token,
-                                    ConstByteArray const &document)
+void YamlDocument::ExtractPrimitive(
+    Variant &             variant,
+    YamlToken const &     token,
+    ConstByteArray const &document)
 {
   bool        success{false};
   char const *str = nullptr;
@@ -1114,8 +1116,11 @@ void YamlDocument::Tokenise(ConstByteArray const &document)
         ++pos;
       }
 
-      tokens_.push_back({fixed_start, pos, static_cast<uint8_t>(folded ? STRING : STRING_MULTILINE),
-                         ident, line});
+      tokens_.push_back({fixed_start,
+                         pos,
+                         static_cast<uint8_t>(folded ? STRING : STRING_MULTILINE),
+                         ident,
+                         line});
 
       prevLine = line;
       while (pos < document.size())

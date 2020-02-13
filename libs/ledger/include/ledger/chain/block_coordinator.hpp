@@ -182,11 +182,18 @@ public:
   static char const *ToString(State state);
 
   // Construction / Destruction
-  BlockCoordinator(MainChain &chain, DAGPtr dag, ExecutionManagerInterface &execution_manager,
-                   StorageUnitInterface &storage_unit, BlockPackerInterface &packer,
-                   BlockSinkInterface &block_sink, ProverPtr prover, uint32_t log2_num_lanes,
-                   std::size_t num_slices, ConsensusPtr consensus,
-                   SynergeticExecMgrPtr synergetic_exec_manager);
+  BlockCoordinator(
+      MainChain &                chain,
+      DAGPtr                     dag,
+      ExecutionManagerInterface &execution_manager,
+      StorageUnitInterface &     storage_unit,
+      BlockPackerInterface &     packer,
+      BlockSinkInterface &       block_sink,
+      ProverPtr                  prover,
+      uint32_t                   log2_num_lanes,
+      std::size_t                num_slices,
+      ConsensusPtr               consensus,
+      SynergeticExecMgrPtr       synergetic_exec_manager);
   BlockCoordinator(BlockCoordinator const &) = delete;
   BlockCoordinator(BlockCoordinator &&)      = delete;
   ~BlockCoordinator()                        = default;

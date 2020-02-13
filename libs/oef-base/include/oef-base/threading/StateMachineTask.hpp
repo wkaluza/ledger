@@ -85,8 +85,8 @@ public:
         {
           state = 0;
         }
-        FETCH_LOG_INFO(LOGGING_NAME, "Reply was ", result.first, ":",
-                       exitStateNames[result.second]);
+        FETCH_LOG_INFO(
+            LOGGING_NAME, "Reply was ", result.first, ":", exitStateNames[result.second]);
 
         switch (result.second)
         {

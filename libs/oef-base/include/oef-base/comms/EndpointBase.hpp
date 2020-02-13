@@ -119,8 +119,10 @@ public:
     ON_PROTOERROR = 4,
   } CallbackSet;
 
-  void DoCallbacks(CallbackSet callbacks, std::string const &msg = "",
-                   std::error_code ec = std::error_code())
+  void DoCallbacks(
+      CallbackSet        callbacks,
+      std::string const &msg = "",
+      std::error_code    ec  = std::error_code())
   {
     if ((callbacks & ON_ERROR) && onError)
     {

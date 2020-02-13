@@ -47,9 +47,11 @@ void PrepareTestDataAndLabels1D(TypeParam &train_data, TypeParam &train_label)
 }
 
 template <typename TypeParam, typename DataType, typename ModelType>
-ModelType SetupModel(fetch::ml::OptimiserType                 optimiser_type,
-                     fetch::ml::model::ModelConfig<DataType> &model_config, TypeParam &data,
-                     TypeParam &gt)
+ModelType SetupModel(
+    fetch::ml::OptimiserType                 optimiser_type,
+    fetch::ml::model::ModelConfig<DataType> &model_config,
+    TypeParam &                              data,
+    TypeParam &                              gt)
 {
   // setup dataloader
   using DataLoaderType = fetch::ml::dataloaders::TensorDataLoader<TypeParam>;
@@ -70,9 +72,11 @@ ModelType SetupModel(fetch::ml::OptimiserType                 optimiser_type,
 }
 
 template <typename TypeParam>
-bool RunTest(fetch::ml::OptimiserType optimiser_type, typename TypeParam::Type tolerance,
-             typename TypeParam::Type lr = fetch::math::Type<typename TypeParam::Type>("0.5"),
-             fetch::math::SizeType    training_steps = 100)
+bool RunTest(
+    fetch::ml::OptimiserType optimiser_type,
+    typename TypeParam::Type tolerance,
+    typename TypeParam::Type lr             = fetch::math::Type<typename TypeParam::Type>("0.5"),
+    fetch::math::SizeType    training_steps = 100)
 {
   using DataType  = typename TypeParam::Type;
   using ModelType = fetch::ml::model::Sequential<TypeParam>;
@@ -88,8 +92,8 @@ bool RunTest(fetch::ml::OptimiserType optimiser_type, typename TypeParam::Type t
   PrepareTestDataAndLabels1D<TypeParam>(train_data, train_labels);
 
   // set up model
-  ModelType model = SetupModel<TypeParam, DataType, ModelType>(optimiser_type, model_config,
-                                                               train_data, train_labels);
+  ModelType model = SetupModel<TypeParam, DataType, ModelType>(
+      optimiser_type, model_config, train_data, train_labels);
   // test loss decreases
   DataType loss{0};
   DataType later_loss{0};
@@ -112,41 +116,51 @@ bool RunTest(fetch::ml::OptimiserType optimiser_type, typename TypeParam::Type t
 TYPED_TEST(SequentialModelTest, adagrad_sequential)
 {
   using DataType = typename TypeParam::Type;
-  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(fetch::ml::OptimiserType::ADAGRAD,
-                                                     fetch::math::Type<DataType>("0.0001"),
-                                                     fetch::math::Type<DataType>("0.05"), 400));
+  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(
+      fetch::ml::OptimiserType::ADAGRAD,
+      fetch::math::Type<DataType>("0.0001"),
+      fetch::math::Type<DataType>("0.05"),
+      400));
 }
 
 TYPED_TEST(SequentialModelTest, adam_sequential)
 {
   using DataType = typename TypeParam::Type;
-  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(fetch::ml::OptimiserType::ADAM,
-                                                     fetch::math::Type<DataType>("0.001"),
-                                                     fetch::math::Type<DataType>("0.01"), 400));
+  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(
+      fetch::ml::OptimiserType::ADAM,
+      fetch::math::Type<DataType>("0.001"),
+      fetch::math::Type<DataType>("0.01"),
+      400));
 }
 
 TYPED_TEST(SequentialModelTest, momentum_sequential)
 {
   using DataType = typename TypeParam::Type;
-  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(fetch::ml::OptimiserType::MOMENTUM,
-                                                     fetch::math::Type<DataType>("0.0001"),
-                                                     fetch::math::Type<DataType>("0.5"), 200));
+  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(
+      fetch::ml::OptimiserType::MOMENTUM,
+      fetch::math::Type<DataType>("0.0001"),
+      fetch::math::Type<DataType>("0.5"),
+      200));
 }
 
 TYPED_TEST(SequentialModelTest, rmsprop_sequential)
 {
   using DataType = typename TypeParam::Type;
-  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(fetch::ml::OptimiserType::RMSPROP,
-                                                     fetch::math::Type<DataType>("0.01"),
-                                                     fetch::math::Type<DataType>("0.006"), 200));
+  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(
+      fetch::ml::OptimiserType::RMSPROP,
+      fetch::math::Type<DataType>("0.01"),
+      fetch::math::Type<DataType>("0.006"),
+      200));
 }
 
 TYPED_TEST(SequentialModelTest, sgd_sequential)
 {
   using DataType = typename TypeParam::Type;
-  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(fetch::ml::OptimiserType::SGD,
-                                                     fetch::math::Type<DataType>("0.0001"),
-                                                     fetch::math::Type<DataType>("0.7"), 400));
+  ASSERT_TRUE(sequential_details::RunTest<TypeParam>(
+      fetch::ml::OptimiserType::SGD,
+      fetch::math::Type<DataType>("0.0001"),
+      fetch::math::Type<DataType>("0.7"),
+      400));
 }
 
 TYPED_TEST(SequentialModelTest, sgd_sequential_serialisation)

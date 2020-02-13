@@ -27,10 +27,13 @@ QuestionStruct PunishmentBroadcastChannel::AllowPeerPull()
   return question_;
 }
 
-PunishmentBroadcastChannel::PunishmentBroadcastChannel(Endpoint &endpoint, MuddleAddress address,
-                                                       CallbackFunction call_back,
-                                                       CertificatePtr certificate, uint16_t channel,
-                                                       bool ordered_delivery)
+PunishmentBroadcastChannel::PunishmentBroadcastChannel(
+    Endpoint &       endpoint,
+    MuddleAddress    address,
+    CallbackFunction call_back,
+    CertificatePtr   certificate,
+    uint16_t         channel,
+    bool             ordered_delivery)
   : endpoint_{endpoint}
   , address_{std::move(address)}
   , deliver_msg_callback_{std::move(call_back)}
@@ -49,8 +52,8 @@ PunishmentBroadcastChannel::PunishmentBroadcastChannel(Endpoint &endpoint, Muddl
 
   // Connect states to the state machine
   state_machine_->RegisterHandler(State::INIT, this, &PunishmentBroadcastChannel::OnInit);
-  state_machine_->RegisterHandler(State::RESOLVE_PROMISES, this,
-                                  &PunishmentBroadcastChannel::OnResolvePromises);
+  state_machine_->RegisterHandler(
+      State::RESOLVE_PROMISES, this, &PunishmentBroadcastChannel::OnResolvePromises);
 }
 
 PunishmentBroadcastChannel::~PunishmentBroadcastChannel() = default;
@@ -85,8 +88,9 @@ bool PunishmentBroadcastChannel::ResetCabinet(CabinetMembers const &cabinet)
  * reset can still access this information
  *
  */
-void PunishmentBroadcastChannel::SetQuestion(ConstByteArray const &question,
-                                             ConstByteArray const &answer)
+void PunishmentBroadcastChannel::SetQuestion(
+    ConstByteArray const &question,
+    ConstByteArray const &answer)
 {
   FETCH_LOCK(lock_);
   previous_question_ = std::move(question_);
@@ -173,8 +177,8 @@ PunishmentBroadcastChannel::State PunishmentBroadcastChannel::OnInit()
     MuddleAddress send_to = current_cabinet_vector_.back();
     current_cabinet_vector_.pop_back();
 
-    auto promise = rpc_client_.CallSpecificAddress(send_to, RPC_BEACON,
-                                                   PunishmentBroadcastChannel::PULL_INFO_FROM_PEER);
+    auto promise = rpc_client_.CallSpecificAddress(
+        send_to, RPC_BEACON, PunishmentBroadcastChannel::PULL_INFO_FROM_PEER);
 
     network_promises_.emplace_back(std::make_pair(send_to, promise));
   }

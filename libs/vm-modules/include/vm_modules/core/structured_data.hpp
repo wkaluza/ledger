@@ -37,17 +37,23 @@ class StructuredData : public vm::Object
 {
 public:
   template <typename T, typename Y = void>
-  static constexpr bool IsSupportedRefType =
-      type_util::IsAnyOfV<meta::Decay<T>, vm::String, vm::Address, vm::Fixed128,
-                          vm_modules::ByteArrayWrapper, vm_modules::math::UInt256Wrapper>;
+  static constexpr bool IsSupportedRefType = type_util::IsAnyOfV<
+      meta::Decay<T>,
+      vm::String,
+      vm::Address,
+      vm::Fixed128,
+      vm_modules::ByteArrayWrapper,
+      vm_modules::math::UInt256Wrapper>;
 
   template <typename T, typename Y = void>
   using IfIsSupportedRefType = meta::EnableIf<IsSupportedRefType<T>, Y>;
 
   static void                    Bind(vm::Module &module);
   static vm::Ptr<StructuredData> Constructor(vm::VM *vm, vm::TypeId type_id);
-  static vm::Ptr<StructuredData> ConstructorFromVariant(vm::VM *vm, vm::TypeId type_id,
-                                                        variant::Variant const &data);
+  static vm::Ptr<StructuredData> ConstructorFromVariant(
+      vm::VM *                vm,
+      vm::TypeId              type_id,
+      variant::Variant const &data);
 
   StructuredData() = delete;
   StructuredData(vm::VM *vm, vm::TypeId type_id);

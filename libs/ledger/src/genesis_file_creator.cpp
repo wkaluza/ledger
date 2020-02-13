@@ -100,8 +100,10 @@ FileReadStatus ParseDocument(JSONDocument &document, ConstByteArray const &conte
 
 using ConsensusPtr = std::shared_ptr<fetch::ledger::ConsensusInterface>;
 
-GenesisFileCreator::GenesisFileCreator(StorageUnitInterface &storage_unit,
-                                       CertificatePtr certificate, std::string const &db_prefix)
+GenesisFileCreator::GenesisFileCreator(
+    StorageUnitInterface &storage_unit,
+    CertificatePtr        certificate,
+    std::string const &   db_prefix)
   : certificate_{std::move(certificate)}
   , storage_unit_{storage_unit}
   , db_name_{db_prefix + "_genesis_block"}
@@ -112,9 +114,10 @@ GenesisFileCreator::GenesisFileCreator(StorageUnitInterface &storage_unit,
  *
  * @param name The path to the file to be loaded
  */
-GenesisFileCreator::Result GenesisFileCreator::LoadContents(ConstByteArray const &contents,
-                                                            bool                  proof_of_stake,
-                                                            ConsensusParameters & params)
+GenesisFileCreator::Result GenesisFileCreator::LoadContents(
+    ConstByteArray const &contents,
+    bool                  proof_of_stake,
+    ConsensusParameters & params)
 {
   // Perform a check as to whether we have installed genesis before
   {
@@ -122,8 +125,12 @@ GenesisFileCreator::Result GenesisFileCreator::LoadContents(ConstByteArray const
 
     if (genesis_store_.Get(storage::ResourceAddress("HEAD"), genesis_block_))
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Restored Genesis. Block 0x", genesis_block_.hash.ToHex(),
-                     " Merkle: 0x", genesis_block_.merkle_hash.ToHex());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Restored Genesis. Block 0x",
+          genesis_block_.hash.ToHex(),
+          " Merkle: 0x",
+          genesis_block_.merkle_hash.ToHex());
 
       chain::SetGenesisDigest(genesis_block_.hash);
       chain::SetGenesisMerkleRoot(genesis_block_.merkle_hash);
@@ -186,8 +193,8 @@ GenesisFileCreator::Result GenesisFileCreator::LoadContents(ConstByteArray const
     }
     else
     {
-      FETCH_LOG_CRITICAL(LOGGING_NAME, "Incorrect stake file version! Found: ", version,
-                         ". Expected: ", VERSION);
+      FETCH_LOG_CRITICAL(
+          LOGGING_NAME, "Incorrect stake file version! Found: ", version, ". Expected: ", VERSION);
     }
   }
 
@@ -364,8 +371,14 @@ bool GenesisFileCreator::LoadConsensus(Variant const &object, ConsensusParameter
       auto identity = crypto::Identity(FromBase64(identity_raw));
       auto address  = chain::Address(identity);
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Restoring stake. Identity: ", identity.identifier().ToBase64(),
-                     " (address): ", address.address().ToBase64(), " amount: ", amount);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Restoring stake. Identity: ",
+          identity.identifier().ToBase64(),
+          " (address): ",
+          address.address().ToBase64(),
+          " amount: ",
+          amount);
 
       // The initial set of miners is stored in the genesis block
       genesis_block_.block_entropy.qualified.insert(identity.identifier());

@@ -131,8 +131,9 @@ void MaxPool2D<T>::Forward(const VecTensorType &inputs, TensorType &output)
  * output[0]=input_error[inputs[0].shape]
  */
 template <typename TensorType>
-std::vector<TensorType> MaxPool2D<TensorType>::Backward(const VecTensorType &inputs,
-                                                        const TensorType &   error_signal)
+std::vector<TensorType> MaxPool2D<TensorType>::Backward(
+    const VecTensorType &inputs,
+    const TensorType &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == ComputeOutputShape(inputs));
@@ -200,11 +201,11 @@ std::vector<fetch::math::SizeType> MaxPool2D<T>::ComputeOutputShape(
   // output_shape_[0]=number of output channels
   output_shape.emplace_back(inputs.at(0)->shape().at(0));
   // output_shape_[1]=number of stride_size steps over input height
-  output_shape.emplace_back((inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) /
-                            stride_size_);
+  output_shape.emplace_back(
+      (inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) / stride_size_);
   // output_shape_[2]=number of stride_size steps over input width
-  output_shape.emplace_back((inputs.at(0)->shape().at(2) - (kernel_size_ - stride_size_)) /
-                            stride_size_);
+  output_shape.emplace_back(
+      (inputs.at(0)->shape().at(2) - (kernel_size_ - stride_size_)) / stride_size_);
   // output_shape_[3]=batch dimension
   output_shape.emplace_back(inputs.at(0)->shape().at(3));
   return output_shape;

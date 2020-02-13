@@ -45,8 +45,11 @@ public:
   using DirectMessageHandler = std::function<void(Handle, PacketPtr)>;
 
   // Construction / Destruction
-  FakeMuddleEndpoint(NetworkId network_id, Address address, Prover *certificate = nullptr,
-                     bool sign_broadcasts = false)
+  FakeMuddleEndpoint(
+      NetworkId network_id,
+      Address   address,
+      Prover *  certificate     = nullptr,
+      bool      sign_broadcasts = false)
     : network_id_{network_id}
     , address_{std::move(address)}
     , certificate_{certificate}
@@ -84,27 +87,40 @@ public:
     return address_;
   }
 
-  void Send(Address const &address, uint16_t service, uint16_t channel,
-            Payload const &message) override
+  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
+      override
   {
     return Send(address, service, channel, msg_counter_++, message, MuddleEndpoint::OPTION_DEFAULT);
   }
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message,
-            Options options) override
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message,
+      Options        options) override
   {
     return Send(address, service, channel, msg_counter_++, message, options);
   }
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload) override
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload) override
   {
     return Send(address, service, channel, message_num, payload, MuddleEndpoint::OPTION_DEFAULT);
   }
 
-  PacketPtr FormatPacket(Packet::Address const &from, NetworkId const &network, uint16_t service,
-                         uint16_t channel, uint16_t counter, uint8_t ttl,
-                         Packet::Payload const &payload)
+  PacketPtr FormatPacket(
+      Packet::Address const &from,
+      NetworkId const &      network,
+      uint16_t               service,
+      uint16_t               channel,
+      uint16_t               counter,
+      uint8_t                ttl,
+      Packet::Payload const &payload)
   {
     auto packet = std::make_shared<Packet>(from, network.value());
     packet->SetService(service);
@@ -125,8 +141,13 @@ public:
     return p;
   }
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload, Options options) override
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload,
+      Options        options) override
   {
     // format the packet
     auto packet = FormatPacket(address_, network_id_, service, channel, message_num, 40, payload);
@@ -217,9 +238,13 @@ public:
   using ServerList         = std::vector<Server>;
 
   // Construction / Destruction
-  MuddleFake(NetworkId network_id, CertificatePtr certificate, NetworkManager const &nm,
-             bool sign_packets = false, bool sign_broadcasts = false,
-             std::string external_address = "127.0.0.1")
+  MuddleFake(
+      NetworkId             network_id,
+      CertificatePtr        certificate,
+      NetworkManager const &nm,
+      bool                  sign_packets     = false,
+      bool                  sign_broadcasts  = false,
+      std::string           external_address = "127.0.0.1")
     : name_{GenerateLoggingName("Muddle", network_id)}
     , certificate_(std::move(certificate))
     , external_address_(std::move(external_address))
@@ -228,7 +253,9 @@ public:
     , sign_packets_{sign_packets}
     , sign_broadcasts_{sign_broadcasts}
     , network_id_{network_id}
-    , fake_muddle_endpoint_{network_id_, node_address_, sign_packets ? certificate_.get() : nullptr,
+    , fake_muddle_endpoint_{network_id_,
+                            node_address_,
+                            sign_packets ? certificate_.get() : nullptr,
                             sign_packets && sign_broadcasts}
   {
     FETCH_UNUSED(certificate_);
@@ -363,8 +390,10 @@ public:
     throw std::runtime_error("ConnectTo x functionality not implemented");
   }
 
-  void ConnectTo(Address const &address, network::Uri const & /*uri_hint*/,
-                 Duration const & /*expire*/) override
+  void ConnectTo(
+      Address const &address,
+      network::Uri const & /*uri_hint*/,
+      Duration const & /*expire*/) override
   {
     FakeNetwork::Connect(node_address_, address);
   }

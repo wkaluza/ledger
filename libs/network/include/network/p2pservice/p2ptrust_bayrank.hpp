@@ -84,8 +84,11 @@ public:
     AddFeedback(peer_ident, ConstByteArray{}, subject, quality);
   }
 
-  void AddFeedback(IDENTITY const &peer_ident, ConstByteArray const & /*object_ident*/,
-                   TrustSubject subject, TrustQuality quality) override
+  void AddFeedback(
+      IDENTITY const &peer_ident,
+      ConstByteArray const & /*object_ident*/,
+      TrustSubject subject,
+      TrustQuality quality) override
   {
     FETCH_UNUSED(subject);
     FETCH_LOCK(mutex_);
@@ -104,8 +107,14 @@ public:
       pos = ranking->second;
     }
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Feedback: ", byte_array::ToBase64(peer_ident),
-                    " subj=", ToString(subject), " qual=", ToString(quality));
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Feedback: ",
+        byte_array::ToBase64(peer_ident),
+        " subj=",
+        ToString(subject),
+        " qual=",
+        ToString(quality));
     if (quality == TrustQuality::NEW_PEER)
     {
       trust_store_[pos].update_score();
@@ -249,9 +258,12 @@ public:
     FETCH_LOCK(mutex_);
     for (std::size_t pos = 0; pos < trust_store_.size(); ++pos)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "trust_store_ ",
-                     byte_array::ToBase64(trust_store_[pos].peer_identity), " => ",
-                     trust_store_[pos].score);
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "trust_store_ ",
+          byte_array::ToBase64(trust_store_[pos].peer_identity),
+          " => ",
+          trust_store_[pos].score);
     }
   }
 
@@ -278,8 +290,13 @@ protected:
     return t / g;
   }
 
-  void updateGaussian(bool honest, Gaussian &s, Gaussian const &ref, double beta, double drift,
-                      double eps)
+  void updateGaussian(
+      bool            honest,
+      Gaussian &      s,
+      Gaussian const &ref,
+      double          beta,
+      double          drift,
+      double          eps)
   {
     // Calculate new distribution for g1 assuming that g1 won with g2.
     // beta corresponds to a measure of how difficult the game is to master.
@@ -310,19 +327,21 @@ protected:
     }
     dirty_ = false;
 
-    std::sort(trust_store_.begin(), trust_store_.end(),
-              [](PeerTrustRating const &a, PeerTrustRating const &b) {
-                if (a.score < b.score)
-                {
-                  return true;
-                }
-                if (a.score > b.score)
-                {
-                  return false;
-                }
+    std::sort(
+        trust_store_.begin(),
+        trust_store_.end(),
+        [](PeerTrustRating const &a, PeerTrustRating const &b) {
+          if (a.score < b.score)
+          {
+            return true;
+          }
+          if (a.score > b.score)
+          {
+            return false;
+          }
 
-                return a.peer_identity < b.peer_identity;
-              });
+          return a.peer_identity < b.peer_identity;
+        });
 
     ranking_store_.clear();
     for (std::size_t pos = 0; pos < trust_store_.size(); ++pos)

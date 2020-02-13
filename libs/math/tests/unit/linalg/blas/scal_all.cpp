@@ -29,8 +29,11 @@ using namespace fetch::math::linalg;
 
 TEST(blas_A_withA, blas_scal_all1)
 {
-  Blas<double, Signature(_x <= _n, _alpha, _x, _m), Computes(_x <= _alpha * _x),
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x <= _n, _alpha, _x, _m),
+      Computes(_x <= _alpha * _x),
+      platform::Parallelisation::NOT_PARALLEL>
       scal_all;
   // Computing _x <= _alpha * _x
   using Type = double;
@@ -55,8 +58,11 @@ TEST(blas_A_withA, blas_scal_all1)
 
 TEST(blas_A_withA, blas_scal_all2)
 {
-  Blas<double, Signature(_x <= _n, _alpha, _x, _m), Computes(_x <= _alpha * _x),
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x <= _n, _alpha, _x, _m),
+      Computes(_x <= _alpha * _x),
+      platform::Parallelisation::NOT_PARALLEL>
       scal_all;
   // Computing _x <= _alpha * _x
   using Type = double;
@@ -81,8 +87,11 @@ TEST(blas_A_withA, blas_scal_all2)
 
 TEST(blas_A_withA, blas_scal_all3)
 {
-  Blas<double, Signature(_x <= _n, _alpha, _x, _m), Computes(_x <= _alpha * _x),
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x <= _n, _alpha, _x, _m),
+      Computes(_x <= _alpha * _x),
+      platform::Parallelisation::NOT_PARALLEL>
       scal_all;
   // Computing _x <= _alpha * _x
   using Type = double;
@@ -107,8 +116,11 @@ TEST(blas_A_withA, blas_scal_all3)
 
 TEST(blas_A_withA, blas_scal_all4)
 {
-  Blas<double, Signature(_x <= _n, _alpha, _x, _m), Computes(_x <= _alpha * _x),
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x <= _n, _alpha, _x, _m),
+      Computes(_x <= _alpha * _x),
+      platform::Parallelisation::NOT_PARALLEL>
       scal_all;
   // Computing _x <= _alpha * _x
   using Type = double;

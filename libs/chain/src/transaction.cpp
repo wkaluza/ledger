@@ -93,8 +93,9 @@ bool Transaction::Verify()
 bool Transaction::IsSignedByFromAddress() const
 {
   auto const it = std::find_if(
-      signatories_.begin(), signatories_.end(),
-      [this](Transaction::Signatory const &signatory) { return signatory.address == from_; });
+      signatories_.begin(), signatories_.end(), [this](Transaction::Signatory const &signatory) {
+        return signatory.address == from_;
+      });
 
   return it != signatories_.end();
 }

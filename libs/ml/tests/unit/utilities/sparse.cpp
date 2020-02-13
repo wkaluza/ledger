@@ -103,21 +103,26 @@ TYPED_TEST(SparseTest, sparse_add_sparse_to_normal_test)
 
   EXPECT_TRUE(data_dst.View(4).Copy().AllClose(
       data_dst_old.View(4).Copy() + data_src.View(0).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(data_dst.View(3).Copy().AllClose(data_dst_old.View(3).Copy(),
-                                               fetch::math::function_tolerance<DataType>(),
-                                               fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data_dst.View(3).Copy().AllClose(
+      data_dst_old.View(3).Copy(),
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(data_dst.View(2).Copy().AllClose(
       data_dst_old.View(2).Copy() + data_src.View(1).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(data_dst.View(1).Copy().AllClose(
       data_dst_old.View(1).Copy() + data_src.View(2).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(data_dst.View(0).Copy().AllClose(data_dst_old.View(0).Copy(),
-                                               fetch::math::function_tolerance<DataType>(),
-                                               fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data_dst.View(0).Copy().AllClose(
+      data_dst_old.View(0).Copy(),
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SparseTest, sparse_vector_add_sparse_to_normal_test)
@@ -142,21 +147,26 @@ TYPED_TEST(SparseTest, sparse_vector_add_sparse_to_normal_test)
 
   EXPECT_TRUE(data_dst.View(1).Copy().AllClose(
       data_dst_old.View(1).Copy() + data_src.View(0).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(data_dst.View(3).Copy().AllClose(data_dst_old.View(3).Copy(),
-                                               fetch::math::function_tolerance<DataType>(),
-                                               fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data_dst.View(3).Copy().AllClose(
+      data_dst_old.View(3).Copy(),
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(data_dst.View(2).Copy().AllClose(
       data_dst_old.View(2).Copy() + data_src.View(1).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(data_dst.View(4).Copy().AllClose(
       data_dst_old.View(4).Copy() + data_src.View(2).Copy(),
-      fetch::math::function_tolerance<DataType>(), fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(data_dst.View(0).Copy().AllClose(data_dst_old.View(0).Copy(),
-                                               fetch::math::function_tolerance<DataType>(),
-                                               fetch::math::function_tolerance<DataType>()));
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data_dst.View(0).Copy().AllClose(
+      data_dst_old.View(0).Copy(),
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace test

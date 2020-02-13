@@ -91,12 +91,19 @@ void Convolution2D<TensorType>::Forward(VecTensorType const &inputs, TensorType 
   TensorType vertical_stride{{vertical_stride_width, horizontal_stride_width}};
 
   // Reshape input data to horizontal stride - im2col
-  FillHorizontalStride(input, horizontal_stride, output_height, output_width, input_channels,
-                       kernel_height, kernel_width, batch_size);
+  FillHorizontalStride(
+      input,
+      horizontal_stride,
+      output_height,
+      output_width,
+      input_channels,
+      kernel_height,
+      kernel_width,
+      batch_size);
 
   // Reshape kernel data to vertical stride - im2col
-  FillVerticalStride(kernels, vertical_stride, output_channels, input_channels, kernel_height,
-                     kernel_width);
+  FillVerticalStride(
+      kernels, vertical_stride, output_channels, input_channels, kernel_height, kernel_width);
 
   // Do matmul
   TensorType reshaped_output = fetch::math::Dot(vertical_stride, horizontal_stride);
@@ -118,8 +125,9 @@ void Convolution2D<TensorType>::Forward(VecTensorType const &inputs, TensorType 
  * output[0]=input_error[inputs[0].shape], output[1]=kernel_error[inputs[1].shape]
  */
 template <class TensorType>
-std::vector<TensorType> Convolution2D<TensorType>::Backward(VecTensorType const &inputs,
-                                                            TensorType const &   error_signal)
+std::vector<TensorType> Convolution2D<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 2);
   // Input should be a 4D tensor [C x H x W x N]
@@ -155,12 +163,19 @@ std::vector<TensorType> Convolution2D<TensorType>::Backward(VecTensorType const 
   TensorType vertical_stride{{vertical_stride_width, horizontal_stride_width}};
 
   // Reshape input data to horizontal stride - im2col
-  FillHorizontalStride(input, horizontal_stride, output_height, output_width, input_channels,
-                       kernel_height, kernel_width, batch_size);
+  FillHorizontalStride(
+      input,
+      horizontal_stride,
+      output_height,
+      output_width,
+      input_channels,
+      kernel_height,
+      kernel_width,
+      batch_size);
 
   // Reshape kernel data to vertical stride - im2col
-  FillVerticalStride(kernels, vertical_stride, output_channels, input_channels, kernel_height,
-                     kernel_width);
+  FillVerticalStride(
+      kernels, vertical_stride, output_channels, input_channels, kernel_height, kernel_width);
 
   // Reshape error_signal to error for matmul
   TensorType error{{vertical_stride_width, horizontal_stride_height}};
@@ -171,12 +186,19 @@ std::vector<TensorType> Convolution2D<TensorType>::Backward(VecTensorType const 
   TensorType error1 = fetch::math::TransposeDot(vertical_stride, error);
 
   // Reshape horizontal stride to input data error_signal - reversed im2col
-  ReverseFillHorizontalStride(input_error, error1, output_height, output_width, input_channels,
-                              kernel_height, kernel_width, batch_size);
+  ReverseFillHorizontalStride(
+      input_error,
+      error1,
+      output_height,
+      output_width,
+      input_channels,
+      kernel_height,
+      kernel_width,
+      batch_size);
 
   // Reshape vertical stride to kernel data error_signal - reversed im2col
-  ReverseFillVerticalStride(kernel_error, error2, output_channels, input_channels, kernel_height,
-                            kernel_width);
+  ReverseFillVerticalStride(
+      kernel_error, error2, output_channels, input_channels, kernel_height, kernel_width);
 
   return {input_error, kernel_error};
 }
@@ -202,8 +224,9 @@ std::vector<typename TensorType::SizeType> Convolution2D<TensorType>::ComputeOut
 }
 
 template <class TensorType>
-math::SizeType Convolution2D<TensorType>::ComputeOutputDim(SizeType const input_dim,
-                                                           SizeType const kernel_dim) const
+math::SizeType Convolution2D<TensorType>::ComputeOutputDim(
+    SizeType const input_dim,
+    SizeType const kernel_dim) const
 {
   SizeType output_dim = (input_dim - kernel_dim + this->stride_size_) / this->stride_size_;
 
@@ -222,11 +245,13 @@ math::SizeType Convolution2D<TensorType>::ComputeOutputDim(SizeType const input_
  * @param kernel_width
  */
 template <class TensorType>
-void Convolution2D<TensorType>::FillVerticalStride(TensorType &input, TensorType &vertical_stride,
-                                                   SizeType const output_channels,
-                                                   SizeType const input_channels,
-                                                   SizeType const kernel_height,
-                                                   SizeType const kernel_width)
+void Convolution2D<TensorType>::FillVerticalStride(
+    TensorType &   input,
+    TensorType &   vertical_stride,
+    SizeType const output_channels,
+    SizeType const input_channels,
+    SizeType const kernel_height,
+    SizeType const kernel_width)
 {
   SizeType j_s;                                           // stride height iterator
   for (SizeType i_oc{0}; i_oc < output_channels; ++i_oc)  // Iterate over output channels
@@ -260,8 +285,12 @@ void Convolution2D<TensorType>::FillVerticalStride(TensorType &input, TensorType
  */
 template <class TensorType>
 void Convolution2D<TensorType>::ReverseFillVerticalStride(
-    TensorType &input, TensorType &vertical_stride, SizeType const output_channels,
-    SizeType const input_channels, SizeType const kernel_height, SizeType const kernel_width)
+    TensorType &   input,
+    TensorType &   vertical_stride,
+    SizeType const output_channels,
+    SizeType const input_channels,
+    SizeType const kernel_height,
+    SizeType const kernel_width)
 {
   SizeType j_s;                                           // stride height iterator
   for (SizeType i_oc{0}; i_oc < output_channels; ++i_oc)  // Iterate over output channels
@@ -296,9 +325,14 @@ void Convolution2D<TensorType>::ReverseFillVerticalStride(
  */
 template <class TensorType>
 void Convolution2D<TensorType>::FillHorizontalStride(
-    TensorType &input, TensorType &horizontal_stride, SizeType const output_height,
-    SizeType const output_width, SizeType const input_channels, SizeType const kernel_height,
-    SizeType const kernel_width, SizeType const batch_size)
+    TensorType &   input,
+    TensorType &   horizontal_stride,
+    SizeType const output_height,
+    SizeType const output_width,
+    SizeType const input_channels,
+    SizeType const kernel_height,
+    SizeType const kernel_width,
+    SizeType const batch_size)
 {
   SizeType i_s;  // stride width index
   SizeType j_s;  // stride height index
@@ -344,9 +378,14 @@ void Convolution2D<TensorType>::FillHorizontalStride(
  */
 template <class TensorType>
 void Convolution2D<TensorType>::ReverseFillHorizontalStride(
-    TensorType &input, TensorType &horizontal_stride, SizeType const output_height,
-    SizeType const output_width, SizeType const input_channels, SizeType const kernel_height,
-    SizeType const kernel_width, SizeType const batch_size)
+    TensorType &   input,
+    TensorType &   horizontal_stride,
+    SizeType const output_height,
+    SizeType const output_width,
+    SizeType const input_channels,
+    SizeType const kernel_height,
+    SizeType const kernel_width,
+    SizeType const batch_size)
 {
   SizeType i_s;  // stride width index
   SizeType j_s;  // stride height index
@@ -389,10 +428,13 @@ void Convolution2D<TensorType>::ReverseFillHorizontalStride(
  * @param output_width
  */
 template <class TensorType>
-void Convolution2D<TensorType>::FillOutput(TensorType const &gemm_output, TensorType &output,
-                                           SizeType const output_channels,
-                                           SizeType const output_height,
-                                           SizeType const output_width, SizeType const batch_size)
+void Convolution2D<TensorType>::FillOutput(
+    TensorType const &gemm_output,
+    TensorType &      output,
+    SizeType const    output_channels,
+    SizeType const    output_height,
+    SizeType const    output_width,
+    SizeType const    batch_size)
 {
 
   SizeType it;
@@ -424,11 +466,13 @@ void Convolution2D<TensorType>::FillOutput(TensorType const &gemm_output, Tensor
  * @param output_width
  */
 template <class TensorType>
-void Convolution2D<TensorType>::ReverseFillOutput(TensorType &gemm_output, TensorType const &output,
-                                                  SizeType const output_channels,
-                                                  SizeType const output_height,
-                                                  SizeType const output_width,
-                                                  SizeType const batch_size)
+void Convolution2D<TensorType>::ReverseFillOutput(
+    TensorType &      gemm_output,
+    TensorType const &output,
+    SizeType const    output_channels,
+    SizeType const    output_height,
+    SizeType const    output_width,
+    SizeType const    batch_size)
 {
 
   SizeType it;
@@ -461,11 +505,11 @@ OperationsCount Convolution2D<TensorType>::ChargeForward() const
   SizeType kernel_height   = this->batch_input_shapes_.back().at(2);
   SizeType kernel_width    = this->batch_input_shapes_.back().at(3);
 
-  SizeType output_height = ComputeOutputDim(this->batch_input_shapes_.front().at(1),
-                                            this->batch_input_shapes_.back().at(2));
+  SizeType output_height = ComputeOutputDim(
+      this->batch_input_shapes_.front().at(1), this->batch_input_shapes_.back().at(2));
 
-  SizeType output_width = ComputeOutputDim(this->batch_input_shapes_.front().at(2),
-                                           this->batch_input_shapes_.back().at(3));
+  SizeType output_width = ComputeOutputDim(
+      this->batch_input_shapes_.front().at(2), this->batch_input_shapes_.back().at(3));
 
   SizeType horizontal_stride_width  = kernel_width * kernel_height * input_channels;
   SizeType horizontal_stride_height = output_height * output_width * batch_size;
@@ -490,11 +534,11 @@ OperationsCount Convolution2D<TensorType>::ChargeBackward() const
   SizeType kernel_height   = this->batch_input_shapes_.back().at(2);
   SizeType kernel_width    = this->batch_input_shapes_.back().at(3);
 
-  SizeType output_height = ComputeOutputDim(this->batch_input_shapes_.front().at(1),
-                                            this->batch_input_shapes_.back().at(2));
+  SizeType output_height = ComputeOutputDim(
+      this->batch_input_shapes_.front().at(1), this->batch_input_shapes_.back().at(2));
 
-  SizeType output_width = ComputeOutputDim(this->batch_input_shapes_.front().at(2),
-                                           this->batch_input_shapes_.back().at(3));
+  SizeType output_width = ComputeOutputDim(
+      this->batch_input_shapes_.front().at(2), this->batch_input_shapes_.back().at(3));
 
   SizeType horizontal_stride_width  = kernel_width * kernel_height * input_channels;
   SizeType horizontal_stride_height = output_height * output_width * batch_size;

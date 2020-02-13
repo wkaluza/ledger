@@ -109,8 +109,17 @@ protected:
         signer->identity(), block_interval_ms_, *main_chain_);
 
     block_coordinator_ = std::make_unique<BlockCoordinator>(
-        *main_chain_, DAGPtr{}, *execution_manager_, *storage_unit_, *packer_, *block_sink_, signer,
-        LOG2_NUM_LANES, NUM_SLICES, consensus_, nullptr);
+        *main_chain_,
+        DAGPtr{},
+        *execution_manager_,
+        *storage_unit_,
+        *packer_,
+        *block_sink_,
+        signer,
+        LOG2_NUM_LANES,
+        NUM_SLICES,
+        consensus_,
+        nullptr);
   }
 
   /**
@@ -158,8 +167,9 @@ protected:
     // run one step of the state machine
     block_coordinator_->GetRunnable().Execute();
 
-    ASSERT_EQ(std::string(block_coordinator_->ToString(final_state)),
-              std::string(block_coordinator_->ToString(state_machine.state())))
+    ASSERT_EQ(
+        std::string(block_coordinator_->ToString(final_state)),
+        std::string(block_coordinator_->ToString(state_machine.state())))
         << " at line " << line_no;
   }
 
@@ -1211,8 +1221,17 @@ protected:
         signer->identity(), block_interval_ms_, *main_chain_);
 
     block_coordinator_ = std::make_unique<BlockCoordinator>(
-        *main_chain_, DAGPtr{}, *execution_manager_, *storage_unit_, *packer_, *block_sink_, signer,
-        LOG2_NUM_LANES, NUM_SLICES, consensus_, nullptr);
+        *main_chain_,
+        DAGPtr{},
+        *execution_manager_,
+        *storage_unit_,
+        *packer_,
+        *block_sink_,
+        signer,
+        LOG2_NUM_LANES,
+        NUM_SLICES,
+        consensus_,
+        nullptr);
   }
 
   fetch::moment::AdjustableClockPtr clock_;
@@ -1220,8 +1239,8 @@ protected:
 
 TEST_F(NiceMockBlockCoordinatorTests, UnknownTransactionDoesNotBlockForever)
 {
-  TransactionLayout layout{*fetch::testing::GenerateUniqueHashes(1u).begin(), fetch::BitVector{}, 0,
-                           0, 1000};
+  TransactionLayout layout{
+      *fetch::testing::GenerateUniqueHashes(1u).begin(), fetch::BitVector{}, 0, 0, 1000};
 
   auto genesis = block_generator_();
   auto b1      = block_generator_(genesis);

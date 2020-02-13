@@ -40,8 +40,11 @@ constexpr char const *LOGGING_NAME = "ShardMgmt";
 
 }  // namespace
 
-ShardManagementService::ShardManagementService(Manifest manifest, ShardManagementInterface &shards,
-                                               MuddleInterface &muddle, uint32_t log2_num_lanes)
+ShardManagementService::ShardManagementService(
+    Manifest                  manifest,
+    ShardManagementInterface &shards,
+    MuddleInterface &         muddle,
+    uint32_t                  log2_num_lanes)
   : core::PeriodicRunnable("ShardManagement", 1s)
   , shards_{shards}
   , muddle_{muddle}
@@ -157,8 +160,12 @@ void ShardManagementService::ResolveUpdates()
   }
   catch (std::exception const &e)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Failed to request manifest from peer: ", current_peer,
-                   " exception thrown: ", e.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Failed to request manifest from peer: ",
+        current_peer,
+        " exception thrown: ",
+        e.what());
   }
 }
 
@@ -180,8 +187,9 @@ void ShardManagementService::RequestUpdates(Addresses addresses)
     FETCH_LOG_TRACE(LOGGING_NAME, "Request manifest: ", address.ToBase64());
 
     pending_requests_.emplace(
-        address, rpc_client_.CallSpecificAddress(address, RPC_SHARD_MGMT,
-                                                 ShardManagementProtocol::REQUEST_MANIFEST));
+        address,
+        rpc_client_.CallSpecificAddress(
+            address, RPC_SHARD_MGMT, ShardManagementProtocol::REQUEST_MANIFEST));
   }
 }
 

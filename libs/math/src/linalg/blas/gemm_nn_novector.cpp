@@ -28,10 +28,17 @@ namespace math {
 namespace linalg {
 
 template <typename S>
-void Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
-          Computes(_C <= _alpha * _A * _B + _beta * _C), platform::Parallelisation::NOT_PARALLEL>::
-     operator()(Type const alpha, TensorView<Type> const a, TensorView<Type> const b, Type const beta,
-           TensorView<Type> c) const
+void Blas<
+    S,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>::
+operator()(
+    Type const             alpha,
+    TensorView<Type> const a,
+    TensorView<Type> const b,
+    Type const             beta,
+    TensorView<Type>       c) const
 {
   std::size_t i;
   std::size_t j;
@@ -97,57 +104,83 @@ void Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
   }
 }
 
-template class Blas<uint8_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<uint16_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<uint32_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<uint64_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<int8_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<int16_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<int32_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<int64_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
-
-template class Blas<float, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * _B + _beta * _C),
-                    platform::Parallelisation::NOT_PARALLEL>;
+template class Blas<
+    uint8_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
 
 template class Blas<
-    fetch::fixed_point::FixedPoint<16, 16>, Signature(_C <= _alpha, _A, _B, _beta, _C),
-    Computes(_C <= _alpha * _A * _B + _beta * _C), platform::Parallelisation::NOT_PARALLEL>;
+    uint16_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
 
 template class Blas<
-    fetch::fixed_point::FixedPoint<32, 32>, Signature(_C <= _alpha, _A, _B, _beta, _C),
-    Computes(_C <= _alpha * _A * _B + _beta * _C), platform::Parallelisation::NOT_PARALLEL>;
+    uint32_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
 
 template class Blas<
-    fetch::fixed_point::FixedPoint<64, 64>, Signature(_C <= _alpha, _A, _B, _beta, _C),
-    Computes(_C <= _alpha * _A * _B + _beta * _C), platform::Parallelisation::NOT_PARALLEL>;
+    uint64_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    int8_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    int16_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    int32_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    int64_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    double,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    float,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    fetch::fixed_point::FixedPoint<16, 16>,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    fetch::fixed_point::FixedPoint<32, 32>,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
+
+template class Blas<
+    fetch::fixed_point::FixedPoint<64, 64>,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * _B + _beta * _C),
+    platform::Parallelisation::NOT_PARALLEL>;
 
 }  // namespace linalg
 }  // namespace math

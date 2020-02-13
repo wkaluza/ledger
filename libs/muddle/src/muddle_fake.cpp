@@ -21,14 +21,20 @@
 namespace fetch {
 namespace muddle {
 
-MuddlePtr CreateMuddleFake(NetworkId const &network, ProverPtr certificate,
-                           network::NetworkManager const &nm, std::string const &external_address)
+MuddlePtr CreateMuddleFake(
+    NetworkId const &              network,
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address)
 {
   return std::make_shared<MuddleFake>(network, certificate, nm, true, true, external_address);
 }
 
-MuddlePtr CreateMuddleFake(char const network[4], ProverPtr certificate,
-                           network::NetworkManager const &nm, std::string const &external_address)
+MuddlePtr CreateMuddleFake(
+    char const                     network[4],
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address)
 {
   return CreateMuddleFake(NetworkId{network}, std::move(certificate), nm, external_address);
 }

@@ -187,9 +187,14 @@ protected:
       }
       else if (target != source)
       {
-        FETCH_LOG_WARN(LOGGING_NAME,
-                       "Target table or field name not the same for all merged leaves! ",
-                       "Target: '", target, "', Source: '", source, "'");
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Target table or field name not the same for all merged leaves! ",
+            "Target: '",
+            target,
+            "', Source: '",
+            source,
+            "'");
       }
     }
   }

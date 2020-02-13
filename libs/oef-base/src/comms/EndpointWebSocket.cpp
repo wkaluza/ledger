@@ -29,9 +29,11 @@
 static Gauge wsep_count("mt-core.network.EndpointWebSocket");
 
 template <typename TXType>
-EndpointWebSocket<TXType>::EndpointWebSocket(asio::io_context & /*io_context*/,
-                                             std::size_t sendBufferSize, std::size_t readBufferSize,
-                                             ConfigMap configMap)
+EndpointWebSocket<TXType>::EndpointWebSocket(
+    asio::io_context & /*io_context*/,
+    std::size_t sendBufferSize,
+    std::size_t readBufferSize,
+    ConfigMap   configMap)
   : EndpointBase<TXType>(sendBufferSize, readBufferSize, configMap)
 //  , web_socket_(io_context)
 //  , strand_(web_socket_.get_executor())
@@ -109,8 +111,10 @@ void EndpointWebSocket<TXType>::async_read(const std::size_t & /*bytes_needed*/)
 
 template <typename TXType>
 void EndpointWebSocket<TXType>::async_read_at_least(
-    const std::size_t & /*bytes_needed*/, std::size_t /*bytes_read*/,
-    std::vector<RingBuffer::mutable_buffer> & /*space*/, std::shared_ptr<StateType> /*my_state*/)
+    const std::size_t & /*bytes_needed*/,
+    std::size_t /*bytes_read*/,
+    std::vector<RingBuffer::mutable_buffer> & /*space*/,
+    std::shared_ptr<StateType> /*my_state*/)
 {
   /*
     if (*state != this->RUNNING_ENDPOINT)

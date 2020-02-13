@@ -67,8 +67,9 @@ void MatrixMultiply<T>::Forward(VecTensorType const &inputs, TensorType &output)
   // Batchwise 3D @ 3D or broadcast matmul 2D @ 3D, 3D @ 2D
   else
   {
-    assert((inputs.at(0)->shape().size() == 3 || inputs.at(0)->shape().size() == 2) &&
-           (inputs.at(1)->shape().size() == 3 || inputs.at(1)->shape().size() == 2));
+    assert(
+        (inputs.at(0)->shape().size() == 3 || inputs.at(0)->shape().size() == 2) &&
+        (inputs.at(1)->shape().size() == 3 || inputs.at(1)->shape().size() == 2));
 
     // Get batch size
     SizeType batch_size;
@@ -118,8 +119,9 @@ void MatrixMultiply<T>::Forward(VecTensorType const &inputs, TensorType &output)
 }
 
 template <typename T>
-std::vector<T> MatrixMultiply<T>::Backward(VecTensorType const &inputs,
-                                           TensorType const &   error_signal)
+std::vector<T> MatrixMultiply<T>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 2);
 
@@ -129,14 +131,15 @@ std::vector<T> MatrixMultiply<T>::Backward(VecTensorType const &inputs,
   // Normal MatMul 2D @ 2D
   if (inputs.at(0)->shape().size() == 2 && inputs.at(1)->shape().size() == 2)
   {
-    BackDotWithTranspose((*inputs.at(0)), (*inputs.at(1)), error_signal, error_signal_1_,
-                         error_signal_2_);
+    BackDotWithTranspose(
+        (*inputs.at(0)), (*inputs.at(1)), error_signal, error_signal_1_, error_signal_2_);
   }
   // Batchwise 3D @ 3D or broadcast matmul 2D @ 3D, 3D @ 2D
   else
   {
-    assert((inputs.at(0)->shape().size() == 3 || inputs.at(0)->shape().size() == 2) &&
-           (inputs.at(1)->shape().size() == 3 || inputs.at(1)->shape().size() == 2));
+    assert(
+        (inputs.at(0)->shape().size() == 3 || inputs.at(0)->shape().size() == 2) &&
+        (inputs.at(1)->shape().size() == 3 || inputs.at(1)->shape().size() == 2));
 
     // Get batch size
     SizeType batch_size;
@@ -184,8 +187,8 @@ std::vector<T> MatrixMultiply<T>::Backward(VecTensorType const &inputs,
       /// DO MATMUL ///
       /////////////////
 
-      BackDotWithTranspose(back_in1_view_tensor_, back_in2_view_tensor_, err_sig_view_tensor_,
-                           err1_, err2_);
+      BackDotWithTranspose(
+          back_in1_view_tensor_, back_in2_view_tensor_, err_sig_view_tensor_, err1_, err2_);
 
       ////////////////////////////////
       /// COPY DATA BACK TO Views ///
@@ -254,18 +257,18 @@ std::vector<typename fetch::math::SizeType> MatrixMultiply<T>::ComputeOutputShap
   {
     if (!transpose_a_ && !transpose_b_)
     {
-      output_shape = {inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(1),
-                      inputs.at(0)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(1), inputs.at(0)->shape().at(2)};
     }
     else if (transpose_a_ & !transpose_b_)
     {
-      output_shape = {inputs.at(0)->shape().at(1), inputs.at(1)->shape().at(1),
-                      inputs.at(0)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(1), inputs.at(1)->shape().at(1), inputs.at(0)->shape().at(2)};
     }
     else
     {
-      output_shape = {inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(0),
-                      inputs.at(0)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(0), inputs.at(0)->shape().at(2)};
     }
   }
   else
@@ -273,18 +276,18 @@ std::vector<typename fetch::math::SizeType> MatrixMultiply<T>::ComputeOutputShap
     // 2D @ 3D broadcast matmul
     if (!transpose_a_ && !transpose_b_)
     {
-      output_shape = {inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(1),
-                      inputs.at(1)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(1), inputs.at(1)->shape().at(2)};
     }
     else if (transpose_a_ & !transpose_b_)
     {
-      output_shape = {inputs.at(0)->shape().at(1), inputs.at(1)->shape().at(1),
-                      inputs.at(1)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(1), inputs.at(1)->shape().at(1), inputs.at(1)->shape().at(2)};
     }
     else
     {
-      output_shape = {inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(0),
-                      inputs.at(1)->shape().at(2)};
+      output_shape = {
+          inputs.at(0)->shape().at(0), inputs.at(1)->shape().at(0), inputs.at(1)->shape().at(2)};
     }
   }
 
@@ -374,8 +377,9 @@ void MatrixMultiply<T>::UpdateContainersForward(VecTensorType const &inputs)
  * @param error_signal back pass error signal
  */
 template <typename T>
-void MatrixMultiply<T>::UpdateContainersBackward(VecTensorType const &inputs,
-                                                 TensorType const &   error_signal)
+void MatrixMultiply<T>::UpdateContainersBackward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   if (!((inputs.at(0)->shape() == back_input_shape_1_) &&
         (inputs.at(1)->shape() == back_input_shape_2_)))
@@ -402,8 +406,10 @@ void MatrixMultiply<T>::UpdateContainersBackward(VecTensorType const &inputs,
  * @param ret
  */
 template <typename TensorType>
-void MatrixMultiply<TensorType>::DotWithTranspose(TensorType const &a, TensorType const &b,
-                                                  TensorType &ret)
+void MatrixMultiply<TensorType>::DotWithTranspose(
+    TensorType const &a,
+    TensorType const &b,
+    TensorType &      ret)
 {
   if (!transpose_a_ && !transpose_b_)
   {
@@ -432,9 +438,12 @@ void MatrixMultiply<TensorType>::DotWithTranspose(TensorType const &a, TensorTyp
  * @param ret
  */
 template <typename TensorType>
-void MatrixMultiply<TensorType>::BackDotWithTranspose(TensorType const &a, TensorType const &b,
-                                                      TensorType const &err_signal,
-                                                      TensorType &err_ret_1, TensorType &err_ret_2)
+void MatrixMultiply<TensorType>::BackDotWithTranspose(
+    TensorType const &a,
+    TensorType const &b,
+    TensorType const &err_signal,
+    TensorType &      err_ret_1,
+    TensorType &      err_ret_2)
 {
 
   if (!transpose_a_ && !transpose_b_)

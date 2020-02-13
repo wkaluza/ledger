@@ -185,8 +185,11 @@ bool HasVersionFlag(int argc, char **argv)
  * @param uris The initial set of nodes
  * @return The new bootstrap pointer if one exists
  */
-BootstrapPtr CreateBootstrap(Settings const &settings, Config const &config,
-                             ProverPtr const &prover, UriSet &uris)
+BootstrapPtr CreateBootstrap(
+    Settings const & settings,
+    Config const &   config,
+    ProverPtr const &prover,
+    UriSet &         uris)
 {
   BootstrapPtr bootstrap{};
 
@@ -204,8 +207,12 @@ BootstrapPtr CreateBootstrap(Settings const &settings, Config const &config,
 
     // build the bootstrap monitor instance
     bootstrap = std::make_unique<BootstrapMonitor>(
-        prover, core_service_peer.port(), settings.network_name.value(),
-        settings.discoverable.value(), settings.token.value(), core_service_peer.address());
+        prover,
+        core_service_peer.port(),
+        settings.network_name.value(),
+        settings.discoverable.value(),
+        settings.token.value(),
+        core_service_peer.address());
 
     // run the discover
     bootstrap->DiscoverPeers(uris, core_service_peer.address());

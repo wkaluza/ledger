@@ -35,8 +35,8 @@ struct MatrixApplyFreeFunction
   struct Unroll
   {
     using signature_type =
-        typename MatrixApplyFreeFunction<B, R, Args...,
-                                         B const &>::template Unroll<Remaining...>::signature_type;
+        typename MatrixApplyFreeFunction<B, R, Args..., B const &>::template Unroll<
+            Remaining...>::signature_type;
 
     static R Apply(B const *regs, signature_type &&fnc, B &ret, Args &&... args)
     {
@@ -63,9 +63,8 @@ struct MatrixReduceFreeFunction
   template <typename T, typename... Remaining>
   struct Unroll
   {
-    using SignatureType =
-        typename MatrixReduceFreeFunction<B, Args...,
-                                          B const &>::template Unroll<Remaining...>::SignatureType;
+    using SignatureType = typename MatrixReduceFreeFunction<B, Args..., B const &>::template Unroll<
+        Remaining...>::SignatureType;
 
     static B Apply(B const &self, B const *regs, SignatureType &&fnc, Args &&... args)
     {

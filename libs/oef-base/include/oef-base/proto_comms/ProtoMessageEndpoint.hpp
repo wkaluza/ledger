@@ -35,8 +35,10 @@ class Message;
 }
 }  // namespace google
 
-template <typename TXType, typename Reader = ProtoMessageReader,
-          typename Sender = ProtoMessageSender>
+template <
+    typename TXType,
+    typename Reader = ProtoMessageReader,
+    typename Sender = ProtoMessageSender>
 class ProtoMessageEndpoint : public EndpointPipe<EndpointBase<TXType>>
 {
 public:

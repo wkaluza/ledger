@@ -216,8 +216,8 @@ TEST(MessengerMailboxTest, MessagesRouting)
         "", fetch::network::Uri("tcp://127.0.0.1:" + std::to_string(6500 + i + 1)));
 
     auto &b = servers[i + 1];
-    b->mail_muddle->ConnectTo("",
-                              fetch::network::Uri("tcp://127.0.0.1:" + std::to_string(6500 + i)));
+    b->mail_muddle->ConnectTo(
+        "", fetch::network::Uri("tcp://127.0.0.1:" + std::to_string(6500 + i)));
   }
 
   // Give the network time to settle.

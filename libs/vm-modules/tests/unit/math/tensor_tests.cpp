@@ -1079,7 +1079,12 @@ TEST_F(MathTensorTests, tensor_reshape_to_compatible_shape_test)
 
   // Index transposition table from [6,1] to [2,3]
   static std::map<SizeType, std::pair<SizeType, SizeType>> const TRANSPOSED_INDEXES = {
-      {0, {0, 0}}, {1, {1, 0}}, {2, {0, 1}}, {3, {1, 1}}, {4, {0, 2}}, {5, {1, 2}},
+      {0, {0, 0}},
+      {1, {1, 0}},
+      {2, {0, 1}},
+      {3, {1, 1}},
+      {4, {0, 2}},
+      {5, {1, 2}},
   };
 
   // Initial shape of the Tensor is [2, 3]

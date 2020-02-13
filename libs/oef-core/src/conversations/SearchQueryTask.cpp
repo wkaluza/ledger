@@ -36,14 +36,25 @@ SearchQueryTask::EntryPoint searchQueryTaskEntryPoints[] = {
     &SearchQueryTask::HandleResponse,
 };
 
-SearchQueryTask::SearchQueryTask(std::shared_ptr<SearchQueryTask::IN_PROTO> initiator,
-                                 std::shared_ptr<OutboundConversations>     outbounds,
-                                 std::shared_ptr<OefAgentEndpoint> endpoint, uint32_t msg_id,
-                                 std::string core_key, std::string agent_uri, uint16_t ttl,
-                                 uint64_t random_seed)
-  : SearchConversationTask("search", std::move(initiator), std::move(outbounds),
-                           std::move(endpoint), msg_id, std::move(core_key), std::move(agent_uri),
-                           searchQueryTaskEntryPoints, this)
+SearchQueryTask::SearchQueryTask(
+    std::shared_ptr<SearchQueryTask::IN_PROTO> initiator,
+    std::shared_ptr<OutboundConversations>     outbounds,
+    std::shared_ptr<OefAgentEndpoint>          endpoint,
+    uint32_t                                   msg_id,
+    std::string                                core_key,
+    std::string                                agent_uri,
+    uint16_t                                   ttl,
+    uint64_t                                   random_seed)
+  : SearchConversationTask(
+        "search",
+        std::move(initiator),
+        std::move(outbounds),
+        std::move(endpoint),
+        msg_id,
+        std::move(core_key),
+        std::move(agent_uri),
+        searchQueryTaskEntryPoints,
+        this)
   , ttl_{ttl}
   , random_seed_{random_seed}
 {
@@ -85,9 +96,11 @@ SearchQueryTask::StateResult SearchQueryTask::HandleResponse()
   if (!response->status().success())
   {
     tasks_errored++;
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Error response from search, code: ", response->status().errorcode(),
-                   ", narrative:");
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Error response from search, code: ",
+        response->status().errorcode(),
+        ", narrative:");
     for (const auto &n : response->status().narrative())
     {
       FETCH_LOG_WARN(LOGGING_NAME, "  ", n);
@@ -104,8 +117,12 @@ SearchQueryTask::StateResult SearchQueryTask::HandleResponse()
 
     if (ttl_ == 1)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Got search response: ", response->DebugString(),
-                     ", size: ", response->identifiers_size());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Got search response: ",
+          response->DebugString(),
+          ", size: ",
+          response->identifiers_size());
 
       auto answer_agents = answer->mutable_agents();
 
@@ -118,8 +135,8 @@ SearchQueryTask::StateResult SearchQueryTask::HandleResponse()
           answer_agents->add_agents(uri.AgentPartAsString());
         }
       }
-      FETCH_LOG_INFO(LOGGING_NAME, "Sending ", answer_agents->agents().size(), "agents to ",
-                     agent_uri_);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "Sending ", answer_agents->agents().size(), "agents to ", agent_uri_);
     }
     else
     {

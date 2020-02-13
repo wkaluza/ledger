@@ -135,8 +135,9 @@ void AvgPool2D<TensorType>::Forward(VecTensorType const &inputs, TensorType &out
  * output[0]=input_error[inputs[0].shape]
  */
 template <typename TensorType>
-std::vector<TensorType> AvgPool2D<TensorType>::Backward(VecTensorType const &inputs,
-                                                        TensorType const &   error_signal)
+std::vector<TensorType> AvgPool2D<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == ComputeOutputShape(inputs));
@@ -165,9 +166,9 @@ std::vector<TensorType> AvgPool2D<TensorType>::Backward(VecTensorType const &inp
           {
             for (SizeType jh{0}; jh < kernel_size_; jh++)  // Iterate over kernel width
             {
-              return_signal(c, iterw + jw, iterh + jh, n_i) =
-                  static_cast<DataType>(return_signal(c, iterw + jw, iterh + jh, n_i) +
-                                        static_cast<DataType>(*erit / cnt));
+              return_signal(c, iterw + jw, iterh + jh, n_i) = static_cast<DataType>(
+                  return_signal(c, iterw + jw, iterh + jh, n_i) +
+                  static_cast<DataType>(*erit / cnt));
             }
           }
 
@@ -189,11 +190,11 @@ std::vector<math::SizeType> AvgPool2D<TensorType>::ComputeOutputShape(
   // output_shape_[0]=number of output channels
   output_shape.emplace_back(inputs.at(0)->shape().at(0));
   // output_shape_[1]=number of stride_size steps over input height
-  output_shape.emplace_back((inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) /
-                            stride_size_);
+  output_shape.emplace_back(
+      (inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) / stride_size_);
   // output_shape_[2]=number of stride_size steps over input width
-  output_shape.emplace_back((inputs.at(0)->shape().at(2) - (kernel_size_ - stride_size_)) /
-                            stride_size_);
+  output_shape.emplace_back(
+      (inputs.at(0)->shape().at(2) - (kernel_size_ - stride_size_)) / stride_size_);
   // output_shape_[3]=batch dimension
   output_shape.emplace_back(inputs.at(0)->shape().at(3));
   return output_shape;
@@ -221,9 +222,9 @@ OperationsCount AvgPool2D<TensorType>::ChargeBackward() const
       this->batch_output_shape_.at(0) * this->batch_output_shape_.at(1) *
       this->batch_output_shape_.at(2) * this->batch_output_shape_.at(3) * this->kernel_size_ *
       this->kernel_size_;
-  auto cost = static_cast<OperationsCount>(num_output_shape_ops *
-                                           fetch::ml::charge_estimation::ops::DIVISION_PER_ELEMENT *
-                                           fetch::ml::charge_estimation::ops::ADDITION_PER_ELEMENT);
+  auto cost = static_cast<OperationsCount>(
+      num_output_shape_ops * fetch::ml::charge_estimation::ops::DIVISION_PER_ELEMENT *
+      fetch::ml::charge_estimation::ops::ADDITION_PER_ELEMENT);
   return cost;
 }
 

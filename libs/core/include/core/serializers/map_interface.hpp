@@ -53,8 +53,9 @@ public:
     serializer_ << val;
   }
 
-  bool AppendUsingFunction(std::function<bool(Driver &)> key_serialize,
-                           std::function<bool(Driver &)> value_serialize)
+  bool AppendUsingFunction(
+      std::function<bool(Driver &)> key_serialize,
+      std::function<bool(Driver &)> value_serialize)
   {
     ++pos_;
     if (pos_ > size_)
@@ -139,8 +140,9 @@ public:
     serializer_ >> key >> value;
   }
 
-  bool GetNextKeyPairUsingFunction(std::function<bool(Driver &)> key_deserialize,
-                                   std::function<bool(Driver &)> value_deserialize)
+  bool GetNextKeyPairUsingFunction(
+      std::function<bool(Driver &)> key_deserialize,
+      std::function<bool(Driver &)> value_deserialize)
   {
     if (state_ != State::KEY_VALUE_NEXT)
     {
@@ -181,8 +183,9 @@ public:
     if (k != key)
     {
       throw SerializableException(
-          std::string("Key mismatch while deserialising map: " + std::to_string(pos_ - 1) + " / " +
-                      std::to_string(size_)) +
+          std::string(
+              "Key mismatch while deserialising map: " + std::to_string(pos_ - 1) + " / " +
+              std::to_string(size_)) +
           ", " + std::to_string(k) + " != " + std::to_string(key));
     }
     serializer_ >> value;

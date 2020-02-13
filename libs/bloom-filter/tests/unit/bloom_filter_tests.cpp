@@ -64,7 +64,9 @@ public:
     : hash_source_factory({double_length_as_hash, length_powers_as_hash, raw_data_as_hash})
     // ASCII '3' == 0x33u, 'D' == 0x44u, 'w' == 0x77u
     , input("wD3D3D3D333ww")
-    , expected_output{2 * input.size(), input.size(), input.size() * input.size(),
+    , expected_output{2 * input.size(),
+                      input.size(),
+                      input.size() * input.size(),
                       input.size() * input.size() * input.size(),
                       // First 8 bytes of input
                       0x4433443344334477ull,

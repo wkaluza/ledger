@@ -36,8 +36,10 @@ void QueueUpFor(DebugMutex *mutex, std::thread::id thread, LockLocation const &l
   mutex_register.QueueUpFor(mutex, thread, location);
 }
 
-void RegisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread,
-                              LockLocation const &location)
+void RegisterMutexAcquisition(
+    DebugMutex *        mutex,
+    std::thread::id     thread,
+    LockLocation const &location)
 {
   mutex_register.RegisterMutexAcquisition(mutex, thread, location);
 }
@@ -47,8 +49,10 @@ void UnregisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread)
   mutex_register.UnregisterMutexAcquisition(mutex, thread);
 }
 
-void MutexRegister::QueueUpFor(DebugMutex *mutex, std::thread::id thread,
-                               LockLocation const &location)
+void MutexRegister::QueueUpFor(
+    DebugMutex *        mutex,
+    std::thread::id     thread,
+    LockLocation const &location)
 {
   FETCH_LOCK(mutex_);
 
@@ -57,8 +61,10 @@ void MutexRegister::QueueUpFor(DebugMutex *mutex, std::thread::id thread,
   waiting_location_.insert({thread, location});
 }
 
-void MutexRegister::RegisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread,
-                                             LockLocation const &location)
+void MutexRegister::RegisterMutexAcquisition(
+    DebugMutex *        mutex,
+    std::thread::id     thread,
+    LockLocation const &location)
 {
   FETCH_LOCK(mutex_);
 
@@ -76,8 +82,10 @@ void MutexRegister::UnregisterMutexAcquisition(DebugMutex *mutex, std::thread::i
   lock_location_.erase(mutex);
 }
 
-void MutexRegister::FindDeadlock(DebugMutex *first_mutex, std::thread::id thread,
-                                 LockLocation const &location)
+void MutexRegister::FindDeadlock(
+    DebugMutex *        first_mutex,
+    std::thread::id     thread,
+    LockLocation const &location)
 {
   DebugMutex *mutex = first_mutex;
   while (true)
@@ -107,8 +115,10 @@ void MutexRegister::FindDeadlock(DebugMutex *first_mutex, std::thread::id thread
   }
 }
 
-std::string MutexRegister::CreateTrace(DebugMutex *first_mutex, std::thread::id thread,
-                                       LockLocation const &location)
+std::string MutexRegister::CreateTrace(
+    DebugMutex *        first_mutex,
+    std::thread::id     thread,
+    LockLocation const &location)
 {
   std::stringstream ss{""};
   ss << "Deadlock occur when acquiring lock in " << location.filename << ":" << location.line

@@ -48,17 +48,20 @@ using fetch::vm_modules::ByteArrayWrapper;
 using fetch::vm_modules::math::UInt256Wrapper;
 
 template <typename T>
-meta::EnableIf<vm::IsString<meta::Decay<T>>, Ptr<T>> FromByteArray(VM *vm,
-                                                                   Ptr<String> const & /*name*/,
-                                                                   ConstByteArray const &array)
+meta::EnableIf<vm::IsString<meta::Decay<T>>, Ptr<T>> FromByteArray(
+    VM *vm,
+    Ptr<String> const & /*name*/,
+    ConstByteArray const &array)
 {
   ConstByteArray value_array;
   return Ptr<T>{new T{vm, static_cast<std::string>(array)}};
 }
 
 template <typename T>
-meta::EnableIf<IsAddress<meta::Decay<T>>, Ptr<T>> FromByteArray(VM *vm, Ptr<String> const &name,
-                                                                ConstByteArray const &array)
+meta::EnableIf<IsAddress<meta::Decay<T>>, Ptr<T>> FromByteArray(
+    VM *                  vm,
+    Ptr<String> const &   name,
+    ConstByteArray const &array)
 {
   try
   {
@@ -73,15 +76,17 @@ meta::EnableIf<IsAddress<meta::Decay<T>>, Ptr<T>> FromByteArray(VM *vm, Ptr<Stri
   }
   catch (std::runtime_error const &ex)
   {
-    vm->RuntimeError("Unable to construct Address object for " + name->string() +
-                     " item: " + ex.what());
+    vm->RuntimeError(
+        "Unable to construct Address object for " + name->string() + " item: " + ex.what());
     return Ptr<T>{};
   }
 }
 
 template <typename T>
 meta::EnableIf<std::is_same<ByteArrayWrapper, T>::value, Ptr<T>> FromByteArray(
-    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
+    VM *                  vm,
+    Ptr<String> const &   name,
+    ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   ConstByteArray value_array{array.FromBase64()};
@@ -97,7 +102,9 @@ meta::EnableIf<std::is_same<ByteArrayWrapper, T>::value, Ptr<T>> FromByteArray(
 
 template <typename T>
 meta::EnableIf<std::is_same<UInt256Wrapper, T>::value, Ptr<T>> FromByteArray(
-    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
+    VM *                  vm,
+    Ptr<String> const &   name,
+    ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   auto const     value_array{array.FromBase64()};
@@ -111,9 +118,10 @@ meta::EnableIf<std::is_same<UInt256Wrapper, T>::value, Ptr<T>> FromByteArray(
 }
 
 template <typename T>
-meta::EnableIf<std::is_same<Fixed128, T>::value, Ptr<T>> FromByteArray(VM *                  vm,
-                                                                       Ptr<String> const &   name,
-                                                                       ConstByteArray const &array)
+meta::EnableIf<std::is_same<Fixed128, T>::value, Ptr<T>> FromByteArray(
+    VM *                  vm,
+    Ptr<String> const &   name,
+    ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   auto const     value_array{array.FromBase64()};
@@ -149,8 +157,9 @@ ByteArray ToByteArray(UInt256Wrapper const &big_number)
 
 ByteArray ToByteArray(Fixed128 const &fixed_number)
 {
-  return byte_array::ToBase64(reinterpret_cast<uint8_t const *>(fixed_number.data_.pointer()),
-                              sizeof(fixed_point::fp128_t));
+  return byte_array::ToBase64(
+      reinterpret_cast<uint8_t const *>(fixed_number.data_.pointer()),
+      sizeof(fixed_point::fp128_t));
 }
 
 }  // namespace
@@ -213,8 +222,10 @@ Ptr<StructuredData> StructuredData::Constructor(VM *vm, TypeId type_id)
   return Ptr<StructuredData>{new StructuredData(vm, type_id)};
 }
 
-vm::Ptr<StructuredData> StructuredData::ConstructorFromVariant(vm::VM *vm, vm::TypeId type_id,
-                                                               variant::Variant const &data)
+vm::Ptr<StructuredData> StructuredData::ConstructorFromVariant(
+    vm::VM *                vm,
+    vm::TypeId              type_id,
+    variant::Variant const &data)
 {
   Ptr<StructuredData> structured_data{};
 
@@ -344,9 +355,9 @@ StructuredData::IfIsSupportedRefType<T, Ptr<T>> StructuredData::GetObject(
       return FromByteArray<T>(vm_, s, v_item.As<ConstByteArray>());
     }
 
-    vm_->RuntimeError("Unable to look up item" +
-                      (s ? ("for the \"" + s->string() + "\" key") : std::string{}) +
-                      " in the StructuredData object");
+    vm_->RuntimeError(
+        "Unable to look up item" + (s ? ("for the \"" + s->string() + "\" key") : std::string{}) +
+        " in the StructuredData object");
   }
   catch (std::exception const &e)
   {
@@ -402,8 +413,8 @@ Ptr<Array<T>> StructuredData::GetArray(Ptr<String> const &s)
       }
       else
       {
-        ret = Ptr<Array<T>>(new Array<T>(vm_, vm_->GetTypeId<IArray>(), vm_->GetTypeId<T>(),
-                                         int32_t(value_array.size())));
+        ret = Ptr<Array<T>>(new Array<T>(
+            vm_, vm_->GetTypeId<IArray>(), vm_->GetTypeId<T>(), int32_t(value_array.size())));
 
         // copy each of the elements
         for (std::size_t i = 0; i < value_array.size(); ++i)
@@ -521,8 +532,9 @@ void StructuredData::SetObjectArray(Ptr<String> const &s, Ptr<Array<Ptr<T>>> con
 }
 
 template <typename T>
-StructuredData::IfIsSupportedRefType<T> StructuredData::SetObject(Ptr<String> const &s,
-                                                                  Ptr<T> const &     value)
+StructuredData::IfIsSupportedRefType<T> StructuredData::SetObject(
+    Ptr<String> const &s,
+    Ptr<T> const &     value)
 {
   try
   {
@@ -537,10 +549,11 @@ StructuredData::IfIsSupportedRefType<T> StructuredData::SetObject(Ptr<String> co
   }
   catch (std::exception const &ex)
   {
-    vm_->RuntimeError(std::string{"Internal error setting item" +
-                                  (s ? (" for the \"" + s->string() + "\" key") : std::string{}) +
-                                  " in to StructuredData object: "} +
-                      ex.what());
+    vm_->RuntimeError(
+        std::string{"Internal error setting item" +
+                    (s ? (" for the \"" + s->string() + "\" key") : std::string{}) +
+                    " in to StructuredData object: "} +
+        ex.what());
   }
 }
 

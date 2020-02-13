@@ -41,9 +41,11 @@ public:
             Invoke<FakeMuddleEndpoint, SubscriptionPtr (FakeMuddleEndpoint::*)(uint16_t, uint16_t)>(
                 &fake, &FakeMuddleEndpoint::Subscribe));
     ON_CALL(*this, Subscribe(_, _, _))
-        .WillByDefault(Invoke<FakeMuddleEndpoint, SubscriptionPtr (FakeMuddleEndpoint::*)(
-                                                      Address const &, uint16_t, uint16_t)>(
-            &fake, &FakeMuddleEndpoint::Subscribe));
+        .WillByDefault(
+            Invoke<
+                FakeMuddleEndpoint,
+                SubscriptionPtr (FakeMuddleEndpoint::*)(Address const &, uint16_t, uint16_t)>(
+                &fake, &FakeMuddleEndpoint::Subscribe));
     ON_CALL(*this, network_id()).WillByDefault(Invoke(&fake, &FakeMuddleEndpoint::network_id));
   }
 

@@ -73,8 +73,11 @@ private:
   TokenAmount fee_{0};
 };
 
-inline ExecutionItem::ExecutionItem(Digest digest, BlockIndex block, SliceIndex slice,
-                                    BitVector const &shards)
+inline ExecutionItem::ExecutionItem(
+    Digest           digest,
+    BlockIndex       block,
+    SliceIndex       slice,
+    BitVector const &shards)
   : digest_(std::move(digest))
   , block_{block}
   , slice_{slice}

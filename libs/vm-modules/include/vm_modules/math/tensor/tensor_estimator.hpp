@@ -72,8 +72,12 @@ public:
 
   ChargeAmount SetAtThree(uint64_t idx1, uint64_t idx2, uint64_t idx3, DataType const &value);
 
-  ChargeAmount SetAtFour(uint64_t idx1, uint64_t idx2, uint64_t idx3, uint64_t idx4,
-                         DataType const &value);
+  ChargeAmount SetAtFour(
+      uint64_t        idx1,
+      uint64_t        idx2,
+      uint64_t        idx3,
+      uint64_t        idx4,
+      DataType const &value);
 
   ChargeAmount Fill(DataType const &value);
 
@@ -99,34 +103,43 @@ public:
 
   ChargeAmount NegateChargeEstimator(vm::Ptr<vm::Object> const & /*object*/);
 
-  ChargeAmount IsEqualChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                      vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount IsEqualChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount IsNotEqualChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                         vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount IsNotEqualChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
   ChargeAmount AddChargeEstimator(vm::Ptr<vm::Object> const &lhso, vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount SubtractChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                       vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount SubtractChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount InplaceAddChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                         vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount InplaceAddChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount InplaceSubtractChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                              vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount InplaceSubtractChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount MultiplyChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                       vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount MultiplyChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount DivideChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                     vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount DivideChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount InplaceMultiplyChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                              vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount InplaceMultiplyChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
-  ChargeAmount InplaceDivideChargeEstimator(vm::Ptr<vm::Object> const &lhso,
-                                            vm::Ptr<vm::Object> const &rhso);
+  ChargeAmount InplaceDivideChargeEstimator(
+      vm::Ptr<vm::Object> const &lhso,
+      vm::Ptr<vm::Object> const &rhso);
 
   /// END OF OPERATORS ///
 

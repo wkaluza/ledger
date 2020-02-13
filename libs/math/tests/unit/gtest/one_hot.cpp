@@ -50,8 +50,10 @@ TYPED_TEST(OneHotTest, one_hot_test_axis_0)
   ArrayType ret = OneHot(data, depth, 0, on_value, off_value);
 
   ASSERT_EQ(ret.shape(), gt.shape());
-  ASSERT_TRUE(ret.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                           fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(OneHotTest, one_hot_test_axis_1)
@@ -71,8 +73,10 @@ TYPED_TEST(OneHotTest, one_hot_test_axis_1)
   ArrayType ret = OneHot(data, depth, 1, on_value, off_value);
 
   ASSERT_EQ(ret.shape(), gt.shape());
-  ASSERT_TRUE(ret.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                           fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(OneHotTest, one_hot_test_axis_3)
@@ -92,8 +96,10 @@ TYPED_TEST(OneHotTest, one_hot_test_axis_3)
   ArrayType ret = OneHot(data, depth, 3, on_value, off_value);
 
   ASSERT_EQ(ret.shape(), gt.shape());
-  ASSERT_TRUE(ret.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                           fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace test

@@ -46,8 +46,8 @@ auto CreateSmartContract(chain::Address const &contract_address, StorageInterfac
     return std::make_unique<ContractType>(std::string(document.source));
   }
 
-  FETCH_LOG_ERROR("SmartContractFactory",
-                  "Unable to construct requested smart contract: ", addr.address());
+  FETCH_LOG_ERROR(
+      "SmartContractFactory", "Unable to construct requested smart contract: ", addr.address());
 
   return {};
 }

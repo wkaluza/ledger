@@ -67,25 +67,28 @@ private:
   void Read() noexcept
   {
     auto self = shared_from_this();
-    socket_.async_read_some(asio::buffer(message_.pointer(), lengthPerRead_),
-                            [this, self](std::error_code ec, std::size_t length) {
-                              if (!ec)
-                              {
-                                Write(length);
-                              }
-                            });
+    socket_.async_read_some(
+        asio::buffer(message_.pointer(), lengthPerRead_),
+        [this, self](std::error_code ec, std::size_t length) {
+          if (!ec)
+          {
+            Write(length);
+          }
+        });
   }
 
   void Write(std::size_t length) noexcept
   {
     auto self = shared_from_this();
-    asio::async_write(socket_, asio::buffer(message_.pointer(), length),
-                      [this, self](std::error_code ec, std::size_t) {
-                        if (!ec)
-                        {
-                          Read();
-                        }
-                      });
+    asio::async_write(
+        socket_,
+        asio::buffer(message_.pointer(), length),
+        [this, self](std::error_code ec, std::size_t) {
+          if (!ec)
+          {
+            Read();
+          }
+        });
   }
 };
 

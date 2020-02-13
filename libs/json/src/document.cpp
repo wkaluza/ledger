@@ -41,8 +41,10 @@ constexpr char const *LOGGING_NAME = "JSONDocument";
  * @param token The token to be converted
  * @param document The whole document
  */
-void JSONDocument::ExtractPrimitive(Variant &variant, JSONToken const &token,
-                                    ConstByteArray const &document)
+void JSONDocument::ExtractPrimitive(
+    Variant &             variant,
+    JSONToken const &     token,
+    ConstByteArray const &document)
 {
   bool success{false};
 
@@ -101,8 +103,8 @@ void JSONDocument::ExtractPrimitive(Variant &variant, JSONToken const &token,
 
     if (!std::isfinite(converted_value))
     {
-      throw JSONParseException(std::string("Failed to convert str=") + str +
-                               " to finite long double");
+      throw JSONParseException(
+          std::string("Failed to convert str=") + str + " to finite long double");
     }
 
     // update the variant
@@ -500,10 +502,10 @@ void JSONDocument::Tokenise(ConstByteArray const &document)
           uint8_t(byte_array::consumers::NumberConsumer<NUMBER_INT, NUMBER_FLOAT>(document, pos));
       if (type == uint8_t(-1))
       {
-        throw JSONParseException("Unable to parse integer on line " + std::to_string(line) +
-                                 ", char " + std::to_string(pos - last_pos) +
-                                 ", char value: " + std::to_string(uint64_t(document[pos])) + ", " +
-                                 std::to_string(c));
+        throw JSONParseException(
+            "Unable to parse integer on line " + std::to_string(line) + ", char " +
+            std::to_string(pos - last_pos) +
+            ", char value: " + std::to_string(uint64_t(document[pos])) + ", " + std::to_string(c));
       }
       tokens_.push_back({oldpos, pos - oldpos, type});
       break;

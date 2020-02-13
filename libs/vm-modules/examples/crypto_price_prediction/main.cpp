@@ -43,7 +43,8 @@ using System     = fetch::vm_modules::System;
 
 // read the weights and bias csv files
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> remove_leading_dimension(
-    fetch::vm::VM *vm, fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &tensor)
+    fetch::vm::VM *                                          vm,
+    fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &tensor)
 {
   auto t = tensor->GetTensor();
   t.Reshape({t.shape(1), t.shape(2)});

@@ -27,7 +27,8 @@ static Counter bytes_requested_counter("mt-core.comms.protopath.send.bytes_reque
 static Counter messages_handled_counter("mt-core.comms.protopath.send.messages_handled");
 
 ProtoPathMessageSender::consumed_needed_pair ProtoPathMessageSender::CheckForSpace(
-    const mutable_buffers &data, IMessageWriter::TXQ &txq)
+    const mutable_buffers &data,
+    IMessageWriter::TXQ &  txq)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "search message tx...");
   CharArrayBuffer chars(data);

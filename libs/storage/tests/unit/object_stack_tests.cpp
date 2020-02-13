@@ -85,8 +85,9 @@ public:
 }  // namespace serializers
 }  // namespace fetch
 
-void CheckIdentical(ObjectStack<TestSerDeser> &      test_stack,
-                    std::vector<TestSerDeser> const &ref_stack)
+void CheckIdentical(
+    ObjectStack<TestSerDeser> &      test_stack,
+    std::vector<TestSerDeser> const &ref_stack)
 {
   EXPECT_EQ(test_stack.size(), ref_stack.size());
 

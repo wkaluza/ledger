@@ -67,8 +67,8 @@ TEST_F(SystemTests, no_args)
 
 TEST_F(SystemTests, some_args)
 {
-  std::vector<std::string>  args = {"executable", "scriptname", "etch_arg1",
-                                   "--",         "prog_arg1",  "prog_arg2"};
+  std::vector<std::string> args = {
+      "executable", "scriptname", "etch_arg1", "--", "prog_arg1", "prog_arg2"};
   std::vector<char const *> argv;
   argv.reserve(args.size());
   for (auto const &s : args)

@@ -99,8 +99,8 @@ public:
         }
         if (pos == oldpos)
         {
-          TODO_FAIL("Unable to parse char on ", pos, "  '", str[pos], "'", ", '", contents[pos],
-                    "'");
+          TODO_FAIL(
+              "Unable to parse char on ", pos, "  '", str[pos], "'", ", '", contents[pos], "'");
         }
         ++n;
       }

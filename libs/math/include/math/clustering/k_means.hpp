@@ -63,9 +63,14 @@ class KMeansImplementation
   using ArrayOfSizeType = typename fetch::math::Tensor<SizeType>;
 
 public:
-  KMeansImplementation(ArrayType const &data, SizeType const &n_clusters, ClusteringType &ret,
-                       SizeType const &r_seed, SizeType const &max_loops, InitMode init_mode,
-                       SizeType max_no_change_convergence)
+  KMeansImplementation(
+      ArrayType const &data,
+      SizeType const & n_clusters,
+      ClusteringType & ret,
+      SizeType const & r_seed,
+      SizeType const & max_loops,
+      InitMode         init_mode,
+      SizeType         max_no_change_convergence)
     : n_clusters_(n_clusters)
     , max_no_change_convergence_(max_no_change_convergence)
     , max_loops_(max_loops)
@@ -94,9 +99,14 @@ public:
    * @param max_loops maximum number of loops before assuming convergence
    * @param init_mode what type of initialisation to use
    */
-  KMeansImplementation(ArrayType const &data, SizeType const &n_clusters, ClusteringType &ret,
-                       SizeType const &r_seed, SizeType const &max_loops,
-                       ClusteringType k_assignment, SizeType max_no_change_convergence)
+  KMeansImplementation(
+      ArrayType const &data,
+      SizeType const & n_clusters,
+      ClusteringType & ret,
+      SizeType const & r_seed,
+      SizeType const & max_loops,
+      ClusteringType   k_assignment,
+      SizeType         max_no_change_convergence)
     : n_clusters_(n_clusters)
     , max_no_change_convergence_(max_no_change_convergence)
     , max_loops_(max_loops)
@@ -123,9 +133,14 @@ public:
     ret = k_assignment_;
   }
 
-  KMeansImplementation(ArrayType const &data, ClusteringType &ret, SizeType const &r_seed,
-                       SizeType const &max_loops, ClusteringType k_assignment,
-                       SizeType max_no_change_convergence, KInferenceMode const &k_inference_mode)
+  KMeansImplementation(
+      ArrayType const &     data,
+      ClusteringType &      ret,
+      SizeType const &      r_seed,
+      SizeType const &      max_loops,
+      ClusteringType        k_assignment,
+      SizeType              max_no_change_convergence,
+      KInferenceMode const &k_inference_mode)
     : max_no_change_convergence_(max_no_change_convergence)
     , max_loops_(max_loops)
     , k_assignment_(std::move(k_assignment))
@@ -388,9 +403,10 @@ private:
         if (current_cluster_label >= 0)
         {
           k_assignment_.Set(
-              j, static_cast<DataType>(reverse_cluster_assignment_map
-                                           .find(static_cast<SizeType>(k_assignment_.At(j)))
-                                           ->second));
+              j,
+              static_cast<DataType>(
+                  reverse_cluster_assignment_map.find(static_cast<SizeType>(k_assignment_.At(j)))
+                      ->second));
         }
       }
     }
@@ -498,8 +514,8 @@ private:
       }
 
       // select point as new cluster centre
-      std::piecewise_constant_distribution<double> dist(std::begin(interval), std::end(interval),
-                                                        std::begin(weights));
+      std::piecewise_constant_distribution<double> dist(
+          std::begin(interval), std::end(interval), std::begin(weights));
 
       auto val      = dist(lfg_);
       auto tmp_rand = static_cast<SizeType>(val);
@@ -713,12 +729,14 @@ private:
   {
     for (SizeType i = 0; i < n_points_; ++i)
     {
-      assert(cluster_assignment_map_.find(static_cast<SizeType>(k_assignment_.At(i))) !=
-             cluster_assignment_map_.end());
+      assert(
+          cluster_assignment_map_.find(static_cast<SizeType>(k_assignment_.At(i))) !=
+          cluster_assignment_map_.end());
       // overwrite every clust assignment with its equivalent previous label at input
       k_assignment_.Set(
-          i, static_cast<DataType>(
-                 cluster_assignment_map_.find(static_cast<SizeType>(k_assignment_.At(i)))->second));
+          i,
+          static_cast<DataType>(
+              cluster_assignment_map_.find(static_cast<SizeType>(k_assignment_.At(i)))->second));
     }
   }
 
@@ -775,11 +793,13 @@ private:
  * @return              ArrayType of format n_data x 1 with values indicating cluster
  */
 template <typename ArrayType>
-ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const &r_seed,
-                      typename ArrayType::SizeType const &K,
-                      typename ArrayType::SizeType        max_loops = 1000,
-                      InitMode                            init_mode = InitMode::KMeansPP,
-                      typename ArrayType::SizeType        max_no_change_convergence = 10)
+ClusteringType KMeans(
+    ArrayType const &                   data,
+    typename ArrayType::SizeType const &r_seed,
+    typename ArrayType::SizeType const &K,
+    typename ArrayType::SizeType        max_loops                 = 1000,
+    InitMode                            init_mode                 = InitMode::KMeansPP,
+    typename ArrayType::SizeType        max_no_change_convergence = 10)
 {
   using SizeType = fetch::math::SizeType;
   using DataType = typename ArrayType::Type;
@@ -801,8 +821,8 @@ ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const 
   }
   else  // real work happens in these cases
   {
-    details::KMeansImplementation<ArrayType>(data, K, ret, r_seed, max_loops, init_mode,
-                                             max_no_change_convergence);
+    details::KMeansImplementation<ArrayType>(
+        data, K, ret, r_seed, max_loops, init_mode, max_no_change_convergence);
   }
 
   return ret;
@@ -821,17 +841,20 @@ ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const 
  * @return                  ArrayType of format n_data x 1 with values indicating cluster
  */
 template <typename ArrayType>
-ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const &r_seed,
-                      ClusteringType const &prev_assignment, KInferenceMode const &k_inference_mode,
-                      typename ArrayType::SizeType max_loops                 = 100,
-                      typename ArrayType::SizeType max_no_change_convergence = 10)
+ClusteringType KMeans(
+    ArrayType const &                   data,
+    typename ArrayType::SizeType const &r_seed,
+    ClusteringType const &              prev_assignment,
+    KInferenceMode const &              k_inference_mode,
+    typename ArrayType::SizeType        max_loops                 = 100,
+    typename ArrayType::SizeType        max_no_change_convergence = 10)
 {
   using SizeType = fetch::math::SizeType;
 
   SizeType       n_points = data.shape()[0];
   ClusteringType ret{n_points};
-  details::KMeansImplementation<ArrayType>(data, ret, r_seed, max_loops, prev_assignment,
-                                           max_no_change_convergence, k_inference_mode);
+  details::KMeansImplementation<ArrayType>(
+      data, ret, r_seed, max_loops, prev_assignment, max_no_change_convergence, k_inference_mode);
 
   return ret;
 }
@@ -849,10 +872,13 @@ ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const 
  * @return                  ArrayType of format n_data x 1 with values indicating cluster
  */
 template <typename ArrayType>
-ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const &r_seed,
-                      typename ArrayType::SizeType const &K, ClusteringType const &prev_assignment,
-                      typename ArrayType::SizeType max_loops                 = 100,
-                      typename ArrayType::SizeType max_no_change_convergence = 10)
+ClusteringType KMeans(
+    ArrayType const &                   data,
+    typename ArrayType::SizeType const &r_seed,
+    typename ArrayType::SizeType const &K,
+    ClusteringType const &              prev_assignment,
+    typename ArrayType::SizeType        max_loops                 = 100,
+    typename ArrayType::SizeType        max_no_change_convergence = 10)
 {
   using SizeType = fetch::math::SizeType;
   using DataType = typename ArrayType::Type;
@@ -872,8 +898,8 @@ ClusteringType KMeans(ArrayType const &data, typename ArrayType::SizeType const 
   }
   else  // real work happens in these cases
   {
-    details::KMeansImplementation<ArrayType>(data, K, ret, r_seed, max_loops, prev_assignment,
-                                             max_no_change_convergence);
+    details::KMeansImplementation<ArrayType>(
+        data, K, ret, r_seed, max_loops, prev_assignment, max_no_change_convergence);
   }
   return ret;
 }

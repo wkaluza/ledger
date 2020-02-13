@@ -58,13 +58,16 @@ TYPED_TEST(SwitchTest, forward_test)
                                               std::make_shared<const TensorType>(then_array),
                                               std::make_shared<const TensorType>(else_array)}));
   op.Forward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(then_array),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(then_array),
        std::make_shared<const TensorType>(else_array)},
       prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SwitchTest, forward_test_mask_broadcasted)
@@ -90,13 +93,16 @@ TYPED_TEST(SwitchTest, forward_test_mask_broadcasted)
                                               std::make_shared<const TensorType>(then_array),
                                               std::make_shared<const TensorType>(else_array)}));
   op.Forward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(then_array),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(then_array),
        std::make_shared<const TensorType>(else_array)},
       prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SwitchTest, backward_test)
@@ -127,17 +133,24 @@ TYPED_TEST(SwitchTest, backward_test)
   fetch::ml::ops::Switch<TensorType> op;
 
   std::vector<TypeParam> prediction = op.Backward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(target_input),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(target_input),
        std::make_shared<const TensorType>(mask_value)},
       error_signal);
 
   // test correct values
-  ASSERT_TRUE(prediction.at(0).AllClose(gt_mask, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction.at(1).AllClose(gt_then, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction.at(2).AllClose(gt_else, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(0).AllClose(
+      gt_mask,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(1).AllClose(
+      gt_then,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(2).AllClose(
+      gt_else,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SwitchTest, back_test_broadcast_mask)
@@ -168,7 +181,8 @@ TYPED_TEST(SwitchTest, back_test_broadcast_mask)
   fetch::ml::ops::Switch<TensorType> op;
 
   std::vector<TypeParam> prediction = op.Backward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(target_input),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(target_input),
        std::make_shared<const TensorType>(mask_value)},
       error_signal);
 

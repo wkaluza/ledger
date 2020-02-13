@@ -33,8 +33,11 @@ template <int sp_offset, typename ReturnType, typename Callable, typename EtchAr
 struct VmMemberFunctionInvoker
 {
   template <typename Estimator>
-  static void Invoke(VM *vm, Estimator &&estimator, Callable &&callable,
-                     EtchArgsTuple &&etch_arguments)
+  static void Invoke(
+      VM *            vm,
+      Estimator &&    estimator,
+      Callable &&     callable,
+      EtchArgsTuple &&etch_arguments)
   {
     using OwningType     = typename meta::CallableTraits<Callable>::OwningType;
     auto const offset    = sp_offset + 1;
@@ -51,8 +54,8 @@ struct VmMemberFunctionInvoker
     auto estimator_args_tuple = std::tuple_cat(std::make_tuple(context), etch_arguments);
     if (EstimateCharge(vm, std::forward<Estimator>(estimator), std::move(estimator_args_tuple)))
     {
-      ReturnType result         = meta::Apply(std::forward<Callable>(callable), *context,
-                                      std::forward<EtchArgsTuple>(etch_arguments));
+      ReturnType result = meta::Apply(
+          std::forward<Callable>(callable), *context, std::forward<EtchArgsTuple>(etch_arguments));
       auto const return_type_id = vm->instruction_->type_id;
       StackSetter<ReturnType>::Set(vm, result_sp, std::move(result), return_type_id);
       vm->sp_ = result_sp;
@@ -64,8 +67,11 @@ template <int sp_offset, typename Callable, typename EtchArgsTuple>
 struct VmMemberFunctionInvoker<sp_offset, void, Callable, EtchArgsTuple>
 {
   template <typename Estimator>
-  static void Invoke(VM *vm, Estimator &&estimator, Callable &&callable,
-                     EtchArgsTuple &&etch_arguments)
+  static void Invoke(
+      VM *            vm,
+      Estimator &&    estimator,
+      Callable &&     callable,
+      EtchArgsTuple &&etch_arguments)
   {
     using OwningType  = typename meta::CallableTraits<Callable>::OwningType;
     auto const offset = sp_offset + 1;
@@ -81,8 +87,8 @@ struct VmMemberFunctionInvoker<sp_offset, void, Callable, EtchArgsTuple>
     auto estimator_args_tuple = std::tuple_cat(std::make_tuple(context), etch_arguments);
     if (EstimateCharge(vm, std::forward<Estimator>(estimator), std::move(estimator_args_tuple)))
     {
-      meta::Apply(std::forward<Callable>(callable), *context,
-                  std::forward<EtchArgsTuple>(etch_arguments));
+      meta::Apply(
+          std::forward<Callable>(callable), *context, std::forward<EtchArgsTuple>(etch_arguments));
       v.Reset();
       vm->sp_ -= offset;
     }

@@ -26,8 +26,10 @@ int main(int argc, char *argv[])
 
   if (argc != 2)
   {
-    FETCH_LOG_ERROR("MTCoreApp", "Failed to run binary, because exactly 1 argument ",
-                    "(path to config file) should be passed!");
+    FETCH_LOG_ERROR(
+        "MTCoreApp",
+        "Failed to run binary, because exactly 1 argument ",
+        "(path to config file) should be passed!");
     return -1;
   }
 

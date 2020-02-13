@@ -397,49 +397,60 @@ TYPED_TEST_SUITE(BasicTrainingTest, math::test::HighPrecisionTensorFloatingTypes
 
 TYPED_TEST(BasicTrainingTest, plus_one_relu_test)
 {
-  basic_training_details::PlusOneTest<TypeParam, fetch::ml::ops::MeanSquareErrorLoss<TypeParam>,
-                                      fetch::ml::ops::Relu<TypeParam>>();
+  basic_training_details::PlusOneTest<
+      TypeParam,
+      fetch::ml::ops::MeanSquareErrorLoss<TypeParam>,
+      fetch::ml::ops::Relu<TypeParam>>();
 }
 TYPED_TEST(BasicTrainingTest, plus_one_sigmoid_test)
 {
-  basic_training_details::PlusOneTest<TypeParam, fetch::ml::ops::MeanSquareErrorLoss<TypeParam>,
-                                      fetch::ml::ops::Sigmoid<TypeParam>>();
+  basic_training_details::PlusOneTest<
+      TypeParam,
+      fetch::ml::ops::MeanSquareErrorLoss<TypeParam>,
+      fetch::ml::ops::Sigmoid<TypeParam>>();
 }
 
 TYPED_TEST(BasicTrainingTest, categorical_plus_one_CE_relu_test)
 {
   basic_training_details::CategoricalPlusOneTest<
-      TypeParam, fetch::ml::ops::CrossEntropyLoss<TypeParam>, fetch::ml::ops::Relu<TypeParam>>(
-      true);
+      TypeParam,
+      fetch::ml::ops::CrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Relu<TypeParam>>(true);
 }
 TYPED_TEST(BasicTrainingTest, categorical_plus_one_SCE_relu_test)
 {
-  basic_training_details::CategoricalPlusOneTest<TypeParam,
-                                                 fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
-                                                 fetch::ml::ops::Relu<TypeParam>>(false);
+  basic_training_details::CategoricalPlusOneTest<
+      TypeParam,
+      fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Relu<TypeParam>>(false);
 }
 TYPED_TEST(BasicTrainingTest, categorical_plus_one_CE_sigmoid_test)
 {
   basic_training_details::CategoricalPlusOneTest<
-      TypeParam, fetch::ml::ops::CrossEntropyLoss<TypeParam>, fetch::ml::ops::Sigmoid<TypeParam>>(
-      true);
+      TypeParam,
+      fetch::ml::ops::CrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Sigmoid<TypeParam>>(true);
 }
 TYPED_TEST(BasicTrainingTest, categorical_plus_one_SCE_sigmoid_test)
 {
-  basic_training_details::CategoricalPlusOneTest<TypeParam,
-                                                 fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
-                                                 fetch::ml::ops::Sigmoid<TypeParam>>(false);
+  basic_training_details::CategoricalPlusOneTest<
+      TypeParam,
+      fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Sigmoid<TypeParam>>(false);
 }
 TYPED_TEST(BasicTrainingTest, categorical_xor_CE_relu_test)
 {
-  basic_training_details::CategoricalXorTest<TypeParam, fetch::ml::ops::CrossEntropyLoss<TypeParam>,
-                                             fetch::ml::ops::Relu<TypeParam>>(true);
+  basic_training_details::CategoricalXorTest<
+      TypeParam,
+      fetch::ml::ops::CrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Relu<TypeParam>>(true);
 }
 TYPED_TEST(BasicTrainingTest, categorical_xor_SCE_relu_test)
 {
-  basic_training_details::CategoricalXorTest<TypeParam,
-                                             fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
-                                             fetch::ml::ops::Relu<TypeParam>>(false);
+  basic_training_details::CategoricalXorTest<
+      TypeParam,
+      fetch::ml::ops::SoftmaxCrossEntropyLoss<TypeParam>,
+      fetch::ml::ops::Relu<TypeParam>>(false);
 }
 
 }  // namespace test

@@ -35,12 +35,13 @@ void MomentumOptimiser<T>::Init()
 }
 
 template <class T>
-MomentumOptimiser<T>::MomentumOptimiser(std::shared_ptr<Graph<T>>       graph,
-                                        std::vector<std::string> const &input_node_names,
-                                        std::string const &             label_node_name,
-                                        std::string const &             output_node_name,
-                                        DataType const &                learning_rate,
-                                        DataType const &                momentum_update)
+MomentumOptimiser<T>::MomentumOptimiser(
+    std::shared_ptr<Graph<T>>       graph,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name,
+    DataType const &                learning_rate,
+    DataType const &                momentum_update)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate)
   , momentum_update_(momentum_update)
 {
@@ -49,8 +50,10 @@ MomentumOptimiser<T>::MomentumOptimiser(std::shared_ptr<Graph<T>>       graph,
 
 template <class T>
 MomentumOptimiser<T>::MomentumOptimiser(
-    std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-    std::string const &label_node_name, std::string const &output_node_name,
+    std::shared_ptr<Graph<T>>                                 graph,
+    std::vector<std::string> const &                          input_node_names,
+    std::string const &                                       label_node_name,
+    std::string const &                                       output_node_name,
     fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
     DataType const &                                          momentum_update)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate_param)
@@ -76,9 +79,10 @@ void MomentumOptimiser<T>::ApplyGradients(SizeType batch_size)
 
       // momentum[i] = momentum_update * momentum[i] + learning_rate * (input_grad[i]/batch_size)
       fetch::math::Multiply(*mit, momentum_update_, *mit);
-      fetch::math::Multiply((*trainable_it)->GetGradientsReferences(),
-                            (this->learning_rate_) / (static_cast<DataType>(batch_size)),
-                            *gradient_it);
+      fetch::math::Multiply(
+          (*trainable_it)->GetGradientsReferences(),
+          (this->learning_rate_) / (static_cast<DataType>(batch_size)),
+          *gradient_it);
       fetch::math::Add(*mit, *gradient_it, *mit);
 
       // output_grad[i]=-momentum[i]

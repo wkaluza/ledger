@@ -92,8 +92,8 @@ void TopK<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
 
   UpdateIndices(inputs);
 
-  fetch::math::TopK<TensorType, TensorSizeType>(output, indices_, *(inputs.at(0)), k_, axis_,
-                                                sorted_);
+  fetch::math::TopK<TensorType, TensorSizeType>(
+      output, indices_, *(inputs.at(0)), k_, axis_, sorted_);
 }
 
 /**
@@ -104,8 +104,9 @@ void TopK<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * @return return signal tensor of same size as input tensor
  */
 template <class TensorType>
-std::vector<TensorType> TopK<TensorType>::Backward(VecTensorType const &inputs,
-                                                   TensorType const &   error_signal)
+std::vector<TensorType> TopK<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
 

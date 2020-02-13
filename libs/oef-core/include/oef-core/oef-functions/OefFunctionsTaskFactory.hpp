@@ -39,9 +39,11 @@ public:
   using RandomEngine        = std::mt19937_64;
   using QueryIdDistribution = std::uniform_int_distribution<uint64_t>;
 
-  OefFunctionsTaskFactory(std::string core_key, std::shared_ptr<Agents> agents,
-                          std::string                            agent_public_key,
-                          std::shared_ptr<OutboundConversations> outbounds)
+  OefFunctionsTaskFactory(
+      std::string                            core_key,
+      std::shared_ptr<Agents>                agents,
+      std::string                            agent_public_key,
+      std::shared_ptr<OutboundConversations> outbounds)
     : IOefTaskFactory(std::move(outbounds))
     , agents_{std::move(agents)}
     , agent_public_key_{std::move(agent_public_key)}

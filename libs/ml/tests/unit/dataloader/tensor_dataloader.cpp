@@ -80,8 +80,9 @@ TYPED_TEST(TensorDataloaderTest, serialize_tensor_dataloader)
   label_tensor.Reshape({1, 4});
   data1_tensor.Reshape({2, 3, 4});
   data2_tensor.Reshape({8, 2, 4});
-  EXPECT_EQ(tdl.AddData({data1_tensor, data2_tensor}, label_tensor),
-            tdl_2.AddData({data1_tensor, data2_tensor}, label_tensor));
+  EXPECT_EQ(
+      tdl.AddData({data1_tensor, data2_tensor}, label_tensor),
+      tdl_2.AddData({data1_tensor, data2_tensor}, label_tensor));
 
   EXPECT_EQ(tdl.Size(), tdl_2.Size());
   EXPECT_EQ(tdl.IsDone(), tdl_2.IsDone());
@@ -141,10 +142,10 @@ TYPED_TEST(TensorDataloaderTest, prepare_batch_test)
   bool is_done_set = false;
   auto batch       = tdl.PrepareBatch(batch_size, is_done_set).second;
 
-  EXPECT_EQ(batch.at(0).shape(),
-            std::vector<SizeType>({feature_size_1_1, feature_size_1_2, batch_size}));
-  EXPECT_EQ(batch.at(1).shape(),
-            std::vector<SizeType>({feature_size_2_1, feature_size_2_2, batch_size}));
+  EXPECT_EQ(
+      batch.at(0).shape(), std::vector<SizeType>({feature_size_1_1, feature_size_1_2, batch_size}));
+  EXPECT_EQ(
+      batch.at(1).shape(), std::vector<SizeType>({feature_size_2_1, feature_size_2_2, batch_size}));
 }
 
 }  // namespace test

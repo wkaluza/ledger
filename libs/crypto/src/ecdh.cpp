@@ -35,8 +35,10 @@ namespace crypto {
  * @param shared_key The generated shared key
  * @return true if successful, otherwise false
  */
-bool ComputeSharedKey(ECDSASigner const &signer, ECDSAVerifier const &verifier,
-                      ConstByteArray &shared_key)
+bool ComputeSharedKey(
+    ECDSASigner const &  signer,
+    ECDSAVerifier const &verifier,
+    ConstByteArray &     shared_key)
 {
   bool success{false};
 
@@ -59,8 +61,12 @@ bool ComputeSharedKey(ECDSASigner const &signer, ECDSAVerifier const &verifier,
       shared_key_buffer.Resize(shared_key_size);
 
       // compute the shared key
-      ECDH_compute_key(shared_key_buffer.pointer(), shared_key_buffer.size(), public_ec_point.get(),
-                       private_ec_key.get(), nullptr);
+      ECDH_compute_key(
+          shared_key_buffer.pointer(),
+          shared_key_buffer.size(),
+          public_ec_point.get(),
+          private_ec_key.get(),
+          nullptr);
 
       // return the hashed computed shared key
       shared_key = Hash<SHA256>(shared_key_buffer);
@@ -79,8 +85,10 @@ bool ComputeSharedKey(ECDSASigner const &signer, ECDSAVerifier const &verifier,
  * @param shared_key The reference to the output shared key
  * @return true if successful, otherwise false
  */
-bool ComputeSharedKey(Prover const &prover, Verifier const &verifier,
-                      byte_array::ConstByteArray &shared_key)
+bool ComputeSharedKey(
+    Prover const &              prover,
+    Verifier const &            verifier,
+    byte_array::ConstByteArray &shared_key)
 {
   bool success{false};
 

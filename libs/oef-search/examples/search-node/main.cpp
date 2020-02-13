@@ -28,13 +28,15 @@ int main(int argc, char *argv[])
 
   program_options::options_description desc{"Options"};
 
-  desc.add_options()("config_file",
-                     program_options::value<std::string>(&config_file)->default_value(""),
-                     "Path to the configuration file.");
+  desc.add_options()(
+      "config_file",
+      program_options::value<std::string>(&config_file)->default_value(""),
+      "Path to the configuration file.");
 
-  desc.add_options()("config_string",
-                     program_options::value<std::string>(&config_string)->default_value(""),
-                     "Configuration JSON.");
+  desc.add_options()(
+      "config_string",
+      program_options::value<std::string>(&config_string)->default_value(""),
+      "Configuration JSON.");
   program_options::variables_map vm;
   try
   {

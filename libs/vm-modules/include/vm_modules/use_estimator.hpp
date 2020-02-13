@@ -32,8 +32,9 @@ struct EstimatorFromMemberFunction
   static auto MakeEstimator(Callable &&estimator)
   {
     using EstimatorType = typename meta::CallableTraits<Callable>::OwningType;
-    return [estimator](vm::Ptr<typename EstimatorType::VMObjectType> context,
-                       EtchArgs... args) -> vm::ChargeAmount {
+    return [estimator](
+               vm::Ptr<typename EstimatorType::VMObjectType> context,
+               EtchArgs... args) -> vm::ChargeAmount {
       return meta::Invoke(estimator, context->Estimator(), args...);
     };
   }

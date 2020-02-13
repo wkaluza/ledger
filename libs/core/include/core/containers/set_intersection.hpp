@@ -25,13 +25,15 @@
 namespace fetch {
 
 template <typename K, typename H>
-std::unordered_set<K, H> operator&(std::unordered_set<K, H> const &lhs,
-                                   std::unordered_set<K, H> const &rhs)
+std::unordered_set<K, H> operator
+    &(std::unordered_set<K, H> const &lhs, std::unordered_set<K, H> const &rhs)
 {
   std::unordered_set<K, H> result;
 
-  std::copy_if(lhs.begin(), lhs.end(), std::inserter(result, result.begin()),
-               [&rhs](K const &item) { return rhs.find(item) != rhs.end(); });
+  std::copy_if(
+      lhs.begin(), lhs.end(), std::inserter(result, result.begin()), [&rhs](K const &item) {
+        return rhs.find(item) != rhs.end();
+      });
 
   return result;
 }
@@ -41,32 +43,38 @@ std::set<K, H> operator&(std::set<K, H> const &lhs, std::set<K, H> const &rhs)
 {
   std::set<K, H> result;
 
-  std::copy_if(lhs.begin(), lhs.end(), std::inserter(result, result.begin()),
-               [&rhs](K const &item) { return rhs.find(item) != rhs.end(); });
+  std::copy_if(
+      lhs.begin(), lhs.end(), std::inserter(result, result.begin()), [&rhs](K const &item) {
+        return rhs.find(item) != rhs.end();
+      });
 
   return result;
 }
 
 template <typename K, typename V, typename H>
-std::unordered_set<K, H> operator&(std::unordered_set<K, H> const &   lhs,
-                                   std::unordered_map<K, V, H> const &rhs)
+std::unordered_set<K, H> operator
+    &(std::unordered_set<K, H> const &lhs, std::unordered_map<K, V, H> const &rhs)
 {
   std::unordered_set<K> result;
 
-  std::copy_if(lhs.begin(), lhs.end(), std::inserter(result, result.begin()),
-               [&rhs](K const &item) { return rhs.find(item) != rhs.end(); });
+  std::copy_if(
+      lhs.begin(), lhs.end(), std::inserter(result, result.begin()), [&rhs](K const &item) {
+        return rhs.find(item) != rhs.end();
+      });
 
   return result;
 }
 
 template <typename K, typename V, typename H>
-std::unordered_set<K, H> operator&(std::unordered_map<K, V, H> const &lhs,
-                                   std::unordered_set<K, H> const &   rhs)
+std::unordered_set<K, H> operator
+    &(std::unordered_map<K, V, H> const &lhs, std::unordered_set<K, H> const &rhs)
 {
   std::unordered_set<K> result;
 
-  std::copy_if(rhs.begin(), rhs.end(), std::inserter(result, result.begin()),
-               [&lhs](K const &item) { return lhs.find(item) != lhs.end(); });
+  std::copy_if(
+      rhs.begin(), rhs.end(), std::inserter(result, result.begin()), [&lhs](K const &item) {
+        return lhs.find(item) != lhs.end();
+      });
 
   return result;
 }

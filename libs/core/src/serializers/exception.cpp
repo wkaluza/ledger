@@ -46,8 +46,9 @@ SerializableException::SerializableException(error::ErrorType error_code, std::s
   , explanation_(std::move(explanation))
 {}
 
-SerializableException::SerializableException(error::ErrorType                  error_code,
-                                             byte_array::ConstByteArray const &explanation)
+SerializableException::SerializableException(
+    error::ErrorType                  error_code,
+    byte_array::ConstByteArray const &explanation)
   : SerializableException(error_code, std::string{explanation})
 {}
 

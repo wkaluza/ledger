@@ -59,10 +59,13 @@ public:
 
   /// @name Miner Interface
   /// @{
-  void     EnqueueTransaction(chain::Transaction const &tx) override;
-  void     EnqueueTransaction(chain::TransactionLayout const &layout) override;
-  void     GenerateBlock(Block &block, std::size_t num_lanes, std::size_t num_slices,
-                         MainChain const &chain) override;
+  void EnqueueTransaction(chain::Transaction const &tx) override;
+  void EnqueueTransaction(chain::TransactionLayout const &layout) override;
+  void GenerateBlock(
+      Block &          block,
+      std::size_t      num_lanes,
+      std::size_t      num_slices,
+      MainChain const &chain) override;
   uint64_t GetBacklog() const override;
   /// @}
 
@@ -76,10 +79,17 @@ private:
 
   /// @name Packing Operations
   /// @{
-  static void GenerateSlices(Queue &transactions, Block &block, std::size_t offset,
-                             std::size_t interval, std::size_t num_lanes);
-  static void GenerateSlice(Queue &transactions, Block::Slice &slice, std::size_t slice_index,
-                            std::size_t num_lanes);
+  static void GenerateSlices(
+      Queue &     transactions,
+      Block &     block,
+      std::size_t offset,
+      std::size_t interval,
+      std::size_t num_lanes);
+  static void GenerateSlice(
+      Queue &       transactions,
+      Block::Slice &slice,
+      std::size_t   slice_index,
+      std::size_t   num_lanes);
   static bool SortByFee(TransactionLayout const &a, TransactionLayout const &b);
   /// @}
 

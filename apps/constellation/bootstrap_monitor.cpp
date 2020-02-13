@@ -119,10 +119,17 @@ http::JsonClient::Headers BuildHeaders(std::string const &token)
  * @param token The authorization token to join this network
  * @param host_name A identifiable name of the host
  */
-BootstrapMonitor::BootstrapMonitor(ProverPtr entity, uint16_t p2p_port, std::string network_name,
-                                   bool discoverable, std::string token, std::string host_name)
-  : state_machine_{std::make_shared<StateMachine>("bootstrap", State::Notify,
-                                                  BootstrapMonitor::ToString)}
+BootstrapMonitor::BootstrapMonitor(
+    ProverPtr   entity,
+    uint16_t    p2p_port,
+    std::string network_name,
+    bool        discoverable,
+    std::string token,
+    std::string host_name)
+  : state_machine_{std::make_shared<StateMachine>(
+        "bootstrap",
+        State::Notify,
+        BootstrapMonitor::ToString)}
   , entity_(std::move(entity))
   , network_name_(std::move(network_name))
   , discoverable_(discoverable)

@@ -32,7 +32,8 @@ void RelativeDifference(array_type const &A, array_type const &B, array_type &C)
 {
   type cst{0.5};
   C.in_parallel().Apply(
-      [cst](auto const &a, auto const &b, auto &c) { c = decltype(a)(cst) * (a - b) / (a + b); }, A,
+      [cst](auto const &a, auto const &b, auto &c) { c = decltype(a)(cst) * (a - b) / (a + b); },
+      A,
       B);
 }
 

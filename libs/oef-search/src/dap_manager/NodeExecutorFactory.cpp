@@ -52,9 +52,10 @@ bool operator==(Identifier const &lhs, Identifier const &rhs)
          (lhs.score() == rhs.score());
 }
 
-std::shared_ptr<NodeExecutorTask> NodeExecutorFactory(const BranchExecutorTask::NodeDataType &data,
-                                                      std::shared_ptr<IdentifierSequence>     input,
-                                                      std::shared_ptr<DapManager> &dap_manager)
+std::shared_ptr<NodeExecutorTask> NodeExecutorFactory(
+    const BranchExecutorTask::NodeDataType &data,
+    std::shared_ptr<IdentifierSequence>     input,
+    std::shared_ptr<DapManager> &           dap_manager)
 {
   std::shared_ptr<Node> node = nullptr;
   if (data.type == "leaf" && data.leaf)
@@ -118,7 +119,9 @@ std::shared_ptr<NodeExecutorTask> NodeExecutorFactory(const BranchExecutorTask::
         if (input->originator())
         {
           FETCH_LOG_WARN(
-              LOGGING_NAME, "Now at: ", node->ToString(),
+              LOGGING_NAME,
+              "Now at: ",
+              node->ToString(),
               ". "
               "Trying to create not executor branch with originator IdentifierSequence: ",
               input->DebugString());
@@ -131,39 +134,43 @@ std::shared_ptr<NodeExecutorTask> NodeExecutorFactory(const BranchExecutorTask::
           sp->GetTopPipeData().prev = sp->GetOutput();
           return result;
         };
-        executor->SetPipeBuilder([](std::shared_ptr<IdentifierSequence>     result,
-                                    const BranchExecutorTask::NodeDataType &data)
-                                     -> std::shared_ptr<IdentifierSequence> {
-          if (data.prev == nullptr)
-          {
-            FETCH_LOG_ERROR(LOGGING_NAME, "NodeDataType.prev not set! Not execution failed!");
-            return result;
-          }
-          std::unordered_set<Identifier, IdentifierHash> to_remove;
-          for (auto &id : result->identifiers())
-          {
-            to_remove.insert(id);
-          }
-          auto res = std::make_shared<IdentifierSequence>();
-          res->set_originator(result->originator());
-          res->mutable_status()->CopyFrom(result->status());
-          for (auto &id : data.prev->identifiers())
-          {
-            auto it = to_remove.find(id);
-            if (it == to_remove.end())
-            {
-              res->add_identifiers()->CopyFrom(id);
-            }
-          }
-          return res;
-        });
+        executor->SetPipeBuilder(
+            [](std::shared_ptr<IdentifierSequence>     result,
+               const BranchExecutorTask::NodeDataType &data)
+                -> std::shared_ptr<IdentifierSequence> {
+              if (data.prev == nullptr)
+              {
+                FETCH_LOG_ERROR(LOGGING_NAME, "NodeDataType.prev not set! Not execution failed!");
+                return result;
+              }
+              std::unordered_set<Identifier, IdentifierHash> to_remove;
+              for (auto &id : result->identifiers())
+              {
+                to_remove.insert(id);
+              }
+              auto res = std::make_shared<IdentifierSequence>();
+              res->set_originator(result->originator());
+              res->mutable_status()->CopyFrom(result->status());
+              for (auto &id : data.prev->identifiers())
+              {
+                auto it = to_remove.find(id);
+                if (it == to_remove.end())
+                {
+                  res->add_identifiers()->CopyFrom(id);
+                }
+              }
+              return res;
+            });
         task = std::dynamic_pointer_cast<NodeExecutorTask>(executor);
       }
     }
     else
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to create task, because type ", data.type,
-                     " not supported, or data not set!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Failed to create task, because type ",
+          data.type,
+          " not supported, or data not set!");
     }
     if (task == nullptr)
     {
@@ -173,10 +180,12 @@ std::shared_ptr<NodeExecutorTask> NodeExecutorFactory(const BranchExecutorTask::
     FETCH_LOG_INFO(LOGGING_NAME, "Now at: ", node->ToString(), ". Task id=", task->GetTaskId());
     if (!late_mementos.empty())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, node->ToString(),
-                     " has late daps. Create WithLateDapExecutorTask wrapper task");
-      return std::make_shared<WithLateDapExecutorTask>(std::move(task), std::move(late_mementos),
-                                                       dap_manager);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          node->ToString(),
+          " has late daps. Create WithLateDapExecutorTask wrapper task");
+      return std::make_shared<WithLateDapExecutorTask>(
+          std::move(task), std::move(late_mementos), dap_manager);
     }
     return task;
   }

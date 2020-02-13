@@ -39,8 +39,9 @@ TYPED_TEST_SUITE(TsneFloatTests, math::test::HighPrecisionTensorNoFixedPointFloa
 TYPED_TEST_SUITE(TsneFixedPointTests, math::test::HighPrecisionTensorFixedPointTypes, );
 
 template <typename TypeParam>
-TypeParam RunTest(typename TypeParam::SizeType n_output_feature_size,
-                  typename TypeParam::SizeType n_data_size)
+TypeParam RunTest(
+    typename TypeParam::SizeType n_output_feature_size,
+    typename TypeParam::SizeType n_data_size)
 {
   using SizeType   = fetch::math::SizeType;
   using DataType   = typename TypeParam::Type;
@@ -88,8 +89,13 @@ TypeParam RunTest(typename TypeParam::SizeType n_output_feature_size,
 
   fetch::ml::TSNE<TensorType> tsn(A, N_OUTPUT_FEATURE_SIZE, PERPLEXITY, RANDOM_SEED);
 
-  tsn.Optimise(LEARNING_RATE, MAX_ITERATIONS, INITIAL_MOMENTUM, FINAL_MOMENTUM,
-               FINAL_MOMENTUM_STEPS, P_LATER_CORRECTION_ITERATION);
+  tsn.Optimise(
+      LEARNING_RATE,
+      MAX_ITERATIONS,
+      INITIAL_MOMENTUM,
+      FINAL_MOMENTUM,
+      FINAL_MOMENTUM_STEPS,
+      P_LATER_CORRECTION_ITERATION);
   return tsn.GetOutputMatrix();
 }
 
@@ -108,22 +114,38 @@ TYPED_TEST(TsneFloatTests, tsne_test_2d)
   // since tsne is a training procedure the number of operations is relatively large.
   // here we use 50 as proxy instead of calculating the number of operations
   // 50 is quite strict since there are 100 data points
-  EXPECT_NEAR(double(output_matrix.At(0, 0)), 2.5455484559746151,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 0)), -1.7767733335494995,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 25)), 0.059521886824643898,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 25)), 2.8227819671468208,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 50)), -1.0112856793691054,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 50)), -0.057417890948507175,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 99)), 2.7302324351584537,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 99)), 0.48101261687371411,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 0)),
+      2.5455484559746151,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 0)),
+      -1.7767733335494995,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 25)),
+      0.059521886824643898,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 25)),
+      2.8227819671468208,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 50)),
+      -1.0112856793691054,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 50)),
+      -0.057417890948507175,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 99)),
+      2.7302324351584537,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 99)),
+      0.48101261687371411,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(TsneFixedPointTests, tsne_test_2d)
@@ -141,22 +163,38 @@ TYPED_TEST(TsneFixedPointTests, tsne_test_2d)
   // since tsne is a training procedure the number of operations is relatively large.
   // here we use 50 as proxy instead of calculating the number of operations
   // 50 is quite strict since there are 100 data points
-  EXPECT_NEAR(double(output_matrix.At(0, 0)), 1.920028132153675,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 0)), 2.5480373881291598,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 25)), 2.4161552721634507,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 25)), 2.6394541021436453,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 50)), 0.78585268370807171,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 50)), 2.5319689763709903,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(0, 99)), 0.89536958793178201,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
-  EXPECT_NEAR(double(output_matrix.At(1, 99)), 3.3876196120399982,
-              50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 0)),
+      1.920028132153675,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 0)),
+      2.5480373881291598,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 25)),
+      2.4161552721634507,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 25)),
+      2.6394541021436453,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 50)),
+      0.78585268370807171,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 50)),
+      2.5319689763709903,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(0, 99)),
+      0.89536958793178201,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(output_matrix.At(1, 99)),
+      3.3876196120399982,
+      50 * static_cast<double>(math::function_tolerance<DataType>()));
 }
 
 }  // namespace test

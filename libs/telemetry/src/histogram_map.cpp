@@ -31,8 +31,12 @@ namespace telemetry {
  * @param description The description of the metric
  * @param labels The labels associated with the metric
  */
-HistogramMap::HistogramMap(std::string const &name, std::string field, std::vector<double> buckets,
-                           std::string const &description, Labels const &labels)
+HistogramMap::HistogramMap(
+    std::string const & name,
+    std::string         field,
+    std::vector<double> buckets,
+    std::string const & description,
+    Labels const &      labels)
   : Measurement(name, description, labels)
   , field_{std::move(field)}
   , buckets_{std::move(buckets)}

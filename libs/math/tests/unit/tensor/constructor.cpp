@@ -161,40 +161,45 @@ TYPED_TEST(TensorConstructorTest, string_construction_bad_formatting_3)
 
 TYPED_TEST(TensorConstructorTest, string_construction_invalid_formatting)
 {
-  EXPECT_THROW(fetch::math::Tensor<TypeParam>::FromString(R"(
+  EXPECT_THROW(
+      fetch::math::Tensor<TypeParam>::FromString(R"(
   	1 3 4 4.1;
   	5 6 7 7.999
   	8 9 10 11.11111;
   	)"),
-               fetch::math::exceptions::WrongShape);
+      fetch::math::exceptions::WrongShape);
 
-  EXPECT_THROW(fetch::math::Tensor<TypeParam>::FromString(R"(
+  EXPECT_THROW(
+      fetch::math::Tensor<TypeParam>::FromString(R"(
   	1 3 4 4.1
   	5 6 7 7.999; 8 9 10 11.11111
   	)"),
-               fetch::math::exceptions::WrongShape);
+      fetch::math::exceptions::WrongShape);
 
-  EXPECT_THROW(fetch::math::Tensor<TypeParam>::FromString(R"(
+  EXPECT_THROW(
+      fetch::math::Tensor<TypeParam>::FromString(R"(
   	1 3 4 4.1;
   	;
   	5 6 7 7.999
   	8 9 10 11.11111
   	)"),
-               fetch::math::exceptions::WrongShape);
+      fetch::math::exceptions::WrongShape);
 
-  EXPECT_THROW(fetch::math::Tensor<TypeParam>::FromString(R"(
+  EXPECT_THROW(
+      fetch::math::Tensor<TypeParam>::FromString(R"(
   	1 3 4 4.1;
   	5 6 7;
   	8 9 10 11.11111;
   	)"),
-               fetch::math::exceptions::WrongShape);
+      fetch::math::exceptions::WrongShape);
 
-  EXPECT_THROW(fetch::math::Tensor<TypeParam>::FromString(R"(
+  EXPECT_THROW(
+      fetch::math::Tensor<TypeParam>::FromString(R"(
   	1 3 4 4.1
   	5 6 7
   	8 9 10 11.11111
   	)"),
-               fetch::math::exceptions::WrongShape);
+      fetch::math::exceptions::WrongShape);
 }
 
 }  // namespace test

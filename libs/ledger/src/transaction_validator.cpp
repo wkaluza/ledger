@@ -41,8 +41,9 @@ TransactionValidator::TransactionValidator(StorageInterface &storage, TokenContr
  * @param block_index The designated block index
  * @return SUCCESS if successful, otherwise a corresponding error code
  */
-ContractExecutionStatus TransactionValidator::operator()(chain::Transaction const &tx,
-                                                         uint64_t block_index) const
+ContractExecutionStatus TransactionValidator::operator()(
+    chain::Transaction const &tx,
+    uint64_t                  block_index) const
 {
   // CHECK: Determine if the transaction is valid for the given block
   auto const tx_validity = tx.GetValidity(block_index);
@@ -55,8 +56,8 @@ ContractExecutionStatus TransactionValidator::operator()(chain::Transaction cons
   StateAdapter storage_adapter{storage_, "fetch.token"};
 
   {
-    ContractContext         ctx{&token_contract_, tx.contract_address(), nullptr, &storage_adapter,
-                        block_index};
+    ContractContext ctx{
+        &token_contract_, tx.contract_address(), nullptr, &storage_adapter, block_index};
     ContractContextAttacher attacher{token_contract_, ctx};
 
     // CHECK: Ensure there is permission from the originating address to perform the transaction

@@ -460,8 +460,10 @@ protected:
     rng_.seed(42);
   }
 
-  void ValidateTransaction(Transaction const &tx, ConstByteArray const &serialised_data,
-                           std::string const &expected_hex_payload)
+  void ValidateTransaction(
+      Transaction const &   tx,
+      ConstByteArray const &serialised_data,
+      std::string const &   expected_hex_payload)
   {
     // calculate  the expected payload size
     std::size_t const base_sig_serial_length = EXPECTED_SIGN_FINAL_LENGTH * tx.signatories().size();
@@ -483,8 +485,8 @@ protected:
       std::size_t const sig_offset = expected_payload_end + (index * EXPECTED_SIGN_FINAL_LENGTH);
 
       // extract the signature
-      auto sig = serialised_data.SubArray(sig_offset + EXPECTED_SIGN_LEN_FIELD,
-                                          EXPECTED_SIGNATURE_BYTE_LEN);
+      auto sig = serialised_data.SubArray(
+          sig_offset + EXPECTED_SIGN_LEN_FIELD, EXPECTED_SIGNATURE_BYTE_LEN);
 
       ECDSAVerifier verifier{signatory.identity};
       EXPECT_TRUE(verifier.Verify(payload_data, sig));

@@ -107,10 +107,17 @@ T DeterministicShuffle(T &container, uint64_t entropy)
 
 }  // namespace
 
-Consensus::Consensus(StakeManagerPtr stake, BeaconSetupServicePtr beacon_setup,
-                     BeaconServicePtr beacon, MainChain const &chain, StorageInterface &storage,
-                     Identity mining_identity, uint64_t aeon_period, uint64_t max_cabinet_size,
-                     uint64_t block_interval_ms, NotarisationPtr notarisation)
+Consensus::Consensus(
+    StakeManagerPtr       stake,
+    BeaconSetupServicePtr beacon_setup,
+    BeaconServicePtr      beacon,
+    MainChain const &     chain,
+    StorageInterface &    storage,
+    Identity              mining_identity,
+    uint64_t              aeon_period,
+    uint64_t              max_cabinet_size,
+    uint64_t              block_interval_ms,
+    NotarisationPtr       notarisation)
   : storage_{storage}
   , stake_{std::move(stake)}
   , cabinet_creator_{std::move(beacon_setup)}
@@ -122,28 +129,36 @@ Consensus::Consensus(StakeManagerPtr stake, BeaconSetupServicePtr beacon_setup,
   , block_interval_ms_{block_interval_ms}
   , notarisation_{std::move(notarisation)}
   , consensus_last_validate_block_failure_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "consensus_last_validate_block_failure", "Number of miners that have made it into qual")}
+        "consensus_last_validate_block_failure",
+        "Number of miners that have made it into qual")}
   , consensus_validate_block_failures_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_validate_block_failures_total", "The total number of DKG failures")}
+        "consensus_validate_block_failures_total",
+        "The total number of DKG failures")}
   , consensus_non_heaviest_blocks_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_non_heaviest_blocks_total", "The total number of DKG failures")}
+        "consensus_non_heaviest_blocks_total",
+        "The total number of DKG failures")}
   , failed_to_generate_entropy_total_{telemetry::Registry::Instance().CreateCounter(
-        "failed_to_generate_entropy_total", "The total number of failures to generate entropy")}
+        "failed_to_generate_entropy_total",
+        "The total number of failures to generate entropy")}
   , block_generation_exception_total_{telemetry::Registry::Instance().CreateCounter(
-        "block_generation_exception_total", "The total number of exceptions at block generation")}
+        "block_generation_exception_total",
+        "The total number of exceptions at block generation")}
   , block_generation_unknown_failure_total_{telemetry::Registry::Instance().CreateCounter(
         "block_generation_unknown_failure_total",
         "The total number of unknown failures at block generation")}
   , invalid_block_timing_total_{telemetry::Registry::Instance().CreateCounter(
-        "invalid_block_timing_total", "The total number of invalid block timings")}
+        "invalid_block_timing_total",
+        "The total number of invalid block timings")}
   , notarisation_is_not_ready_yet_total_{telemetry::Registry::Instance().CreateCounter(
-        "notarisation_is_not_ready_yet_total", "The total number of unready notarisations")}
+        "notarisation_is_not_ready_yet_total",
+        "The total number of unready notarisations")}
 {
   assert(stake_);
 }
 
-Consensus::WeightedQual QualWeightedByEntropy(Consensus::BlockEntropy::Cabinet const &cabinet,
-                                              uint64_t                                entropy)
+Consensus::WeightedQual QualWeightedByEntropy(
+    Consensus::BlockEntropy::Cabinet const &cabinet,
+    uint64_t                                entropy)
 {
   Consensus::WeightedQual ret;
   ret.reserve(cabinet.size());
@@ -168,8 +183,12 @@ Consensus::CabinetPtr Consensus::GetCabinet(Block const &previous) const
 
   if (cabinet_history_.find(last_snapshot) == cabinet_history_.end())
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "No cabinet history found for block: ", previous.block_number,
-                   " AKA ", last_snapshot);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "No cabinet history found for block: ",
+        previous.block_number,
+        " AKA ",
+        last_snapshot);
     return nullptr;
   }
 
@@ -184,8 +203,14 @@ Consensus::CabinetPtr Consensus::GetCabinet(Block const &previous) const
 
   if (cabinet_ptr == cabinet_history_.end() || !(cabinet_ptr->second))
   {
-    FETCH_LOG_ERROR(LOGGING_NAME, "Could not get cabinet from snapshot ", last_snapshot,
-                    " for block ", previous.block_number, " 0x", previous.hash);
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Could not get cabinet from snapshot ",
+        last_snapshot,
+        " for block ",
+        previous.block_number,
+        " 0x",
+        previous.hash);
 
     throw std::runtime_error("Could not get cabinet from snapshot");
   }
@@ -218,8 +243,12 @@ Block Consensus::GetBeginningOfAeon(Block const &current, MainChain const &chain
   if ((current.block_number % aeon_period_) == 0)
   {
     nearest_aeon = (current.block_number - aeon_period_) + 1;
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Finding nearest aeon: ", nearest_aeon,
-                    " with current: ", current.block_number);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Finding nearest aeon: ",
+        nearest_aeon,
+        " with current: ",
+        current.block_number);
   }
 
   // Attempt to lookup from cache to avoid chain walk
@@ -238,8 +267,8 @@ Block Consensus::GetBeginningOfAeon(Block const &current, MainChain const &chain
 
     if (!prior)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME,
-                      "Failed to find the beginning of the aeon when traversing the chain!");
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "Failed to find the beginning of the aeon when traversing the chain!");
       throw std::runtime_error("Failed to traverse main chain");
     }
 
@@ -253,9 +282,12 @@ Block Consensus::GetBeginningOfAeon(Block const &current, MainChain const &chain
   }
   else
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Mismatch found when finding nearest aeon. expected: ", nearest_aeon,
-                   " got: ", ret.block_number);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Mismatch found when finding nearest aeon. expected: ",
+        nearest_aeon,
+        " got: ",
+        ret.block_number);
   }
 
   return ret;
@@ -277,9 +309,10 @@ bool Consensus::VerifyNotarisation(Block const &block) const
       return false;
     }
 
-    auto result = notarisation_->Verify(previous_notarised_block->block_number,
-                                        previous_notarised_block->hash,
-                                        block.block_entropy.block_notarisation);
+    auto result = notarisation_->Verify(
+        previous_notarised_block->block_number,
+        previous_notarised_block->hash,
+        block.block_entropy.block_notarisation);
     if (result == NotarisationResult::CAN_NOT_VERIFY)
     {
       // If block is too old then get aeon beginning
@@ -289,9 +322,11 @@ bool Consensus::VerifyNotarisation(Block const &block) const
         auto threshold                 = GetThreshold(*previous_notarised_block);
         auto ordered_notarisation_keys = aeon_block.block_entropy.aeon_notarisation_keys;
 
-        return notarisation_->Verify(previous_notarised_block->hash,
-                                     block.block_entropy.block_notarisation,
-                                     ordered_notarisation_keys, threshold);
+        return notarisation_->Verify(
+            previous_notarised_block->hash,
+            block.block_entropy.block_notarisation,
+            ordered_notarisation_keys,
+            threshold);
       }
       catch (std::exception const &ex)
       {
@@ -317,8 +352,8 @@ uint64_t Consensus::GetBlockGenerationWeight(Block const &current, Identity cons
   MilliTimer const timer{"GetBlockGenerationWeight ", 1000};
   Block            beginning_of_aeon = GetBeginningOfAeon(current, chain_);
 
-  auto qualified_cabinet_weighted = QualWeightedByEntropy(beginning_of_aeon.block_entropy.qualified,
-                                                          current.block_entropy.EntropyAsU64());
+  auto qualified_cabinet_weighted = QualWeightedByEntropy(
+      beginning_of_aeon.block_entropy.qualified, current.block_entropy.EntropyAsU64());
 
   auto cabinet_position =
       std::find(qualified_cabinet_weighted.cbegin(), qualified_cabinet_weighted.cend(), identity);
@@ -367,9 +402,13 @@ bool Consensus::ValidBlockTiming(Block const &previous, Block const &proposed) c
 
   if (qualified_cabinet.find(identity.identifier()) == qualified_cabinet.end())
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Miner ", identity.identifier().ToBase64(),
-                   " attempted to mine block ", previous.block_number + 1,
-                   " but was not part of qual:");
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Miner ",
+        identity.identifier().ToBase64(),
+        " attempted to mine block ",
+        previous.block_number + 1,
+        " but was not part of qual:");
 
     for (auto const &member : qualified_cabinet)
     {
@@ -390,9 +429,10 @@ bool Consensus::ValidBlockTiming(Block const &previous, Block const &proposed) c
   // will be rejected.
   if (proposed_block_timestamp_ms > time_now_ms)
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Found block that appears to be minted ahead in time. This is invalid. Delta: ",
-                   proposed_block_timestamp_ms - time_now_ms);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Found block that appears to be minted ahead in time. This is invalid. Delta: ",
+        proposed_block_timestamp_ms - time_now_ms);
     return false;
   }
 
@@ -429,12 +469,25 @@ bool Consensus::ValidBlockTiming(Block const &previous, Block const &proposed) c
     if (identity == mining_identity_)
     {
       FETCH_LOG_DEBUG(
-          LOGGING_NAME, "Minting block. Time now: ", time_now_ms,
-          " Timestamp: ", block_interval_ms_, " proposed: ", proposed_block_timestamp_ms,
-          " Prev window ends: ", previous_block_window_ends,
-          " last block TS:  ", last_block_timestamp_ms, " miner rank: ", miner_rank, " target: ",
+          LOGGING_NAME,
+          "Minting block. Time now: ",
+          time_now_ms,
+          " Timestamp: ",
+          block_interval_ms_,
+          " proposed: ",
+          proposed_block_timestamp_ms,
+          " Prev window ends: ",
+          previous_block_window_ends,
+          " last block TS:  ",
+          last_block_timestamp_ms,
+          " miner rank: ",
+          miner_rank,
+          " target: ",
           uint64_t(previous_block_window_ends + (uint64_t(miner_rank) * block_interval_ms_)),
-          " block weight: ", proposed.weight, " ident: ", mining_identity_.identifier().ToBase64());
+          " block weight: ",
+          proposed.weight,
+          " ident: ",
+          mining_identity_.identifier().ToBase64());
     }
     return true;
   }
@@ -478,10 +531,13 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
 
   if (current.block_number > current_block_.block_number && !one_ahead)
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Note: updating consensus with a block more than one ahead than last updated "
-                   "block! Current: ",
-                   current_block_.block_number, " Attempt: ", current.block_number);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Note: updating consensus with a block more than one ahead than last updated "
+        "block! Current: ",
+        current_block_.block_number,
+        " Attempt: ",
+        current.block_number);
   }
 
   current_block_ = current;
@@ -505,8 +561,8 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
 
   if (!stake_->Load(storage_))
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "Failure to load stake information. block: ", current_block_.block_number);
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, "Failure to load stake information. block: ", current_block_.block_number);
     return false;
   }
 
@@ -522,9 +578,11 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
     {
       uint64_t round_start = current_block_.block_number;
       assert(!current_block_.block_entropy.aeon_notarisation_keys.empty());
-      notarisation_->SetAeonDetails(round_start, round_start + aeon_period_ - 1,
-                                    GetThreshold(current_block_),
-                                    current_block_.block_entropy.aeon_notarisation_keys);
+      notarisation_->SetAeonDetails(
+          round_start,
+          round_start + aeon_period_ - 1,
+          GetThreshold(current_block_),
+          current_block_.block_entropy.aeon_notarisation_keys);
     }
   }
 
@@ -535,8 +593,8 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
 
     if (!cabinet)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME,
-                      "Failed to build cabinet for block: ", current_block_.block_number);
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "Failed to build cabinet for block: ", current_block_.block_number);
       return false;
     }
 
@@ -559,13 +617,22 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
     if (member_of_cabinet)
     {
       auto threshold =
-          static_cast<uint32_t>(std::floor(static_cast<double>(cabinet_member_list.size())) *
-                                threshold_) +
+          static_cast<uint32_t>(
+              std::floor(static_cast<double>(cabinet_member_list.size())) * threshold_) +
           1;
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Block: ", current_block_.block_number,
-                     " creating new aeon. Periodicity: ", aeon_period_, " threshold: ", threshold,
-                     " as double: ", threshold_, " cabinet size: ", cabinet_member_list.size());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Block: ",
+          current_block_.block_number,
+          " creating new aeon. Periodicity: ",
+          aeon_period_,
+          " threshold: ",
+          threshold,
+          " as double: ",
+          threshold_,
+          " cabinet size: ",
+          cabinet_member_list.size());
 
       uint64_t last_block_time = current.timestamp;
       auto     current_time =
@@ -576,18 +643,27 @@ bool Consensus::UpdateCurrentBlock(Block const &current)
         last_block_time = default_start_time_;
       }
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Starting DKG with timestamp: ", last_block_time,
-                     " current: ", current_time,
-                     " diff: ", int64_t(current_time) - int64_t(last_block_time),
-                     " aeon period: ", aeon_period_);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Starting DKG with timestamp: ",
+          last_block_time,
+          " current: ",
+          current_time,
+          " diff: ",
+          int64_t(current_time) - int64_t(last_block_time),
+          " aeon period: ",
+          aeon_period_);
 
       uint64_t block_interval = 1;
 
       // Safe to call this multiple times
-      cabinet_creator_->StartNewCabinet(cabinet_member_list, threshold,
-                                        current_block_.block_number + 1,
-                                        current_block_.block_number + aeon_period_,
-                                        last_block_time + block_interval, current.block_entropy);
+      cabinet_creator_->StartNewCabinet(
+          cabinet_member_list,
+          threshold,
+          current_block_.block_number + 1,
+          current_block_.block_number + aeon_period_,
+          last_block_time + block_interval,
+          current.block_entropy);
     }
   }
 
@@ -701,15 +777,17 @@ bool BlockSignedByQualMember(fetch::ledger::Block const &block)
 /**
  * Checks all cabinet members have submitted a notarisation key which has been signed correctly
  */
-bool ValidNotarisationKeys(Consensus::BlockEntropy::Cabinet const &             cabinet,
-                           Consensus::BlockEntropy::AeonNotarisationKeys const &notarisation_keys)
+bool ValidNotarisationKeys(
+    Consensus::BlockEntropy::Cabinet const &             cabinet,
+    Consensus::BlockEntropy::AeonNotarisationKeys const &notarisation_keys)
 {
   for (auto const &member : cabinet)
   {
     if (notarisation_keys.find(member) == notarisation_keys.end() ||
-        !fetch::crypto::Verifier::Verify(fetch::crypto::Identity(member),
-                                         notarisation_keys.at(member).first.getStr(),
-                                         notarisation_keys.at(member).second))
+        !fetch::crypto::Verifier::Verify(
+            fetch::crypto::Identity(member),
+            notarisation_keys.at(member).first.getStr(),
+            notarisation_keys.at(member).second))
     {
       return false;
     }
@@ -733,8 +811,10 @@ bool Consensus::EnoughQualSigned(Block const &previous, Block const &current) co
         LOGGING_NAME,
         "Found empty cabinet when verifying block. Something bad has happened. Whitelist size: ",
         whitelist_.size(),
-        " prefilter size: ", stake_->BuildCabinet(previous, max_cabinet_size_)->size(),
-        " cab: ", max_cabinet_size_);
+        " prefilter size: ",
+        stake_->BuildCabinet(previous, max_cabinet_size_)->size(),
+        " cab: ",
+        max_cabinet_size_);
     return false;
   }
 
@@ -747,8 +827,10 @@ bool Consensus::EnoughQualSigned(Block const &previous, Block const &current) co
 
   if (qualified.size() < proposed_qual_size || qualified.size() > cabinet->size())
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Found a block entropy that has the wrong size of qualified set: ",
-                   qualified.size());
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Found a block entropy that has the wrong size of qualified set: ",
+        qualified.size());
     return false;
   }
 
@@ -759,8 +841,10 @@ bool Consensus::EnoughQualSigned(Block const &previous, Block const &current) co
     // Is qual in cabinet
     if (std::find(cabinet->begin(), cabinet->end(), Identity(it)) == cabinet->end())
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Found an unknown identity in the block entropy qualified set: ",
-                     it.ToBase64());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Found an unknown identity in the block entropy qualified set: ",
+          it.ToBase64());
       return false;
     }
 
@@ -774,8 +858,12 @@ bool Consensus::EnoughQualSigned(Block const &previous, Block const &current) co
       {
         FETCH_LOG_WARN(
             LOGGING_NAME,
-            "Found a bad signature in the block entropy confirmations. By: ", it.ToBase64(),
-            " sig: ", sig.ToBase64(), " hash: ", entropy.digest.ToBase64());
+            "Found a bad signature in the block entropy confirmations. By: ",
+            it.ToBase64(),
+            " sig: ",
+            sig.ToBase64(),
+            " hash: ",
+            entropy.digest.ToBase64());
         return false;
       }
 
@@ -785,8 +873,12 @@ bool Consensus::EnoughQualSigned(Block const &previous, Block const &current) co
 
   if (total_confirmations < proposed_qual_size)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Validation Failed: Not enough valid confirmations. Expected: ",
-                   proposed_qual_size, " Recv: ", total_confirmations);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Validation Failed: Not enough valid confirmations. Expected: ",
+        proposed_qual_size,
+        " Recv: ",
+        total_confirmations);
     return false;
   }
 
@@ -849,8 +941,8 @@ Status Consensus::ValidBlock(Block const &current) const
     {
       consensus_last_validate_block_failure_->set(4);
       consensus_validate_block_failures_total_->increment();
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Found block that didn't create a new aeon when it should have!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Found block that didn't create a new aeon when it should have!");
       return Status::NO;
     }
 
@@ -898,8 +990,10 @@ Status Consensus::ValidBlock(Block const &current) const
       {
         consensus_last_validate_block_failure_->set(8);
         consensus_validate_block_failures_total_->increment();
-        FETCH_LOG_WARN(LOGGING_NAME, "Saw a block entropy with mismatched qualified field. Size: ",
-                       block_entropy.qualified.size());
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Saw a block entropy with mismatched qualified field. Size: ",
+            block_entropy.qualified.size());
         return Status::NO;
       }
     }
@@ -940,14 +1034,15 @@ Status Consensus::ValidBlock(Block const &current) const
   {
     consensus_last_validate_block_failure_->set(10);
     consensus_validate_block_failures_total_->increment();
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Saw block not signed by a member of qual! Block: ", current.block_number);
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Saw block not signed by a member of qual! Block: ", current.block_number);
     return Status::NO;
   }
 
-  if (beacon_ &&
-      !dkg::BeaconManager::Verify(group_pub_key, block_preceeding->block_entropy.EntropyAsSHA256(),
-                                  current.block_entropy.group_signature))
+  if (beacon_ && !dkg::BeaconManager::Verify(
+                     group_pub_key,
+                     block_preceeding->block_entropy.EntropyAsSHA256(),
+                     current.block_entropy.group_signature))
   {
     consensus_last_validate_block_failure_->set(11);
     consensus_validate_block_failures_total_->increment();

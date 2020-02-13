@@ -372,10 +372,10 @@ TEST_P(Base58Tests, CheckDecodeWithTrailingSpacesGoingBeyondBufferEndBoundary)
   ASSERT_EQ(concatenated_array.pointer(), input.pointer());
   // The following verifies expected content beyond end boundary of the `input` array and is ought
   // fail if something is wrong (when run with address sanitizer, Valgrind, etc. ...)
-  ASSERT_TRUE(
-      std::equal(characters_beyond_end_boundary.pointer(),
-                 characters_beyond_end_boundary.pointer() + characters_beyond_end_boundary.size(),
-                 input.pointer() + input.size()));
+  ASSERT_TRUE(std::equal(
+      characters_beyond_end_boundary.pointer(),
+      characters_beyond_end_boundary.pointer() + characters_beyond_end_boundary.size(),
+      input.pointer() + input.size()));
 
   ConstByteArray const expected{test.hex};
   ConstByteArray const actual{ToHex(FromBase58(input))};
@@ -394,10 +394,10 @@ TEST_F(Base58Tests, CheckDecodeContinuous1GoingBeyondBufferEndBoundary)
   ASSERT_EQ(concatenated_array.pointer(), input.pointer());
   // The following verifies expected content beyond end boundary of the `input` array and is ought
   // fail if something is wrong (when run with address sanitizer, Valgrind, etc. ...)
-  ASSERT_TRUE(
-      std::equal(characters_beyond_end_boundary.pointer(),
-                 characters_beyond_end_boundary.pointer() + characters_beyond_end_boundary.size(),
-                 input.pointer() + input.size()));
+  ASSERT_TRUE(std::equal(
+      characters_beyond_end_boundary.pointer(),
+      characters_beyond_end_boundary.pointer() + characters_beyond_end_boundary.size(),
+      input.pointer() + input.size()));
 
   ConstByteArray const expected{"000000000000"};
   ConstByteArray const actual{ToHex(FromBase58(input))};

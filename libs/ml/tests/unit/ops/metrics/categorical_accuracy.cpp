@@ -93,8 +93,10 @@ TYPED_TEST(CategoricalAccuracyTest, mixed_forward_test)
   TensorType                                      result({1, 1});
   op.Forward({std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)}, result);
 
-  EXPECT_NEAR(static_cast<double>(result(0, 0)), 0.5,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      static_cast<double>(result(0, 0)),
+      0.5,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(CategoricalAccuracyTest, mixed_forward_test_weighted)
@@ -119,8 +121,10 @@ TYPED_TEST(CategoricalAccuracyTest, mixed_forward_test_weighted)
   TensorType                                      result({1, 1});
   op.Forward({std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)}, result);
 
-  EXPECT_NEAR(static_cast<double>(result(0, 0)), 0.3,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      static_cast<double>(result(0, 0)),
+      0.3,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(CategoricalAccuracyTest, backward_test)
@@ -137,8 +141,8 @@ TYPED_TEST(CategoricalAccuracyTest, backward_test)
   fetch::ml::ops::CategoricalAccuracy<TensorType> op;
 
   EXPECT_THROW(
-      op.Backward({std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)},
-                  error_signal),
+      op.Backward(
+          {std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)}, error_signal),
       fetch::ml::exceptions::NotImplemented);
 }
 
@@ -214,12 +218,14 @@ TYPED_TEST(CategoricalAccuracyTest, saveparams_test)
 
   // check that new predictions match the old
   TensorType new_result({1, 1});
-  op.Forward({std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)},
-             new_result);
+  op.Forward(
+      {std::make_shared<TensorType>(data1), std::make_shared<TensorType>(data2)}, new_result);
 
   // test correct values
-  EXPECT_NEAR(static_cast<double>(result(0, 0)), static_cast<double>(new_result(0, 0)),
-              static_cast<double>(0));
+  EXPECT_NEAR(
+      static_cast<double>(result(0, 0)),
+      static_cast<double>(new_result(0, 0)),
+      static_cast<double>(0));
 }
 
 }  // namespace test

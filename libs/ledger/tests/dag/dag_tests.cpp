@@ -100,8 +100,8 @@ protected:
       // 1000 nodes in each epoch
       for (std::size_t dag_node_index = 0; dag_node_index < nodes_in_epoch; ++dag_node_index)
       {
-        std::string dag_contents(std::to_string(epoch_index) + ":" +
-                                 std::to_string(dag_node_index));
+        std::string dag_contents(
+            std::to_string(epoch_index) + ":" + std::to_string(dag_node_index));
         epoch_history_[epoch_index].insert(dag_contents);
         dag_->AddArbitrary(dag_contents);
 

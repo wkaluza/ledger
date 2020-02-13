@@ -39,7 +39,8 @@ using DRNG        = random::LinearCongruentialGenerator;
  * @return The selection of identities
  */
 StakeSnapshot::CabinetPtr StakeSnapshot::BuildCabinet(
-    uint64_t entropy, std::size_t count,
+    uint64_t                                    entropy,
+    std::size_t                                 count,
     std::set<byte_array::ConstByteArray> const &whitelist) const
 {
   FETCH_LOG_DEBUG(LOGGING_NAME, "Building cabinet from pool of: ", stake_index_.size());
@@ -55,8 +56,10 @@ StakeSnapshot::CabinetPtr StakeSnapshot::BuildCabinet(
     {
       if (whitelist.find((*it)->identity.identifier()) == whitelist.end())
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Removing staker since not in whitelist: ",
-                       (*it)->identity.identifier().ToBase64());
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Removing staker since not in whitelist: ",
+            (*it)->identity.identifier().ToBase64());
         it = stake_index.erase(it);
       }
       else
@@ -79,8 +82,9 @@ StakeSnapshot::CabinetPtr StakeSnapshot::BuildCabinet(
     DRNG        rng(entropy);
 
     // ensure the stake list is reset to a deterministic state
-    std::sort(stake_index.begin(), stake_index.end(),
-              [](RecordPtr const &a, RecordPtr const &b) { return a->identity < b->identity; });
+    std::sort(stake_index.begin(), stake_index.end(), [](RecordPtr const &a, RecordPtr const &b) {
+      return a->identity < b->identity;
+    });
 
     for (std::size_t i = 0; i < count; ++i)
     {
@@ -184,8 +188,9 @@ void StakeSnapshot::UpdateStake(Identity const &identity, uint64_t stake)
 
       // remove from the stake index
       auto const last = std::remove_if(
-          stake_index_.begin(), stake_index_.end(),
-          [&identity](RecordPtr const &record) { return identity == record->identity; });
+          stake_index_.begin(), stake_index_.end(), [&identity](RecordPtr const &record) {
+            return identity == record->identity;
+          });
       stake_index_.erase(last, stake_index_.end());
     }
     else

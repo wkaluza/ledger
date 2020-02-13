@@ -28,23 +28,26 @@ using namespace fetch::vm;
 
 namespace {
 
-AddressPtr CreateAddress(VM *vm, fetch::chain::Address const &address,
-                         fetch::chain::Transaction::Signatories const &signatories)
+AddressPtr CreateAddress(
+    VM *                                          vm,
+    fetch::chain::Address const &                 address,
+    fetch::chain::Transaction::Signatories const &signatories)
 {
   // TODO(pb): Performance - `std::vector<...>` in not suited for effective search (signatories are
   // returned as `std::vector<Signatory>` type.
-  auto const has_signed{signatories.cend() != std::find_if(signatories.cbegin(), signatories.cend(),
-                                                           [&address](auto const &signatory) {
-                                                             return signatory.address == address;
-                                                           })};
+  auto const has_signed{
+      signatories.cend() !=
+      std::find_if(signatories.cbegin(), signatories.cend(), [&address](auto const &signatory) {
+        return signatory.address == address;
+      })};
   return vm->CreateNewObject<Address>(address, has_signed);
 }
 
 AddressesPtr CreateSignatories(VM *vm, fetch::chain::Transaction const &tx)
 {
   auto const size{tx.signatories().size()};
-  auto       signatories{vm->CreateNewObject<vm::Array<AddressPtr>>(vm->GetTypeId<Address>(),
-                                                              static_cast<int32_t>(size))};
+  auto       signatories{vm->CreateNewObject<vm::Array<AddressPtr>>(
+      vm->GetTypeId<Address>(), static_cast<int32_t>(size))};
 
   for (std::size_t i{0}; i < size; ++i)
   {
@@ -57,8 +60,8 @@ TransfersPtr CreateTransfers(VM *vm, fetch::chain::Transaction const &tx)
 {
   auto const &transfers{tx.transfers()};
   auto const  size{tx.transfers().size()};
-  auto        vm_transfers{vm->CreateNewObject<vm::Array<TransferPtr>>(vm->GetTypeId<Transfer>(),
-                                                                static_cast<int32_t>(size))};
+  auto        vm_transfers{vm->CreateNewObject<vm::Array<TransferPtr>>(
+      vm->GetTypeId<Transfer>(), static_cast<int32_t>(size))};
 
   for (std::size_t i{0}; i < size; ++i)
   {

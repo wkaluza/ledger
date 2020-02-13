@@ -28,8 +28,11 @@ void FakeBlockPacker::EnqueueTransaction(fetch::chain::Transaction const & /*tx*
 void FakeBlockPacker::EnqueueTransaction(fetch::chain::TransactionLayout const & /*layout*/)
 {}
 
-void FakeBlockPacker::GenerateBlock(fetch::ledger::Block &block, std::size_t num_lanes,
-                                    std::size_t num_slices, fetch::ledger::MainChain const &chain)
+void FakeBlockPacker::GenerateBlock(
+    fetch::ledger::Block &          block,
+    std::size_t                     num_lanes,
+    std::size_t                     num_slices,
+    fetch::ledger::MainChain const &chain)
 {
   FETCH_UNUSED(chain);
 

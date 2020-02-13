@@ -253,8 +253,9 @@ TEST_P(MainChainTests, CheckChainBlockInvalidation)
     ASSERT_EQ(BlockStatus::ADDED, chain_->AddBlock(*branch[youngest_block_age]))
         << "; branch3: " << Hashes(branch3) << "; branch5: " << Hashes(branch5)
         << "; branch9: " << Hashes(branch9);
-    ASSERT_EQ(chain_->GetHeaviestBlockHash(),
-              std::max(best_block->hash, branch[youngest_block_age]->hash));
+    ASSERT_EQ(
+        chain_->GetHeaviestBlockHash(),
+        std::max(best_block->hash, branch[youngest_block_age]->hash));
     for (std::size_t i{youngest_block_age + 1}; i < branch.size(); ++i)
     {
       ASSERT_EQ(BlockStatus::ADDED, chain_->AddBlock(*branch[i]))
@@ -995,8 +996,9 @@ TEST_P(MainChainTests, AddingBlockWithDuplicateTxInSameBlockFails)
   ASSERT_EQ(chain_->GetHeaviestBlockHash(), genesis->hash);
 }
 
-INSTANTIATE_TEST_SUITE_P(ParamBased, MainChainTests,
-                         ::testing::Values(MainChain::Mode::CREATE_PERSISTENT_DB,
-                                           MainChain::Mode::IN_MEMORY_DB));
+INSTANTIATE_TEST_SUITE_P(
+    ParamBased,
+    MainChainTests,
+    ::testing::Values(MainChain::Mode::CREATE_PERSISTENT_DB, MainChain::Mode::IN_MEMORY_DB));
 
 }  // namespace

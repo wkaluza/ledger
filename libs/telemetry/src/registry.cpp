@@ -130,8 +130,11 @@ CounterMapPtr Registry::CreateCounterMap(std::string name, std::string descripti
  * @param labels The labels associated with the metric
  * @return The pointer to the created metric if successful, otherwise a nullptr
  */
-HistogramPtr Registry::CreateHistogram(std::initializer_list<double> const &buckets,
-                                       std::string name, std::string description, Labels labels)
+HistogramPtr Registry::CreateHistogram(
+    std::initializer_list<double> const &buckets,
+    std::string                          name,
+    std::string                          description,
+    Labels                               labels)
 {
   HistogramPtr histogram{};
 
@@ -150,18 +153,24 @@ HistogramPtr Registry::CreateHistogram(std::initializer_list<double> const &buck
   return histogram;
 }
 
-HistogramMapPtr Registry::CreateHistogramMap(std::vector<double> buckets, std::string name,
-                                             std::string field, std::string description,
-                                             Labels labels)
+HistogramMapPtr Registry::CreateHistogramMap(
+    std::vector<double> buckets,
+    std::string         name,
+    std::string         field,
+    std::string         description,
+    Labels              labels)
 {
   HistogramMapPtr histogram_map{};
 
   if (ValidateName(name))
   {
     // create the histogram
-    histogram_map =
-        std::make_shared<HistogramMap>(std::move(name), std::move(field), std::move(buckets),
-                                       std::move(description), std::move(labels));
+    histogram_map = std::make_shared<HistogramMap>(
+        std::move(name),
+        std::move(field),
+        std::move(buckets),
+        std::move(description),
+        std::move(labels));
 
     // add the counter to the register
     {

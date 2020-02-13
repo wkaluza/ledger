@@ -58,8 +58,8 @@ TYPED_TEST(Convolution2DTest, set_input_and_evaluate_test)  // Use the class as 
   input.FillUniformRandom();
 
   // Evaluate
-  fetch::ml::layers::Convolution2D<TensorType> conv(output_channels, input_channels, kernel_height,
-                                                    stride_size);
+  fetch::ml::layers::Convolution2D<TensorType> conv(
+      output_channels, input_channels, kernel_height, stride_size);
 
   conv.ComputeBatchOutputShape({input_shape});  // necessary for out-of-Graph usage
   conv.CompleteShapeDeduction();                // necessary for out-of-Graph usage
@@ -78,8 +78,8 @@ TYPED_TEST(Convolution2DTest, set_input_and_evaluate_test)  // Use the class as 
 
   // Test correct shape and values
   EXPECT_EQ(output.shape(), gt.shape());
-  EXPECT_TRUE(output.AllClose(gt, math::function_tolerance<DataType>(),
-                              math::function_tolerance<DataType>()));
+  EXPECT_TRUE(output.AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(Convolution2DTest, ops_forward_test)  // Use the class as an Ops
@@ -101,8 +101,8 @@ TYPED_TEST(Convolution2DTest, ops_forward_test)  // Use the class as an Ops
   input.FillUniformRandom();
 
   // Evaluate
-  fetch::ml::layers::Convolution2D<TensorType> conv(output_channels, input_channels, kernel_height,
-                                                    stride_size);
+  fetch::ml::layers::Convolution2D<TensorType> conv(
+      output_channels, input_channels, kernel_height, stride_size);
 
   conv.ComputeBatchOutputShape({input_shape});  // necessary for out-of-Graph usage
   conv.CompleteShapeDeduction();                // necessary for out-of-Graph usage
@@ -120,8 +120,8 @@ TYPED_TEST(Convolution2DTest, ops_forward_test)  // Use the class as an Ops
 
   // Test correct shape and values
   EXPECT_EQ(output.shape(), gt.shape());
-  EXPECT_TRUE(output.AllClose(gt, math::function_tolerance<DataType>(),
-                              math::function_tolerance<DataType>()));
+  EXPECT_TRUE(output.AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(Convolution2DTest, ops_backward_test)  // Use the class as an Ops
@@ -149,8 +149,8 @@ TYPED_TEST(Convolution2DTest, ops_backward_test)  // Use the class as an Ops
   error_signal.FillUniformRandom();
 
   // Evaluate
-  fetch::ml::layers::Convolution2D<TensorType> conv(output_channels, input_channels, kernel_height,
-                                                    stride_size);
+  fetch::ml::layers::Convolution2D<TensorType> conv(
+      output_channels, input_channels, kernel_height, stride_size);
 
   conv.ComputeBatchOutputShape({input_shape});  // necessary for out-of-Graph usage
   conv.CompleteShapeDeduction();                // necessary for out-of-Graph usage
@@ -164,15 +164,15 @@ TYPED_TEST(Convolution2DTest, ops_backward_test)  // Use the class as an Ops
   // generate ground truth
   auto                                      weights = conv.GetWeights();
   fetch::ml::ops::Convolution2D<TensorType> op;
-  std::vector<TensorType>                   gt =
-      op.Backward({std::make_shared<TensorType>(input), std::make_shared<TensorType>(weights[0])},
-                  error_signal);
+  std::vector<TensorType>                   gt = op.Backward(
+      {std::make_shared<TensorType>(input), std::make_shared<TensorType>(weights[0])},
+      error_signal);
 
   // test correct shapes and values
   EXPECT_EQ(backprop_error.size(), 1);
   EXPECT_EQ(backprop_error[0].shape(), gt[0].shape());
-  EXPECT_TRUE(backprop_error[0].AllClose(gt[0], math::function_tolerance<DataType>(),
-                                         math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[0].AllClose(
+      gt[0], math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(Convolution2DTest, conv2d_node_forward_test)  // Use the class as a Node
@@ -195,13 +195,15 @@ TYPED_TEST(Convolution2DTest, conv2d_node_forward_test)  // Use the class as a N
 
   // Evaluate
   auto placeholder_node = std::make_shared<fetch::ml::Node<TensorType>>(
-      fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-      []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TensorType>>(); });
+      fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+        return std::make_shared<fetch::ml::ops::PlaceHolder<TensorType>>();
+      });
   std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TensorType>>(placeholder_node->GetOp())
       ->SetData(input);
 
   auto conv = fetch::ml::Node<TensorType>(
-      fetch::ml::OpType::LAYER_CONVOLUTION_2D, "Convolution2D",
+      fetch::ml::OpType::LAYER_CONVOLUTION_2D,
+      "Convolution2D",
       [output_channels, input_channels, kernel_height, stride_size]() {
         return std::make_shared<fetch::ml::layers::Convolution2D<TensorType>>(
             output_channels, input_channels, kernel_height, stride_size);
@@ -223,8 +225,8 @@ TYPED_TEST(Convolution2DTest, conv2d_node_forward_test)  // Use the class as a N
 
   // Test correct shape and values
   EXPECT_EQ(prediction.shape(), gt.shape());
-  EXPECT_TRUE(prediction.AllClose(gt, math::function_tolerance<DataType>(),
-                                  math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(Convolution2DTest, node_backward_test)  // Use the class as a Node
@@ -253,15 +255,17 @@ TYPED_TEST(Convolution2DTest, node_backward_test)  // Use the class as a Node
 
   // Evaluate
   auto placeholder_node = std::make_shared<fetch::ml::Node<TensorType>>(
-      fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-      []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TensorType>>(); });
+      fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+        return std::make_shared<fetch::ml::ops::PlaceHolder<TensorType>>();
+      });
   std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TensorType>>(placeholder_node->GetOp())
       ->SetData(input);
 
   auto conv2d_layer_ptr = std::make_shared<fetch::ml::layers::Convolution2D<TensorType>>(
       output_channels, input_channels, kernel_height, stride_size);
   auto conv = fetch::ml::Node<TensorType>(
-      fetch::ml::OpType::LAYER_CONVOLUTION_2D, "Convolution2D",
+      fetch::ml::OpType::LAYER_CONVOLUTION_2D,
+      "Convolution2D",
       [output_channels, input_channels, kernel_height, stride_size]() {
         return std::make_shared<fetch::ml::layers::Convolution2D<TensorType>>(
             output_channels, input_channels, kernel_height, stride_size);
@@ -278,16 +282,16 @@ TYPED_TEST(Convolution2DTest, node_backward_test)  // Use the class as a Node
       (std::dynamic_pointer_cast<fetch::ml::layers::Convolution2D<TensorType>>(conv.GetOp()))
           ->GetWeights();
   fetch::ml::ops::Convolution2D<TensorType> op;
-  std::vector<TensorType>                   gt =
-      op.Backward({std::make_shared<TensorType>(input), std::make_shared<TensorType>(weights[0])},
-                  error_signal);
+  std::vector<TensorType>                   gt = op.Backward(
+      {std::make_shared<TensorType>(input), std::make_shared<TensorType>(weights[0])},
+      error_signal);
 
   // test correct shapes and values
   EXPECT_EQ(backprop_error.size(), 1);
   auto err_signal = (*(backprop_error.begin())).second.at(0);
   EXPECT_EQ(err_signal.shape(), gt[0].shape());
-  EXPECT_TRUE(err_signal.AllClose(gt[0], math::function_tolerance<DataType>(),
-                                  math::function_tolerance<DataType>()));
+  EXPECT_TRUE(err_signal.AllClose(
+      gt[0], math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(Convolution2DTest, graph_forward_test)  // Use the class as a Node
@@ -326,8 +330,8 @@ TYPED_TEST(Convolution2DTest, graph_forward_test)  // Use the class as a Node
 
   EXPECT_EQ(prediction.shape(), gt.shape());
 
-  EXPECT_TRUE(prediction.AllClose(gt, math::function_tolerance<DataType>(),
-                                  math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 }  // namespace test

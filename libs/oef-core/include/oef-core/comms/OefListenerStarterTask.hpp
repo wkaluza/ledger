@@ -41,8 +41,10 @@ public:
       int p,
       std::shared_ptr<OefListenerSet<IOefTaskFactory<OefAgentEndpoint>, OefAgentEndpoint>>
                             listeners,
-      std::shared_ptr<Core> core, FactoryCreator initialFactoryCreator, IKarmaPolicy *karmaPolicy,
-      ConfigMap endpointConfig)
+      std::shared_ptr<Core> core,
+      FactoryCreator        initialFactoryCreator,
+      IKarmaPolicy *        karmaPolicy,
+      ConfigMap             endpointConfig)
   {
     this->p                     = p;
     this->listeners             = listeners;

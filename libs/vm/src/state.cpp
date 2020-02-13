@@ -60,8 +60,9 @@ bool ReadHelper(TypeId type_id, std::string const &name, Ptr<Object> &val, VM *v
 
   if (!vm->IsDefaultSerializeConstructable(type_id))
   {
-    vm->RuntimeError("Cannot deserialise object of type " + vm->GetTypeName(type_id) +
-                     " for which no serialisation constructor exists.");
+    vm->RuntimeError(
+        "Cannot deserialise object of type " + vm->GetTypeName(type_id) +
+        " for which no serialisation constructor exists.");
 
     return false;
   }
@@ -168,8 +169,9 @@ public:
     catch (std::exception const &ex)
     {
       // TODO(issue 1094): Support for nested runtime error(s) and/or exception(s)
-      vm_->RuntimeError("An exception has been thrown from State<...>::FlushIO(). Desc.: " +
-                        std::string(ex.what()));
+      vm_->RuntimeError(
+          "An exception has been thrown from State<...>::FlushIO(). Desc.: " +
+          std::string(ex.what()));
     }
     catch (...)
     {
@@ -333,11 +335,14 @@ Ptr<IState> IState::ConstructorFromAddress(VM *vm, TypeId type_id, Ptr<Address> 
   return {};
 }
 
-Ptr<IState> IState::ConstructIntrinsic(VM *vm, TypeId type_id, TypeId template_param_type_id,
-                                       Ptr<String> const &name)
+Ptr<IState> IState::ConstructIntrinsic(
+    VM *               vm,
+    TypeId             type_id,
+    TypeId             template_param_type_id,
+    Ptr<String> const &name)
 {
-  return TypeIdAsCanonicalType<StateFactory>(template_param_type_id, vm, type_id,
-                                             template_param_type_id, name);
+  return TypeIdAsCanonicalType<StateFactory>(
+      template_param_type_id, vm, type_id, template_param_type_id, name);
 }
 
 }  // namespace vm

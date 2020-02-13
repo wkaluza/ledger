@@ -50,8 +50,9 @@ public:
   virtual ~Ops() = default;
 
   virtual void                    Forward(VecTensorType const &inputs, TensorType &output) = 0;
-  virtual std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                           TensorType const &   error_signal)                 = 0;
+  virtual std::vector<TensorType> Backward(
+      VecTensorType const &inputs,
+      TensorType const &   error_signal) = 0;
   /*
    * ComputeOutputShape is usually expensive function and should be used only for initialisation or
    * in ASSERT. On Forward you can use output.shape() and on Backward there is error_signal.shape()
@@ -173,8 +174,8 @@ public:
   virtual OperationsCount ChargeForward() const
   {
     // TODO(ML-483): make a pure virtual method after all Ops have their overrides;
-    FETCH_LOG_ERROR(Descriptor(),
-                    " Error: call to unexisting ChargeForward() implementation! returned 0.");
+    FETCH_LOG_ERROR(
+        Descriptor(), " Error: call to unexisting ChargeForward() implementation! returned 0.");
     return 0;
   }
 
@@ -186,8 +187,8 @@ public:
   virtual OperationsCount ChargeBackward() const
   {
     // TODO(ML-483): make a pure virtual method after all Ops have their overrides;
-    FETCH_LOG_ERROR(Descriptor(),
-                    " Error: call to unexisting ChargeBackward() implementation! returned 0.");
+    FETCH_LOG_ERROR(
+        Descriptor(), " Error: call to unexisting ChargeBackward() implementation! returned 0.");
     return 0;
   }
 

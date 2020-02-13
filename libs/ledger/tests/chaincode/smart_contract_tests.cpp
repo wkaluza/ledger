@@ -80,8 +80,10 @@ protected:
   }
 
   template <typename T>
-  void VerifyQuery(ConstByteArray const &query_method_name, T const &expected_value,
-                   Variant const &request = Variant::Object())
+  void VerifyQuery(
+      ConstByteArray const &query_method_name,
+      T const &             expected_value,
+      Variant const &       request = Variant::Object())
   {
     Variant response;
     EXPECT_EQ(SmartContract::Status::OK, SendQuery(query_method_name, request, response));

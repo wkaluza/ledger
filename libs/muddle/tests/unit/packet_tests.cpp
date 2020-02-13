@@ -40,8 +40,12 @@ protected:
     packet_   = CreatePacket(prover_->identity().identifier(), 1, 2, 3, response_);
   }
 
-  static PacketPtr CreatePacket(fetch::byte_array::ConstByteArray const &address, uint16_t service,
-                                uint16_t channel, uint16_t counter, Payload const &payload)
+  static PacketPtr CreatePacket(
+      fetch::byte_array::ConstByteArray const &address,
+      uint16_t                                 service,
+      uint16_t                                 channel,
+      uint16_t                                 counter,
+      Payload const &                          payload)
   {
     PacketPtr packet = std::make_shared<Packet>(address, 0);
     packet->SetService(service);

@@ -98,9 +98,10 @@ TEST_F(NewKeyTest, test_compare_keys_triang_bit_shift)
     EXPECT_EQ(0, res);
 
     // Comparing *current* key against *previous* key which is BIGGER by value
-    res =
-        key.Compare(last_key, pos,
-                    static_cast<uint16_t>(fetch::storage::Key<256, unsigned long>::size_in_bits()));
+    res = key.Compare(
+        last_key,
+        pos,
+        static_cast<uint16_t>(fetch::storage::Key<256, unsigned long>::size_in_bits()));
     EXPECT_EQ(key.size_in_bits() - i, pos);
     EXPECT_EQ(-1, res);
 
@@ -152,9 +153,10 @@ TEST_F(NewKeyTest, test_compare_for_keys_with_moving_zero)
     EXPECT_EQ(0, res);
 
     // Comparing *current* key against *previous* key which is SMALLER by value
-    res =
-        key.Compare(last_key, pos,
-                    static_cast<uint16_t>(fetch::storage::Key<256, unsigned long>::size_in_bits()));
+    res = key.Compare(
+        last_key,
+        pos,
+        static_cast<uint16_t>(fetch::storage::Key<256, unsigned long>::size_in_bits()));
     EXPECT_EQ(i - 1, pos);
     EXPECT_EQ(1, res);
 

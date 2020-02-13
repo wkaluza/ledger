@@ -74,8 +74,8 @@ ProverPtr GenerateP2PKey()
       private_key_data.Resize(ECDSASigner::PrivateKey::EcdsaCurveType::privateKeySize);
 
       // attempt to read in the private key
-      input_file.read(private_key_data.char_pointer(),
-                      static_cast<std::streamsize>(private_key_data.size()));
+      input_file.read(
+          private_key_data.char_pointer(), static_cast<std::streamsize>(private_key_data.size()));
 
       if (!(input_file.fail() || input_file.eof()))
       {
@@ -96,8 +96,8 @@ ProverPtr GenerateP2PKey()
     {
       auto const private_key_data = certificate->private_key();
 
-      output_file.write(private_key_data.char_pointer(),
-                        static_cast<std::streamsize>(private_key_data.size()));
+      output_file.write(
+          private_key_data.char_pointer(), static_cast<std::streamsize>(private_key_data.size()));
     }
     else
     {

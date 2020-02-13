@@ -72,8 +72,9 @@ void Sqrt<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * f'(input0)= 0.5 * (input0 ^ -0.5) * error_signal
  */
 template <typename TensorType>
-std::vector<TensorType> Sqrt<TensorType>::Backward(VecTensorType const &inputs,
-                                                   TensorType const &   error_signal)
+std::vector<TensorType> Sqrt<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == this->ComputeOutputShape(inputs));

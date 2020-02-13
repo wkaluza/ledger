@@ -35,8 +35,11 @@ using std::placeholders::_2;
 static Gauge ep_count("mt-core.network.EndpointSSL");
 
 template <typename TXType>
-EndpointSSL<TXType>::EndpointSSL(Core &core, std::size_t sendBufferSize, std::size_t readBufferSize,
-                                 ConfigMap configMap)
+EndpointSSL<TXType>::EndpointSSL(
+    Core &      core,
+    std::size_t sendBufferSize,
+    std::size_t readBufferSize,
+    ConfigMap   configMap)
   : EndpointBase<TXType>(sendBufferSize, readBufferSize, configMap)
   , sock(static_cast<asio::io_context &>(core))
 {
@@ -156,8 +159,14 @@ void EndpointSSL<TXType>::async_write()
   int i = 0;
   for (auto &d : data)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Send buffer ", i, "=", d.size(),
-                    " bytes on thr=", std::this_thread::get_id());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Send buffer ",
+        i,
+        "=",
+        d.size(),
+        " bytes on thr=",
+        std::this_thread::get_id());
     ++i;
   }
 
@@ -172,10 +181,10 @@ void EndpointSSL<TXType>::async_write()
   FETCH_LOG_DEBUG(LOGGING_NAME, "run_sending: START");
 
   auto my_state = state;
-  asio::async_write(*ssl_sock_p, data,
-                    [this, my_state](const std::error_code &ec, const size_t &bytes) {
-                      this->complete_sending(my_state, ec, bytes);
-                    });
+  asio::async_write(
+      *ssl_sock_p, data, [this, my_state](const std::error_code &ec, const size_t &bytes) {
+        this->complete_sending(my_state, ec, bytes);
+      });
 }
 
 template <typename TXType>
@@ -187,10 +196,13 @@ void EndpointSSL<TXType>::async_read(const std::size_t &bytes_needed)
   FETCH_LOG_DEBUG(LOGGING_NAME, "run_reading: START, bytes_needed: ", bytes_needed);
 
   // auto self = shared_from_this();
-  asio::async_read(*ssl_sock_p, space, asio::transfer_at_least(bytes_needed),
-                   [this, my_state](const std::error_code &ec, const size_t &bytes) {
-                     this->complete_reading(my_state, ec, bytes);
-                   });
+  asio::async_read(
+      *ssl_sock_p,
+      space,
+      asio::transfer_at_least(bytes_needed),
+      [this, my_state](const std::error_code &ec, const size_t &bytes) {
+        this->complete_reading(my_state, ec, bytes);
+      });
 }
 
 template <typename TXType>
@@ -208,8 +220,8 @@ typename EndpointSSL<TXType>::ContextSSL *EndpointSSL<TXType>::make_ssl_ctx()
   auto sk_f = configMap_.find("core_cert_pk_file");
   if (sk_f == configMap_.end())
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "SSL setup failed, because missing core_cert_pk_file from configuration!");
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, "SSL setup failed, because missing core_cert_pk_file from configuration!");
     return nullptr;
   }
   ssl_ctx->use_certificate_chain_file(sk_f->second);
@@ -217,8 +229,8 @@ typename EndpointSSL<TXType>::ContextSSL *EndpointSSL<TXType>::make_ssl_ctx()
   auto dh_file = configMap_.find("tmp_dh_file");
   if (dh_file == configMap_.end())
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "SSL setup failed, because missing tmp_dh_file from configuration!");
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, "SSL setup failed, because missing tmp_dh_file from configuration!");
     return nullptr;
   }
   ssl_ctx->use_tmp_dh_file(dh_file->second);

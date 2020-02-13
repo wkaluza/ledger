@@ -205,8 +205,11 @@ inline TypePtr ConvertToTypePtr(SymbolPtr const &symbol)
 
 struct Variable : public Symbol
 {
-  Variable(VariableKind variable_kind__, std::string name, TypePtr type__,
-           TypePtr user_defined_type)
+  Variable(
+      VariableKind variable_kind__,
+      std::string  name,
+      TypePtr      type__,
+      TypePtr      user_defined_type)
     : Symbol(SymbolKind::Variable, std::move(name), std::move(user_defined_type))
     , variable_kind{variable_kind__}
     , type{std::move(type__)}
@@ -225,11 +228,14 @@ struct Variable : public Symbol
 using VariablePtr      = std::shared_ptr<Variable>;
 using VariablePtrArray = std::vector<VariablePtr>;
 
-inline VariablePtr CreateVariable(VariableKind variable_kind, std::string name, TypePtr type,
-                                  TypePtr user_defined_type)
+inline VariablePtr CreateVariable(
+    VariableKind variable_kind,
+    std::string  name,
+    TypePtr      type,
+    TypePtr      user_defined_type)
 {
-  return std::make_shared<Variable>(variable_kind, std::move(name), std::move(type),
-                                    std::move(user_defined_type));
+  return std::make_shared<Variable>(
+      variable_kind, std::move(name), std::move(type), std::move(user_defined_type));
 }
 inline VariablePtr ConvertToVariablePtr(SymbolPtr const &symbol)
 {
@@ -239,9 +245,13 @@ inline VariablePtr ConvertToVariablePtr(SymbolPtr const &symbol)
 
 struct Function
 {
-  Function(FunctionKind function_kind__, std::string name__, std::string unique_name__,
-           TypePtrArray parameter_types__, VariablePtrArray parameter_variables__,
-           TypePtr return_type__)
+  Function(
+      FunctionKind     function_kind__,
+      std::string      name__,
+      std::string      unique_name__,
+      TypePtrArray     parameter_types__,
+      VariablePtrArray parameter_variables__,
+      TypePtr          return_type__)
     : function_kind{function_kind__}
     , name{std::move(name__)}
     , unique_name{std::move(unique_name__)}
@@ -266,13 +276,21 @@ struct Function
 using FunctionPtr      = std::shared_ptr<Function>;
 using FunctionPtrArray = std::vector<FunctionPtr>;
 
-inline FunctionPtr CreateFunction(FunctionKind function_kind, std::string name,
-                                  std::string unique_name, TypePtrArray parameter_types,
-                                  VariablePtrArray parameter_variables, TypePtr return_type)
+inline FunctionPtr CreateFunction(
+    FunctionKind     function_kind,
+    std::string      name,
+    std::string      unique_name,
+    TypePtrArray     parameter_types,
+    VariablePtrArray parameter_variables,
+    TypePtr          return_type)
 {
-  return std::make_shared<Function>(function_kind, std::move(name), std::move(unique_name),
-                                    std::move(parameter_types), std::move(parameter_variables),
-                                    std::move(return_type));
+  return std::make_shared<Function>(
+      function_kind,
+      std::move(name),
+      std::move(unique_name),
+      std::move(parameter_types),
+      std::move(parameter_variables),
+      std::move(return_type));
 }
 
 struct FunctionGroup : public Symbol

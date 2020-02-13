@@ -36,8 +36,8 @@ protected:
   {
     using B = std::vector<double>;
 
-    histogram_map_ = std::make_unique<HistogramMap>("http_requests", "path", B{0.2, 0.4, 0.6, 0.8},
-                                                    "Request time for HTTP paths");
+    histogram_map_ = std::make_unique<HistogramMap>(
+        "http_requests", "path", B{0.2, 0.4, 0.6, 0.8}, "Request time for HTTP paths");
   }
 
   void TearDown() override

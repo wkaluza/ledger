@@ -29,8 +29,8 @@ namespace linalg {
 
 template <typename S, uint64_t V>
 void Blas<S, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x), V>::  // NOLINT
-     operator()(int const n, TensorView<Type> dx, int const incx, TensorView<Type> dy,
-           int const incy) const
+     operator()(int const n, TensorView<Type> dx, int const incx, TensorView<Type> dy, int const incy)
+    const
 {
   Type dtemp;
   int  i;
@@ -95,22 +95,46 @@ void Blas<S, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x)
   }
 }
 
-template class Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::NOT_PARALLEL>;
-template class Blas<float, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::NOT_PARALLEL>;
-template class Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::THREADING>;
-template class Blas<float, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::THREADING>;
-template class Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::VECTORISE>;
-template class Blas<float, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::VECTORISE>;
-template class Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::VECTORISE | platform::Parallelisation::THREADING>;
-template class Blas<float, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),
-                    platform::Parallelisation::VECTORISE | platform::Parallelisation::THREADING>;
+template class Blas<
+    double,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::NOT_PARALLEL>;
+template class Blas<
+    float,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::NOT_PARALLEL>;
+template class Blas<
+    double,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::THREADING>;
+template class Blas<
+    float,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::THREADING>;
+template class Blas<
+    double,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::VECTORISE>;
+template class Blas<
+    float,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::VECTORISE>;
+template class Blas<
+    double,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::VECTORISE | platform::Parallelisation::THREADING>;
+template class Blas<
+    float,
+    Signature(_x, _y <= _n, _x, _m, _y, _p),
+    Computes(_x, _y <= _y, _x),
+    platform::Parallelisation::VECTORISE | platform::Parallelisation::THREADING>;
 
 }  // namespace linalg
 }  // namespace math

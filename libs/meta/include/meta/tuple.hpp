@@ -101,7 +101,8 @@ struct Tuple<std::tuple<T, Ts...>> : TupleOperations<std::tuple<T, Ts...>>
 {
   using FirstType = T;
   using LastType  = std::tuple_element_t<
-      0, typename TupleOperations<std::tuple<T, Ts...>>::template TakeTerminal<1>::type>;
+      0,
+      typename TupleOperations<std::tuple<T, Ts...>>::template TakeTerminal<1>::type>;
 };
 
 template <typename T>

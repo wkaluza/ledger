@@ -42,14 +42,14 @@ TYPED_TEST(MinkowskiTest, simple_test)
   TypeParam a   = TypeParam::FromString("1, 0, 0");
   TypeParam b   = TypeParam::FromString("0, 1, 0");
   Type      ret = distance::Minkowski(a, b, Type{2});
-  EXPECT_NEAR(static_cast<double>(ret), 1.41421356237,
-              static_cast<double>(function_tolerance<Type>()));
+  EXPECT_NEAR(
+      static_cast<double>(ret), 1.41421356237, static_cast<double>(function_tolerance<Type>()));
 
   a   = TypeParam::FromString("1, 0, 0");
   b   = TypeParam::FromString("0, 1, 0");
   ret = distance::Minkowski(a, b, Type{3});
-  EXPECT_NEAR(static_cast<double>(ret), 1.25992104989,
-              static_cast<double>(function_tolerance<Type>()));
+  EXPECT_NEAR(
+      static_cast<double>(ret), 1.25992104989, static_cast<double>(function_tolerance<Type>()));
 
   a   = TypeParam::FromString("1, 5, 7");
   ret = distance::Minkowski(a, a, Type{3});
@@ -60,16 +60,20 @@ TYPED_TEST(MinkowskiTest, simple_test)
   b         = TypeParam::FromString("10, 11, 12");
   ret       = distance::Minkowski(a, b, Type{1});
   Type ret2 = distance::Manhattan(a, b);
-  EXPECT_NEAR(static_cast<double>(ret), static_cast<double>(ret2),
-              static_cast<double>(function_tolerance<Type>()));
+  EXPECT_NEAR(
+      static_cast<double>(ret),
+      static_cast<double>(ret2),
+      static_cast<double>(function_tolerance<Type>()));
 
   // minkowski with lambda=2 == euclidean
   a    = TypeParam::FromString("1, 0, 0");
   b    = TypeParam::FromString("0, 1, 0");
   ret  = distance::Minkowski(a, b, Type{2});
   ret2 = distance::Euclidean(a, b);
-  EXPECT_NEAR(static_cast<double>(ret), static_cast<double>(ret2),
-              static_cast<double>(function_tolerance<Type>()));
+  EXPECT_NEAR(
+      static_cast<double>(ret),
+      static_cast<double>(ret2),
+      static_cast<double>(function_tolerance<Type>()));
 }
 
 }  // namespace test

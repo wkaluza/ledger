@@ -21,10 +21,12 @@
 namespace fetch {
 namespace beacon {
 
-TrustedDealerSetupService::TrustedDealerSetupService(MuddleInterface &       muddle,
-                                                     ManifestCacheInterface &manifest_cache,
-                                                     CertificatePtr const &  certificate,
-                                                     double threshold, uint64_t aeon_period)
+TrustedDealerSetupService::TrustedDealerSetupService(
+    MuddleInterface &       muddle,
+    ManifestCacheInterface &manifest_cache,
+    CertificatePtr const &  certificate,
+    double                  threshold,
+    uint64_t                aeon_period)
   : BeaconSetupService{muddle, manifest_cache, certificate}
   , certificate_{certificate}
   , threshold_{threshold}
@@ -32,16 +34,27 @@ TrustedDealerSetupService::TrustedDealerSetupService(MuddleInterface &       mud
 {}
 
 void TrustedDealerSetupService::StartNewCabinet(
-    CabinetMemberList members, uint64_t round_start, uint64_t start_time,
-    BlockEntropy const &prev_entropy, DkgOutput const &output,
+    CabinetMemberList                                             members,
+    uint64_t                                                      round_start,
+    uint64_t                                                      start_time,
+    BlockEntropy const &                                          prev_entropy,
+    DkgOutput const &                                             output,
     std::pair<SharedNotarisationManager, CabinetNotarisationKeys> notarisation_keys)
 {
   uint64_t round_end = round_start + aeon_period_ - 1;
   auto     diff_time =
       int64_t(GetTime(fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM))) -
       int64_t(start_time);
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting new cabinet from ", round_start, " to ", round_end,
-                 " at time: ", start_time, " (diff): ", diff_time);
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting new cabinet from ",
+      round_start,
+      " to ",
+      round_end,
+      " at time: ",
+      start_time,
+      " (diff): ",
+      diff_time);
 
   uint32_t threshold =
       static_cast<uint32_t>(std::floor(threshold_ * static_cast<double>(members.size()))) + 1;
@@ -77,8 +90,8 @@ void TrustedDealerSetupService::StartNewCabinet(
     // Put notarisation keys in block entropy
     beacon->block_entropy.aeon_notarisation_keys = aeon_keys;
 
-    notarisation_keys.first->SetAeonDetails(round_start, round_end, threshold,
-                                            notarisation_keys.second);
+    notarisation_keys.first->SetAeonDetails(
+        round_start, round_end, threshold, notarisation_keys.second);
     notarisation_callback_function_(notarisation_keys.first);
   }
 

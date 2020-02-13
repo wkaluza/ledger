@@ -84,9 +84,12 @@ Contract::Result SmartContractManager::OnCreate(chain::Transaction const &tx)
   // fail if the extraction fails
   if (!extract_success)
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Failed to extract contract data from transaction body. Debug: ", contract_hash,
-                   " : ", contract_source);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Failed to extract contract data from transaction body. Debug: ",
+        contract_hash,
+        " : ",
+        contract_source);
     return {Status::FAILED};
   }
 
@@ -105,9 +108,12 @@ Contract::Result SmartContractManager::OnCreate(chain::Transaction const &tx)
 
   if (calculated_hash != contract_hash)
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Warning! Failed to match calculated hash with provided hash: ", calculated_hash,
-                   " to ", contract_hash);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Warning! Failed to match calculated hash with provided hash: ",
+        calculated_hash,
+        " to ",
+        contract_hash);
 
     return {Status::FAILED};
   }
@@ -124,8 +130,12 @@ Contract::Result SmartContractManager::OnCreate(chain::Transaction const &tx)
   SmartContractWrapper contract;
   if (GetStateRecord(contract, contract_address))
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Contract ", contract_address.display(), " already created @ ",
-                   contract.creation_timestamp);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Contract ",
+        contract_address.display(),
+        " already created @ ",
+        contract.creation_timestamp);
     return {Status::OK};
   }
 
@@ -174,7 +184,10 @@ Contract::Result SmartContractManager::OnCreate(chain::Transaction const &tx)
     state().PushContext(contract_address.display());
 
     {
-      ContractContext ctx{context().token_contract, tx.contract_address(), nullptr, &state(),
+      ContractContext         ctx{context().token_contract,
+                          tx.contract_address(),
+                          nullptr,
+                          &state(),
                           context().block_index};
       ContractContextAttacher raii(smart_contract, ctx);
       init_status = smart_contract.DispatchInitialise(tx.from(), tx);
@@ -186,8 +199,8 @@ Contract::Result SmartContractManager::OnCreate(chain::Transaction const &tx)
       return init_status;
     }
   }
-  auto const status = SetStateRecord(SmartContractWrapper{contract_source, init_status.block_index},
-                                     contract_address);
+  auto const status = SetStateRecord(
+      SmartContractWrapper{contract_source, init_status.block_index}, contract_address);
   if (status != StateAdapter::Status::OK)
   {
     FETCH_LOG_INFO(LOGGING_NAME, "Failed to store smart contract to state DB!");

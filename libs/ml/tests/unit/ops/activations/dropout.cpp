@@ -91,23 +91,29 @@ TYPED_TEST(DropoutTest, forward_test)
 
   // test correct fraction and sum
   DataType abs_error = two_stdev(tensorsize, static_cast<DataType>(prob));
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction)), static_cast<double>(prob),
-              static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction)),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
   // using 2* two_stdev * tensorsize for the error on this calculation is not quite correct but it's
   // close enough
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction)),
-              static_cast<double>(fetch::math::Sum(data)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction)),
+      static_cast<double>(fetch::math::Sum(data)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
 
   // Test after generating new random alpha value
   op.Forward(VecTensorType({std::make_shared<const TensorType>(data)}), prediction);
 
   // test correct fraction and sum
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction)), static_cast<double>(prob),
-              static_cast<double>(abs_error));
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction)),
-              static_cast<double>(fetch::math::Sum(data)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction)),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction)),
+      static_cast<double>(fetch::math::Sum(data)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
 
   // Test with is_training set to false
   op.SetTraining(false);
@@ -136,11 +142,14 @@ TYPED_TEST(DropoutTest, forward_3d_tensor_test)
 
   // test correct fraction, sum and shape
   DataType abs_error = two_stdev(tensorsize, static_cast<DataType>(prob));
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction)), static_cast<double>(prob),
-              static_cast<double>(abs_error));
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction)),
-              static_cast<double>(fetch::math::Sum(data)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction)),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction)),
+      static_cast<double>(fetch::math::Sum(data)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
   EXPECT_EQ(prediction.shape(), data.shape());
 }
 
@@ -167,11 +176,14 @@ TYPED_TEST(DropoutTest, backward_test)
 
   // test correct fraction and sum
   DataType abs_error = two_stdev(tensorsize, static_cast<DataType>(prob));
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction[0])), static_cast<double>(prob),
-              static_cast<double>(abs_error));
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction[0])),
-              static_cast<double>(fetch::math::Sum(error)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction[0])),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction[0])),
+      static_cast<double>(fetch::math::Sum(error)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
 
   // Test after generating new random alpha value
   // Forward pass will update random value
@@ -180,11 +192,14 @@ TYPED_TEST(DropoutTest, backward_test)
   prediction = op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct fraction and sum
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction[0])), static_cast<double>(prob),
-              static_cast<double>(abs_error));
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction[0])),
-              static_cast<double>(fetch::math::Sum(error)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction[0])),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction[0])),
+      static_cast<double>(fetch::math::Sum(error)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
 }
 
 TYPED_TEST(DropoutTest, backward_3d_tensor_test)
@@ -214,11 +229,14 @@ TYPED_TEST(DropoutTest, backward_3d_tensor_test)
 
   // test correct fraction, sum and shape
   DataType abs_error = two_stdev(tensorsize, static_cast<DataType>(prob));
-  EXPECT_NEAR(static_cast<double>(zero_fraction(prediction[0])), static_cast<double>(prob),
-              static_cast<double>(abs_error));
-  EXPECT_NEAR(static_cast<double>(fetch::math::Sum(prediction[0])),
-              static_cast<double>(fetch::math::Sum(error)),
-              static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
+  EXPECT_NEAR(
+      static_cast<double>(zero_fraction(prediction[0])),
+      static_cast<double>(prob),
+      static_cast<double>(abs_error));
+  EXPECT_NEAR(
+      static_cast<double>(fetch::math::Sum(prediction[0])),
+      static_cast<double>(fetch::math::Sum(error)),
+      static_cast<double>(DataType{2} * abs_error * static_cast<DataType>(tensorsize)));
   EXPECT_EQ(prediction[0].shape(), error.shape());
 }
 
@@ -329,7 +347,8 @@ TYPED_TEST(DropoutTest, saveparams_backward_3d_tensor_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 

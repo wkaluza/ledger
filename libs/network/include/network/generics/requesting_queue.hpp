@@ -296,8 +296,10 @@ typename RequestingQueueOf<K, R, P, H>::KeySet RequestingQueueOf<K, R, P, H>::Fi
 
   KeySet keys;
 
-  std::copy_if(inputs.begin(), inputs.end(), std::inserter(keys, keys.begin()),
-               [this](Key const &key) { return requests_.find(key) == requests_.end(); });
+  std::copy_if(
+      inputs.begin(), inputs.end(), std::inserter(keys, keys.begin()), [this](Key const &key) {
+        return requests_.find(key) == requests_.end();
+      });
 
   return keys;
 }

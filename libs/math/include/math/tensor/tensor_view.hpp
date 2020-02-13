@@ -133,8 +133,8 @@ template <typename T, typename C>
 typename TensorView<T, C>::IteratorType TensorView<T, C>::end()
 {
   SizeType padded_size = padded_height_ * width_;
-  return IteratorType(data_.pointer() + padded_size, height_ * width_, padded_size, height_,
-                      padded_height_);
+  return IteratorType(
+      data_.pointer() + padded_size, height_ * width_, padded_size, height_, padded_height_);
 }
 
 /**
@@ -146,8 +146,8 @@ typename TensorView<T, C>::IteratorType TensorView<T, C>::end()
 template <typename T, typename C>
 typename TensorView<T, C>::ConstIteratorType TensorView<T, C>::cbegin() const
 {
-  return ConstIteratorType(data_.pointer(), height_ * width_, padded_height_ * width_, height_,
-                           padded_height_);
+  return ConstIteratorType(
+      data_.pointer(), height_ * width_, padded_height_ * width_, height_, padded_height_);
 }
 
 /**
@@ -160,8 +160,8 @@ template <typename T, typename C>
 typename TensorView<T, C>::ConstIteratorType TensorView<T, C>::cend() const
 {
   SizeType padded_size = padded_height_ * width_;
-  return ConstIteratorType(data_.pointer() + padded_size, height_ * width_, padded_size, height_,
-                           padded_height_);
+  return ConstIteratorType(
+      data_.pointer() + padded_size, height_ * width_, padded_size, height_, padded_height_);
 }
 
 /**

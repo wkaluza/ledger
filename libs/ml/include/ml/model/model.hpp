@@ -76,8 +76,10 @@ public:
 
   virtual ~Model() = default;
 
-  void Compile(OptimiserType optimiser_type, ops::LossType loss_type = ops::LossType::NONE,
-               std::vector<ops::MetricType> const &metrics = std::vector<ops::MetricType>());
+  void Compile(
+      OptimiserType                       optimiser_type,
+      ops::LossType                       loss_type = ops::LossType::NONE,
+      std::vector<ops::MetricType> const &metrics   = std::vector<ops::MetricType>());
 
   /// training and testing ///
   void           Train();
@@ -85,8 +87,9 @@ public:
   void           Train(SizeType n_rounds, DataType &loss);
   void           Test(DataType &test_loss);
   void           Predict(TensorType &input, TensorType &output);
-  DataVectorType Evaluate(dataloaders::DataLoaderMode dl_mode = dataloaders::DataLoaderMode::TEST,
-                          SizeType                    batch_size = 0);
+  DataVectorType Evaluate(
+      dataloaders::DataLoaderMode dl_mode    = dataloaders::DataLoaderMode::TEST,
+      SizeType                    batch_size = 0);
 
   template <typename... Params>
   void SetData(Params... params);
@@ -133,8 +136,10 @@ protected:
 
   DataType loss_;
 
-  virtual void PrintStats(SizeType epoch, DataType loss,
-                          DataType test_loss = fetch::math::numeric_max<DataType>());
+  virtual void PrintStats(
+      SizeType epoch,
+      DataType loss,
+      DataType test_loss = fetch::math::numeric_max<DataType>());
 
 private:
   void TrainImplementation(DataType &loss, SizeType n_rounds = 1);

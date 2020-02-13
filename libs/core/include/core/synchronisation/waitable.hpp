@@ -103,14 +103,14 @@ void Waitable<T, M>::Wait(Predicate &&predicate) const
 {
   std::unique_lock<M> lock{protected_payload_.mutex_};
 
-  condition_.wait(lock,
-                  [this, predicate]() -> bool { return predicate(protected_payload_.payload_); });
+  condition_.wait(
+      lock, [this, predicate]() -> bool { return predicate(protected_payload_.payload_); });
 }
 
 template <typename T, typename M>
 template <typename Predicate, typename R, typename P>
-bool Waitable<T, M>::Wait(Predicate &&                       predicate,
-                          std::chrono::duration<R, P> const &max_wait_time) const
+bool Waitable<T, M>::Wait(Predicate &&predicate, std::chrono::duration<R, P> const &max_wait_time)
+    const
 {
   std::unique_lock<M> lock{protected_payload_.mutex_};
 

@@ -85,8 +85,10 @@ bool AgentDirectory::UnregisterAgent(ConstByteArray const &pk)
   return true;
 }
 
-bool AgentDirectory::RegisterVocabularyLocation(AgentId id, std::string model,
-                                                SemanticPosition position)
+bool AgentDirectory::RegisterVocabularyLocation(
+    AgentId          id,
+    std::string      model,
+    SemanticPosition position)
 {
   // We can only register a vocabulary location for existing agents
   if (agents_.find(id) == agents_.end())

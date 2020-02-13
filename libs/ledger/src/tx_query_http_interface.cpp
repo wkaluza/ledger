@@ -42,7 +42,8 @@ namespace ledger {
 TxQueryHttpInterface::TxQueryHttpInterface(StorageUnitInterface &storage_unit)
   : storage_unit_{storage_unit}
 {
-  Get("/api/tx/(digest=[a-fA-F0-9]{64})/", "Retrieves a transaction.",
+  Get("/api/tx/(digest=[a-fA-F0-9]{64})/",
+      "Retrieves a transaction.",
       {
           {"digest", "The transaction hash.", http::validators::StringValue()},
       },

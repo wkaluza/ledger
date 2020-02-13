@@ -86,8 +86,9 @@ void Embeddings<TensorType>::Forward(VecTensorType const &inputs, TensorType &ou
 }
 
 template <class TensorType>
-std::vector<TensorType> Embeddings<TensorType>::Backward(VecTensorType const &inputs,
-                                                         TensorType const &   error_signal)
+std::vector<TensorType> Embeddings<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(inputs.front()->shape().size() == 2);
@@ -132,8 +133,8 @@ std::vector<math::SizeType> Embeddings<TensorType>::ComputeOutputShape(
     VecTensorType const &inputs) const
 {
   auto                  feature_size = this->data_->shape().at(0);
-  std::vector<SizeType> output_shape{feature_size, inputs.front()->shape().at(0),
-                                     inputs.front()->shape().at(1)};
+  std::vector<SizeType> output_shape{
+      feature_size, inputs.front()->shape().at(0), inputs.front()->shape().at(1)};
   return output_shape;
 }
 

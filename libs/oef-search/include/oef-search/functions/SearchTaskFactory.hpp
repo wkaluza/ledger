@@ -37,9 +37,10 @@ class SearchTaskFactory : public IOefTaskFactory<OefSearchEndpoint>,
 public:
   static constexpr char const *LOGGING_NAME = "SearchTaskFactory";
 
-  SearchTaskFactory(std::shared_ptr<OefSearchEndpoint>     the_endpoint,
-                    std::shared_ptr<OutboundConversations> outbounds,
-                    std::shared_ptr<DapManager>            dap_manager)
+  SearchTaskFactory(
+      std::shared_ptr<OefSearchEndpoint>     the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<DapManager>            dap_manager)
     : IOefTaskFactory(the_endpoint, outbounds)
     , dap_manager_{std::move(dap_manager)}
   {}
@@ -54,8 +55,10 @@ protected:
   {}
 
   void HandleQuery(fetch::oef::pb::SearchQuery &query, const Uri &current_uri);
-  void ExecuteQuery(std::shared_ptr<Branch> &root, const fetch::oef::pb::SearchQuery &query,
-                    const Uri &current_uri);
+  void ExecuteQuery(
+      std::shared_ptr<Branch> &          root,
+      const fetch::oef::pb::SearchQuery &query,
+      const Uri &                        current_uri);
 
 protected:
   std::shared_ptr<DapManager> dap_manager_;

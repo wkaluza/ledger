@@ -132,8 +132,8 @@ void AbstractConnection::SetPort(uint16_t p)
 
 void AbstractConnection::SignalLeave()
 {
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Connection terminated for handle ", handle_.load(),
-                  ", SignalLeave called.");
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME, "Connection terminated for handle ", handle_.load(), ", SignalLeave called.");
   std::function<void()> cb;
   {
     FETCH_LOCK(callback_mutex_);

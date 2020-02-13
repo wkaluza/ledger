@@ -29,10 +29,12 @@ namespace optimisers {
  * @tparam T
  */
 template <class T>
-SGDOptimiser<T>::SGDOptimiser(std::shared_ptr<Graph<T>>       graph,
-                              std::vector<std::string> const &input_node_names,
-                              std::string const &             label_node_name,
-                              std::string const &output_node_name, DataType const &learning_rate)
+SGDOptimiser<T>::SGDOptimiser(
+    std::shared_ptr<Graph<T>>       graph,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name,
+    DataType const &                learning_rate)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate)
 {}
 
@@ -42,8 +44,10 @@ SGDOptimiser<T>::SGDOptimiser(std::shared_ptr<Graph<T>>       graph,
  */
 template <class T>
 SGDOptimiser<T>::SGDOptimiser(
-    std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-    std::string const &label_node_name, std::string const &output_node_name,
+    std::shared_ptr<Graph<T>>                                                  graph,
+    std::vector<std::string> const &                                           input_node_names,
+    std::string const &                                                        label_node_name,
+    std::string const &                                                        output_node_name,
     fetch::ml::optimisers::LearningRateParam<SGDOptimiser<T>::DataType> const &learning_rate_param)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate_param)
 {}
@@ -95,8 +99,8 @@ void SGDOptimiser<T>::ApplyGradients(SizeType batch_size)
           TensorType refs_slice_tensor = refs_slice.Copy();
 
           // output_grad[i] = (input_grad[i] / batch_size) * -learning_rate
-          fetch::math::Multiply(refs_slice_tensor, neg_learning_rate_div_batch_size,
-                                gradient_slice_tensor);
+          fetch::math::Multiply(
+              refs_slice_tensor, neg_learning_rate_div_batch_size, gradient_slice_tensor);
 
           gradient_slice.Assign(gradient_slice_tensor);
         }

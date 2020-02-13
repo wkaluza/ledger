@@ -38,7 +38,9 @@ struct GenesisDescriptor
   char const *contents;
 };
 
-GenesisDescriptor const HARD_CODED_CONFIGS[] = {{"mainnet", 10000u, 250000u,
+GenesisDescriptor const HARD_CODED_CONFIGS[] = {{"mainnet",
+                                                 10000u,
+                                                 250000u,
                                                  R"(
 {
   "version": 4,

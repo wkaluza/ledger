@@ -40,12 +40,14 @@ NotarisationManager::Signature NotarisationManager::Sign(MessagePayload const &m
   return crypto::mcl::AggregateSign(message, aggregate_private_key_);
 }
 
-bool NotarisationManager::Verify(MessagePayload const &message, Signature const &signature,
-                                 MuddleAddress const &member)
+bool NotarisationManager::Verify(
+    MessagePayload const &message,
+    Signature const &     signature,
+    MuddleAddress const & member)
 {
   uint32_t member_index = identity_to_index_[member];
-  return crypto::mcl::VerifySign(cabinet_public_keys_[member_index].aggregate_public_key, message,
-                                 signature, GetGenerator());
+  return crypto::mcl::VerifySign(
+      cabinet_public_keys_[member_index].aggregate_public_key, message, signature, GetGenerator());
 }
 
 NotarisationManager::AggregateSignature NotarisationManager::ComputeAggregateSignature(
@@ -56,12 +58,13 @@ NotarisationManager::AggregateSignature NotarisationManager::ComputeAggregateSig
   {
     signatures.insert({identity_to_index_[share.first], share.second});
   }
-  return crypto::mcl::ComputeAggregateSignature(signatures,
-                                                static_cast<uint32_t>(identity_to_index_.size()));
+  return crypto::mcl::ComputeAggregateSignature(
+      signatures, static_cast<uint32_t>(identity_to_index_.size()));
 }
 
-bool NotarisationManager::VerifyAggregateSignature(MessagePayload const &    message,
-                                                   AggregateSignature const &aggregate_signature)
+bool NotarisationManager::VerifyAggregateSignature(
+    MessagePayload const &    message,
+    AggregateSignature const &aggregate_signature)
 {
   if (aggregate_signature.second.size() != cabinet_public_keys_.size())
   {
@@ -69,13 +72,14 @@ bool NotarisationManager::VerifyAggregateSignature(MessagePayload const &    mes
   }
   PublicKey aggregate_public_key =
       crypto::mcl::ComputeAggregatePublicKey(aggregate_signature.second, cabinet_public_keys_);
-  return crypto::mcl::VerifySign(aggregate_public_key, message, aggregate_signature.first,
-                                 GetGenerator());
+  return crypto::mcl::VerifySign(
+      aggregate_public_key, message, aggregate_signature.first, GetGenerator());
 }
 
-bool NotarisationManager::VerifyAggregateSignature(MessagePayload const &    message,
-                                                   AggregateSignature const &aggregate_signature,
-                                                   std::vector<PublicKey> const &public_keys)
+bool NotarisationManager::VerifyAggregateSignature(
+    MessagePayload const &        message,
+    AggregateSignature const &    aggregate_signature,
+    std::vector<PublicKey> const &public_keys)
 {
   if (aggregate_signature.second.size() != public_keys.size())
   {
@@ -83,8 +87,8 @@ bool NotarisationManager::VerifyAggregateSignature(MessagePayload const &    mes
   }
   PublicKey aggregate_public_key =
       crypto::mcl::ComputeAggregatePublicKey(aggregate_signature.second, public_keys);
-  return crypto::mcl::VerifySign(aggregate_public_key, message, aggregate_signature.first,
-                                 GetGenerator());
+  return crypto::mcl::VerifySign(
+      aggregate_public_key, message, aggregate_signature.first, GetGenerator());
 }
 
 NotarisationManager::PublicKey NotarisationManager::GenerateKeys()
@@ -100,7 +104,9 @@ NotarisationManager::PublicKey NotarisationManager::GenerateKeys()
 }
 
 void NotarisationManager::SetAeonDetails(
-    uint64_t round_start, uint64_t round_end, uint32_t threshold,
+    uint64_t                                  round_start,
+    uint64_t                                  round_end,
+    uint32_t                                  threshold,
     std::map<MuddleAddress, PublicKey> const &cabinet_public_keys)
 {
   round_start_ = round_start;

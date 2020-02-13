@@ -31,8 +31,9 @@ namespace crypto {
 template <typename T>
 byte_array::ByteArray Hash(byte_array::ConstByteArray const &input)
 {
-  static_assert(std::is_base_of<HasherInterface, T>::value,
-                "Use a type derived from fetch::crypto::Hasher:Interface");
+  static_assert(
+      std::is_base_of<HasherInterface, T>::value,
+      "Use a type derived from fetch::crypto::Hasher:Interface");
   T hasher;
 
   hasher.Reset();
@@ -43,8 +44,9 @@ byte_array::ByteArray Hash(byte_array::ConstByteArray const &input)
 template <typename T>
 void Hash(uint8_t const *const input, std::size_t const input_size, uint8_t *const output)
 {
-  static_assert(std::is_base_of<HasherInterface, T>::value,
-                "Use a type derived from fetch::crypto::Hasher:Interface");
+  static_assert(
+      std::is_base_of<HasherInterface, T>::value,
+      "Use a type derived from fetch::crypto::Hasher:Interface");
   T hasher;
 
   hasher.Reset();

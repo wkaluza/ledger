@@ -36,8 +36,11 @@ class Oefv1Listener : public IOefListener<IOefTaskFactory<OefAgentEndpoint>, Oef
 public:
   using ConfigMap = std::unordered_map<std::string, std::string>;
 
-  Oefv1Listener(std::shared_ptr<Core> const &core, unsigned short port, IKarmaPolicy *karmaPolicy,
-                ConfigMap endpointConfig);
+  Oefv1Listener(
+      std::shared_ptr<Core> const &core,
+      unsigned short               port,
+      IKarmaPolicy *               karmaPolicy,
+      ConfigMap                    endpointConfig);
   ~Oefv1Listener() override
   {
     std::cout << "Listener on " << port << " GONE" << std::endl;

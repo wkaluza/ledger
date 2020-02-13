@@ -102,9 +102,13 @@ struct CabinetNode
   }
 };
 
-void RunHonestCabinetRenewal(uint16_t delay = 100, uint16_t total_renewals = 4,
-                             uint16_t number_of_cabinets = 4, uint16_t cabinet_size = 4,
-                             uint16_t numbers_per_aeon = 10, double threshold = 0.5)
+void RunHonestCabinetRenewal(
+    uint16_t delay              = 100,
+    uint16_t total_renewals     = 4,
+    uint16_t number_of_cabinets = 4,
+    uint16_t cabinet_size       = 4,
+    uint16_t numbers_per_aeon   = 10,
+    double   threshold          = 0.5)
 {
   fetch::crypto::mcl::details::MCLInitialiser();
 
@@ -205,7 +209,9 @@ void RunHonestCabinetRenewal(uint16_t delay = 100, uint16_t total_renewals = 4,
         member->beacon_setup_service.StartNewCabinet(
             cabinet_select,
             static_cast<uint32_t>(static_cast<double>(cabinet_select.size()) * threshold),
-            i * numbers_per_aeon, (i + 1) * numbers_per_aeon, start_time,
+            i * numbers_per_aeon,
+            (i + 1) * numbers_per_aeon,
+            start_time,
             member->genesis_block_entropy);
       }
     }

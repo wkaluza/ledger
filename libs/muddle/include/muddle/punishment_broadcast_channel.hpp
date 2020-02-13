@@ -86,9 +86,13 @@ public:
 
   QuestionStruct AllowPeerPull();
 
-  PunishmentBroadcastChannel(Endpoint &endpoint, MuddleAddress address, CallbackFunction call_back,
-                             CertificatePtr certificate, uint16_t channel = CHANNEL_RBC_BROADCAST,
-                             bool ordered_delivery = true);
+  PunishmentBroadcastChannel(
+      Endpoint &       endpoint,
+      MuddleAddress    address,
+      CallbackFunction call_back,
+      CertificatePtr   certificate,
+      uint16_t         channel          = CHANNEL_RBC_BROADCAST,
+      bool             ordered_delivery = true);
 
   ~PunishmentBroadcastChannel() override;
 

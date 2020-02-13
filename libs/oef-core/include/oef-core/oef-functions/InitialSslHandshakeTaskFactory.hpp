@@ -34,12 +34,13 @@ class InitialSslHandshakeTaskFactory : public IOefTaskFactory<OefAgentEndpoint>
 public:
   static constexpr char const *LOGGING_NAME = "InitialSslHandshakeTaskFactory";
 
-  InitialSslHandshakeTaskFactory(std::string const &                    core_key,
-                                 std::shared_ptr<OefAgentEndpoint>      the_endpoint,
-                                 std::shared_ptr<OutboundConversations> outbounds,
-                                 std::shared_ptr<Agents>                agents,
-                                 std::shared_ptr<std::set<PublicKey>>   white_list,
-                                 bool                                   white_list_enabled)
+  InitialSslHandshakeTaskFactory(
+      std::string const &                    core_key,
+      std::shared_ptr<OefAgentEndpoint>      the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<Agents>                agents,
+      std::shared_ptr<std::set<PublicKey>>   white_list,
+      bool                                   white_list_enabled)
     : IOefTaskFactory(std::move(the_endpoint), std::move(outbounds))
     , agents_{std::move(agents)}
     , public_key_{""}

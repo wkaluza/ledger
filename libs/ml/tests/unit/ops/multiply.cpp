@@ -57,12 +57,14 @@ TYPED_TEST(MultiplyTest, forward_test)
 
   TypeParam prediction(op.ComputeOutputShape(
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}));
-  op.Forward({std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)},
-             prediction);
+  op.Forward(
+      {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   ASSERT_TRUE(!fetch::math::state_overflow<typename TypeParam::Type>());
 }
@@ -100,11 +102,15 @@ TYPED_TEST(MultiplyTest, backward_test_NMB_N11)
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, error);
 
   // test correct values and shape
-  ASSERT_TRUE(prediction[0].AllClose(gt_1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(prediction[0].shape() == data_1.shape());
-  ASSERT_TRUE(prediction[1].AllClose(gt_2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(prediction[1].shape() == data_2.shape());
 }
 
@@ -139,11 +145,15 @@ TYPED_TEST(MultiplyTest, backward_test_NMB_111)
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, error);
 
   // test correct values and shape
-  ASSERT_TRUE(prediction[0].AllClose(gt_1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(prediction[0].shape() == data_1.shape());
-  ASSERT_TRUE(prediction[1].AllClose(gt_2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(prediction[1].shape() == data_2.shape());
 }
 
@@ -179,10 +189,14 @@ TYPED_TEST(MultiplyTest, backward_test_NB_N1)
   // test correct values and shape
   ASSERT_TRUE(prediction[0].shape() == data_1.shape());
   ASSERT_TRUE(prediction[1].shape() == data_2.shape());
-  ASSERT_TRUE(prediction[0].AllClose(gt_1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction[1].AllClose(gt_2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(MultiplyTest, backward_test_NB_NB)
@@ -215,10 +229,14 @@ TYPED_TEST(MultiplyTest, backward_test_NB_NB)
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt_1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction[1].AllClose(gt_2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace

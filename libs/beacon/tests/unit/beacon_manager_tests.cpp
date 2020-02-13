@@ -77,8 +77,9 @@ TEST(beacon_manager, dkg_and_threshold_signing)
         std::distance(cabinet.begin(), cabinet.find(member_ptrs[index]->identity().identifier())));
     for (auto &mem : member_ptrs)
     {
-      EXPECT_EQ(manager->cabinet_index(mem->identity().identifier()),
-                std::distance(cabinet.begin(), cabinet.find(mem->identity().identifier())));
+      EXPECT_EQ(
+          manager->cabinet_index(mem->identity().identifier()),
+          std::distance(cabinet.begin(), cabinet.find(mem->identity().identifier())));
     }
     EXPECT_TRUE(manager->qual().empty());
     EXPECT_TRUE(manager->group_public_key() == zero.getStr());
@@ -130,8 +131,8 @@ TEST(beacon_manager, dkg_and_threshold_signing)
   // in correctly
   beacon_managers[0]->AddShares(honest, beacon_managers[1]->GetOwnShares(my_address));
   beacon_managers[0]->AddCoefficients(honest, beacon_managers[1]->GetCoefficients());
-  EXPECT_EQ(beacon_managers[0]->GetReceivedShares(honest),
-            beacon_managers[1]->GetOwnShares(my_address));
+  EXPECT_EQ(
+      beacon_managers[0]->GetReceivedShares(honest), beacon_managers[1]->GetOwnShares(my_address));
 
   // Add shares and coefficients failing verification from malicious party
   PrivateKey sprime_i;
@@ -167,8 +168,9 @@ TEST(beacon_manager, dkg_and_threshold_signing)
   correct_answer.first  = my_address;
   correct_answer.second = beacon_managers[2]->GetOwnShares(my_address);
   EXPECT_TRUE(beacon_managers[0]->VerifyComplaintAnswer(malicious, correct_answer));
-  EXPECT_EQ(beacon_managers[0]->GetReceivedShares(malicious),
-            beacon_managers[2]->GetOwnShares(my_address));
+  EXPECT_EQ(
+      beacon_managers[0]->GetReceivedShares(malicious),
+      beacon_managers[2]->GetOwnShares(my_address));
 
   // Distribute correct shares and coefficients amongst everyone else
   for (uint32_t index = 1; index < cabinet_size; ++index)
@@ -177,10 +179,10 @@ TEST(beacon_manager, dkg_and_threshold_signing)
     {
       if (index1 != index)
       {
-        beacon_managers[index]->AddShares(addresses[index1],
-                                          beacon_managers[index1]->GetOwnShares(addresses[index]));
-        beacon_managers[index]->AddCoefficients(addresses[index1],
-                                                beacon_managers[index1]->GetCoefficients());
+        beacon_managers[index]->AddShares(
+            addresses[index1], beacon_managers[index1]->GetOwnShares(addresses[index]));
+        beacon_managers[index]->AddCoefficients(
+            addresses[index1], beacon_managers[index1]->GetCoefficients());
       }
     }
   }
@@ -238,8 +240,8 @@ TEST(beacon_manager, dkg_and_threshold_signing)
     {
       if (index1 != index)
       {
-        beacon_managers[index]->AddQualCoefficients(addresses[index1],
-                                                    beacon_managers[index1]->GetQualCoefficients());
+        beacon_managers[index]->AddQualCoefficients(
+            addresses[index1], beacon_managers[index1]->GetQualCoefficients());
       }
     }
   }
@@ -297,13 +299,14 @@ TEST(beacon_manager, dkg_and_threshold_signing)
   {
     for (uint32_t index1 = index + 1; index1 < cabinet_size; ++index1)
     {
-      EXPECT_EQ(outputs[index].group_public_key.getStr(),
-                outputs[index1].group_public_key.getStr());
+      EXPECT_EQ(
+          outputs[index].group_public_key.getStr(), outputs[index1].group_public_key.getStr());
       EXPECT_EQ(outputs[index].qual, outputs[index1].qual);
       for (uint32_t shares_index = 0; shares_index < cabinet_size; ++shares_index)
       {
-        EXPECT_EQ(outputs[index].public_key_shares[shares_index],
-                  outputs[index1].public_key_shares[shares_index]);
+        EXPECT_EQ(
+            outputs[index].public_key_shares[shares_index],
+            outputs[index1].public_key_shares[shares_index]);
       }
     }
   }

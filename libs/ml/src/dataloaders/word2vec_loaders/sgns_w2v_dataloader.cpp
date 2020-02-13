@@ -31,11 +31,12 @@ namespace dataloaders {
  * @param negative_samples the number of total samples (all but one being negative)
  */
 template <typename TensorType>
-GraphW2VLoader<TensorType>::GraphW2VLoader(SizeType const &           window_size,
-                                           SizeType const &           negative_samples,
-                                           fixed_point::fp64_t const &freq_thresh,
-                                           SizeType const &           max_word_count,
-                                           SizeType const &           seed)
+GraphW2VLoader<TensorType>::GraphW2VLoader(
+    SizeType const &           window_size,
+    SizeType const &           negative_samples,
+    fixed_point::fp64_t const &freq_thresh,
+    SizeType const &           max_word_count,
+    SizeType const &           seed)
   : DataLoader<TensorType>()  // no random mode specified
   , current_sentence_(0)
   , current_word_(0)
@@ -429,8 +430,9 @@ typename GraphW2VLoader<TensorType>::ReturnType GraphW2VLoader<TensorType>::GetN
 }
 
 template <typename TensorType>
-bool GraphW2VLoader<TensorType>::AddData(std::vector<TensorType> const &input,
-                                         TensorType const &             label)
+bool GraphW2VLoader<TensorType>::AddData(
+    std::vector<TensorType> const &input,
+    TensorType const &             label)
 {
   FETCH_UNUSED(input);
   FETCH_UNUSED(label);
@@ -443,8 +445,10 @@ bool GraphW2VLoader<TensorType>::AddData(std::vector<TensorType> const &input,
  * @return bool indicates success
  */
 template <typename TensorType>
-void GraphW2VLoader<TensorType>::BuildVocabAndData(std::vector<std::string> const &sents,
-                                                   SizeType min_count, bool build_data)
+void GraphW2VLoader<TensorType>::BuildVocabAndData(
+    std::vector<std::string> const &sents,
+    SizeType                        min_count,
+    bool                            build_data)
 {
   // build vocab from sentences
   std::cout << "building vocab and data" << std::endl;
@@ -496,8 +500,9 @@ void GraphW2VLoader<TensorType>::BuildVocabAndData(std::vector<std::string> cons
 }
 
 template <typename TensorType>
-void GraphW2VLoader<TensorType>::BuildData(std::vector<std::string> const &sents,
-                                           SizeType                        min_count)
+void GraphW2VLoader<TensorType>::BuildData(
+    std::vector<std::string> const &sents,
+    SizeType                        min_count)
 {
   assert(vocab_->GetWordCount() >= 0);
 
@@ -587,8 +592,8 @@ math::SizeType GraphW2VLoader<TensorType>::vocab_size() const
  * @return
  */
 template <typename TensorType>
-std::shared_ptr<typename GraphW2VLoader<TensorType>::VocabType> const &
-GraphW2VLoader<TensorType>::GetVocab() const
+std::shared_ptr<typename GraphW2VLoader<TensorType>::VocabType> const &GraphW2VLoader<
+    TensorType>::GetVocab() const
 {
   return vocab_;
 }
@@ -628,8 +633,9 @@ typename GraphW2VLoader<TensorType>::SizeType GraphW2VLoader<TensorType>::Window
  * @return
  */
 template <typename TensorType>
-std::vector<std::string> GraphW2VLoader<TensorType>::PreprocessString(std::string const &s,
-                                                                      SizeType length_limit)
+std::vector<std::string> GraphW2VLoader<TensorType>::PreprocessString(
+    std::string const &s,
+    SizeType           length_limit)
 {
   std::string result;
   result.reserve(s.size());

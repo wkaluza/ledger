@@ -49,8 +49,9 @@ public:
     E_BLOCK_COUNT   = E_REGISTER_SIZE / sizeof(type)
   };
 
-  static_assert((E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
-                "type cannot be contained in the given register size.");
+  static_assert(
+      (E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
+      "type cannot be contained in the given register size.");
 
   VectorRegister() = default;
   VectorRegister(type const *d)  // NOLINT
@@ -114,8 +115,9 @@ public:
     E_BLOCK_COUNT   = E_REGISTER_SIZE / sizeof(type)
   };
 
-  static_assert((E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
-                "type cannot be contained in the given register size.");
+  static_assert(
+      (E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
+      "type cannot be contained in the given register size.");
 
   VectorRegister() = default;
   VectorRegister(type const *d)  // NOLINT
@@ -197,12 +199,12 @@ inline VectorRegister<float, 256> operator-(VectorRegister<float, 256> const &x)
   return {_mm256_sub_ps(_mm256_setzero_ps(), x.data())};
 }
 
-#define FETCH_ADD_OPERATOR(op, type, size, L, fnc)                                   \
-  inline VectorRegister<type, size> operator op(VectorRegister<type, size> const &a, \
-                                                VectorRegister<type, size> const &b) \
-  {                                                                                  \
-    L ret = fnc(a.data(), b.data());                                                 \
-    return {ret};                                                                    \
+#define FETCH_ADD_OPERATOR(op, type, size, L, fnc)                              \
+  inline VectorRegister<type, size> operator op(                                \
+      VectorRegister<type, size> const &a, VectorRegister<type, size> const &b) \
+  {                                                                             \
+    L ret = fnc(a.data(), b.data());                                            \
+    return {ret};                                                               \
   }
 
 FETCH_ADD_OPERATOR(*, float, 128, __m128, _mm_mul_ps)
@@ -217,12 +219,12 @@ FETCH_ADD_OPERATOR(+, float, 256, __m256, _mm256_add_ps)
 
 #undef FETCH_ADD_OPERATOR
 
-#define FETCH_ADD_OPERATOR(op, type, L, fnc)                                       \
-  inline VectorRegister<type, 128> operator op(VectorRegister<type, 128> const &a, \
-                                               VectorRegister<type, 128> const &b) \
-  {                                                                                \
-    L ret = fnc(a.data(), b.data());                                               \
-    return {ret};                                                                  \
+#define FETCH_ADD_OPERATOR(op, type, L, fnc)                                  \
+  inline VectorRegister<type, 128> operator op(                               \
+      VectorRegister<type, 128> const &a, VectorRegister<type, 128> const &b) \
+  {                                                                           \
+    L ret = fnc(a.data(), b.data());                                          \
+    return {ret};                                                             \
   }
 
 FETCH_ADD_OPERATOR(==, float, __m128, _mm_cmpeq_ps)
@@ -234,12 +236,12 @@ FETCH_ADD_OPERATOR(<, float, __m128, _mm_cmplt_ps)
 
 #undef FETCH_ADD_OPERATOR
 
-#define FETCH_ADD_OPERATOR(op, type, L, fnc)                                       \
-  inline VectorRegister<type, 256> operator op(VectorRegister<type, 256> const &a, \
-                                               VectorRegister<type, 256> const &b) \
-  {                                                                                \
-    L ret = _mm256_cmp_ps(a.data(), b.data(), fnc);                                \
-    return {ret};                                                                  \
+#define FETCH_ADD_OPERATOR(op, type, L, fnc)                                  \
+  inline VectorRegister<type, 256> operator op(                               \
+      VectorRegister<type, 256> const &a, VectorRegister<type, 256> const &b) \
+  {                                                                           \
+    L ret = _mm256_cmp_ps(a.data(), b.data(), fnc);                           \
+    return {ret};                                                             \
   }
 
 FETCH_ADD_OPERATOR(==, float, __m256, _CMP_EQ_OQ)
@@ -256,11 +258,14 @@ FETCH_ADD_OPERATOR(<, float, __m256, _CMP_LT_OQ)
 //__m128d _mm_cmpunord_pd (__m128d a, __m128d b)
 
 // Floats
-inline VectorRegister<float, 128> vector_zero_below_element(VectorRegister<float, 128> const &a,
-                                                            int const &                       n)
+inline VectorRegister<float, 128> vector_zero_below_element(
+    VectorRegister<float, 128> const &a,
+    int const &                       n)
 {
-  alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 >= n))), uint32_t(-(int32_t(1 >= n))),
-                                        uint32_t(-(int32_t(2 >= n))), uint32_t(-(int32_t(3 >= n)))};
+  alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 >= n))),
+                                        uint32_t(-(int32_t(1 >= n))),
+                                        uint32_t(-(int32_t(2 >= n))),
+                                        uint32_t(-(int32_t(3 >= n)))};
 
   __m128i conv = _mm_castps_si128(a.data());
   conv         = _mm_and_si128(conv, *reinterpret_cast<__m128i const *>(mask));
@@ -268,13 +273,18 @@ inline VectorRegister<float, 128> vector_zero_below_element(VectorRegister<float
   return {_mm_castsi128_ps(conv)};
 }
 
-inline VectorRegister<float, 256> vector_zero_below_element(VectorRegister<float, 256> const &a,
-                                                            int const &                       n)
+inline VectorRegister<float, 256> vector_zero_below_element(
+    VectorRegister<float, 256> const &a,
+    int const &                       n)
 {
-  alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))), uint32_t(-(int32_t(1 >= n))),
-                                        uint32_t(-(int32_t(2 >= n))), uint32_t(-(int32_t(3 >= n))),
-                                        uint32_t(-(int32_t(4 <= n))), uint32_t(-(int32_t(5 <= n))),
-                                        uint32_t(-(int32_t(6 <= n))), uint32_t(-(int32_t(7 <= n)))};
+  alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))),
+                                        uint32_t(-(int32_t(1 >= n))),
+                                        uint32_t(-(int32_t(2 >= n))),
+                                        uint32_t(-(int32_t(3 >= n))),
+                                        uint32_t(-(int32_t(4 <= n))),
+                                        uint32_t(-(int32_t(5 <= n))),
+                                        uint32_t(-(int32_t(6 <= n))),
+                                        uint32_t(-(int32_t(7 <= n)))};
 
   __m256i conv = _mm256_castps_si256(a.data());
   conv         = _mm256_and_si256(conv, *reinterpret_cast<__m256i const *>(mask));
@@ -282,11 +292,14 @@ inline VectorRegister<float, 256> vector_zero_below_element(VectorRegister<float
   return {_mm256_castsi256_ps(conv)};
 }
 
-inline VectorRegister<float, 128> vector_zero_above_element(VectorRegister<float, 128> const &a,
-                                                            int const &                       n)
+inline VectorRegister<float, 128> vector_zero_above_element(
+    VectorRegister<float, 128> const &a,
+    int const &                       n)
 {
-  alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 <= n))), uint32_t(-(int32_t(1 <= n))),
-                                        uint32_t(-(int32_t(2 <= n))), uint32_t(-(int32_t(3 <= n)))};
+  alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 <= n))),
+                                        uint32_t(-(int32_t(1 <= n))),
+                                        uint32_t(-(int32_t(2 <= n))),
+                                        uint32_t(-(int32_t(3 <= n)))};
 
   __m128i conv = _mm_castps_si128(a.data());
   conv         = _mm_and_si128(conv, *reinterpret_cast<__m128i const *>(mask));
@@ -294,13 +307,18 @@ inline VectorRegister<float, 128> vector_zero_above_element(VectorRegister<float
   return {_mm_castsi128_ps(conv)};
 }
 
-inline VectorRegister<float, 256> vector_zero_above_element(VectorRegister<float, 256> const &a,
-                                                            int const &                       n)
+inline VectorRegister<float, 256> vector_zero_above_element(
+    VectorRegister<float, 256> const &a,
+    int const &                       n)
 {
-  alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))), uint32_t(-(int32_t(1 >= n))),
-                                        uint32_t(-(int32_t(2 >= n))), uint32_t(-(int32_t(3 >= n))),
-                                        uint32_t(-(int32_t(4 <= n))), uint32_t(-(int32_t(5 <= n))),
-                                        uint32_t(-(int32_t(6 <= n))), uint32_t(-(int32_t(7 <= n)))};
+  alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))),
+                                        uint32_t(-(int32_t(1 >= n))),
+                                        uint32_t(-(int32_t(2 >= n))),
+                                        uint32_t(-(int32_t(3 >= n))),
+                                        uint32_t(-(int32_t(4 <= n))),
+                                        uint32_t(-(int32_t(5 <= n))),
+                                        uint32_t(-(int32_t(6 <= n))),
+                                        uint32_t(-(int32_t(7 <= n)))};
 
   __m256i conv = _mm256_castps_si256(a.data());
   conv         = _mm256_and_si256(conv, *reinterpret_cast<__m256i const *>(mask));

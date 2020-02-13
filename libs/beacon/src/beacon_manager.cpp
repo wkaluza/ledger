@@ -156,8 +156,9 @@ std::pair<BeaconManager::Share, BeaconManager::Share> BeaconManager::GetReceived
   return shares_j;
 }
 
-void BeaconManager::AddCoefficients(MuddleAddress const &           from,
-                                    std::vector<Coefficient> const &coefficients)
+void BeaconManager::AddCoefficients(
+    MuddleAddress const &           from,
+    std::vector<Coefficient> const &coefficients)
 {
   if (coefficients.size() == polynomial_degree_ + 1)
   {
@@ -167,8 +168,12 @@ void BeaconManager::AddCoefficients(MuddleAddress const &           from,
     }
     return;
   }
-  FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                 " received coefficients of incorrect size from node ", identity_to_index_[from]);
+  FETCH_LOG_WARN(
+      LOGGING_NAME,
+      "Node ",
+      cabinet_index_,
+      " received coefficients of incorrect size from node ",
+      identity_to_index_[from]);
 }
 
 void BeaconManager::AddShares(MuddleAddress const &from, std::pair<Share, Share> const &shares)
@@ -195,13 +200,21 @@ std::set<BeaconManager::MuddleAddress> BeaconManager::ComputeComplaints(
     {
       PublicKey rhs;
       PublicKey lhs;
-      lhs = crypto::mcl::ComputeLHS(g__s_ij[i][cabinet_index_], GetGroupG(), GetGroupH(),
-                                    s_ij[i][cabinet_index_], sprime_ij[i][cabinet_index_]);
+      lhs = crypto::mcl::ComputeLHS(
+          g__s_ij[i][cabinet_index_],
+          GetGroupG(),
+          GetGroupH(),
+          s_ij[i][cabinet_index_],
+          sprime_ij[i][cabinet_index_]);
       rhs = crypto::mcl::ComputeRHS(cabinet_index_, C_ik[i]);
       if (lhs != rhs || lhs.isZero())
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                       " received bad coefficients/shares from node ", i);
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Node ",
+            cabinet_index_,
+            " received bad coefficients/shares from node ",
+            i);
         complaints_local.insert(cab);
       }
     }
@@ -225,13 +238,23 @@ bool BeaconManager::VerifyComplaintAnswer(MuddleAddress const &from, ComplaintAn
   lhsG   = crypto::mcl::ComputeLHS(GetGroupG(), GetGroupH(), s, sprime);
   if (lhsG != rhsG || lhsG.isZero())
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_, " verification for node ", from_index,
-                   " complaint answer failed");
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Node ",
+        cabinet_index_,
+        " verification for node ",
+        from_index,
+        " complaint answer failed");
     return false;
   }
 
-  FETCH_LOG_INFO(LOGGING_NAME, "Node ", cabinet_index_, " verification for node ", from_index,
-                 " complaint answer succeeded");
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Node ",
+      cabinet_index_,
+      " verification for node ",
+      from_index,
+      " complaint answer succeeded");
   if (reporter_index == cabinet_index_)
   {
     FETCH_LOG_INFO(LOGGING_NAME, "Node ", cabinet_index_, " reset shares for ", from_index);
@@ -268,8 +291,9 @@ std::vector<BeaconManager::Coefficient> BeaconManager::GetQualCoefficients()
   return coefficients;
 }
 
-void BeaconManager::AddQualCoefficients(MuddleAddress const &           from,
-                                        std::vector<Coefficient> const &coefficients)
+void BeaconManager::AddQualCoefficients(
+    MuddleAddress const &           from,
+    std::vector<Coefficient> const &coefficients)
 {
   CabinetIndex from_index = identity_to_index_[from];
   if (coefficients.size() == polynomial_degree_ + 1)
@@ -280,9 +304,12 @@ void BeaconManager::AddQualCoefficients(MuddleAddress const &           from,
     }
     return;
   }
-  FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                 " received qual coefficients of incorrect size from node ",
-                 identity_to_index_[from]);
+  FETCH_LOG_WARN(
+      LOGGING_NAME,
+      "Node ",
+      cabinet_index_,
+      " received qual coefficients of incorrect size from node ",
+      identity_to_index_[from]);
 }
 
 /**
@@ -309,15 +336,24 @@ BeaconManager::SharesExposedMap BeaconManager::ComputeQualComplaints(
         rhs = crypto::mcl::ComputeRHS(cabinet_index_, A_ik[i]);
         if (lhs != rhs || rhs.isZero())
         {
-          FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                         " received qual coefficients from node ", i, " which failed verification");
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "Node ",
+              cabinet_index_,
+              " received qual coefficients from node ",
+              i,
+              " which failed verification");
           qual_complaints.insert({miner, {s_ij[i][cabinet_index_], sprime_ij[i][cabinet_index_]}});
         }
       }
       else
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                       " did not receive qual coefficients from node ", i);
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Node ",
+            cabinet_index_,
+            " did not receive qual coefficients from node ",
+            i);
         qual_complaints.insert({miner, {s_ij[i][cabinet_index_], sprime_ij[i][cabinet_index_]}});
       }
     }
@@ -325,8 +361,9 @@ BeaconManager::SharesExposedMap BeaconManager::ComputeQualComplaints(
   return qual_complaints;
 }
 
-BeaconManager::MuddleAddress BeaconManager::VerifyQualComplaint(MuddleAddress const &  from,
-                                                                ComplaintAnswer const &answer)
+BeaconManager::MuddleAddress BeaconManager::VerifyQualComplaint(
+    MuddleAddress const &  from,
+    ComplaintAnswer const &answer)
 {
   CabinetIndex from_index   = identity_to_index_[from];
   CabinetIndex victim_index = identity_to_index_[answer.first];
@@ -341,9 +378,14 @@ BeaconManager::MuddleAddress BeaconManager::VerifyQualComplaint(MuddleAddress co
   rhs    = crypto::mcl::ComputeRHS(from_index, C_ik[victim_index]);
   if (lhs != rhs || lhs.isZero())
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_,
-                    " received shares failing initial coefficients verification from node ",
-                    from_index, " for node ", victim_index);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Node ",
+        cabinet_index_,
+        " received shares failing initial coefficients verification from node ",
+        from_index,
+        " for node ",
+        victim_index);
     return from;
   }
 
@@ -351,14 +393,19 @@ BeaconManager::MuddleAddress BeaconManager::VerifyQualComplaint(MuddleAddress co
   rhs = crypto::mcl::ComputeRHS(from_index, A_ik[victim_index]);
   if (lhs != rhs || rhs.isZero())
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_,
-                    " received shares failing qual coefficients verification from node ",
-                    from_index, " for node ", victim_index);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Node ",
+        cabinet_index_,
+        " received shares failing qual coefficients verification from node ",
+        from_index,
+        " for node ",
+        victim_index);
     return answer.first;
   }
 
-  FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_, " received incorrect complaint from ",
-                 from_index);
+  FETCH_LOG_WARN(
+      LOGGING_NAME, "Node ", cabinet_index_, " received incorrect complaint from ", from_index);
   return from;
 }
 
@@ -410,12 +457,19 @@ void BeaconManager::AddReconstructionShare(MuddleAddress const &address)
   reconstruction_shares.at(address).second[cabinet_index_] = s_ij[index][cabinet_index_];
 }
 
-void BeaconManager::AddReconstructionShare(MuddleAddress const &                  from,
-                                           std::pair<MuddleAddress, Share> const &share)
+void BeaconManager::AddReconstructionShare(
+    MuddleAddress const &                  from,
+    std::pair<MuddleAddress, Share> const &share)
 {
   CabinetIndex from_index = identity_to_index_[from];
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_, "received good share from node ",
-                  from_index, "for reconstructing node ", identity_to_index_[share.first]);
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Node ",
+      cabinet_index_,
+      "received good share from node ",
+      from_index,
+      "for reconstructing node ",
+      identity_to_index_[share.first]);
   if (reconstruction_shares.find(share.first) == reconstruction_shares.end())
   {
     reconstruction_shares.insert(
@@ -423,8 +477,12 @@ void BeaconManager::AddReconstructionShare(MuddleAddress const &                
   }
   else if (!reconstruction_shares.at(share.first).second[from_index].isZero())
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_,
-                   " received duplicate reconstruction shares from node ", from_index);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Node ",
+        cabinet_index_,
+        " received duplicate reconstruction shares from node ",
+        from_index);
     return;
   }
   PrivateKey s;
@@ -451,8 +509,14 @@ void BeaconManager::VerifyReconstructionShare(MuddleAddress const &from, Exposed
   }
   else
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_, "received bad share from node ",
-                    identity_to_index_[from], "for reconstructing node ", victim_index);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Node ",
+        cabinet_index_,
+        "received bad share from node ",
+        identity_to_index_[from],
+        "for reconstructing node ",
+        victim_index);
   }
 }
 
@@ -465,8 +529,8 @@ void BeaconManager::VerifyReconstructionShare(MuddleAddress const &from, Exposed
 bool BeaconManager::RunReconstruction()
 {
   std::vector<std::vector<PrivateKey>> a_ik;
-  crypto::mcl::Init(a_ik, static_cast<uint32_t>(cabinet_size_),
-                    static_cast<uint32_t>(polynomial_degree_ + 1));
+  crypto::mcl::Init(
+      a_ik, static_cast<uint32_t>(cabinet_size_), static_cast<uint32_t>(polynomial_degree_ + 1));
   for (auto const &in : reconstruction_shares)
   {
     CabinetIndex            victim_index = identity_to_index_[in.first];
@@ -481,16 +545,28 @@ bool BeaconManager::RunReconstruction()
     if (parties.size() <= polynomial_degree_)
     {
       // Do not have enough good shares to be able to do reconstruction
-      FETCH_LOG_WARN(LOGGING_NAME, "Node ", cabinet_index_, " reconstruction for node ",
-                     victim_index, " failed with party size ", parties.size());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Node ",
+          cabinet_index_,
+          " reconstruction for node ",
+          victim_index,
+          " failed with party size ",
+          parties.size());
       return false;
     }
     std::vector<PrivateKey> points;
     std::vector<PrivateKey> shares_f;
     for (const auto &index : parties)
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Node ", cabinet_index_, " run reconstruction for node ",
-                      victim_index, " with shares from node ", index);
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Node ",
+          cabinet_index_,
+          " run reconstruction for node ",
+          victim_index,
+          " with shares from node ",
+          index);
       points.emplace_back(index + 1);  // adjust index in computation
       shares_f.push_back(shares[index]);
     }
@@ -574,8 +650,9 @@ void BeaconManager::Reset()
  * @param signature is the signature part.
  */
 
-BeaconManager::AddResult BeaconManager::AddSignaturePart(Identity const & from,
-                                                         Signature const &signature)
+BeaconManager::AddResult BeaconManager::AddSignaturePart(
+    Identity const & from,
+    Signature const &signature)
 {
   auto it = identity_to_index_.find(from.identifier());
   auto iq = qual_.find(from.identifier());
@@ -619,9 +696,10 @@ bool BeaconManager::Verify(Signature const &signature)
   return crypto::mcl::VerifySign(public_key_, current_message_, signature, GetGroupG());
 }
 
-bool BeaconManager::Verify(byte_array::ConstByteArray const &group_public_key,
-                           MessagePayload const &            message,
-                           byte_array::ConstByteArray const &signature)
+bool BeaconManager::Verify(
+    byte_array::ConstByteArray const &group_public_key,
+    MessagePayload const &            message,
+    byte_array::ConstByteArray const &signature)
 {
   if (group_public_key.empty() || message.empty() || signature.empty())
   {

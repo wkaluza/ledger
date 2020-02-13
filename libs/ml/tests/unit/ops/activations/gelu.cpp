@@ -53,7 +53,8 @@ TYPED_TEST(GeluTest, forward_test_3d)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
   // test correct values
   ASSERT_TRUE(prediction.AllClose(
-      gt, fetch::math::function_tolerance<DataType>(),
+      gt,
+      fetch::math::function_tolerance<DataType>(),
       fetch::math::Type<DataType>("2.8") * fetch::math::function_tolerance<DataType>()));
 
   // gelu can overflow for some fixed point types for these data
@@ -79,8 +80,10 @@ TYPED_TEST(GeluTest, backward_3d_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error_signal);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                     DataType{100} * fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{100} * fetch::math::function_tolerance<DataType>()));
 
   // gelu can overflow for some fixed point types for these data
   fetch::math::state_clear<DataType>();
@@ -182,7 +185,8 @@ TYPED_TEST(GeluTest, saveparams_backward_3d_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 
   // gelu can overflow for some fixed point types for these data

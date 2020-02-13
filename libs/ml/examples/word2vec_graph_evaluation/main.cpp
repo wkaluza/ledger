@@ -67,8 +67,8 @@ int main(int argc, char **argv)
     DataType freq_thresh =
         fetch::math::Type<DataType>("0.001");  // frequency threshold for subsampling
 
-    GraphW2VLoader<TensorType> data_loader(window_size, negative_sample_size, freq_thresh,
-                                           max_word_count);
+    GraphW2VLoader<TensorType> data_loader(
+        window_size, negative_sample_size, freq_thresh, max_word_count);
     data_loader.BuildVocabAndData({utilities::ReadFile(data_file)}, min_count, false);
     vcb        = *(data_loader.GetVocab());
     vocab_file = "/tmp/vocab.txt";

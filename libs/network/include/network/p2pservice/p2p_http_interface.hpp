@@ -49,26 +49,33 @@ public:
 
   static constexpr char const *LOGGING_NAME = "P2PHttpInterface";
 
-  P2PHttpInterface(uint32_t log2_num_lanes, MainChain &chain, BlockPackerInterface &packer,
-                   WeakStateMachines state_machines)
+  P2PHttpInterface(
+      uint32_t              log2_num_lanes,
+      MainChain &           chain,
+      BlockPackerInterface &packer,
+      WeakStateMachines     state_machines)
     : log2_num_lanes_(log2_num_lanes)
     , chain_(chain)
     , packer_(packer)
     , state_machines_(std::move(state_machines))
   {
-    Get("/api/status/chain", "Gets the status of the chain.",
+    Get("/api/status/chain",
+        "Gets the status of the chain.",
         [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
           return GetChainStatus(params, request);
         });
-    Get("/api/status/backlog", "Provides mem pool status.",
+    Get("/api/status/backlog",
+        "Provides mem pool status.",
         [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
           return GetBacklogStatus(params, request);
         });
-    Get("/api/status/states", "Provides the state of the state machine.",
+    Get("/api/status/states",
+        "Provides the state of the state machine.",
         [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
           return GetStateMachineStatus(params, request);
         });
-    Get("/api/status", "Provides high level system status.",
+    Get("/api/status",
+        "Provides high level system status.",
         [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
           return GetGeneralStatus(params, request);
         });
@@ -77,8 +84,9 @@ public:
 private:
   using Variant = variant::Variant;
 
-  http::HTTPResponse GetGeneralStatus(http::ViewParameters const & /*params*/,
-                                      http::HTTPRequest const & /*request*/)
+  http::HTTPResponse GetGeneralStatus(
+      http::ViewParameters const & /*params*/,
+      http::HTTPRequest const & /*request*/)
   {
     // create the system response
     Variant response    = Variant::Object();
@@ -89,8 +97,9 @@ private:
     return http::CreateJsonResponse(response);
   }
 
-  http::HTTPResponse GetChainStatus(http::ViewParameters const & /*params*/,
-                                    http::HTTPRequest const &request)
+  http::HTTPResponse GetChainStatus(
+      http::ViewParameters const & /*params*/,
+      http::HTTPRequest const &request)
   {
     static const std::size_t CHAIN_QUERY_LIMIT = 2000;
 
@@ -105,8 +114,9 @@ private:
       // if the request for the chain size is too large then
       if (chain_length > CHAIN_QUERY_LIMIT)
       {
-        return http::CreateJsonResponse(R"({"error": "Requested chain size is too large"})",
-                                        http::Status::CLIENT_ERROR_BAD_REQUEST);
+        return http::CreateJsonResponse(
+            R"({"error": "Requested chain size is too large"})",
+            http::Status::CLIENT_ERROR_BAD_REQUEST);
       }
     }
 
@@ -137,8 +147,9 @@ private:
     return http::CreateJsonResponse(response);
   }
 
-  http::HTTPResponse GetBacklogStatus(http::ViewParameters const & /*params*/,
-                                      http::HTTPRequest const & /*request*/)
+  http::HTTPResponse GetBacklogStatus(
+      http::ViewParameters const & /*params*/,
+      http::HTTPRequest const & /*request*/)
   {
     variant::Variant data = variant::Variant::Object();
     data["backlog"]       = packer_.GetBacklog();
@@ -146,8 +157,9 @@ private:
     return http::CreateJsonResponse(data);
   }
 
-  http::HTTPResponse GetStateMachineStatus(http::ViewParameters const & /*params*/,
-                                           http::HTTPRequest const & /*request*/)
+  http::HTTPResponse GetStateMachineStatus(
+      http::ViewParameters const & /*params*/,
+      http::HTTPRequest const & /*request*/)
   {
     variant::Variant data = variant::Variant::Object();
 
@@ -163,8 +175,10 @@ private:
     return http::CreateJsonResponse(data);
   }
 
-  Variant GenerateForwardChain(ConstByteArray const &start_hash, std::size_t limit,
-                               bool include_transactions)
+  Variant GenerateForwardChain(
+      ConstByteArray const &start_hash,
+      std::size_t           limit,
+      bool                  include_transactions)
   {
     auto travelogue = chain_.TimeTravel(start_hash, limit);
 
@@ -201,8 +215,10 @@ private:
     return block_list;
   }
 
-  void PopulateJsonFromBlock(Variant &output, ledger::BlockPtr const &block,
-                             bool include_transactions)
+  void PopulateJsonFromBlock(
+      Variant &               output,
+      ledger::BlockPtr const &block,
+      bool                    include_transactions)
   {
     // format the block number
     output                 = Variant::Object();

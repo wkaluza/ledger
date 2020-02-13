@@ -117,8 +117,8 @@ TYPED_TEST(GraphTest, no_such_node_test)  // Use the class as a Node
   fetch::ml::Graph<TensorType> g;
 
   g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input", {});
-  g.template AddNode<fetch::ml::layers::Convolution1D<TensorType>>("Convolution1D", {"Input"}, 3u,
-                                                                   3u, 3u, 3u);
+  g.template AddNode<fetch::ml::layers::Convolution1D<TensorType>>(
+      "Convolution1D", {"Input"}, 3u, 3u, 3u, 3u);
 
   TensorType data(std::vector<SizeType>({5, 10, 1}));
 
@@ -171,14 +171,29 @@ TYPED_TEST(GraphTest, multi_nodes_have_same_name)
 
   std::string input = g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input", {});
   std::string fc_1  = g.template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-      "FC1", {input}, 10u, 10u, fetch::ml::details::ActivationType::NOTHING,
-      fetch::ml::RegularisationType::NONE, DataType{0});
+      "FC1",
+      {input},
+      10u,
+      10u,
+      fetch::ml::details::ActivationType::NOTHING,
+      fetch::ml::RegularisationType::NONE,
+      DataType{0});
   std::string fc_2 = g.template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-      "FC1", {fc_1}, 10u, 10u, fetch::ml::details::ActivationType::NOTHING,
-      fetch::ml::RegularisationType::NONE, DataType{0});
+      "FC1",
+      {fc_1},
+      10u,
+      10u,
+      fetch::ml::details::ActivationType::NOTHING,
+      fetch::ml::RegularisationType::NONE,
+      DataType{0});
   std::string fc_3 = g.template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-      "FC1", {fc_2}, 10u, 10u, fetch::ml::details::ActivationType::NOTHING,
-      fetch::ml::RegularisationType::NONE, DataType{0});
+      "FC1",
+      {fc_2},
+      10u,
+      10u,
+      fetch::ml::details::ActivationType::NOTHING,
+      fetch::ml::RegularisationType::NONE,
+      DataType{0});
 
   // check the naming is correct
   ASSERT_EQ(fc_1, "FC1");
@@ -219,8 +234,10 @@ TYPED_TEST(GraphTest, applying_regularisation_per_trainable)
   op_ptr->Forward({}, prediction);
 
   // Test actual values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, applying_regularisation_all_trainables)
@@ -256,8 +273,10 @@ TYPED_TEST(GraphTest, applying_regularisation_all_trainables)
   op_ptr->Forward({}, prediction);
 
   // Test actual values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, variable_freezing_per_trainable)
@@ -290,8 +309,10 @@ TYPED_TEST(GraphTest, variable_freezing_per_trainable)
   op_ptr->Forward({}, prediction_1);
 
   // Test if weights didn't change
-  ASSERT_TRUE(prediction_1.AllClose(data_1, fetch::math::function_tolerance<DataType>(),
-                                    fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction_1.AllClose(
+      data_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // Un-freeze variable
   g.SetFrozenState(false);
@@ -302,8 +323,10 @@ TYPED_TEST(GraphTest, variable_freezing_per_trainable)
   op_ptr->Forward({}, prediction_2);
 
   // Test actual values
-  ASSERT_TRUE(prediction_2.AllClose(data_2, fetch::math::function_tolerance<DataType>(),
-                                    fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction_2.AllClose(
+      data_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, variable_freezing_all_trainables)
@@ -334,8 +357,10 @@ TYPED_TEST(GraphTest, variable_freezing_all_trainables)
   op_ptr->Forward({}, prediction_1);
 
   // Test actual values
-  ASSERT_TRUE(prediction_1.AllClose(data_1, fetch::math::function_tolerance<DataType>(),
-                                    fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction_1.AllClose(
+      data_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // Un-freeze variable
   g.SetFrozenState(false);
@@ -346,8 +371,10 @@ TYPED_TEST(GraphTest, variable_freezing_all_trainables)
   op_ptr->Forward({}, prediction_2);
 
   // Test actual values
-  ASSERT_TRUE(prediction_2.AllClose(data_2, fetch::math::function_tolerance<DataType>(),
-                                    fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction_2.AllClose(
+      data_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, variable_freezing_subgraph)
@@ -546,8 +573,10 @@ TYPED_TEST(GraphTest,
 
   // Test correct values
   ASSERT_EQ(output.shape(), data1.shape());
-  ASSERT_TRUE(output.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                              fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(output.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // Change data2
   data2 = TensorType::FromString(R"(-2, -1, 0, 1, 2, 3)");
@@ -559,8 +588,10 @@ TYPED_TEST(GraphTest,
 
   // Test correct values
   ASSERT_EQ(output.shape(), data1.shape());
-  ASSERT_TRUE(output.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                              fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(output.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, diamond_graph_backward)  // output=(input1*input2)-(input1^2)
@@ -607,22 +638,35 @@ TYPED_TEST(GraphTest, diamond_graph_backward)  // output=(input1*input2)-(input1
   std::vector<TypeParam> gradients = g.GetGradients();
 
   EXPECT_EQ(gradients.size(), 2);
-  ASSERT_TRUE((gradients[0].AllClose(grad1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()) &&
-               gradients[1].AllClose(grad2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>())) ||
-              (gradients[1].AllClose(grad1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()) &&
-               gradients[0].AllClose(grad2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>())));
+  ASSERT_TRUE(
+      (gradients[0].AllClose(
+           grad1,
+           fetch::math::function_tolerance<DataType>(),
+           fetch::math::function_tolerance<DataType>()) &&
+       gradients[1].AllClose(
+           grad2,
+           fetch::math::function_tolerance<DataType>(),
+           fetch::math::function_tolerance<DataType>())) ||
+      (gradients[1].AllClose(
+           grad1,
+           fetch::math::function_tolerance<DataType>(),
+           fetch::math::function_tolerance<DataType>()) &&
+       gradients[0].AllClose(
+           grad2,
+           fetch::math::function_tolerance<DataType>(),
+           fetch::math::function_tolerance<DataType>())));
 
   // Test Weights
   std::vector<TypeParam> weights = g.GetWeights();
   EXPECT_EQ(weights.size(), 2);
-  ASSERT_TRUE(weights[1].AllClose(data2, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights[0].AllClose(data1, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights[1].AllClose(
+      data2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights[0].AllClose(
+      data1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // Change data2
   data2                        = TensorType::FromString(R"(-2, -1, 0, 1, 2, 3)");
@@ -646,18 +690,26 @@ TYPED_TEST(GraphTest, diamond_graph_backward)  // output=(input1*input2)-(input1
   // Test Weights
   std::vector<TypeParam> weights2 = g.GetWeights();
   EXPECT_EQ(weights2.size(), 2);
-  ASSERT_TRUE(weights2[1].AllClose(weights1_expected, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights2[0].AllClose(weights2_expected, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights2[1].AllClose(
+      weights1_expected,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights2[0].AllClose(
+      weights2_expected,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // Test gradient
   std::vector<TypeParam> gradients2 = g.GetGradients();
   EXPECT_EQ(gradients2.size(), 2);
-  ASSERT_TRUE(gradients2[1].AllClose(grad1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(gradients2[0].AllClose(grad2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(gradients2[1].AllClose(
+      grad1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(gradients2[0].AllClose(
+      grad2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, compute_shapes_single_placeholder)
@@ -696,12 +748,12 @@ TYPED_TEST(GraphTest, compute_shapes_dense_layers)
   fetch::ml::Graph<TensorType> g;
 
   std::string input   = g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input", {});
-  std::string layer_1 = g.template AddNode<Dense>("FC1", {"Input"}, Dense::AUTODETECT_INPUTS_COUNT,
-                                                  FIRST_LAYER_OUTPUTS);
-  std::string layer_2 = g.template AddNode<Dense>("FC2", {"FC1"}, Dense::AUTODETECT_INPUTS_COUNT,
-                                                  SECOND_LAYER_OUTPUTS);
-  std::string output  = g.template AddNode<Dense>("FC3", {"FC2"}, Dense::AUTODETECT_INPUTS_COUNT,
-                                                 THIRD_LAYER_OUTPUTS);
+  std::string layer_1 = g.template AddNode<Dense>(
+      "FC1", {"Input"}, Dense::AUTODETECT_INPUTS_COUNT, FIRST_LAYER_OUTPUTS);
+  std::string layer_2 = g.template AddNode<Dense>(
+      "FC2", {"FC1"}, Dense::AUTODETECT_INPUTS_COUNT, SECOND_LAYER_OUTPUTS);
+  std::string output = g.template AddNode<Dense>(
+      "FC3", {"FC2"}, Dense::AUTODETECT_INPUTS_COUNT, THIRD_LAYER_OUTPUTS);
 
   g.SetInput(input, data);
   g.Compile();
@@ -754,11 +806,11 @@ TYPED_TEST(GraphTest, compute_shapes_two_outputs)
   std::string left_input =
       g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("LeftInput", {});
 
-  std::string center = g.template AddNode<Dense>("Center", {"LeftInput"},
-                                                 Dense::AUTODETECT_INPUTS_COUNT, CENTER_OUTPUTS);
+  std::string center = g.template AddNode<Dense>(
+      "Center", {"LeftInput"}, Dense::AUTODETECT_INPUTS_COUNT, CENTER_OUTPUTS);
 
-  std::string left_output  = g.template AddNode<Dense>("LeftOutput", {"Center"},
-                                                      Dense::AUTODETECT_INPUTS_COUNT, LEFT_OUTPUTS);
+  std::string left_output = g.template AddNode<Dense>(
+      "LeftOutput", {"Center"}, Dense::AUTODETECT_INPUTS_COUNT, LEFT_OUTPUTS);
   std::string right_output = g.template AddNode<Dense>(
       "RightOutput", {"Center"}, Dense::AUTODETECT_INPUTS_COUNT, RIGHT_OUTPUTS);
 
@@ -826,11 +878,11 @@ TYPED_TEST(GraphTest, compute_shapes_two_inputs_two_outputs)
   std::string multiply = g.template AddNode<fetch::ml::ops::Multiply<TensorType>>(
       "Multiply", {"AddInputs", "SubInputs"});
 
-  std::string center = g.template AddNode<Dense>("Center", {"Multiply"},
-                                                 Dense::AUTODETECT_INPUTS_COUNT, CENTER_OUTPUTS);
+  std::string center = g.template AddNode<Dense>(
+      "Center", {"Multiply"}, Dense::AUTODETECT_INPUTS_COUNT, CENTER_OUTPUTS);
 
-  std::string left_output  = g.template AddNode<Dense>("LeftOutput", {"Center"},
-                                                      Dense::AUTODETECT_INPUTS_COUNT, LEFT_OUTPUTS);
+  std::string left_output = g.template AddNode<Dense>(
+      "LeftOutput", {"Center"}, Dense::AUTODETECT_INPUTS_COUNT, LEFT_OUTPUTS);
   std::string right_output = g.template AddNode<Dense>(
       "RightOutput", {"Center"}, Dense::AUTODETECT_INPUTS_COUNT, RIGHT_OUTPUTS);
 
@@ -1021,8 +1073,9 @@ TYPED_TEST(GraphTest, graph_invalidName)
   // Create graph
   fetch::ml::Graph<TensorType> g;
 
-  EXPECT_THROW(g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input/", {}),
-               std::runtime_error);
+  EXPECT_THROW(
+      g.template AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input/", {}),
+      std::runtime_error);
 }
 
 TYPED_TEST(GraphTest, graph_getNodeNames)
@@ -1091,8 +1144,10 @@ TYPED_TEST(GraphTest, graph_setWeight)
   EXPECT_EQ(weight.shape().at(1), 1);
 
   // Test values
-  ASSERT_TRUE(weight.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                              fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weight.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, graph_getWeightsOrder_1)
@@ -1146,20 +1201,32 @@ TYPED_TEST(GraphTest, graph_getWeightsOrder_1)
 
   // Test values
   ASSERT_EQ(weights.size(), 6);
-  ASSERT_TRUE(weights.at(0).AllClose(gt_a_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(1).AllClose(gt_a_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(0).AllClose(
+      gt_a_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(1).AllClose(
+      gt_a_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
-  ASSERT_TRUE(weights.at(2).AllClose(gt_b_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(3).AllClose(gt_b_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(2).AllClose(
+      gt_b_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(3).AllClose(
+      gt_b_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
-  ASSERT_TRUE(weights.at(4).AllClose(gt_c_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(5).AllClose(gt_c_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(4).AllClose(
+      gt_c_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(5).AllClose(
+      gt_c_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, graph_getWeightsOrder_2)
@@ -1213,20 +1280,32 @@ TYPED_TEST(GraphTest, graph_getWeightsOrder_2)
 
   // Test values
   ASSERT_EQ(weights.size(), 6);
-  ASSERT_TRUE(weights.at(0).AllClose(gt_a_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(1).AllClose(gt_a_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(0).AllClose(
+      gt_a_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(1).AllClose(
+      gt_a_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
-  ASSERT_TRUE(weights.at(2).AllClose(gt_b_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(3).AllClose(gt_b_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(2).AllClose(
+      gt_b_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(3).AllClose(
+      gt_b_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
-  ASSERT_TRUE(weights.at(4).AllClose(gt_c_bias, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(weights.at(5).AllClose(gt_c_weight, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(4).AllClose(
+      gt_c_bias,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(weights.at(5).AllClose(
+      gt_c_weight,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphTest, graph_charge_forward_input_only)
@@ -1465,8 +1544,8 @@ TYPED_TEST(GraphTest, graph_charge_backward_diamond)
   std::string prev_node = first_add;
   for (std::size_t i{2}; i <= N; ++i)
   {
-    prev_node = g.template AddNode<Dropout<TensorType>>("Dropout" + std::to_string(i),
-                                                        {prev_node, prev_node}, DataType{1});
+    prev_node = g.template AddNode<Dropout<TensorType>>(
+        "Dropout" + std::to_string(i), {prev_node, prev_node}, DataType{1});
   }
   std::string const output = prev_node;
   g.SetInput(input, data);

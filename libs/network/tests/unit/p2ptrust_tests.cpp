@@ -29,8 +29,8 @@ using fetch::byte_array::ConstByteArray;
 TEST(TrustTests, TrustGoesUp)
 {
   P2PTrust<std::string> trust;
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::NEW_INFORMATION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::NEW_INFORMATION);
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), true);
 }
 

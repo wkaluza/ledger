@@ -53,8 +53,10 @@ TYPED_TEST(TopKTest, top_k_2D_test_sorted)
   ASSERT_EQ(ret.first.shape(), gt_data.shape());
   ASSERT_EQ(ret.second.shape(), gt_indices.shape());
 
-  ASSERT_TRUE(ret.first.AllClose(gt_data, fetch::math::function_tolerance<DataType>(),
-                                 fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.first.AllClose(
+      gt_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(ret.second.AllClose(gt_indices, 0, 0));
 }
 
@@ -78,8 +80,10 @@ TYPED_TEST(TopKTest, top_k_2D_test_unsorted)
   ASSERT_EQ(ret.first.shape(), gt_data.shape());
   ASSERT_EQ(ret.second.shape(), gt_indices.shape());
 
-  ASSERT_TRUE(ret.first.AllClose(gt_data, fetch::math::function_tolerance<DataType>(),
-                                 fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.first.AllClose(
+      gt_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(ret.second.AllClose(gt_indices, 0, 0));
 }
 
@@ -103,8 +107,10 @@ TYPED_TEST(TopKTest, top_k_1D_test_sorted)
   ASSERT_EQ(ret.first.shape(), gt_data.shape());
   ASSERT_EQ(ret.second.shape(), gt_indices.shape());
 
-  ASSERT_TRUE(ret.first.AllClose(gt_data, fetch::math::function_tolerance<DataType>(),
-                                 fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.first.AllClose(
+      gt_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(ret.second.AllClose(gt_indices, 0, 0));
 }
 
@@ -128,8 +134,10 @@ TYPED_TEST(TopKTest, top_k_1D_test_unsorted)
   ASSERT_EQ(ret.first.shape(), gt_data.shape());
   ASSERT_EQ(ret.second.shape(), gt_indices.shape());
 
-  ASSERT_TRUE(ret.first.AllClose(gt_data, fetch::math::function_tolerance<DataType>(),
-                                 fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(ret.first.AllClose(
+      gt_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   ASSERT_TRUE(ret.second.AllClose(gt_indices, 0, 0));
 }
 

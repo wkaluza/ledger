@@ -50,8 +50,12 @@ bool TxStorageClient::AddTransaction(Transaction const &tx)
     ResourceID resource{tx.digest()};
 
     // make the RPC request
-    auto promise = rpc_client_.CallSpecificAddress(LookupAddress(resource), fetch::RPC_TX_STORE,
-                                                   TransactionStorageProtocol::ADD, resource, tx);
+    auto promise = rpc_client_.CallSpecificAddress(
+        LookupAddress(resource),
+        fetch::RPC_TX_STORE,
+        TransactionStorageProtocol::ADD,
+        resource,
+        tx);
 
     // wait the for the response
     promise->Wait();
@@ -71,8 +75,8 @@ bool TxStorageClient::GetTransaction(Digest const &digest, Transaction &tx)
   ResourceID const resource{digest};
 
   // make the request to the RPC server
-  auto promise = rpc_client_.CallSpecificAddress(LookupAddress(resource), fetch::RPC_TX_STORE,
-                                                 TransactionStorageProtocol::GET, resource);
+  auto promise = rpc_client_.CallSpecificAddress(
+      LookupAddress(resource), fetch::RPC_TX_STORE, TransactionStorageProtocol::GET, resource);
 
   // wait for the response to be delivered
   bool const success = promise->GetResult(tx);
@@ -89,8 +93,8 @@ bool TxStorageClient::HasTransaction(Digest const &digest)
   ResourceID const resource{digest};
 
   // make the request to the RPC server
-  auto promise = rpc_client_.CallSpecificAddress(LookupAddress(resource), fetch::RPC_TX_STORE,
-                                                 TransactionStorageProtocol::HAS, resource);
+  auto promise = rpc_client_.CallSpecificAddress(
+      LookupAddress(resource), fetch::RPC_TX_STORE, TransactionStorageProtocol::HAS, resource);
 
   // wait for the response to be delivered
   bool present{false};

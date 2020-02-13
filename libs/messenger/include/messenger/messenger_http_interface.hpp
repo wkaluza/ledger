@@ -30,7 +30,8 @@ public:
   explicit MessengerHttpModule(MessengerAPI &messenger)
     : messenger_{messenger}
   {
-    Get("/api/messenger/node-address", "Gets the address of the node.",
+    Get("/api/messenger/node-address",
+        "Gets the address of the node.",
         [this](http::ViewParameters const &, http::HTTPRequest const &) {
           variant::Variant response = variant::Variant::Object();
           response["address"]       = byte_array::ToBase64(messenger_.GetAddress());
@@ -38,154 +39,168 @@ public:
           return http::CreateJsonResponse(response);
         });
 
-    Post("/api/messenger/register", "Registers an agent to the network.",
-         [this](http::ViewParameters const &, http::HTTPRequest const &request) {
-           // Finding sender
-           auto doc = request.JSON();
-           if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+    Post(
+        "/api/messenger/register",
+        "Registers an agent to the network.",
+        [this](http::ViewParameters const &, http::HTTPRequest const &request) {
+          // Finding sender
+          auto doc = request.JSON();
+          if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           // Sender
-           service::CallContext context;
-           context.sender_address =
-               byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
+          // Sender
+          service::CallContext context;
+          context.sender_address =
+              byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
 
-           // TODO(private issue AEA-124): Authentication missing.
-           messenger_.RegisterMessenger(context, true);
+          // TODO(private issue AEA-124): Authentication missing.
+          messenger_.RegisterMessenger(context, true);
 
-           variant::Variant response = variant::Variant::Object();
-           response["status"]        = "OK";
-           return http::CreateJsonResponse(response);
-         });
+          variant::Variant response = variant::Variant::Object();
+          response["status"]        = "OK";
+          return http::CreateJsonResponse(response);
+        });
 
-    Post("/api/messenger/unregister", "Unregisters an agent from the network.",
-         [this](http::ViewParameters const &, http::HTTPRequest const &request) {
-           // Finding sender
-           auto doc = request.JSON();
-           if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+    Post(
+        "/api/messenger/unregister",
+        "Unregisters an agent from the network.",
+        [this](http::ViewParameters const &, http::HTTPRequest const &request) {
+          // Finding sender
+          auto doc = request.JSON();
+          if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           // Sender
-           service::CallContext context;
-           context.sender_address =
-               byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
+          // Sender
+          service::CallContext context;
+          context.sender_address =
+              byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
 
-           // TODO(private issue AEA-124): Authentication missing.
-           messenger_.UnregisterMessenger(context);
+          // TODO(private issue AEA-124): Authentication missing.
+          messenger_.UnregisterMessenger(context);
 
-           variant::Variant response = variant::Variant::Object();
-           response["status"]        = "OK";
-           return http::CreateJsonResponse(response);
-         });
+          variant::Variant response = variant::Variant::Object();
+          response["status"]        = "OK";
+          return http::CreateJsonResponse(response);
+        });
 
-    Post("/api/messenger/sendmessage", "Sends a message to a specific agent.",
-         [this](http::ViewParameters const &, http::HTTPRequest const &request) {
-           // Finding sender
-           auto doc = request.JSON();
-           if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+    Post(
+        "/api/messenger/sendmessage",
+        "Sends a message to a specific agent.",
+        [this](http::ViewParameters const &, http::HTTPRequest const &request) {
+          // Finding sender
+          auto doc = request.JSON();
+          if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           if ((!doc.Has("message")) || (!doc["message"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+          if ((!doc.Has("message")) || (!doc["message"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           // Sender
-           service::CallContext context;
-           context.sender_address =
-               byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
+          // Sender
+          service::CallContext context;
+          context.sender_address =
+              byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
 
-           serializers::MsgPackSerializer buffer{
-               byte_array::FromBase64(doc["message"].As<byte_array::ConstByteArray>())};
-           Message msg;
-           buffer >> msg;
+          serializers::MsgPackSerializer buffer{
+              byte_array::FromBase64(doc["message"].As<byte_array::ConstByteArray>())};
+          Message msg;
+          buffer >> msg;
 
-           // TODO(private issue AEA-124): Authentication missing.
-           messenger_.SendMessage(context, msg);
+          // TODO(private issue AEA-124): Authentication missing.
+          messenger_.SendMessage(context, msg);
 
-           variant::Variant response = variant::Variant::Object();
-           response["status"]        = "OK";
-           return http::CreateJsonResponse(response);
-         });
+          variant::Variant response = variant::Variant::Object();
+          response["status"]        = "OK";
+          return http::CreateJsonResponse(response);
+        });
 
-    Post("/api/messenger/getmessages", "Gets messages in inbox.",
-         [this](http::ViewParameters const &, http::HTTPRequest const &request) {
-           // Finding sender
-           auto doc = request.JSON();
-           if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+    Post(
+        "/api/messenger/getmessages",
+        "Gets messages in inbox.",
+        [this](http::ViewParameters const &, http::HTTPRequest const &request) {
+          // Finding sender
+          auto doc = request.JSON();
+          if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           // Sender
-           service::CallContext context;
-           context.sender_address =
-               byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
+          // Sender
+          service::CallContext context;
+          context.sender_address =
+              byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
 
-           // TODO(private issue AEA-124): Authentication missing.
-           auto messages = messenger_.GetMessages(context);
+          // TODO(private issue AEA-124): Authentication missing.
+          auto messages = messenger_.GetMessages(context);
 
-           // Creating stream with messages
-           serializers::MsgPackSerializer buffer;
-           buffer << messages;
+          // Creating stream with messages
+          serializers::MsgPackSerializer buffer;
+          buffer << messages;
 
-           variant::Variant response = variant::Variant::Object();
-           response["status"]        = "OK";
-           response["messages"]      = byte_array::ToBase64(buffer.data());
-           return http::CreateJsonResponse(response);
-         });
+          variant::Variant response = variant::Variant::Object();
+          response["status"]        = "OK";
+          response["messages"]      = byte_array::ToBase64(buffer.data());
+          return http::CreateJsonResponse(response);
+        });
 
-    Post("/api/messenger/clear-messages", "Clears the front messages.",
-         [this](http::ViewParameters const &, http::HTTPRequest const &request) {
-           // Finding sender
-           auto doc = request.JSON();
-           if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+    Post(
+        "/api/messenger/clear-messages",
+        "Clears the front messages.",
+        [this](http::ViewParameters const &, http::HTTPRequest const &request) {
+          // Finding sender
+          auto doc = request.JSON();
+          if ((!doc.Has("sender")) || (!doc["sender"].IsString()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           if ((!doc.Has("count")) || (!doc["count"].IsInteger()))
-           {
-             return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
-           }
+          if ((!doc.Has("count")) || (!doc["count"].IsInteger()))
+          {
+            return http::CreateJsonResponse("", http::Status::CLIENT_ERROR_BAD_REQUEST);
+          }
 
-           // Sender
-           service::CallContext context;
-           context.sender_address =
-               byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
+          // Sender
+          service::CallContext context;
+          context.sender_address =
+              byte_array::FromBase64(doc["sender"].As<byte_array::ConstByteArray>());
 
-           // TODO(private issue AEA-124): Authentication missing.
-           auto messages = messenger_.GetMessages(context);
+          // TODO(private issue AEA-124): Authentication missing.
+          auto messages = messenger_.GetMessages(context);
 
-           // Creating stream with messages
-           serializers::MsgPackSerializer buffer;
-           buffer << messages;
+          // Creating stream with messages
+          serializers::MsgPackSerializer buffer;
+          buffer << messages;
 
-           variant::Variant response = variant::Variant::Object();
-           response["status"]        = "OK";
-           response["messages"]      = byte_array::ToBase64(buffer.data());
-           return http::CreateJsonResponse(response);
-         });
+          variant::Variant response = variant::Variant::Object();
+          response["status"]        = "OK";
+          response["messages"]      = byte_array::ToBase64(buffer.data());
+          return http::CreateJsonResponse(response);
+        });
 
-    Post("/api/messenger/findagent", "Finds agents matching search criteria.",
-         [](http::ViewParameters const &, http::HTTPRequest const &) {
-           //  ResultList FindAgents(service::CallContext const & call_context, ConstByteArray const
-           //  & query_type, ConstByteArray const & query);
+    Post(
+        "/api/messenger/findagent",
+        "Finds agents matching search criteria.",
+        [](http::ViewParameters const &, http::HTTPRequest const &) {
+          //  ResultList FindAgents(service::CallContext const & call_context, ConstByteArray const
+          //  & query_type, ConstByteArray const & query);
 
-           return http::CreateJsonResponse("{}");
-         });
+          return http::CreateJsonResponse("{}");
+        });
 
-    Post("/api/messenger/advertise", "Creates advertisement on the node.",
-         [](http::ViewParameters const &, http::HTTPRequest const &) {
-           //   void Advertise(service::CallContext const & call_context);
-           return http::CreateJsonResponse("{}");
-         });
+    Post(
+        "/api/messenger/advertise",
+        "Creates advertisement on the node.",
+        [](http::ViewParameters const &, http::HTTPRequest const &) {
+          //   void Advertise(service::CallContext const & call_context);
+          return http::CreateJsonResponse("{}");
+        });
   }
 
 private:

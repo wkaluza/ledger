@@ -113,8 +113,11 @@ struct ServerWithFakeMailbox
   explicit ServerWithFakeMailbox(uint16_t port_offset)
     : certificate{CertificateGenerator::New()}
     , network_manager{"SearchNetworkManager", 1}
-    , messenger_muddle{fetch::muddle::CreateMuddle("MSGN", certificate, network_manager,
-                                                   "127.0.0.1")}
+    , messenger_muddle{fetch::muddle::CreateMuddle(
+          "MSGN",
+          certificate,
+          network_manager,
+          "127.0.0.1")}
     , api{messenger_muddle, mailbox}
     , http{network_manager}
     , http_module{api}
@@ -161,8 +164,11 @@ struct Server
   explicit Server(uint16_t port_offset)
     : certificate{CertificateGenerator::New()}
     , network_manager{"SearchNetworkManager", 1}
-    , messenger_muddle{fetch::muddle::CreateMuddle("MSGN", certificate, network_manager,
-                                                   "127.0.0.1")}
+    , messenger_muddle{fetch::muddle::CreateMuddle(
+          "MSGN",
+          certificate,
+          network_manager,
+          "127.0.0.1")}
     , mail_muddle{fetch::muddle::CreateMuddle("MALM", certificate, network_manager, "127.0.0.1")}
     , mailbox{mail_muddle}
     , api{messenger_muddle, mailbox}

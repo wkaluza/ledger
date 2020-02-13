@@ -34,9 +34,10 @@ class FNVTest : public testing::Test
 {
 public:
   template <typename FNV_CONFIG, detail::eFnvAlgorithm ALGORITHM>
-  void testFnvHash(detail::FNV<FNV_CONFIG, ALGORITHM> &   fnv,
-                   byte_array::ConstByteArray const &     data_to_hash_param,
-                   typename FNV_CONFIG::NumberType const &expected_hash)
+  void testFnvHash(
+      detail::FNV<FNV_CONFIG, ALGORITHM> &   fnv,
+      byte_array::ConstByteArray const &     data_to_hash_param,
+      typename FNV_CONFIG::NumberType const &expected_hash)
   {
     fnv.reset();
     fnv.update(data_to_hash_param.pointer(), data_to_hash_param.size());

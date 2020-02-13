@@ -73,8 +73,9 @@ void Abs<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * f'(input0)=sign(input0)*error_signal
  */
 template <typename TensorType>
-std::vector<TensorType> Abs<TensorType>::Backward(VecTensorType const &inputs,
-                                                  TensorType const &   error_signal)
+std::vector<TensorType> Abs<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.size() == inputs.at(0)->size());

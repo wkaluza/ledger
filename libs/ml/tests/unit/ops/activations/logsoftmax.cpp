@@ -50,8 +50,10 @@ TYPED_TEST(LogSoftmaxTest, forward_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, DataType{1000} * math::function_tolerance<DataType>(),
-                                  DataType{1000} * math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      DataType{1000} * math::function_tolerance<DataType>(),
+      DataType{1000} * math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LogSoftmaxTest, forward_3d_tensor_axis_0_test)
@@ -63,8 +65,15 @@ TYPED_TEST(LogSoftmaxTest, forward_3d_tensor_axis_0_test)
   TensorType          data({3, 3, 1});
   TensorType          gt({3, 3, 1});
   std::vector<double> data_input({1, -2, 3, -4, 5, -6, 7, -8, 9});
-  std::vector<double> gt_input({-2.13284524, -5.13284527, -0.13284524, -9.00014165, -0.00014012,
-                                -11.00015697, -2.12692806, -17.13728466, -0.12692805});
+  std::vector<double> gt_input({-2.13284524,
+                                -5.13284527,
+                                -0.13284524,
+                                -9.00014165,
+                                -0.00014012,
+                                -11.00015697,
+                                -2.12692806,
+                                -17.13728466,
+                                -0.12692805});
 
   for (SizeType i{0}; i < 3; ++i)
   {
@@ -80,8 +89,10 @@ TYPED_TEST(LogSoftmaxTest, forward_3d_tensor_axis_0_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, DataType{1000} * math::function_tolerance<DataType>(),
-                                  DataType{1000} * math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      DataType{1000} * math::function_tolerance<DataType>(),
+      DataType{1000} * math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LogSoftmaxTest, backward_test)
@@ -100,9 +111,10 @@ TYPED_TEST(LogSoftmaxTest, backward_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(
-      prediction[0].AllClose(gt, static_cast<DataType>(50) * math::function_tolerance<DataType>(),
-                             static_cast<DataType>(50) * math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      static_cast<DataType>(50) * math::function_tolerance<DataType>(),
+      static_cast<DataType>(50) * math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LogSoftmaxTest, backward_3d_tensor_axis_0_test)
@@ -116,8 +128,15 @@ TYPED_TEST(LogSoftmaxTest, backward_3d_tensor_axis_0_test)
   TensorType          gt({3, 3, 1});
   std::vector<double> data_input({1, -2, 3, -4, 5, -6, 7, -8, 9});
   std::vector<double> errorInput({0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.9});
-  std::vector<double> gt_input({8.8150e-02, -5.8998e-04, -8.7560e-02, -6.1696e-05, 7.0026e-05,
-                                -8.3497e-06, -1.0728e-01, -3.2818e-08, 1.0728e-01});
+  std::vector<double> gt_input({8.8150e-02,
+                                -5.8998e-04,
+                                -8.7560e-02,
+                                -6.1696e-05,
+                                7.0026e-05,
+                                -8.3497e-06,
+                                -1.0728e-01,
+                                -3.2818e-08,
+                                1.0728e-01});
   for (SizeType i{0}; i < 3; ++i)
   {
     for (SizeType j{0}; j < 3; ++j)
@@ -132,9 +151,10 @@ TYPED_TEST(LogSoftmaxTest, backward_3d_tensor_axis_0_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(
-      prediction[0].AllClose(gt, static_cast<DataType>(50) * math::function_tolerance<DataType>(),
-                             static_cast<DataType>(50) * math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      static_cast<DataType>(50) * math::function_tolerance<DataType>(),
+      static_cast<DataType>(50) * math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LogSoftmaxTest, saveparams_test)
@@ -194,8 +214,15 @@ TYPED_TEST(LogSoftmaxTest, saveparams_backward_3d_tensor_axis_0_test)
   TensorType          gt({3, 3, 1});
   std::vector<double> data_input({1, -2, 3, -4, 5, -6, 7, -8, 9});
   std::vector<double> errorInput({0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.9});
-  std::vector<double> gt_input({8.8150e-02, -5.8998e-04, -8.7560e-02, -6.1696e-05, 7.0026e-05,
-                                -8.3497e-06, -1.0728e-01, -3.2818e-08, 1.0728e-01});
+  std::vector<double> gt_input({8.8150e-02,
+                                -5.8998e-04,
+                                -8.7560e-02,
+                                -6.1696e-05,
+                                7.0026e-05,
+                                -8.3497e-06,
+                                -1.0728e-01,
+                                -3.2818e-08,
+                                1.0728e-01});
   for (SizeType i{0}; i < 3; ++i)
   {
     for (SizeType j{0}; j < 3; ++j)
@@ -238,7 +265,8 @@ TYPED_TEST(LogSoftmaxTest, saveparams_backward_3d_tensor_axis_0_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 

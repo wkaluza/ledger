@@ -54,36 +54,56 @@ public:
 
   TSNE(TensorType const &input_matrix, TensorType const &output_matrix, DataType const &perplexity);
 
-  TSNE(TensorType const &input_matrix, SizeType const &output_dimensions,
-       DataType const &perplexity, SizeType const &random_seed);
+  TSNE(
+      TensorType const &input_matrix,
+      SizeType const &  output_dimensions,
+      DataType const &  perplexity,
+      SizeType const &  random_seed);
 
-  void Optimise(DataType const &learning_rate, SizeType const &max_iters,
-                DataType const &initial_momentum, DataType const &final_momentum,
-                SizeType const &final_momentum_steps, SizeType const &p_later_correction_iteration);
+  void Optimise(
+      DataType const &learning_rate,
+      SizeType const &max_iters,
+      DataType const &initial_momentum,
+      DataType const &final_momentum,
+      SizeType const &final_momentum_steps,
+      SizeType const &p_later_correction_iteration);
 
   const TensorType GetOutputMatrix() const;
 
 private:
-  void Init(TensorType const &input_matrix, TensorType const &output_matrix,
-            DataType const &perplexity);
+  void Init(
+      TensorType const &input_matrix,
+      TensorType const &output_matrix,
+      DataType const &  perplexity);
 
   void RandomInitWeights(TensorType &output_matrix);
 
-  void Hbeta(TensorType const &d, TensorType &p, DataType &entropy, DataType const &beta,
-             SizeType const &k);
+  void Hbeta(
+      TensorType const &d,
+      TensorType &      p,
+      DataType &        entropy,
+      DataType const &  beta,
+      SizeType const &  k);
 
-  void CalculatePairwiseAffinitiesP(TensorType const &input_matrix, TensorType &pairwise_affinities,
-                                    DataType const &target_perplexity, DataType const &tolerance,
-                                    SizeType const &max_tries);
+  void CalculatePairwiseAffinitiesP(
+      TensorType const &input_matrix,
+      TensorType &      pairwise_affinities,
+      DataType const &  target_perplexity,
+      DataType const &  tolerance,
+      SizeType const &  max_tries);
 
-  void CalculateSymmetricAffinitiesQ(TensorType const &output_matrix,
-                                     TensorType &output_symmetric_affinities, TensorType &num);
+  void CalculateSymmetricAffinitiesQ(
+      TensorType const &output_matrix,
+      TensorType &      output_symmetric_affinities,
+      TensorType &      num);
 
   DataType GetRandom(DataType /*mean*/, DataType /*standard_deviation*/);
 
-  TensorType ComputeGradient(TensorType const &output_matrix,
-                             TensorType const &input_symmetric_affinities,
-                             TensorType const &output_symmetric_affinities, TensorType const &num);
+  TensorType ComputeGradient(
+      TensorType const &output_matrix,
+      TensorType const &input_symmetric_affinities,
+      TensorType const &output_symmetric_affinities,
+      TensorType const &num);
 
   void LimitMin(TensorType &matrix, DataType const &min);
 

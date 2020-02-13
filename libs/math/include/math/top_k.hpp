@@ -33,8 +33,13 @@ namespace math {
  * @param sorted TRUE=descending order, FALSE=ascending order
  */
 template <typename ArrayDataType, typename ArrayIndicesType>
-void TopK(ArrayDataType &ret_data, ArrayIndicesType &ret_indices, ArrayDataType const &data,
-          typename ArrayDataType::SizeType k, fetch::math::SizeType axis, bool sorted = true)
+void TopK(
+    ArrayDataType &                  ret_data,
+    ArrayIndicesType &               ret_indices,
+    ArrayDataType const &            data,
+    typename ArrayDataType::SizeType k,
+    fetch::math::SizeType            axis,
+    bool                             sorted = true)
 {
   using DataType  = typename ArrayDataType::Type;
   using IndexType = typename ArrayIndicesType::Type;
@@ -71,10 +76,12 @@ void TopK(ArrayDataType &ret_data, ArrayIndicesType &ret_indices, ArrayDataType 
     }
 
     // sort the top k values
-    std::sort(vec.begin(), vec.end(),
-              [](std::pair<IndexType, DataType> const &a, std::pair<IndexType, DataType> const &b) {
-                return a.second > b.second;
-              });
+    std::sort(
+        vec.begin(),
+        vec.end(),
+        [](std::pair<IndexType, DataType> const &a, std::pair<IndexType, DataType> const &b) {
+          return a.second > b.second;
+        });
 
     // Copy sorted values to return array
     for (SizeType index{0}; index < k; index++)
@@ -111,9 +118,11 @@ void TopK(ArrayDataType &ret_data, ArrayIndicesType &ret_indices, ArrayDataType 
  * @return std::pair<ArrayDataType,ArrayIndicesType>
  */
 template <typename ArrayDataType, typename ArrayIndicesType>
-std::pair<ArrayDataType, ArrayIndicesType> TopK(ArrayDataType const &            data,
-                                                typename ArrayDataType::SizeType k,
-                                                fetch::math::SizeType axis, bool sorted = true)
+std::pair<ArrayDataType, ArrayIndicesType> TopK(
+    ArrayDataType const &            data,
+    typename ArrayDataType::SizeType k,
+    fetch::math::SizeType            axis,
+    bool                             sorted = true)
 {
   assert(axis < data.shape().size());
   assert(k <= data.shape().at(axis));

@@ -56,8 +56,10 @@ TYPED_TEST(ReduceMeanTest, forward_2_2_2_test)
   ASSERT_EQ(prediction.shape().at(1), 1);
   ASSERT_EQ(prediction.shape().at(2), 2);
 
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(ReduceMeanTest, backward_2_2_2_test)
@@ -84,8 +86,10 @@ TYPED_TEST(ReduceMeanTest, backward_2_2_2_test)
   ASSERT_EQ(error_signal.at(0).shape().at(1), 2);
   ASSERT_EQ(error_signal.at(0).shape().at(2), 2);
 
-  ASSERT_TRUE(error_signal.at(0).AllClose(gt_error, fetch::math::function_tolerance<DataType>(),
-                                          fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(error_signal.at(0).AllClose(
+      gt_error,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   fetch::math::state_clear<DataType>();
 }
 

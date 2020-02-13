@@ -26,9 +26,11 @@ class OutboundConversations;
 class OutboundConversation;
 class OefAgentEndpoint;
 
-class SearchAddressUpdateTask
-  : public SearchConversationTask<Address, Successfulness, fetch::oef::pb::Update,
-                                  SearchAddressUpdateTask>
+class SearchAddressUpdateTask : public SearchConversationTask<
+                                    Address,
+                                    Successfulness,
+                                    fetch::oef::pb::Update,
+                                    SearchAddressUpdateTask>
 {
 public:
   using StateResult   = fetch::oef::base::StateMachineTask<SearchAddressUpdateTask>::Result;
@@ -36,9 +38,10 @@ public:
   using OUT_PROTO     = fetch::oef::pb::Server_AgentMessage;
   using REQUEST_PROTO = fetch::oef::pb::Update;
 
-  SearchAddressUpdateTask(std::shared_ptr<IN_PROTO>              initiator,
-                          std::shared_ptr<OutboundConversations> outbounds,
-                          std::shared_ptr<OefAgentEndpoint>      endpoint);
+  SearchAddressUpdateTask(
+      std::shared_ptr<IN_PROTO>              initiator,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<OefAgentEndpoint>      endpoint);
   virtual ~SearchAddressUpdateTask();
 
   static constexpr char const *LOGGING_NAME = "SearchAddressUpdateTask";

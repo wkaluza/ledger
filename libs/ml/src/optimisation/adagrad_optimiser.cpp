@@ -28,11 +28,13 @@ namespace ml {
 namespace optimisers {
 
 template <class T>
-AdaGradOptimiser<T>::AdaGradOptimiser(std::shared_ptr<Graph<T>>       graph,
-                                      std::vector<std::string> const &input_node_names,
-                                      std::string const &             label_node_name,
-                                      std::string const &             output_node_name,
-                                      DataType const &learning_rate, DataType const &epsilon)
+AdaGradOptimiser<T>::AdaGradOptimiser(
+    std::shared_ptr<Graph<T>>       graph,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name,
+    DataType const &                learning_rate,
+    DataType const &                epsilon)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate)
   , epsilon_(epsilon)
 {
@@ -45,8 +47,10 @@ AdaGradOptimiser<T>::AdaGradOptimiser(std::shared_ptr<Graph<T>>       graph,
 
 template <class T>
 AdaGradOptimiser<T>::AdaGradOptimiser(
-    std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-    std::string const &label_node_name, std::string const &output_node_name,
+    std::shared_ptr<Graph<T>>                                 graph,
+    std::vector<std::string> const &                          input_node_names,
+    std::string const &                                       label_node_name,
+    std::string const &                                       output_node_name,
     fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
     DataType const &                                          epsilon)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate_param)
@@ -76,8 +80,10 @@ void AdaGradOptimiser<T>::ApplyGradients(SizeType batch_size)
     {
 
       // cache[i] += (input_grad[i]/batch_size)^2
-      fetch::math::Divide((*trainable_it)->GetGradientsReferences(),
-                          static_cast<DataType>(batch_size), *gradient_it);
+      fetch::math::Divide(
+          (*trainable_it)->GetGradientsReferences(),
+          static_cast<DataType>(batch_size),
+          *gradient_it);
       fetch::math::Square(*gradient_it, *gradient_it);
       fetch::math::Add(*cached_weight_it, *gradient_it, *cached_weight_it);
 
@@ -86,9 +92,10 @@ void AdaGradOptimiser<T>::ApplyGradients(SizeType batch_size)
       fetch::math::Sqrt(*cached_weight_it, *gradient_it);
       fetch::math::Add(*gradient_it, epsilon_, *gradient_it);
       fetch::math::Divide((*trainable_it)->GetGradientsReferences(), *gradient_it, *gradient_it);
-      fetch::math::Multiply(*gradient_it,
-                            (-this->learning_rate_) / (static_cast<DataType>(batch_size)),
-                            *gradient_it);
+      fetch::math::Multiply(
+          *gradient_it,
+          (-this->learning_rate_) / (static_cast<DataType>(batch_size)),
+          *gradient_it);
 
       // we need to explicitly reset the gradients for this shared op to avoid double counting
       // in the case of shared ops

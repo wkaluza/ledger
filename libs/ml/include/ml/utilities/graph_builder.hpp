@@ -31,8 +31,10 @@ namespace ml {
 namespace utilities {
 
 template <typename T>
-void BuildNodeAndInsertTrainables(NodeSaveableParams<T> const &nsp, std::string const &name,
-                                  std::shared_ptr<Graph<T>> g);
+void BuildNodeAndInsertTrainables(
+    NodeSaveableParams<T> const &nsp,
+    std::string const &          name,
+    std::shared_ptr<Graph<T>>    g);
 
 template <typename T>
 void BuildGraph(GraphSaveableParams<T> const &sp, std::shared_ptr<Graph<T>> ret)
@@ -50,8 +52,8 @@ void BuildGraph(GraphSaveableParams<T> const &sp, std::shared_ptr<Graph<T>> ret)
       throw ml::exceptions::NotImplemented("Cannot currently deserialize shared-weights graph");
     }
 
-    BuildNodeAndInsertTrainables(*(std::dynamic_pointer_cast<NodeSaveableParams<T>>(node.second)),
-                                 node_name, ret);
+    BuildNodeAndInsertTrainables(
+        *(std::dynamic_pointer_cast<NodeSaveableParams<T>>(node.second)), node_name, ret);
   }
   ret->SetGraphSaveableParams(sp);
 }

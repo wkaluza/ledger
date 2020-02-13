@@ -81,7 +81,8 @@ DAG::DAG(std::string db_name, bool load, CertificatePtr certificate)
       {
         FETCH_LOG_ERROR(
             LOGGING_NAME,
-            "Epoch not found when traversing/recovering from file. Index: ", next_epoch);
+            "Epoch not found when traversing/recovering from file. Index: ",
+            next_epoch);
         return false;
       }
     }
@@ -462,8 +463,10 @@ bool DAG::GetWork(DAGHash const &hash, Work &work)
   return success;
 }
 
-std::shared_ptr<DAGNode> DAG::GetDAGNodeInternal(DAGHash const &hash, bool including_loose,
-                                                 bool &was_loose)
+std::shared_ptr<DAGNode> DAG::GetDAGNodeInternal(
+    DAGHash const &hash,
+    bool           including_loose,
+    bool &         was_loose)
 {
   // Find in node pool
   auto it2 = node_pool_.find(hash);
@@ -682,8 +685,12 @@ DAGEpoch DAG::CreateEpoch(uint64_t block_number)
 // TODO(HUT): const this.
 bool DAG::CommitEpoch(DAGEpoch new_epoch)
 {
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Committing epoch: ", new_epoch.block_number,
-                  " Nodes: ", new_epoch.all_nodes.size());
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Committing epoch: ",
+      new_epoch.block_number,
+      " Nodes: ",
+      new_epoch.all_nodes.size());
   FETCH_LOCK(mutex_);
 
   if (new_epoch.block_number == 0)
@@ -696,7 +703,9 @@ bool DAG::CommitEpoch(DAGEpoch new_epoch)
     FETCH_LOG_WARN(
         LOGGING_NAME,
         "Attempt to commit a bad epoch: not an increment on the current DAG epoch! Current: ",
-        most_recent_epoch_, " attempted: ", new_epoch.block_number);
+        most_recent_epoch_,
+        " attempted: ",
+        new_epoch.block_number);
     return false;
   }
 
@@ -770,9 +779,10 @@ void DAG::Flush()
   finalised_dag_nodes_.Flush(false);
 }
 
-void DAG::TraverseFromTips(std::set<DAGHash> const &            tip_hashes,
-                           std::function<void(NodeHash)> const &on_node,
-                           std::function<bool(NodeHash)> const &terminating_condition)
+void DAG::TraverseFromTips(
+    std::set<DAGHash> const &            tip_hashes,
+    std::function<void(NodeHash)> const &on_node,
+    std::function<bool(NodeHash)> const &terminating_condition)
 {
   for (auto const &tip_hash : tip_hashes)
   {
@@ -843,8 +853,8 @@ void DAG::TraverseFromTips(std::set<DAGHash> const &            tip_hashes,
       }
       if (!dag_node_to_add)
       {
-        FETCH_LOG_ERROR(LOGGING_NAME,
-                        "TraverseFromTips: unable to lookup node with hash=", start.ToBase64());
+        FETCH_LOG_ERROR(
+            LOGGING_NAME, "TraverseFromTips: unable to lookup node with hash=", start.ToBase64());
         switch_choices.pop_back();
         switch_hashes.pop_back();
         continue;
@@ -1001,7 +1011,9 @@ bool DAG::SatisfyEpoch(DAGEpoch const &epoch)
     FETCH_LOG_WARN(
         LOGGING_NAME,
         "Attempt to satisfy a bad epoch: not an increment on the current DAG epoch! Current: ",
-        most_recent_epoch_, " Satisfy: ", epoch.block_number);
+        most_recent_epoch_,
+        " Satisfy: ",
+        epoch.block_number);
     return false;
   }
 
@@ -1036,15 +1048,21 @@ bool DAG::SatisfyEpoch(DAGEpoch const &epoch)
 
       if (!found)
       {
-        FETCH_LOG_WARN(LOGGING_NAME,
-                       "DAG node found that points to unknown epoch: ", node_prev_hash.ToBase64());
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "DAG node found that points to unknown epoch: ",
+            node_prev_hash.ToBase64());
         return true;
       }
 
       if (node->oldest_epoch_referenced != points_to.block_number)
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "DAG node found with incorrect oldest_epoch_referenced :",
-                       node->oldest_epoch_referenced, " while epoch is: ", points_to.block_number);
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "DAG node found with incorrect oldest_epoch_referenced :",
+            node->oldest_epoch_referenced,
+            " while epoch is: ",
+            points_to.block_number);
         return true;
       }
 
@@ -1088,10 +1106,13 @@ bool DAG::SatisfyEpoch(DAGEpoch const &epoch)
       if (node->oldest_epoch_referenced != previous_hashes_oldest ||
           node->weight != previous_hashes_heaviest + 1)
       {
-        FETCH_LOG_WARN(LOGGING_NAME,
-                       "Malformed node found in epoch: doesn't increment weight or refer to oldest "
-                       "correctly. Oldest: ",
-                       node->oldest_epoch_referenced, "  weight: ", node->weight);
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Malformed node found in epoch: doesn't increment weight or refer to oldest "
+            "correctly. Oldest: ",
+            node->oldest_epoch_referenced,
+            "  weight: ",
+            node->weight);
         return true;
       }
     }
@@ -1120,8 +1141,10 @@ bool DAG::SatisfyEpoch(DAGEpoch const &epoch)
       success = false;
       if (missing_count < 10)
       {
-        FETCH_LOG_INFO(LOGGING_NAME,
-                       "Found missing DAG node/hash when satisfying epoch: ", node_hash.ToBase64());
+        FETCH_LOG_INFO(
+            LOGGING_NAME,
+            "Found missing DAG node/hash when satisfying epoch: ",
+            node_hash.ToBase64());
       }
       missing_.insert(node_hash);
       missing_count++;
@@ -1137,9 +1160,18 @@ bool DAG::SatisfyEpoch(DAGEpoch const &epoch)
 
   if ((missing_count != 0u) || (loose_count != 0u))
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "When satisfying, epoch ", epoch.block_number,
-                   " AKA: ", epoch.hash.ToBase64(), " is missing : ", missing_count, " of ",
-                   epoch.all_nodes.size(), ". Loose: ", loose_count);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "When satisfying, epoch ",
+        epoch.block_number,
+        " AKA: ",
+        epoch.hash.ToBase64(),
+        " is missing : ",
+        missing_count,
+        " of ",
+        epoch.all_nodes.size(),
+        ". Loose: ",
+        loose_count);
   }
 
   // TODO(HUT): Verify Epoch here (loose nodes)
@@ -1178,9 +1210,13 @@ bool DAG::RevertToEpoch(uint64_t epoch_bn_to_revert)
 
   if (epoch_bn_to_revert > most_recent_epoch_)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Attempting to restore to epoch forward in time! Requested: ",
-                   epoch_bn_to_revert, " while dag is at: ", most_recent_epoch_,
-                   ". This is invalid.");
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Attempting to restore to epoch forward in time! Requested: ",
+        epoch_bn_to_revert,
+        " while dag is at: ",
+        most_recent_epoch_,
+        ". This is invalid.");
     return false;
   }
 
@@ -1278,8 +1314,9 @@ bool DAG::GetEpochFromStorage(std::string const &identifier, DAGEpoch &epoch)
 bool DAG::SetEpochInStorage(std::string const & /*unused*/, DAGEpoch const &epoch, bool is_head)
 {
   all_stored_epochs_.Set(storage::ResourceID(epoch.hash.hash), epoch);  // Store of all epochs
-  epochs_.Set(storage::ResourceAddress(std::to_string(epoch.block_number)),
-              epoch.hash);  // Our epoch stack
+  epochs_.Set(
+      storage::ResourceAddress(std::to_string(epoch.block_number)),
+      epoch.hash);  // Our epoch stack
 
   if (is_head)
   {

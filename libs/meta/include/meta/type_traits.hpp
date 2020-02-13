@@ -45,9 +45,10 @@ struct Is
   template <typename Y0, typename... Y>
   struct SameAsEvery
   {
-    static_assert(sizeof...(T) == 1,
-                  "There must be just single type T provided in to encapsulating  `Is<T...>` "
-                  "template in order to evaluate SameAsEvery<...> sub-template.");
+    static_assert(
+        sizeof...(T) == 1,
+        "There must be just single type T provided in to encapsulating  `Is<T...>` "
+        "template in order to evaluate SameAsEvery<...> sub-template.");
     using FirstT                = std::tuple_element_t<0ull, std::tuple<T...>>;
     static constexpr bool value = std::is_same<FirstT, Y0>::value && SameAsEvery<Y...>::value;
   };
@@ -55,9 +56,10 @@ struct Is
   template <typename Y>
   struct SameAsEvery<Y>
   {
-    static_assert(sizeof...(T) == 1,
-                  "There must be just single type T provided in to encapsulating  `Is<T...>` "
-                  "template in order to evaluate SameAsEvery<...> sub-template.");
+    static_assert(
+        sizeof...(T) == 1,
+        "There must be just single type T provided in to encapsulating  `Is<T...>` "
+        "template in order to evaluate SameAsEvery<...> sub-template.");
     using FirstT                = std::tuple_element_t<0ull, std::tuple<T...>>;
     static constexpr bool value = std::is_same<FirstT, Y>::value;
   };

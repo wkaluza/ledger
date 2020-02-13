@@ -45,8 +45,11 @@ public:
    * @param on_value TRUE value
    * @param off_value FALSE value
    */
-  explicit OneHot(SizeType depth, SizeType axis = 0, DataType on_value = DataType{1},
-                  DataType off_value = DataType{0})
+  explicit OneHot(
+      SizeType depth,
+      SizeType axis      = 0,
+      DataType on_value  = DataType{1},
+      DataType off_value = DataType{0})
     : depth_(depth)
     , axis_(axis)
     , on_value_(on_value)
@@ -63,8 +66,8 @@ public:
       std::shared_ptr<fetch::ml::ops::Ops<TensorType>> me) override;
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
 
   std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override;
 

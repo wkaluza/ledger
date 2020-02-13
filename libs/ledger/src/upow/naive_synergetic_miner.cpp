@@ -163,8 +163,9 @@ void NaiveSynergeticMiner::EnableMining(bool enable)
   is_mining_ = enable;
 }
 
-WorkPtr NaiveSynergeticMiner::MineSolution(chain::Address const &contract_address,
-                                           ProblemData const &   problem_data)
+WorkPtr NaiveSynergeticMiner::MineSolution(
+    chain::Address const &contract_address,
+    ProblemData const &   problem_data)
 {
   StateAdapter storage_adapter{storage_, "fetch.token"};
 
@@ -175,8 +176,8 @@ WorkPtr NaiveSynergeticMiner::MineSolution(chain::Address const &contract_addres
 
   if (balance == 0)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Not handling contract: ", contract_address.display(),
-                   " balance is 0");
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Not handling contract: ", contract_address.display(), " balance is 0");
     return {};
   }
 

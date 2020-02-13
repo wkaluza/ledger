@@ -48,11 +48,13 @@ FeeManager::TransactionDetails::TransactionDetails(chain::Transaction &tx, BitVe
   , charge_limit{tx.charge_limit()}
 {}
 
-FeeManager::TransactionDetails::TransactionDetails(chain::Address const &from_addr,
-                                                   chain::Address const &contract_addr,
-                                                   BitVector const &shards, Digest const &tx_digest,
-                                                   TokenAmount const &rate,
-                                                   TokenAmount const &limit)
+FeeManager::TransactionDetails::TransactionDetails(
+    chain::Address const &from_addr,
+    chain::Address const &contract_addr,
+    BitVector const &     shards,
+    Digest const &        tx_digest,
+    TokenAmount const &   rate,
+    TokenAmount const &   limit)
   : from{from_addr}
   , contract_address{contract_addr}
   , shard_mask{shards}
@@ -66,9 +68,10 @@ FeeManager::FeeManager(TokenContract &token_contract, std::string const &histogr
   , deduct_fees_duration_{Registry::Instance().LookupMeasurement<Histogram>(histogram_name)}
 {}
 
-bool FeeManager::CalculateChargeAndValidate(TransactionDetails &             tx,
-                                            std::vector<Chargeable *> const &chargeables,
-                                            Result &                         result)
+bool FeeManager::CalculateChargeAndValidate(
+    TransactionDetails &             tx,
+    std::vector<Chargeable *> const &chargeables,
+    Result &                         result)
 {
   bool success = true;
 
@@ -80,16 +83,30 @@ bool FeeManager::CalculateChargeAndValidate(TransactionDetails &             tx,
 
   uint64_t const scaled_charge = std::max<uint64_t>(tx.shard_mask.PopCount(), 1) * base_charge;
 
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Calculated charge for 0x", tx.digest.ToHex(), ": ", scaled_charge,
-                  " (base: ", base_charge, " scaled: ", scaled_charge, ")");
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Calculated charge for 0x",
+      tx.digest.ToHex(),
+      ": ",
+      scaled_charge,
+      " (base: ",
+      base_charge,
+      " scaled: ",
+      scaled_charge,
+      ")");
 
   result.charge += scaled_charge;
 
   // determine if the chain code ran out of charge
   if (result.charge > tx.charge_limit)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Insufficient charge, charge (", result.charge,
-                   ") greater then limit (", tx.charge_limit, ")");
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Insufficient charge, charge (",
+        result.charge,
+        ") greater then limit (",
+        tx.charge_limit,
+        ")");
     result.status = Status::INSUFFICIENT_CHARGE;
     success       = false;
   }
@@ -102,8 +119,11 @@ bool FeeManager::CalculateChargeAndValidate(TransactionDetails &             tx,
   return success;
 }
 
-void FeeManager::Execute(TransactionDetails &tx, Result &result, BlockIndex const &block,
-                         StorageInterface &storage)
+void FeeManager::Execute(
+    TransactionDetails &tx,
+    Result &            result,
+    BlockIndex const &  block,
+    StorageInterface &  storage)
 {
   telemetry::FunctionTimer const timer{*deduct_fees_duration_};
 
@@ -130,9 +150,13 @@ void FeeManager::Execute(TransactionDetails &tx, Result &result, BlockIndex cons
   token_contract_.SubtractTokens(from, result.fee);
 }
 
-void FeeManager::SettleFees(chain::Address const &miner, TokenAmount amount,
-                            chain::Address const &contract_address, uint32_t log2_num_lanes,
-                            BlockIndex const &block, StorageInterface &storage)
+void FeeManager::SettleFees(
+    chain::Address const &miner,
+    TokenAmount           amount,
+    chain::Address const &contract_address,
+    uint32_t              log2_num_lanes,
+    BlockIndex const &    block,
+    StorageInterface &    storage)
 {
   // only if there are fees to settle then update the state database
   if (amount == 0)

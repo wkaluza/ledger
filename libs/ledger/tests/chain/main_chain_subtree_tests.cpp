@@ -61,14 +61,16 @@ protected:
   MainChainPtr   chain_;
 
 public:
-  Blocks GetAncestorInLimit(MainChain::BehaviourWhenLimit behaviour, BlockPtr const &b1,
-                            BlockPtr const &b3)
+  Blocks GetAncestorInLimit(
+      MainChain::BehaviourWhenLimit behaviour,
+      BlockPtr const &              b1,
+      BlockPtr const &              b3)
   {
     constexpr uint64_t subchain_length_limit = 2;
 
     Blocks blocks;
-    EXPECT_TRUE(chain_->GetPathToCommonAncestor(blocks, b3->hash, b1->hash, subchain_length_limit,
-                                                behaviour));
+    EXPECT_TRUE(chain_->GetPathToCommonAncestor(
+        blocks, b3->hash, b1->hash, subchain_length_limit, behaviour));
     EXPECT_EQ(subchain_length_limit, blocks.size());
 
     return blocks;
@@ -90,8 +92,12 @@ Blocks Extract(Blocks const &input, std::initializer_list<std::size_t> indexes)
 
 bool AreEqual(Blocks const &actual, Blocks const &expected)
 {
-  return std::equal(actual.begin(), actual.end(), expected.begin(), expected.end(),
-                    [](auto const &a, auto const &b) { return a->hash == b->hash; });
+  return std::equal(
+      actual.begin(),
+      actual.end(),
+      expected.begin(),
+      expected.end(),
+      [](auto const &a, auto const &b) { return a->hash == b->hash; });
 }
 
 TEST_F(MainChainSubTreeTests, CheckSimpleTree)
@@ -336,8 +342,9 @@ TEST_F(MainChainSubTreeTests, ComplicatedSubTrees)
   }
 }
 
-TEST_F(MainChainSubTreeTests,
-       Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Including_Ancestor)
+TEST_F(
+    MainChainSubTreeTests,
+    Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Including_Ancestor)
 {
   // Simple tree structure
   //
@@ -366,8 +373,9 @@ TEST_F(MainChainSubTreeTests,
   EXPECT_EQ(genesis->hash, blocks[1]->hash);
 }
 
-TEST_F(MainChainSubTreeTests,
-       Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Not_Including_Ancestor)
+TEST_F(
+    MainChainSubTreeTests,
+    Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Not_Including_Ancestor)
 {
   // Simple tree structure
   //

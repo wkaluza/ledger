@@ -88,8 +88,9 @@ ProtoMessageReader::consumed_needed_pair ProtoMessageReader::CheckForMessage(con
 
     if (body_size > 10000)  // TODO(kll)
     {
-      throw std::invalid_argument(std::string("Proto deserialisation refuses incoming ") +
-                                  std::to_string(body_size) + " bytes message header.");
+      throw std::invalid_argument(
+          std::string("Proto deserialisation refuses incoming ") + std::to_string(body_size) +
+          " bytes message header.");
       break;
     }
 

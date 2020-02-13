@@ -84,8 +84,10 @@ std::string GenerateTimestamp()
   return {buffer};
 }
 
-bool CreateTxFromJson(Variant const &tx_obj, std::vector<ConstByteArray> &txs,
-                      TransactionProcessor &processor)
+bool CreateTxFromJson(
+    Variant const &              tx_obj,
+    std::vector<ConstByteArray> &txs,
+    TransactionProcessor &       processor)
 {
   auto tx = std::make_shared<chain::Transaction>();
 
@@ -105,8 +107,10 @@ bool CreateTxFromJson(Variant const &tx_obj, std::vector<ConstByteArray> &txs,
   return false;
 }
 
-bool CreateTxFromBuffer(ConstByteArray const &encoded_tx, std::vector<ConstByteArray> &txs,
-                        TransactionProcessor &processor)
+bool CreateTxFromBuffer(
+    ConstByteArray const &       encoded_tx,
+    std::vector<ConstByteArray> &txs,
+    TransactionProcessor &       processor)
 {
   auto tx = std::make_shared<chain::Transaction>();
 
@@ -137,8 +141,9 @@ constexpr char const *LOGGING_NAME = "ContractHttpInterface";
  * @param storage The reference to the storage engine
  * @param processor The reference to the (input) transaction processor
  */
-ContractHttpInterface::ContractHttpInterface(StorageInterface &    storage,
-                                             TransactionProcessor &processor)
+ContractHttpInterface::ContractHttpInterface(
+    StorageInterface &    storage,
+    TransactionProcessor &processor)
   : storage_{storage}
   , processor_{processor}
   , access_log_{"access.log"}
@@ -151,8 +156,9 @@ ContractHttpInterface::ContractHttpInterface(StorageInterface &    storage,
     auto contract = CreateChainCode(contract_name);
 
     ByteArray contract_path{contract_name};
-    contract_path.Replace(static_cast<char const &>(CONTRACT_NAME_SEPARATOR[0]),
-                          static_cast<char const &>(PATH_SEPARATOR[0]));
+    contract_path.Replace(
+        static_cast<char const &>(CONTRACT_NAME_SEPARATOR[0]),
+        static_cast<char const &>(PATH_SEPARATOR[0]));
 
     // enumerate all of the contract query handlers
     auto const &query_handlers = contract->query_handlers();
@@ -166,11 +172,13 @@ ContractHttpInterface::ContractHttpInterface(StorageInterface &    storage,
 
       FETCH_LOG_INFO(LOGGING_NAME, "Query API: ", api_path);
 
-      Post(api_path, "Calls contract query " + query_name + " for " + contract_name,
-           [this, contract_name, query_name](http::ViewParameters const &,
-                                             http::HTTPRequest const &request) {
-             return OnQuery(contract_name, query_name, request);
-           });
+      Post(
+          api_path,
+          "Calls contract query " + query_name + " for " + contract_name,
+          [this, contract_name, query_name](
+              http::ViewParameters const &, http::HTTPRequest const &request) {
+            return OnQuery(contract_name, query_name, request);
+          });
     }
 
     auto const &transaction_handlers = contract->transaction_handlers();
@@ -188,31 +196,36 @@ ContractHttpInterface::ContractHttpInterface(StorageInterface &    storage,
 
       FETCH_LOG_INFO(LOGGING_NAME, "   Tx API: ", api_path, " : ", canonical_contract_name);
 
-      Post(api_path, "Calls contract action " + transaction_name + " for " + contract_name,
-           [this, canonical_contract_name](http::ViewParameters const &params,
-                                           http::HTTPRequest const &   request) {
-             FETCH_UNUSED(params);
-             return OnTransaction(request, canonical_contract_name);
-           });
+      Post(
+          api_path,
+          "Calls contract action " + transaction_name + " for " + contract_name,
+          [this, canonical_contract_name](
+              http::ViewParameters const &params, http::HTTPRequest const &request) {
+            FETCH_UNUSED(params);
+            return OnTransaction(request, canonical_contract_name);
+          });
     }
   }
 
-  Post("/api/contract/(identifier=[1-9A-HJ-NP-Za-km-z]{48,50})/(query=.+)",
-       "Submits a query to a contract",
-       {{"identifier", "The query identifier.", http::validators::StringValue()}},
-       [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
-         // build the contract name
-         auto const contract_name = params["identifier"];
+  Post(
+      "/api/contract/(identifier=[1-9A-HJ-NP-Za-km-z]{48,50})/(query=.+)",
+      "Submits a query to a contract",
+      {{"identifier", "The query identifier.", http::validators::StringValue()}},
+      [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
+        // build the contract name
+        auto const contract_name = params["identifier"];
 
-         // proxy the call to the query handler
-         return OnQuery(contract_name, params["query"], request);
-       });
+        // proxy the call to the query handler
+        return OnQuery(contract_name, params["query"], request);
+      });
 
-  Post("/api/contract/submit", "Submits a new contract to the ledger.",
-       [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
-         FETCH_UNUSED(params);
-         return OnTransaction(request, ConstByteArray{});
-       });
+  Post(
+      "/api/contract/submit",
+      "Submits a new contract to the ledger.",
+      [this](http::ViewParameters const &params, http::HTTPRequest const &request) {
+        FETCH_UNUSED(params);
+        return OnTransaction(request, ConstByteArray{});
+      });
 }
 
 /**
@@ -223,14 +236,23 @@ ContractHttpInterface::ContractHttpInterface(StorageInterface &    storage,
  * @param request The originating HTTPRequest object
  * @return The appropriate HTTPResponse to be returned to the client
  */
-http::HTTPResponse ContractHttpInterface::OnQuery(ConstByteArray const &   contract_name,
-                                                  ConstByteArray const &   query,
-                                                  http::HTTPRequest const &request)
+http::HTTPResponse ContractHttpInterface::OnQuery(
+    ConstByteArray const &   contract_name,
+    ConstByteArray const &   query,
+    http::HTTPRequest const &request)
 {
   try
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Query: ", contract_name, '.', query,
-                    " from: ", request.originating_address(), ':', request.originating_port());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Query: ",
+        contract_name,
+        '.',
+        query,
+        " from: ",
+        request.originating_address(),
+        ':',
+        request.originating_port());
     FETCH_LOG_DEBUG(LOGGING_NAME, request.body());
 
     // record an entry in the access log
@@ -292,8 +314,9 @@ http::HTTPResponse ContractHttpInterface::OnQuery(ConstByteArray const &   contr
  * @param expected_contract_name The expected contract name (optional)
  * @return The appropriate HTTPResponse to be returned to the client
  */
-http::HTTPResponse ContractHttpInterface::OnTransaction(http::HTTPRequest const &request,
-                                                        ConstByteArray const &   expected_contract)
+http::HTTPResponse ContractHttpInterface::OnTransaction(
+    http::HTTPRequest const &request,
+    ConstByteArray const &   expected_contract)
 {
   Variant json = Variant::Object();
 
@@ -377,7 +400,8 @@ http::HTTPResponse ContractHttpInterface::OnTransaction(http::HTTPRequest const 
  * @see SubmitNativeTx
  */
 ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitJsonTx(
-    http::HTTPRequest const &request, TxHashes &txs)
+    http::HTTPRequest const &request,
+    TxHashes &               txs)
 {
   std::size_t submitted{0};
   std::size_t expected_count{0};
@@ -411,14 +435,21 @@ ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitJsonTx(
     }
   }
 
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Submitted ", submitted, " transactions from ",
-                  request.originating_address(), ':', request.originating_port());
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Submitted ",
+      submitted,
+      " transactions from ",
+      request.originating_address(),
+      ':',
+      request.originating_port());
 
   return SubmitTxStatus{submitted, expected_count};
 }
 
 ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitBulkTx(
-    http::HTTPRequest const &request, TxHashes &txs)
+    http::HTTPRequest const &request,
+    TxHashes &               txs)
 {
   std::size_t                 submitted{0};
   std::vector<ConstByteArray> encoded_txs{};
@@ -452,9 +483,10 @@ ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitBulkTx(
  * @param status The transaction submission status (counts)
  * @param request The originating HTTPRequest object
  */
-void ContractHttpInterface::RecordTransaction(SubmitTxStatus const &   status,
-                                              http::HTTPRequest const &request,
-                                              ConstByteArray const &   expected_contract)
+void ContractHttpInterface::RecordTransaction(
+    SubmitTxStatus const &   status,
+    http::HTTPRequest const &request,
+    ConstByteArray const &   expected_contract)
 {
   // form the variant
   Variant entry      = Variant::Object();
@@ -481,9 +513,10 @@ void ContractHttpInterface::RecordTransaction(SubmitTxStatus const &   status,
  * @param query The requested query name
  * @param request The original HTTPRequest object
  */
-void ContractHttpInterface::RecordQuery(ConstByteArray const &   contract_name,
-                                        ConstByteArray const &   query,
-                                        http::HTTPRequest const &request)
+void ContractHttpInterface::RecordQuery(
+    ConstByteArray const &   contract_name,
+    ConstByteArray const &   query,
+    http::HTTPRequest const &request)
 {
   Variant entry      = Variant::Object();
   entry["timestamp"] = GenerateTimestamp();

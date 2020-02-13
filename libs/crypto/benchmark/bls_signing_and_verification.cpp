@@ -98,8 +98,8 @@ void VerifyBLSSignature(benchmark::State &state)
     state.ResumeTiming();
 
     // Verify message
-    fetch::crypto::mcl::VerifySign(outputs[verify_index].public_key_shares[sign_index], msg,
-                                   signature, generator);
+    fetch::crypto::mcl::VerifySign(
+        outputs[verify_index].public_key_shares[sign_index], msg, signature, generator);
   }
 }
 

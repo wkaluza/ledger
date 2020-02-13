@@ -52,9 +52,9 @@ public:
       std::shared_ptr<fetch::ml::ops::Ops<TensorType>> me) override;
 
   void                    Forward(VecTensorType const &inputs, TensorType &output) override;
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
-  std::vector<SizeType>   ComputeOutputShape(VecTensorType const &inputs) const override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
+  std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override;
 
   static constexpr OpType OpCode()
   {
@@ -101,8 +101,12 @@ private:
   void UpdateContainersForward(VecTensorType const &inputs);
   void UpdateContainersBackward(VecTensorType const &inputs, TensorType const &error_signal);
   void DotWithTranspose(TensorType const &a, TensorType const &b, TensorType &ret);
-  void BackDotWithTranspose(TensorType const &a, TensorType const &b, TensorType const &err_signal,
-                            TensorType &err_ret_1, TensorType &err_ret_2);
+  void BackDotWithTranspose(
+      TensorType const &a,
+      TensorType const &b,
+      TensorType const &err_signal,
+      TensorType &      err_ret_1,
+      TensorType &      err_ret_2);
 };
 
 }  // namespace ops

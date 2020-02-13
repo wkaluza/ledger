@@ -37,8 +37,9 @@ L1Regulariser<TensorType>::L1Regulariser()
  * @param regularisation_rate
  */
 template <typename TensorType>
-void L1Regulariser<TensorType>::ApplyRegularisation(TensorType &weight,
-                                                    DataType    regularisation_rate)
+void L1Regulariser<TensorType>::ApplyRegularisation(
+    TensorType &weight,
+    DataType    regularisation_rate)
 {
   auto it = weight.begin();
   while (it.is_valid())

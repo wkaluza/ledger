@@ -91,24 +91,32 @@ public:
 
   VMOptimiser(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
 
-  VMOptimiser(fetch::vm::VM *vm, fetch::vm::TypeId type_id, std::string const &mode,
-              fetch::ml::Graph<fetch::math::Tensor<DataType>> const &graph,
-              vm::Ptr<VMDataLoader> const &loader, std::vector<std::string> const &input_node_names,
-              std::string const &label_node_name, std::string const &output_node_name);
+  VMOptimiser(
+      fetch::vm::VM *                                        vm,
+      fetch::vm::TypeId                                      type_id,
+      std::string const &                                    mode,
+      fetch::ml::Graph<fetch::math::Tensor<DataType>> const &graph,
+      vm::Ptr<VMDataLoader> const &                          loader,
+      std::vector<std::string> const &                       input_node_names,
+      std::string const &                                    label_node_name,
+      std::string const &                                    output_node_name);
 
   static void Bind(vm::Module &module, bool enable_experimental);
 
   static fetch::vm::Ptr<VMOptimiser> Constructor(
-      fetch::vm::VM *vm, fetch::vm::TypeId type_id, fetch::vm::Ptr<fetch::vm::String> const &mode,
+      fetch::vm::VM *                                                            vm,
+      fetch::vm::TypeId                                                          type_id,
+      fetch::vm::Ptr<fetch::vm::String> const &                                  mode,
       fetch::vm::Ptr<fetch::vm_modules::ml::VMGraph> const &                     graph,
       fetch::vm::Ptr<fetch::vm_modules::ml::VMDataLoader> const &                loader,
       fetch::vm::Ptr<fetch::vm::Array<fetch::vm::Ptr<fetch::vm::String>>> const &input_node_names,
       fetch::vm::Ptr<fetch::vm::String> const &                                  label_node_name,
       fetch::vm::Ptr<fetch::vm::String> const &                                  output_node_names);
 
-  DataType RunData(fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &data,
-                   fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &labels,
-                   uint64_t                                                 batch_size);
+  DataType RunData(
+      fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &data,
+      fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &labels,
+      uint64_t                                                 batch_size);
 
   DataType RunLoader(uint64_t batch_size, uint64_t subset_size);
 

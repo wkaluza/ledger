@@ -45,11 +45,14 @@ static const TestCase TEST_CASES[] = {
     {R"(sequence:
 - one
 - two)",
-     R"({"sequence": ["one", "two"]})", true, false},
+     R"({"sequence": ["one", "two"]})",
+     true,
+     false},
     // multiline compact sequence
     {R"(- key: value
 - key: another value)",
-     R"([{"key": "value"}, {"key": "another value"}])", true,
+     R"([{"key": "value"}, {"key": "another value"}])",
+     true,
      false},                                     // Check for compact mappings in multiline sequence
     {R"(one, two)", "", false, true},            // invalid single-line sequence
     {R"(sequence: one, two)", "", false, true},  // invalid single-line sequence as a value
@@ -59,23 +62,28 @@ static const TestCase TEST_CASES[] = {
     {R"(- Mark McGwire
 - Sammy Sosa
 - Ken Griffey)",
-     R"(["Mark McGwire", "Sammy Sosa", "Ken Griffey"])", true, false},  // Example 2.1
+     R"(["Mark McGwire", "Sammy Sosa", "Ken Griffey"])",
+     true,
+     false},  // Example 2.1
     {R"(- [name        , hr, avg  ]
 - [Mark McGwire, 65, 0.278]
 - [Sammy Sosa  , 63, 0.288])",
-     R"([["name", "hr", "avg"], ["Mark McGwire", 65, 0.278], ["Sammy Sosa", 63, 0.288]])", true,
+     R"([["name", "hr", "avg"], ["Mark McGwire", 65, 0.278], ["Sammy Sosa", 63, 0.288]])",
+     true,
      false},  // Example 2.5
     {R"(# ASCII Art
 --- |
   \//||\/||
   // ||  ||__)",
-     "\"\\\\//||\\\\/||\n// ||  ||__\"", true,
+     "\"\\\\//||\\\\/||\n// ||  ||__\"",
+     true,
      false},  // Example 2.13.  In literals, newlines are preserved
     {R"(--- >
   Mark McGwire's
   year was crippled
   by a knee injury.)",
-     "\"Mark McGwire's year was crippled by a knee injury.\"", true,
+     "\"Mark McGwire's year was crippled by a knee injury.\"",
+     true,
      false},  // Example 2.14.  In the folded scalars, newlines become spaces
     {R"(# Ordered maps are represented as
 # A sequence of mappings, with
@@ -84,7 +92,8 @@ static const TestCase TEST_CASES[] = {
 - Mark McGwire: 65
 - Sammy Sosa: 63
 - Ken Griffy: 58)",
-     R"([{"Mark McGwire": 65}, {"Sammy Sosa": 63}, {"Ken Griffy": 58}])", true,
+     R"([{"Mark McGwire": 65}, {"Sammy Sosa": 63}, {"Ken Griffy": 58}])",
+     true,
      false},                                       // Example 2.26. Ordered Mappings
     {R"(commercial-at: @text)", "", false, true},  // 5.10. Invalid use of reserved indicators
     {R"(grave-accent: `text)", "", false, true},   // 5.10. Invalid use of reserved indicators

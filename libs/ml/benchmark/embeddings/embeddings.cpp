@@ -48,8 +48,11 @@ namespace benchmark {
 
 template <typename TypeParam>
 std::shared_ptr<fetch::ml::Graph<TypeParam>> PrepareTestGraph(
-    typename TypeParam::SizeType embedding_dimensions, typename TypeParam::SizeType n_datapoints,
-    std::string &input_name, std::string &label_name, std::string &error_name)
+    typename TypeParam::SizeType embedding_dimensions,
+    typename TypeParam::SizeType n_datapoints,
+    std::string &                input_name,
+    std::string &                label_name,
+    std::string &                error_name)
 {
   std::shared_ptr<fetch::ml::Graph<TypeParam>> g(std::make_shared<fetch::ml::Graph<TypeParam>>());
 
@@ -90,8 +93,8 @@ void BM_Setup_And_Train_Embeddings(::benchmark::State &state)
   std::string input_name;
   std::string label_name;
   std::string error_name;
-  auto g = PrepareTestGraph<TensorType>(embedding_dimensions, n_datapoints, input_name, label_name,
-                                        error_name);
+  auto        g = PrepareTestGraph<TensorType>(
+      embedding_dimensions, n_datapoints, input_name, label_name, error_name);
 
   // Initialise Optimiser
   OptimiserType optimiser(g, {input_name}, label_name, error_name, learning_rate);
@@ -130,48 +133,64 @@ static void CustomArguments(::benchmark::internal::Benchmark *b)
 }
 
 // Normal Adam tests
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, float,
-                   fetch::ml::optimisers::AdamOptimiser<fetch::math::Tensor<float>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    float,
+    fetch::ml::optimisers::AdamOptimiser<fetch::math::Tensor<float>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, double,
-                   fetch::ml::optimisers::AdamOptimiser<fetch::math::Tensor<double>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    double,
+    fetch::ml::optimisers::AdamOptimiser<fetch::math::Tensor<double>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, fetch::fixed_point::FixedPoint<16, 16>,
-                   fetch::ml::optimisers::AdamOptimiser<
-                       fetch::math::Tensor<fetch::fixed_point::FixedPoint<16, 16>>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    fetch::fixed_point::FixedPoint<16, 16>,
+    fetch::ml::optimisers::AdamOptimiser<
+        fetch::math::Tensor<fetch::fixed_point::FixedPoint<16, 16>>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, fetch::fixed_point::FixedPoint<32, 32>,
-                   fetch::ml::optimisers::AdamOptimiser<
-                       fetch::math::Tensor<fetch::fixed_point::FixedPoint<32, 32>>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    fetch::fixed_point::FixedPoint<32, 32>,
+    fetch::ml::optimisers::AdamOptimiser<
+        fetch::math::Tensor<fetch::fixed_point::FixedPoint<32, 32>>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
 // Sparse LazyAdam tests
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, float,
-                   fetch::ml::optimisers::LazyAdamOptimiser<fetch::math::Tensor<float>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    float,
+    fetch::ml::optimisers::LazyAdamOptimiser<fetch::math::Tensor<float>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, double,
-                   fetch::ml::optimisers::LazyAdamOptimiser<fetch::math::Tensor<double>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    double,
+    fetch::ml::optimisers::LazyAdamOptimiser<fetch::math::Tensor<double>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, fetch::fixed_point::FixedPoint<16, 16>,
-                   fetch::ml::optimisers::LazyAdamOptimiser<
-                       fetch::math::Tensor<fetch::fixed_point::FixedPoint<16, 16>>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    fetch::fixed_point::FixedPoint<16, 16>,
+    fetch::ml::optimisers::LazyAdamOptimiser<
+        fetch::math::Tensor<fetch::fixed_point::FixedPoint<16, 16>>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 
-BENCHMARK_TEMPLATE(BM_Setup_And_Train_Embeddings, fetch::fixed_point::FixedPoint<32, 32>,
-                   fetch::ml::optimisers::LazyAdamOptimiser<
-                       fetch::math::Tensor<fetch::fixed_point::FixedPoint<32, 32>>>)
+BENCHMARK_TEMPLATE(
+    BM_Setup_And_Train_Embeddings,
+    fetch::fixed_point::FixedPoint<32, 32>,
+    fetch::ml::optimisers::LazyAdamOptimiser<
+        fetch::math::Tensor<fetch::fixed_point::FixedPoint<32, 32>>>)
     ->Apply(CustomArguments)
     ->Unit(::benchmark::kMillisecond);
 

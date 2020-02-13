@@ -40,8 +40,11 @@ public:
   using PacketPtr = std::shared_ptr<Packet>;
 
   // Construction / Destruction
-  DirectMessageService(Address address, Router &router, MuddleRegister &reg,
-                       PeerConnectionList &peers);
+  DirectMessageService(
+      Address             address,
+      Router &            router,
+      MuddleRegister &    reg,
+      PeerConnectionList &peers);
   DirectMessageService(DirectMessageService const &) = delete;
   DirectMessageService(DirectMessageService &&)      = delete;
   ~DirectMessageService()                            = default;
@@ -91,8 +94,10 @@ private:
 
   static char const *ToString(UpdateStatus status);
 
-  UpdateStatus UpdateReservation(Address const &address, Handle handle,
-                                 Handle *previous_handle = nullptr);
+  UpdateStatus UpdateReservation(
+      Address const &address,
+      Handle         handle,
+      Handle *       previous_handle = nullptr);
 
   Address const     address_;
   std::string const name_;

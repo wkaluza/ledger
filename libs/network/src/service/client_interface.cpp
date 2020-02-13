@@ -23,8 +23,9 @@
 namespace fetch {
 namespace service {
 
-void ServiceClientInterface::ProcessRPCResult(network::MessageBuffer const &msg,
-                                              service::SerializerType &     params)
+void ServiceClientInterface::ProcessRPCResult(
+    network::MessageBuffer const &msg,
+    service::SerializerType &     params)
 {
   // extract the promise counter (or request number)
   PromiseCounter id;
@@ -70,16 +71,16 @@ bool ServiceClientInterface::ProcessServerMessage(network::MessageBuffer const &
 
     if (!p)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Attempted to look up a network promise but it was already deleted");
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Attempted to look up a network promise but it was already deleted");
     }
     else
     {
       p->Fail(e);
     }
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Binning promise ", id,
-                    " due to finishing delivering the response (error)");
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME, "Binning promise ", id, " due to finishing delivering the response (error)");
   }
   else
   {

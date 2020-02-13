@@ -55,8 +55,10 @@ struct DummyManifestCache : public ManifestCacheInterface
 class HonestSetupService : public BeaconSetupService
 {
 public:
-  HonestSetupService(MuddleInterface &endpoint, const ProverPtr &prover,
-                     ManifestCacheInterface &manifest_cache)
+  HonestSetupService(
+      MuddleInterface &       endpoint,
+      const ProverPtr &       prover,
+      ManifestCacheInterface &manifest_cache)
     : BeaconSetupService{endpoint, manifest_cache, prover}
   {}
 };
@@ -78,9 +80,11 @@ public:
     WITHOLD_RECONSTRUCTION_SHARES
   };
 
-  FaultySetupService(MuddleInterface &endpoint, const ProverPtr &prover,
-                     ManifestCacheInterface &     manifest_cache,
-                     const std::vector<Failures> &failures = {})
+  FaultySetupService(
+      MuddleInterface &            endpoint,
+      const ProverPtr &            prover,
+      ManifestCacheInterface &     manifest_cache,
+      const std::vector<Failures> &failures = {})
     : BeaconSetupService{endpoint, manifest_cache, prover}
   {
     for (auto f : failures)
@@ -97,8 +101,9 @@ private:
     return failures_flags_[static_cast<uint8_t>(f)];
   }
 
-  void SendShares(MuddleAddress const &                        destination,
-                  std::pair<MessageShare, MessageShare> const &shares)
+  void SendShares(
+      MuddleAddress const &                        destination,
+      std::pair<MessageShare, MessageShare> const &shares)
   {
     fetch::serializers::SizeCounter counter;
     counter << shares;
@@ -392,9 +397,13 @@ struct DkgMember
 
   virtual ~DkgMember() = default;
 
-  virtual void StartNewCabinet(CabinetMemberList members, uint32_t threshold, uint64_t round_start,
-                               uint64_t round_end, uint64_t start_time,
-                               BlockEntropy const &prev_entropy)        = 0;
+  virtual void StartNewCabinet(
+      CabinetMemberList   members,
+      uint32_t            threshold,
+      uint64_t            round_start,
+      uint64_t            round_end,
+      uint64_t            start_time,
+      BlockEntropy const &prev_entropy)                                 = 0;
   virtual std::vector<std::weak_ptr<core::Runnable>> GetWeakRunnables() = 0;
   virtual bool                                       DkgFinished()      = 0;
 };
@@ -405,8 +414,10 @@ struct FaultyDkgMember : DkgMember
   DummyManifestCache manifest_cache;
   FaultySetupService dkg;
 
-  FaultyDkgMember(uint16_t port_number, uint16_t index,
-                  const std::vector<FaultySetupService::Failures> &failures = {})
+  FaultyDkgMember(
+      uint16_t                                         port_number,
+      uint16_t                                         index,
+      const std::vector<FaultySetupService::Failures> &failures = {})
     : DkgMember{port_number, index}
     , dkg{*muddle, muddle_certificate, manifest_cache, failures}
   {
@@ -418,9 +429,13 @@ struct FaultyDkgMember : DkgMember
 
   ~FaultyDkgMember() override = default;
 
-  void StartNewCabinet(CabinetMemberList members, uint32_t threshold, uint64_t round_start,
-                       uint64_t round_end, uint64_t start_time,
-                       BlockEntropy const &prev_entropy) override
+  void StartNewCabinet(
+      CabinetMemberList   members,
+      uint32_t            threshold,
+      uint64_t            round_start,
+      uint64_t            round_end,
+      uint64_t            start_time,
+      BlockEntropy const &prev_entropy) override
   {
     dkg.StartNewCabinet(members, threshold, round_start, round_end, start_time, prev_entropy);
   }
@@ -453,9 +468,13 @@ struct HonestDkgMember : DkgMember
 
   ~HonestDkgMember() override = default;
 
-  void StartNewCabinet(CabinetMemberList members, uint32_t threshold, uint64_t round_start,
-                       uint64_t round_end, uint64_t start_time,
-                       BlockEntropy const &prev_entropy) override
+  void StartNewCabinet(
+      CabinetMemberList   members,
+      uint32_t            threshold,
+      uint64_t            round_start,
+      uint64_t            round_end,
+      uint64_t            start_time,
+      BlockEntropy const &prev_entropy) override
   {
     dkg.StartNewCabinet(members, threshold, round_start, round_end, start_time, prev_entropy);
   }
@@ -470,10 +489,13 @@ struct HonestDkgMember : DkgMember
   }
 };
 
-void GenerateTest(uint32_t cabinet_size, uint32_t threshold, uint32_t qual_size,
-                  uint32_t expected_completion_size,
-                  const std::vector<std::vector<FaultySetupService::Failures>> &failures    = {},
-                  uint16_t                                                      setup_delay = 0)
+void GenerateTest(
+    uint32_t                                                      cabinet_size,
+    uint32_t                                                      threshold,
+    uint32_t                                                      qual_size,
+    uint32_t                                                      expected_completion_size,
+    const std::vector<std::vector<FaultySetupService::Failures>> &failures    = {},
+    uint16_t                                                      setup_delay = 0)
 {
   fetch::crypto::mcl::details::MCLInitialiser();
 
@@ -513,8 +535,8 @@ void GenerateTest(uint32_t cabinet_size, uint32_t threshold, uint32_t qual_size,
   // Reset cabinet for rbc in pre-dkg sync
   for (uint32_t i = 0; i < cabinet_size; i++)
   {
-    cabinet_members[i]->StartNewCabinet(cabinet_addresses, threshold, 0, 10, start_time,
-                                        prev_entropy);
+    cabinet_members[i]->StartNewCabinet(
+        cabinet_addresses, threshold, 0, 10, start_time, prev_entropy);
   }
 
   // Start off some connections until everyone else has connected
@@ -522,8 +544,9 @@ void GenerateTest(uint32_t cabinet_size, uint32_t threshold, uint32_t qual_size,
   {
     for (uint32_t j = i + 1; j < cabinet_size; j++)
     {
-      cabinet_members[i]->muddle->ConnectTo(cabinet_members[j]->muddle->GetAddress(),
-                                            peers_list[cabinet_members[j]->muddle->GetAddress()]);
+      cabinet_members[i]->muddle->ConnectTo(
+          cabinet_members[j]->muddle->GetAddress(),
+          peers_list[cabinet_members[j]->muddle->GetAddress()]);
     }
   }
 
@@ -567,16 +590,20 @@ void GenerateTest(uint32_t cabinet_size, uint32_t threshold, uint32_t qual_size,
     uint32_t start_complete = cabinet_size - expected_completion_size;
     for (uint32_t n = start_complete + 1; n < cabinet_size; ++n)
     {
-      EXPECT_EQ(cabinet_members[start_complete]->output.group_public_key,
-                cabinet_members[n]->output.group_public_key);
-      EXPECT_EQ(cabinet_members[start_complete]->output.public_key_shares,
-                cabinet_members[n]->output.public_key_shares);
-      EXPECT_NE(cabinet_members[start_complete]->output.public_key_shares[start_complete],
-                cabinet_members[n]->output.public_key_shares[n]);
+      EXPECT_EQ(
+          cabinet_members[start_complete]->output.group_public_key,
+          cabinet_members[n]->output.group_public_key);
+      EXPECT_EQ(
+          cabinet_members[start_complete]->output.public_key_shares,
+          cabinet_members[n]->output.public_key_shares);
+      EXPECT_NE(
+          cabinet_members[start_complete]->output.public_key_shares[start_complete],
+          cabinet_members[n]->output.public_key_shares[n]);
       for (uint32_t q = n + 1; q < cabinet_size; ++q)
       {
-        EXPECT_NE(cabinet_members[start_complete]->output.public_key_shares[n],
-                  cabinet_members[start_complete]->output.public_key_shares[q]);
+        EXPECT_NE(
+            cabinet_members[start_complete]->output.public_key_shares[n],
+            cabinet_members[start_complete]->output.public_key_shares[q]);
       }
     }
   }
@@ -595,10 +622,14 @@ TEST(dkg_setup, bad_messages)
   // Another node sends certain messages with unknown member in it. Ignored and not excluded.
   // Finally, a third node enters qual but then sends qual messages with incorrect crypto -
   // fails the dkg as it receives threshold number of complaints
-  GenerateTest(7, 4, 6, 5,
-               {{FaultySetupService::Failures::MESSAGES_WITH_INVALID_CRYPTO},
-                {FaultySetupService::Failures::QUAL_MESSAGES_WITH_INVALID_CRYPTO},
-                {FaultySetupService::Failures::MESSAGES_WITH_UNKNOWN_ADDRESSES}});
+  GenerateTest(
+      7,
+      4,
+      6,
+      5,
+      {{FaultySetupService::Failures::MESSAGES_WITH_INVALID_CRYPTO},
+       {FaultySetupService::Failures::QUAL_MESSAGES_WITH_INVALID_CRYPTO},
+       {FaultySetupService::Failures::MESSAGES_WITH_UNKNOWN_ADDRESSES}});
 }
 
 TEST(dkg_setup, send_empty_complaint_answer)
@@ -607,10 +638,14 @@ TEST(dkg_setup, send_empty_complaint_answer)
   // Node 0 then does not send real shares and instead sends empty complaint answer.
   // Node 0 should be disqualified from qual. A different node sends bad secret shares
   // but then reveals correct shares in complaint answer so is allowed into qual.
-  GenerateTest(4, 3, 3, 3,
-               {{FaultySetupService::Failures::SEND_BAD_SHARE,
-                 FaultySetupService::Failures::SEND_EMPTY_COMPLAINT_ANSWER},
-                {FaultySetupService::Failures::SEND_BAD_SHARE}});
+  GenerateTest(
+      4,
+      3,
+      3,
+      3,
+      {{FaultySetupService::Failures::SEND_BAD_SHARE,
+        FaultySetupService::Failures::SEND_EMPTY_COMPLAINT_ANSWER},
+       {FaultySetupService::Failures::SEND_BAD_SHARE}});
 }
 
 TEST(dkg_setup, send_multiple_messages)
@@ -620,8 +655,12 @@ TEST(dkg_setup, send_multiple_messages)
   // A third node sends fake qual coefficients. Should trigger warning and this node's shares will
   // be reconstructed but should succeed in the DKG. This behaviour is important to test as it means
   // reconstruction computes the correct thing.
-  GenerateTest(5, 3, 4, 4,
-               {{FaultySetupService::Failures::BAD_COEFFICIENT},
-                {FaultySetupService::Failures::SEND_MULTIPLE_MESSAGES},
-                {FaultySetupService::Failures::SEND_FALSE_QUAL_COMPLAINT}});
+  GenerateTest(
+      5,
+      3,
+      4,
+      4,
+      {{FaultySetupService::Failures::BAD_COEFFICIENT},
+       {FaultySetupService::Failures::SEND_MULTIPLE_MESSAGES},
+       {FaultySetupService::Failures::SEND_FALSE_QUAL_COMPLAINT}});
 }

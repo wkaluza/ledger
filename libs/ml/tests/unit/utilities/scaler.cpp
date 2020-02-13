@@ -61,8 +61,10 @@ TYPED_TEST(ScalerTest, min_max_2d_test)
   EXPECT_EQ(data.shape(), norm_data.shape());
   EXPECT_EQ(de_norm_data.shape(), norm_data.shape());
 
-  EXPECT_TRUE(data.AllClose(de_norm_data, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data.AllClose(
+      de_norm_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(fetch::math::Max(norm_data) <= DataType{1});
   EXPECT_TRUE(fetch::math::Min(norm_data) >= DataType{0});
@@ -90,8 +92,10 @@ TYPED_TEST(ScalerTest, min_max_3d_test)
   EXPECT_EQ(data.shape(), norm_data.shape());
   EXPECT_EQ(de_norm_data.shape(), norm_data.shape());
 
-  EXPECT_TRUE(data.AllClose(de_norm_data, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data.AllClose(
+      de_norm_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(fetch::math::Max(norm_data) <= DataType{1});
   EXPECT_TRUE(fetch::math::Min(norm_data) >= DataType{0});
@@ -117,16 +121,20 @@ TYPED_TEST(ScalerTest, min_max_no_variation_test)
   scaler.Normalise(data, norm_data);
   test_zeros.Fill(DataType{0});
 
-  EXPECT_TRUE(norm_data.AllClose(test_zeros, fetch::math::function_tolerance<DataType>(),
-                                 fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(norm_data.AllClose(
+      test_zeros,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   scaler.DeNormalise(norm_data, de_norm_data);
 
   EXPECT_EQ(data.shape(), norm_data.shape());
   EXPECT_EQ(de_norm_data.shape(), norm_data.shape());
 
-  EXPECT_TRUE(data.AllClose(de_norm_data, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(data.AllClose(
+      de_norm_data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   EXPECT_TRUE(fetch::math::Max(norm_data) <= DataType{1});
   EXPECT_TRUE(fetch::math::Min(norm_data) >= DataType{0});

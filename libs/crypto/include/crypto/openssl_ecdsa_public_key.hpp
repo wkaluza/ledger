@@ -26,9 +26,10 @@ namespace fetch {
 namespace crypto {
 namespace openssl {
 
-template <eECDSAEncoding          P_ECDSABinaryDataFormat = eECDSAEncoding::canonical,
-          int                     P_ECDSA_Curve_NID       = NID_secp256k1,
-          point_conversion_form_t P_ConversionForm        = POINT_CONVERSION_UNCOMPRESSED>
+template <
+    eECDSAEncoding          P_ECDSABinaryDataFormat = eECDSAEncoding::canonical,
+    int                     P_ECDSA_Curve_NID       = NID_secp256k1,
+    point_conversion_form_t P_ConversionForm        = POINT_CONVERSION_UNCOMPRESSED>
 class ECDSAPublicKey
 {
   SharedPointerType<EC_POINT> key_EC_POINT_;
@@ -41,14 +42,18 @@ public:
   static constexpr eECDSAEncoding          binaryDataFormat = P_ECDSABinaryDataFormat;
   static constexpr point_conversion_form_t conversionForm   = P_ConversionForm;
 
-  template <eECDSAEncoding P_ECDSABinaryDataFormat2, int P_ECDSA_Curve_NID2,
-            point_conversion_form_t P_ConversionForm2>
+  template <
+      eECDSAEncoding          P_ECDSABinaryDataFormat2,
+      int                     P_ECDSA_Curve_NID2,
+      point_conversion_form_t P_ConversionForm2>
   friend class ECDSAPublicKey;
 
   ECDSAPublicKey() = default;
 
-  ECDSAPublicKey(SharedPointerType<EC_POINT> &&public_key, const EC_GROUP *group,
-                 const context::Session<BN_CTX> &session)
+  ECDSAPublicKey(
+      SharedPointerType<EC_POINT> &&  public_key,
+      const EC_GROUP *                group,
+      const context::Session<BN_CTX> &session)
     : key_EC_POINT_{public_key}
     , key_EC_KEY_{ConvertToECKEY(public_key.get())}
     , key_binary_{Convert(public_key.get(), group, session, binaryDataFormat)}
@@ -114,10 +119,11 @@ public:
 private:
   using AffineCoordConversionType = ECDSAAffineCoordinatesConversion<P_ECDSA_Curve_NID>;
 
-  static byte_array::ByteArray Convert(EC_POINT const *const           public_key,
-                                       EC_GROUP const *const           group,
-                                       context::Session<BN_CTX> const &session,
-                                       eECDSAEncoding const            binary_data_format)
+  static byte_array::ByteArray Convert(
+      EC_POINT const *const           public_key,
+      EC_GROUP const *const           group,
+      context::Session<BN_CTX> const &session,
+      eECDSAEncoding const            binary_data_format)
   {
     switch (binary_data_format)
     {
@@ -137,8 +143,9 @@ private:
     return {};
   }
 
-  static byte_array::ByteArray Convert(EC_POINT const *const public_key,
-                                       eECDSAEncoding const  binary_data_format)
+  static byte_array::ByteArray Convert(
+      EC_POINT const *const public_key,
+      eECDSAEncoding const  binary_data_format)
   {
     UniquePointerType<EC_GROUP> group{createGroup()};
     context::Session<BN_CTX>    session;
@@ -156,8 +163,9 @@ private:
     return {};
   }
 
-  static UniquePointerType<EC_POINT> Convert(byte_array::ConstByteArray const &key_data,
-                                             eECDSAEncoding const              binary_data_format)
+  static UniquePointerType<EC_POINT> Convert(
+      byte_array::ConstByteArray const &key_data,
+      eECDSAEncoding const              binary_data_format)
   {
     switch (binary_data_format)
     {
@@ -176,24 +184,30 @@ private:
     return {};
   }
 
-  static byte_array::ByteArray Convert2Canonical(EC_POINT const *const           public_key,
-                                                 EC_GROUP const *const           group,
-                                                 context::Session<BN_CTX> const &session)
+  static byte_array::ByteArray Convert2Canonical(
+      EC_POINT const *const           public_key,
+      EC_GROUP const *const           group,
+      context::Session<BN_CTX> const &session)
   {
     SharedPointerType<BIGNUM> x{BN_new()};
     SharedPointerType<BIGNUM> y{BN_new()};
-    EC_POINT_get_affine_coordinates_GFp(group, public_key, x.get(), y.get(),
-                                        session.context().get());
+    EC_POINT_get_affine_coordinates_GFp(
+        group, public_key, x.get(), y.get(), session.context().get());
     return AffineCoordConversionType::Convert2Canonical(x.get(), y.get());
   }
 
-  static byte_array::ByteArray Convert2Bin(EC_POINT const *const           public_key,
-                                           EC_GROUP const *const           group,
-                                           context::Session<BN_CTX> const &session)
+  static byte_array::ByteArray Convert2Bin(
+      EC_POINT const *const           public_key,
+      EC_GROUP const *const           group,
+      context::Session<BN_CTX> const &session)
   {
     SharedPointerType<BIGNUM> public_key_as_BN{BN_new()};
-    if (EC_POINT_point2bn(group, public_key, ECDSAPublicKey::conversionForm, public_key_as_BN.get(),
-                          session.context().get()) == nullptr)
+    if (EC_POINT_point2bn(
+            group,
+            public_key,
+            ECDSAPublicKey::conversionForm,
+            public_key_as_BN.get(),
+            session.context().get()) == nullptr)
     {
       throw std::runtime_error(
           "ECDSAPublicKey::Convert(...): "
@@ -223,8 +237,8 @@ private:
 
     AffineCoordConversionType::ConvertFromCanonical(key_data, x.get(), y.get());
 
-    if (EC_POINT_set_affine_coordinates_GFp(group.get(), public_key.get(), x.get(), y.get(),
-                                            session.context().get()) == 0)
+    if (EC_POINT_set_affine_coordinates_GFp(
+            group.get(), public_key.get(), x.get(), y.get(), session.context().get()) == 0)
     {
       throw std::runtime_error(
           "ECDSAPublicKey::ConvertFromCanonical(...): "
@@ -237,8 +251,10 @@ private:
   static UniquePointerType<EC_POINT> ConvertFromBin(byte_array::ConstByteArray const &key_data)
   {
     SharedPointerType<BIGNUM> pub_key_as_BN{BN_new()};
-    if (BN_bin2bn(static_cast<const uint8_t *>(key_data.pointer()), int(key_data.size()),
-                  pub_key_as_BN.get()) == nullptr)
+    if (BN_bin2bn(
+            static_cast<const uint8_t *>(key_data.pointer()),
+            int(key_data.size()),
+            pub_key_as_BN.get()) == nullptr)
     {
       throw std::runtime_error("ECDSAPublicKey::ConvertToECPOINT(...): BN_bin2bn(...) failed.");
     }
@@ -247,8 +263,8 @@ private:
     UniquePointerType<EC_POINT> public_key{EC_POINT_new(group.get())};
     context::Session<BN_CTX>    session;
 
-    if (EC_POINT_bn2point(group.get(), pub_key_as_BN.get(), public_key.get(),
-                          session.context().get()) == nullptr)
+    if (EC_POINT_bn2point(
+            group.get(), pub_key_as_BN.get(), public_key.get(), session.context().get()) == nullptr)
     {
       throw std::runtime_error(
           "ECDSAPublicKey::ConvertToECPOINT(...): "

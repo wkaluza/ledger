@@ -72,8 +72,10 @@ void Softmax1DImplementation(ArrayType1 const &array, ArrayType2 &ret)
  * @param axis
  */
 template <typename ArrayType>
-void SoftmaxNDImplementation(ArrayType const &array, ArrayType &ret,
-                             typename ArrayType::SizeType axis)
+void SoftmaxNDImplementation(
+    ArrayType const &            array,
+    ArrayType &                  ret,
+    typename ArrayType::SizeType axis)
 {
   // Subtract max for numerical stability
   ArrayType sums = ReduceMax(array, axis);

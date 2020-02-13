@@ -133,8 +133,10 @@ TEST(MclDkgTests, ComputeLhsRhs)
   {
     PublicKey tmpG;
     tmpG.clear();
-    bn::G2::mul(tmpG, coefficients[jj],
-                static_cast<int64_t>(pow(static_cast<double>(rank + 1), static_cast<double>(jj))));
+    bn::G2::mul(
+        tmpG,
+        coefficients[jj],
+        static_cast<int64_t>(pow(static_cast<double>(rank + 1), static_cast<double>(jj))));
     bn::G2::add(rhs_test, rhs_test, tmpG);
   }
 
@@ -272,8 +274,10 @@ TEST(MclNotarisationTests, AggregateSigningVerification)
   {
     aggregate_private_keys[i].coefficient =
         SignatureAggregationCoefficient(public_keys[i], public_keys);
-    bn::G2::mul(aggregate_public_keys[i].aggregate_public_key, public_keys[i],
-                aggregate_private_keys[i].coefficient);
+    bn::G2::mul(
+        aggregate_public_keys[i].aggregate_public_key,
+        public_keys[i],
+        aggregate_private_keys[i].coefficient);
   }
 
   MessagePayload                          message = "Hello";

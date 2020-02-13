@@ -71,8 +71,8 @@ void CreateVMAndRunScript(std::string script, ExecutionTask const &task)
 
   // Unpacking arguments
   ParameterPack params{vm->registered_types()};
-  bool const    success_extract = task.DeserializeParameters(vm.get(), params, executable.get(),
-                                                          executable->FindFunction(task.function));
+  bool const    success_extract = task.DeserializeParameters(
+      vm.get(), params, executable.get(), executable->FindFunction(task.function));
 
   EXPECT_TRUE(success_extract);
   ;

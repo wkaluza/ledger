@@ -56,8 +56,8 @@ void Product(ArrayType const &obj1, typename ArrayType::Type &ret)
   // TODO(private issue 994): Create test for this function
   if (obj1.padding() == 1)
   {
-    ret = obj1.data().in_parallel().Reduce(memory::Range(0, obj1.size()),
-                                           [](auto const &a, auto const &b) { return a * b; });
+    ret = obj1.data().in_parallel().Reduce(
+        memory::Range(0, obj1.size()), [](auto const &a, auto const &b) { return a * b; });
   }
   else
   {
@@ -81,8 +81,8 @@ void Product(ArrayType const &obj1, typename ArrayType::Type &ret)
 template <typename ArrayType>
 void Sum(ArrayType const &obj1, typename ArrayType::Type &ret)
 {
-  ret = obj1.data().in_parallel().Reduce(memory::Range(0, obj1.size()),
-                                         [](auto const &a, auto const &b) { return a + b; });
+  ret = obj1.data().in_parallel().Reduce(
+      memory::Range(0, obj1.size()), [](auto const &a, auto const &b) { return a + b; });
 }
 
 }  // namespace details_vectorisation
@@ -97,8 +97,11 @@ void Sum(ArrayType const &obj1, typename ArrayType::Type &ret)
  * @return
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> Switch(ArrayType const &mask, ArrayType const &then_array,
-                                            ArrayType const &else_array, ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> Switch(
+    ArrayType const &mask,
+    ArrayType const &then_array,
+    ArrayType const &else_array,
+    ArrayType &      ret)
 {
   using DataType = typename ArrayType::Type;
 
@@ -119,8 +122,10 @@ meta::IfIsMathArray<ArrayType, void> Switch(ArrayType const &mask, ArrayType con
  * @param x
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, ArrayType> Switch(ArrayType const &mask, ArrayType const &then_array,
-                                                 ArrayType const &else_array)
+meta::IfIsMathArray<ArrayType, ArrayType> Switch(
+    ArrayType const &mask,
+    ArrayType const &then_array,
+    ArrayType const &else_array)
 {
   ArrayType ret(mask.shape());
   Switch(mask, then_array, else_array, ret);
@@ -132,8 +137,10 @@ meta::IfIsMathArray<ArrayType, ArrayType> Switch(ArrayType const &mask, ArrayTyp
  * @param x
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> BooleanMask(ArrayType const &input_array,
-                                                 ArrayType const &mask, ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> BooleanMask(
+    ArrayType const &input_array,
+    ArrayType const &mask,
+    ArrayType &      ret)
 {
   assert(input_array.size() == mask.size());
   assert(ret.size() >= typename ArrayType::SizeType(Sum(mask)));
@@ -176,8 +183,10 @@ meta::IfIsMathArray<ArrayType, ArrayType> BooleanMask(ArrayType &input_array, Ar
  * @param indices vector of indices at which to apply the updates
  */
 template <typename ArrayType>
-void Scatter(ArrayType &input_array, ArrayType const &updates,
-             std::vector<SizeVector> const &indices)
+void Scatter(
+    ArrayType &                    input_array,
+    ArrayType const &              updates,
+    std::vector<SizeVector> const &indices)
 {
   assert(indices.size() == updates.size());
 
@@ -216,8 +225,10 @@ meta::IfIsMathArray<ArrayType, void> Product(ArrayType const &array1, T &ret)
   }
 }
 
-template <typename T, typename C /*template<class> class C*/,
-          typename = std::enable_if_t<meta::IsArithmetic<T>>>
+template <
+    typename T,
+    typename C /*template<class> class C*/,
+    typename = std::enable_if_t<meta::IsArithmetic<T>>>
 meta::IfIsMathArray<Tensor<T, C>, T> Product(Tensor<T, C> const &array1)
 {
   T ret;
@@ -503,8 +514,10 @@ void Min(ArrayType const &array, typename ArrayType::SizeType const &axis, Array
  * @return the combined array
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> Maximum(ArrayType const &array1, ArrayType const &array2,
-                                             ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> Maximum(
+    ArrayType const &array1,
+    ArrayType const &array2,
+    ArrayType &      ret)
 {
   assert(array1.shape() == array2.shape());
   assert(ret.shape() == array2.shape());
@@ -636,9 +649,10 @@ ArrayType ReduceSum(ArrayType const &obj1, std::vector<SizeType> axes)
  * @param ret Output Tensor of shape of input with size 1 along given axis
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> ReduceMean(ArrayType const &                   obj1,
-                                                typename ArrayType::SizeType const &axis,
-                                                ArrayType &                         ret)
+meta::IfIsMathArray<ArrayType, void> ReduceMean(
+    ArrayType const &                   obj1,
+    typename ArrayType::SizeType const &axis,
+    ArrayType &                         ret)
 {
   using Type = typename ArrayType::Type;
 
@@ -655,8 +669,9 @@ meta::IfIsMathArray<ArrayType, void> ReduceMean(ArrayType const &               
  * @return Output Tensor of shape of input with size 1 along given axis
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, ArrayType> ReduceMean(ArrayType const &                   obj1,
-                                                     typename ArrayType::SizeType const &axis)
+meta::IfIsMathArray<ArrayType, ArrayType> ReduceMean(
+    ArrayType const &                   obj1,
+    typename ArrayType::SizeType const &axis)
 {
   using Type = typename ArrayType::Type;
 
@@ -674,8 +689,10 @@ meta::IfIsMathArray<ArrayType, ArrayType> ReduceMean(ArrayType const &          
  * @param ret Output Tensor of shape of input with size 1 along given axes
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> ReduceMean(ArrayType const &            obj1,
-                                                std::vector<SizeType> const &axes, ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> ReduceMean(
+    ArrayType const &            obj1,
+    std::vector<SizeType> const &axes,
+    ArrayType &                  ret)
 {
   using Type = typename ArrayType::Type;
 
@@ -697,8 +714,9 @@ meta::IfIsMathArray<ArrayType, void> ReduceMean(ArrayType const &            obj
  * @return Output Tensor of shape of input with size 1 along given axes
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, ArrayType> ReduceMean(ArrayType const &            obj1,
-                                                     std::vector<SizeType> const &axes)
+meta::IfIsMathArray<ArrayType, ArrayType> ReduceMean(
+    ArrayType const &            obj1,
+    std::vector<SizeType> const &axes)
 {
   using Type = typename ArrayType::Type;
 
@@ -935,8 +953,10 @@ ArrayType ReduceMax(ArrayType const &obj1, std::vector<SizeType> axes)
  * @return
  */
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> ArgMax(ArrayType const &array, ArrayType &ret,
-                                            SizeType axis = NO_AXIS)
+meta::IfIsMathArray<ArrayType, void> ArgMax(
+    ArrayType const &array,
+    ArrayType &      ret,
+    SizeType         axis = NO_AXIS)
 {
   using Type = typename ArrayType::Type;
 
@@ -1062,17 +1082,19 @@ T ArgMax(std::vector<T> const &obj1)
 }
 
 template <typename ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, void> Dot(ArrayType const &A, ArrayType const &B,
-                                                      ArrayType &ret)
+fetch::math::meta::IfIsMathArray<ArrayType, void> Dot(
+    ArrayType const &A,
+    ArrayType const &B,
+    ArrayType &      ret)
 {
   auto aview = A.View();
   auto bview = B.View();
 
   if (aview.width() != bview.height())
   {
-    throw fetch::math::exceptions::WrongShape("expected A width (" + std::to_string(aview.width()) +
-                                              ") equal to B height (" +
-                                              std::to_string(bview.height()) + ").");
+    throw fetch::math::exceptions::WrongShape(
+        "expected A width (" + std::to_string(aview.width()) + ") equal to B height (" +
+        std::to_string(bview.height()) + ").");
   }
 
   if (ret.shape() != std::vector<SizeType>({aview.height(), bview.width()}))
@@ -1090,8 +1112,11 @@ fetch::math::meta::IfIsMathArray<ArrayType, void> Dot(ArrayType const &A, ArrayT
                              : platform::Parallelisation::NOT_PARALLEL
   };
 
-  Blas<Type, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * _B + _beta * _C), OPTIMISATION_FLAGS>
+  Blas<
+      Type,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * _B + _beta * _C),
+      OPTIMISATION_FLAGS>
       gemm_nn;
 
   gemm_nn(static_cast<Type>(1), aview, bview, static_cast<Type>(0), ret.View());
@@ -1114,8 +1139,10 @@ ArrayType Dot(ArrayType const &A, ArrayType const &B)
  * @return
  */
 template <class ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, void> DotTranspose(ArrayType const &A,
-                                                               ArrayType const &B, ArrayType &ret)
+fetch::math::meta::IfIsMathArray<ArrayType, void> DotTranspose(
+    ArrayType const &A,
+    ArrayType const &B,
+    ArrayType &      ret)
 {
   auto aview = A.View();
   auto bview = B.View();
@@ -1140,16 +1167,20 @@ fetch::math::meta::IfIsMathArray<ArrayType, void> DotTranspose(ArrayType const &
                              : platform::Parallelisation::NOT_PARALLEL
   };
 
-  Blas<Type, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), OPTIMISATION_FLAGS>
+  Blas<
+      Type,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      OPTIMISATION_FLAGS>
       gemm_nt;
 
   gemm_nt(static_cast<Type>(1), A.View(), B.View(), static_cast<Type>(0), ret.View());
 }
 
 template <typename ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> DotTranspose(ArrayType const &A,
-                                                                    ArrayType const &B)
+fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> DotTranspose(
+    ArrayType const &A,
+    ArrayType const &B)
 {
   std::vector<typename ArrayType::SizeType> return_shape{A.shape()[0], B.shape()[0]};
   ArrayType                                 ret(return_shape);
@@ -1165,8 +1196,10 @@ fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> DotTranspose(ArrayType co
  * @return
  */
 template <class ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, void> TransposeDot(ArrayType const &A,
-                                                               ArrayType const &B, ArrayType &ret)
+fetch::math::meta::IfIsMathArray<ArrayType, void> TransposeDot(
+    ArrayType const &A,
+    ArrayType const &B,
+    ArrayType &      ret)
 {
   auto aview = A.View();
   auto bview = B.View();
@@ -1191,16 +1224,20 @@ fetch::math::meta::IfIsMathArray<ArrayType, void> TransposeDot(ArrayType const &
                              : platform::Parallelisation::NOT_PARALLEL
   };
 
-  Blas<Type, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * T(_A) * _B + _beta * _C), OPTIMISATION_FLAGS>
+  Blas<
+      Type,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * T(_A) * _B + _beta * _C),
+      OPTIMISATION_FLAGS>
       gemm_tn;
 
   gemm_tn(static_cast<Type>(1), A.View(), B.View(), static_cast<Type>(0), ret.View());
 }
 
 template <class ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> TransposeDot(ArrayType const &A,
-                                                                    ArrayType const &B)
+fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> TransposeDot(
+    ArrayType const &A,
+    ArrayType const &B)
 {
   std::vector<typename ArrayType::SizeType> return_shape{A.shape().at(1), B.shape().at(1)};
   ArrayType                                 ret(return_shape);
@@ -1209,9 +1246,10 @@ fetch::math::meta::IfIsMathArray<ArrayType, ArrayType> TransposeDot(ArrayType co
 }
 
 template <typename ArrayType>
-fetch::math::meta::IfIsMathArray<ArrayType, void> DynamicStitch(ArrayType &      input_array,
-                                                                ArrayType const &indices,
-                                                                ArrayType const &data)
+fetch::math::meta::IfIsMathArray<ArrayType, void> DynamicStitch(
+    ArrayType &      input_array,
+    ArrayType const &indices,
+    ArrayType const &data)
 {
   assert(data.size() <= input_array.size());
   assert(input_array.size() > static_cast<typename ArrayType::SizeType>(Max(indices)));

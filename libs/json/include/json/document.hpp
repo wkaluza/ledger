@@ -133,8 +133,10 @@ private:
   };
 
   void        Tokenise(ConstByteArray const &document);
-  static void ExtractPrimitive(Variant &variant, JSONToken const &token,
-                               ConstByteArray const &document);
+  static void ExtractPrimitive(
+      Variant &             variant,
+      JSONToken const &     token,
+      ConstByteArray const &document);
 
   std::vector<uint16_t>    counters_{};
   std::vector<JSONToken *> object_stack_{};

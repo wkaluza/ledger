@@ -71,8 +71,10 @@ public:
     , set_count_(CreateCounter(lane, "ledger_statedb_set_total", "The total no. set ops"))
     , commit_count_(CreateCounter(lane, "ledger_statedb_commit_total", "The total no. commit ops"))
     , revert_count_(CreateCounter(lane, "ledger_statedb_revert_total", "The total no. revert ops"))
-    , current_hash_count_(CreateCounter(lane, "ledger_statedb_current_hash_total",
-                                        "The total no. current_hash ops"))
+    , current_hash_count_(CreateCounter(
+          lane,
+          "ledger_statedb_current_hash_total",
+          "The total no. current_hash ops"))
     , hash_exists_count_(
           CreateCounter(lane, "ledger_statedb_hash_exist_total", "The total no. hash_exists ops"))
     , reset_count_(CreateCounter(lane, "ledger_statedb_reset_total", "The total no. reset ops"))
@@ -80,14 +82,22 @@ public:
     , unlock_count_(CreateCounter(lane, "ledger_statedb_unlock_total", "The total no. unlock ops"))
     , has_lock_count_(
           CreateCounter(lane, "ledger_statedb_has_lock_total", "The total no. has lock ops"))
-    , get_durations_(CreateHistogram(lane, "ledger_statedb_get_request_seconds",
-                                     "The histogram of get request durations"))
-    , set_durations_(CreateHistogram(lane, "ledger_statedb_set_request_seconds",
-                                     "The histogram of set request durations"))
-    , lock_durations_(CreateHistogram(lane, "ledger_statedb_lock_request_seconds",
-                                      "The histogram of lock request durations"))
-    , unlock_durations_(CreateHistogram(lane, "ledger_statedb_unlock_request_seconds",
-                                        "The histogram of unlock request durations"))
+    , get_durations_(CreateHistogram(
+          lane,
+          "ledger_statedb_get_request_seconds",
+          "The histogram of get request durations"))
+    , set_durations_(CreateHistogram(
+          lane,
+          "ledger_statedb_set_request_seconds",
+          "The histogram of set request durations"))
+    , lock_durations_(CreateHistogram(
+          lane,
+          "ledger_statedb_lock_request_seconds",
+          "The histogram of lock request durations"))
+    , unlock_durations_(CreateHistogram(
+          lane,
+          "ledger_statedb_unlock_request_seconds",
+          "The histogram of unlock request durations"))
   {
     this->Expose(GET, this, &RevertibleDocumentStoreProtocol::Get);
     this->Expose(GET_OR_CREATE, this, &RevertibleDocumentStoreProtocol::GetOrCreate);
@@ -105,8 +115,10 @@ public:
     this->ExposeWithClientContext(HAS_LOCK, this, &RevertibleDocumentStoreProtocol::HasLock);
   }
 
-  RevertibleDocumentStoreProtocol(NewRevertibleDocumentStore *doc_store, LaneType const &lane,
-                                  LaneType const &maxlanes)
+  RevertibleDocumentStoreProtocol(
+      NewRevertibleDocumentStore *doc_store,
+      LaneType const &            lane,
+      LaneType const &            maxlanes)
     : RevertibleDocumentStoreProtocol(doc_store, lane)
   {
     SetLaneLog2(maxlanes);
@@ -118,7 +130,8 @@ public:
     if (!context.is_valid())
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, ByteArrayType(std::string("No context for HasLock.")));
+          0,
+          ByteArrayType(std::string("No context for HasLock.")));
     }
 
     bool has_lock = false;
@@ -172,7 +185,8 @@ public:
     if (!context.is_valid())
     {
       throw serializers::SerializableException(  // TODO(issue 11): set exception number
-          0, ByteArrayType(std::string("No context for HasLock.")));
+          0,
+          ByteArrayType(std::string("No context for HasLock.")));
     }
 
     // attempt to unlock this shard
@@ -193,8 +207,8 @@ public:
 
     if (!success)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Resource unlock failed for: ", context.sender_address.ToBase64());
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Resource unlock failed for: ", context.sender_address.ToBase64());
     }
 
     unlock_count_->increment();
@@ -203,22 +217,28 @@ public:
   }
 
 private:
-  static telemetry::CounterPtr CreateCounter(LaneType lane, char const *name,
-                                             char const *description)
+  static telemetry::CounterPtr CreateCounter(
+      LaneType    lane,
+      char const *name,
+      char const *description)
   {
-    return telemetry::Registry::Instance().CreateCounter(name, description,
-                                                         {{"lane", std::to_string(lane)}});
+    return telemetry::Registry::Instance().CreateCounter(
+        name, description, {{"lane", std::to_string(lane)}});
   }
 
-  static telemetry::HistogramPtr CreateHistogram(LaneType lane, char const *name,
-                                                 char const *description)
+  static telemetry::HistogramPtr CreateHistogram(
+      LaneType    lane,
+      char const *name,
+      char const *description)
   {
     return telemetry::Registry::Instance().CreateHistogram(
         {0.000001, 0.000002, 0.000003, 0.000004, 0.000005, 0.000006, 0.000007, 0.000008, 0.000009,
          0.00001,  0.00002,  0.00003,  0.00004,  0.00005,  0.00006,  0.00007,  0.00008,  0.00009,
          0.0001,   0.0002,   0.0003,   0.0004,   0.0005,   0.0006,   0.0007,   0.0008,   0.0009,
          0.001,    0.01,     0.1,      1,        10.,      100.},
-        name, description, {{"lane", std::to_string(lane)}});
+        name,
+        description,
+        {{"lane", std::to_string(lane)}});
   }
 
   Document Get(ResourceID const &rid)

@@ -60,16 +60,19 @@ public:
 
   void ResetCabinet(MuddleAddress const &address, uint32_t threshold);
   void AddComplaintAgainst(MuddleAddress const &complaint_address);
-  void AddComplaintsFrom(MuddleAddress const &from, ComplaintsList const &complaints,
-                         Cabinet const &cabinet);
+  void AddComplaintsFrom(
+      MuddleAddress const & from,
+      ComplaintsList const &complaints,
+      Cabinet const &       cabinet);
   void Finish(Cabinet const &cabinet);
 
   uint32_t                          NumComplaintsReceived(Cabinet const &cabinet) const;
   std::unordered_set<MuddleAddress> ComplaintsAgainstSelf() const;
-  bool                              FindComplaint(MuddleAddress const &complaint_address,
-                                                  MuddleAddress const &complainer_address) const;
-  ComplaintsList                    Complaints() const;
-  uint32_t                          ComplaintsCount(MuddleAddress const &address) const;
+  bool                              FindComplaint(
+                                   MuddleAddress const &complaint_address,
+                                   MuddleAddress const &complainer_address) const;
+  ComplaintsList Complaints() const;
+  uint32_t       ComplaintsCount(MuddleAddress const &address) const;
 };
 
 /**
@@ -128,8 +131,9 @@ public:
 
   void Reset();
   void AddComplaintAgainst(MuddleAddress const &id);
-  void AddComplaintsFrom(MuddleAddress const &                                   id,
-                         std::unordered_map<MuddleAddress, ExposedShares> const &complaints);
+  void AddComplaintsFrom(
+      MuddleAddress const &                                   id,
+      std::unordered_map<MuddleAddress, ExposedShares> const &complaints);
   void Finish(Cabinet const &qual, MuddleAddress const &node_id);
 
   uint32_t                                       NumComplaintsReceived(Cabinet const &qual) const;

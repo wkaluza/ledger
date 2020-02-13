@@ -44,8 +44,11 @@ void NormVector(TensorType &vector)
 }
 
 template <typename TensorType, typename DataLoaderType, typename SizeType>
-void EvalAnalogy(DataLoaderType const &data_loader, TensorType const &embeds, SizeType const top_k,
-                 std::vector<std::string> const &test_words)
+void EvalAnalogy(
+    DataLoaderType const &          data_loader,
+    TensorType const &              embeds,
+    SizeType const                  top_k,
+    std::vector<std::string> const &test_words)
 {
   assert(test_words.size() == 3);
 

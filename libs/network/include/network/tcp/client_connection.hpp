@@ -51,8 +51,10 @@ public:
   using SharedSelfType = std::shared_ptr<AbstractConnection>;
   using MutexType      = std::mutex;
 
-  ClientConnection(std::weak_ptr<asio::ip::tcp::tcp::socket> socket,
-                   std::weak_ptr<ClientManager> manager, NetworkManager network_manager)
+  ClientConnection(
+      std::weak_ptr<asio::ip::tcp::tcp::socket> socket,
+      std::weak_ptr<ClientManager>              manager,
+      NetworkManager                            network_manager)
     : socket_(std::move(socket))
     , manager_(std::move(manager))
     , network_manager_(network_manager)  // NOLINT
@@ -69,8 +71,10 @@ public:
       {
         this->SetAddress(endpoint.address().to_string());
 
-        FETCH_LOG_DEBUG(LOGGING_NAME, "Server: Connection from ",
-                        socket_ptr->remote_endpoint().address().to_string());
+        FETCH_LOG_DEBUG(
+            LOGGING_NAME,
+            "Server: Connection from ",
+            socket_ptr->remote_endpoint().address().to_string());
       }
       else
       {
@@ -114,8 +118,10 @@ public:
     ReadHeader(strong_strand);
   }
 
-  void Send(MessageBuffer const &msg, Callback const &success = nullptr,
-            Callback const &fail = nullptr) override
+  void Send(
+      MessageBuffer const &msg,
+      Callback const &     success = nullptr,
+      Callback const &     fail    = nullptr) override
   {
     if (shutting_down_)
     {
@@ -137,8 +143,12 @@ public:
       auto           strandLock = strand_.lock();
       if (!selfLock || !strandLock)
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Failed to lock. Strand: ", bool(selfLock),
-                       " socket: ", bool(strandLock));
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Failed to lock. Strand: ",
+            bool(selfLock),
+            " socket: ",
+            bool(strandLock));
         return;
       }
 
@@ -274,8 +284,8 @@ private:
 
     message.Resize(header_.content.length);
     auto self(shared_from_this());
-    auto cb = [this, socket_ptr, self, message, strong_strand](std::error_code ec,
-                                                               std::size_t     len) {
+    auto cb = [this, socket_ptr, self, message, strong_strand](
+                  std::error_code ec, std::size_t len) {
       FETCH_UNUSED(len);
 
       auto ptr = manager_.lock();

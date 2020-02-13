@@ -64,8 +64,12 @@ std::size_t BlockCipher::GetIVLength(Type type) noexcept
   return iv_length;
 }
 
-bool BlockCipher::Encrypt(Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                          ConstByteArray const &clear_text, ConstByteArray &cipher_text)
+bool BlockCipher::Encrypt(
+    Type                  type,
+    ConstByteArray const &key,
+    ConstByteArray const &iv,
+    ConstByteArray const &clear_text,
+    ConstByteArray &      cipher_text)
 {
   bool success{false};
 
@@ -77,8 +81,12 @@ bool BlockCipher::Encrypt(Type type, ConstByteArray const &key, ConstByteArray c
   return success;
 }
 
-bool BlockCipher::Decrypt(Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                          ConstByteArray const &cipher_text, ConstByteArray &clear_text)
+bool BlockCipher::Decrypt(
+    Type                  type,
+    ConstByteArray const &key,
+    ConstByteArray const &iv,
+    ConstByteArray const &cipher_text,
+    ConstByteArray &      clear_text)
 {
   bool success{false};
 

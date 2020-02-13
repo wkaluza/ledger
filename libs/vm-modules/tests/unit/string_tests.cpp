@@ -439,8 +439,9 @@ TEST_F(StringTests, split_works_if_the_separator_is_long_compared_to_the_fragmen
   ASSERT_EQ(stdout.str(), "2 | a | b");
 }
 
-TEST_F(StringTests,
-       if_the_string_is_empty_split_returns_an_array_with_one_element_equal_to_the_empty_string)
+TEST_F(
+    StringTests,
+    if_the_string_is_empty_split_returns_an_array_with_one_element_equal_to_the_empty_string)
 {
   static char const *TEXT = R"(
     function main()
@@ -486,8 +487,9 @@ TEST_F(StringTests, split_reports_an_error_if_the_separator_is_null)
   ASSERT_FALSE(toolkit.Run());
 }
 
-TEST_F(StringTests,
-       if_the_string_contains_consecutive_separators_split_returns_an_array_with_empty_strings)
+TEST_F(
+    StringTests,
+    if_the_string_contains_consecutive_separators_split_returns_an_array_with_empty_strings)
 {
   static char const *TEXT = R"(
     function main()
@@ -578,9 +580,10 @@ TEST_F(StringTests, utf8_split_returns_an_array_of_string_segments_with_the_sepa
   ASSERT_TRUE(toolkit.Compile(TEXT));
   ASSERT_TRUE(toolkit.Run());
 
-  ASSERT_EQ(stdout.str(),
-            "他身旁放着一支磨尖的花岗岩长矛备用 | 脚边卧着一头犬族猛兽 | "
-            "脚它发出的喘hōu声表明它虽已 | 入睡却睡不安稳");
+  ASSERT_EQ(
+      stdout.str(),
+      "他身旁放着一支磨尖的花岗岩长矛备用 | 脚边卧着一头犬族猛兽 | "
+      "脚它发出的喘hōu声表明它虽已 | 入睡却睡不安稳");
 }
 
 TEST_F(StringTests, utf8_find_returns_zero_based_index_of_first_occurrence_of_substring_in_string)

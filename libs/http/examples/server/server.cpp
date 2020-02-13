@@ -39,27 +39,30 @@ struct ExampleModule : HTTPModule
 
   ExampleModule() /*:HTTPModule("ExampleModule", INTERFACE)*/
   {
-    Get("/pages", "Gets the pages",
+    Get("/pages",
+        "Gets the pages",
         [](fetch::http::ViewParameters const & /*params*/,
            fetch::http::HTTPRequest const & /*request*/) {
           return fetch::http::CreateJsonResponse("{}", fetch::http::Status::SUCCESS_OK);
         });
 
-    Get("/pages/(id=\\d+)", "Get a specific page",
+    Get("/pages/(id=\\d+)",
+        "Get a specific page",
         {{"id", "The page id.", validators::StringValue()}},
         [](fetch::http::HTTPRequest req) { return req.authentication_level() >= 900; },
         [](fetch::http::ViewParameters const & /*params*/,
            fetch::http::HTTPRequest const & /*request*/) {
-          return fetch::http::CreateJsonResponse(R"({"error": "It's all good!"})",
-                                                 fetch::http::Status::SUCCESS_OK);
+          return fetch::http::CreateJsonResponse(
+              R"({"error": "It's all good!"})", fetch::http::Status::SUCCESS_OK);
         });
 
-    Get("/throw", "Throws an exception",
+    Get("/throw",
+        "Throws an exception",
         [](fetch::http::ViewParameters const & /*params*/,
            fetch::http::HTTPRequest const & /*request*/) {
           throw std::runtime_error("some exception!");
-          return fetch::http::CreateJsonResponse("{}",
-                                                 fetch::http::Status::CLIENT_ERROR_BAD_REQUEST);
+          return fetch::http::CreateJsonResponse(
+              "{}", fetch::http::Status::CLIENT_ERROR_BAD_REQUEST);
         });
   }
 };

@@ -47,8 +47,13 @@ public:
   using Identity  = crypto::Identity;
 
   // Construction / Destruction
-  BootstrapMonitor(ProverPtr entity, uint16_t p2p_port, std::string network_name, bool discoverable,
-                   std::string token = std::string{}, std::string host_name = std::string{});
+  BootstrapMonitor(
+      ProverPtr   entity,
+      uint16_t    p2p_port,
+      std::string network_name,
+      bool        discoverable,
+      std::string token     = std::string{},
+      std::string host_name = std::string{});
   BootstrapMonitor(BootstrapMonitor const &) = delete;
   BootstrapMonitor(BootstrapMonitor &&)      = delete;
   ~BootstrapMonitor()                        = default;

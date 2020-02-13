@@ -31,15 +31,19 @@ public:
   virtual ~IKarmaPolicy() = default;
 
   virtual KarmaAccount GetAccount(const std::string &pubkey = "", const std::string &ip = "") = 0;
-  virtual void         upgrade(KarmaAccount & /*account*/, const std::string & /*pubkey*/ = "",
-                               const std::string & /*ip*/ = "")
+  virtual void         upgrade(
+              KarmaAccount & /*account*/,
+              const std::string & /*pubkey*/ = "",
+              const std::string & /*ip*/     = "")
   {}
 
   virtual std::string GetBalance(const KarmaAccount &identifier) = 0;
 
   // Returns True or throws
-  virtual bool perform(const KarmaAccount &identifier, const std::string &action,
-                       bool force = false) = 0;
+  virtual bool perform(
+      const KarmaAccount &identifier,
+      const std::string & action,
+      bool                force = false) = 0;
 
   virtual bool CouldPerform(const KarmaAccount &identifier, const std::string &action) = 0;
 

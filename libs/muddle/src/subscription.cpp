@@ -40,7 +40,11 @@ Subscription::~Subscription()
 void Subscription::SetMessageHandler(MessageCallback cb)
 {
   SetMessageHandler([c = std::move(cb)](Packet const &pkt, Address const &last_hop) {
-    c(pkt.GetSender(), pkt.GetService(), pkt.GetChannel(), pkt.GetMessageNum(), pkt.GetPayload(),
+    c(pkt.GetSender(),
+      pkt.GetService(),
+      pkt.GetChannel(),
+      pkt.GetMessageNum(),
+      pkt.GetPayload(),
       last_hop);
   });
 }

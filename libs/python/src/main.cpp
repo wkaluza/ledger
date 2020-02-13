@@ -63,7 +63,7 @@ PYBIND11_MODULE(fetch, module)
   fetch::byte_array::BuildConstByteArray(ns_fetch_byte_array);
   fetch::byte_array::BuildByteArray(ns_fetch_byte_array);
 
-  fetch::random::BuildLaggedFibonacciGenerator<418, 1279>("LaggedFibonacciGenerator",
-                                                          ns_fetch_random);
+  fetch::random::BuildLaggedFibonacciGenerator<418, 1279>(
+      "LaggedFibonacciGenerator", ns_fetch_random);
   fetch::random::BuildLinearCongruentialGenerator(ns_fetch_random);
 }

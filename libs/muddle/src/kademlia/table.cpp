@@ -39,9 +39,11 @@ KademliaTable::KademliaTable(Address const &own_address, NetworkId const &networ
   , own_kad_address_{KademliaAddress::Create(own_address)}
 {}
 
-KademliaTable::Peers KademliaTable::FindPeerInternal(KademliaAddress const &kam_address,
-                                                     uint64_t log_id, bool scan_left,
-                                                     bool scan_right)
+KademliaTable::Peers KademliaTable::FindPeerInternal(
+    KademliaAddress const &kam_address,
+    uint64_t               log_id,
+    bool                   scan_left,
+    bool                   scan_right)
 {
 
   // Checking that we are within bounds
@@ -133,8 +135,11 @@ KademliaTable::Peers KademliaTable::FindPeer(Address const &address)
   return FindPeerInternal(kam_address, log_id);
 }
 
-KademliaTable::Peers KademliaTable::FindPeer(Address const &address, uint64_t log_id,
-                                             bool scan_left, bool scan_right)
+KademliaTable::Peers KademliaTable::FindPeer(
+    Address const &address,
+    uint64_t       log_id,
+    bool           scan_left,
+    bool           scan_right)
 {
   // Computing the Kademlia distance and the
   // corresponding bucket.
@@ -142,9 +147,11 @@ KademliaTable::Peers KademliaTable::FindPeer(Address const &address, uint64_t lo
   return FindPeerInternal(kam_address, log_id, scan_left, scan_right);
 }
 
-KademliaTable::Peers KademliaTable::FindPeerByHammingInternal(KademliaAddress const &kam_address,
-                                                              uint64_t hamming_id, bool scan_left,
-                                                              bool scan_right)
+KademliaTable::Peers KademliaTable::FindPeerByHammingInternal(
+    KademliaAddress const &kam_address,
+    uint64_t               hamming_id,
+    bool                   scan_left,
+    bool                   scan_right)
 {
   // TODO(tfr): Merge with other function.
   // Checking that we are within bounds
@@ -234,8 +241,11 @@ KademliaTable::Peers KademliaTable::FindPeerByHamming(Address const &address)
   return FindPeerByHammingInternal(kam_address, hamming_id);
 }
 
-KademliaTable::Peers KademliaTable::FindPeerByHamming(Address const &address, uint64_t hamming_id,
-                                                      bool scan_left, bool scan_right)
+KademliaTable::Peers KademliaTable::FindPeerByHamming(
+    Address const &address,
+    uint64_t       hamming_id,
+    bool           scan_left,
+    bool           scan_right)
 {
   auto kam_address = KademliaAddress::Create(address);
   return FindPeerInternal(kam_address, hamming_id, scan_left, scan_right);
@@ -290,8 +300,10 @@ void KademliaTable::ReportLeaving(Uri const &uri)
   --(it->second->connections);
 }
 
-void KademliaTable::ReportLiveliness(Address const &address, Address const &reporter,
-                                     PeerInfo const &info)
+void KademliaTable::ReportLiveliness(
+    Address const & address,
+    Address const & reporter,
+    PeerInfo const &info)
 {
   // We never register our own address
   if (address == own_address())
@@ -677,8 +689,10 @@ KademliaTable::AddressSet KademliaTable::desired_peers() const
   return desired_peers_;
 }
 
-void KademliaTable::AddDesiredPeer(Address const &address, network::Peer const &hint,
-                                   Duration const &expiry)
+void KademliaTable::AddDesiredPeer(
+    Address const &      address,
+    network::Peer const &hint,
+    Duration const &     expiry)
 {
   PeerInfo info;
   {

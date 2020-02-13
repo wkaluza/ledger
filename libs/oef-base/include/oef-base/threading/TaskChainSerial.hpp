@@ -41,9 +41,9 @@ public:
   using MessageHandler = std::function<void(std::shared_ptr<OUT_PROTO>)>;
   using ErrorHandler =
       std::function<void(const std::string &, const std::string &, const std::string &)>;
-  using TaskResultUpdate = std::function<std::shared_ptr<OUT_PROTO>(
-      std::shared_ptr<TaskChainSerial>, std::shared_ptr<OUT_PROTO>)>;
-  using Parent           = StateMachineTask<TaskChainSerial>;
+  using TaskResultUpdate = std::function<
+      std::shared_ptr<OUT_PROTO>(std::shared_ptr<TaskChainSerial>, std::shared_ptr<OUT_PROTO>)>;
+  using Parent = StateMachineTask<TaskChainSerial>;
 
   static constexpr char const *LOGGING_NAME = "TaskChainSerial";
 
@@ -96,8 +96,8 @@ public:
   {
     if (!last_output || !protoPipeBuilder)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME, "No last output or pipe builder set! (id=", this->GetTaskId(),
-                      ")");
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "No last output or pipe builder set! (id=", this->GetTaskId(), ")");
       wake();
       return StateResult(0, ERRORED);
     }
@@ -151,32 +151,41 @@ public:
       }
       else
       {
-        FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to TaskChainSerial(id=", id,
-                        ")! Called by task ", task_id);
+        FETCH_LOG_ERROR(
+            LOGGING_NAME,
+            "No shared pointer to TaskChainSerial(id=",
+            id,
+            ")! Called by task ",
+            task_id);
       }
     });
 
-    task->SetErrorHandler([this_wp, task_id, id](const std::string &dap_name,
-                                                 const std::string &path, const std::string &msg) {
-      auto sp = this_wp.lock();
-      if (sp)
-      {
-        sp->last_task_done.store(true);
-        std::queue<PipeDataType> empty;
-        std::swap(sp->pipe_, empty);
-        sp->last_output = nullptr;
-        if (sp->errorHandler)
-        {
-          sp->errorHandler(dap_name, path, msg);
-          sp->wake();
-        }
-      }
-      else
-      {
-        FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to TaskChainSerial(id=", id,
-                        ")! Called by task ", task_id);
-      }
-    });
+    task->SetErrorHandler(
+        [this_wp, task_id, id](
+            const std::string &dap_name, const std::string &path, const std::string &msg) {
+          auto sp = this_wp.lock();
+          if (sp)
+          {
+            sp->last_task_done.store(true);
+            std::queue<PipeDataType> empty;
+            std::swap(sp->pipe_, empty);
+            sp->last_output = nullptr;
+            if (sp->errorHandler)
+            {
+              sp->errorHandler(dap_name, path, msg);
+              sp->wake();
+            }
+          }
+          else
+          {
+            FETCH_LOG_ERROR(
+                LOGGING_NAME,
+                "No shared pointer to TaskChainSerial(id=",
+                id,
+                ")! Called by task ",
+                task_id);
+          }
+        });
 
     last_task_done.store(false);
     task->submit();
@@ -193,8 +202,12 @@ public:
             })
             .Waiting())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Sleeping (id=", this->GetTaskId(), "), will be woken by ",
-                     task->GetTaskId());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Sleeping (id=",
+          this->GetTaskId(),
+          "), will be woken by ",
+          task->GetTaskId());
       return StateResult(1, DEFER);
     }
 

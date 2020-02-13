@@ -46,18 +46,20 @@ fetch::vm::Ptr<fetch::vm::String> VmString(VMPtr &vm, std::string const &str)
 }
 
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> VmTensor(
-    VMPtr &vm, std::vector<fetch::math::SizeType> const &shape)
+    VMPtr &                                   vm,
+    std::vector<fetch::math::SizeType> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
 
-fetch::vm::Ptr<fetch::vm::Array<uint64_t>> VmArray(std::shared_ptr<fetch::vm::VM> &vm,
-                                                   std::vector<uint64_t> const &   values)
+fetch::vm::Ptr<fetch::vm::Array<uint64_t>> VmArray(
+    std::shared_ptr<fetch::vm::VM> &vm,
+    std::vector<uint64_t> const &   values)
 {
   std::size_t                                size = values.size();
   fetch::vm::Ptr<fetch::vm::Array<uint64_t>> array =
-      vm->CreateNewObject<fetch::vm::Array<uint64_t>>(vm->GetTypeId<uint64_t>(),
-                                                      static_cast<int32_t>(size));
+      vm->CreateNewObject<fetch::vm::Array<uint64_t>>(
+          vm->GetTypeId<uint64_t>(), static_cast<int32_t>(size));
 
   for (std::size_t i{0}; i < size; ++i)
   {
@@ -75,7 +77,9 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(VMPtr &v
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(
-    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations)
+    VMPtr &                vm,
+    std::vector<SizeType> &sizes,
+    std::vector<bool> &    activations)
 {
   if (sizes.size() != (activations.size() + 1))
   {
@@ -94,8 +98,8 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(
 
     if (activations[i])
     {
-      model->Estimator().LayerAddDenseActivation(layer_type, input_size, output_size,
-                                                 activation_type);
+      model->Estimator().LayerAddDenseActivation(
+          layer_type, input_size, output_size, activation_type);
       model->LayerAddDenseActivation(layer_type, input_size, output_size, activation_type);
     }
     else
@@ -109,8 +113,11 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(
-    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations,
-    std::string const &loss, std::string const &optimiser)
+    VMPtr &                vm,
+    std::vector<SizeType> &sizes,
+    std::vector<bool> &    activations,
+    std::string const &    loss,
+    std::string const &    optimiser)
 {
   auto model = VmSequentialModel(vm, sizes, activations);
 
@@ -140,28 +147,39 @@ public:
     vm              = std::make_shared<fetch::vm::VM>(module.get());
   }
 
-  ChargeAmount LayerAddDenseCharge(VmModelPtr &model, VmStringPtr const &layer_type,
-                                   SizeType input_size, SizeType output_size)
+  ChargeAmount LayerAddDenseCharge(
+      VmModelPtr &       model,
+      VmStringPtr const &layer_type,
+      SizeType           input_size,
+      SizeType           output_size)
   {
     return model->Estimator().LayerAddDense(layer_type, input_size, output_size);
   }
 
-  ChargeAmount LayerAddDenseActivationCharge(VmModelPtr &model, VmStringPtr const &layer_type,
-                                             SizeType input_size, SizeType output_size,
-                                             VmStringPtr const &activation)
+  ChargeAmount LayerAddDenseActivationCharge(
+      VmModelPtr &       model,
+      VmStringPtr const &layer_type,
+      SizeType           input_size,
+      SizeType           output_size,
+      VmStringPtr const &activation)
   {
-    return model->Estimator().LayerAddDenseActivation(layer_type, input_size, output_size,
-                                                      activation);
+    return model->Estimator().LayerAddDenseActivation(
+        layer_type, input_size, output_size, activation);
   }
 
-  ChargeAmount CompileSequentialCharge(VmModelPtr &model, VmStringPtr const &loss,
-                                       VmStringPtr const &optimiser)
+  ChargeAmount CompileSequentialCharge(
+      VmModelPtr &       model,
+      VmStringPtr const &loss,
+      VmStringPtr const &optimiser)
   {
     return model->Estimator().CompileSequential(loss, optimiser);
   }
 
-  ChargeAmount FitCharge(VmModelPtr &model, VmTensorPtr const &data, VmTensorPtr const &label,
-                         SizeType batch_size)
+  ChargeAmount FitCharge(
+      VmModelPtr &       model,
+      VmTensorPtr const &data,
+      VmTensorPtr const &label,
+      SizeType           batch_size)
   {
     return model->Estimator().Fit(data, label, batch_size);
   }
@@ -212,13 +230,15 @@ TEST_F(VMModelEstimatorTests, add_dense_layer_test)
       padded_size_sum += fetch::math::Tensor<DataType>::PaddedSizeFromShape({outputs, 1});
       SizeType size_sum = inputs * outputs + outputs;
 
-      DataType val = (VmModelEstimator::ADD_DENSE_PADDED_WEIGHTS_SIZE_COEF *
-                      static_cast<DataType>(padded_size_sum));
+      DataType val =
+          (VmModelEstimator::ADD_DENSE_PADDED_WEIGHTS_SIZE_COEF *
+           static_cast<DataType>(padded_size_sum));
       val += VmModelEstimator::ADD_DENSE_WEIGHTS_SIZE_COEF * static_cast<DataType>(size_sum);
       val += VmModelEstimator::ADD_DENSE_CONST_COEF;
 
-      EXPECT_TRUE(model_estimator.LayerAddDense(vm_ptr_layer_type, inputs, outputs) ==
-                  static_cast<ChargeAmount>(val) + 1);
+      EXPECT_TRUE(
+          model_estimator.LayerAddDense(vm_ptr_layer_type, inputs, outputs) ==
+          static_cast<ChargeAmount>(val) + 1);
     }
   }
 }
@@ -252,14 +272,16 @@ TEST_F(VMModelEstimatorTests, add_dense_layer_activation_test)
       padded_size_sum += fetch::math::Tensor<DataType>::PaddedSizeFromShape({outputs, 1});
       SizeType size_sum = inputs * outputs + outputs;
 
-      DataType val = (VmModelEstimator::ADD_DENSE_PADDED_WEIGHTS_SIZE_COEF *
-                      static_cast<DataType>(padded_size_sum));
+      DataType val =
+          (VmModelEstimator::ADD_DENSE_PADDED_WEIGHTS_SIZE_COEF *
+           static_cast<DataType>(padded_size_sum));
       val += VmModelEstimator::ADD_DENSE_WEIGHTS_SIZE_COEF * static_cast<DataType>(size_sum);
       val += VmModelEstimator::ADD_DENSE_CONST_COEF;
 
-      EXPECT_TRUE(model_estimator.LayerAddDenseActivation(vm_ptr_layer_type, inputs, outputs,
-                                                          vm_ptr_activation_type) ==
-                  static_cast<ChargeAmount>(val) + 1);
+      EXPECT_TRUE(
+          model_estimator.LayerAddDenseActivation(
+              vm_ptr_layer_type, inputs, outputs, vm_ptr_activation_type) ==
+          static_cast<ChargeAmount>(val) + 1);
     }
   }
 }
@@ -303,9 +325,10 @@ TEST_F(VMModelEstimatorTests, add_conv_layer_test)
              stride_size += stride_step)
         {
 
-          EXPECT_TRUE(model_estimator.LayerAddConv(vm_ptr_layer_type, output_channels,
-                                                   input_channels, kernel_size, stride_size) ==
-                      static_cast<ChargeAmount>(fetch::vm::MAXIMUM_CHARGE));
+          EXPECT_TRUE(
+              model_estimator.LayerAddConv(
+                  vm_ptr_layer_type, output_channels, input_channels, kernel_size, stride_size) ==
+              static_cast<ChargeAmount>(fetch::vm::MAXIMUM_CHARGE));
         }
       }
     }
@@ -353,10 +376,14 @@ TEST_F(VMModelEstimatorTests, add_conv_layer_activation_test)
              stride_size += stride_step)
         {
 
-          EXPECT_TRUE(model_estimator.LayerAddConvActivation(vm_ptr_layer_type, output_channels,
-                                                             input_channels, kernel_size,
-                                                             stride_size, vm_ptr_activation_type) ==
-                      static_cast<ChargeAmount>(fetch::vm::MAXIMUM_CHARGE));
+          EXPECT_TRUE(
+              model_estimator.LayerAddConvActivation(
+                  vm_ptr_layer_type,
+                  output_channels,
+                  input_channels,
+                  kernel_size,
+                  stride_size,
+                  vm_ptr_activation_type) == static_cast<ChargeAmount>(fetch::vm::MAXIMUM_CHARGE));
         }
       }
     }
@@ -412,8 +439,9 @@ TEST_F(VMModelEstimatorTests, compile_sequential_test)
       val += VmModelEstimator::ADAM_WEIGHTS_SIZE_COEF * static_cast<DataType>(weights_size_sum);
       val += VmModelEstimator::COMPILE_CONST_COEF;
 
-      EXPECT_TRUE(model_estimator.CompileSequential(vm_ptr_loss_type, vm_ptr_opt_type) ==
-                  static_cast<ChargeAmount>(val) + 1);
+      EXPECT_TRUE(
+          model_estimator.CompileSequential(vm_ptr_loss_type, vm_ptr_opt_type) ==
+          static_cast<ChargeAmount>(val) + 1);
     }
   }
 }
@@ -471,10 +499,10 @@ TEST_F(VMModelEstimatorTests, estimator_fit_and_predict_test)
           VmModel          model(vm.get(), type_id, model_type);
           VmModelEstimator model_estimator(model);
 
-          model_estimator.LayerAddDenseActivation(vm_ptr_layer_type, data_size_1, label_size_1,
-                                                  vm_ptr_activation_type);
-          model.LayerAddDenseActivation(vm_ptr_layer_type, data_size_1, label_size_1,
-                                        vm_ptr_activation_type);
+          model_estimator.LayerAddDenseActivation(
+              vm_ptr_layer_type, data_size_1, label_size_1, vm_ptr_activation_type);
+          model.LayerAddDenseActivation(
+              vm_ptr_layer_type, data_size_1, label_size_1, vm_ptr_activation_type);
 
           SizeType ops_count = 0;
           ops_count += 3;  // for dense layer
@@ -530,14 +558,15 @@ TEST_F(VMModelEstimatorTests, estimator_fit_and_predict_test)
 
           val = val * static_cast<DataType>(fetch::vm::COMPUTE_CHARGE_COST);
 
-          EXPECT_TRUE(model_estimator.Fit(vm_ptr_tensor_data, vm_ptr_tensor_labels, batch_size) ==
-                      static_cast<SizeType>(val) + 1);
+          EXPECT_TRUE(
+              model_estimator.Fit(vm_ptr_tensor_data, vm_ptr_tensor_labels, batch_size) ==
+              static_cast<SizeType>(val) + 1);
 
           ChargeAmount const cost        = model.ChargeForward();
           ChargeAmount const predict_val = n_data * cost;
 
-          EXPECT_TRUE(model.EstimatePredict(vm_ptr_tensor_data) ==
-                      static_cast<SizeType>(predict_val));
+          EXPECT_TRUE(
+              model.EstimatePredict(vm_ptr_tensor_data) == static_cast<SizeType>(predict_val));
         }
       }
     }
@@ -580,9 +609,11 @@ TEST_F(VMModelEstimatorTests, estimator_evaluate_with_metrics)
   std::vector<std::string> mets      = {"categorical accuracy", "mse", "cel", "scel"};
   SizeType                 n_metrics = mets.size();
 
-  Ptr<Array<Ptr<String>>> metrics = Ptr<Array<Ptr<String>>>(
-      new Array<Ptr<String>>(vm.get(), vm->GetTypeId<fetch::vm::IArray>(), vm->GetTypeId<String>(),
-                             static_cast<int32_t>(n_metrics)));
+  Ptr<Array<Ptr<String>>> metrics = Ptr<Array<Ptr<String>>>(new Array<Ptr<String>>(
+      vm.get(),
+      vm->GetTypeId<fetch::vm::IArray>(),
+      vm->GetTypeId<String>(),
+      static_cast<int32_t>(n_metrics)));
 
   for (SizeType i{0}; i < n_metrics; i++)
   {
@@ -615,10 +646,10 @@ TEST_F(VMModelEstimatorTests, estimator_evaluate_with_metrics)
 
           model.LayerAddInput(input_name, input_array);
 
-          model_estimator.LayerAddDenseActivation(vm_ptr_layer_type, data_size_1, label_size_1,
-                                                  vm_ptr_activation_type);
-          model.LayerAddDenseActivation(vm_ptr_layer_type, data_size_1, label_size_1,
-                                        vm_ptr_activation_type);
+          model_estimator.LayerAddDenseActivation(
+              vm_ptr_layer_type, data_size_1, label_size_1, vm_ptr_activation_type);
+          model.LayerAddDenseActivation(
+              vm_ptr_layer_type, data_size_1, label_size_1, vm_ptr_activation_type);
 
           SizeType ops_count = 0;
           ops_count += 3;  // for dense layer
@@ -713,13 +744,13 @@ TEST_F(VMModelEstimatorTests, layeraddactivation_charge_correlate_with_input_siz
 
   auto     model_small      = VmSequentialModel(vm);
   SizeType input_size_small = 10;
-  auto     charge_small = LayerAddDenseActivationCharge(model_small, layer_type, input_size_small,
-                                                    output_size, activation_type);
+  auto     charge_small     = LayerAddDenseActivationCharge(
+      model_small, layer_type, input_size_small, output_size, activation_type);
 
   auto     model_big      = VmSequentialModel(vm);
   SizeType input_size_big = 100;
-  auto     charge_big     = LayerAddDenseActivationCharge(model_big, layer_type, input_size_big,
-                                                  output_size, activation_type);
+  auto     charge_big     = LayerAddDenseActivationCharge(
+      model_big, layer_type, input_size_big, output_size, activation_type);
 
   EXPECT_LT(charge_small, charge_big);
 }
@@ -732,13 +763,13 @@ TEST_F(VMModelEstimatorTests, layeraddactivation_charge_correlate_with_output_si
 
   auto     model_small       = VmSequentialModel(vm);
   SizeType output_size_small = 10;
-  auto     charge_small      = LayerAddDenseActivationCharge(model_small, layer_type, input_size,
-                                                    output_size_small, activation_type);
+  auto     charge_small      = LayerAddDenseActivationCharge(
+      model_small, layer_type, input_size, output_size_small, activation_type);
 
   auto     model_big       = VmSequentialModel(vm);
   SizeType output_size_big = 100;
-  auto     charge_big      = LayerAddDenseActivationCharge(model_big, layer_type, input_size,
-                                                  output_size_big, activation_type);
+  auto     charge_big      = LayerAddDenseActivationCharge(
+      model_big, layer_type, input_size, output_size_big, activation_type);
 
   EXPECT_LT(charge_small, charge_big);
 }
@@ -751,14 +782,14 @@ TEST_F(VMModelEstimatorTests, layeraddactivation_charge_correlate_with_input_siz
   auto     model_small       = VmSequentialModel(vm);
   SizeType input_size_small  = 10;
   SizeType output_size_small = 10;
-  auto     charge_small = LayerAddDenseActivationCharge(model_small, layer_type, input_size_small,
-                                                    output_size_small, activation_type);
+  auto     charge_small      = LayerAddDenseActivationCharge(
+      model_small, layer_type, input_size_small, output_size_small, activation_type);
 
   auto     model_big       = VmSequentialModel(vm);
   SizeType input_size_big  = 100;
   SizeType output_size_big = 100;
-  auto     charge_big      = LayerAddDenseActivationCharge(model_big, layer_type, input_size_big,
-                                                  output_size_big, activation_type);
+  auto     charge_big      = LayerAddDenseActivationCharge(
+      model_big, layer_type, input_size_big, output_size_big, activation_type);
 
   EXPECT_LT(charge_small, charge_big);
 }
@@ -1075,11 +1106,11 @@ TEST_F(VMModelEstimatorTests, estimator_state_consistency_after_serialization_de
   EXPECT_EQ(charge_original, charge_from_serializer);
 
   //
-  auto activation_type   = VmString(vm, "relu");
-  charge_original        = LayerAddDenseActivationCharge(model_original, layer_type, input_size,
-                                                  output_size, activation_type);
-  charge_from_serializer = LayerAddDenseActivationCharge(model_from_serializer, layer_type,
-                                                         input_size, output_size, activation_type);
+  auto activation_type = VmString(vm, "relu");
+  charge_original      = LayerAddDenseActivationCharge(
+      model_original, layer_type, input_size, output_size, activation_type);
+  charge_from_serializer = LayerAddDenseActivationCharge(
+      model_from_serializer, layer_type, input_size, output_size, activation_type);
   EXPECT_EQ(charge_original, charge_from_serializer);
 
   //
@@ -1119,8 +1150,9 @@ TEST_F(VMModelEstimatorTests, estimator_state_consistency_after_serialization_de
   EXPECT_EQ(charge_original, charge_from_serializer);
 }
 
-TEST_F(VMModelEstimatorTests,
-       estimator_state_consistency_after_serialization_deserialization_from_string)
+TEST_F(
+    VMModelEstimatorTests,
+    estimator_state_consistency_after_serialization_deserialization_from_string)
 {
   std::vector<SizeType> sizes          = {10, 10, 10};
   std::vector<bool>     activations    = {true, true};
@@ -1142,11 +1174,11 @@ TEST_F(VMModelEstimatorTests,
   EXPECT_EQ(charge_original, charge_from_serializer);
 
   //
-  auto activation_type   = VmString(vm, "relu");
-  charge_original        = LayerAddDenseActivationCharge(model_original, layer_type, input_size,
-                                                  output_size, activation_type);
-  charge_from_serializer = LayerAddDenseActivationCharge(model_from_serializer, layer_type,
-                                                         input_size, output_size, activation_type);
+  auto activation_type = VmString(vm, "relu");
+  charge_original      = LayerAddDenseActivationCharge(
+      model_original, layer_type, input_size, output_size, activation_type);
+  charge_from_serializer = LayerAddDenseActivationCharge(
+      model_from_serializer, layer_type, input_size, output_size, activation_type);
   EXPECT_EQ(charge_original, charge_from_serializer);
 
   //

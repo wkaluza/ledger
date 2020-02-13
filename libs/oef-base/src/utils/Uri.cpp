@@ -27,8 +27,8 @@ const char *what2str[] = {"*", "PROTO", "HOST", "PORT", "PATH"};
 
 void Uri::parse(const std::string &value)
 {
-  std::regex uri_regex("^([-_a-zA-Z0-9\\.]+://)?([-_a-zA-Z0-9\\.]+)(:[0-9]+)?(/.*)?$",
-                       std::regex_constants::icase);
+  std::regex uri_regex(
+      "^([-_a-zA-Z0-9\\.]+://)?([-_a-zA-Z0-9\\.]+)(:[0-9]+)?(/.*)?$", std::regex_constants::icase);
 
   valid = false;
   proto = "";
@@ -39,8 +39,8 @@ void Uri::parse(const std::string &value)
   std::smatch parts_result;
   if (std::regex_match(value, parts_result, uri_regex))
   {
-    std::vector<std::sub_match<std::string::const_iterator>> v(parts_result.begin(),
-                                                               parts_result.end());
+    std::vector<std::sub_match<std::string::const_iterator>> v(
+        parts_result.begin(), parts_result.end());
 
     using What        = enum { ALL, PROTO, HOST, PORT, PATH };
     What expectedpart = ALL;

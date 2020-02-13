@@ -73,74 +73,132 @@ public:
 
   /// Post methods
   /// @{
-  void Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-            std::vector<HTTPParameter> const &parameters, ViewType const &view);
+  void Post(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
 
-  void Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-            ViewType const &view);
-  void Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-            std::vector<HTTPParameter> const &parameters, Authenticator const &auth,
-            ViewType const &view);
-  void Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-            Authenticator const &auth, ViewType const &view);
+  void Post(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      ViewType const &             view);
+  void Post(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      Authenticator const &             auth,
+      ViewType const &                  view);
+  void Post(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      Authenticator const &        auth,
+      ViewType const &             view);
   /// @}
 
   /// Get methods
   /// @{
-  void Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           std::vector<HTTPParameter> const &parameters, ViewType const &view);
-  void Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           ViewType const &view);
-  void Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           std::vector<HTTPParameter> const &parameters, Authenticator const &auth,
-           ViewType const &view);
-  void Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           Authenticator const &auth, ViewType const &view);
+  void Get(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
+  void Get(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      ViewType const &             view);
+  void Get(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      Authenticator const &             auth,
+      ViewType const &                  view);
+  void Get(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      Authenticator const &        auth,
+      ViewType const &             view);
   /// @}
 
   /// Put methods
   /// @{
-  void Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           std::vector<HTTPParameter> const &parameters, ViewType const &view);
-  void Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           ViewType const &view);
-  void Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           std::vector<HTTPParameter> const &parameters, Authenticator const &auth,
-           ViewType const &view);
-  void Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-           Authenticator const &auth, ViewType const &view);
+  void Put(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
+  void Put(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      ViewType const &             view);
+  void Put(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      Authenticator const &             auth,
+      ViewType const &                  view);
+  void Put(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      Authenticator const &        auth,
+      ViewType const &             view);
   /// @}
 
   /// Patch methods
   /// @{
-  void Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-             std::vector<HTTPParameter> const &parameters, ViewType const &view);
-  void Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-             ViewType const &view);
-  void Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-             std::vector<HTTPParameter> const &parameters, Authenticator const &auth,
-             ViewType const &view);
-  void Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-             Authenticator const &auth, ViewType const &view);
+  void Patch(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
+  void Patch(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      ViewType const &             view);
+  void Patch(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      Authenticator const &             auth,
+      ViewType const &                  view);
+  void Patch(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      Authenticator const &        auth,
+      ViewType const &             view);
   /// @}
 
   /// Delete methods
   /// @{
-  void Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-              std::vector<HTTPParameter> const &parameters, ViewType const &view);
-  void Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-              ViewType const &view);
-  void Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-              Authenticator const &auth, std::vector<HTTPParameter> const &parameters,
-              ViewType const &view);
-  void Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-              Authenticator const &auth, ViewType const &view);
+  void Delete(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
+  void Delete(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      ViewType const &             view);
+  void Delete(
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      Authenticator const &             auth,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view);
+  void Delete(
+      byte_array::ByteArray const &path,
+      byte_array::ByteArray const &description,
+      Authenticator const &        auth,
+      ViewType const &             view);
   /// @}
 
-  void                              AddView(Method method, byte_array::ByteArray const &path,
-                                            byte_array::ByteArray const &     description,
-                                            std::vector<HTTPParameter> const &parameters, ViewType const &view,
-                                            Authenticator const &auth = NormalAccessAuthentication);
+  void AddView(
+      Method                            method,
+      byte_array::ByteArray const &     path,
+      byte_array::ByteArray const &     description,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view,
+      Authenticator const &             auth = NormalAccessAuthentication);
   std::vector<UnmountedView> const &views() const;
 
 private:

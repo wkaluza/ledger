@@ -66,8 +66,14 @@ public:
 
     bool status = this->MakeRunnable();
 
-    FETCH_LOG_INFO(LOGGING_NAME, "Added workload with id=", workload->GetId(), " to worker task (",
-                   GetTaskId(), ") ! Runnable status: ", status);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Added workload with id=",
+        workload->GetId(),
+        " to worker task (",
+        GetTaskId(),
+        ") ! Runnable status: ",
+        status);
 
     return waitable->MakeNotification();
   }
@@ -113,8 +119,12 @@ public:
           state = not_started.find(*it) != not_started.end() ? WorkloadState::START
                                                              : WorkloadState::RESUME;
           auto result = process(it->first, state);
-          FETCH_LOG_INFO(LOGGING_NAME, "Reply was (id=", it->first->GetId(), ")",
-                         workloadProcessedNames[static_cast<int>(result)]);
+          FETCH_LOG_INFO(
+              LOGGING_NAME,
+              "Reply was (id=",
+              it->first->GetId(),
+              ")",
+              workloadProcessedNames[static_cast<int>(result)]);
 
           switch (result)
           {
@@ -151,8 +161,8 @@ public:
       }
       catch (std::exception const &e)
       {
-        FETCH_LOG_ERROR(LOGGING_NAME, "Exception in the worker (", GetTaskId(),
-                        ") loop: ", e.what());
+        FETCH_LOG_ERROR(
+            LOGGING_NAME, "Exception in the worker (", GetTaskId(), ") loop: ", e.what());
       }
     }
   }

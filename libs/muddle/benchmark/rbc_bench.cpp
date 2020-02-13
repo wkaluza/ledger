@@ -138,7 +138,8 @@ struct RBCNode : public AbstractRBCNode
 
   RBCNode(uint16_t port_number, uint16_t index)
     : AbstractRBCNode(port_number, index)
-    , rbc{muddle->GetEndpoint(), muddle_certificate->identity().identifier(),
+    , rbc{muddle->GetEndpoint(),
+          muddle_certificate->identity().identifier(),
           [this](MuddleAddress const &from, ConstByteArray const &payload) -> void {
             FETCH_LOCK(mutex);
             answers[from] = payload;
@@ -180,12 +181,14 @@ struct PBCNode : public AbstractRBCNode
   PBCNode(uint16_t port_number, uint16_t index)
     : AbstractRBCNode(port_number, index)
     , punishment_broadcast_channel{
-          muddle->GetEndpoint(), muddle_certificate->identity().identifier(),
+          muddle->GetEndpoint(),
+          muddle_certificate->identity().identifier(),
           [this](MuddleAddress const &from, ConstByteArray const &payload) -> void {
             FETCH_LOCK(mutex);
             answers[from] = payload;
           },
-          muddle_certificate, 0}
+          muddle_certificate,
+          0}
   {
     reactor.Attach(punishment_broadcast_channel.GetRunnable());
     reactor.Start();

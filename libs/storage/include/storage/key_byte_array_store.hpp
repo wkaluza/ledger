@@ -37,8 +37,12 @@ struct ByteArrayMapConfigurator
   using DocumentStackType     = RandomAccessStack<SpecificFileBlockType>;
   using FileObjectType        = FileObject<DocumentStackType>;
 
-  using Type = DocumentStore<BLOCK_SIZE, SpecificFileBlockType, KVIStoreType, DocumentStackType,
-                             FileObjectType>;
+  using Type = DocumentStore<
+      BLOCK_SIZE,
+      SpecificFileBlockType,
+      KVIStoreType,
+      DocumentStackType,
+      FileObjectType>;
 };
 
 }  // namespace details

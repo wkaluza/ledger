@@ -77,8 +77,8 @@ TYPED_TEST(LayersSaveParamsTest, conv1d_saveparams_test)
   auto dsp    = serializer_test_utils::SerialiseDeserialiseBuild<SPType, TensorType>(layer);
   auto layer2 = *(::fetch::ml::utilities::BuildLayer<TensorType, LayerType>(dsp));
 
-  serializer_test_utils::TestLayerPredictionsEqual<DataType>(layer, layer2, input, input_name,
-                                                             output_name, prediction);
+  serializer_test_utils::TestLayerPredictionsEqual<DataType>(
+      layer, layer2, input, input_name, output_name, prediction);
 
   // train g
   layer.SetInput(label_name, labels);
@@ -102,8 +102,10 @@ TYPED_TEST(LayersSaveParamsTest, conv1d_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   input.FillUniformRandom();
@@ -114,11 +116,15 @@ TYPED_TEST(LayersSaveParamsTest, conv1d_saveparams_test)
   layer2.SetInput(input_name, input);
   TensorType prediction4 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, conv2d_saveparams_test)
@@ -168,8 +174,8 @@ TYPED_TEST(LayersSaveParamsTest, conv2d_saveparams_test)
   auto dsp    = serializer_test_utils::SerialiseDeserialiseBuild<SPType, TensorType>(layer);
   auto layer2 = *(::fetch::ml::utilities::BuildLayer<TensorType, LayerType>(dsp));
 
-  serializer_test_utils::TestLayerPredictionsEqual<DataType>(layer, layer2, input, input_name,
-                                                             output_name, prediction);
+  serializer_test_utils::TestLayerPredictionsEqual<DataType>(
+      layer, layer2, input, input_name, output_name, prediction);
 
   // train g
   layer.SetInput(label_name, labels);
@@ -193,8 +199,10 @@ TYPED_TEST(LayersSaveParamsTest, conv2d_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   input.FillUniformRandom();
@@ -205,11 +213,15 @@ TYPED_TEST(LayersSaveParamsTest, conv2d_saveparams_test)
   layer2.SetInput(input_name, input);
   TensorType prediction4 = layer2.Evaluate(output_name, true);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, fully_connected_saveparams_test)
@@ -257,8 +269,8 @@ TYPED_TEST(LayersSaveParamsTest, fully_connected_saveparams_test)
   auto dsp    = serializer_test_utils::SerialiseDeserialiseBuild<SPType, TypeParam>(layer);
   auto layer2 = *(::fetch::ml::utilities::BuildLayer<TypeParam, LayerType>(dsp));
 
-  serializer_test_utils::TestLayerPredictionsEqual<DataType>(layer, layer2, input, input_name,
-                                                             output_name, prediction);
+  serializer_test_utils::TestLayerPredictionsEqual<DataType>(
+      layer, layer2, input, input_name, output_name, prediction);
 
   // train g
   layer.SetInput(label_name, labels);
@@ -282,8 +294,10 @@ TYPED_TEST(LayersSaveParamsTest, fully_connected_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   input.FillUniformRandom();
@@ -294,11 +308,15 @@ TYPED_TEST(LayersSaveParamsTest, fully_connected_saveparams_test)
   layer2.SetInput(input_name, input);
   TypeParam prediction4 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, layer_norm_saveparams_test)
@@ -340,8 +358,8 @@ TYPED_TEST(LayersSaveParamsTest, layer_norm_saveparams_test)
   auto dsp    = serializer_test_utils::SerialiseDeserialiseBuild<SPType, TypeParam>(layer);
   auto layer2 = *(::fetch::ml::utilities::BuildLayer<TypeParam, LayerType>(dsp));
 
-  serializer_test_utils::TestLayerPredictionsEqual<DataType>(layer, layer2, input, input_name,
-                                                             output_name, prediction);
+  serializer_test_utils::TestLayerPredictionsEqual<DataType>(
+      layer, layer2, input, input_name, output_name, prediction);
 
   // train g
   layer.SetInput(label_name, labels);
@@ -365,8 +383,10 @@ TYPED_TEST(LayersSaveParamsTest, layer_norm_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   input.FillUniformRandom();
@@ -379,8 +399,10 @@ TYPED_TEST(LayersSaveParamsTest, layer_norm_saveparams_test)
 
   EXPECT_FALSE(prediction == prediction3);
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, multi_head_attention_saveparams_test)
@@ -440,10 +462,14 @@ TYPED_TEST(LayersSaveParamsTest, multi_head_attention_saveparams_test)
   layer2.SetInput("MultiheadAttention_Mask", mask_data);
   TypeParam prediction2 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction1.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                    ::fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(prediction0.AllClose(prediction1, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction1.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction0.AllClose(
+      prediction1,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, prelu_saveparams_test)
@@ -484,8 +510,8 @@ TYPED_TEST(LayersSaveParamsTest, prelu_saveparams_test)
   auto dsp    = serializer_test_utils::SerialiseDeserialiseBuild<SPType, TypeParam>(layer);
   auto layer2 = *(::fetch::ml::utilities::BuildLayer<TypeParam, LayerType>(dsp));
 
-  serializer_test_utils::TestLayerPredictionsEqual<DataType>(layer, layer2, input, input_name,
-                                                             output_name, prediction);
+  serializer_test_utils::TestLayerPredictionsEqual<DataType>(
+      layer, layer2, input, input_name, output_name, prediction);
 
   // train g
   layer.SetInput(label_name, labels);
@@ -509,8 +535,10 @@ TYPED_TEST(LayersSaveParamsTest, prelu_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   input.FillUniformRandom();
@@ -521,11 +549,15 @@ TYPED_TEST(LayersSaveParamsTest, prelu_saveparams_test)
   layer2.SetInput(input_name, input);
   TypeParam prediction4 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, scaled_dot_product_attention_saveparams_test)
@@ -582,8 +614,10 @@ TYPED_TEST(LayersSaveParamsTest, scaled_dot_product_attention_saveparams_test)
   layer2.Compile();
   TypeParam prediction2 = layer2.Evaluate(output_name, true);
 
-  EXPECT_TRUE(prediction.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                  ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // train g
   layer.SetInput(label_name, labels);
@@ -607,8 +641,10 @@ TYPED_TEST(LayersSaveParamsTest, scaled_dot_product_attention_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // new random input
   query_data.FillUniformRandom();
@@ -625,11 +661,15 @@ TYPED_TEST(LayersSaveParamsTest, scaled_dot_product_attention_saveparams_test)
   layer2.SetInput("ScaledDotProductAttention_Mask", mask_data);
   TypeParam prediction4 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, self_attention_saveparams_test)
@@ -685,10 +725,14 @@ TYPED_TEST(LayersSaveParamsTest, self_attention_saveparams_test)
   layer2.Compile();
   TypeParam prediction2 = layer2.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction1.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                    ::fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(prediction0.AllClose(prediction1, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction1.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction0.AllClose(
+      prediction1,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(LayersSaveParamsTest, skipgram_saveparams_test)
@@ -743,16 +787,20 @@ TYPED_TEST(LayersSaveParamsTest, skipgram_saveparams_test)
   TypeParam prediction = layer.Evaluate(output_name, true);
 
   // sanity check - serialisation should not affect initial prediction
-  ASSERT_TRUE(prediction0.AllClose(prediction, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction0.AllClose(
+      prediction,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   layer2.SetInput("SkipGram_Input", input);
   layer2.SetInput("SkipGram_Context", context);
   layer2.Compile();
   TypeParam prediction2 = layer2.Evaluate(output_name, true);
 
-  ASSERT_TRUE(prediction.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                  ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // train g
   layer.SetInput(label_name, labels);
@@ -776,8 +824,10 @@ TYPED_TEST(LayersSaveParamsTest, skipgram_saveparams_test)
   }
   layer2.ApplyGradients(grads2);
 
-  EXPECT_TRUE(loss.AllClose(loss2, ::fetch::math::function_tolerance<DataType>(),
-                            ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(loss.AllClose(
+      loss2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   //
   // test that prediction is different after a back prop and step have been completed
@@ -787,8 +837,10 @@ TYPED_TEST(LayersSaveParamsTest, skipgram_saveparams_test)
   layer.SetInput("SkipGram_Context", context);  // resets node cache
   TypeParam prediction3 = layer.Evaluate(output_name);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   //
   // test that the deserialized model gives the same result as the original layer after training
@@ -798,8 +850,10 @@ TYPED_TEST(LayersSaveParamsTest, skipgram_saveparams_test)
   layer2.SetInput("SkipGram_Context", context);
   TypeParam prediction5 = layer2.Evaluate(output_name);
 
-  EXPECT_TRUE(prediction3.AllClose(prediction5, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction5,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace

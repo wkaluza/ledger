@@ -57,8 +57,9 @@ void DataHolder<TensorType>::Forward(VecTensorType const &inputs, TensorType &ou
  * @return
  */
 template <class TensorType>
-std::vector<TensorType> DataHolder<TensorType>::Backward(VecTensorType const &inputs,
-                                                         TensorType const &   error_signal)
+std::vector<TensorType> DataHolder<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.empty());
@@ -85,8 +86,8 @@ std::vector<math::SizeType> DataHolder<TensorType>::ComputeOutputShape(
   FETCH_UNUSED(inputs);
   if (!data_)
   {
-    throw std::runtime_error("Data is not set for " + std ::string(Descriptor()) +
-                             ", shape computing is not possible.");
+    throw std::runtime_error(
+        "Data is not set for " + std ::string(Descriptor()) + ", shape computing is not possible.");
   }
   return data_->shape();
 }

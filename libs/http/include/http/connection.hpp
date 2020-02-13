@@ -50,8 +50,8 @@ public:
     : socket_(std::move(socket))
     , manager_(manager)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "HTTP connection from ",
-                    socket_.remote_endpoint().address().to_string());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME, "HTTP connection from ", socket_.remote_endpoint().address().to_string());
   }
 
   ~HTTPConnection() override = default;
@@ -167,8 +167,11 @@ public:
       }
     };
 
-    asio::async_read(socket_, *buffer_ptr,
-                     asio::transfer_exactly(request->content_length() - buffer_ptr->size()), cb);
+    asio::async_read(
+        socket_,
+        *buffer_ptr,
+        asio::transfer_exactly(request->content_length() - buffer_ptr->size()),
+        cb);
   }
 
   void HandleError(std::error_code const &ec, SharedRequestType const & /*req*/)

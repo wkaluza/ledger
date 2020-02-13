@@ -29,8 +29,8 @@ namespace kernels {
 struct Sin
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::sin(x));
   }
@@ -45,8 +45,8 @@ struct Sin
 struct Cos
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::cos(x));
   }
@@ -61,8 +61,8 @@ struct Cos
 struct Tan
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::tan(x));
   }
@@ -77,8 +77,8 @@ struct Tan
 struct ASin
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::asin(x));
   }
@@ -93,8 +93,8 @@ struct ASin
 struct ACos
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::acos(x));
   }
@@ -109,8 +109,8 @@ struct ACos
 struct ATan
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::atan(x));
   }
@@ -125,16 +125,17 @@ struct ATan
 struct ATan2
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type const &y,
-                                                                        Type &      z) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(
+      Type const &x,
+      Type const &y,
+      Type &      z) const
   {
     z = static_cast<Type>(std::atan2(x, y));
   }
 
   template <typename Type>
-  fetch::math::meta::IfIsFixedPoint<Type, void> operator()(Type const &x, Type const &y,
-                                                           Type &z) const
+  fetch::math::meta::IfIsFixedPoint<Type, void> operator()(Type const &x, Type const &y, Type &z)
+      const
   {
     z = Type::ATan2(x, y);
   }
@@ -143,8 +144,8 @@ struct ATan2
 struct SinH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::sinh(x));
   }
@@ -159,8 +160,8 @@ struct SinH
 struct CosH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::cosh(x));
   }
@@ -175,8 +176,8 @@ struct CosH
 struct TanH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::tanh(x));
   }
@@ -191,8 +192,8 @@ struct TanH
 struct ASinH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::asinh(x));
   }
@@ -207,8 +208,8 @@ struct ASinH
 struct ACosH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::acosh(x));
   }
@@ -223,8 +224,8 @@ struct ACosH
 struct ATanH
 {
   template <typename Type>
-  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x,
-                                                                        Type &      y) const
+  fetch::math::meta::IfIsNonFixedPointArithmetic<Type, void> operator()(Type const &x, Type &y)
+      const
   {
     y = static_cast<Type>(std::atanh(x));
   }

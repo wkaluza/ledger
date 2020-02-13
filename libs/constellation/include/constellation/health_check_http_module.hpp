@@ -36,12 +36,14 @@ public:
     : chain_{chain}
     , block_coordinator_{block_coordinator}
   {
-    Get("/api/health/alive", "Endpoint to check if the server is alive.",
+    Get("/api/health/alive",
+        "Endpoint to check if the server is alive.",
         [](http::ViewParameters const &, http::HTTPRequest const &) {
           return http::CreateJsonResponse("{}");
         });
 
-    Get("/api/health/ready", "Retrieves the current synchronisation status.",
+    Get("/api/health/ready",
+        "Retrieves the current synchronisation status.",
         [this](http::ViewParameters const &, http::HTTPRequest const &) {
           MainChainRpcService const *const chain_service = chain_service_.load();
 

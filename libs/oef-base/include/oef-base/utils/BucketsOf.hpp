@@ -22,8 +22,11 @@
 #include <string>
 #include <vector>
 
-template <class CONTENTS, class NAME_TYPE = std::string, class IDENT_TYPE = std::size_t,
-          std::size_t BUCKET_SIZE = 128>
+template <
+    class CONTENTS,
+    class NAME_TYPE         = std::string,
+    class IDENT_TYPE        = std::size_t,
+    std::size_t BUCKET_SIZE = 128>
 class BucketsOf
 {
 public:

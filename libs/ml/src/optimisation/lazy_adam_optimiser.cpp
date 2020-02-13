@@ -28,28 +28,49 @@ namespace ml {
 namespace optimisers {
 
 template <class T>
-LazyAdamOptimiser<T>::LazyAdamOptimiser(std::shared_ptr<Graph<T>>       graph,
-                                        std::vector<std::string> const &input_node_names,
-                                        std::string const &             label_node_name,
-                                        std::string const &             output_node_name,
-                                        DataType const &learning_rate, DataType const &beta1,
+LazyAdamOptimiser<T>::LazyAdamOptimiser(
+    std::shared_ptr<Graph<T>>       graph,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name,
+    DataType const &                learning_rate,
+    DataType const &                beta1,
 
-                                        DataType const &beta2, SizeType sparsity_threshold,
-                                        DataType const &epsilon)
-  : AdamOptimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate,
-                     beta1, beta2, epsilon)
+    DataType const &beta2,
+    SizeType        sparsity_threshold,
+    DataType const &epsilon)
+  : AdamOptimiser<T>(
+        graph,
+        input_node_names,
+        label_node_name,
+        output_node_name,
+        learning_rate,
+        beta1,
+        beta2,
+        epsilon)
   , sparsity_threshold_(sparsity_threshold)
 {}
 
 template <class T>
 LazyAdamOptimiser<T>::LazyAdamOptimiser(
-    std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-    std::string const &label_node_name, std::string const &output_node_name,
+    std::shared_ptr<Graph<T>>                                 graph,
+    std::vector<std::string> const &                          input_node_names,
+    std::string const &                                       label_node_name,
+    std::string const &                                       output_node_name,
     fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
-    DataType const &beta1, DataType const &beta2, SizeType sparsity_threshold,
-    DataType const &epsilon)
-  : AdamOptimiser<T>(graph, input_node_names, label_node_name, output_node_name,
-                     learning_rate_param, beta1, beta2, epsilon)
+    DataType const &                                          beta1,
+    DataType const &                                          beta2,
+    SizeType                                                  sparsity_threshold,
+    DataType const &                                          epsilon)
+  : AdamOptimiser<T>(
+        graph,
+        input_node_names,
+        label_node_name,
+        output_node_name,
+        learning_rate_param,
+        beta1,
+        beta2,
+        epsilon)
   , sparsity_threshold_(sparsity_threshold)
 {}
 
@@ -68,16 +89,21 @@ LazyAdamOptimiser<T>::LazyAdamOptimiser(
  * @param refs_tensor
  */
 template <class T>
-void LazyAdamOptimiser<T>::ApplyLogic(SizeType batch_size, TensorType &gradient_tensor,
-                                      TensorType &momentum_tensor, TensorType &mt_tensor,
-                                      TensorType &v_tensor, TensorType &cache_tensor,
-                                      TensorType const &refs_tensor)
+void LazyAdamOptimiser<T>::ApplyLogic(
+    SizeType          batch_size,
+    TensorType &      gradient_tensor,
+    TensorType &      momentum_tensor,
+    TensorType &      mt_tensor,
+    TensorType &      v_tensor,
+    TensorType &      cache_tensor,
+    TensorType const &refs_tensor)
 {
 
   // cache[i] = (beta1_t_ * cache[i]) + ((1.0 - beta1_t_) * (input_gradients[i]/batch_size));
-  fetch::math::Multiply(refs_tensor,
-                        (DataType{1} - this->beta1_t_) / static_cast<DataType>(batch_size),
-                        gradient_tensor);
+  fetch::math::Multiply(
+      refs_tensor,
+      (DataType{1} - this->beta1_t_) / static_cast<DataType>(batch_size),
+      gradient_tensor);
   fetch::math::Multiply(cache_tensor, this->beta1_t_, cache_tensor);
   fetch::math::Add(cache_tensor, gradient_tensor, cache_tensor);
 
@@ -137,8 +163,14 @@ void LazyAdamOptimiser<T>::ApplyGradients(SizeType batch_size)
     if (rows.at(rows.size() - 1).empty() ||
         (rows.at(rows.size() - 1).size() * sparsity_threshold_) > gradient_pair.first.shape().at(1))
     {
-      ApplyLogic(batch_size, *gradient_it, *momentum_it, *mt_it, *vt_it, *cached_weight_it,
-                 (*trainable_it)->GetGradientsReferences());
+      ApplyLogic(
+          batch_size,
+          *gradient_it,
+          *momentum_it,
+          *mt_it,
+          *vt_it,
+          *cached_weight_it,
+          (*trainable_it)->GetGradientsReferences());
     }
     // Sparse apply gradient
     // if number_of_rows_to_update * sparsity_threshold_ <= total_rows
@@ -163,8 +195,14 @@ void LazyAdamOptimiser<T>::ApplyGradients(SizeType batch_size)
         TensorType refs_view_tensor =
             (*trainable_it)->GetGradientsReferences().View(update_index).Copy();
 
-        ApplyLogic(batch_size, gradient_view_tensor, momentum_view_tensor, mt_tensor, vt_tensor,
-                   cache_view_tensor, refs_view_tensor);
+        ApplyLogic(
+            batch_size,
+            gradient_view_tensor,
+            momentum_view_tensor,
+            mt_tensor,
+            vt_tensor,
+            cache_view_tensor,
+            refs_view_tensor);
 
         // Put things back
         gradient_view.Assign(gradient_view_tensor);

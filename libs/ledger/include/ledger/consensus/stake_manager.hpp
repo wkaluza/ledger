@@ -72,10 +72,15 @@ public:
   /// @}
 
   /// @name Committee Generation
-  CabinetPtr BuildCabinet(Block const &current, uint64_t cabinet_size,
-                          ConsensusInterface::Minerwhitelist const &whitelist = {});
-  CabinetPtr BuildCabinet(uint64_t block_number, uint64_t entropy, uint64_t cabinet_size,
-                          ConsensusInterface::Minerwhitelist const &whitelist = {}) const;
+  CabinetPtr BuildCabinet(
+      Block const &                             current,
+      uint64_t                                  cabinet_size,
+      ConsensusInterface::Minerwhitelist const &whitelist = {});
+  CabinetPtr BuildCabinet(
+      uint64_t                                  block_number,
+      uint64_t                                  entropy,
+      uint64_t                                  cabinet_size,
+      ConsensusInterface::Minerwhitelist const &whitelist = {}) const;
   /// @}
 
   /// @name Persistence

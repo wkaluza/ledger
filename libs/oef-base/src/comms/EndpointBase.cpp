@@ -41,8 +41,16 @@ bool EndpointBase<TXType>::connect(const Uri &uri, Core &core)
     socket().connect(endpoint);
     if (ec)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "id=", ident, " outbound connection to ", uri.host, ":",
-                     uri.port, " FAILED ", ec.value());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "id=",
+          ident,
+          " outbound connection to ",
+          uri.host,
+          ":",
+          uri.port,
+          " FAILED ",
+          ec.value());
     }
     else
     {
@@ -55,8 +63,10 @@ bool EndpointBase<TXType>::connect(const Uri &uri, Core &core)
 }
 
 template <typename TXType>
-EndpointBase<TXType>::EndpointBase(std::size_t sendBufferSize, std::size_t readBufferSize,
-                                   ConfigMap configMap)
+EndpointBase<TXType>::EndpointBase(
+    std::size_t sendBufferSize,
+    std::size_t readBufferSize,
+    ConfigMap   configMap)
   : sendBuffer(sendBufferSize)
   , readBuffer(readBufferSize)
   , configMap_(std::move(configMap))
@@ -81,8 +91,8 @@ void EndpointBase<TXType>::run_sending()
     Lock lock(mutex);
     if (asio_sending || *state != RUNNING_ENDPOINT)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "id=", ident, " early exit 1 sending=", asio_sending,
-                     " state=", *state);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "id=", ident, " early exit 1 sending=", asio_sending, " state=", *state);
       return;
     }
     if (sendBuffer.GetDataAvailable() == 0)
@@ -111,14 +121,14 @@ void EndpointBase<TXType>::run_reading()
     Lock lock(mutex);
     if (asio_reading || *state != RUNNING_ENDPOINT)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, reader.get(), ":early exit 1 reading=", asio_sending,
-                     " state=", *state);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, reader.get(), ":early exit 1 reading=", asio_sending, " state=", *state);
       return;
     }
     if (read_needed == 0)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, reader.get(), ":early exit 1 read_needed=", read_needed,
-                     " state=", *state);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, reader.get(), ":early exit 1 read_needed=", read_needed, " state=", *state);
       return;
     }
     read_needed_local = read_needed;
@@ -314,8 +324,10 @@ void EndpointBase<TXType>::go()
 }
 
 template <typename TXType>
-void EndpointBase<TXType>::complete_sending(StateTypeP current, std::error_code const &ec,
-                                            const size_t &bytes)
+void EndpointBase<TXType>::complete_sending(
+    StateTypeP             current,
+    std::error_code const &ec,
+    const size_t &         bytes)
 {
   try
   {
@@ -367,8 +379,10 @@ void EndpointBase<TXType>::create_messages()
 }
 
 template <typename TXType>
-void EndpointBase<TXType>::complete_reading(StateTypeP current, std::error_code const &ec,
-                                            const size_t &bytes)
+void EndpointBase<TXType>::complete_reading(
+    StateTypeP             current,
+    std::error_code const &ec,
+    const size_t &         bytes)
 {
   try
   {
@@ -390,8 +404,8 @@ void EndpointBase<TXType>::complete_reading(StateTypeP current, std::error_code 
 
     if (ec)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "id=", ident, " MARKED ERROR AT complete_reading() ",
-                     ec.message());
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "id=", ident, " MARKED ERROR AT complete_reading() ", ec.message());
       error(ec);
       close();
       return;  // We are done with this thing!

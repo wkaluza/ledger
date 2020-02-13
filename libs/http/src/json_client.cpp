@@ -107,8 +107,8 @@ JsonClient JsonClient::CreateFromUrl(std::string const &url)
       errno = 0;
       FETCH_LOG_ERROR(LOGGING_NAME, "Failed to convert port_str=", port_str, " to integer");
 
-      throw std::domain_error(std::string("Failed to convert port_str=") + port_str +
-                              " to integer");
+      throw std::domain_error(
+          std::string("Failed to convert port_str=") + port_str + " to integer");
     }
 
     return JsonClient{mode, host, static_cast<uint16_t>(port_value)};
@@ -163,8 +163,12 @@ JsonClient::JsonClient(ConnectionMode mode, std::string host, uint16_t port)
  * @param response The output response from the server
  * @return true if successful, otherwise false
  */
-bool JsonClient::Request(Method method, ConstByteArray const &endpoint, Headers const *headers,
-                         Variant const *request, Variant &response)
+bool JsonClient::Request(
+    Method                method,
+    ConstByteArray const &endpoint,
+    Headers const *       headers,
+    Variant const *       request,
+    Variant &             response)
 {
   bool success = false;
 
@@ -202,8 +206,14 @@ bool JsonClient::Request(Method method, ConstByteArray const &endpoint, Headers 
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Failed to make ", ToString(method), " to ", endpoint,
-                   ". Exception: ", ex.what());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Failed to make ",
+        ToString(method),
+        " to ",
+        endpoint,
+        ". Exception: ",
+        ex.what());
     success = false;
   }
 
@@ -279,8 +289,11 @@ bool JsonClient::Post(ConstByteArray const &endpoint, Variant &response)
  * @param response The output response
  * @return true if successful, otherwise false
  */
-bool JsonClient::Post(ConstByteArray const &endpoint, Headers const &headers,
-                      Variant const &request, Variant &response)
+bool JsonClient::Post(
+    ConstByteArray const &endpoint,
+    Headers const &       headers,
+    Variant const &       request,
+    Variant &             response)
 {
   return Request(Method::POST, endpoint, &headers, &request, response);
 }

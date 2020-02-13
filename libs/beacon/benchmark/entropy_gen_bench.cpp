@@ -183,7 +183,10 @@ void EntropyGen(benchmark::State &state)
     for (uint32_t m = 0; m < nodes_online; ++m)
     {
       nodes[m]->beacon_setup.StartNewCabinet(
-          cabinet, test_attempt * entropy_rounds, start_time, prev_entropy,
+          cabinet,
+          test_attempt * entropy_rounds,
+          start_time,
+          prev_entropy,
           dealer.GetDkgKeys(nodes[m]->muddle_certificate->identity().identifier()));
       nodes[m]->beacon_service.MostRecentSeen((test_attempt * entropy_rounds) + entropy_rounds - 1);
     }

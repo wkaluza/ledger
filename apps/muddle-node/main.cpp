@@ -206,9 +206,15 @@ int main(int argc, char **argv)
 
       if ((data.total_messages & 0x0Fu) == 0)
       {
-        FETCH_LOG_INFO(LOGGING_NAME, "Message Summary: ", data.total_messages, " from ",
-                       data.counters.size(),
-                       " peers (connected: ", muddle->GetNumDirectlyConnectedPeers(), ")");
+        FETCH_LOG_INFO(
+            LOGGING_NAME,
+            "Message Summary: ",
+            data.total_messages,
+            " from ",
+            data.counters.size(),
+            " peers (connected: ",
+            muddle->GetNumDirectlyConnectedPeers(),
+            ")");
 
         for (auto const &element : data.counters)
         {

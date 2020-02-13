@@ -83,8 +83,9 @@ std::size_t GenerateEchoId(Packet const &packet)
 
   std::size_t out = 0;
 
-  static_assert(sizeof(out) == decltype(hash)::SIZE_IN_BYTES,
-                "Output type has incorrect size to contain hash");
+  static_assert(
+      sizeof(out) == decltype(hash)::SIZE_IN_BYTES,
+      "Output type has incorrect size to contain hash");
   hash.Final(reinterpret_cast<uint8_t *>(&out));
 
   return out;
@@ -164,9 +165,14 @@ bool ExtractPayload(ConstByteArray const &payload, T &msg)
  * @param payload The reference to the payload to be send
  * @return A new packet with common field populated
  */
-Router::PacketPtr FormatPacket(Packet::Address const &from, NetworkId const &network,
-                               uint16_t service, uint16_t channel, uint16_t counter, uint8_t ttl,
-                               Packet::Payload const &payload)
+Router::PacketPtr FormatPacket(
+    Packet::Address const &from,
+    NetworkId const &      network,
+    uint16_t               service,
+    uint16_t               channel,
+    uint16_t               counter,
+    uint8_t                ttl,
+    Packet::Payload const &payload)
 {
   auto packet = std::make_shared<Packet>(from, network.value());
   packet->SetService(service);
@@ -237,8 +243,12 @@ Packet::Address Router::ConvertAddress(Packet::RawAddress const &address)
  * @param address The address of the current node
  * @param reg The connection register
  */
-Router::Router(NetworkId network_id, Address address, MuddleRegister &reg, Prover const &prover,
-               bool enable_message_signing)
+Router::Router(
+    NetworkId       network_id,
+    Address         address,
+    MuddleRegister &reg,
+    Prover const &  prover,
+    bool            enable_message_signing)
   : name_{GenerateLoggingName(BASE_NAME, network_id)}
   , signing_enabled_{enable_message_signing}
   , address_(std::move(address))
@@ -254,68 +264,83 @@ Router::Router(NetworkId network_id, Address address, MuddleRegister &reg, Prove
         CreateGauge("ledger_router_tx_max_packet_length", "The max transmitted packet length"))
   , bx_max_packet_length(
         CreateGauge("ledger_router_bx_max_packet_length", "The max broadcasted packet length"))
-  , rx_packet_length(CreateHistogram("ledger_router_rx_packet_length",
-                                     "The histogram of received packet lengths"))
-  , tx_packet_length(CreateHistogram("ledger_router_tx_packet_length",
-                                     "The histogram of transmitted packet lengths"))
-  , bx_packet_length(CreateHistogram("ledger_router_bx_packet_length",
-                                     "The histogram of broadcasted packet lengths"))
+  , rx_packet_length(CreateHistogram(
+        "ledger_router_rx_packet_length",
+        "The histogram of received packet lengths"))
+  , tx_packet_length(CreateHistogram(
+        "ledger_router_tx_packet_length",
+        "The histogram of transmitted packet lengths"))
+  , bx_packet_length(CreateHistogram(
+        "ledger_router_bx_packet_length",
+        "The histogram of broadcasted packet lengths"))
   , rx_packet_total_(
         CreateCounter("ledger_router_rx_packet_total", "The total number of received packets"))
   , tx_packet_total_(
         CreateCounter("ledger_router_tx_packet_total", "The total number of transmitted packets"))
   , bx_packet_total_(
         CreateCounter("ledger_router_bx_packet_total", "The total number of broadcasted packets"))
-  , rx_encrypted_packet_failures_total_(
-        (CreateCounter("ledger_router_rx_encrypted_packet_failures_total",
-                       "The total number of received encrypted packets that could not be read")))
-  , rx_encrypted_packet_success_total_(
-        (CreateCounter("ledger_router_rx_encrypted_packet_success_total",
-                       "The total number of received encrypted packets that could be read")))
-  , tx_encrypted_packet_failures_total_(
-        (CreateCounter("ledger_router_tx_encrypted_packet_failures_total",
-                       "The total number of sent encrypted packets that could not be generated")))
-  , tx_encrypted_packet_success_total_(
-        (CreateCounter("ledger_router_tx_encrypted_packet_success_total",
-                       "The total number of sent encrypted packets that could be generated")))
-  , ttl_expired_packet_total_(
-        CreateCounter("ledger_router_ttl_expired_packet_total",
-                      "The total number of packets that have expired due to TTL"))
-  , dispatch_enqueued_total_(CreateCounter("ledger_router_enqueued_packet_total",
-                                           "The total number of enqueued packets to be dispatched"))
-  , exchange_dispatch_total_(CreateCounter("ledger_router_exchange_packet_total",
-                                           "The total number of exchange packets dispatched"))
-  , subscription_dispatch_total_(
-        CreateCounter("ledger_router_subscription_packet_total",
-                      "The total number of subscription packets dispatched"))
-  , dispatch_direct_total_(CreateCounter("ledger_router_direct_packet_total",
-                                         "The total number of direct packets dispatched"))
-  , dispatch_failure_total_(CreateCounter("ledger_router_dispatch_failure_total",
-                                          "The total number of dispatch failures"))
-  , dispatch_complete_total_(CreateCounter("ledger_router_dispatch_complete_total",
-                                           "The total number of completed dispatchs"))
+  , rx_encrypted_packet_failures_total_((CreateCounter(
+        "ledger_router_rx_encrypted_packet_failures_total",
+        "The total number of received encrypted packets that could not be read")))
+  , rx_encrypted_packet_success_total_((CreateCounter(
+        "ledger_router_rx_encrypted_packet_success_total",
+        "The total number of received encrypted packets that could be read")))
+  , tx_encrypted_packet_failures_total_((CreateCounter(
+        "ledger_router_tx_encrypted_packet_failures_total",
+        "The total number of sent encrypted packets that could not be generated")))
+  , tx_encrypted_packet_success_total_((CreateCounter(
+        "ledger_router_tx_encrypted_packet_success_total",
+        "The total number of sent encrypted packets that could be generated")))
+  , ttl_expired_packet_total_(CreateCounter(
+        "ledger_router_ttl_expired_packet_total",
+        "The total number of packets that have expired due to TTL"))
+  , dispatch_enqueued_total_(CreateCounter(
+        "ledger_router_enqueued_packet_total",
+        "The total number of enqueued packets to be dispatched"))
+  , exchange_dispatch_total_(CreateCounter(
+        "ledger_router_exchange_packet_total",
+        "The total number of exchange packets dispatched"))
+  , subscription_dispatch_total_(CreateCounter(
+        "ledger_router_subscription_packet_total",
+        "The total number of subscription packets dispatched"))
+  , dispatch_direct_total_(CreateCounter(
+        "ledger_router_direct_packet_total",
+        "The total number of direct packets dispatched"))
+  , dispatch_failure_total_(CreateCounter(
+        "ledger_router_dispatch_failure_total",
+        "The total number of dispatch failures"))
+  , dispatch_complete_total_(CreateCounter(
+        "ledger_router_dispatch_complete_total",
+        "The total number of completed dispatchs"))
   , foreign_packet_total_(
         CreateCounter("ledger_router_foreign_packet_total", "The total number of foreign packets"))
-  , fraudulent_packet_total_(CreateCounter("ledger_router_fraudulent_packet_total",
-                                           "The total number of fraudulent packets"))
-  , routing_table_updates_total_(CreateCounter("ledger_router_table_updates_total",
-                                               "The total number of updates to the routing table"))
-  , echo_cache_trims_total_(CreateCounter("ledger_router_echo_cache_trims_total",
-                                          "The total number of times the echo cache was trimmed"))
-  , echo_cache_removals_total_(
-        CreateCounter("ledger_router_echo_cache_removal_total",
-                      "The total number of entries removed from the echo cache"))
-  , normal_routing_total_(CreateCounter("ledger_router_normal_routing_total",
-                                        "The total number of normally routed packets"))
-  , informed_routing_total_(CreateCounter("ledger_router_informed_routing_total",
-                                          "The total number of informed routed packets"))
-  , speculative_routing_total_(CreateCounter("ledger_router_speculative_routing_total",
-                                             "The total number of speculatively routed packets"))
-  , failed_routing_total_(
-        CreateCounter("ledger_router_failed_routing_total",
-                      "The total number of packets that have failed to be routed"))
-  , connection_dropped_total_(CreateCounter("ledger_router_connection_dropped_total",
-                                            "The total number of connections dropped"))
+  , fraudulent_packet_total_(CreateCounter(
+        "ledger_router_fraudulent_packet_total",
+        "The total number of fraudulent packets"))
+  , routing_table_updates_total_(CreateCounter(
+        "ledger_router_table_updates_total",
+        "The total number of updates to the routing table"))
+  , echo_cache_trims_total_(CreateCounter(
+        "ledger_router_echo_cache_trims_total",
+        "The total number of times the echo cache was trimmed"))
+  , echo_cache_removals_total_(CreateCounter(
+        "ledger_router_echo_cache_removal_total",
+        "The total number of entries removed from the echo cache"))
+  , normal_routing_total_(CreateCounter(
+        "ledger_router_normal_routing_total",
+        "The total number of normally routed packets"))
+  , informed_routing_total_(CreateCounter(
+        "ledger_router_informed_routing_total",
+        "The total number of informed routed packets"))
+  , speculative_routing_total_(CreateCounter(
+        "ledger_router_speculative_routing_total",
+        "The total number of speculatively routed packets"))
+  , failed_routing_total_(CreateCounter(
+        "ledger_router_failed_routing_total",
+        "The total number of packets that have failed to be routed"))
+  , connection_dropped_total_(CreateCounter(
+        "ledger_router_connection_dropped_total",
+        "The total number of connections dropped"))
 {}
 
 /**
@@ -383,8 +408,14 @@ void Router::Route(Handle handle, PacketPtr const &packet)
   // discard all foreign packets
   if (packet->GetNetworkId() != network_id_.value())
   {
-    FETCH_LOG_WARN(logging_name_, "Discarding foreign packet: ", DescribePacket(*packet), " at ",
-                   ToBase64(address_), ":", network_id_.ToString());
+    FETCH_LOG_WARN(
+        logging_name_,
+        "Discarding foreign packet: ",
+        DescribePacket(*packet),
+        " at ",
+        ToBase64(address_),
+        ":",
+        network_id_.ToString());
 
     foreign_packet_total_->increment();
     return;
@@ -427,8 +458,11 @@ Address const &Router::GetAddress() const
  * @param channel The channel identifier
  * @param message The message to be sent
  */
-void Router::Send(Address const &address, uint16_t service, uint16_t channel,
-                  Payload const &message)
+void Router::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message)
 {
   // get the next counter for this message
   uint16_t const counter = GetNextCounter();
@@ -436,8 +470,12 @@ void Router::Send(Address const &address, uint16_t service, uint16_t channel,
   Send(address, service, channel, counter, message, OPTION_DEFAULT);
 }
 
-void Router::Send(Address const &address, uint16_t service, uint16_t channel,
-                  Payload const &message, Options options)
+void Router::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message,
+    Options        options)
 {
   uint16_t const counter = GetNextCounter();
 
@@ -453,14 +491,23 @@ void Router::Send(Address const &address, uint16_t service, uint16_t channel,
  * @param message_num The message number of the request
  * @param payload The message payload to be sent
  */
-void Router::Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-                  Payload const &payload)
+void Router::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload)
 {
   Send(address, service, channel, message_num, payload, OPTION_DEFAULT);
 }
 
-void Router::Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-                  Payload const &payload, Options options)
+void Router::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload,
+    Options        options)
 {
   // format the packet
   auto packet =
@@ -475,8 +522,8 @@ void Router::Send(Address const &address, uint16_t service, uint16_t channel, ui
   if ((options & OPTION_ENCRYPTED) != 0u)
   {
     ConstByteArray encrypted_payload{};
-    bool const     encrypted = secure_channel_.Encrypt(address, service, channel, message_num,
-                                                   packet->GetPayload(), encrypted_payload);
+    bool const     encrypted = secure_channel_.Encrypt(
+        address, service, channel, message_num, packet->GetPayload(), encrypted_payload);
     if (!encrypted)
     {
       FETCH_LOG_ERROR(logging_name_, "Unable to encrypt packet contents");
@@ -491,8 +538,17 @@ void Router::Send(Address const &address, uint16_t service, uint16_t channel, ui
 
   Sign(packet);
 
-  FETCH_LOG_TRACE(logging_name_, "Exchange Response: ", ToBase64(address), " (", service, '-',
-                  channel, '-', message_num, ")");
+  FETCH_LOG_TRACE(
+      logging_name_,
+      "Exchange Response: ",
+      ToBase64(address),
+      " (",
+      service,
+      '-',
+      channel,
+      '-',
+      message_num,
+      ")");
 
   RoutePacket(packet, false);
 }
@@ -546,8 +602,10 @@ MuddleEndpoint::SubscriptionPtr Router::Subscribe(uint16_t service, uint16_t cha
  * @param channel The identifier for the channel
  * @return A valid pointer if the successful, otherwise an invalid pointer
  */
-MuddleEndpoint::SubscriptionPtr Router::Subscribe(Address const &address, uint16_t service,
-                                                  uint16_t channel)
+MuddleEndpoint::SubscriptionPtr Router::Subscribe(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel)
 {
   return registrar_.Register(address, service, channel);
 }
@@ -591,8 +649,11 @@ Router::Handle Router::LookupHandle(Packet::RawAddress const &raw_address) const
  * @param handle The handle to the network connection
  * @param packet The packet to be routed
  */
-void Router::SendToConnection(Handle handle, PacketPtr const &packet, bool external,
-                              bool reschedule_on_fail)
+void Router::SendToConnection(
+    Handle           handle,
+    PacketPtr const &packet,
+    bool             external,
+    bool             reschedule_on_fail)
 {
   // internal method, we expect all inputs be valid at this stage
   assert(static_cast<bool>(packet));
@@ -799,8 +860,8 @@ void Router::SchedulePacketForRedelivery(PacketPtr const &packet, bool external)
     auto handle = tracker_->LookupRandomHandle();
     if (handle != 0u)
     {
-      FETCH_LOG_WARN(logging_name_,
-                     "Speculative routing to peer: ", packet->GetTarget().ToBase64());
+      FETCH_LOG_WARN(
+          logging_name_, "Speculative routing to peer: ", packet->GetTarget().ToBase64());
       SendToConnection(handle, packet, external, false);
       speculative_routing_total_->increment();
       return;
@@ -888,9 +949,13 @@ void Router::DispatchPacket(PacketPtr const &packet, Address const &transmitter)
     if (packet->IsEncrypted())
     {
       ConstByteArray decrypted_payload{};
-      bool const     decrypted =
-          secure_channel_.Decrypt(packet->GetSender(), packet->GetService(), packet->GetChannel(),
-                                  packet->GetMessageNum(), packet->GetPayload(), decrypted_payload);
+      bool const     decrypted = secure_channel_.Decrypt(
+          packet->GetSender(),
+          packet->GetService(),
+          packet->GetChannel(),
+          packet->GetMessageNum(),
+          packet->GetPayload(),
+          decrypted_payload);
 
       if (!decrypted)
       {
@@ -913,9 +978,14 @@ void Router::DispatchPacket(PacketPtr const &packet, Address const &transmitter)
       return;
     }
 
-    FETCH_LOG_WARN(logging_name_,
-                   "Unable to locate handler for routed message. Net: ", packet->GetNetworkId(),
-                   " Service: ", packet->GetService(), " Channel: ", packet->GetChannel());
+    FETCH_LOG_WARN(
+        logging_name_,
+        "Unable to locate handler for routed message. Net: ",
+        packet->GetNetworkId(),
+        " Service: ",
+        packet->GetService(),
+        " Channel: ",
+        packet->GetChannel());
 
     dispatch_failure_total_->increment();
     dispatch_complete_total_->increment();
@@ -1021,8 +1091,8 @@ Address const &Router::network_address() const
 
 telemetry::GaugePtr<uint64_t> Router::CreateGauge(char const *name, char const *description) const
 {
-  return telemetry::Registry::Instance().CreateGauge<uint64_t>(name, description,
-                                                               CreateLabels(*this));
+  return telemetry::Registry::Instance().CreateGauge<uint64_t>(
+      name, description, CreateLabels(*this));
 }
 
 telemetry::HistogramPtr Router::CreateHistogram(char const *name, char const *description) const

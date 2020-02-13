@@ -247,8 +247,9 @@ void C2VLoader<TypeParam>::SetValidationRatio(fixed_point::fp32_t new_validation
  * @param word the string to be counted.
  */
 template <typename TensorType>
-void C2VLoader<TensorType>::addValueToCounter(typename C2VLoader<TensorType>::umap_str_int &umap,
-                                              const std::string &                           word)
+void C2VLoader<TensorType>::addValueToCounter(
+    typename C2VLoader<TensorType>::umap_str_int &umap,
+    const std::string &                           word)
 {
   if (umap.find(word) == umap.end())
   {
@@ -268,8 +269,9 @@ void C2VLoader<TensorType>::addValueToCounter(typename C2VLoader<TensorType>::um
  * @return std::vector<std::string> A vector of substrings
  */
 template <typename TensorType>
-std::vector<std::string> C2VLoader<TensorType>::splitStringByChar(std::stringstream input,
-                                                                  char const *      sep)
+std::vector<std::string> C2VLoader<TensorType>::splitStringByChar(
+    std::stringstream input,
+    char const *      sep)
 {
   std::vector<std::string> split_string;
   std::string              segment;
@@ -290,7 +292,8 @@ std::vector<std::string> C2VLoader<TensorType>::splitStringByChar(std::stringstr
  */
 template <typename TensorType>
 typename C2VLoader<TensorType>::SizeType C2VLoader<TensorType>::addToIdxUMaps(
-    std::string const &input, typename C2VLoader<TensorType>::umap_str_int &name_to_idx,
+    std::string const &                           input,
+    typename C2VLoader<TensorType>::umap_str_int &name_to_idx,
     typename C2VLoader<TensorType>::umap_int_str &idx_to_name)
 {
   if (name_to_idx.find(input) == name_to_idx.end())

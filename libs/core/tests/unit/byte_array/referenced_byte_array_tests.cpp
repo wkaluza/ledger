@@ -111,8 +111,9 @@ TEST(reference_byte_array_gtest, testing_that_ConstByteArray_r_value_not_moved_i
   EXPECT_EQ(expected_to_remain_unchanged_2, base);  // NOLINT(bugprone-use-after-move)
 }
 
-TEST(reference_byte_array_gtest,
-     testing_that_instantiation_of_ByteArray_is_done_by_referencee_and_NOT_by_value)
+TEST(
+    reference_byte_array_gtest,
+    testing_that_instantiation_of_ByteArray_is_done_by_referencee_and_NOT_by_value)
 {
   char const *base = "hello world";
   ByteArray   str(base);
@@ -129,8 +130,9 @@ TEST(reference_byte_array_gtest,
   EXPECT_EQ(cba, expected);
 }
 
-TEST(reference_byte_array_gtest,
-     testing_assignment_from_ByteArray_is_done_by_referencee_and_NOT_by_value)
+TEST(
+    reference_byte_array_gtest,
+    testing_assignment_from_ByteArray_is_done_by_referencee_and_NOT_by_value)
 {
   char const *base = "hello world";
   ByteArray   str(base);

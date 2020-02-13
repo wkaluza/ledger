@@ -111,10 +111,14 @@ TYPED_TEST(KlDivergenceTest, other_divergence_test)
   B.Set(SizeType{3}, SizeType{2}, fetch::math::Type<DataType>("0.45"));
   B.Set(SizeType{3}, SizeType{3}, fetch::math::Type<DataType>("0.46"));
 
-  EXPECT_NEAR(static_cast<double>(KlDivergence(A, B)), static_cast<double>(-1.920114985949124),
-              10 * static_cast<double>(function_tolerance<DataType>()));
-  EXPECT_NEAR(static_cast<double>(KlDivergence(B, A)), static_cast<double>(3.3324871063232422),
-              10 * static_cast<double>(function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      static_cast<double>(KlDivergence(A, B)),
+      static_cast<double>(-1.920114985949124),
+      10 * static_cast<double>(function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      static_cast<double>(KlDivergence(B, A)),
+      static_cast<double>(3.3324871063232422),
+      10 * static_cast<double>(function_tolerance<DataType>()));
 }
 
 }  // namespace test

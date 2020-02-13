@@ -44,8 +44,9 @@ using Labels = telemetry::Measurement::Labels;
  * @param storage The reference to the storage engine
  * @param lane The lane / shard being targetted
  */
-TransactionStorageProtocol::TransactionStorageProtocol(TransactionStorageEngineInterface &storage,
-                                                       uint32_t                           lane)
+TransactionStorageProtocol::TransactionStorageProtocol(
+    TransactionStorageEngineInterface &storage,
+    uint32_t                           lane)
   : lane_{lane}
   , storage_{storage}
   , add_total_{CreateCounter("add")}
@@ -98,7 +99,9 @@ telemetry::HistogramPtr TransactionStorageProtocol::CreateHistogram(char const *
   Labels const labels{{"lane", std::to_string(lane_)}};
 
   return telemetry::Registry::Instance().CreateHistogram(
-      {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10., 100.}, name.str(), description.str(),
+      {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10., 100.},
+      name.str(),
+      description.str(),
       labels);
 }
 

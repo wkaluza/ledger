@@ -36,8 +36,10 @@ namespace muddle {
 
 struct DevNull : public network::AbstractConnection
 {
-  void Send(network::MessageBuffer const & /*type*/, Callback const & /*success*/,
-            Callback const & /*fail*/) override
+  void Send(
+      network::MessageBuffer const & /*type*/,
+      Callback const & /*success*/,
+      Callback const & /*fail*/) override
   {}
 
   uint16_t Type() const override

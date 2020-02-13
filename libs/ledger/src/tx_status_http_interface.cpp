@@ -36,8 +36,9 @@ constexpr char const *LOGGING_NAME = "TxStatusHttp";
 using fetch::byte_array::FromHex;
 using fetch::variant::Variant;
 
-constexpr PublicTxStatus Convert(TransactionStatus       tx_processing_pipeline_status,
-                                 ContractExecutionStatus contract_exec_status)
+constexpr PublicTxStatus Convert(
+    TransactionStatus       tx_processing_pipeline_status,
+    ContractExecutionStatus contract_exec_status)
 {
   switch (tx_processing_pipeline_status)
   {
@@ -116,7 +117,8 @@ TxStatusHttpInterface::TxStatusHttpInterface(TxStatusCachePtr status_cache)
 {
   assert(status_cache_);
 
-  Get("/api/status/tx/(digest=[a-fA-F0-9]{64})", "Retrieves a transaction status.",
+  Get("/api/status/tx/(digest=[a-fA-F0-9]{64})",
+      "Retrieves a transaction status.",
       {
           {"digest", "The transaction hash.", http::validators::StringValue()},
       },

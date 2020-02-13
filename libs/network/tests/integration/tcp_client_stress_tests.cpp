@@ -125,8 +125,10 @@ std::mutex                 mutex_;
 class VerifyClient : public TCPClient
 {
 public:
-  VerifyClient(std::string const &host_name, std::string const &port_number,
-               NetworkManager &nmanager)
+  VerifyClient(
+      std::string const &host_name,
+      std::string const &port_number,
+      NetworkManager &   nmanager)
     : TCPClient(nmanager)
   {
     Connect(host_name, port_number);

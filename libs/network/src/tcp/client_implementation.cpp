@@ -38,8 +38,9 @@ void TCPClientImplementation::Connect(byte_array::ConstByteArray const &host, ui
   Connect(host, byte_array::ConstByteArray(std::to_string(port)));
 }
 
-void TCPClientImplementation::Connect(byte_array::ConstByteArray const &host,
-                                      byte_array::ConstByteArray const &port)
+void TCPClientImplementation::Connect(
+    byte_array::ConstByteArray const &host,
+    byte_array::ConstByteArray const &port)
 {
   SelfType self = shared_from_this();
 
@@ -83,8 +84,8 @@ void TCPClientImplementation::Connect(byte_array::ConstByteArray const &host,
 
       std::shared_ptr<ResolverType> res = networkManager_.CreateIO<ResolverType>();
 
-      auto cb = [this, self, res, socket, strand, port](std::error_code ec,
-                                                        ResolverType::iterator) {
+      auto cb = [this, self, res, socket, strand, port](
+                    std::error_code ec, ResolverType::iterator) {
         SharedSelfType selfLock = self.lock();
         if (!selfLock)
         {
@@ -108,14 +109,14 @@ void TCPClientImplementation::Connect(byte_array::ConstByteArray const &host,
           }
           else
           {
-            FETCH_LOG_ERROR(LOGGING_NAME,
-                            "Failed to get endpoint of socket after connection: ", ec2.message());
+            FETCH_LOG_ERROR(
+                LOGGING_NAME, "Failed to get endpoint of socket after connection: ", ec2.message());
           }
         }
         else
         {
-          FETCH_LOG_WARN(LOGGING_NAME, "Client failed to connect on port ", port, ": ",
-                         ec.message());
+          FETCH_LOG_WARN(
+              LOGGING_NAME, "Client failed to connect on port ", port, ": ", ec.message());
           SignalLeave();
         }
       };
@@ -152,8 +153,10 @@ bool TCPClientImplementation::is_alive() const
   return !socket_.expired() && connected_;
 }
 
-void TCPClientImplementation::Send(MessageBuffer const &omsg, Callback const &success,
-                                   Callback const &fail)
+void TCPClientImplementation::Send(
+    MessageBuffer const &omsg,
+    Callback const &     success,
+    Callback const &     fail)
 {
   MessageType msg;
   msg.buffer  = omsg.Copy();
@@ -286,8 +289,12 @@ void TCPClientImplementation::ReadBody(byte_array::ByteArray const &header) noex
     SetHeader(dummy, 0);
     dummy.Resize(16);
 
-    FETCH_LOG_ERROR(LOGGING_NAME, "Magic incorrect during network read:\ngot:      ", ToHex(header),
-                    "\nExpected: ", ToHex(byte_array::ByteArray(dummy)));
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Magic incorrect during network read:\ngot:      ",
+        ToHex(header),
+        "\nExpected: ",
+        ToHex(byte_array::ByteArray(dummy)));
     return;
   }
 

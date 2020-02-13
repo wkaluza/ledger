@@ -183,14 +183,17 @@ private:
   void       HealLooseBlocksInternal(DAGHash const &added_hash);
   void       UpdateStaleTipsInternal();
   bool       NodeInvalidInternal(DAGNodePtr const &node);
-  DAGNodePtr GetDAGNodeInternal(DAGHash const &hash, bool including_loose,
-                                bool &was_loose);  // const
-  void       TraverseFromTips(std::set<DAGHash> const &            tip_hashes,
-                              std::function<void(NodeHash)> const &on_node,
-                              std::function<bool(NodeHash)> const &terminating_condition);
-  bool       GetEpochFromStorage(std::string const &identifier, DAGEpoch &epoch);
-  bool       SetEpochInStorage(std::string const & /*unused*/, DAGEpoch const &epoch, bool is_head);
-  void       Flush();
+  DAGNodePtr GetDAGNodeInternal(
+      DAGHash const &hash,
+      bool           including_loose,
+      bool &         was_loose);  // const
+  void TraverseFromTips(
+      std::set<DAGHash> const &            tip_hashes,
+      std::function<void(NodeHash)> const &on_node,
+      std::function<bool(NodeHash)> const &terminating_condition);
+  bool GetEpochFromStorage(std::string const &identifier, DAGEpoch &epoch);
+  bool SetEpochInStorage(std::string const & /*unused*/, DAGEpoch const &epoch, bool is_head);
+  void Flush();
 
   void DeleteTip(DAGTipID tip_id);
   void DeleteTip(NodeHash const &hash);

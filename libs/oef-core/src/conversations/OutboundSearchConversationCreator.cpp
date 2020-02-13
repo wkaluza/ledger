@@ -39,10 +39,13 @@ class OutboundSearchConversationWorkerTask : public OutboundConversationWorkerTa
 public:
   static constexpr char const *LOGGING_NAME = "OutboundSearchConversationWorkerTask";
 
-  OutboundSearchConversationWorkerTask(Core &core, std::string core_key, Uri const &core_uri,
-                                       Uri const &                            search_uri,
-                                       std::shared_ptr<OutboundConversations> outbounds,
-                                       IOutboundConversationCreator const &   conversationCreator)
+  OutboundSearchConversationWorkerTask(
+      Core &                                 core,
+      std::string                            core_key,
+      Uri const &                            core_uri,
+      Uri const &                            search_uri,
+      std::shared_ptr<OutboundConversations> outbounds,
+      IOutboundConversationCreator const &   conversationCreator)
     : OutboundConversationWorkerTask(core, search_uri, conversationCreator)
     , outbounds_(std::move(outbounds))
     , core_uri(core_uri)
@@ -85,11 +88,14 @@ protected:
 // ------------------------------------------------------------------------------------------
 
 OutboundSearchConversationCreator::OutboundSearchConversationCreator(
-    const std::string &core_key, const Uri &core_uri, const Uri &search_uri, Core &core,
+    const std::string &                    core_key,
+    const Uri &                            core_uri,
+    const Uri &                            search_uri,
+    Core &                                 core,
     std::shared_ptr<OutboundConversations> outbounds)
 {
-  worker = std::make_shared<OutboundSearchConversationWorkerTask>(core, core_key, core_uri,
-                                                                  search_uri, outbounds, *this);
+  worker = std::make_shared<OutboundSearchConversationWorkerTask>(
+      core, core_key, core_uri, search_uri, outbounds, *this);
 
   worker->SetGroupId(worker->GetTaskId());
 
@@ -104,7 +110,8 @@ OutboundSearchConversationCreator::~OutboundSearchConversationCreator()
 }
 
 std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
-    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &                                target_path,
+    std::shared_ptr<google::protobuf::Message> initiator)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "Starting search conversation");
   Lock lock(mutex_);
@@ -114,18 +121,18 @@ std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
 
   if (target_path.path == "/update")
   {
-    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(this_id, target_path,
-                                                                       initiator);
+    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(
+        this_id, target_path, initiator);
   }
   else if (target_path.path == "/remove")
   {
-    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(this_id, target_path,
-                                                                       initiator);
+    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(
+        this_id, target_path, initiator);
   }
   else if (target_path.path == "/search")
   {
-    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(this_id, target_path,
-                                                                           initiator);
+    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(
+        this_id, target_path, initiator);
   }
   else
   {

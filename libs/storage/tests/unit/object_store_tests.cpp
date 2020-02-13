@@ -292,8 +292,9 @@ TEST(storage_object_store_with_STL_gtest, iterator_over_basic_struct)
   }
 }
 
-TEST(storage_object_store_with_STL_gtest,
-     subtree_iterator_over_basic_struct_1_to_8_bits_root_sizes_split)
+TEST(
+    storage_object_store_with_STL_gtest,
+    subtree_iterator_over_basic_struct_1_to_8_bits_root_sizes_split)
 {
   std::vector<uint64_t> keyTests{0,  1,  2,  3,  4,  5,  6,   7,   8,   9,
                                  10, 11, 12, 13, 14, 99, 100, 133, 998, 1001};

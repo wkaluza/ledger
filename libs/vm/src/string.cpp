@@ -198,8 +198,8 @@ Ptr<Array<Ptr<String>>> String::Split(Ptr<String> const &separator) const
 
   for (std::size_t i = utf8_str_.string().find(separator->utf8_str_.string());
        i != std::string::npos;
-       i = utf8_str_.string().find(separator->utf8_str_.string(),
-                                   i + separator->utf8_str_.string().size()))
+       i = utf8_str_.string().find(
+           separator->utf8_str_.string(), i + separator->utf8_str_.string().size()))
   {
     segment_boundaries.emplace_back(i + separator->utf8_str_.string().size());
   }
@@ -218,9 +218,11 @@ Ptr<Array<Ptr<String>>> String::Split(Ptr<String> const &separator) const
 
   assert(segment_boundaries.size() > 2u);
 
-  auto ret = Ptr<Array<Ptr<String>>>{
-      new Array<Ptr<String>>(vm_, vm_->GetTypeId<Array<Ptr<String>>>(), type_id_,
-                             static_cast<int32_t>(segment_boundaries.size() - 1))};
+  auto ret = Ptr<Array<Ptr<String>>>{new Array<Ptr<String>>(
+      vm_,
+      vm_->GetTypeId<Array<Ptr<String>>>(),
+      type_id_,
+      static_cast<int32_t>(segment_boundaries.size() - 1))};
 
   for (std::size_t i = 0; i + 1 < segment_boundaries.size(); ++i)
   {
@@ -305,38 +307,44 @@ void String::Add(Ptr<Object> &lhso, Ptr<Object> &rhso)
   }
 }
 
-ChargeAmount String::IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                            Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsEqualChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-ChargeAmount String::IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                               Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsNotEqualChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-ChargeAmount String::IsLessThanChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                               Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsLessThanChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-ChargeAmount String::IsLessThanOrEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                                      Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsLessThanOrEqualChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-ChargeAmount String::IsGreaterThanChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                                  Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsGreaterThanChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-ChargeAmount String::IsGreaterThanOrEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                                         Ptr<Object> const & /*rhso*/)
+ChargeAmount String::IsGreaterThanOrEqualChargeEstimator(
+    Ptr<Object> const & /*lhso*/,
+    Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }

@@ -89,11 +89,13 @@ public:
   void             NewCabinet(std::set<MuddleAddress> const &cabinet, uint32_t threshold);
   void             Reset();
 
-  AddResult     AddSignaturePart(Identity const &from, Signature const &signature);
-  bool          Verify();
-  bool          Verify(Signature const &signature);
-  static bool   Verify(byte_array::ConstByteArray const &group_public_key,
-                       MessagePayload const &message, byte_array::ConstByteArray const &signature);
+  AddResult   AddSignaturePart(Identity const &from, Signature const &signature);
+  bool        Verify();
+  bool        Verify(Signature const &signature);
+  static bool Verify(
+      byte_array::ConstByteArray const &group_public_key,
+      MessagePayload const &            message,
+      byte_array::ConstByteArray const &signature);
   Signature     GroupSignature() const;
   void          SetMessage(MessagePayload next_message);
   SignedMessage Sign();
@@ -156,8 +158,9 @@ private:
   Signature                                   group_signature_;
   /// }
 
-  void AddReconstructionShare(MuddleAddress const &                  from,
-                              std::pair<MuddleAddress, Share> const &share);
+  void AddReconstructionShare(
+      MuddleAddress const &                  from,
+      std::pair<MuddleAddress, Share> const &share);
 };
 }  // namespace dkg
 

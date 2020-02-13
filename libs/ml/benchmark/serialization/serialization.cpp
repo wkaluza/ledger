@@ -35,8 +35,10 @@
 
 using SizeType = fetch::math::SizeType;
 template <typename T>
-void CreateGraph(std::shared_ptr<fetch::ml::Graph<typename fetch::math::Tensor<T>>> g,
-                 SizeType dims, SizeType n_layers)
+void CreateGraph(
+    std::shared_ptr<fetch::ml::Graph<typename fetch::math::Tensor<T>>> g,
+    SizeType                                                           dims,
+    SizeType                                                           n_layers)
 {
   using DataType   = T;
   using TensorType = fetch::math::Tensor<DataType>;

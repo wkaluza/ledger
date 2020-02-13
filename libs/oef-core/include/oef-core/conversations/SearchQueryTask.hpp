@@ -25,9 +25,11 @@ class OutboundConversations;
 class OutboundConversation;
 class OefAgentEndpoint;
 
-class SearchQueryTask
-  : public SearchConversationTask<fetch::oef::pb::AgentSearch, fetch::oef::pb::Server_AgentMessage,
-                                  fetch::oef::pb::SearchQuery, SearchQueryTask>
+class SearchQueryTask : public SearchConversationTask<
+                            fetch::oef::pb::AgentSearch,
+                            fetch::oef::pb::Server_AgentMessage,
+                            fetch::oef::pb::SearchQuery,
+                            SearchQueryTask>
 {
 public:
   using StateResult   = fetch::oef::base::StateMachineTask<SearchQueryTask>::Result;
@@ -35,10 +37,15 @@ public:
   using OUT_PROTO     = fetch::oef::pb::Server_AgentMessage;
   using REQUEST_PROTO = fetch::oef::pb::SearchQuery;
 
-  SearchQueryTask(std::shared_ptr<IN_PROTO>              initiator,
-                  std::shared_ptr<OutboundConversations> outbounds,
-                  std::shared_ptr<OefAgentEndpoint> endpoint, uint32_t msg_id, std::string core_key,
-                  std::string agent_uri, uint16_t ttl, uint64_t random_seed);
+  SearchQueryTask(
+      std::shared_ptr<IN_PROTO>              initiator,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<OefAgentEndpoint>      endpoint,
+      uint32_t                               msg_id,
+      std::string                            core_key,
+      std::string                            agent_uri,
+      uint16_t                               ttl,
+      uint64_t                               random_seed);
   virtual ~SearchQueryTask();
 
   static constexpr char const *LOGGING_NAME = "SearchQueryTask";

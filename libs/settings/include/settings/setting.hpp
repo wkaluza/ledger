@@ -34,8 +34,11 @@ class Setting : public SettingBase
 {
 public:
   // Construction / Destruction
-  Setting(SettingCollection &reg, std::string name, T const &default_value,
-          std::string description);
+  Setting(
+      SettingCollection &reg,
+      std::string        name,
+      T const &          default_value,
+      std::string        description);
   Setting(SettingCollection &reg, std::string name, T &&default_value, std::string description);
   Setting(Setting const &) = delete;
   Setting(Setting &&)      = delete;
@@ -69,15 +72,21 @@ private:
 };
 
 template <typename T>
-Setting<T>::Setting(SettingCollection &reg, std::string name, T const &default_value,
-                    std::string description)
+Setting<T>::Setting(
+    SettingCollection &reg,
+    std::string        name,
+    T const &          default_value,
+    std::string        description)
   : SettingBase{reg, std::move(name), std::move(description)}
   , default_{default_value}
 {}
 
 template <typename T>
-Setting<T>::Setting(SettingCollection &reg, std::string name, T &&default_value,
-                    std::string description)
+Setting<T>::Setting(
+    SettingCollection &reg,
+    std::string        name,
+    T &&               default_value,
+    std::string        description)
   : SettingBase{reg, std::move(name), std::move(description)}
   , default_{std::move(default_value)}
 {}

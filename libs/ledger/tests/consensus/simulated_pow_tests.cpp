@@ -43,8 +43,8 @@ TEST(ledger_simulated_pow_gtest, test_block_emission)
   // generate a public/private key pair for the constructor (not needed for the test)
   auto signer = std::make_shared<ECDSASigner>();
 
-  auto consensus = std::make_shared<fetch::ledger::SimulatedPowConsensus>(signer->identity(),
-                                                                          block_interval_ms, dummy);
+  auto consensus = std::make_shared<fetch::ledger::SimulatedPowConsensus>(
+      signer->identity(), block_interval_ms, dummy);
 
   std::shared_ptr<Block> block = std::make_shared<Block>();
   block->timestamp = GetTime(fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM));
@@ -83,8 +83,8 @@ TEST(ledger_simulated_pow_gtest, test_disable_functionality)
   // generate a public/private key pair for the constructor (not needed for the test)
   auto signer = std::make_shared<ECDSASigner>();
 
-  auto consensus = std::make_shared<fetch::ledger::SimulatedPowConsensus>(signer->identity(),
-                                                                          block_interval_ms, dummy);
+  auto consensus = std::make_shared<fetch::ledger::SimulatedPowConsensus>(
+      signer->identity(), block_interval_ms, dummy);
 
   std::shared_ptr<Block> block = std::make_shared<Block>();
   block->timestamp = GetTime(fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM));

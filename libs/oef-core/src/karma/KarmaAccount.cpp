@@ -44,15 +44,15 @@ bool KarmaAccount::CouldPerform(std::string const &action)
 {
   if (policy == nullptr)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Karma for '", action,
-                   "' would be denied because account is VOID");
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Karma for '", action, "' would be denied because account is VOID");
     return false;
   }
   auto r = policy->CouldPerform(*this, action);
   if (!r)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Karma for '", action,
-                   "' would be denied because balance is too low.");
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Karma for '", action, "' would be denied because balance is too low.");
   }
   return r;
 }

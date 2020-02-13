@@ -64,23 +64,23 @@ struct Fixed128 : public Object
   ChargeAmount IsEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
   ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
   ChargeAmount IsLessThanChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
-  ChargeAmount IsLessThanOrEqualChargeEstimator(Ptr<Object> const &lhso,
-                                                Ptr<Object> const &rhso) override;
-  ChargeAmount IsGreaterThanChargeEstimator(Ptr<Object> const &lhso,
-                                            Ptr<Object> const &rhso) override;
-  ChargeAmount IsGreaterThanOrEqualChargeEstimator(Ptr<Object> const &lhso,
-                                                   Ptr<Object> const &rhso) override;
+  ChargeAmount IsLessThanOrEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
+  ChargeAmount IsGreaterThanChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
+  ChargeAmount IsGreaterThanOrEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
   ChargeAmount AddChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
   ChargeAmount InplaceAddChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
   ChargeAmount SubtractChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
-  ChargeAmount InplaceSubtractChargeEstimator(Ptr<Object> const &lhso,
-                                              Ptr<Object> const &rhso) override;
+  ChargeAmount InplaceSubtractChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
   ChargeAmount MultiplyChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
-  ChargeAmount InplaceMultiplyChargeEstimator(Ptr<Object> const &lhso,
-                                              Ptr<Object> const &rhso) override;
+  ChargeAmount InplaceMultiplyChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
   ChargeAmount DivideChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso) override;
-  ChargeAmount InplaceDivideChargeEstimator(Ptr<Object> const &lhso,
-                                            Ptr<Object> const &rhso) override;
+  ChargeAmount InplaceDivideChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso)
+      override;
   ChargeAmount NegateChargeEstimator(Ptr<Object> const &object) override;
 
   bool SerializeTo(MsgPackSerializer &buffer) override;

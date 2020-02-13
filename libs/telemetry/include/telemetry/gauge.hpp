@@ -40,8 +40,10 @@ class Gauge : public Measurement
 {
 public:
   // Construction / Destruction
-  explicit Gauge(std::string const &name, std::string const &description,
-                 Labels const &labels = Labels{});
+  explicit Gauge(
+      std::string const &name,
+      std::string const &description,
+      Labels const &     labels = Labels{});
   Gauge(Gauge const &) = delete;
   Gauge(Gauge &&)      = delete;
   ~Gauge() override    = default;
@@ -163,8 +165,9 @@ void Gauge<V>::max(V const &value)
  * @param stream The stream to be populated
  */
 template <typename V>
-std::enable_if_t<std::is_integral<V>::value> GaugeToStream(Gauge<V> const &gauge,
-                                                           OutputStream &  stream)
+std::enable_if_t<std::is_integral<V>::value> GaugeToStream(
+    Gauge<V> const &gauge,
+    OutputStream &  stream)
 {
   stream << gauge.get() << '\n';
 }
@@ -176,8 +179,9 @@ std::enable_if_t<std::is_integral<V>::value> GaugeToStream(Gauge<V> const &gauge
  * @param stream The stream to be populated
  */
 template <typename V>
-std::enable_if_t<std::is_floating_point<V>::value> GaugeToStream(Gauge<V> const &gauge,
-                                                                 OutputStream &  stream)
+std::enable_if_t<std::is_floating_point<V>::value> GaugeToStream(
+    Gauge<V> const &gauge,
+    OutputStream &  stream)
 {
   stream << std::scientific << gauge.get() << '\n';
 }

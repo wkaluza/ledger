@@ -49,8 +49,9 @@ public:
     return type_;
   }
 
-  void        Walk(std::function<void(std::string, Vocabulary)> const &callback,
-                   std::string const &                                 name = "");
+  void Walk(
+      std::function<void(std::string, Vocabulary)> const &callback,
+      std::string const &                                 name = "");
   Vocabulary &operator[](std::string const &name);
   void        Insert(std::string const &name, Vocabulary const &value);
 

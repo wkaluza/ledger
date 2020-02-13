@@ -87,8 +87,12 @@ bool RBCMessage::is_valid() const
   return false;
 }
 
-RBCMessage::RBCMessage(RBCMessageType type, uint16_t channel, uint32_t id, uint8_t counter,
-                       SerialisedMessage msg)
+RBCMessage::RBCMessage(
+    RBCMessageType    type,
+    uint16_t          channel,
+    uint32_t          id,
+    uint8_t           counter,
+    SerialisedMessage msg)
   : type_{type}
   , channel_{channel}
   , id_{id}

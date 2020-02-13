@@ -26,8 +26,8 @@ namespace math {
 namespace distance {
 
 template <typename ArrayType, typename F>
-meta::IfIsMathArray<ArrayType, ArrayType> &PairWiseDistance(ArrayType const &a, F &&metric,
-                                                            ArrayType &ret)
+meta::IfIsMathArray<ArrayType, ArrayType>
+    &PairWiseDistance(ArrayType const &a, F &&metric, ArrayType &ret)
 {
   detailed_assert(ret.shape(0) == 1);
   detailed_assert(ret.shape(1) == (a.shape(0) * (a.shape(0) - 1) / 2));

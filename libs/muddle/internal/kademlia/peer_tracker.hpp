@@ -94,9 +94,12 @@ public:
     DEAD     = 3
   };
 
-  static PeerTrackerPtr New(Duration const &interval, core::Reactor &reactor,
-                            MuddleRegister const &reg, PeerConnectionList &connections,
-                            MuddleEndpoint &endpoint);
+  static PeerTrackerPtr New(
+      Duration const &      interval,
+      core::Reactor &       reactor,
+      MuddleRegister const &reg,
+      PeerConnectionList &  connections,
+      MuddleEndpoint &      endpoint);
   PeerTracker(PeerTracker const &other) = delete;
   PeerTracker(PeerTracker &&other)      = delete;
   PeerTracker operator=(PeerTracker const &other) = delete;
@@ -106,15 +109,19 @@ public:
   /// Tracker interface
   /// @{
   AddressSet GetDesiredPeers() const;
-  void       AddDesiredPeer(Address const & address,
-                            Duration const &expiry = muddle::MuddleInterface::NeverExpire());
-  void       AddDesiredPeer(Address const &address, network::Peer const &hint,
-                            Duration const &expiry =
-                                muddle::MuddleInterface::NeverExpire());  // TODO(tfr): change hint to URI
-  void       AddDesiredPeer(Uri const &     uri,
-                            Duration const &expiry = muddle::MuddleInterface::NeverExpire());
-  void       RemoveDesiredPeer(Address const &address);
-  void       DownloadPeerDetails(Handle handle, Address const &address);
+  void       AddDesiredPeer(
+            Address const & address,
+            Duration const &expiry = muddle::MuddleInterface::NeverExpire());
+  void AddDesiredPeer(
+      Address const &      address,
+      network::Peer const &hint,
+      Duration const &     expiry =
+          muddle::MuddleInterface::NeverExpire());  // TODO(tfr): change hint to URI
+  void AddDesiredPeer(
+      Uri const &     uri,
+      Duration const &expiry = muddle::MuddleInterface::NeverExpire());
+  void RemoveDesiredPeer(Address const &address);
+  void DownloadPeerDetails(Handle handle, Address const &address);
   /// @}
 
   /// Reporting
@@ -189,16 +196,24 @@ protected:
   /// @}
 
 private:
-  explicit PeerTracker(Duration const &interval, core::Reactor &reactor, MuddleRegister const &reg,
-                       PeerConnectionList &connections, MuddleEndpoint &endpoint);
+  explicit PeerTracker(
+      Duration const &      interval,
+      core::Reactor &       reactor,
+      MuddleRegister const &reg,
+      PeerConnectionList &  connections,
+      MuddleEndpoint &      endpoint);
 
   /// Connectivity maintenance
   /// @{
   void ConnectToDesiredPeers();
-  void UpdatePriorityList(ConnectionPriorityMap & connection_priority,
-                          ConnectionPriorityList &prioritized_peers, Peers const &peers);
-  void ConnectToPeers(AddressSet &connections_made, ConnectionPriorityList const &prioritized_peers,
-                      uint64_t const &max_connections);
+  void UpdatePriorityList(
+      ConnectionPriorityMap & connection_priority,
+      ConnectionPriorityList &prioritized_peers,
+      Peers const &           peers);
+  void ConnectToPeers(
+      AddressSet &                  connections_made,
+      ConnectionPriorityList const &prioritized_peers,
+      uint64_t const &              max_connections);
   void DisconnectDuplicates();
   void DisconnectFromPeers();
   void DisconnectFromSelf();
@@ -217,8 +232,11 @@ private:
   void PullPeerKnowledge();
   void SchedulePull(Address const &address);
   void SchedulePull(Address const &address, Address const &search_for);
-  void OnResolvedPull(uint64_t pull_id, Address const &peer, Address const &search_for,
-                      service::Promise const &promise);
+  void OnResolvedPull(
+      uint64_t                pull_id,
+      Address const &         peer,
+      Address const &         search_for,
+      service::Promise const &promise);
   /// @}
 
   /// Thread-safety

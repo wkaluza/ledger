@@ -33,11 +33,16 @@ public:
 
   // Construction / Destruction
   template <typename Class>
-  PromiseTask(service::Promise const &promise, Class *instance,
-              void (Class::*member_function)(service::Promise const &));
+  PromiseTask(
+      service::Promise const &promise,
+      Class *                 instance,
+      void (Class::*member_function)(service::Promise const &));
   template <typename Class>
-  PromiseTask(service::Promise const &promise, Duration const &timeout, Class *instance,
-              void (Class::*member_function)(service::Promise const &));
+  PromiseTask(
+      service::Promise const &promise,
+      Duration const &        timeout,
+      Class *                 instance,
+      void (Class::*member_function)(service::Promise const &));
   PromiseTask(service::Promise const &promise, Callback callback);
   PromiseTask(service::Promise const &promise, Duration const &timeout, Callback callback);
   PromiseTask(PromiseTask const &) = delete;
@@ -67,16 +72,21 @@ private:
 };
 
 template <typename Class>
-PromiseTask::PromiseTask(service::Promise const &promise, Class *instance,
-                         void (Class::*member_function)(service::Promise const &))
+PromiseTask::PromiseTask(
+    service::Promise const &promise,
+    Class *                 instance,
+    void (Class::*member_function)(service::Promise const &))
   : PromiseTask(promise, [instance, member_function](service::Promise const &p) {
     (instance->*member_function)(p);
   })
 {}
 
 template <typename Class>
-PromiseTask::PromiseTask(service::Promise const &promise, Duration const &timeout, Class *instance,
-                         void (Class::*member_function)(service::Promise const &))
+PromiseTask::PromiseTask(
+    service::Promise const &promise,
+    Duration const &        timeout,
+    Class *                 instance,
+    void (Class::*member_function)(service::Promise const &))
   : PromiseTask(promise, timeout, [instance, member_function](service::Promise const &p) {
     (instance->*member_function)(p);
   })

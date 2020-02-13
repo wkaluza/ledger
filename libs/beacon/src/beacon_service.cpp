@@ -82,21 +82,27 @@ struct BeaconServiceSerializeWrapper
   uint16_t       current_state{0};
 };
 
-BeaconService::BeaconService(MuddleInterface &muddle, const CertificatePtr &certificate,
-                             BeaconSetupService &beacon_setup, SharedEventManager event_manager,
-                             bool load_and_reload_on_crash)
+BeaconService::BeaconService(
+    MuddleInterface &     muddle,
+    const CertificatePtr &certificate,
+    BeaconSetupService &  beacon_setup,
+    SharedEventManager    event_manager,
+    bool                  load_and_reload_on_crash)
   : certificate_{certificate}
   , identity_{certificate->identity()}
   , muddle_{muddle}
   , endpoint_{muddle_.GetEndpoint()}
-  , state_machine_{std::make_shared<StateMachine>("BeaconService", State::RELOAD_ON_STARTUP,
-                                                  ToString)}
+  , state_machine_{std::make_shared<StateMachine>(
+        "BeaconService",
+        State::RELOAD_ON_STARTUP,
+        ToString)}
   , load_and_reload_on_crash_{load_and_reload_on_crash}
   , rpc_client_{"BeaconService", endpoint_, SERVICE_DKG, CHANNEL_RPC}
   , event_manager_{std::move(event_manager)}
   , beacon_protocol_{*this}
   , beacon_entropy_generated_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_entropy_generated_total", "The total number of times entropy has been generated")}
+        "beacon_entropy_generated_total",
+        "The total number of times entropy has been generated")}
   , beacon_entropy_future_signature_seen_total_{telemetry::Registry::Instance().CreateCounter(
         "beacon_entropy_future_signature_seen_total",
         "The total number of times entropy has been generated")}
@@ -104,20 +110,27 @@ BeaconService::BeaconService(MuddleInterface &muddle, const CertificatePtr &cert
         "beacon_entropy_forced_to_time_out_total",
         "The total number of times entropy failed and timed out")}
   , beacon_entropy_last_requested_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_last_requested", "The last entropy value requested from the beacon")}
+        "beacon_entropy_last_requested",
+        "The last entropy value requested from the beacon")}
   , beacon_entropy_last_generated_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_last_generated", "The last entropy value able to be generated")}
+        "beacon_entropy_last_generated",
+        "The last entropy value able to be generated")}
   , beacon_entropy_current_round_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_current_round", "The current round attempting to generate for.")}
+        "beacon_entropy_current_round",
+        "The current round attempting to generate for.")}
   , beacon_state_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_state_gauge", "State the beacon is in as integer")}
+        "beacon_state_gauge",
+        "State the beacon is in as integer")}
   , beacon_most_recent_round_seen_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_most_recent_round_seen", "Most recent round the beacon has seen")}
+        "beacon_most_recent_round_seen",
+        "Most recent round the beacon has seen")}
   , beacon_collect_time_{telemetry::Registry::Instance().CreateHistogram(
-        {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1}, "beacon_collect_time",
+        {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1},
+        "beacon_collect_time",
         "Time taken to collect signatures")}
   , beacon_verify_time_{telemetry::Registry::Instance().CreateHistogram(
-        {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1}, "beacon_verify_time",
+        {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1},
+        "beacon_verify_time",
         "Time taken to verify signatures")}
 {
   // Attaching beacon ready callback handler
@@ -143,8 +156,13 @@ BeaconService::BeaconService(MuddleInterface &muddle, const CertificatePtr &cert
     FETCH_UNUSED(this);
     FETCH_UNUSED(current);
     FETCH_UNUSED(previous);
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Current state: ", ToString(current),
-                    " (previous: ", ToString(previous), ")");
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Current state: ",
+        ToString(current),
+        " (previous: ",
+        ToString(previous),
+        ")");
   });
 }
 
@@ -197,10 +215,15 @@ void BeaconService::SaveState()
              signatures_being_built_.find(highest_relevant_sig_index) !=
                  signatures_being_built_.end())
       {
-        FETCH_LOG_DEBUG(LOGGING_NAME, "Highest relevant: ", highest_relevant_sig_index,
-                        " size: ", signatures_being_built_.size());
-        saved_state_all_sigs_.Set(CreateRID(highest_relevant_sig_index),
-                                  signatures_being_built_.at(highest_relevant_sig_index));
+        FETCH_LOG_DEBUG(
+            LOGGING_NAME,
+            "Highest relevant: ",
+            highest_relevant_sig_index,
+            " size: ",
+            signatures_being_built_.size());
+        saved_state_all_sigs_.Set(
+            CreateRID(highest_relevant_sig_index),
+            signatures_being_built_.at(highest_relevant_sig_index));
         highest_relevant_sig_index--;
       }
     }
@@ -291,9 +314,12 @@ void BeaconService::ReloadState(State &next_state)
 
     if (old_state_.Get(storage::ResourceAddress("HEAD"), *ret))
     {
-      FETCH_LOG_INFO(LOGGING_NAME,
-                     "Found aeon keys during beacon construction, recovering. Valid from: ",
-                     ret->aeon.round_start, " to ", ret->aeon.round_end);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Found aeon keys during beacon construction, recovering. Valid from: ",
+          ret->aeon.round_start,
+          " to ",
+          ret->aeon.round_end);
 
       for (auto const &address_in_qual : ret->manager.qual())
       {
@@ -318,8 +344,11 @@ BeaconService::State BeaconService::OnReloadOnStartup()
 
   ReloadState(state_after_reload);
 
-  FETCH_LOG_INFO(LOGGING_NAME, "After reloading state, we have ", completed_block_entropy_.size(),
-                 " completed block entropy");
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "After reloading state, we have ",
+      completed_block_entropy_.size(),
+      " completed block entropy");
 
   return state_after_reload;
 }
@@ -349,8 +378,10 @@ void BeaconService::MostRecentSeen(uint64_t round)
 
 // Determine whether signatures already exist (used rather than entropy
 // since it is persisted across reboots)
-bool SigsAlreadyExist(BeaconService::SharedAeonExecutionUnit const &exe_unit,
-                      BeaconService::SignaturesBeingBuilt const &sigs, char const *LOGGING_NAME)
+bool SigsAlreadyExist(
+    BeaconService::SharedAeonExecutionUnit const &exe_unit,
+    BeaconService::SignaturesBeingBuilt const &   sigs,
+    char const *                                  LOGGING_NAME)
 {
   if (sigs.empty())
   {
@@ -369,7 +400,9 @@ bool SigsAlreadyExist(BeaconService::SharedAeonExecutionUnit const &exe_unit,
   FETCH_LOG_WARN(
       LOGGING_NAME,
       "Found an aeon in the aeon queue that appears to be old or a duplicate! It starts: ",
-      exe_unit->aeon.round_start, " but we have a signature for round: ", last_signature.round);
+      exe_unit->aeon.round_start,
+      " but we have a signature for round: ",
+      last_signature.round);
 
   return true;
 }
@@ -418,8 +451,12 @@ bool BeaconService::OutOfSync()
 {
   if (most_recent_round_seen_ > active_exe_unit_->aeon.round_end)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "most recent seen exceeds current exe bounds: most recent: ",
-                   most_recent_round_seen_, " current: ", active_exe_unit_->aeon.round_end);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "most recent seen exceeds current exe bounds: most recent: ",
+        most_recent_round_seen_,
+        " current: ",
+        active_exe_unit_->aeon.round_end);
   }
 
   return most_recent_round_seen_ > active_exe_unit_->aeon.round_end;
@@ -510,8 +547,8 @@ BeaconService::State BeaconService::OnCollectSignaturesState()
 
   if (missing_signatures_from.empty())
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Signatures from all qual are already fulfilled. Re-querying a random node");
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Signatures from all qual are already fulfilled. Re-querying a random node");
     missing_signatures_from = ChooseRandomlyFrom(active_exe_unit_->manager.qual(), 1);
   }
 
@@ -522,9 +559,11 @@ BeaconService::State BeaconService::OnCollectSignaturesState()
   FETCH_LOG_DEBUG(LOGGING_NAME, "Get Signature shares... (index: ", index, ")");
 
   qual_promise_identity_ = Identity(*it);
-  sig_share_promise_ =
-      rpc_client_.CallSpecificAddress(qual_promise_identity_.identifier(), RPC_BEACON,
-                                      BeaconServiceProtocol::GET_SIGNATURE_SHARES, index);
+  sig_share_promise_     = rpc_client_.CallSpecificAddress(
+      qual_promise_identity_.identifier(),
+      RPC_BEACON,
+      BeaconServiceProtocol::GET_SIGNATURE_SHARES,
+      index);
 
   // Timer to wait maximally for network events
   timer_to_proceed_.Restart(std::chrono::milliseconds{200});
@@ -560,10 +599,14 @@ BeaconService::State BeaconService::OnVerifySignaturesState()
     // Attempt to resolve the promise and add it
     if (!sig_share_promise_->IsSuccessful() || !sig_share_promise_->GetResult(ret))
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to resolve RPC promise from ",
-                     qual_promise_identity_.identifier().ToBase64(),
-                     " when generating entropy for block: ", index,
-                     " connections: ", endpoint_.GetDirectlyConnectedPeers().size());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Failed to resolve RPC promise from ",
+          qual_promise_identity_.identifier().ToBase64(),
+          " when generating entropy for block: ",
+          index,
+          " connections: ",
+          endpoint_.GetDirectlyConnectedPeers().size());
 
       state_machine_->Delay(std::chrono::milliseconds(100));
       return State::COLLECT_SIGNATURES;
@@ -588,8 +631,10 @@ BeaconService::State BeaconService::OnVerifySignaturesState()
 
     if (ret.threshold_signatures.empty())
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Peer wasn't ready when asking for signatures: ",
-                      qual_promise_identity_.identifier().ToBase64());
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Peer wasn't ready when asking for signatures: ",
+          qual_promise_identity_.identifier().ToBase64());
       state_machine_->Delay(std::chrono::milliseconds(100));
 
       return State::COLLECT_SIGNATURES;
@@ -597,10 +642,14 @@ BeaconService::State BeaconService::OnVerifySignaturesState()
 
     if (ret.round != index)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Peer returned the wrong round when asked for signatures. Peer: ",
-                     qual_promise_identity_.identifier().ToBase64(), " returned: ", ret.round,
-                     " expected: ", index);
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Peer returned the wrong round when asked for signatures. Peer: ",
+          qual_promise_identity_.identifier().ToBase64(),
+          " returned: ",
+          ret.round,
+          " expected: ",
+          index);
       return State::COLLECT_SIGNATURES;
     }
 
@@ -621,8 +670,8 @@ BeaconService::State BeaconService::OnVerifySignaturesState()
       }
     }
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "After adding, we have ", all_sigs_map.size(),
-                    " signatures. Round: ", index);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME, "After adding, we have ", all_sigs_map.size(), " signatures. Round: ", index);
   }  // Mutex unlocks here since verification can take some time
 
   MilliTimer const timer2{"Verify threshold signature", 100};
@@ -658,9 +707,10 @@ BeaconService::State BeaconService::OnCompleteState()
       active_exe_unit_->manager.GroupSignature().getStr();
 
   // Check when in debug mode that the block entropy signing has gone correctly
-  assert(dkg::BeaconManager::Verify(block_entropy_being_created_->group_public_key,
-                                    block_entropy_previous_->EntropyAsSHA256(),
-                                    block_entropy_being_created_->group_signature));
+  assert(dkg::BeaconManager::Verify(
+      block_entropy_being_created_->group_public_key,
+      block_entropy_previous_->EntropyAsSHA256(),
+      block_entropy_being_created_->group_signature));
 
   // Trim maps of unnecessary info
   auto const max_cache_size =
@@ -707,8 +757,10 @@ bool BeaconService::AddSignature(SignatureShare share)
   }
   if (ret == BeaconManager::AddResult::NOT_MEMBER)
   {  // And that it was sent by a member of the cabinet
-    FETCH_LOG_ERROR(LOGGING_NAME, "Signature from non-member! Identity: ",
-                    share.identity.identifier().ToBase64());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Signature from non-member! Identity: ",
+        share.identity.identifier().ToBase64());
 
     for (auto const &i : active_exe_unit_->manager.qual())
     {

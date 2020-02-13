@@ -55,8 +55,9 @@ public:
     return daps_;
   }
 
-  bool CheckOption(const std::string &                                    option,
-                   const google::protobuf::RepeatedPtrField<std::string> &options) const
+  bool CheckOption(
+      const std::string &                                    option,
+      const google::protobuf::RepeatedPtrField<std::string> &options) const
   {
     for (const auto &op : options)
     {
@@ -82,8 +83,12 @@ public:
         attributes_to_dapnames_[field_desc.name()].push_back(dap_name);
         if (CheckOption("replace_target_info", field_desc.options()))
         {
-          FETCH_LOG_INFO(LOGGING_NAME, "target_query_type_to_tbandfield_name_: ", field_desc.type(),
-                         " set field: ", field_desc.name());
+          FETCH_LOG_INFO(
+              LOGGING_NAME,
+              "target_query_type_to_tbandfield_name_: ",
+              field_desc.type(),
+              " set field: ",
+              field_desc.name());
           target_query_type_to_tbandfield_name_[field_desc.type()] =
               std::make_pair(table_desc.name(), field_desc.name());
         }
@@ -93,13 +98,13 @@ public:
           {
             plane_description =
                 std::make_shared<std::pair<std::string, DapDescription_DapFieldDescription>>(
-                    std::make_pair(table_desc.name(),
-                                   DapDescription_DapFieldDescription(field_desc)));
+                    std::make_pair(
+                        table_desc.name(), DapDescription_DapFieldDescription(field_desc)));
           }
           else
           {
-            FETCH_LOG_WARN(LOGGING_NAME, "Dap ", dap_name,
-                           " has multiple plane fields! Only one supported!");
+            FETCH_LOG_WARN(
+                LOGGING_NAME, "Dap ", dap_name, " has multiple plane fields! Only one supported!");
           }
         }
       }
@@ -118,21 +123,30 @@ public:
         plane_descriptions_["geo"] = plane_description;
         if (plane_description == nullptr)
         {
-          FETCH_LOG_WARN(LOGGING_NAME, "GEO dap ", dap_name,
-                         " does not have plane decorated field. Search broadcasting won't work!");
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "GEO dap ",
+              dap_name,
+              " does not have plane decorated field. Search broadcasting won't work!");
         }
       }
       else
       {
-        FETCH_LOG_ERROR(LOGGING_NAME, "Geo dap already provided (", geo_dap_,
-                        ")! Multiple geo daps not supported!", " Ignoring: ", dap_name);
+        FETCH_LOG_ERROR(
+            LOGGING_NAME,
+            "Geo dap already provided (",
+            geo_dap_,
+            ")! Multiple geo daps not supported!",
+            " Ignoring: ",
+            dap_name);
       }
     }
     if (configured_daps_ == daps_.size() && geo_dap_.empty())
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "All DAPs configured, but no geo dap is provided (dap with option 'geo')! ",
-                     "Location based services might not work correctly!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "All DAPs configured, but no geo dap is provided (dap with option 'geo')! ",
+          "Location based services might not work correctly!");
     }
   }
 
@@ -187,8 +201,8 @@ public:
     return dap_names_tmp_;
   }
 
-  bool MatchAttributeName(const std::string &attribute_pattern,
-                          const std::string &attribute_name) const
+  bool MatchAttributeName(const std::string &attribute_pattern, const std::string &attribute_name)
+      const
   {
     if (attribute_pattern == "*")
     {
@@ -293,24 +307,26 @@ protected:
 
   std::unordered_map<std::string, std::pair<std::string, std::string>>
       target_query_type_to_tbandfield_name_;
-  std::unordered_map<std::string,
-                     std::shared_ptr<std::pair<std::string, DapDescription_DapFieldDescription>>>
+  std::unordered_map<
+      std::string,
+      std::shared_ptr<std::pair<std::string, DapDescription_DapFieldDescription>>>
       plane_descriptions_;
 
-  std::unordered_map<std::string, std::function<bool(const std::string &,
-                                                     const std::unordered_set<std::string> &)>>
+  std::unordered_map<
+      std::string,
+      std::function<bool(const std::string &, const std::unordered_set<std::string> &)>>
       dap_filters_;
 
   void SetupFilters()
   {
     dap_filters_["always_true"] =
         [](const std::string &, const std::unordered_set<std::string> &) -> bool { return true; };
-    dap_filters_["not_lazy"] = [this](const std::string &dap,
-                                      const std::unordered_set<std::string> &) -> bool {
+    dap_filters_["not_lazy"] =
+        [this](const std::string &dap, const std::unordered_set<std::string> &) -> bool {
       return !IsDap(dap, "lazy");
     };
-    dap_filters_["lazy_no_res"] = [this](const std::string &                    dap,
-                                         const std::unordered_set<std::string> &daps) -> bool {
+    dap_filters_["lazy_no_res"] =
+        [this](const std::string &dap, const std::unordered_set<std::string> &daps) -> bool {
       return daps.empty() && IsDap(dap, "lazy");
     };
   }

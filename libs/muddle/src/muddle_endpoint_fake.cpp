@@ -30,9 +30,14 @@ using AddressList     = FakeMuddleEndpoint::AddressList;
 using AddressSet      = FakeMuddleEndpoint::AddressSet;
 
 // Convenience function - note shares similarities with real muddle
-PacketPtr FormatPacket(Packet::Address from, NetworkId const &network, uint16_t service,
-                       uint16_t channel, uint16_t counter, uint8_t ttl,
-                       const Packet::Payload &payload)
+PacketPtr FormatPacket(
+    Packet::Address        from,
+    NetworkId const &      network,
+    uint16_t               service,
+    uint16_t               channel,
+    uint16_t               counter,
+    uint8_t                ttl,
+    const Packet::Payload &payload)
 {
   auto packet = std::make_shared<Packet>(std::move(from), network.value());
   packet->SetService(service);
@@ -54,8 +59,11 @@ PacketPtr const &FakeMuddleEndpoint::Sign(PacketPtr const &p) const
 }
 
 // Construction / Destruction
-FakeMuddleEndpoint::FakeMuddleEndpoint(NetworkId network_id, Address address, Prover *certificate,
-                                       bool sign_broadcasts)
+FakeMuddleEndpoint::FakeMuddleEndpoint(
+    NetworkId network_id,
+    Address   address,
+    Prover *  certificate,
+    bool      sign_broadcasts)
   : network_id_{network_id}
   , address_{std::move(address)}
   , certificate_{certificate}
@@ -93,26 +101,42 @@ Address const &FakeMuddleEndpoint::GetAddress() const
   return address_;
 }
 
-void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                              Payload const &message)
+void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message)
 {
   return Send(address, service, channel, msg_counter_++, message, MuddleEndpoint::OPTION_DEFAULT);
 }
 
-void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                              Payload const &message, Options options)
+void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message,
+    Options        options)
 {
   return Send(address, service, channel, msg_counter_++, message, options);
 }
 
-void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                              uint16_t message_num, Payload const &payload)
+void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload)
 {
   return Send(address, service, channel, message_num, payload, MuddleEndpoint::OPTION_DEFAULT);
 }
 
-void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                              uint16_t message_num, Payload const &payload, Options options)
+void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload,
+    Options        options)
 {
   // format the packet
   auto packet = FormatPacket(address_, network_id_, service, channel, message_num, 40, payload);
@@ -142,8 +166,10 @@ SubscriptionPtr FakeMuddleEndpoint::Subscribe(uint16_t service, uint16_t channel
   return registrar_.Register(service, channel);
 }
 
-SubscriptionPtr FakeMuddleEndpoint::Subscribe(Address const &address, uint16_t service,
-                                              uint16_t channel)
+SubscriptionPtr FakeMuddleEndpoint::Subscribe(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel)
 {
   return registrar_.Register(address, service, channel);
 }

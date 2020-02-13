@@ -31,16 +31,21 @@
 
 #include <google/protobuf/message.h>
 
-OutboundSearchConversationCreator::OutboundSearchConversationCreator(const Uri &search_uri,
-                                                                     Core &     core)
+OutboundSearchConversationCreator::OutboundSearchConversationCreator(
+    const Uri &search_uri,
+    Core &     core)
   : search_uri_(search_uri)
 {
   worker = std::make_shared<OutboundConversationWorkerTask>(core, search_uri, *this);
 
   worker->SetGroupId(worker->GetTaskId());
 
-  FETCH_LOG_INFO(LOGGING_NAME, "Creating search to search conversation creator for ",
-                 search_uri.ToString(), ", group ", worker->GetTaskId());
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Creating search to search conversation creator for ",
+      search_uri.ToString(),
+      ", group ",
+      worker->GetTaskId());
 
   if (!worker->submit())
   {
@@ -50,16 +55,17 @@ OutboundSearchConversationCreator::OutboundSearchConversationCreator(const Uri &
 
 OutboundSearchConversationCreator::~OutboundSearchConversationCreator()
 {
-  FETCH_LOG_INFO(LOGGING_NAME, "Removing search to search conversation creator for ",
-                 search_uri_.ToString());
+  FETCH_LOG_INFO(
+      LOGGING_NAME, "Removing search to search conversation creator for ", search_uri_.ToString());
   worker.reset();
 }
 
 std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
-    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &                                target_path,
+    std::shared_ptr<google::protobuf::Message> initiator)
 {
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting search to search conversation with ",
-                 search_uri_.ToString(), " ...");
+  FETCH_LOG_INFO(
+      LOGGING_NAME, "Starting search to search conversation with ", search_uri_.ToString(), " ...");
   Lock lock(mutex_);
   auto this_id = ident++;
 
@@ -67,13 +73,13 @@ std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
 
   if (target_path.path == "/search")
   {
-    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(this_id, target_path,
-                                                                           initiator);
+    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(
+        this_id, target_path, initiator);
   }
   else
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Path ", target_path.path,
-                   " not supported in search to search comm!");
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Path ", target_path.path, " not supported in search to search comm!");
     throw std::invalid_argument(
         target_path.path + " is not a valid target, to start a OutboundSearchConversationCreator!");
   }

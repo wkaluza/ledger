@@ -67,8 +67,9 @@ struct Node
 
   Node(uint16_t port, uint16_t http_port)
     : network_manager{std::make_shared<NetworkManager>("NetMgr" + std::to_string(port), 1)}
-    , http_network_manager{std::make_shared<NetworkManager>("HttpMgr" + std::to_string(http_port),
-                                                            1)}
+    , http_network_manager{std::make_shared<NetworkManager>(
+          "HttpMgr" + std::to_string(http_port),
+          1)}
     , http{*http_network_manager}
     , http_modules{std::make_shared<MuddleStatusModule>()}
 
@@ -143,8 +144,9 @@ struct Network
   {
     auto uri =
         fetch::network::Uri("tcp://127.0.0.1:" + std::to_string(BASE_MUDDLE_PORT + counter - 1));
-    nodes.emplace_back(std::make_unique<Node>(static_cast<uint16_t>(BASE_MUDDLE_PORT + counter),
-                                              static_cast<uint16_t>(BASE_HTTP_PORT + counter)));
+    nodes.emplace_back(std::make_unique<Node>(
+        static_cast<uint16_t>(BASE_MUDDLE_PORT + counter),
+        static_cast<uint16_t>(BASE_HTTP_PORT + counter)));
     nodes.back()->muddle->SetTrackerConfiguration(config);
     nodes.back()->muddle->ConnectTo(uri);
     ++counter;
@@ -158,8 +160,9 @@ private:
     /// Creating the nodes
     for (uint64_t i = 0; i < number_of_nodes; ++i)
     {
-      nodes.emplace_back(std::make_unique<Node>(static_cast<uint16_t>(BASE_MUDDLE_PORT + counter),
-                                                static_cast<uint16_t>(BASE_HTTP_PORT + counter)));
+      nodes.emplace_back(std::make_unique<Node>(
+          static_cast<uint16_t>(BASE_MUDDLE_PORT + counter),
+          static_cast<uint16_t>(BASE_HTTP_PORT + counter)));
       nodes.back()->muddle->SetTrackerConfiguration(config);
       ++counter;
     }
@@ -176,10 +179,11 @@ void MakeKademliaNetwork(std::unique_ptr<Network> &network)
   }
 }
 
-void LinearConnectivity(std::unique_ptr<Network> &               network,
-                        muddle::MuddleInterface::Duration const &expire =
-                            std::chrono::duration_cast<muddle::MuddleInterface::Duration>(
-                                std::chrono::hours(1024 * 24)))
+void LinearConnectivity(
+    std::unique_ptr<Network> &               network,
+    muddle::MuddleInterface::Duration const &expire =
+        std::chrono::duration_cast<muddle::MuddleInterface::Duration>(
+            std::chrono::hours(1024 * 24)))
 {
   auto N = network->nodes.size();
   for (std::size_t i = 1; i < N; ++i)
@@ -190,10 +194,11 @@ void LinearConnectivity(std::unique_ptr<Network> &               network,
   }
 }
 
-void AllToAllConnectivity(std::unique_ptr<Network> &               network,
-                          muddle::MuddleInterface::Duration const &expire =
-                              std::chrono::duration_cast<muddle::MuddleInterface::Duration>(
-                                  std::chrono::hours(1024 * 24)))
+void AllToAllConnectivity(
+    std::unique_ptr<Network> &               network,
+    muddle::MuddleInterface::Duration const &expire =
+        std::chrono::duration_cast<muddle::MuddleInterface::Duration>(
+            std::chrono::hours(1024 * 24)))
 {
   auto N = network->nodes.size();
   for (std::size_t i = 0; i < N; ++i)

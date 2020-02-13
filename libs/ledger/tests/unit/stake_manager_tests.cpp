@@ -58,8 +58,12 @@ protected:
     stake_manager_.reset();
   }
 
-  void SimulateRounds(std::vector<Identity> const &identities, Block &block, std::size_t num_rounds,
-                      std::size_t cabinet_size, RoundStats &stats)
+  void SimulateRounds(
+      std::vector<Identity> const &identities,
+      Block &                      block,
+      std::size_t                  num_rounds,
+      std::size_t                  cabinet_size,
+      RoundStats &                 stats)
   {
     ASSERT_GT(cabinet_size, 0);
 
@@ -120,8 +124,12 @@ TEST_F(StakeManagerTests, DISABLED_CheckBasicStakeChangeScenarios)
 
   for (auto const &identity : identities)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Identity: ", identity.identifier().ToBase64(),
-                   " rounds: ", stats.at(identity));
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Identity: ",
+        identity.identifier().ToBase64(),
+        " rounds: ",
+        stats.at(identity));
 
     EXPECT_GT(stats.at(identity), 0);
   }

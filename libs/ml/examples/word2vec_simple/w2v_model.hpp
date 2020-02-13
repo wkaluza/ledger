@@ -63,11 +63,17 @@ private:
   fetch::math::ApproxExpImplementation<0>        fexp_;
 
 public:
-  W2VModel(SizeType embeddings_size, SizeType negative, DataType starting_alpha,
-           dataloaders::W2VLoader<DataType> &data_loader);
+  W2VModel(
+      SizeType                          embeddings_size,
+      SizeType                          negative,
+      DataType                          starting_alpha,
+      dataloaders::W2VLoader<DataType> &data_loader);
 
-  void PrintStats(SizeType const &i, SizeType const &iter, SizeType const &iterations,
-                  SizeType const &print_frequency);
+  void PrintStats(
+      SizeType const &i,
+      SizeType const &iter,
+      SizeType const &iterations,
+      SizeType const &print_frequency);
 
   void UpdateLearningRate(SizeType i, SizeType iter, SizeType iterations);
   void Train(SizeType iter, SizeType print_frequency, bool cbow = true);
@@ -78,8 +84,11 @@ public:
 };
 
 template <typename TensorType>
-W2VModel<TensorType>::W2VModel(SizeType embeddings_size, SizeType negative, DataType starting_alpha,
-                               dataloaders::W2VLoader<DataType> &data_loader)
+W2VModel<TensorType>::W2VModel(
+    SizeType                          embeddings_size,
+    SizeType                          negative,
+    DataType                          starting_alpha,
+    dataloaders::W2VLoader<DataType> &data_loader)
   : embeddings_size_(embeddings_size)
   , negative_(negative)
   , alpha_(starting_alpha)
@@ -130,15 +139,18 @@ W2VModel<TensorType>::W2VModel(SizeType embeddings_size, SizeType negative, Data
  * @param print_frequency
  */
 template <typename TensorType>
-void W2VModel<TensorType>::PrintStats(SizeType const &i, SizeType const &iter,
-                                      SizeType const &iterations, SizeType const &print_frequency)
+void W2VModel<TensorType>::PrintStats(
+    SizeType const &i,
+    SizeType const &iter,
+    SizeType const &iterations,
+    SizeType const &print_frequency)
 {
   cur_time_ = std::chrono::high_resolution_clock::now();
   auto time_span =
       std::chrono::duration_cast<std::chrono::duration<double>>(cur_time_ - last_time_);
   std::cout << i << " / " << iter * iterations << " ("
-            << static_cast<SizeType>(100.0 * static_cast<double>(i) /
-                                     static_cast<double>(iter * iterations))
+            << static_cast<SizeType>(
+                   100.0 * static_cast<double>(i) / static_cast<double>(iter * iterations))
             << "%) -- "
             << "learning rate: " << alpha_ << " -- "
             << static_cast<double>(print_frequency) / time_span.count() << " words / sec"
@@ -218,7 +230,8 @@ void W2VModel<TensorType>::Train(SizeType iter, SizeType print_frequency, bool c
 
 template <typename TensorType>
 void W2VModel<TensorType>::SGNSTrain(  // TODO (#1304) CBOW implementation not SGNS
-    TensorType const &target, TensorType const &context)
+    TensorType const &target,
+    TensorType const &context)
 {
   for (DataType const &cur_context_word : context)
   {
@@ -231,9 +244,10 @@ void W2VModel<TensorType>::SGNSTrain(  // TODO (#1304) CBOW implementation not S
 
       // assign current context word
       auto output_view = word_vector_.View(0);
-      Assign(output_view,
-             embeddings_.View(fetch::math::SizeType(
-                 cur_context_word)));  // TODO (#1304) the w2v should be drawn from target weights
+      Assign(
+          output_view,
+          embeddings_.View(fetch::math::SizeType(
+              cur_context_word)));  // TODO (#1304) the w2v should be drawn from target weights
 
       // assign target weights (Embeddings: target -> weights)
       SizeType j = 0;
@@ -249,7 +263,8 @@ void W2VModel<TensorType>::SGNSTrain(  // TODO (#1304) CBOW implementation not S
 
       // MatrixMultiply: Forward
       fetch::math::TransposeDot(
-          target_weights_, word_vector_,
+          target_weights_,
+          word_vector_,
           error_signal_);  // TODO (#1304) negative samples are drew from the wrong weight matrix
                            // and the context word is trained agaisnt the wrong target
 
@@ -319,7 +334,8 @@ void W2VModel<TensorType>::SGNSTrain(  // TODO (#1304) CBOW implementation not S
             [learning_rate](auto const &a, auto const &b, auto &c) {
               c = b + a * decltype(a)(learning_rate);
             },
-            input.data(), ret.data());
+            input.data(),
+            ret.data());
         input.data().in_parallel().Apply([zero](auto &a) { a = decltype(a)(zero); });
       }
 
@@ -463,7 +479,8 @@ void W2VModel<TensorType>::CBOWTrain(TensorType &target, TensorType &context)
         [learning_rate](auto const &a, auto const &b, auto &c) {
           c = b + a * decltype(a)(learning_rate);
         },
-        input.data(), ret.data());
+        input.data(),
+        ret.data());
     input.data().in_parallel().Apply([zero](auto &a) { a = decltype(a)(zero); });
   }
 

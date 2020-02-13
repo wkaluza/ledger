@@ -68,8 +68,11 @@ public:
    * @param channel The channel identifier
    * @param message The message payload to be sent
    */
-  virtual void Send(Address const &address, uint16_t service, uint16_t channel,
-                    Payload const &message) = 0;
+  virtual void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message) = 0;
 
   /**
    * Send a message to a target address
@@ -80,8 +83,12 @@ public:
    * @param message The message payload to be sent
    * @param options The options to be applied when sending the message
    */
-  virtual void Send(Address const &address, uint16_t service, uint16_t channel,
-                    Payload const &message, Options options) = 0;
+  virtual void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message,
+      Options        options) = 0;
 
   /**
    * Send a message to a target address
@@ -92,8 +99,12 @@ public:
    * @param message_num The message number of the request
    * @param payload The message payload to be sent
    */
-  virtual void Send(Address const &address, uint16_t service, uint16_t channel,
-                    uint16_t message_num, Payload const &payload) = 0;
+  virtual void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload) = 0;
 
   /**
    * Send a message to a target address
@@ -105,8 +116,13 @@ public:
    * @param payload The message payload to be sent
    * @param options The options to be applied when sending the message
    */
-  virtual void Send(Address const &address, uint16_t service, uint16_t channel,
-                    uint16_t message_num, Payload const &payload, Options options) = 0;
+  virtual void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload,
+      Options        options) = 0;
 
   /**
    * Broadcast a message to all peers in the network

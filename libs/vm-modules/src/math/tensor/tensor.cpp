@@ -67,8 +67,9 @@ VMTensor::VMTensor(VM *vm, TypeId type_id, std::string const &str)
   catch (std::exception const &ex)
   {
     // TODO(issue 1094): Support for nested runtime error(s) and/or exception(s)
-    vm_->RuntimeError("An exception has been thrown from State<...>::FlushIO(). Desc.: " +
-                      std::string(ex.what()));
+    vm_->RuntimeError(
+        "An exception has been thrown from State<...>::FlushIO(). Desc.: " +
+        std::string(ex.what()));
   }
   catch (...)
   {
@@ -109,8 +110,8 @@ void VMTensor::Bind(Module &module, bool const enable_experimental)
     DataType padded_size =
         static_cast<DataType>(fetch::math::Tensor<DataType>::PaddedSizeFromShape(shape->elements));
 
-    return static_cast<ChargeAmount>(CONSTRUCTION_PADDED_SIZE_COEF * padded_size +
-                                     CONSTRUCTION_CONST_COEF) *
+    return static_cast<ChargeAmount>(
+               CONSTRUCTION_PADDED_SIZE_COEF * padded_size + CONSTRUCTION_CONST_COEF) *
            COMPUTE_CHARGE_COST;
   };
 
@@ -118,8 +119,8 @@ void VMTensor::Bind(Module &module, bool const enable_experimental)
       [](Ptr<String> const &str) -> ChargeAmount {
     auto size = static_cast<DataType>(str->string().size());
 
-    return static_cast<ChargeAmount>(CONSTRUCTION_STRING_SIZE_COEF * size +
-                                     CONSTRUCTION_STRING_CONST_COEF) *
+    return static_cast<ChargeAmount>(
+               CONSTRUCTION_STRING_SIZE_COEF * size + CONSTRUCTION_STRING_CONST_COEF) *
            COMPUTE_CHARGE_COST;
   };
 
@@ -132,36 +133,44 @@ void VMTensor::Bind(Module &module, bool const enable_experimental)
           })
           .CreateMemberFunction("copy", &VMTensor::Copy, UseEstimator(&TensorEstimator::Copy))
           .CreateMemberFunction("at", &VMTensor::At<Index>, UseEstimator(&TensorEstimator::AtOne))
-          .CreateMemberFunction("at", &VMTensor::At<Index, Index>,
-                                UseEstimator(&TensorEstimator::AtTwo))
-          .CreateMemberFunction("at", &VMTensor::At<Index, Index, Index>,
-                                UseEstimator(&TensorEstimator::AtThree))
-          .CreateMemberFunction("at", &VMTensor::At<Index, Index, Index, Index>,
-                                UseEstimator(&TensorEstimator::AtFour))
-          .CreateMemberFunction("setAt", &VMTensor::SetAt<Index, DataType>,
-                                UseEstimator(&TensorEstimator::SetAtOne))
-          .CreateMemberFunction("setAt", &VMTensor::SetAt<Index, Index, DataType>,
-                                UseEstimator(&TensorEstimator::SetAtTwo))
-          .CreateMemberFunction("setAt", &VMTensor::SetAt<Index, Index, Index, DataType>,
-                                UseEstimator(&TensorEstimator::SetAtThree))
-          .CreateMemberFunction("setAt", &VMTensor::SetAt<Index, Index, Index, Index, DataType>,
-                                UseEstimator(&TensorEstimator::SetAtFour))
+          .CreateMemberFunction(
+              "at", &VMTensor::At<Index, Index>, UseEstimator(&TensorEstimator::AtTwo))
+          .CreateMemberFunction(
+              "at", &VMTensor::At<Index, Index, Index>, UseEstimator(&TensorEstimator::AtThree))
+          .CreateMemberFunction(
+              "at",
+              &VMTensor::At<Index, Index, Index, Index>,
+              UseEstimator(&TensorEstimator::AtFour))
+          .CreateMemberFunction(
+              "setAt", &VMTensor::SetAt<Index, DataType>, UseEstimator(&TensorEstimator::SetAtOne))
+          .CreateMemberFunction(
+              "setAt",
+              &VMTensor::SetAt<Index, Index, DataType>,
+              UseEstimator(&TensorEstimator::SetAtTwo))
+          .CreateMemberFunction(
+              "setAt",
+              &VMTensor::SetAt<Index, Index, Index, DataType>,
+              UseEstimator(&TensorEstimator::SetAtThree))
+          .CreateMemberFunction(
+              "setAt",
+              &VMTensor::SetAt<Index, Index, Index, Index, DataType>,
+              UseEstimator(&TensorEstimator::SetAtFour))
           .CreateMemberFunction("size", &VMTensor::size, UseEstimator(&TensorEstimator::size))
-          .CreateMemberFunction("shape", &VMTensor::VMShape,
-                                UseEstimator(&TensorEstimator::VMShape))
+          .CreateMemberFunction(
+              "shape", &VMTensor::VMShape, UseEstimator(&TensorEstimator::VMShape))
           .CreateMemberFunction("fill", &VMTensor::Fill, UseEstimator(&TensorEstimator::Fill))
-          .CreateMemberFunction("fillRandom", &VMTensor::FillRandom,
-                                UseEstimator(&TensorEstimator::FillRandom))
+          .CreateMemberFunction(
+              "fillRandom", &VMTensor::FillRandom, UseEstimator(&TensorEstimator::FillRandom))
           .CreateMemberFunction("min", &VMTensor::Min, UseEstimator(&TensorEstimator::Min))
           .CreateMemberFunction("max", &VMTensor::Max, UseEstimator(&TensorEstimator::Max))
-          .CreateMemberFunction("reshape", &VMTensor::Reshape,
-                                UseEstimator(&TensorEstimator::Reshape))
-          .CreateMemberFunction("squeeze", &VMTensor::Squeeze,
-                                UseEstimator(&TensorEstimator::Squeeze))
+          .CreateMemberFunction(
+              "reshape", &VMTensor::Reshape, UseEstimator(&TensorEstimator::Reshape))
+          .CreateMemberFunction(
+              "squeeze", &VMTensor::Squeeze, UseEstimator(&TensorEstimator::Squeeze))
           .CreateMemberFunction("sum", &VMTensor::Sum, UseEstimator(&TensorEstimator::Sum))
           .CreateMemberFunction("argMax", &VMTensor::ArgMax, UseEstimator(&TensorEstimator::ArgMax))
-          .CreateMemberFunction("argMax", &VMTensor::ArgMaxNoIndices,
-                                UseEstimator(&TensorEstimator::ArgMaxNoIndices))
+          .CreateMemberFunction(
+              "argMax", &VMTensor::ArgMaxNoIndices, UseEstimator(&TensorEstimator::ArgMaxNoIndices))
           .CreateMemberFunction("dot", &VMTensor::Dot, UseEstimator(&TensorEstimator::Dot))
           .EnableOperator(Operator::Negate)
           .EnableOperator(Operator::Equal)
@@ -174,20 +183,20 @@ void VMTensor::Bind(Module &module, bool const enable_experimental)
           .EnableOperator(Operator::Divide)
           .EnableOperator(Operator::InplaceMultiply)
           .EnableOperator(Operator::InplaceDivide)
-          .CreateMemberFunction("transpose", &VMTensor::Transpose,
-                                UseEstimator(&TensorEstimator::Transpose))
-          .CreateMemberFunction("unsqueeze", &VMTensor::Unsqueeze,
-                                UseEstimator(&TensorEstimator::Unsqueeze))
-          .CreateMemberFunction("fromString", &VMTensor::FromString,
-                                UseEstimator(&TensorEstimator::FromString))
-          .CreateMemberFunction("toString", &VMTensor::ToString,
-                                UseEstimator(&TensorEstimator::ToString));
+          .CreateMemberFunction(
+              "transpose", &VMTensor::Transpose, UseEstimator(&TensorEstimator::Transpose))
+          .CreateMemberFunction(
+              "unsqueeze", &VMTensor::Unsqueeze, UseEstimator(&TensorEstimator::Unsqueeze))
+          .CreateMemberFunction(
+              "fromString", &VMTensor::FromString, UseEstimator(&TensorEstimator::FromString))
+          .CreateMemberFunction(
+              "toString", &VMTensor::ToString, UseEstimator(&TensorEstimator::ToString));
 
   // experimental features are bound only if the VMFactory given the flag to do so
   if (enable_experimental)
   {
-    interface.CreateConstructor(&VMTensor::StringConstructor,
-                                tensor_string_constructor_charge_estimate);
+    interface.CreateConstructor(
+        &VMTensor::StringConstructor, tensor_string_constructor_charge_estimate);
     interface.CreateConstructor(&VMTensor::EmptyConstructor, []() -> ChargeAmount {
       return static_cast<ChargeAmount>(CONSTRUCTION_CONST_COEF);
     });
@@ -313,9 +322,10 @@ bool VMTensor::Reshape(Ptr<Array<SizeType>> const &new_shape)
   }
   if (total_new_elements != tensor_.size())
   {
-    RuntimeError("Can not reshape a Tensor : total elements count in the new shape (" +
-                 std::to_string(total_new_elements) +
-                 ") mismatch. Expected : " + std::to_string(tensor_.size()));
+    RuntimeError(
+        "Can not reshape a Tensor : total elements count in the new shape (" +
+        std::to_string(total_new_elements) +
+        ") mismatch. Expected : " + std::to_string(tensor_.size()));
     return false;
   }
   return tensor_.Reshape(new_shape->elements);
@@ -344,8 +354,9 @@ bool VMTensor::IsEqual(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
   return result;
 }
 
-ChargeAmount VMTensor::IsEqualChargeEstimator(vm::Ptr<Object> const &lhso,
-                                              vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::IsEqualChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.IsEqualChargeEstimator(lhso, rhso);
 }
@@ -399,8 +410,9 @@ void VMTensor::Subtract(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
   this->GetTensor()   = (left->GetTensor() - right->GetTensor());
 }
 
-ChargeAmount VMTensor::SubtractChargeEstimator(vm::Ptr<Object> const &lhso,
-                                               vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::SubtractChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.SubtractChargeEstimator(lhso, rhso);
 }
@@ -412,8 +424,9 @@ void VMTensor::InplaceAdd(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rh
   left->GetTensor().InlineAdd(right->GetTensor());
 }
 
-ChargeAmount VMTensor::InplaceAddChargeEstimator(vm::Ptr<Object> const &lhso,
-                                                 vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::InplaceAddChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceAddChargeEstimator(lhso, rhso);
 }
@@ -425,8 +438,9 @@ void VMTensor::InplaceSubtract(vm::Ptr<Object> const &lhso, vm::Ptr<Object> cons
   left->GetTensor().InlineSubtract(right->GetTensor());
 }
 
-ChargeAmount VMTensor::InplaceSubtractChargeEstimator(vm::Ptr<Object> const &lhso,
-                                                      vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::InplaceSubtractChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceSubtractChargeEstimator(lhso, rhso);
 }
@@ -438,8 +452,9 @@ void VMTensor::Multiply(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
   this->GetTensor()   = (left->GetTensor() * right->GetTensor());
 }
 
-ChargeAmount VMTensor::MultiplyChargeEstimator(vm::Ptr<Object> const &lhso,
-                                               vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::MultiplyChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.MultiplyChargeEstimator(lhso, rhso);
 }
@@ -451,8 +466,9 @@ void VMTensor::Divide(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
   this->GetTensor()   = (left->GetTensor() / right->GetTensor());
 }
 
-ChargeAmount VMTensor::DivideChargeEstimator(vm::Ptr<Object> const &lhso,
-                                             vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::DivideChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.DivideChargeEstimator(lhso, rhso);
 }
@@ -464,8 +480,9 @@ void VMTensor::InplaceMultiply(vm::Ptr<Object> const &lhso, vm::Ptr<Object> cons
   left->GetTensor().InlineMultiply(right->GetTensor());
 }
 
-ChargeAmount VMTensor::InplaceMultiplyChargeEstimator(vm::Ptr<Object> const &lhso,
-                                                      vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::InplaceMultiplyChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceMultiplyChargeEstimator(lhso, rhso);
 }
@@ -477,8 +494,9 @@ void VMTensor::InplaceDivide(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const 
   left->GetTensor().InlineDivide(right->GetTensor());
 }
 
-ChargeAmount VMTensor::InplaceDivideChargeEstimator(vm::Ptr<Object> const &lhso,
-                                                    vm::Ptr<Object> const &rhso)
+ChargeAmount VMTensor::InplaceDivideChargeEstimator(
+    vm::Ptr<Object> const &lhso,
+    vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceDivideChargeEstimator(lhso, rhso);
 }

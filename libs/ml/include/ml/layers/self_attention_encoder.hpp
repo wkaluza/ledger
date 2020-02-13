@@ -42,12 +42,15 @@ public:
 
   SelfAttentionEncoder() = default;
 
-  SelfAttentionEncoder(SizeType n_heads, SizeType model_dim, SizeType ff_dim,
-                       DataType       residual_dropout    = fetch::math::Type<DataType>("0.1"),
-                       DataType       attention_dropout   = fetch::math::Type<DataType>("0.1"),
-                       DataType       feedforward_dropout = fetch::math::Type<DataType>("0.1"),
-                       DataType       epsilon         = fetch::math::function_tolerance<DataType>(),
-                       ActivationType activation_type = ActivationType::GELU);
+  SelfAttentionEncoder(
+      SizeType       n_heads,
+      SizeType       model_dim,
+      SizeType       ff_dim,
+      DataType       residual_dropout    = fetch::math::Type<DataType>("0.1"),
+      DataType       attention_dropout   = fetch::math::Type<DataType>("0.1"),
+      DataType       feedforward_dropout = fetch::math::Type<DataType>("0.1"),
+      DataType       epsilon             = fetch::math::function_tolerance<DataType>(),
+      ActivationType activation_type     = ActivationType::GELU);
 
   std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override
   {
@@ -86,8 +89,10 @@ private:
 
   std::string positionwise_feedforward(std::string const &name, std::string const &input);
 
-  std::string residual_connection(std::string const &name, std::string const &prev_layer_input,
-                                  std::string const &prev_layer_output);
+  std::string residual_connection(
+      std::string const &name,
+      std::string const &prev_layer_input,
+      std::string const &prev_layer_output);
 
   OperationsCount ChargeForward() const override;
   OperationsCount ChargeBackward() const override;

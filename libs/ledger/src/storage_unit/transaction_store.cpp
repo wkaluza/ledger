@@ -65,8 +65,8 @@ void TransactionStore::Add(chain::Transaction const &tx)
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Failed to add tx: 0x", tx.digest().ToHex(),
-                   " to store: ", ex.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Failed to add tx: 0x", tx.digest().ToHex(), " to store: ", ex.what());
   }
 }
 
@@ -99,8 +99,8 @@ bool TransactionStore::Get(Digest const &tx_digest, chain::Transaction &tx) cons
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Failed to get tx: 0x", tx.digest().ToHex(),
-                   " from store: ", ex.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Failed to get tx: 0x", tx.digest().ToHex(), " from store: ", ex.what());
   }
 
   return false;
@@ -124,8 +124,10 @@ uint64_t TransactionStore::GetCount() const
  * @param pull_limit The maximum number of transactions to be retrieved
  * @return The extracted subtree of transactions from the store
  */
-TxArray TransactionStore::PullSubtree(Digest const &partial_digest, uint64_t bit_count,
-                                      uint64_t pull_limit)
+TxArray TransactionStore::PullSubtree(
+    Digest const &partial_digest,
+    uint64_t      bit_count,
+    uint64_t      pull_limit)
 {
   TxArray ret{};
 

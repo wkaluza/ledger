@@ -65,8 +65,9 @@ inline std::ostream &operator<<(std::ostream &os, StringProxy const &m)
 
 // Generate unique hashes that are very close together to stress unit tests. Do this by creating a
 // random reference and then for each hash required flipping a single bit of this reference hash
-inline std::unordered_set<fetch::byte_array::ByteArray> GenerateUniqueHashes(uint64_t size,
-                                                                             uint64_t seed = 0)
+inline std::unordered_set<fetch::byte_array::ByteArray> GenerateUniqueHashes(
+    uint64_t size,
+    uint64_t seed = 0)
 {
   random::LinearCongruentialGenerator lcg(seed);
   fetch::byte_array::ByteArray reference = crypto::Hash<crypto::SHA256>(std::to_string(lcg()));

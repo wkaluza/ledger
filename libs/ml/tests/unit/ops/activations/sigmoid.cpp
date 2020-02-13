@@ -51,8 +51,8 @@ TYPED_TEST(SigmoidTest, forward_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::Type<DataType>("0.00001"),
-                                  fetch::math::Type<DataType>("0.00001")));
+  ASSERT_TRUE(prediction.AllClose(
+      gt, fetch::math::Type<DataType>("0.00001"), fetch::math::Type<DataType>("0.00001")));
 }
 
 TYPED_TEST(SigmoidTest, forward_3d_tensor_test)
@@ -64,8 +64,14 @@ TYPED_TEST(SigmoidTest, forward_3d_tensor_test)
   TensorType          data({2, 2, 2});
   TensorType          gt({2, 2, 2});
   std::vector<double> data_input({1, -2, 3, -4, 5, -6, 7, -8});
-  std::vector<double> gt_input({0.73106, 0.1192029, 0.952574, 0.01798620996, 0.993307149,
-                                0.002472623156635, 0.999088948806, 0.000335350130466});
+  std::vector<double> gt_input({0.73106,
+                                0.1192029,
+                                0.952574,
+                                0.01798620996,
+                                0.993307149,
+                                0.002472623156635,
+                                0.999088948806,
+                                0.000335350130466});
 
   for (SizeType i{0}; i < 2; ++i)
   {
@@ -84,8 +90,8 @@ TYPED_TEST(SigmoidTest, forward_3d_tensor_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::Type<DataType>("0.00001"),
-                                  fetch::math::Type<DataType>("0.00001")));
+  ASSERT_TRUE(prediction.AllClose(
+      gt, fetch::math::Type<DataType>("0.00001"), fetch::math::Type<DataType>("0.00001")));
 }
 
 TYPED_TEST(SigmoidTest, backward_test)
@@ -102,8 +108,10 @@ TYPED_TEST(SigmoidTest, backward_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SigmoidTest, backward_3d_tensor_test)
@@ -137,8 +145,10 @@ TYPED_TEST(SigmoidTest, backward_3d_tensor_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SigmoidTest, saveparams_test)
@@ -247,7 +257,8 @@ TYPED_TEST(SigmoidTest, saveparams_backward_3d_tensor_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 

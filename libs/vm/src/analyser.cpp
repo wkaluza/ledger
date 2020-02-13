@@ -104,8 +104,12 @@ void Analyser::Initialise(bool use_test_annotations)
   symbols_             = CreateSymbolTable();
 
   CreatePrimitiveType("Null", TypeIndex(typeid(std::nullptr_t)), false, TypeIds::Null, null_type_);
-  CreatePrimitiveType("InitialiserList", TypeIndex(typeid(InitialiserListPlaceholder)), false,
-                      TypeIds::InitialiserList, initialiser_list_type_);
+  CreatePrimitiveType(
+      "InitialiserList",
+      TypeIndex(typeid(InitialiserListPlaceholder)),
+      false,
+      TypeIds::InitialiserList,
+      initialiser_list_type_);
   CreatePrimitiveType("Void", TypeIndex(typeid(void)), false, TypeIds::Void, void_type_);
   CreatePrimitiveType("Bool", TypeIndex(typeid(bool)), true, TypeIds::Bool, bool_type_);
   CreatePrimitiveType("Int8", TypeIndex(typeid(int8_t)), true, TypeIds::Int8, int8_type_);
@@ -116,10 +120,10 @@ void Analyser::Initialise(bool use_test_annotations)
   CreatePrimitiveType("UInt32", TypeIndex(typeid(uint32_t)), true, TypeIds::UInt32, uint32_type_);
   CreatePrimitiveType("Int64", TypeIndex(typeid(int64_t)), true, TypeIds::Int64, int64_type_);
   CreatePrimitiveType("UInt64", TypeIndex(typeid(uint64_t)), true, TypeIds::UInt64, uint64_type_);
-  CreatePrimitiveType("Fixed32", TypeIndex(typeid(fixed_point::fp32_t)), true, TypeIds::Fixed32,
-                      fixed32_type_);
-  CreatePrimitiveType("Fixed64", TypeIndex(typeid(fixed_point::fp64_t)), true, TypeIds::Fixed64,
-                      fixed64_type_);
+  CreatePrimitiveType(
+      "Fixed32", TypeIndex(typeid(fixed_point::fp32_t)), true, TypeIds::Fixed32, fixed32_type_);
+  CreatePrimitiveType(
+      "Fixed64", TypeIndex(typeid(fixed_point::fp64_t)), true, TypeIds::Fixed64, fixed64_type_);
 
   CreateClassType("Fixed128", TypeIndex(typeid(Fixed128)), TypeIds::Fixed128, fixed128_type_);
   EnableOperator(fixed128_type_, Operator::Equal);
@@ -151,22 +155,42 @@ void Analyser::Initialise(bool use_test_annotations)
   EnableOperator(address_type_, Operator::Equal);
   EnableOperator(address_type_, Operator::NotEqual);
 
-  CreateMetaType("[TemplateParameter1]", TypeIndex(typeid(TemplateParameter1)), TypeIds::Unknown,
-                 template_parameter1_type_);
-  CreateMetaType("[TemplateParameter2]", TypeIndex(typeid(TemplateParameter2)), TypeIds::Unknown,
-                 template_parameter2_type_);
+  CreateMetaType(
+      "[TemplateParameter1]",
+      TypeIndex(typeid(TemplateParameter1)),
+      TypeIds::Unknown,
+      template_parameter1_type_);
+  CreateMetaType(
+      "[TemplateParameter2]",
+      TypeIndex(typeid(TemplateParameter2)),
+      TypeIds::Unknown,
+      template_parameter2_type_);
   CreateMetaType("[Any]", TypeIndex(typeid(Any)), TypeIds::Unknown, any_type_);
-  CreateMetaType("[AnyPrimitive]", TypeIndex(typeid(AnyPrimitive)), TypeIds::Unknown,
-                 any_primitive_type_);
+  CreateMetaType(
+      "[AnyPrimitive]", TypeIndex(typeid(AnyPrimitive)), TypeIds::Unknown, any_primitive_type_);
 
   EnableOperator(bool_type_, Operator::Equal);
   EnableOperator(bool_type_, Operator::NotEqual);
 
-  TypePtrArray const integer_types = {int8_type_,  uint8_type_,  int16_type_, uint16_type_,
-                                      int32_type_, uint32_type_, int64_type_, uint64_type_};
-  TypePtrArray const number_types  = {int8_type_,    uint8_type_,   int16_type_,   uint16_type_,
-                                     int32_type_,   uint32_type_,  int64_type_,   uint64_type_,
-                                     fixed32_type_, fixed64_type_, fixed128_type_};
+  TypePtrArray const integer_types = {int8_type_,
+                                      uint8_type_,
+                                      int16_type_,
+                                      uint16_type_,
+                                      int32_type_,
+                                      uint32_type_,
+                                      int64_type_,
+                                      uint64_type_};
+  TypePtrArray const number_types  = {int8_type_,
+                                     uint8_type_,
+                                     int16_type_,
+                                     uint16_type_,
+                                     int32_type_,
+                                     uint32_type_,
+                                     int64_type_,
+                                     uint64_type_,
+                                     fixed32_type_,
+                                     fixed64_type_,
+                                     fixed128_type_};
   for (auto const &type : number_types)
   {
     EnableOperator(type, Operator::Equal);
@@ -186,21 +210,29 @@ void Analyser::Initialise(bool use_test_annotations)
     EnableOperator(type, Operator::InplaceDivide);
   }
 
-  CreateGroupType("[AnyInteger]", TypeIndex(typeid(AnyInteger)), integer_types, TypeIds::Unknown,
-                  any_integer_type_);
+  CreateGroupType(
+      "[AnyInteger]",
+      TypeIndex(typeid(AnyInteger)),
+      integer_types,
+      TypeIds::Unknown,
+      any_integer_type_);
 
-  CreateTemplateType("Array", TypeIndex(typeid(IArray)), {any_type_}, TypeIds::Unknown,
-                     array_type_);
-  CreateTemplateType("Map", TypeIndex(typeid(IMap)), {any_type_, any_type_}, TypeIds::Unknown,
-                     map_type_);
+  CreateTemplateType(
+      "Array", TypeIndex(typeid(IArray)), {any_type_}, TypeIds::Unknown, array_type_);
+  CreateTemplateType(
+      "Map", TypeIndex(typeid(IMap)), {any_type_, any_type_}, TypeIds::Unknown, map_type_);
 
-  CreateTemplateType("Pair", TypeIndex(typeid(IPair)), {any_type_, any_type_}, TypeIds::Unknown,
-                     pair_type_);
+  CreateTemplateType(
+      "Pair", TypeIndex(typeid(IPair)), {any_type_, any_type_}, TypeIds::Unknown, pair_type_);
 
-  CreateTemplateType("State", TypeIndex(typeid(IState)), {any_type_}, TypeIds::Unknown,
-                     state_type_);
-  CreateTemplateType("ShardedState", TypeIndex(typeid(IShardedState)), {any_type_},
-                     TypeIds::Unknown, sharded_state_type_);
+  CreateTemplateType(
+      "State", TypeIndex(typeid(IState)), {any_type_}, TypeIds::Unknown, state_type_);
+  CreateTemplateType(
+      "ShardedState",
+      TypeIndex(typeid(IShardedState)),
+      {any_type_},
+      TypeIds::Unknown,
+      sharded_state_type_);
 }
 
 void Analyser::UnInitialise()
@@ -254,57 +286,86 @@ void Analyser::CreateClassType(std::string const &name, TypeIndex type_index)
   CreateClassType(name, type_index, TypeIds::Unknown, type);
 }
 
-void Analyser::CreateTemplateType(std::string const &name, TypeIndex type_index,
-                                  TypeIndexArray const &allowed_types_index_array)
+void Analyser::CreateTemplateType(
+    std::string const &   name,
+    TypeIndex             type_index,
+    TypeIndexArray const &allowed_types_index_array)
 {
   TypePtr type;
   CreateTemplateType(name, type_index, GetTypes(allowed_types_index_array), TypeIds::Unknown, type);
 }
 
 void Analyser::CreateTemplateInstantiationType(
-    TypeIndex type_index, TypeIndex template_type_index,
+    TypeIndex             type_index,
+    TypeIndex             template_type_index,
     TypeIndexArray const &template_parameter_type_index_array)
 {
   TypePtr type;
-  CreateTemplateInstantiationType(type_index, GetType(template_type_index),
-                                  GetTypes(template_parameter_type_index_array), TypeIds::Unknown,
-                                  type);
+  CreateTemplateInstantiationType(
+      type_index,
+      GetType(template_type_index),
+      GetTypes(template_parameter_type_index_array),
+      TypeIds::Unknown,
+      type);
 }
 
-void Analyser::CreateFreeFunction(std::string const &   name,
-                                  TypeIndexArray const &parameter_type_index_array,
-                                  TypeIndex return_type_index, Handler const &handler,
-                                  ChargeAmount static_charge)
+void Analyser::CreateFreeFunction(
+    std::string const &   name,
+    TypeIndexArray const &parameter_type_index_array,
+    TypeIndex             return_type_index,
+    Handler const &       handler,
+    ChargeAmount          static_charge)
 {
-  CreateFreeFunction(name, GetTypes(parameter_type_index_array), GetType(return_type_index),
-                     handler, static_charge);
+  CreateFreeFunction(
+      name,
+      GetTypes(parameter_type_index_array),
+      GetType(return_type_index),
+      handler,
+      static_charge);
 }
 
-void Analyser::CreateConstructor(TypeIndex             type_index,
-                                 TypeIndexArray const &parameter_type_index_array,
-                                 Handler const &handler, ChargeAmount static_charge)
+void Analyser::CreateConstructor(
+    TypeIndex             type_index,
+    TypeIndexArray const &parameter_type_index_array,
+    Handler const &       handler,
+    ChargeAmount          static_charge)
 {
-  CreateConstructor(GetType(type_index), GetTypes(parameter_type_index_array), handler,
-                    static_charge);
+  CreateConstructor(
+      GetType(type_index), GetTypes(parameter_type_index_array), handler, static_charge);
 }
 
-void Analyser::CreateStaticMemberFunction(TypeIndex type_index, std::string const &function_name,
-                                          TypeIndexArray const &parameter_type_index_array,
-                                          TypeIndex return_type_index, Handler const &handler,
-                                          ChargeAmount static_charge)
+void Analyser::CreateStaticMemberFunction(
+    TypeIndex             type_index,
+    std::string const &   function_name,
+    TypeIndexArray const &parameter_type_index_array,
+    TypeIndex             return_type_index,
+    Handler const &       handler,
+    ChargeAmount          static_charge)
 {
-  CreateStaticMemberFunction(GetType(type_index), function_name,
-                             GetTypes(parameter_type_index_array), GetType(return_type_index),
-                             handler, static_charge);
+  CreateStaticMemberFunction(
+      GetType(type_index),
+      function_name,
+      GetTypes(parameter_type_index_array),
+      GetType(return_type_index),
+      handler,
+      static_charge);
 }
 
-void Analyser::CreateMemberFunction(TypeIndex type_index, std::string const &function_name,
-                                    TypeIndexArray const &parameter_type_index_array,
-                                    TypeIndex return_type_index, Handler const &handler,
-                                    ChargeAmount static_charge)
+void Analyser::CreateMemberFunction(
+    TypeIndex             type_index,
+    std::string const &   function_name,
+    TypeIndexArray const &parameter_type_index_array,
+    TypeIndex             return_type_index,
+    Handler const &       handler,
+    ChargeAmount          static_charge)
 {
-  CreateMemberFunction(GetType(type_index), function_name, GetTypes(parameter_type_index_array),
-                       GetType(return_type_index), handler, static_charge);
+  CreateMemberFunction(
+      GetType(type_index),
+      function_name,
+      GetTypes(parameter_type_index_array),
+      GetType(return_type_index),
+      handler,
+      static_charge);
 }
 
 void Analyser::EnableOperator(TypeIndex type_index, Operator op)
@@ -322,15 +383,23 @@ void Analyser::EnableRightOperator(TypeIndex type_index, Operator op)
   EnableRightOperator(GetType(type_index), op);
 }
 
-void Analyser::EnableIndexOperator(TypeIndex             type_index,
-                                   TypeIndexArray const &input_type_index_array,
-                                   TypeIndex output_type_index, Handler const &get_handler,
-                                   Handler const &set_handler, ChargeAmount get_static_charge,
-                                   ChargeAmount set_static_charge)
+void Analyser::EnableIndexOperator(
+    TypeIndex             type_index,
+    TypeIndexArray const &input_type_index_array,
+    TypeIndex             output_type_index,
+    Handler const &       get_handler,
+    Handler const &       set_handler,
+    ChargeAmount          get_static_charge,
+    ChargeAmount          set_static_charge)
 {
-  EnableIndexOperator(GetType(type_index), GetTypes(input_type_index_array),
-                      GetType(output_type_index), get_handler, set_handler, get_static_charge,
-                      set_static_charge);
+  EnableIndexOperator(
+      GetType(type_index),
+      GetTypes(input_type_index_array),
+      GetType(output_type_index),
+      get_handler,
+      set_handler,
+      get_static_charge,
+      set_static_charge);
 }
 
 bool Analyser::Analyse(BlockNodePtr const &root, std::vector<std::string> &errors)
@@ -518,8 +587,9 @@ void Analyser::ValidateFunctionAnnotations(NodePtr const &function_node)
   }
 }
 
-void Analyser::ValidateFunctionPrototype(NodePtr const &            function_node,
-                                         LedgerRestrictionMetadata &metadata)
+void Analyser::ValidateFunctionPrototype(
+    NodePtr const &            function_node,
+    LedgerRestrictionMetadata &metadata)
 {
   auto const &function_name_node = ConvertToExpressionNodePtr(function_node->children[1]);
   assert(function_name_node->function != nullptr);
@@ -590,8 +660,9 @@ void Analyser::ValidateFunctionPrototype(NodePtr const &            function_nod
   {
     if (return_type != int64_type_ && return_type != void_type_)
     {
-      AddError(function_name_node->line,
-               "@action functions must either return Int64 or have no return type");
+      AddError(
+          function_name_node->line,
+          "@action functions must either return Int64 or have no return type");
     }
   }
 
@@ -599,16 +670,18 @@ void Analyser::ValidateFunctionPrototype(NodePtr const &            function_nod
   {
     if (return_type != int64_type_ && return_type != void_type_)
     {
-      AddError(function_name_node->line,
-               "@init functions must either return Int64 or have no return type");
+      AddError(
+          function_name_node->line,
+          "@init functions must either return Int64 or have no return type");
     }
 
     auto const param_types = function_name_node->function->parameter_types;
     if (!param_types.empty() && !(param_types.size() == 1 && param_types.back() == address_type_))
     {
-      AddError(function_name_node->line,
-               "@init functions must accept either no parameters or exactly one parameter of type "
-               "Address");
+      AddError(
+          function_name_node->line,
+          "@init functions must accept either no parameters or exactly one parameter of type "
+          "Address");
     }
   }
 
@@ -627,8 +700,10 @@ void Analyser::CheckInitFunctionUnique(LedgerRestrictionMetadata const &metadata
   {
     for (auto const &x : metadata.init_functions)
     {
-      AddError(x.filename, x.node->line,
-               "Multiple @init functions found; only one @init function is allowed per contract");
+      AddError(
+          x.filename,
+          x.node->line,
+          "Multiple @init functions found; only one @init function is allowed per contract");
     }
   }
 }
@@ -739,7 +814,8 @@ void Analyser::CheckSynergeticContract(LedgerRestrictionMetadata const &metadata
   if (!problem_params_correct)
   {
     AddError(
-        problem_file, problem_node->line,
+        problem_file,
+        problem_node->line,
         "The @problem function should accept a single parameter of type Array<StructuredData>");
   }
 
@@ -766,9 +842,11 @@ void Analyser::CheckSynergeticContract(LedgerRestrictionMetadata const &metadata
                                    (work_second_param_type->name == "UInt256");
   if (!work_params_correct)
   {
-    AddError(work_file, work_node->line,
-             "The @work function should accept two parameters: the first should have the same "
-             "type as that returned by the @problem function; the second should be UInt256");
+    AddError(
+        work_file,
+        work_node->line,
+        "The @work function should accept two parameters: the first should have the same "
+        "type as that returned by the @problem function; the second should be UInt256");
   }
 
   if (work_function.return_type == void_type_)
@@ -800,10 +878,12 @@ void Analyser::CheckSynergeticContract(LedgerRestrictionMetadata const &metadata
       (objective_second_param_type == work_function.return_type);
   if (!objective_params_correct)
   {
-    AddError(objective_file, objective_node->line,
-             "The @objective function should accept two parameters: the first should have the same "
-             "type as that returned by the @problem function; the second should have the same type "
-             "as that returned by the @work function");
+    AddError(
+        objective_file,
+        objective_node->line,
+        "The @objective function should accept two parameters: the first should have the same "
+        "type as that returned by the @problem function; the second should have the same type "
+        "as that returned by the @work function");
   }
 
   // @clear
@@ -828,10 +908,12 @@ void Analyser::CheckSynergeticContract(LedgerRestrictionMetadata const &metadata
                                     (clear_second_param_type == work_function.return_type);
   if (!clear_params_correct)
   {
-    AddError(clear_file, clear_node->line,
-             "The @clear function should accept two parameters: the first should have the same "
-             "type as that returned by the @problem function; the second should have the same type "
-             "as that returned by the @work function");
+    AddError(
+        clear_file,
+        clear_node->line,
+        "The @clear function should accept two parameters: the first should have the same "
+        "type as that returned by the @problem function; the second should have the same type "
+        "as that returned by the @work function");
   }
 }
 
@@ -870,8 +952,8 @@ void Analyser::BuildBlock(BlockNodePtr const &block_node)
 {
   if (blocks_.size() >= MAX_NESTED_BLOCKS)
   {
-    throw FatalErrorException(filename_, block_node->line,
-                              "maximum number of nested blocks exceeded");
+    throw FatalErrorException(
+        filename_, block_node->line, "maximum number of nested blocks exceeded");
   }
   blocks_.push_back(block_node);
   for (NodePtr const &child : block_node->block_children)
@@ -940,8 +1022,8 @@ void Analyser::BuildContractDefinition(BlockNodePtr const &contract_definition_n
   std::string const &contract_name = contract_name_node->text;
   if (num_contract_definitions_++ >= MAX_CONTRACT_DEFINITIONS)
   {
-    throw FatalErrorException(filename_, contract_name_node->line,
-                              "maximum number of contract definitions exceeded");
+    throw FatalErrorException(
+        filename_, contract_name_node->line, "maximum number of contract definitions exceeded");
   }
   // check symbols_ as well here?
   if (contract_definitions_.Find(contract_name) || root_->symbols->Find(contract_name))
@@ -964,8 +1046,8 @@ void Analyser::BuildStructDefinition(BlockNodePtr const &struct_definition_node)
   std::string const &struct_name = struct_name_node->text;
   if (num_user_defined_types_++ >= MAX_USER_DEFINED_TYPES)
   {
-    throw FatalErrorException(filename_, struct_name_node->line,
-                              "maximum number of user defined types exceeded");
+    throw FatalErrorException(
+        filename_, struct_name_node->line, "maximum number of user defined types exceeded");
   }
   // check symbols_ as well here?
   if (contract_definitions_.Find(struct_name) || root_->symbols->Find(struct_name))
@@ -988,8 +1070,8 @@ void Analyser::BuildFreeFunctionDefinition(BlockNodePtr const &function_definiti
   std::string const &function_name = function_name_node->text;
   if (num_free_functions_++ >= MAX_FREE_FUNCTIONS)
   {
-    throw FatalErrorException(filename_, function_name_node->line,
-                              "maximum number of functions exceeded");
+    throw FatalErrorException(
+        filename_, function_name_node->line, "maximum number of functions exceeded");
   }
   if (contract_definitions_.Find(function_name))
   {
@@ -1085,8 +1167,8 @@ void Analyser::PreAnnotatePersistentStatement(NodePtr const &persistent_statemen
   std::string const &state_name = state_name_node->text;
   if (num_state_definitions_++ >= MAX_STATE_DEFINITIONS)
   {
-    throw FatalErrorException(filename_, state_name_node->line,
-                              "maximum number of state definitions exceeded");
+    throw FatalErrorException(
+        filename_, state_name_node->line, "maximum number of state definitions exceeded");
   }
   if (state_name == "any")
   {
@@ -1126,8 +1208,10 @@ void Analyser::PreAnnotatePersistentStatement(NodePtr const &persistent_statemen
     // The instantiation doesn't already exist, so create it now
     if (num_user_defined_instantiation_types_++ >= MAX_USER_DEFINED_INSTANTIATION_TYPES)
     {
-      throw FatalErrorException(filename_, state_name_node->line,
-                                "maximum number of user defined instantiation types exceeded");
+      throw FatalErrorException(
+          filename_,
+          state_name_node->line,
+          "maximum number of user defined instantiation types exceeded");
     }
     instantation_type = InternalCreateTemplateInstantiationType(
         TypeKind::UserDefinedTemplateInstantiation, template_type, {managed_type});
@@ -1150,8 +1234,9 @@ void Analyser::PreAnnotateContractDefinition(BlockNodePtr const &contract_defini
   PreAnnotateBlock(contract_definition_node);
 }
 
-void Analyser::PreAnnotateContractFunction(BlockNodePtr const &contract_definition_node,
-                                           NodePtr const &     function_node)
+void Analyser::PreAnnotateContractFunction(
+    BlockNodePtr const &contract_definition_node,
+    NodePtr const &     function_node)
 {
   ExpressionNodePtr contract_name_node =
       ConvertToExpressionNodePtr(contract_definition_node->children[0]);
@@ -1164,8 +1249,8 @@ void Analyser::PreAnnotateContractFunction(BlockNodePtr const &contract_definiti
   std::string const &function_name      = function_name_node->text;
   if (contract_type->num_functions++ >= MAX_FUNCTIONS_PER_CONTRACT)
   {
-    throw FatalErrorException(filename_, function_name_node->line,
-                              "maximum number of contract functions exceeded");
+    throw FatalErrorException(
+        filename_, function_name_node->line, "maximum number of contract functions exceeded");
   }
   FunctionGroupPtr function_group;
   SymbolPtr        symbol = contract_definition_node->symbols->Find(function_name);
@@ -1189,15 +1274,16 @@ void Analyser::PreAnnotateContractFunction(BlockNodePtr const &contract_definiti
   TypePtrArray           parameter_types;
   VariablePtrArray       parameter_variables;
   TypePtr                return_type;
-  if (!PreAnnotatePrototype(function_node, parameter_nodes, parameter_types, parameter_variables,
-                            return_type))
+  if (!PreAnnotatePrototype(
+          function_node, parameter_nodes, parameter_types, parameter_variables, return_type))
   {
     return;
   }
   if (FindFunction(contract_type, function_group, parameter_nodes))
   {
-    AddError(function_name_node->line,
-             "function '" + function_name + "' is already defined with the same parameter types");
+    AddError(
+        function_name_node->line,
+        "function '" + function_name + "' is already defined with the same parameter types");
     return;
   }
   FunctionPtr function = CreateUserDefinedContractFunction(
@@ -1243,8 +1329,9 @@ void Analyser::PreAnnotateStructDefinition(BlockNodePtr const &struct_definition
   struct_name_node->function       = function;
 }
 
-void Analyser::PreAnnotateMemberFunctionDefinition(BlockNodePtr const &struct_definition_node,
-                                                   BlockNodePtr const &function_definition_node)
+void Analyser::PreAnnotateMemberFunctionDefinition(
+    BlockNodePtr const &struct_definition_node,
+    BlockNodePtr const &function_definition_node)
 {
   ExpressionNodePtr struct_name_node =
       ConvertToExpressionNodePtr(struct_definition_node->children[0]);
@@ -1258,8 +1345,8 @@ void Analyser::PreAnnotateMemberFunctionDefinition(BlockNodePtr const &struct_de
   std::string function_name = function_name_node->text;
   if (struct_type->num_functions++ >= MAX_MEMBER_FUNCTIONS_PER_TYPE)
   {
-    throw FatalErrorException(filename_, function_name_node->line,
-                              "maximum number of member functions exceeded");
+    throw FatalErrorException(
+        filename_, function_name_node->line, "maximum number of member functions exceeded");
   }
   FunctionGroupPtr function_group;
   std::string      symbol_name;
@@ -1304,16 +1391,21 @@ void Analyser::PreAnnotateMemberFunctionDefinition(BlockNodePtr const &struct_de
   TypePtrArray           parameter_types;
   VariablePtrArray       parameter_variables;
   TypePtr                return_type;
-  if (!PreAnnotatePrototype(function_definition_node, parameter_nodes, parameter_types,
-                            parameter_variables, return_type))
+  if (!PreAnnotatePrototype(
+          function_definition_node,
+          parameter_nodes,
+          parameter_types,
+          parameter_variables,
+          return_type))
   {
     return;
   }
   if (FindFunction(struct_type, function_group, parameter_nodes))
   {
     std::string text = is_constructor ? "constructor" : "function";
-    AddError(function_name_node->line,
-             text + " '" + function_name + "' is already defined with the same parameter types");
+    AddError(
+        function_name_node->line,
+        text + " '" + function_name + "' is already defined with the same parameter types");
     return;
   }
   for (auto const &parameter_variable : parameter_variables)
@@ -1327,15 +1419,16 @@ void Analyser::PreAnnotateMemberFunctionDefinition(BlockNodePtr const &struct_de
   }
   else
   {
-    function = CreateUserDefinedMemberFunction(struct_type, function_name, parameter_types,
-                                               parameter_variables, return_type);
+    function = CreateUserDefinedMemberFunction(
+        struct_type, function_name, parameter_types, parameter_variables, return_type);
   }
   function_group->functions.push_back(function);
   function_name_node->function = function;
 }
 
-void Analyser::PreAnnotateMemberVarDeclarationStatement(BlockNodePtr const &struct_definition_node,
-                                                        NodePtr const &     var_statement_node)
+void Analyser::PreAnnotateMemberVarDeclarationStatement(
+    BlockNodePtr const &struct_definition_node,
+    NodePtr const &     var_statement_node)
 {
   ExpressionNodePtr struct_name_node =
       ConvertToExpressionNodePtr(struct_definition_node->children[0]);
@@ -1349,8 +1442,8 @@ void Analyser::PreAnnotateMemberVarDeclarationStatement(BlockNodePtr const &stru
   std::string const &variable_name = variable_name_node->text;
   if (struct_type->num_variables++ >= MAX_MEMBER_VARIABLES_PER_TYPE)
   {
-    throw FatalErrorException(filename_, variable_name_node->line,
-                              "maximum number of member variables exceeded");
+    throw FatalErrorException(
+        filename_, variable_name_node->line, "maximum number of member variables exceeded");
   }
   SymbolPtr symbol = struct_definition_node->symbols->Find(variable_name);
   if (symbol)
@@ -1365,9 +1458,10 @@ void Analyser::PreAnnotateMemberVarDeclarationStatement(BlockNodePtr const &stru
   }
   if (type_node->type->IsUserDefinedStruct())
   {
-    AddError(variable_name_node->line, "member variable '" + variable_name +
-                                           "' of user defined type '" + type_node->type->name +
-                                           "' is not supported");
+    AddError(
+        variable_name_node->line,
+        "member variable '" + variable_name + "' of user defined type '" + type_node->type->name +
+            "' is not supported");
     return;
   }
   VariablePtr variable =
@@ -1391,31 +1485,38 @@ void Analyser::PreAnnotateFreeFunctionDefinition(BlockNodePtr const &function_de
   TypePtrArray           parameter_types;
   VariablePtrArray       parameter_variables;
   TypePtr                return_type;
-  if (!PreAnnotatePrototype(function_definition_node, parameter_nodes, parameter_types,
-                            parameter_variables, return_type))
+  if (!PreAnnotatePrototype(
+          function_definition_node,
+          parameter_nodes,
+          parameter_types,
+          parameter_variables,
+          return_type))
   {
     return;
   }
   if (FindFunction(nullptr, function_group, parameter_nodes))
   {
-    AddError(function_name_node->line,
-             "function '" + function_name + "' is already defined with the same parameter types");
+    AddError(
+        function_name_node->line,
+        "function '" + function_name + "' is already defined with the same parameter types");
     return;
   }
   for (auto const &parameter_variable : parameter_variables)
   {
     function_definition_node->symbols->Add(parameter_variable);
   }
-  FunctionPtr function = CreateUserDefinedFreeFunction(function_name, parameter_types,
-                                                       parameter_variables, return_type);
+  FunctionPtr function = CreateUserDefinedFreeFunction(
+      function_name, parameter_types, parameter_variables, return_type);
   function_group->functions.push_back(function);
   function_name_node->function = function;
 }
 
-bool Analyser::PreAnnotatePrototype(NodePtr const &         prototype_node,
-                                    ExpressionNodePtrArray &parameter_nodes,
-                                    TypePtrArray &          parameter_types,
-                                    VariablePtrArray &parameter_variables, TypePtr &return_type)
+bool Analyser::PreAnnotatePrototype(
+    NodePtr const &         prototype_node,
+    ExpressionNodePtrArray &parameter_nodes,
+    TypePtrArray &          parameter_types,
+    VariablePtrArray &      parameter_variables,
+    TypePtr &               return_type)
 {
   parameter_nodes.clear();
   parameter_types.clear();
@@ -1627,8 +1728,9 @@ void Analyser::AnnotateBlock(BlockNodePtr const &block_node)
     {
       if (!variable->referenced)
       {
-        AddError(block_node->block_terminator_line,
-                 "state variable '" + variable->name + "' is not referenced in block");
+        AddError(
+            block_node->block_terminator_line,
+            "state variable '" + variable->name + "' is not referenced in block");
       }
     }
     else if (variable->variable_kind == VariableKind::UseAny)
@@ -1682,8 +1784,9 @@ void Analyser::AnnotateFunctionDefinition(BlockNodePtr const &function_definitio
   {
     if (TestBlock(function_definition_node))
     {
-      AddError(function_definition_node->block_terminator_line,
-               "control reaches end of function without returning a value");
+      AddError(
+          function_definition_node->block_terminator_line,
+          "control reaches end of function without returning a value");
     }
   }
   function_     = nullptr;
@@ -1764,8 +1867,9 @@ void Analyser::AnnotateIfStatement(NodePtr const &if_statement_node)
   }
 }
 
-void Analyser::AnnotateUseStatement(BlockNodePtr const &parent_block_node,
-                                    NodePtr const &     use_statement_node)
+void Analyser::AnnotateUseStatement(
+    BlockNodePtr const &parent_block_node,
+    NodePtr const &     use_statement_node)
 {
   ExpressionNodePtr state_name_node = ConvertToExpressionNodePtr(use_statement_node->children[0]);
   NodePtr           list_node       = use_statement_node->children[1];
@@ -1774,8 +1878,9 @@ void Analyser::AnnotateUseStatement(BlockNodePtr const &parent_block_node,
   TypePtr           type               = state_definitions_.Find(state_name_node->text);
   if (!type)
   {
-    AddError(state_name_node->line,
-             "unable to find state definition for '" + state_name_node->text + "'");
+    AddError(
+        state_name_node->line,
+        "unable to find state definition for '" + state_name_node->text + "'");
     return;
   }
   if (list_node)
@@ -1817,8 +1922,9 @@ void Analyser::AnnotateUseStatement(BlockNodePtr const &parent_block_node,
   variable_name_node->function = constructor;
 }
 
-void Analyser::AnnotateUseAnyStatement(BlockNodePtr const &parent_block_node,
-                                       NodePtr const &     use_any_statement_node)
+void Analyser::AnnotateUseAnyStatement(
+    BlockNodePtr const &parent_block_node,
+    NodePtr const &     use_any_statement_node)
 {
   if (use_any_node_)
   {
@@ -1842,8 +1948,9 @@ void Analyser::AnnotateUseAnyStatement(BlockNodePtr const &parent_block_node,
   }
 }
 
-void Analyser::AnnotateContractStatement(BlockNodePtr const &parent_block_node,
-                                         NodePtr const &     contract_statement_node)
+void Analyser::AnnotateContractStatement(
+    BlockNodePtr const &parent_block_node,
+    NodePtr const &     contract_statement_node)
 {
   ExpressionNodePtr contract_variable_node =
       ConvertToExpressionNodePtr(contract_statement_node->children[0]);
@@ -1857,8 +1964,8 @@ void Analyser::AnnotateContractStatement(BlockNodePtr const &parent_block_node,
 
   if (parent_block_node->symbols->Find(contract_variable_name))
   {
-    AddError(contract_variable_node->line,
-             "symbol '" + contract_variable_name + "' is already defined");
+    AddError(
+        contract_variable_node->line, "symbol '" + contract_variable_name + "' is already defined");
     return;
   }
   TypePtr contract_type = contract_definitions_.Find(contract_type_name);
@@ -1884,8 +1991,9 @@ void Analyser::AnnotateContractStatement(BlockNodePtr const &parent_block_node,
   contract_type_node->type         = contract_type;
 }
 
-void Analyser::AnnotateLocalVarStatement(BlockNodePtr const &parent_block_node,
-                                         NodePtr const &     var_statement_node)
+void Analyser::AnnotateLocalVarStatement(
+    BlockNodePtr const &parent_block_node,
+    NodePtr const &     var_statement_node)
 {
   ExpressionNodePtr  name_node = ConvertToExpressionNodePtr(var_statement_node->children[0]);
   std::string const &name      = name_node->text;
@@ -2091,8 +2199,9 @@ bool Analyser::AnnotateLHSExpression(ExpressionNodePtr const &node, ExpressionNo
   SymbolPtr setter_symbol = symbols->Find(SET_INDEXED_VALUE);
   if (!setter_symbol)
   {
-    AddError(container_node->line, "unable to find matching index operator for type '" +
-                                       container_node->type->name + "'");
+    AddError(
+        container_node->line,
+        "unable to find matching index operator for type '" + container_node->type->name + "'");
     return false;
   }
 
@@ -2102,8 +2211,9 @@ bool Analyser::AnnotateLHSExpression(ExpressionNodePtr const &node, ExpressionNo
   FunctionPtr setter_f = FindFunction(container_node->type, setter_fg, index_nodes);
   if (!setter_f)
   {
-    AddError(container_node->line, "unable to find matching index operator for type '" +
-                                       container_node->type->name + "'");
+    AddError(
+        container_node->line,
+        "unable to find matching index operator for type '" + container_node->type->name + "'");
     return false;
   }
 
@@ -2622,16 +2732,16 @@ bool Analyser::AnnotateIndexOp(ExpressionNodePtr const &node)
   SymbolPtr symbol = symbols->Find(GET_INDEXED_VALUE);
   if (!symbol)
   {
-    AddError(lhs->line,
-             "unable to find matching index operator for type '" + lhs->type->name + "'");
+    AddError(
+        lhs->line, "unable to find matching index operator for type '" + lhs->type->name + "'");
     return false;
   }
   FunctionGroupPtr fg = ConvertToFunctionGroupPtr(symbol);
   FunctionPtr      f  = FindFunction(lhs->type, fg, index_nodes);
   if (!f)
   {
-    AddError(lhs->line,
-             "unable to find matching index operator for type '" + lhs->type->name + "'");
+    AddError(
+        lhs->line, "unable to find matching index operator for type '" + lhs->type->name + "'");
     return false;
   }
   TypePtr return_type = ResolveReturnType(f->return_type, lhs->type);
@@ -2696,8 +2806,8 @@ bool Analyser::AnnotateDotOp(ExpressionNodePtr const &node)
   if (lhs_is_type_expression)
   {
     // static member variable
-    AddError(lhs->line,
-             "'" + lhs->type->name + "' has no static member named '" + member_name + "'");
+    AddError(
+        lhs->line, "'" + lhs->type->name + "' has no static member named '" + member_name + "'");
     return false;
   }
   // member variable
@@ -2730,8 +2840,8 @@ bool Analyser::AnnotateInvokeOp(ExpressionNodePtr const &node)
     if (!f)
     {
       // No matching function, or ambiguous
-      AddError(lhs->line,
-               "unable to find matching function for '" + lhs->function_group->name + "'");
+      AddError(
+          lhs->line, "unable to find matching function for '" + lhs->function_group->name + "'");
       return false;
     }
     TypePtr return_type = ResolveReturnType(f->return_type, lhs->owner);
@@ -2894,8 +3004,10 @@ bool Analyser::IsWriteable(ExpressionNodePtr const &node)
   return true;
 }
 
-bool Analyser::AnnotateArithmetic(ExpressionNodePtr const &node, ExpressionNodePtr const &lhs,
-                                  ExpressionNodePtr const &rhs)
+bool Analyser::AnnotateArithmetic(
+    ExpressionNodePtr const &node,
+    ExpressionNodePtr const &lhs,
+    ExpressionNodePtr const &rhs)
 {
   Operator const op = GetOperator(node->node_kind);
   if (lhs->IsNull() || rhs->IsNull())
@@ -2956,8 +3068,10 @@ bool Analyser::AnnotateArithmetic(ExpressionNodePtr const &node, ExpressionNodeP
   return false;
 }
 
-FunctionPtr Analyser::FindFunction(TypePtr const &type, FunctionGroupPtr const &function_group,
-                                   ExpressionNodePtrArray const &parameter_nodes)
+FunctionPtr Analyser::FindFunction(
+    TypePtr const &               type,
+    FunctionGroupPtr const &      function_group,
+    ExpressionNodePtrArray const &parameter_nodes)
 {
   FunctionPtrArray          functions;
   std::vector<TypePtrArray> array;
@@ -3010,8 +3124,10 @@ TypePtr Analyser::ConvertNode(ExpressionNodePtr const &node, TypePtr const &expe
   return ConvertNode(node, expected_type, nullptr);
 }
 
-TypePtr Analyser::ConvertNode(ExpressionNodePtr const &node, TypePtr const &expected_type,
-                              TypePtr const &type)
+TypePtr Analyser::ConvertNode(
+    ExpressionNodePtr const &node,
+    TypePtr const &          expected_type,
+    TypePtr const &          type)
 {
   TypePtr const &input_type = node->type;
 
@@ -3201,8 +3317,10 @@ SymbolPtr Analyser::FindSymbol(ExpressionNodePtr const &node)
     }
     if (num_user_defined_instantiation_types_++ >= MAX_USER_DEFINED_INSTANTIATION_TYPES)
     {
-      throw FatalErrorException(filename_, identifier_node->line,
-                                "maximum number of user defined instantiation types exceeded");
+      throw FatalErrorException(
+          filename_,
+          identifier_node->line,
+          "maximum number of user defined instantiation types exceeded");
     }
     TypePtr type = InternalCreateTemplateInstantiationType(
         TypeKind::UserDefinedTemplateInstantiation, template_type, template_parameter_types);
@@ -3233,8 +3351,10 @@ SymbolPtr Analyser::SearchSymbols(std::string const &name)
   return nullptr;
 }
 
-void Analyser::SetVariableExpression(ExpressionNodePtr const &node, VariablePtr const &variable,
-                                     TypePtr const &owner)
+void Analyser::SetVariableExpression(
+    ExpressionNodePtr const &node,
+    VariablePtr const &      variable,
+    TypePtr const &          owner)
 {
   node->expression_kind = ExpressionKind::Variable;
   node->variable        = variable;
@@ -3261,9 +3381,10 @@ void Analyser::SetTypeExpression(ExpressionNodePtr const &node, TypePtr const &t
   node->type            = type;
 }
 
-void Analyser::SetFunctionGroupExpression(ExpressionNodePtr const &node,
-                                          FunctionGroupPtr const & function_group,
-                                          TypePtr const &          owner)
+void Analyser::SetFunctionGroupExpression(
+    ExpressionNodePtr const &node,
+    FunctionGroupPtr const & function_group,
+    TypePtr const &          owner)
 {
   node->expression_kind = ExpressionKind::FunctionGroup;
   node->function_group  = function_group;
@@ -3277,8 +3398,9 @@ bool Analyser::CheckType(std::string const &type_name, TypeIndex type_index)
   {
     if (found_type->name != type_name)
     {
-      throw std::runtime_error("type index " + std::string(type_index.name()) +
-                               " has already been registered with a different name");
+      throw std::runtime_error(
+          "type index " + std::string(type_index.name()) +
+          " has already been registered with a different name");
     }
     // Already created
     return true;
@@ -3292,8 +3414,12 @@ bool Analyser::CheckType(std::string const &type_name, TypeIndex type_index)
   return false;
 }
 
-void Analyser::CreatePrimitiveType(std::string const &type_name, TypeIndex type_index,
-                                   bool add_to_symbol_table, TypeId type_id, TypePtr &type)
+void Analyser::CreatePrimitiveType(
+    std::string const &type_name,
+    TypeIndex          type_index,
+    bool               add_to_symbol_table,
+    TypeId             type_id,
+    TypePtr &          type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3310,8 +3436,11 @@ void Analyser::CreatePrimitiveType(std::string const &type_name, TypeIndex type_
   }
 }
 
-void Analyser::CreateMetaType(std::string const &type_name, TypeIndex type_index, TypeId type_id,
-                              TypePtr &type)
+void Analyser::CreateMetaType(
+    std::string const &type_name,
+    TypeIndex          type_index,
+    TypeId             type_id,
+    TypePtr &          type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3324,8 +3453,11 @@ void Analyser::CreateMetaType(std::string const &type_name, TypeIndex type_index
   registered_types_.Add(type_index, type->id);
 }
 
-void Analyser::CreateClassType(std::string const &type_name, TypeIndex type_index, TypeId type_id,
-                               TypePtr &type)
+void Analyser::CreateClassType(
+    std::string const &type_name,
+    TypeIndex          type_index,
+    TypeId             type_id,
+    TypePtr &          type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3340,8 +3472,12 @@ void Analyser::CreateClassType(std::string const &type_name, TypeIndex type_inde
   symbols_->Add(type);
 }
 
-void Analyser::CreateTemplateType(std::string const &type_name, TypeIndex type_index,
-                                  TypePtrArray const &allowed_types, TypeId type_id, TypePtr &type)
+void Analyser::CreateTemplateType(
+    std::string const & type_name,
+    TypeIndex           type_index,
+    TypePtrArray const &allowed_types,
+    TypeId              type_id,
+    TypePtr &           type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3357,12 +3493,15 @@ void Analyser::CreateTemplateType(std::string const &type_name, TypeIndex type_i
   symbols_->Add(type);
 }
 
-void Analyser::CreateTemplateInstantiationType(TypeIndex type_index, TypePtr const &template_type,
-                                               TypePtrArray const &template_parameter_types,
-                                               TypeId type_id, TypePtr &type)
+void Analyser::CreateTemplateInstantiationType(
+    TypeIndex           type_index,
+    TypePtr const &     template_type,
+    TypePtrArray const &template_parameter_types,
+    TypeId              type_id,
+    TypePtr &           type)
 {
-  type = InternalCreateTemplateInstantiationType(TypeKind::TemplateInstantiation, template_type,
-                                                 template_parameter_types);
+  type = InternalCreateTemplateInstantiationType(
+      TypeKind::TemplateInstantiation, template_type, template_parameter_types);
   if (CheckType(type->name, type_index))
   {
     // Already created
@@ -3374,14 +3513,23 @@ void Analyser::CreateTemplateInstantiationType(TypeIndex type_index, TypePtr con
     template_parameter_type_ids.push_back(template_parameter_type->id);
   }
   type_map_.Add(type_index, type);
-  AddTypeInfo(TypeKind::TemplateInstantiation, type->name, type_id, template_type->id,
-              template_parameter_type_ids, type);
+  AddTypeInfo(
+      TypeKind::TemplateInstantiation,
+      type->name,
+      type_id,
+      template_type->id,
+      template_parameter_type_ids,
+      type);
   registered_types_.Add(type_index, type->id);
   symbols_->Add(type);
 }
 
-void Analyser::CreateGroupType(std::string const &type_name, TypeIndex type_index,
-                               TypePtrArray const &allowed_types, TypeId type_id, TypePtr &type)
+void Analyser::CreateGroupType(
+    std::string const & type_name,
+    TypeIndex           type_index,
+    TypePtrArray const &allowed_types,
+    TypeId              type_id,
+    TypePtr &           type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3396,7 +3544,9 @@ void Analyser::CreateGroupType(std::string const &type_name, TypeIndex type_inde
 }
 
 TypePtr Analyser::InternalCreateTemplateInstantiationType(
-    TypeKind type_kind, TypePtr const &template_type, TypePtrArray const &template_parameter_types)
+    TypeKind            type_kind,
+    TypePtr const &     template_type,
+    TypePtrArray const &template_parameter_types)
 {
   std::stringstream stream;
   stream << template_type->name + "<";
@@ -3417,9 +3567,12 @@ TypePtr Analyser::InternalCreateTemplateInstantiationType(
   return type;
 }
 
-void Analyser::CreateFreeFunction(std::string const &name, TypePtrArray const &parameter_types,
-                                  TypePtr const &return_type, Handler const &handler,
-                                  ChargeAmount static_charge)
+void Analyser::CreateFreeFunction(
+    std::string const & name,
+    TypePtrArray const &parameter_types,
+    TypePtr const &     return_type,
+    Handler const &     handler,
+    ChargeAmount        static_charge)
 {
   std::string unique_name = BuildUniqueName(nullptr, name, parameter_types, return_type);
   if (function_map_.Find(unique_name))
@@ -3427,15 +3580,18 @@ void Analyser::CreateFreeFunction(std::string const &name, TypePtrArray const &p
     // Already created
     return;
   }
-  FunctionPtr f = CreateFunction(FunctionKind::FreeFunction, name, unique_name, parameter_types, {},
-                                 return_type);
+  FunctionPtr f = CreateFunction(
+      FunctionKind::FreeFunction, name, unique_name, parameter_types, {}, return_type);
   AddFunctionToSymbolTable(symbols_, f);
   AddFunctionInfo(f, handler, static_charge);
   function_map_.Add(f);
 }
 
-void Analyser::CreateConstructor(TypePtr const &type, TypePtrArray const &parameter_types,
-                                 Handler const &handler, ChargeAmount static_charge)
+void Analyser::CreateConstructor(
+    TypePtr const &     type,
+    TypePtrArray const &parameter_types,
+    Handler const &     handler,
+    ChargeAmount        static_charge)
 {
   std::string unique_name = BuildUniqueName(type, CONSTRUCTOR, parameter_types, type);
   if (function_map_.Find(unique_name))
@@ -3443,17 +3599,20 @@ void Analyser::CreateConstructor(TypePtr const &type, TypePtrArray const &parame
     // Already created
     return;
   }
-  FunctionPtr f = CreateFunction(FunctionKind::Constructor, CONSTRUCTOR, unique_name,
-                                 parameter_types, {}, type);
+  FunctionPtr f = CreateFunction(
+      FunctionKind::Constructor, CONSTRUCTOR, unique_name, parameter_types, {}, type);
   AddFunctionToSymbolTable(type->symbols, f);
   AddFunctionInfo(f, handler, static_charge);
   function_map_.Add(f);
 }
 
-void Analyser::CreateStaticMemberFunction(TypePtr const &type, std::string const &name,
-                                          TypePtrArray const &parameter_types,
-                                          TypePtr const &return_type, Handler const &handler,
-                                          ChargeAmount static_charge)
+void Analyser::CreateStaticMemberFunction(
+    TypePtr const &     type,
+    std::string const & name,
+    TypePtrArray const &parameter_types,
+    TypePtr const &     return_type,
+    Handler const &     handler,
+    ChargeAmount        static_charge)
 {
   std::string unique_name = BuildUniqueName(type, name, parameter_types, return_type);
   if (function_map_.Find(unique_name))
@@ -3461,16 +3620,20 @@ void Analyser::CreateStaticMemberFunction(TypePtr const &type, std::string const
     // Already created
     return;
   }
-  FunctionPtr f = CreateFunction(FunctionKind::StaticMemberFunction, name, unique_name,
-                                 parameter_types, {}, return_type);
+  FunctionPtr f = CreateFunction(
+      FunctionKind::StaticMemberFunction, name, unique_name, parameter_types, {}, return_type);
   AddFunctionToSymbolTable(type->symbols, f);
   AddFunctionInfo(f, handler, static_charge);
   function_map_.Add(f);
 }
 
-void Analyser::CreateMemberFunction(TypePtr const &type, std::string const &name,
-                                    TypePtrArray const &parameter_types, TypePtr const &return_type,
-                                    Handler const &handler, ChargeAmount static_charge)
+void Analyser::CreateMemberFunction(
+    TypePtr const &     type,
+    std::string const & name,
+    TypePtrArray const &parameter_types,
+    TypePtr const &     return_type,
+    Handler const &     handler,
+    ChargeAmount        static_charge)
 {
   std::string unique_name = BuildUniqueName(type, name, parameter_types, return_type);
   if (function_map_.Find(unique_name))
@@ -3478,57 +3641,86 @@ void Analyser::CreateMemberFunction(TypePtr const &type, std::string const &name
     // Already created
     return;
   }
-  FunctionPtr f = CreateFunction(FunctionKind::MemberFunction, name, unique_name, parameter_types,
-                                 {}, return_type);
+  FunctionPtr f = CreateFunction(
+      FunctionKind::MemberFunction, name, unique_name, parameter_types, {}, return_type);
   AddFunctionToSymbolTable(type->symbols, f);
   AddFunctionInfo(f, handler, static_charge);
   function_map_.Add(f);
 }
 
-FunctionPtr Analyser::CreateUserDefinedFreeFunction(std::string const &     name,
-                                                    TypePtrArray const &    parameter_types,
-                                                    VariablePtrArray const &parameter_variables,
-                                                    TypePtr const &         return_type)
+FunctionPtr Analyser::CreateUserDefinedFreeFunction(
+    std::string const &     name,
+    TypePtrArray const &    parameter_types,
+    VariablePtrArray const &parameter_variables,
+    TypePtr const &         return_type)
 {
   std::string unique_name = BuildUniqueName(nullptr, name, parameter_types, return_type);
-  return CreateFunction(FunctionKind::UserDefinedFreeFunction, name, unique_name, parameter_types,
-                        parameter_variables, return_type);
+  return CreateFunction(
+      FunctionKind::UserDefinedFreeFunction,
+      name,
+      unique_name,
+      parameter_types,
+      parameter_variables,
+      return_type);
 }
 
-FunctionPtr Analyser::CreateUserDefinedContractFunction(TypePtr const &         type,
-                                                        std::string const &     name,
-                                                        TypePtrArray const &    parameter_types,
-                                                        VariablePtrArray const &parameter_variables,
-                                                        TypePtr const &         return_type)
+FunctionPtr Analyser::CreateUserDefinedContractFunction(
+    TypePtr const &         type,
+    std::string const &     name,
+    TypePtrArray const &    parameter_types,
+    VariablePtrArray const &parameter_variables,
+    TypePtr const &         return_type)
 {
   std::string unique_name = BuildUniqueName(type, name, parameter_types, return_type);
-  return CreateFunction(FunctionKind::UserDefinedContractFunction, name, unique_name,
-                        parameter_types, parameter_variables, return_type);
+  return CreateFunction(
+      FunctionKind::UserDefinedContractFunction,
+      name,
+      unique_name,
+      parameter_types,
+      parameter_variables,
+      return_type);
 }
 
-FunctionPtr Analyser::CreateUserDefinedConstructor(TypePtr const &         type,
-                                                   TypePtrArray const &    parameter_types,
-                                                   VariablePtrArray const &parameter_variables)
+FunctionPtr Analyser::CreateUserDefinedConstructor(
+    TypePtr const &         type,
+    TypePtrArray const &    parameter_types,
+    VariablePtrArray const &parameter_variables)
 {
   std::string unique_name = BuildUniqueName(type, CONSTRUCTOR, parameter_types, type);
-  return CreateFunction(FunctionKind::UserDefinedConstructor, CONSTRUCTOR, unique_name,
-                        parameter_types, parameter_variables, type);
+  return CreateFunction(
+      FunctionKind::UserDefinedConstructor,
+      CONSTRUCTOR,
+      unique_name,
+      parameter_types,
+      parameter_variables,
+      type);
 }
 
-FunctionPtr Analyser::CreateUserDefinedMemberFunction(TypePtr const &type, std::string const &name,
-                                                      TypePtrArray const &    parameter_types,
-                                                      VariablePtrArray const &parameter_variables,
-                                                      TypePtr const &         return_type)
+FunctionPtr Analyser::CreateUserDefinedMemberFunction(
+    TypePtr const &         type,
+    std::string const &     name,
+    TypePtrArray const &    parameter_types,
+    VariablePtrArray const &parameter_variables,
+    TypePtr const &         return_type)
 {
   std::string unique_name = BuildUniqueName(type, name, parameter_types, return_type);
-  return CreateFunction(FunctionKind::UserDefinedMemberFunction, name, unique_name, parameter_types,
-                        parameter_variables, return_type);
+  return CreateFunction(
+      FunctionKind::UserDefinedMemberFunction,
+      name,
+      unique_name,
+      parameter_types,
+      parameter_variables,
+      return_type);
 }
 
-void Analyser::EnableIndexOperator(TypePtr const &type, TypePtrArray const &input_types,
-                                   TypePtr const &output_type, Handler const &get_handler,
-                                   Handler const &set_handler, ChargeAmount get_static_charge,
-                                   ChargeAmount set_static_charge)
+void Analyser::EnableIndexOperator(
+    TypePtr const &     type,
+    TypePtrArray const &input_types,
+    TypePtr const &     output_type,
+    Handler const &     get_handler,
+    Handler const &     set_handler,
+    ChargeAmount        get_static_charge,
+    ChargeAmount        set_static_charge)
 {
   std::string g_unique_name = BuildUniqueName(type, GET_INDEXED_VALUE, input_types, output_type);
   if (function_map_.Find(g_unique_name))
@@ -3544,22 +3736,31 @@ void Analyser::EnableIndexOperator(TypePtr const &type, TypePtrArray const &inpu
     return;
   }
 
-  FunctionPtr gf = CreateFunction(FunctionKind::MemberFunction, GET_INDEXED_VALUE, g_unique_name,
-                                  input_types, {}, output_type);
+  FunctionPtr gf = CreateFunction(
+      FunctionKind::MemberFunction, GET_INDEXED_VALUE, g_unique_name, input_types, {}, output_type);
   AddFunctionInfo(gf, get_handler, get_static_charge);
   AddFunctionToSymbolTable(type->symbols, gf);
   function_map_.Add(gf);
 
-  FunctionPtr sf = CreateFunction(FunctionKind::MemberFunction, SET_INDEXED_VALUE, s_unique_name,
-                                  s_input_types, {}, void_type_);
+  FunctionPtr sf = CreateFunction(
+      FunctionKind::MemberFunction,
+      SET_INDEXED_VALUE,
+      s_unique_name,
+      s_input_types,
+      {},
+      void_type_);
   AddFunctionInfo(sf, set_handler, set_static_charge);
   AddFunctionToSymbolTable(type->symbols, sf);
   function_map_.Add(sf);
 }
 
-void Analyser::AddTypeInfo(TypeKind type_kind, std::string const &type_name, TypeId type_id,
-                           TypeId template_type_id, TypeIdArray const &template_parameter_type_ids,
-                           TypePtr const &type)
+void Analyser::AddTypeInfo(
+    TypeKind           type_kind,
+    std::string const &type_name,
+    TypeId             type_id,
+    TypeId             template_type_id,
+    TypeIdArray const &template_parameter_type_ids,
+    TypePtr const &    type)
 {
   TypeId id;
   if (type_id == TypeIds::Unknown)
@@ -3578,16 +3779,20 @@ void Analyser::AddTypeInfo(TypeKind type_kind, std::string const &type_name, Typ
   type_info_map_[type->name] = id;
 }
 
-void Analyser::AddFunctionInfo(FunctionPtr const &function, Handler const &handler,
-                               ChargeAmount static_charge)
+void Analyser::AddFunctionInfo(
+    FunctionPtr const &function,
+    Handler const &    handler,
+    ChargeAmount       static_charge)
 {
-  function_info_array_.emplace_back(function->function_kind, function->unique_name, handler,
-                                    static_charge);
+  function_info_array_.emplace_back(
+      function->function_kind, function->unique_name, handler, static_charge);
 }
 
-std::string Analyser::BuildUniqueName(TypePtr const &type, std::string const &function_name,
-                                      TypePtrArray const &parameter_types,
-                                      TypePtr const &     return_type)
+std::string Analyser::BuildUniqueName(
+    TypePtr const &     type,
+    std::string const & function_name,
+    TypePtrArray const &parameter_types,
+    TypePtr const &     return_type)
 {
   std::stringstream stream;
   if (type)

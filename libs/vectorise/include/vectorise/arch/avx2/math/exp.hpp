@@ -131,11 +131,14 @@ inline VectorRegister<fixed_point::fp32_t, 128> Exp(
   e.data() = _mm_blendv_epi8(
       e.data(), VectorRegister<fixed_point::fp32_t, 128>::MaskPosInf().data(), mask_pos_inf.data());
   // Replace -inf in the final product using the mask
-  e.data() = _mm_blendv_epi8(e.data(), VectorRegister<fixed_point::fp32_t, 128>::_0().data(),
-                             (mask_neg_inf | mask_underflow).data());
+  e.data() = _mm_blendv_epi8(
+      e.data(),
+      VectorRegister<fixed_point::fp32_t, 128>::_0().data(),
+      (mask_neg_inf | mask_underflow).data());
   // Replace NaN in the final product using the mask
   e.data() = _mm_blendv_epi8(
-      e.data(), VectorRegister<fixed_point::fp32_t, 128>(fixed_point::fp32_t::NaN).data(),
+      e.data(),
+      VectorRegister<fixed_point::fp32_t, 128>(fixed_point::fp32_t::NaN).data(),
       mask_nan.data());
 
   // Remove NaN/Inf elements from Overflow/Underflow mask
@@ -144,8 +147,8 @@ inline VectorRegister<fixed_point::fp32_t, 128> Exp(
   mask_underflow.data() =
       _mm_blendv_epi8(mask_underflow.data(), _mm_setzero_si128(), (mask_nan | mask_neg_inf).data());
   bool is_overflow = _mm_movemask_epi8(mask_overflow.data() | mask_underflow.data()) != 0;
-  bool is_infinity = any_equal_to(mask_pos_inf | mask_neg_inf,
-                                  VectorRegister<fixed_point::fp32_t, 128>::MaskAllBits());
+  bool is_infinity = any_equal_to(
+      mask_pos_inf | mask_neg_inf, VectorRegister<fixed_point::fp32_t, 128>::MaskAllBits());
   bool is_nan = any_equal_to(mask_nan, VectorRegister<fixed_point::fp32_t, 128>::MaskAllBits());
   fixed_point::fp32_t::fp_state |=
       fixed_point::fp32_t::STATE_INFINITY * static_cast<uint32_t>(is_infinity);
@@ -198,21 +201,24 @@ inline VectorRegister<fixed_point::fp32_t, 256> Exp(
   e.data() = _mm256_blendv_epi8(
       e.data(), VectorRegister<fixed_point::fp32_t, 256>::MaskPosInf().data(), mask_pos_inf.data());
   // Replace -inf in the final product using the mask
-  e.data() = _mm256_blendv_epi8(e.data(), VectorRegister<fixed_point::fp32_t, 256>::_0().data(),
-                                (mask_neg_inf | mask_underflow).data());
+  e.data() = _mm256_blendv_epi8(
+      e.data(),
+      VectorRegister<fixed_point::fp32_t, 256>::_0().data(),
+      (mask_neg_inf | mask_underflow).data());
   // Replace NaN in the final product using the mask
   e.data() = _mm256_blendv_epi8(
-      e.data(), VectorRegister<fixed_point::fp32_t, 256>(fixed_point::fp32_t::NaN).data(),
+      e.data(),
+      VectorRegister<fixed_point::fp32_t, 256>(fixed_point::fp32_t::NaN).data(),
       mask_nan.data());
 
   // Remove NaN/Inf elements from Overflow/Underflow mask
-  mask_overflow.data()  = _mm256_blendv_epi8(mask_overflow.data(), _mm256_setzero_si256(),
-                                            (mask_nan | mask_pos_inf).data());
-  mask_underflow.data() = _mm256_blendv_epi8(mask_underflow.data(), _mm256_setzero_si256(),
-                                             (mask_nan | mask_neg_inf).data());
-  bool is_overflow      = _mm256_movemask_epi8(mask_overflow.data() | mask_underflow.data()) != 0;
-  bool is_infinity      = any_equal_to(mask_pos_inf | mask_neg_inf,
-                                  VectorRegister<fixed_point::fp32_t, 256>::MaskAllBits());
+  mask_overflow.data() = _mm256_blendv_epi8(
+      mask_overflow.data(), _mm256_setzero_si256(), (mask_nan | mask_pos_inf).data());
+  mask_underflow.data() = _mm256_blendv_epi8(
+      mask_underflow.data(), _mm256_setzero_si256(), (mask_nan | mask_neg_inf).data());
+  bool is_overflow = _mm256_movemask_epi8(mask_overflow.data() | mask_underflow.data()) != 0;
+  bool is_infinity = any_equal_to(
+      mask_pos_inf | mask_neg_inf, VectorRegister<fixed_point::fp32_t, 256>::MaskAllBits());
   bool is_nan = any_equal_to(mask_nan, VectorRegister<fixed_point::fp32_t, 256>::MaskAllBits());
   fixed_point::fp32_t::fp_state |=
       fixed_point::fp32_t::STATE_INFINITY * static_cast<uint32_t>(is_infinity);

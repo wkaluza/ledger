@@ -35,8 +35,10 @@ constexpr char const *LOGGING_NAME = "StateSentinelAdapter";
  * @param storage The reference to the storage engine
  * @param scope The reference to the scope
  */
-StateSentinelAdapter::StateSentinelAdapter(StorageInterface &storage, ConstByteArray scope,
-                                           BitVector const &shards)
+StateSentinelAdapter::StateSentinelAdapter(
+    StorageInterface &storage,
+    ConstByteArray    scope,
+    BitVector const & shards)
   : StateAdapter(storage, std::move(scope), Mode::READ_WRITE)
   , shards_{shards}
 {
@@ -71,8 +73,10 @@ StateSentinelAdapter::~StateSentinelAdapter()
  * back
  * @return OK if the read was successful, PERMISSION_DENIED if the key is incorrect, otherwise ERROR
  */
-StateSentinelAdapter::Status StateSentinelAdapter::Read(std::string const &key, void *data,
-                                                        uint64_t &size)
+StateSentinelAdapter::Status StateSentinelAdapter::Read(
+    std::string const &key,
+    void *             data,
+    uint64_t &         size)
 {
   if (!IsAllowedResource(key))
   {
@@ -102,13 +106,17 @@ StateSentinelAdapter::Status StateSentinelAdapter::Read(std::string const &key, 
  * @return OK if the write was successful, PERMISSION_DENIED if the key is incorrect, otherwise
  * ERROR
  */
-StateSentinelAdapter::Status StateSentinelAdapter::Write(std::string const &key, void const *data,
-                                                         uint64_t size)
+StateSentinelAdapter::Status StateSentinelAdapter::Write(
+    std::string const &key,
+    void const *       data,
+    uint64_t           size)
 {
   if (!IsAllowedResource(key))
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Unable to write to resource: ", CreateAddress(CurrentScope(), key).address());
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Unable to write to resource: ",
+        CreateAddress(CurrentScope(), key).address());
     return Status::PERMISSION_DENIED;
   }
 

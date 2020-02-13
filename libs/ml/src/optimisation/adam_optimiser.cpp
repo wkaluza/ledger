@@ -40,12 +40,15 @@ void AdamOptimiser<T>::Init()
 }
 
 template <class T>
-AdamOptimiser<T>::AdamOptimiser(std::shared_ptr<Graph<T>>       graph,
-                                std::vector<std::string> const &input_node_names,
-                                std::string const &             label_node_name,
-                                std::string const &output_node_name, DataType const &learning_rate,
-                                DataType const &beta1, DataType const &beta2,
-                                DataType const &epsilon)
+AdamOptimiser<T>::AdamOptimiser(
+    std::shared_ptr<Graph<T>>       graph,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name,
+    DataType const &                learning_rate,
+    DataType const &                beta1,
+    DataType const &                beta2,
+    DataType const &                epsilon)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate)
   , beta1_(beta1)
   , beta2_(beta2)
@@ -58,10 +61,14 @@ AdamOptimiser<T>::AdamOptimiser(std::shared_ptr<Graph<T>>       graph,
 
 template <class T>
 AdamOptimiser<T>::AdamOptimiser(
-    std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-    std::string const &label_node_name, std::string const &output_node_name,
+    std::shared_ptr<Graph<T>>                                 graph,
+    std::vector<std::string> const &                          input_node_names,
+    std::string const &                                       label_node_name,
+    std::string const &                                       output_node_name,
     fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
-    DataType const &beta1, DataType const &beta2, DataType const &epsilon)
+    DataType const &                                          beta1,
+    DataType const &                                          beta2,
+    DataType const &                                          epsilon)
   : Optimiser<T>(graph, input_node_names, label_node_name, output_node_name, learning_rate_param)
   , beta1_(beta1)
   , beta2_(beta2)
@@ -97,9 +104,10 @@ void AdamOptimiser<T>::ApplyGradients(SizeType batch_size)
     {
 
       // cache[i] = (beta1_t_ * cache[i]) + ((1.0 - beta1_t_) * (input_gradients[i]/batch_size));
-      fetch::math::Multiply((*trainable_it)->GetGradientsReferences(),
-                            (DataType{1} - beta1_t_) / static_cast<DataType>(batch_size),
-                            *gradient_it);
+      fetch::math::Multiply(
+          (*trainable_it)->GetGradientsReferences(),
+          (DataType{1} - beta1_t_) / static_cast<DataType>(batch_size),
+          *gradient_it);
       fetch::math::Multiply(*cached_weight_it, beta1_t_, *cached_weight_it);
       fetch::math::Add(*cached_weight_it, *gradient_it, *cached_weight_it);
 
@@ -108,8 +116,8 @@ void AdamOptimiser<T>::ApplyGradients(SizeType batch_size)
 
       // momentum[i] = (beta2_t_ * momentum[i]) + ((1.0 - beta2_t_) *
       // ((input_gradients[i]/batch_size)^2));
-      fetch::math::Divide((*trainable_it)->GetGradientsReferences(),
-                          static_cast<DataType>(batch_size), *vt_it);
+      fetch::math::Divide(
+          (*trainable_it)->GetGradientsReferences(), static_cast<DataType>(batch_size), *vt_it);
       fetch::math::Square(*vt_it, *vt_it);
       fetch::math::Multiply(*vt_it, (DataType{1} - beta2_t_), *vt_it);
       fetch::math::Multiply(*momentum_it, beta2_t_, *momentum_it);

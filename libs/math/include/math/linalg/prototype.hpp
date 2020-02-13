@@ -60,9 +60,9 @@ struct Prototype
   using OneOpReturnType = Prototype<P + OpSize, uint64_t(S1) | (uint64_t(OP) << (P))>;
 
   template <typename O, uint64_t OP>
-  using TwoOpReturnType =
-      Prototype<P + O::StackSize + OpSize,
-                uint64_t(S1) | (uint64_t(O::Stack) << P) | (uint64_t(OP) << (P + O::StackSize))>;
+  using TwoOpReturnType = Prototype<
+      P + O::StackSize + OpSize,
+      uint64_t(S1) | (uint64_t(O::Stack) << P) | (uint64_t(OP) << (P + O::StackSize))>;
 
   template <typename O>
   TwoOpReturnType<O, ADD> constexpr operator+(O const & /*other*/) const

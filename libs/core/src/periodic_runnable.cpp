@@ -23,8 +23,8 @@
 namespace {
 std::string ToLowerCase(std::string data)
 {
-  std::transform(data.begin(), data.end(), data.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
+  std::transform(
+      data.begin(), data.end(), data.begin(), [](unsigned char c) { return std::tolower(c); });
   return data;
 }
 }  // namespace

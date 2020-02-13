@@ -38,8 +38,11 @@ namespace utilities {
  * @return TensorType with data
  */
 template <typename TensorType>
-TensorType ReadCSV(std::string const &filename, math::SizeType const cols_to_skip = 0,
-                   math::SizeType rows_to_skip = 0, bool unsafe_parsing = false)
+TensorType ReadCSV(
+    std::string const &  filename,
+    math::SizeType const cols_to_skip   = 0,
+    math::SizeType       rows_to_skip   = 0,
+    bool                 unsafe_parsing = false)
 {
   using DataType = typename TensorType::Type;
   std::ifstream file(filename);

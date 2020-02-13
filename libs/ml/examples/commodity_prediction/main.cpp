@@ -100,7 +100,9 @@ LayerType GetLayerType(std::string const &layer_name)
  * names of the nodes
  */
 std::pair<std::string, std::vector<std::string>> ReadArchitecture(
-    std::string const &filename, std::shared_ptr<GraphType> const &g, SizeType line_num = 0)
+    std::string const &               filename,
+    std::shared_ptr<GraphType> const &g,
+    SizeType                          line_num = 0)
 {
   char                     delimiter = ',';
   std::ifstream            file(filename);
@@ -224,8 +226,11 @@ int ArgPos(char const *str, int argc, char **argv)
   return -1;
 }
 
-DataType get_loss(std::shared_ptr<GraphType> const &g_ptr, std::string const &test_x_file,
-                  std::string const &test_y_file, std::vector<std::string> node_names)
+DataType get_loss(
+    std::shared_ptr<GraphType> const &g_ptr,
+    std::string const &               test_x_file,
+    std::string const &               test_y_file,
+    std::vector<std::string>          node_names)
 {
   DataType                                             loss{0};
   DataType                                             loss_counter{0};
@@ -387,8 +392,8 @@ int main(int argc, char **argv)
     DataType loss{0};
 
     // Initialise Optimiser
-    OptimiserType optimiser(g_ptr, {node_names.front()}, node_names.at(1), node_names.back(),
-                            LEARNING_RATE);
+    OptimiserType optimiser(
+        g_ptr, {node_names.front()}, node_names.at(1), node_names.back(), LEARNING_RATE);
 
     fetch::ml::dataloaders::TensorDataLoader<TensorType> loader;
 

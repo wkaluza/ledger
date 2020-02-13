@@ -68,8 +68,9 @@ public:
   bool               operator==(const TaskChainParallel &other) = delete;
   bool               operator<(const TaskChainParallel &other)  = delete;
 
-  virtual std::shared_ptr<TaskType> CreateTask(const TaskInputDataType &,
-                                               std::shared_ptr<IN_PROTO>)    = 0;
+  virtual std::shared_ptr<TaskType> CreateTask(
+      const TaskInputDataType &,
+      std::shared_ptr<IN_PROTO>)                                             = 0;
   virtual std::shared_ptr<IN_PROTO> GetInputProto(const TaskInputDataType &) = 0;
 
   virtual void Add(TaskInputDataType task)
@@ -140,32 +141,40 @@ public:
         }
         else
         {
-          FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to TaskChainParallel(", id,
-                          "), Called by task ", task_id);
+          FETCH_LOG_ERROR(
+              LOGGING_NAME,
+              "No shared pointer to TaskChainParallel(",
+              id,
+              "), Called by task ",
+              task_id);
         }
       });
 
-      task->SetErrorHandler([this_wp, id, task_id](const std::string &dap_name,
-                                                   const std::string &path,
-                                                   const std::string &msg) {
-        auto sp = this_wp.lock();
-        if (sp)
-        {
-          {
-            std::lock_guard<std::mutex> lock(sp->result_mutex_);
-            ++(sp->errored_tasks_);
-          }
-          if (sp->errorHandler)
-          {
-            sp->errorHandler(dap_name, path, msg);
-          }
-        }
-        else
-        {
-          FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to TaskChainParallel(", id,
-                          "), Called by task ", task_id);
-        }
-      });
+      task->SetErrorHandler(
+          [this_wp, id, task_id](
+              const std::string &dap_name, const std::string &path, const std::string &msg) {
+            auto sp = this_wp.lock();
+            if (sp)
+            {
+              {
+                std::lock_guard<std::mutex> lock(sp->result_mutex_);
+                ++(sp->errored_tasks_);
+              }
+              if (sp->errorHandler)
+              {
+                sp->errorHandler(dap_name, path, msg);
+              }
+            }
+            else
+            {
+              FETCH_LOG_ERROR(
+                  LOGGING_NAME,
+                  "No shared pointer to TaskChainParallel(",
+                  id,
+                  "), Called by task ",
+                  task_id);
+            }
+          });
 
       task->submit();
 

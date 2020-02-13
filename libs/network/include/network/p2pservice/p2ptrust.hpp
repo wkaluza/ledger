@@ -117,8 +117,11 @@ public:
     AddFeedback(peer_ident, ConstByteArray{}, subject, quality);
   }
 
-  void AddFeedback(IDENTITY const &peer_ident, ConstByteArray const & /*object_ident*/,
-                   TrustSubject subject, TrustQuality quality) override
+  void AddFeedback(
+      IDENTITY const &peer_ident,
+      ConstByteArray const & /*object_ident*/,
+      TrustSubject subject,
+      TrustQuality quality) override
   {
     FETCH_LOCK(mutex_);
 
@@ -280,18 +283,20 @@ protected:
       trust_store_[pos].SetCurrentTrust(current_time);
     }
 
-    std::sort(trust_store_.begin(), trust_store_.end(),
-              [](PeerTrustRating const &a, PeerTrustRating const &b) {
-                if (a.trust < b.trust)
-                {
-                  return true;
-                }
-                if (a.trust > b.trust)
-                {
-                  return false;
-                }
-                return a.peer_identity < b.peer_identity;
-              });
+    std::sort(
+        trust_store_.begin(),
+        trust_store_.end(),
+        [](PeerTrustRating const &a, PeerTrustRating const &b) {
+          if (a.trust < b.trust)
+          {
+            return true;
+          }
+          if (a.trust > b.trust)
+          {
+            return false;
+          }
+          return a.peer_identity < b.peer_identity;
+        });
 
     ranking_store_.clear();
     for (std::size_t pos = 0; pos < trust_store_.size(); ++pos)

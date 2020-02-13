@@ -26,10 +26,17 @@ namespace math {
 namespace linalg {
 
 template <typename S>
-void Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
-          Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>::
-     operator()(Type const alpha, TensorView<Type> const a, TensorView<Type> const b, Type const beta,
-           TensorView<Type> c) const
+void Blas<
+    S,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>::
+operator()(
+    Type const             alpha,
+    TensorView<Type> const a,
+    TensorView<Type> const b,
+    Type const             beta,
+    TensorView<Type>       c) const
 {
   std::size_t j;
   if ((c.height() == 0) ||
@@ -111,34 +118,47 @@ void Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
           [temp](auto const &vr_c_j, auto const &vr_a_l, auto &vw_c_j) {
             vw_c_j = vr_c_j + static_cast<std::remove_reference_t<decltype(vw_c_j)>>(temp) * vr_a_l;
           },
-          slice_c_j, slice_a_l);
+          slice_c_j,
+          slice_a_l);
     }
   }
 }
 
-template class Blas<int32_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
-                    platform::Parallelisation::VECTORISE>;
-
-template class Blas<int64_t, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
-                    platform::Parallelisation::VECTORISE>;
-
-template class Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
-                    platform::Parallelisation::VECTORISE>;
-
-template class Blas<float, Signature(_C <= _alpha, _A, _B, _beta, _C),
-                    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
-                    platform::Parallelisation::VECTORISE>;
+template class Blas<
+    int32_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
 
 template class Blas<
-    fetch::fixed_point::FixedPoint<16, 16>, Signature(_C <= _alpha, _A, _B, _beta, _C),
-    Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>;
+    int64_t,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
 
 template class Blas<
-    fetch::fixed_point::FixedPoint<32, 32>, Signature(_C <= _alpha, _A, _B, _beta, _C),
-    Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>;
+    double,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
+
+template class Blas<
+    float,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
+
+template class Blas<
+    fetch::fixed_point::FixedPoint<16, 16>,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
+
+template class Blas<
+    fetch::fixed_point::FixedPoint<32, 32>,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+    platform::Parallelisation::VECTORISE>;
 
 }  // namespace linalg
 }  // namespace math

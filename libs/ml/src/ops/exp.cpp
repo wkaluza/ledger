@@ -73,8 +73,9 @@ void Exp<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * f'(input0)= e^x * error_signal
  */
 template <class TensorType>
-std::vector<TensorType> Exp<TensorType>::Backward(VecTensorType const &inputs,
-                                                  TensorType const &   error_signal)
+std::vector<TensorType> Exp<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == this->ComputeOutputShape(inputs));

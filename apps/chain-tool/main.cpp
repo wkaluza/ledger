@@ -225,8 +225,10 @@ class BlockChainForwardTree
     static BlockChains Recurse(BlockHash const &root, BlockChainForwardTree const &block_tree);
 
   private:
-    static bool RecurseInternal(Stack &stack, BlockChainForwardTree const &block_tree,
-                                BlockChains &chains);
+    static bool RecurseInternal(
+        Stack &                      stack,
+        BlockChainForwardTree const &block_tree,
+        BlockChains &                chains);
   };
 
 public:
@@ -318,7 +320,8 @@ public:
   }
 
   std::tuple<BlockChain, int, std::string> GetHeaviestChain(
-      BlockChains const &chains, ChainHeadStore const &chain_head_store) const
+      BlockChains const &   chains,
+      ChainHeadStore const &chain_head_store) const
   {
     std::ostringstream s;
 
@@ -423,54 +426,58 @@ public:
 
     uint64_t last_block_number{0ull};
     uint64_t i{0ull};
-    IterateChainBackward(chain, [&chain, &err_code, &err_msg, &last_block_number, &i](
-                                    BlockNode const &node, BlockHash const &block_hash) {
-      // std::cout << "DEBUG{ValidateChain(...)}: last block idx = " << last_block_number << ",
-      // iteration = " << i << std::endl;
+    IterateChainBackward(
+        chain,
+        [&chain, &err_code, &err_msg, &last_block_number, &i](
+            BlockNode const &node, BlockHash const &block_hash) {
+          // std::cout << "DEBUG{ValidateChain(...)}: last block idx = " << last_block_number << ",
+          // iteration = " << i << std::endl;
 
-      if (!node.is_block_set)
-      {
-        if (block_hash != chain.root)
-        {
-          err_code = -1;
-          std::ostringstream s;
-          s << "Block hash = 0x" << block_hash.ToHex()
-            << " of node with UNSET block db structure (= technical root of the chain) does NOT "
-               "match to expected root hash 0x" +
-                   chain.root.ToHex();
-          err_msg = s.str();
-        }
+          if (!node.is_block_set)
+          {
+            if (block_hash != chain.root)
+            {
+              err_code = -1;
+              std::ostringstream s;
+              s << "Block hash = 0x" << block_hash.ToHex()
+                << " of node with UNSET block db structure (= technical root of the chain) does "
+                   "NOT "
+                   "match to expected root hash 0x" +
+                       chain.root.ToHex();
+              err_msg = s.str();
+            }
 
-        return false;
-      }
+            return false;
+          }
 
-      if (node.db_record.hash() != block_hash)
-      {
-        err_code = -2;
-        err_msg =
-            "Block hash stored in block DB structure does not match block hash used as key to "
-            "fetch block DB structure.";
-        return false;
-      }
+          if (node.db_record.hash() != block_hash)
+          {
+            err_code = -2;
+            err_msg =
+                "Block hash stored in block DB structure does not match block hash used as key to "
+                "fetch block DB structure.";
+            return false;
+          }
 
-      if (i > 0)
-      {
-        if (last_block_number != node.db_record.block.block_number + 1)
-        {
-          err_code = -3;
-          std::ostringstream s;
-          s << "Block 0x" << block_hash.ToHex() << " has unexpected block number value "
-            << node.db_record.block.block_number << ", expected value is " << last_block_number - 1;
-          err_msg = s.str();
-          return false;
-        }
-      }
+          if (i > 0)
+          {
+            if (last_block_number != node.db_record.block.block_number + 1)
+            {
+              err_code = -3;
+              std::ostringstream s;
+              s << "Block 0x" << block_hash.ToHex() << " has unexpected block number value "
+                << node.db_record.block.block_number << ", expected value is "
+                << last_block_number - 1;
+              err_msg = s.str();
+              return false;
+            }
+          }
 
-      last_block_number = node.db_record.block.block_number;
-      ++i;
+          last_block_number = node.db_record.block.block_number;
+          ++i;
 
-      return true;
-    });
+          return true;
+        });
 
     if (last_block_number != 0ull)
     {
@@ -534,8 +541,9 @@ private:
       {
         // parent_it = bch.emplace(node_it->second.db_record.block.previous_hash,
         // BlockNode{BlockDbRecord{}, BlockNode::BlockChildren{new_node_hash}, false}).first;
-        bch.emplace(node_it->second.db_record.block.previous_hash,
-                    BlockNode{BlockDbRecord{}, BlockNode::BlockChildren{new_node_hash}, false});
+        bch.emplace(
+            node_it->second.db_record.block.previous_hash,
+            BlockNode{BlockDbRecord{}, BlockNode::BlockChildren{new_node_hash}, false});
       }
 
       // TODO(pb): This check is supposed to be compiled in, but it can't, since ledger node sets
@@ -588,7 +596,8 @@ private:
 };
 
 BlockChains BlockChainForwardTree::RecursionContext::Recurse(
-    BlockHash const &root, BlockChainForwardTree const &block_tree)
+    BlockHash const &            root,
+    BlockChainForwardTree const &block_tree)
 {
   BlockChains chains;
 
@@ -628,7 +637,9 @@ BlockChains BlockChainForwardTree::RecursionContext::Recurse(
 }
 
 bool BlockChainForwardTree::RecursionContext::RecurseInternal(
-    Stack &stack, BlockChainForwardTree const &block_tree, BlockChains &chains)
+    Stack &                      stack,
+    BlockChainForwardTree const &block_tree,
+    BlockChains &                chains)
 {
   bool retval{false};
 
@@ -734,9 +745,12 @@ std::tuple<TxStores, int, std::string> OpenTxDbStores()
   return {std::move(tx_stores), 0, ""};
 }
 
-void ProcessTransactions(BlockChainForwardTree const &bch, BlockChain const &heaviest_chain,
-                         TxStores &tx_stores, TxStoresPtr trimmed_tx_stores,
-                         bool const print_missing_txs)
+void ProcessTransactions(
+    BlockChainForwardTree const &bch,
+    BlockChain const &           heaviest_chain,
+    TxStores &                   tx_stores,
+    TxStoresPtr                  trimmed_tx_stores,
+    bool const                   print_missing_txs)
 {
 
   constexpr std::size_t num_of_progress_steps{10ull};
@@ -767,9 +781,16 @@ void ProcessTransactions(BlockChainForwardTree const &bch, BlockChain const &hea
   std::cout << "INFO: Checking Transactions from all blocks ... " << std::endl;
   bch.IterateChainBackward(
       heaviest_chain,
-      [&tx_stores, &tx_count_in_blockchain, &last_reported_progress_tx_count, &tx_count_missing,
-       &tx_count_missing_accumulated, &tx_count_processed, &tx_count_stored_in_trimmed_db,
-       &trimmed_tx_stores, progress_step, print_missing_txs,
+      [&tx_stores,
+       &tx_count_in_blockchain,
+       &last_reported_progress_tx_count,
+       &tx_count_missing,
+       &tx_count_missing_accumulated,
+       &tx_count_processed,
+       &tx_count_stored_in_trimmed_db,
+       &trimmed_tx_stores,
+       progress_step,
+       print_missing_txs,
        log2_num_of_lanes](BlockNode const &node, BlockHash const & /*block_hash*/) {
         uint64_t slice_idx{0};
         for (auto const &slice : node.db_record.block.slices)
@@ -894,16 +915,23 @@ int main(int argc, char **argv)
   commandline::Params parser{};
   parser.description(
       "Tool for consistency check & analysis of fetch block-chain & transaction storage files.");
-  parser.add(print_missing_txs, "print-missing-txs",
-             "Print transactions required by block-chain but missing in tx store.", false);
-  parser.add(create_repaired_block_store, "repair-block-db",
-             "Create repaired Blockchain db store containing only necessary & valid blocks. The "
-             "repair creates fresh chain HEAD file.",
-             false);
-  parser.add(create_trimmed_tx_store, "trim-tx-db",
-             "Create trimmed TX db store containing only such TXs which are required by "
-             "block-chain & exist in original TX db store.",
-             false);
+  parser.add(
+      print_missing_txs,
+      "print-missing-txs",
+      "Print transactions required by block-chain but missing in tx store.",
+      false);
+  parser.add(
+      create_repaired_block_store,
+      "repair-block-db",
+      "Create repaired Blockchain db store containing only necessary & valid blocks. The "
+      "repair creates fresh chain HEAD file.",
+      false);
+  parser.add(
+      create_trimmed_tx_store,
+      "trim-tx-db",
+      "Create trimmed TX db store containing only such TXs which are required by "
+      "block-chain & exist in original TX db store.",
+      false);
   parser.Parse(argc, argv);
 
   BlockStore block_store;
@@ -975,8 +1003,8 @@ int main(int argc, char **argv)
     trimmed_tx_stores->reserve(tx_stores.size());
     for (uint64_t lane_idx{0ull}; lane_idx < tx_stores.size(); ++lane_idx)
     {
-      (*trimmed_tx_stores)[lane_idx].New(ComposeTxDbFileName(lane_idx, "trimmed"),
-                                         ComposeTxDbFileName(lane_idx, "index_trimmed"));
+      (*trimmed_tx_stores)[lane_idx].New(
+          ComposeTxDbFileName(lane_idx, "trimmed"), ComposeTxDbFileName(lane_idx, "index_trimmed"));
     }
   }
 

@@ -36,22 +36,38 @@ public:
 
   /// @name Testing Interface
   /// @{
-  void SubmitPacket(Address const &from, uint16_t service, uint16_t channel,
-                    Payload const &payload);
+  void SubmitPacket(
+      Address const &from,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &payload);
   void SubmitPacket(Packet const &packet, Address const &last_hop);
   /// @}
 
   /// @name Muddle Endpoint Interface
   /// @{
   Address const &GetAddress() const override;
-  void           Send(Address const &address, uint16_t service, uint16_t channel,
-                      Payload const &message) override;
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message,
-            Options options) override;
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload) override;
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload, Options options) override;
+  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
+      override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message,
+      Options        options) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload,
+      Options        options) override;
   void Broadcast(uint16_t service, uint16_t channel, Payload const &payload) override;
 
   SubscriptionPtr  Subscribe(uint16_t service, uint16_t channel) override;
@@ -80,8 +96,11 @@ inline FakeMuddleEndpoint::FakeMuddleEndpoint(Address address, NetworkId const &
   , network_id_{network_id}
 {}
 
-inline void FakeMuddleEndpoint::SubmitPacket(Address const &from, uint16_t service,
-                                             uint16_t channel, Payload const &payload)
+inline void FakeMuddleEndpoint::SubmitPacket(
+    Address const &from,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &payload)
 {
   // build up the muddle packet
   Packet packet{from, network_id_.value()};
@@ -120,38 +139,57 @@ inline FakeMuddleEndpoint::Address const &FakeMuddleEndpoint::GetAddress() const
   return address_;
 }
 
-inline void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                                     Payload const &message)
+inline void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message)
 {
   FETCH_UNUSED(address, service, channel, message);
 }
 
-inline void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                                     Payload const &message, Options options)
+inline void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &message,
+    Options        options)
 {
   FETCH_UNUSED(address, service, channel, message, options);
 }
 
-inline void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                                     uint16_t message_num, Payload const &payload)
+inline void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload)
 {
   FETCH_UNUSED(address, service, channel, message_num, payload);
 }
 
-inline void FakeMuddleEndpoint::Send(Address const &address, uint16_t service, uint16_t channel,
-                                     uint16_t message_num, Payload const &payload, Options options)
+inline void FakeMuddleEndpoint::Send(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel,
+    uint16_t       message_num,
+    Payload const &payload,
+    Options        options)
 {
   FETCH_UNUSED(address, service, channel, message_num, payload, options);
 }
 
-inline void FakeMuddleEndpoint::Broadcast(uint16_t service, uint16_t channel,
-                                          Payload const &payload)
+inline void FakeMuddleEndpoint::Broadcast(
+    uint16_t       service,
+    uint16_t       channel,
+    Payload const &payload)
 {
   FETCH_UNUSED(service, channel, payload);
 }
 
-inline FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(uint16_t service,
-                                                                         uint16_t channel)
+inline FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(
+    uint16_t service,
+    uint16_t channel)
 {
   auto subscription = std::make_shared<Subscription>();
 
@@ -166,9 +204,10 @@ inline FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(uint16_
   return subscription;
 }
 
-inline FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(Address const &address,
-                                                                         uint16_t       service,
-                                                                         uint16_t       channel)
+inline FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel)
 {
   FETCH_UNUSED(address, service, channel);
 

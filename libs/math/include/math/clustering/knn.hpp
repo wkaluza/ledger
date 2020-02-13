@@ -28,10 +28,13 @@ namespace math {
 namespace clustering {
 namespace details {
 
-template <typename ArrayType,
-          typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
+template <
+    typename ArrayType,
+    typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNImplementation(
-    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
+    ArrayType                    array,
+    ArrayType                    vec,
+    typename ArrayType::SizeType k)
 {
   using DataType = typename ArrayType::Type;
   using SizeType = fetch::math::SizeType;
@@ -43,8 +46,9 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
   assert((vec.shape().at(0) == 1) || (vec.shape().at(1) == 1));
 
   // array must be either {M, N} (if vector shape is {1, N}) or {N, M}
-  assert(((array.shape().at(1) == vec.shape().at(1)) && (vec.shape().at(0) == 1)) ||
-         ((array.shape().at(0) == vec.shape().at(0)) && (vec.shape().at(1) == 1)));
+  assert(
+      ((array.shape().at(1) == vec.shape().at(1)) && (vec.shape().at(0) == 1)) ||
+      ((array.shape().at(0) == vec.shape().at(0)) && (vec.shape().at(1) == 1)));
 
   SizeType feature_axis;
   SizeType data_axis;
@@ -71,9 +75,13 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
   }
 
   // partial sort first K values
-  std::nth_element(similarities.begin(), similarities.begin() + unsigned(k), similarities.end(),
-                   [](std::pair<SizeType, DataType> const &a,
-                      std::pair<SizeType, DataType> const &b) { return a.second < b.second; });
+  std::nth_element(
+      similarities.begin(),
+      similarities.begin() + unsigned(k),
+      similarities.end(),
+      [](std::pair<SizeType, DataType> const &a, std::pair<SizeType, DataType> const &b) {
+        return a.second < b.second;
+      });
 
   // fill the return container with the partial sort top k
   for (SizeType i(0); i < k; ++i)
@@ -82,10 +90,12 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
   }
 
   // sort the top k values
-  std::sort(ret.begin(), ret.end(),
-            [](std::pair<SizeType, DataType> const &a, std::pair<SizeType, DataType> const &b) {
-              return a.second < b.second;
-            });
+  std::sort(
+      ret.begin(),
+      ret.end(),
+      [](std::pair<SizeType, DataType> const &a, std::pair<SizeType, DataType> const &b) {
+        return a.second < b.second;
+      });
 
   return ret;
 }
@@ -103,7 +113,9 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  */
 template <typename ArrayType>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNCosine(
-    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
+    ArrayType                    array,
+    ArrayType                    vec,
+    typename ArrayType::SizeType k)
 {
   return details::KNNImplementation<ArrayType, fetch::math::distance::Cosine>(array, vec, k);
 }
@@ -118,7 +130,9 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  */
 template <typename ArrayType>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNCosine(
-    ArrayType array, typename ArrayType::SizeType idx, typename ArrayType::SizeType k)
+    ArrayType                    array,
+    typename ArrayType::SizeType idx,
+    typename ArrayType::SizeType k)
 {
   ArrayType vec = array.slice(idx);
   return details::KNNImplementation<ArrayType, fetch::math::distance::Cosine>(array, vec, k);
@@ -135,10 +149,13 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  * @param vec the test vector
  * @param k  value of k - i.e. how many nearest data points to find
  */
-template <typename ArrayType,
-          typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
+template <
+    typename ArrayType,
+    typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNN(
-    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
+    ArrayType                    array,
+    ArrayType                    vec,
+    typename ArrayType::SizeType k)
 {
   return details::KNNImplementation<ArrayType, Distance>(array, vec, k);
 }
@@ -154,10 +171,13 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  * @param idx extract row of array to use as the test vector vector
  * @param k  value of k - i.e. how many nearest data points to find
  */
-template <typename ArrayType,
-          typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
+template <
+    typename ArrayType,
+    typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNN(
-    ArrayType array, typename ArrayType::SizeType idx, typename ArrayType::SizeType k)
+    ArrayType                    array,
+    typename ArrayType::SizeType idx,
+    typename ArrayType::SizeType k)
 {
   ArrayType vec = array.slice(idx);
   return details::KNNImplementation<ArrayType, Distance>(array, vec, k);

@@ -97,8 +97,9 @@ public:
     E_BLOCK_COUNT   = E_REGISTER_SIZE / sizeof(type)
   };
 
-  static_assert((E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
-                "type cannot be contained in the given register size.");
+  static_assert(
+      (E_BLOCK_COUNT * sizeof(type)) == E_REGISTER_SIZE,
+      "type cannot be contained in the given register size.");
 
   VectorRegister() = default;
   explicit VectorRegister(type const *d)

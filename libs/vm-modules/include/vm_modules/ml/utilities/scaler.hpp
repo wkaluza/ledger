@@ -55,8 +55,9 @@ public:
 
   static fetch::vm::Ptr<VMScaler> Constructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
 
-  void SetScaleByData(fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &reference_tensor,
-                      fetch::vm::Ptr<fetch::vm::String> const &                mode);
+  void SetScaleByData(
+      fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> const &reference_tensor,
+      fetch::vm::Ptr<fetch::vm::String> const &                mode);
 
   void SetScaleByRange(DataType const &min_val, DataType const &max_val);
 
@@ -97,8 +98,10 @@ struct MapSerializer<fetch::vm_modules::ml::utilities::VMScaler, D>
   static void Serialize(Constructor &map_constructor, Type const &sp)
   {
     auto map = map_constructor(1);
-    map.Append(SCALER, (*std::static_pointer_cast<fetch::ml::utilities::MinMaxScaler<
-                            fetch::math::Tensor<fetch::vm_modules::math::DataType>>>(sp.scaler_)));
+    map.Append(
+        SCALER,
+        (*std::static_pointer_cast<fetch::ml::utilities::MinMaxScaler<
+             fetch::math::Tensor<fetch::vm_modules::math::DataType>>>(sp.scaler_)));
   }
 
   template <typename MapDeserializer>

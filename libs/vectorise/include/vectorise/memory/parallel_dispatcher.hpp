@@ -45,7 +45,8 @@ public:
 
   template <std::size_t S>
   using vector_kernel_signature_type = std::function<vectorise::VectorRegister<type, S>(
-      vectorise::VectorRegister<type, S> const, vectorise::VectorRegister<type, S> const)>;
+      vectorise::VectorRegister<type, S> const,
+      vectorise::VectorRegister<type, S> const)>;
   template <std::size_t S>
   using vector_reduce_signature_type =
       std::function<type(vectorise::VectorRegister<type, S> const)>;
@@ -56,9 +57,12 @@ public:
   {}
 
   template <std::size_t N, typename G, typename... Args>
-  static void InitializeVectorIterators(std::size_t offset, std::size_t size,
-                                        vectorise::VectorRegisterIterator<type, N> *iters, G &next,
-                                        Args &&... remaining)
+  static void InitializeVectorIterators(
+      std::size_t                                 offset,
+      std::size_t                                 size,
+      vectorise::VectorRegisterIterator<type, N> *iters,
+      G &                                         next,
+      Args &&... remaining)
   {
     assert(next.padded_size() >= offset + size);
     (*iters) = vectorise::VectorRegisterIterator<type, N>(next.pointer() + offset, size);
@@ -66,21 +70,30 @@ public:
   }
 
   template <std::size_t N, typename G>
-  static void InitializeVectorIterators(std::size_t offset, std::size_t size,
-                                        vectorise::VectorRegisterIterator<type, N> *iters, G &next)
+  static void InitializeVectorIterators(
+      std::size_t                                 offset,
+      std::size_t                                 size,
+      vectorise::VectorRegisterIterator<type, N> *iters,
+      G &                                         next)
   {
     assert(next.padded_size() >= offset + size);
     (*iters) = vectorise::VectorRegisterIterator<type, N>(next.pointer() + offset, size);
   }
 
   template <std::size_t N>
-  static void InitializeVectorIterators(std::size_t /*offset*/, std::size_t /*size*/,
-                                        vectorise::VectorRegisterIterator<type, N> * /*iters*/)
+  static void InitializeVectorIterators(
+      std::size_t /*offset*/,
+      std::size_t /*size*/,
+      vectorise::VectorRegisterIterator<type, N> * /*iters*/)
   {}
 
   template <typename G, typename... Args>
-  static void SetPointers(std::size_t offset, std::size_t size, type const **regs, G &next,
-                          Args &&... remaining)
+  static void SetPointers(
+      std::size_t  offset,
+      std::size_t  size,
+      type const **regs,
+      G &          next,
+      Args &&... remaining)
   {
     assert(next.size() >= offset + size);
     *regs = next.pointer() + offset;
@@ -95,13 +108,19 @@ public:
     *regs = next.pointer() + offset;
   }
 
-  static void SetPointers(std::size_t /*offset*/, std::size_t /*size*/,
-                          VectorRegisterIteratorType * /*iters*/)
+  static void SetPointers(
+      std::size_t /*offset*/,
+      std::size_t /*size*/,
+      VectorRegisterIteratorType * /*iters*/)
   {}
 
   template <class OP, class F1, class F2>
-  type GenericRangedOpReduce(Range const &range, type const initial_value, OP &&op,
-                             F1 const &&kernel, F2 &&hkernel)
+  type GenericRangedOpReduce(
+      Range const &range,
+      type const   initial_value,
+      OP &&        op,
+      F1 const &&  kernel,
+      F2 &&        hkernel)
   {
     std::size_t SF  = range.SIMDFromUpper<VectorRegisterType::E_BLOCK_COUNT>();
     std::size_t ST  = range.SIMDToLower<VectorRegisterType::E_BLOCK_COUNT>();
@@ -160,27 +179,44 @@ public:
   type SumReduce(F const &&kernel)
   {
     Range range(0, this->size());
-    return GenericRangedOpReduce(range, type(0), std::plus<void>{}, std::move(kernel),
-                                 [](VectorRegisterType const &a) -> type { return reduce(a); });
+    return GenericRangedOpReduce(
+        range,
+        type(0),
+        std::plus<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); });
   }
 
   template <class F>
   type SumReduce(Range const &range, F const &&kernel)
   {
-    return GenericRangedOpReduce(range, type(0), std::plus<void>{}, std::move(kernel),
-                                 [](VectorRegisterType const &a) -> type { return reduce(a); });
+    return GenericRangedOpReduce(
+        range,
+        type(0),
+        std::plus<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); });
   }
 
   template <class F>
   type ProductReduce(Range const &range, F const &&kernel)
   {
-    return GenericRangedOpReduce(range, type(1), std::multiplies<void>{}, std::move(kernel),
-                                 [](VectorRegisterType const &a) -> type { return reduce(a); });
+    return GenericRangedOpReduce(
+        range,
+        type(1),
+        std::multiplies<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); });
   }
 
   template <class F1, class F2, class OP, typename... Args>
-  type GenericRangedReduceMultiple(Range const &range, type const c, OP const &&op,
-                                   F1 const &&kernel, F2 &&hkernel, Args &&... args)
+  type GenericRangedReduceMultiple(
+      Range const &range,
+      type const   c,
+      OP const &&  op,
+      F1 const &&  kernel,
+      F2 &&        hkernel,
+      Args &&... args)
   {
     std::size_t SF  = range.SIMDFromUpper<VectorRegisterType::E_BLOCK_COUNT>();
     std::size_t ST  = range.SIMDToLower<VectorRegisterType::E_BLOCK_COUNT>();
@@ -200,8 +236,8 @@ public:
       ScalarRegisterIteratorType scalar_iters[sizeof...(args)];
       ScalarRegisterIteratorType scalar_self_iter(this->pointer() + range.from(), SF);
       ScalarRegisterType         scalar_self, scalar_tmp;
-      InitializeVectorIterators<scalar_size>(range.from(), SF, scalar_iters,
-                                             std::forward<Args>(args)...);
+      InitializeVectorIterators<scalar_size>(
+          range.from(), SF, scalar_iters, std::forward<Args>(args)...);
 
       while (static_cast<void const *>(scalar_self_iter.pointer()) <
              static_cast<void const *>(self_iter.pointer()))
@@ -237,8 +273,8 @@ public:
       ScalarRegisterIteratorType scalar_iters[sizeof...(args)];
       ScalarRegisterIteratorType scalar_self_iter(this->pointer() + ST, range.to() - ST);
       ScalarRegisterType         scalar_self, scalar_tmp;
-      InitializeVectorIterators<scalar_size>(ST, range.to() - ST, scalar_iters,
-                                             std::forward<Args>(args)...);
+      InitializeVectorIterators<scalar_size>(
+          ST, range.to() - ST, scalar_iters, std::forward<Args>(args)...);
 
       while (static_cast<void const *>(scalar_self_iter.pointer()) <
              static_cast<void const *>(scalar_self_iter.end()))
@@ -261,8 +297,12 @@ public:
   {
     Range range(0, this->size());
     return GenericRangedReduceMultiple(
-        range, type(0), std::plus<void>{}, std::move(kernel),
-        [](VectorRegisterType const &a) -> type { return reduce(a); }, std::forward<Args>(args)...);
+        range,
+        type(0),
+        std::plus<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); },
+        std::forward<Args>(args)...);
   }
 
   template <class F, typename... Args>
@@ -270,21 +310,32 @@ public:
   {
     Range range(0, this->size());
     return GenericRangedReduceMultiple(
-        range, type(1), std::multiplies<void>{}, std::move(kernel),
-        [](VectorRegisterType const &a) -> type { return reduce(a); }, std::forward<Args>(args)...);
+        range,
+        type(1),
+        std::multiplies<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); },
+        std::forward<Args>(args)...);
   }
 
   template <class F, typename... Args>
   type SumReduce(Range const &range, F const &&kernel, Args &&... args)
   {
     return GenericRangedReduceMultiple(
-        range, type(0), std::plus<void>{}, std::move(kernel),
-        [](VectorRegisterType const &a) -> type { return reduce(a); }, std::forward<Args>(args)...);
+        range,
+        type(0),
+        std::plus<void>{},
+        std::move(kernel),
+        [](VectorRegisterType const &a) -> type { return reduce(a); },
+        std::forward<Args>(args)...);
   }
 
   template <class F1, class F2>
-  type Reduce(Range const &range, F1 const &&kernel, F2 &&hkernel,
-              type const initial_value = type(0))
+  type Reduce(
+      Range const &range,
+      F1 const &&  kernel,
+      F2 &&        hkernel,
+      type const   initial_value = type(0))
   {
     std::size_t SF  = range.SIMDFromUpper<VectorRegisterType::E_BLOCK_COUNT>();
     std::size_t ST  = range.SIMDToLower<VectorRegisterType::E_BLOCK_COUNT>();
@@ -454,16 +505,16 @@ public:
 
     VectorRegisterType         regs[sizeof...(args)], vc(type(0));
     VectorRegisterIteratorType iters[sizeof...(args)];
-    SuperType::template InitializeVectorIterators<vector_size>(SF, ST - SF, iters,
-                                                               std::forward<Args>(args)...);
+    SuperType::template InitializeVectorIterators<vector_size>(
+        SF, ST - SF, iters, std::forward<Args>(args)...);
 
     if (SF != range.from())
     {
       ScalarRegisterType         c(type(0));
       ScalarRegisterType         scalar_regs[sizeof...(args)];
       ScalarRegisterIteratorType scalar_iters[sizeof...(args)];
-      SuperType::template InitializeVectorIterators<scalar_size>(range.from(), SF, scalar_iters,
-                                                                 std::forward<Args>(args)...);
+      SuperType::template InitializeVectorIterators<scalar_size>(
+          range.from(), SF, scalar_iters, std::forward<Args>(args)...);
 
       for (std::size_t i = range.from(); i < SF; i += ScalarRegisterType::E_BLOCK_COUNT)
       {
@@ -492,8 +543,8 @@ public:
       ScalarRegisterType         c{type(0)};
       ScalarRegisterType         scalar_regs[sizeof...(args)];
       ScalarRegisterIteratorType scalar_iters[sizeof...(args)];
-      SuperType::template InitializeVectorIterators<scalar_size>(ST, range.to() - ST, scalar_iters,
-                                                                 std::forward<Args>(args)...);
+      SuperType::template InitializeVectorIterators<scalar_size>(
+          ST, range.to() - ST, scalar_iters, std::forward<Args>(args)...);
 
       for (std::size_t i = ST; i < range.to(); i += ScalarRegisterType::E_BLOCK_COUNT)
       {
@@ -515,8 +566,8 @@ public:
 
   void Assign(Range const &range, type const &a)
   {
-    return RangedApply(range,
-                       [a](auto &c) { c = static_cast<std::remove_reference_t<decltype(c)>>(a); });
+    return RangedApply(
+        range, [a](auto &c) { c = static_cast<std::remove_reference_t<decltype(c)>>(a); });
   }
 
   template <class Array>

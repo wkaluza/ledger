@@ -60,8 +60,10 @@ TYPED_TEST(TanHTest, forward_all_positive_test)
   TypeParam prediction(op.ComputeOutputShape({std::make_shared<const TypeParam>(data)}));
   op.Forward({std::make_shared<const TypeParam>(data)}, prediction);
 
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>() * DataType{5},
-                                  fetch::math::function_tolerance<DataType>() * DataType{5}));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>() * DataType{5},
+      fetch::math::function_tolerance<DataType>() * DataType{5}));
 }
 
 TYPED_TEST(TanHTest, forward_all_negative_test)
@@ -87,8 +89,10 @@ TYPED_TEST(TanHTest, forward_all_negative_test)
   TypeParam prediction(op.ComputeOutputShape({std::make_shared<const TypeParam>(data)}));
   op.Forward({std::make_shared<const TypeParam>(data)}, prediction);
 
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>() * DataType{5},
-                                  fetch::math::function_tolerance<DataType>() * DataType{5}));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>() * DataType{5},
+      fetch::math::function_tolerance<DataType>() * DataType{5}));
 }
 
 TYPED_TEST(TanHTest, backward_all_positive_test)
@@ -113,8 +117,10 @@ TYPED_TEST(TanHTest, backward_all_positive_test)
   std::vector<TypeParam> prediction = op.Backward({std::make_shared<const TypeParam>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::function_tolerance<DataType>() * DataType{5},
-                                     fetch::math::function_tolerance<DataType>() * DataType{5}));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>() * DataType{5},
+      fetch::math::function_tolerance<DataType>() * DataType{5}));
 }
 
 TYPED_TEST(TanHTest, backward_all_negative_test)
@@ -139,8 +145,10 @@ TYPED_TEST(TanHTest, backward_all_negative_test)
   std::vector<TypeParam> prediction = op.Backward({std::make_shared<const TypeParam>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::function_tolerance<DataType>() * DataType{5},
-                                     fetch::math::function_tolerance<DataType>() * DataType{5}));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>() * DataType{5},
+      fetch::math::function_tolerance<DataType>() * DataType{5}));
 }
 
 }  // namespace

@@ -129,9 +129,12 @@ public:
   BeaconService()                      = delete;
   BeaconService(BeaconService const &) = delete;
 
-  BeaconService(MuddleInterface &muddle, const CertificatePtr &certificate,
-                BeaconSetupService &beacon_setup, SharedEventManager event_manager,
-                bool load_and_reload_on_crash = false);
+  BeaconService(
+      MuddleInterface &     muddle,
+      const CertificatePtr &certificate,
+      BeaconSetupService &  beacon_setup,
+      SharedEventManager    event_manager,
+      bool                  load_and_reload_on_crash = false);
 
   /// @name Entropy Generator
   /// @{

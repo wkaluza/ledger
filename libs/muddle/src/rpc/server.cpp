@@ -34,8 +34,14 @@ Server::Server(MuddleEndpoint &endpoint, uint16_t service, uint16_t channel)
 
 bool Server::DeliverResponse(ConstByteArray const &address, network::MessageBuffer const &data)
 {
-  FETCH_LOG_TRACE(LOGGING_NAME, "Server::DeliverResponse to: ", address.ToBase64(), " mdl ",
-                  &endpoint_, " msg: ", data.ToHex());
+  FETCH_LOG_TRACE(
+      LOGGING_NAME,
+      "Server::DeliverResponse to: ",
+      address.ToBase64(),
+      " mdl ",
+      &endpoint_,
+      " msg: ",
+      data.ToHex());
 
   // send the message back to the server
   endpoint_.Send(address, service_, channel_, data);
@@ -52,8 +58,14 @@ void Server::OnMessage(Packet const &packet, Address const &last_hop)
     return;
   }
 
-  FETCH_LOG_TRACE(LOGGING_NAME, "Server::OnMessage from: ", packet.GetSender().ToBase64(), " mdl ",
-                  &endpoint_, " msg: 0x", packet.GetPayload().ToHex());
+  FETCH_LOG_TRACE(
+      LOGGING_NAME,
+      "Server::OnMessage from: ",
+      packet.GetSender().ToBase64(),
+      " mdl ",
+      &endpoint_,
+      " msg: 0x",
+      packet.GetPayload().ToHex());
 
   service::CallContext context;
   context.sender_address      = packet.GetSender();
@@ -67,9 +79,18 @@ void Server::OnMessage(Packet const &packet, Address const &last_hop)
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_ERROR(LOGGING_NAME, "Recv message from: ", packet.GetSender().ToBase64(),
-                    " on: ", packet.GetService(), ':', packet.GetChannel(), ':',
-                    packet.GetMessageNum(), " -- ", ex.what());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Recv message from: ",
+        packet.GetSender().ToBase64(),
+        " on: ",
+        packet.GetService(),
+        ':',
+        packet.GetChannel(),
+        ':',
+        packet.GetMessageNum(),
+        " -- ",
+        ex.what());
   }
 }
 

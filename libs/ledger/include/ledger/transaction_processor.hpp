@@ -46,8 +46,12 @@ public:
   using TxStatusCachePtr = std::shared_ptr<TransactionStatusInterface>;
 
   // Construction / Destruction
-  TransactionProcessor(DAGPtr dag, StorageUnitInterface &storage, BlockPackerInterface &packer,
-                       TxStatusCachePtr tx_status_cache, std::size_t num_threads);
+  TransactionProcessor(
+      DAGPtr                dag,
+      StorageUnitInterface &storage,
+      BlockPackerInterface &packer,
+      TxStatusCachePtr      tx_status_cache,
+      std::size_t           num_threads);
   TransactionProcessor(TransactionProcessor const &) = delete;
   TransactionProcessor(TransactionProcessor &&)      = delete;
   ~TransactionProcessor() override;

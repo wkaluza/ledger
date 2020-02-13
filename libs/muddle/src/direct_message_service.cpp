@@ -81,9 +81,13 @@ bool ExtractPayload(ConstByteArray const &payload, T &msg)
  * @return The packet
  */
 template <typename T>
-Router::PacketPtr FormatDirect(Packet::Address const &from, NetworkId const &network,
-                               uint16_t service, uint16_t channel, T const &msg,
-                               bool exchange = false)
+Router::PacketPtr FormatDirect(
+    Packet::Address const &from,
+    NetworkId const &      network,
+    uint16_t               service,
+    uint16_t               channel,
+    T const &              msg,
+    bool                   exchange = false)
 {
   auto packet = std::make_shared<Packet>(from, network.value());
   packet->SetService(service);
@@ -97,8 +101,11 @@ Router::PacketPtr FormatDirect(Packet::Address const &from, NetworkId const &net
 
 }  // namespace
 
-DirectMessageService::DirectMessageService(Address address, Router &router, MuddleRegister &reg,
-                                           PeerConnectionList & /*peers*/)
+DirectMessageService::DirectMessageService(
+    Address         address,
+    Router &        router,
+    MuddleRegister &reg,
+    PeerConnectionList & /*peers*/)
   : address_{std::move(address)}
   , name_{GenerateLoggingName(BASE_NAME, router.network_id())}
   , router_{router}
@@ -142,8 +149,9 @@ void DirectMessageService::SendMessageToConnection(Handle handle, T const &msg, 
 {
   // send the response
   router_.SendToConnection(
-      handle, router_.Sign(FormatDirect(router_.address_, router_.network_id_, SERVICE_MUDDLE,
-                                        CHANNEL_ROUTING, msg, exchange)));
+      handle,
+      router_.Sign(FormatDirect(
+          router_.address_, router_.network_id_, SERVICE_MUDDLE, CHANNEL_ROUTING, msg, exchange)));
 }
 
 void DirectMessageService::OnDirectMessage(Handle handle, PacketPtr const &packet)
@@ -160,8 +168,8 @@ void DirectMessageService::OnDirectMessage(Handle handle, PacketPtr const &packe
       RoutingMessage msg;
       if (!ExtractPayload(packet->GetPayload(), msg))
       {
-        FETCH_LOG_WARN(logging_name_, "Unable to extract routing message payload (conn: ", handle,
-                       ")");
+        FETCH_LOG_WARN(
+            logging_name_, "Unable to extract routing message payload (conn: ", handle, ")");
         return;
       }
 
@@ -171,8 +179,10 @@ void DirectMessageService::OnDirectMessage(Handle handle, PacketPtr const &packe
   }
 }
 
-void DirectMessageService::OnRoutingMessage(Handle handle, PacketPtr const &packet,
-                                            RoutingMessage const &msg)
+void DirectMessageService::OnRoutingMessage(
+    Handle                handle,
+    PacketPtr const &     packet,
+    RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingMessage");
 
@@ -194,8 +204,10 @@ void DirectMessageService::OnRoutingMessage(Handle handle, PacketPtr const &pack
   }
 }
 
-void DirectMessageService::OnRoutingPing(Handle handle, PacketPtr const &packet,
-                                         RoutingMessage const &msg)
+void DirectMessageService::OnRoutingPing(
+    Handle                handle,
+    PacketPtr const &     packet,
+    RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingPing (conn: ", handle, ")");
   FETCH_UNUSED(packet);
@@ -210,8 +222,10 @@ void DirectMessageService::OnRoutingPing(Handle handle, PacketPtr const &packet,
   SendMessageToConnection(handle, response);
 }
 
-void DirectMessageService::OnRoutingPong(Handle handle, PacketPtr const &packet,
-                                         RoutingMessage const &msg)
+void DirectMessageService::OnRoutingPong(
+    Handle                handle,
+    PacketPtr const &     packet,
+    RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingPong (conn: ", handle, ")");
   FETCH_UNUSED(msg);
@@ -239,15 +253,17 @@ void DirectMessageService::OnRoutingPong(Handle handle, PacketPtr const &packet,
   }
   else
   {
-    FETCH_LOG_WARN(logging_name_, "Pong Reserve failed for conn: ", handle,
-                   " status: ", ToString(status));
+    FETCH_LOG_WARN(
+        logging_name_, "Pong Reserve failed for conn: ", handle, " status: ", ToString(status));
   }
 
   FETCH_LOG_TRACE(logging_name_, "OnRoutingPong (conn: ", handle, ") complete");
 }
 
-void DirectMessageService::OnRoutingRequest(Handle handle, PacketPtr const &packet,
-                                            RoutingMessage const &msg)
+void DirectMessageService::OnRoutingRequest(
+    Handle                handle,
+    PacketPtr const &     packet,
+    RoutingMessage const &msg)
 {
   FETCH_UNUSED(msg);
   FETCH_LOG_TRACE(logging_name_, "OnRoutingRequest (conn: ", handle, ")");
@@ -307,9 +323,10 @@ char const *DirectMessageService::ToString(UpdateStatus status)
   return text;
 }
 
-DirectMessageService::UpdateStatus DirectMessageService::UpdateReservation(Address const &address,
-                                                                           Handle         handle,
-                                                                           Handle *previous_handle)
+DirectMessageService::UpdateStatus DirectMessageService::UpdateReservation(
+    Address const &address,
+    Handle         handle,
+    Handle *       previous_handle)
 {
   UpdateStatus status{UpdateStatus::DUPLICATE};
 

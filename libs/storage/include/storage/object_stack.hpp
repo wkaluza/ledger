@@ -56,8 +56,8 @@ public:
    */
   bool Get(uint64_t index, T &object)
   {
-    return ObjectStore<T, S>::Get(storage::ResourceAddress(std::to_string(index)).as_resource_id(),
-                                  object);
+    return ObjectStore<T, S>::Get(
+        storage::ResourceAddress(std::to_string(index)).as_resource_id(), object);
   }
 };
 

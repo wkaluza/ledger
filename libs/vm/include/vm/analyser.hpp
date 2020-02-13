@@ -44,28 +44,44 @@ public:
 
   void CreateClassType(std::string const &name, TypeIndex type_index);
 
-  void CreateTemplateType(std::string const &name, TypeIndex type_index,
-                          TypeIndexArray const &allowed_types_index_array);
+  void CreateTemplateType(
+      std::string const &   name,
+      TypeIndex             type_index,
+      TypeIndexArray const &allowed_types_index_array);
 
-  void CreateTemplateInstantiationType(TypeIndex type_index, TypeIndex template_type_index,
-                                       TypeIndexArray const &template_parameter_type_index_array);
+  void CreateTemplateInstantiationType(
+      TypeIndex             type_index,
+      TypeIndex             template_type_index,
+      TypeIndexArray const &template_parameter_type_index_array);
 
-  void CreateFreeFunction(std::string const &name, TypeIndexArray const &parameter_type_index_array,
-                          TypeIndex return_type_index, Handler const &handler,
-                          ChargeAmount static_charge);
+  void CreateFreeFunction(
+      std::string const &   name,
+      TypeIndexArray const &parameter_type_index_array,
+      TypeIndex             return_type_index,
+      Handler const &       handler,
+      ChargeAmount          static_charge);
 
-  void CreateConstructor(TypeIndex type_index, TypeIndexArray const &parameter_type_index_array,
-                         Handler const &handler, ChargeAmount static_charge);
+  void CreateConstructor(
+      TypeIndex             type_index,
+      TypeIndexArray const &parameter_type_index_array,
+      Handler const &       handler,
+      ChargeAmount          static_charge);
 
-  void CreateStaticMemberFunction(TypeIndex type_index, std::string const &function_name,
-                                  TypeIndexArray const &parameter_type_index_array,
-                                  TypeIndex return_type_index, Handler const &handler,
-                                  ChargeAmount static_charge);
+  void CreateStaticMemberFunction(
+      TypeIndex             type_index,
+      std::string const &   function_name,
+      TypeIndexArray const &parameter_type_index_array,
+      TypeIndex             return_type_index,
+      Handler const &       handler,
+      ChargeAmount          static_charge);
 
-  void CreateMemberFunction(TypeIndex type_index, std::string const &function_name,
-                            TypeIndexArray const &parameter_type_index_array,
-                            TypeIndex return_type_index, Handler const &handler,
-                            ChargeAmount static_charge);
+  void CreateMemberFunction(
+      TypeIndex             type_index,
+      std::string const &   function_name,
+      TypeIndexArray const &parameter_type_index_array,
+      TypeIndex             return_type_index,
+      Handler const &       handler,
+      ChargeAmount          static_charge);
 
   void EnableOperator(TypeIndex type_index, Operator op);
 
@@ -73,15 +89,22 @@ public:
 
   void EnableRightOperator(TypeIndex type_index, Operator op);
 
-  void EnableIndexOperator(TypeIndex type_index, TypeIndexArray const &input_type_index_array,
-                           TypeIndex output_type_index, Handler const &get_handler,
-                           Handler const &set_handler, ChargeAmount get_static_charge,
-                           ChargeAmount set_static_charge);
+  void EnableIndexOperator(
+      TypeIndex             type_index,
+      TypeIndexArray const &input_type_index_array,
+      TypeIndex             output_type_index,
+      Handler const &       get_handler,
+      Handler const &       set_handler,
+      ChargeAmount          get_static_charge,
+      ChargeAmount          set_static_charge);
 
   bool Analyse(BlockNodePtr const &root, std::vector<std::string> &errors);
 
-  void GetDetails(TypeInfoArray &type_info_array, TypeInfoMap &type_info_map,
-                  RegisteredTypes &registered_types, FunctionInfoArray &function_info_array) const
+  void GetDetails(
+      TypeInfoArray &    type_info_array,
+      TypeInfoMap &      type_info_map,
+      RegisteredTypes &  registered_types,
+      FunctionInfoArray &function_info_array) const
   {
     type_info_array     = type_info_array_;
     type_info_map       = type_info_map_;
@@ -325,17 +348,23 @@ private:
   void PreAnnotateBlock(BlockNodePtr const &block_node);
   void PreAnnotatePersistentStatement(NodePtr const &persistent_statement_node);
   void PreAnnotateContractDefinition(BlockNodePtr const &contract_definition_node);
-  void PreAnnotateContractFunction(BlockNodePtr const &contract_definition_node,
-                                   NodePtr const &     function_node);
+  void PreAnnotateContractFunction(
+      BlockNodePtr const &contract_definition_node,
+      NodePtr const &     function_node);
   void PreAnnotateStructDefinition(BlockNodePtr const &struct_definition_node);
-  void PreAnnotateMemberFunctionDefinition(BlockNodePtr const &struct_definition_node,
-                                           BlockNodePtr const &function_definition_node);
-  void PreAnnotateMemberVarDeclarationStatement(BlockNodePtr const &struct_definition_node,
-                                                NodePtr const &     var_statement_node);
+  void PreAnnotateMemberFunctionDefinition(
+      BlockNodePtr const &struct_definition_node,
+      BlockNodePtr const &function_definition_node);
+  void PreAnnotateMemberVarDeclarationStatement(
+      BlockNodePtr const &struct_definition_node,
+      NodePtr const &     var_statement_node);
   void PreAnnotateFreeFunctionDefinition(BlockNodePtr const &function_definition_node);
-  bool PreAnnotatePrototype(NodePtr const &prototype_node, ExpressionNodePtrArray &parameter_nodes,
-                            TypePtrArray &parameter_types, VariablePtrArray &parameter_variables,
-                            TypePtr &return_type);
+  bool PreAnnotatePrototype(
+      NodePtr const &         prototype_node,
+      ExpressionNodePtrArray &parameter_nodes,
+      TypePtrArray &          parameter_types,
+      VariablePtrArray &      parameter_variables,
+      TypePtr &               return_type);
 
   void CheckInitFunctionUnique(LedgerRestrictionMetadata const &metadata);
   bool CheckSynergeticFunctionsPresentAndUnique(LedgerRestrictionMetadata const &metadata);
@@ -353,14 +382,18 @@ private:
   void AnnotateWhileStatement(BlockNodePtr const &while_statement_node);
   void AnnotateForStatement(BlockNodePtr const &for_statement_node);
   void AnnotateIfStatement(NodePtr const &if_statement_node);
-  void AnnotateUseStatement(BlockNodePtr const &parent_block_node,
-                            NodePtr const &     use_statement_node);
-  void AnnotateUseAnyStatement(BlockNodePtr const &parent_block_node,
-                               NodePtr const &     use_any_statement_node);
-  void AnnotateContractStatement(BlockNodePtr const &parent_block_node,
-                                 NodePtr const &     contract_statement_node);
-  void AnnotateLocalVarStatement(BlockNodePtr const &parent_block_node,
-                                 NodePtr const &     var_statement_node);
+  void AnnotateUseStatement(
+      BlockNodePtr const &parent_block_node,
+      NodePtr const &     use_statement_node);
+  void AnnotateUseAnyStatement(
+      BlockNodePtr const &parent_block_node,
+      NodePtr const &     use_any_statement_node);
+  void AnnotateContractStatement(
+      BlockNodePtr const &parent_block_node,
+      NodePtr const &     contract_statement_node);
+  void AnnotateLocalVarStatement(
+      BlockNodePtr const &parent_block_node,
+      NodePtr const &     var_statement_node);
   void AnnotateReturnStatement(NodePtr const &return_statement_node);
   void AnnotateConditionalBlock(BlockNodePtr const &conditional_block_node);
   bool AnnotateTypeExpression(ExpressionNodePtr const &node);
@@ -386,79 +419,146 @@ private:
   bool ConvertInitialiserListToArray(ExpressionNodePtr const &node, TypePtr const &type);
   bool TestBlock(BlockNodePtr const &block_node) const;
   bool IsWriteable(ExpressionNodePtr const &node);
-  bool AnnotateArithmetic(ExpressionNodePtr const &node, ExpressionNodePtr const &lhs,
-                          ExpressionNodePtr const &rhs);
+  bool AnnotateArithmetic(
+      ExpressionNodePtr const &node,
+      ExpressionNodePtr const &lhs,
+      ExpressionNodePtr const &rhs);
 
-  FunctionPtr FindFunction(TypePtr const &type, FunctionGroupPtr const &function_group,
-                           ExpressionNodePtrArray const &parameter_nodes);
-  TypePtr     ConvertNode(ExpressionNodePtr const &node, TypePtr const &expected_type);
-  TypePtr     ConvertNode(ExpressionNodePtr const &node, TypePtr const &expected_type,
-                          TypePtr const &type);
-  TypePtr     ResolveReturnType(TypePtr const &return_type, TypePtr const &type);
-  TypePtr     FindType(ExpressionNodePtr const &node);
-  SymbolPtr   FindSymbol(ExpressionNodePtr const &node);
-  SymbolPtr   SearchSymbols(std::string const &name);
-  void        SetVariableExpression(ExpressionNodePtr const &node, VariablePtr const &variable,
-                                    TypePtr const &owner);
-  void        SetLVExpression(ExpressionNodePtr const &node, TypePtr const &type);
-  void        SetRVExpression(ExpressionNodePtr const &node, TypePtr const &type);
-  void        SetTypeExpression(ExpressionNodePtr const &node, TypePtr const &type);
-  void        SetFunctionGroupExpression(ExpressionNodePtr const &node,
-                                         FunctionGroupPtr const &function_group, TypePtr const &owner);
-  bool        CheckType(std::string const &type_name, TypeIndex type_index);
-  void        CreatePrimitiveType(std::string const &type_name, TypeIndex type_index,
-                                  bool add_to_symbol_table, TypeId type_id, TypePtr &type);
-  void        CreateMetaType(std::string const &type_name, TypeIndex type_index, TypeId type_id,
-                             TypePtr &type);
-  void        CreateClassType(std::string const &type_name, TypeIndex type_index, TypeId type_id,
-                              TypePtr &type);
-  void        CreateTemplateType(std::string const &type_name, TypeIndex type_index,
-                                 TypePtrArray const &allowed_types, TypeId type_id, TypePtr &type);
-  void        CreateTemplateInstantiationType(TypeIndex type_index, TypePtr const &template_type,
-                                              TypePtrArray const &template_parameter_types, TypeId type_id,
-                                              TypePtr &type);
-  void        CreateGroupType(std::string const &type_name, TypeIndex type_index,
-                              TypePtrArray const &allowed_types, TypeId type_id, TypePtr &type);
-  TypePtr InternalCreateTemplateInstantiationType(TypeKind type_kind, TypePtr const &template_type,
-                                                  TypePtrArray const &template_parameter_types);
-  void    CreateFreeFunction(std::string const &name, TypePtrArray const &parameter_types,
-                             TypePtr const &return_type, Handler const &handler,
-                             ChargeAmount static_charge);
-  void    CreateConstructor(TypePtr const &type, TypePtrArray const &parameter_types,
-                            Handler const &handler, ChargeAmount static_charge);
+  FunctionPtr FindFunction(
+      TypePtr const &               type,
+      FunctionGroupPtr const &      function_group,
+      ExpressionNodePtrArray const &parameter_nodes);
+  TypePtr ConvertNode(ExpressionNodePtr const &node, TypePtr const &expected_type);
+  TypePtr ConvertNode(
+      ExpressionNodePtr const &node,
+      TypePtr const &          expected_type,
+      TypePtr const &          type);
+  TypePtr   ResolveReturnType(TypePtr const &return_type, TypePtr const &type);
+  TypePtr   FindType(ExpressionNodePtr const &node);
+  SymbolPtr FindSymbol(ExpressionNodePtr const &node);
+  SymbolPtr SearchSymbols(std::string const &name);
+  void      SetVariableExpression(
+           ExpressionNodePtr const &node,
+           VariablePtr const &      variable,
+           TypePtr const &          owner);
+  void SetLVExpression(ExpressionNodePtr const &node, TypePtr const &type);
+  void SetRVExpression(ExpressionNodePtr const &node, TypePtr const &type);
+  void SetTypeExpression(ExpressionNodePtr const &node, TypePtr const &type);
+  void SetFunctionGroupExpression(
+      ExpressionNodePtr const &node,
+      FunctionGroupPtr const & function_group,
+      TypePtr const &          owner);
+  bool CheckType(std::string const &type_name, TypeIndex type_index);
+  void CreatePrimitiveType(
+      std::string const &type_name,
+      TypeIndex          type_index,
+      bool               add_to_symbol_table,
+      TypeId             type_id,
+      TypePtr &          type);
+  void CreateMetaType(
+      std::string const &type_name,
+      TypeIndex          type_index,
+      TypeId             type_id,
+      TypePtr &          type);
+  void CreateClassType(
+      std::string const &type_name,
+      TypeIndex          type_index,
+      TypeId             type_id,
+      TypePtr &          type);
+  void CreateTemplateType(
+      std::string const & type_name,
+      TypeIndex           type_index,
+      TypePtrArray const &allowed_types,
+      TypeId              type_id,
+      TypePtr &           type);
+  void CreateTemplateInstantiationType(
+      TypeIndex           type_index,
+      TypePtr const &     template_type,
+      TypePtrArray const &template_parameter_types,
+      TypeId              type_id,
+      TypePtr &           type);
+  void CreateGroupType(
+      std::string const & type_name,
+      TypeIndex           type_index,
+      TypePtrArray const &allowed_types,
+      TypeId              type_id,
+      TypePtr &           type);
+  TypePtr InternalCreateTemplateInstantiationType(
+      TypeKind            type_kind,
+      TypePtr const &     template_type,
+      TypePtrArray const &template_parameter_types);
+  void CreateFreeFunction(
+      std::string const & name,
+      TypePtrArray const &parameter_types,
+      TypePtr const &     return_type,
+      Handler const &     handler,
+      ChargeAmount        static_charge);
+  void CreateConstructor(
+      TypePtr const &     type,
+      TypePtrArray const &parameter_types,
+      Handler const &     handler,
+      ChargeAmount        static_charge);
 
-  void        CreateStaticMemberFunction(TypePtr const &type, std::string const &name,
-                                         TypePtrArray const &parameter_types, TypePtr const &return_type,
-                                         Handler const &handler, ChargeAmount static_charge);
-  void        CreateMemberFunction(TypePtr const &type, std::string const &name,
-                                   TypePtrArray const &parameter_types, TypePtr const &return_type,
-                                   Handler const &handler, ChargeAmount static_charge);
-  FunctionPtr CreateUserDefinedFreeFunction(std::string const &     name,
-                                            TypePtrArray const &    parameter_types,
-                                            VariablePtrArray const &parameter_variables,
-                                            TypePtr const &         return_type);
-  FunctionPtr CreateUserDefinedContractFunction(TypePtr const &type, std::string const &name,
-                                                TypePtrArray const &    parameter_types,
-                                                VariablePtrArray const &parameter_variables,
-                                                TypePtr const &         return_type);
-  FunctionPtr CreateUserDefinedConstructor(TypePtr const &type, TypePtrArray const &parameter_types,
-                                           VariablePtrArray const &parameter_variables);
-  FunctionPtr CreateUserDefinedMemberFunction(TypePtr const &type, std::string const &name,
-                                              TypePtrArray const &    parameter_types,
-                                              VariablePtrArray const &parameter_variables,
-                                              TypePtr const &         return_type);
-  void        EnableIndexOperator(TypePtr const &type, TypePtrArray const &input_types,
-                                  TypePtr const &output_type, Handler const &get_handler,
-                                  Handler const &set_handler, ChargeAmount get_static_charge,
-                                  ChargeAmount set_static_charge);
-  void        AddTypeInfo(TypeKind type_kind, std::string const &type_name, TypeId type_id,
-                          TypeId template_type_id, TypeIdArray const &template_parameter_type_ids,
-                          TypePtr const &type);
-  void        AddFunctionInfo(FunctionPtr const &function, Handler const &handler,
-                              ChargeAmount static_charge);
-  std::string BuildUniqueName(TypePtr const &type, std::string const &function_name,
-                              TypePtrArray const &parameter_types, TypePtr const &return_type);
-  void        AddFunctionToSymbolTable(SymbolTablePtr const &symbols, FunctionPtr const &function);
+  void CreateStaticMemberFunction(
+      TypePtr const &     type,
+      std::string const & name,
+      TypePtrArray const &parameter_types,
+      TypePtr const &     return_type,
+      Handler const &     handler,
+      ChargeAmount        static_charge);
+  void CreateMemberFunction(
+      TypePtr const &     type,
+      std::string const & name,
+      TypePtrArray const &parameter_types,
+      TypePtr const &     return_type,
+      Handler const &     handler,
+      ChargeAmount        static_charge);
+  FunctionPtr CreateUserDefinedFreeFunction(
+      std::string const &     name,
+      TypePtrArray const &    parameter_types,
+      VariablePtrArray const &parameter_variables,
+      TypePtr const &         return_type);
+  FunctionPtr CreateUserDefinedContractFunction(
+      TypePtr const &         type,
+      std::string const &     name,
+      TypePtrArray const &    parameter_types,
+      VariablePtrArray const &parameter_variables,
+      TypePtr const &         return_type);
+  FunctionPtr CreateUserDefinedConstructor(
+      TypePtr const &         type,
+      TypePtrArray const &    parameter_types,
+      VariablePtrArray const &parameter_variables);
+  FunctionPtr CreateUserDefinedMemberFunction(
+      TypePtr const &         type,
+      std::string const &     name,
+      TypePtrArray const &    parameter_types,
+      VariablePtrArray const &parameter_variables,
+      TypePtr const &         return_type);
+  void EnableIndexOperator(
+      TypePtr const &     type,
+      TypePtrArray const &input_types,
+      TypePtr const &     output_type,
+      Handler const &     get_handler,
+      Handler const &     set_handler,
+      ChargeAmount        get_static_charge,
+      ChargeAmount        set_static_charge);
+  void AddTypeInfo(
+      TypeKind           type_kind,
+      std::string const &type_name,
+      TypeId             type_id,
+      TypeId             template_type_id,
+      TypeIdArray const &template_parameter_type_ids,
+      TypePtr const &    type);
+  void AddFunctionInfo(
+      FunctionPtr const &function,
+      Handler const &    handler,
+      ChargeAmount       static_charge);
+  std::string BuildUniqueName(
+      TypePtr const &     type,
+      std::string const & function_name,
+      TypePtrArray const &parameter_types,
+      TypePtr const &     return_type);
+  void AddFunctionToSymbolTable(SymbolTablePtr const &symbols, FunctionPtr const &function);
 
   TypePtr GetType(TypeIndex type_index)
   {
@@ -467,8 +567,9 @@ private:
     {
       return type;
     }
-    throw std::runtime_error("type index has not been registered for the following type:\n " +
-                             std::string(type_index.name()));
+    throw std::runtime_error(
+        "type index has not been registered for the following type:\n " +
+        std::string(type_index.name()));
   }
 
   TypePtrArray GetTypes(TypeIndexArray const &type_index_array)

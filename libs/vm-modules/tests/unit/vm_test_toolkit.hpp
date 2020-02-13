@@ -94,8 +94,9 @@ public:
     return true;
   }
 
-  bool Run(Variant *    output       = nullptr,
-           ChargeAmount charge_limit = std::numeric_limits<ChargeAmount>::max())
+  bool Run(
+      Variant *    output       = nullptr,
+      ChargeAmount charge_limit = std::numeric_limits<ChargeAmount>::max())
   {
     return RunWithParams(output, charge_limit);
   }

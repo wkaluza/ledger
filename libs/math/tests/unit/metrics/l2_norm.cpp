@@ -49,8 +49,10 @@ TYPED_TEST(L2NormTest, value_test)
   DataType score = fetch::math::L2Norm(test_array);
 
   // test correct values
-  EXPECT_NEAR(double(score), double(14.282856857085700852),
-              static_cast<double>(function_tolerance<DataType>()));
+  EXPECT_NEAR(
+      double(score),
+      double(14.282856857085700852),
+      static_cast<double>(function_tolerance<DataType>()));
 }
 
 }  // namespace test

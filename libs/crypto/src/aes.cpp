@@ -162,9 +162,12 @@ std::size_t AesBlockCipher::GetIVLength(BlockCipher::Type type) noexcept
  * @param cipher_text The output cipher text
  * @return true if successful, otherwise false
  */
-bool AesBlockCipher::Encrypt(BlockCipher::Type type, ConstByteArray const &key,
-                             ConstByteArray const &iv, ConstByteArray const &clear_text,
-                             ConstByteArray &cipher_text)
+bool AesBlockCipher::Encrypt(
+    BlockCipher::Type     type,
+    ConstByteArray const &key,
+    ConstByteArray const &iv,
+    ConstByteArray const &clear_text,
+    ConstByteArray &      cipher_text)
 {
   bool success{false};
 
@@ -213,8 +216,12 @@ bool AesBlockCipher::Encrypt(BlockCipher::Type type, ConstByteArray const &key,
 
   // run the plain text through the cipher
   auto remaining_length = static_cast<int>(cipher_text_buffer.size() - populated_length);
-  status = EVP_EncryptUpdate(ctx.get(), cipher_text_buffer.pointer(), &remaining_length,
-                             clear_text.pointer(), static_cast<int>(clear_text.size()));
+  status                = EVP_EncryptUpdate(
+      ctx.get(),
+      cipher_text_buffer.pointer(),
+      &remaining_length,
+      clear_text.pointer(),
+      static_cast<int>(clear_text.size()));
   if (status != 1)
   {
     LogAllErrors();
@@ -258,9 +265,12 @@ bool AesBlockCipher::Encrypt(BlockCipher::Type type, ConstByteArray const &key,
  * @param clear_text The output clear text
  * @return true if successful, otherwise false
  */
-bool AesBlockCipher::Decrypt(BlockCipher::Type type, ConstByteArray const &key,
-                             ConstByteArray const &iv, ConstByteArray const &cipher_text,
-                             ConstByteArray &clear_text)
+bool AesBlockCipher::Decrypt(
+    BlockCipher::Type     type,
+    ConstByteArray const &key,
+    ConstByteArray const &iv,
+    ConstByteArray const &cipher_text,
+    ConstByteArray &      clear_text)
 {
   bool success{false};
 
@@ -295,9 +305,11 @@ bool AesBlockCipher::Decrypt(BlockCipher::Type type, ConstByteArray const &key,
   }
 
   // configure the block cipher encryption
-  status =
-      EVP_DecryptInit(ctx.get(), cipher, reinterpret_cast<unsigned char const *>(key.pointer()),
-                      reinterpret_cast<unsigned char const *>(iv.pointer()));
+  status = EVP_DecryptInit(
+      ctx.get(),
+      cipher,
+      reinterpret_cast<unsigned char const *>(key.pointer()),
+      reinterpret_cast<unsigned char const *>(iv.pointer()));
   if (status != 1)
   {
     LogAllErrors();
@@ -313,8 +325,12 @@ bool AesBlockCipher::Decrypt(BlockCipher::Type type, ConstByteArray const &key,
   // run the cipher text through the cipher
   auto remaining_length = static_cast<int>(clear_text_buffer.size() - populated_length);
 
-  status = EVP_DecryptUpdate(ctx.get(), clear_text_buffer.pointer(), &remaining_length,
-                             cipher_text.pointer(), static_cast<int>(cipher_text.size()));
+  status = EVP_DecryptUpdate(
+      ctx.get(),
+      clear_text_buffer.pointer(),
+      &remaining_length,
+      cipher_text.pointer(),
+      static_cast<int>(cipher_text.size()));
   if (status != 1)
   {
     LogAllErrors();

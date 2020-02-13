@@ -42,9 +42,12 @@ public:
   const int8_t   BufferPositionUnusedDataType = fetch::math::numeric_max<int8_t>();
   const SizeType BufferPositionUnusedSizeType = fetch::math::numeric_max<SizeType>();
 
-  GraphW2VLoader(SizeType const &window_size, SizeType const &negative_samples,
-                 fixed_point::fp64_t const &freq_thresh, SizeType const &max_word_count,
-                 SizeType const &seed = 1337);
+  GraphW2VLoader(
+      SizeType const &           window_size,
+      SizeType const &           negative_samples,
+      fixed_point::fp64_t const &freq_thresh,
+      SizeType const &           max_word_count,
+      SizeType const &           seed = 1337);
 
   bool       IsDone() const override;
   void       Reset() override;
@@ -57,8 +60,10 @@ public:
   void SetTestRatio(fixed_point::fp32_t new_test_ratio) override;
   void SetValidationRatio(fixed_point::fp32_t new_validation_ratio) override;
 
-  void     BuildVocabAndData(std::vector<std::string> const &sents, SizeType min_count = 0,
-                             bool build_data = true);
+  void BuildVocabAndData(
+      std::vector<std::string> const &sents,
+      SizeType                        min_count  = 0,
+      bool                            build_data = true);
   void     BuildData(std::vector<std::string> const &sents, SizeType min_count = 0);
   void     SaveVocab(std::string const &filename);
   void     LoadVocab(std::string const &filename);

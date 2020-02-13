@@ -83,8 +83,8 @@ public:
    * elementwise gradient for second input (the then input) is:
    * error' = mask * error_signal
    */
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override
   {
     assert(inputs.size() == 3);
     assert(inputs.at(1)->shape() == inputs.at(2)->shape());

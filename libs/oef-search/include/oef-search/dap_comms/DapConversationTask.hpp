@@ -43,10 +43,13 @@ public:
 
   static constexpr char const *LOGGING_NAME = "DapConversationTask";
 
-  DapConversationTask(std::string const &dap_name, std::string const &path, uint32_t msg_id,
-                      std::shared_ptr<IN_PROTO>              initiator,
-                      std::shared_ptr<OutboundConversations> outbounds,
-                      std::string const &                    protocol = "dap")
+  DapConversationTask(
+      std::string const &                    dap_name,
+      std::string const &                    path,
+      uint32_t                               msg_id,
+      std::shared_ptr<IN_PROTO>              initiator,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::string const &                    protocol = "dap")
     : fetch::oef::base::StateMachineTask<SelfType>(this, nullptr)
     , initiator(std::move(initiator))
     , outbounds(std::move(outbounds))
@@ -69,10 +72,10 @@ public:
 
     (*task_created)++;
 
-    errorHandler = [](const std::string &dap_name, const std::string &path,
-                      const std::string &msg) {
-      FETCH_LOG_ERROR(LOGGING_NAME, "Failed to call ", path, " @ dap ", dap_name, ": ", msg);
-    };
+    errorHandler =
+        [](const std::string &dap_name, const std::string &path, const std::string &msg) {
+          FETCH_LOG_ERROR(LOGGING_NAME, "Failed to call ", path, " @ dap ", dap_name, ": ", msg);
+        };
 
     if (!protocol_.empty())
     {
@@ -89,8 +92,8 @@ public:
   {
     try
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Start: ", protocol_, dap_name_, "/", path_,
-                     ", id=", this->GetTaskId());
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "Start: ", protocol_, dap_name_, "/", path_, ", id=", this->GetTaskId());
       Uri uri(protocol_ + dap_name_ + "/" + path_);
       if (!protocol_.empty())
       {
@@ -113,8 +116,8 @@ public:
               })
               .Waiting())
       {
-        FETCH_LOG_INFO(LOGGING_NAME, "Sleeping (id=", this->GetTaskId(), ", uri=", uri.ToString(),
-                       ")");
+        FETCH_LOG_INFO(
+            LOGGING_NAME, "Sleeping (id=", this->GetTaskId(), ", uri=", uri.ToString(), ")");
         return DapConversationTask::StateResult(1, fetch::oef::base::DEFER);
       }
       FETCH_LOG_INFO(LOGGING_NAME, "NOT Sleeping (", uri.ToString(), ")");
@@ -122,13 +125,13 @@ public:
     }
     catch (std::exception const &e)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to create conversation with: ", dap_name_,
-                     ", message: ", e.what());
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Failed to create conversation with: ", dap_name_, ", message: ", e.what());
       (*task_errored)++;
       if (errorHandler)
       {
-        errorHandler(dap_name_, path_,
-                     std::string{"Exception in creating conversation: "} + e.what());
+        errorHandler(
+            dap_name_, path_, std::string{"Exception in creating conversation: "} + e.what());
       }
       wake();
       return DapConversationTask::StateResult(0, fetch::oef::base::ERRORED);
@@ -138,8 +141,8 @@ public:
   virtual StateResult HandleResponse()
   {
     FETCH_LOG_INFO(LOGGING_NAME, "Woken (", dap_name_, ")");
-    FETCH_LOG_INFO(LOGGING_NAME, "Response from ", dap_name_, ": ",
-                   conversation->GetAvailableReplyCount());
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Response from ", dap_name_, ": ", conversation->GetAvailableReplyCount());
 
     if (conversation->GetAvailableReplyCount() == 0)
     {

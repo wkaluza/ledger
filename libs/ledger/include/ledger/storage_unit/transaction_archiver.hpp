@@ -57,8 +57,10 @@ public:
   using StateMachine    = core::StateMachine<State>;
   using StateMachinePtr = std::shared_ptr<StateMachine>;
 
-  TransactionArchiver(uint32_t lane, TransactionPoolInterface &pool,
-                      TransactionStoreInterface &archive);
+  TransactionArchiver(
+      uint32_t                   lane,
+      TransactionPoolInterface & pool,
+      TransactionStoreInterface &archive);
   ~TransactionArchiver() = default;
 
   void Confirm(Digest const &digest);

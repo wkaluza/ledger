@@ -64,8 +64,9 @@ Ptr<Array<uint64_t>> CreateArray(std::shared_ptr<VM> &vm, std::vector<uint64_t> 
   return array;
 }
 
-Ptr<fetch::vm_modules::math::VMTensor> CreateTensor(std::shared_ptr<VM> &        vm,
-                                                    std::vector<uint64_t> const &shape)
+Ptr<fetch::vm_modules::math::VMTensor> CreateTensor(
+    std::shared_ptr<VM> &        vm,
+    std::vector<uint64_t> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
@@ -187,8 +188,9 @@ BENCHMARK(BM_Construct)->Args({5, 1, 1, 1000000, 1, 1})->Unit(::benchmark::kMicr
 BENCHMARK(BM_Construct)->Args({5, 1, 1, 1, 1000000, 1})->Unit(::benchmark::kMicrosecond);
 BENCHMARK(BM_Construct)->Args({5, 1, 1, 1, 1, 1000000})->Unit(::benchmark::kMicrosecond);
 
-Ptr<fetch::vm_modules::math::VMTensor> CreateTensorFromString(std::shared_ptr<VM> &vm,
-                                                              std::string const &  str)
+Ptr<fetch::vm_modules::math::VMTensor> CreateTensorFromString(
+    std::shared_ptr<VM> &vm,
+    std::string const &  str)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(str);
 }
@@ -669,8 +671,8 @@ void BM_At(::benchmark::State &state)
       state.counters["charge"] = static_cast<double>(data->Estimator().AtFour(
           config.indices.at(0), config.indices.at(1), config.indices.at(2), config.indices.at(3)));
       state.ResumeTiming();
-      data->At(config.indices.at(0), config.indices.at(1), config.indices.at(2),
-               config.indices.at(3));
+      data->At(
+          config.indices.at(0), config.indices.at(1), config.indices.at(2), config.indices.at(3));
       state.PauseTiming();
       break;
     }
@@ -768,12 +770,19 @@ void BM_SetAt(::benchmark::State &state)
       break;
 
     case 4:
-      state.counters["charge"] = static_cast<double>(
-          data->Estimator().SetAtFour(config.indices.at(0), config.indices.at(1),
-                                      config.indices.at(2), config.indices.at(3), val));
+      state.counters["charge"] = static_cast<double>(data->Estimator().SetAtFour(
+          config.indices.at(0),
+          config.indices.at(1),
+          config.indices.at(2),
+          config.indices.at(3),
+          val));
       state.ResumeTiming();
-      data->SetAt(config.indices.at(0), config.indices.at(1), config.indices.at(2),
-                  config.indices.at(3), val);
+      data->SetAt(
+          config.indices.at(0),
+          config.indices.at(1),
+          config.indices.at(2),
+          config.indices.at(3),
+          val);
       state.PauseTiming();
       break;
     }

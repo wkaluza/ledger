@@ -39,8 +39,10 @@ using SimulatedPowConsensus = fetch::ledger::SimulatedPowConsensus;
 using NextBlockPtr          = SimulatedPowConsensus::NextBlockPtr;
 using Status                = SimulatedPowConsensus::Status;
 
-SimulatedPowConsensus::SimulatedPowConsensus(Identity mining_identity, uint64_t block_interval_ms,
-                                             MainChain const &chain)
+SimulatedPowConsensus::SimulatedPowConsensus(
+    Identity         mining_identity,
+    uint64_t         block_interval_ms,
+    MainChain const &chain)
   : mining_identity_{std::move(mining_identity)}
   , block_interval_ms_{block_interval_ms}
   , chain_{chain}
@@ -60,8 +62,12 @@ uint64_t GetPoissonSample(uint64_t range, double mean_of_distribution)
 
 bool SimulatedPowConsensus::UpdateCurrentBlock(Block const &current)
 {
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Updating new current block: ", current.hash.ToHex(),
-                  " num: ", current.block_number);
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Updating new current block: ",
+      current.hash.ToHex(),
+      " num: ",
+      current.block_number);
 
   if (current == current_block_)
   {
@@ -100,9 +106,16 @@ bool SimulatedPowConsensus::UpdateCurrentBlock(Block const &current)
     decided_next_timestamp_ms_ = (current.timestamp * 1000) + time_to_wait_ms;
   }
 
-  FETCH_LOG_INFO(LOGGING_NAME, "Generating time to wait (ms): ", time_to_wait_ms,
-                 " mean: ", mean_time_to_block, " block time: ", block_interval_ms_,
-                 " decided: ", decided_next_timestamp_ms_);
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Generating time to wait (ms): ",
+      time_to_wait_ms,
+      " mean: ",
+      mean_time_to_block,
+      " block time: ",
+      block_interval_ms_,
+      " decided: ",
+      decided_next_timestamp_ms_);
   return true;
 }
 
@@ -110,21 +123,27 @@ NextBlockPtr SimulatedPowConsensus::GenerateNextBlock()
 {
   NextBlockPtr ret;
 
-  uint64_t current_time_ms =
-      GetTime(fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM),
-              moment::TimeAccuracy::MILLISECONDS);
+  uint64_t current_time_ms = GetTime(
+      fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM),
+      moment::TimeAccuracy::MILLISECONDS);
 
   if (!(current_time_ms > decided_next_timestamp_ms_) && !forcibly_generate_next_)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Waiting before producing block. Milliseconds to wait: ",
-                    decided_next_timestamp_ms_ - current_time_ms);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Waiting before producing block. Milliseconds to wait: ",
+        decided_next_timestamp_ms_ - current_time_ms);
     return ret;
   }
 
   forcibly_generate_next_ = false;
 
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Generating block. Current time: ", current_time_ms,
-                  " deadline: ", decided_next_timestamp_ms_);
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Generating block. Current time: ",
+      current_time_ms,
+      " deadline: ",
+      decided_next_timestamp_ms_);
 
   // Round up to the nearest second for block timestamp
   auto const current_time_s_ceiled =
@@ -174,8 +193,9 @@ void SimulatedPowConsensus::SetMaxCabinetSize(uint16_t /*max_cabinet_size*/)
 void SimulatedPowConsensus::SetAeonPeriod(uint16_t /*aeon_period*/)
 {}
 
-void SimulatedPowConsensus::Reset(StakeSnapshot const & /*snapshot*/,
-                                  StorageInterface & /*storage*/)
+void SimulatedPowConsensus::Reset(
+    StakeSnapshot const & /*snapshot*/,
+    StorageInterface & /*storage*/)
 {}
 
 void SimulatedPowConsensus::Reset(StakeSnapshot const & /*snapshot*/)

@@ -86,10 +86,11 @@ OpType Node<TensorType>::OperationType() const
 {
   if (operation_type_ != op_ptr_->OperationType())
   {
-    FETCH_LOG_ERROR(this->name_.c_str(), "Node operation type (" +
-                                             std::to_string(static_cast<int>(operation_type_)) +
-                                             ") and underlying Ops operation code (" +
-                                             std::string(op_ptr_->Descriptor()) + ") mismatch!");
+    FETCH_LOG_ERROR(
+        this->name_.c_str(),
+        "Node operation type (" + std::to_string(static_cast<int>(operation_type_)) +
+            ") and underlying Ops operation code (" + std::string(op_ptr_->Descriptor()) +
+            ") mismatch!");
   }
   return operation_type_;
 }
@@ -180,13 +181,17 @@ Shape Node<TensorType>::BatchOutputShape()
   {
     if (OperationType() == OpType::OP_PLACEHOLDER)
     {
-      FETCH_LOG_INFO(name_.c_str(), "Shape deduction reached a placeholder input node : " +
-                                        this->name_ + " " + OutputShapeAsString(return_shape));
+      FETCH_LOG_INFO(
+          name_.c_str(),
+          "Shape deduction reached a placeholder input node : " + this->name_ + " " +
+              OutputShapeAsString(return_shape));
     }
     if (OperationType() == OpType::OP_WEIGHTS)
     {
-      FETCH_LOG_INFO(name_.c_str(), "Shape deduction reached weights node : " + this->name_ + " " +
-                                        OutputShapeAsString(return_shape));
+      FETCH_LOG_INFO(
+          name_.c_str(),
+          "Shape deduction reached weights node : " + this->name_ + " " +
+              OutputShapeAsString(return_shape));
     }
   }
   else
@@ -220,9 +225,10 @@ Shape Node<TensorType>::BatchOutputShape()
       {
         if (input_node_ptr->OperationType() != OpType::OP_PLACEHOLDER)
         {
-          FETCH_LOG_INFO(name_.c_str(),
-                         "Got an empty shape as return from non-placeholder layer! : " +
-                             input_node_ptr->GetNodeName());
+          FETCH_LOG_INFO(
+              name_.c_str(),
+              "Got an empty shape as return from non-placeholder layer! : " +
+                  input_node_ptr->GetNodeName());
         }
         continue;
       }
@@ -233,8 +239,10 @@ Shape Node<TensorType>::BatchOutputShape()
     // If there is no one valid (non-empty) input shape, shape deduction can not go further.
     if (input_shapes.empty())
     {
-      FETCH_LOG_ERROR(name_.c_str(), "Shape deduction failed on " + this->name_ +
-                                         " : only empty shapes were received as Input ones.");
+      FETCH_LOG_ERROR(
+          name_.c_str(),
+          "Shape deduction failed on " + this->name_ +
+              " : only empty shapes were received as Input ones.");
       return return_shape;
     }
 
@@ -244,13 +252,17 @@ Shape Node<TensorType>::BatchOutputShape()
 
     if (return_shape.empty())
     {
-      FETCH_LOG_ERROR(name_.c_str(), "Shape deduction failed on " + this->name_ +
-                                         " : unable to compute underlying Ops output shape.");
+      FETCH_LOG_ERROR(
+          name_.c_str(),
+          "Shape deduction failed on " + this->name_ +
+              " : unable to compute underlying Ops output shape.");
     }
     else
     {
-      FETCH_LOG_INFO(name_.c_str(), InputShapesAsString(op_ptr_->BatchInputShapes()) + "->" +
-                                        OutputShapeAsString(op_ptr_->BatchOutputShape()));
+      FETCH_LOG_INFO(
+          name_.c_str(),
+          InputShapesAsString(op_ptr_->BatchInputShapes()) + "->" +
+              OutputShapeAsString(op_ptr_->BatchOutputShape()));
     }
   }
 
@@ -505,8 +517,9 @@ void Node<TensorType>::ResetCache(bool input_size_changed)
  * @param op_ptr
  */
 template <typename TensorType>
-void Node<TensorType>::SetNodeSaveableParams(NodeSaveableParams<TensorType> const &       nsp,
-                                             std::shared_ptr<ops::Ops<TensorType>> const &op_ptr)
+void Node<TensorType>::SetNodeSaveableParams(
+    NodeSaveableParams<TensorType> const &       nsp,
+    std::shared_ptr<ops::Ops<TensorType>> const &op_ptr)
 {
   name_                 = nsp.name;
   cached_output_status_ = CachedOutputState::CHANGED_SIZE;

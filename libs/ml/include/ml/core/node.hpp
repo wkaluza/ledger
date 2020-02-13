@@ -66,8 +66,10 @@ public:
 
   Node() = default;
 
-  Node(OpType const &operation_type, std::string name,
-       std::function<std::shared_ptr<ops::Ops<TensorType>>()> const &constructor)
+  Node(
+      OpType const &                                                operation_type,
+      std::string                                                   name,
+      std::function<std::shared_ptr<ops::Ops<TensorType>>()> const &constructor)
     : name_(std::move(name))
     , cached_output_status_(CachedOutputState::CHANGED_SIZE)
     , operation_type_(operation_type)
@@ -105,8 +107,9 @@ public:
 
   std::shared_ptr<SPType> GetNodeSaveableParams() const;
 
-  void SetNodeSaveableParams(NodeSaveableParams<TensorType> const &       nsp,
-                             std::shared_ptr<ops::Ops<TensorType>> const &op_ptr);
+  void SetNodeSaveableParams(
+      NodeSaveableParams<TensorType> const &       nsp,
+      std::shared_ptr<ops::Ops<TensorType>> const &op_ptr);
 
   ///////////////////////////////////
   /// FORWARD/BACKWARD OPERATIONS ///

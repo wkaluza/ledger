@@ -55,12 +55,14 @@ TYPED_TEST(DivideTest, forward_test)
 
   TypeParam prediction(op.ComputeOutputShape(
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}));
-  op.Forward({std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)},
-             prediction);
+  op.Forward(
+      {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(DivideTest, backward_test)
@@ -93,10 +95,14 @@ TYPED_TEST(DivideTest, backward_test)
       {std::make_shared<TensorType>(data_1), std::make_shared<TensorType>(data_2)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt_1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction[1].AllClose(gt_2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt_1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt_2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace

@@ -31,8 +31,12 @@ class HistogramMap : public Measurement
 {
 public:
   // Construction / Destruction
-  HistogramMap(std::string const &name, std::string field, std::vector<double> buckets,
-               std::string const &description, Labels const &labels = Labels{});
+  HistogramMap(
+      std::string const & name,
+      std::string         field,
+      std::vector<double> buckets,
+      std::string const & description,
+      Labels const &      labels = Labels{});
   HistogramMap(HistogramMap const &) = delete;
   HistogramMap(HistogramMap &&)      = delete;
   ~HistogramMap() override           = default;

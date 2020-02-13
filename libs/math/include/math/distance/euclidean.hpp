@@ -54,8 +54,10 @@ typename ArrayType::Type NegativeSquareEuclidean(ArrayType const &A, ArrayType c
  * @return
  */
 template <typename ArrayType>
-ArrayType EuclideanMatrix(ArrayType const &A, ArrayType const &B,
-                          typename ArrayType::SizeType const &axis = 1)
+ArrayType EuclideanMatrix(
+    ArrayType const &                   A,
+    ArrayType const &                   B,
+    typename ArrayType::SizeType const &axis = 1)
 {
   assert(A.shape() == B.shape());
   assert(A.shape().size() == 2);

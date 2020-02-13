@@ -30,8 +30,10 @@ namespace ledger {
  * @param block_index The block index that is being triggered
  * @param tracker The tracker to be updated
  */
-bool StakeUpdateQueue::ApplyUpdates(BlockIndex block_index, StakeSnapshotPtr const &reference,
-                                    StakeSnapshotPtr &next)
+bool StakeUpdateQueue::ApplyUpdates(
+    BlockIndex              block_index,
+    StakeSnapshotPtr const &reference,
+    StakeSnapshotPtr &      next)
 {
   bool new_snapshot{false};
 
@@ -102,8 +104,10 @@ std::size_t StakeUpdateQueue::size() const
  * @param address The address of the stake holder
  * @param stake The amount of tokens to be staked
  */
-void StakeUpdateQueue::AddStakeUpdate(BlockIndex block_index, Identity const &identity,
-                                      StakeAmount stake)
+void StakeUpdateQueue::AddStakeUpdate(
+    BlockIndex      block_index,
+    Identity const &identity,
+    StakeAmount     stake)
 {
   updates_.ApplyVoid([&](BlockUpdates &updates) { updates[block_index][identity] = stake; });
 }

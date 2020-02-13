@@ -29,13 +29,16 @@ struct FNVConfigInvalid
   static constexpr std::size_t SIZE_IN_BYTES = 0;
 };
 
-template <typename NumberTypeParam, std::size_t SIB = sizeof(NumberTypeParam),
-          typename FROM = FNVConfigInvalid>
+template <
+    typename NumberTypeParam,
+    std::size_t SIB = sizeof(NumberTypeParam),
+    typename FROM   = FNVConfigInvalid>
 struct FNVConfig
 {
-  static_assert(std::is_integral<NumberTypeParam>::value && sizeof(NumberTypeParam) >= SIB,
-                "Provided SIZE_IN_BYTES parameter value must be smaller or equal to `sizeof(...)` "
-                "of provided integral type NumberType type parameter.");
+  static_assert(
+      std::is_integral<NumberTypeParam>::value && sizeof(NumberTypeParam) >= SIB,
+      "Provided SIZE_IN_BYTES parameter value must be smaller or equal to `sizeof(...)` "
+      "of provided integral type NumberType type parameter.");
 
   static_assert(std::is_same<FNVConfigInvalid, FROM>::value || FROM::SIZE_IN_BYTES == SIB, "");
 
@@ -74,24 +77,31 @@ enum class eFnvAlgorithm : uint8_t
   fnv0_deprecated
 };
 
-using FNVConfig_size_t =
-    FNVConfig<std::size_t, sizeof(std::size_t),
-              std::conditional<sizeof(std::size_t) == FNVConfig<uint64_t>::SIZE_IN_BYTES,
-                               FNVConfig<uint64_t>, FNVConfig<uint32_t>>::type>;
+using FNVConfig_size_t = FNVConfig<
+    std::size_t,
+    sizeof(std::size_t),
+    std::conditional<
+        sizeof(std::size_t) == FNVConfig<uint64_t>::SIZE_IN_BYTES,
+        FNVConfig<uint64_t>,
+        FNVConfig<uint32_t>>::type>;
 
 template <typename FNV_CONFIG = FNVConfig_size_t, eFnvAlgorithm ALGORITHM = eFnvAlgorithm::fnv1a>
 struct FNVAlgorithm
 {
-  static void update(typename FNV_CONFIG::NumberType &context, uint8_t const *data_to_hash,
-                     std::size_t size);
+  static void update(
+      typename FNV_CONFIG::NumberType &context,
+      uint8_t const *                  data_to_hash,
+      std::size_t                      size);
   static void reset(typename FNV_CONFIG::NumberType &context);
 };
 
 template <typename FNV_CONFIG>
 struct FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv1a>
 {
-  static void update(typename FNV_CONFIG::NumberType &context, uint8_t const *data_to_hash,
-                     std::size_t size)
+  static void update(
+      typename FNV_CONFIG::NumberType &context,
+      uint8_t const *                  data_to_hash,
+      std::size_t                      size)
   {
     for (std::size_t i = 0; i < size; ++i)
     {
@@ -109,8 +119,10 @@ struct FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv1a>
 template <typename FNV_CONFIG>
 struct FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv1>
 {
-  static void update(typename FNV_CONFIG::NumberType &context, uint8_t const *data_to_hash,
-                     std::size_t size)
+  static void update(
+      typename FNV_CONFIG::NumberType &context,
+      uint8_t const *                  data_to_hash,
+      std::size_t                      size)
   {
     for (std::size_t i = 0; i < size; ++i)
     {
@@ -128,8 +140,10 @@ struct FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv1>
 template <typename FNV_CONFIG>
 struct FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv0_deprecated>
 {
-  static void update(typename FNV_CONFIG::NumberType &context, uint8_t const *data_to_hash,
-                     std::size_t size)
+  static void update(
+      typename FNV_CONFIG::NumberType &context,
+      uint8_t const *                  data_to_hash,
+      std::size_t                      size)
   {
     FNVAlgorithm<FNV_CONFIG, eFnvAlgorithm::fnv1>::update(context, data_to_hash, size);
   }

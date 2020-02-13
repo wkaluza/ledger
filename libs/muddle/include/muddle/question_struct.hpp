@@ -54,8 +54,11 @@ struct QuestionStruct
 
   QuestionStruct();
 
-  QuestionStruct(Digest question, Answer answer, CertificatePtr certificate,
-                 CabinetMembers current_cabinet);
+  QuestionStruct(
+      Digest         question,
+      Answer         answer,
+      CertificatePtr certificate,
+      CabinetMembers current_cabinet);
 
   static Answer const &   GetAnswer(AnswerAndSeen const &ref);
   static Signature const &GetSignature(AnswerAndSeen const &ref);

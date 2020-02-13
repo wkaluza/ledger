@@ -26,8 +26,11 @@
 static Gauge ep_count("mt-core.network.Endpoint");
 
 template <typename TXType>
-Endpoint<TXType>::Endpoint(Core &core, std::size_t sendBufferSize, std::size_t readBufferSize,
-                           ConfigMap configMap)
+Endpoint<TXType>::Endpoint(
+    Core &      core,
+    std::size_t sendBufferSize,
+    std::size_t readBufferSize,
+    ConfigMap   configMap)
   : EndpointBase<TXType>(sendBufferSize, readBufferSize, configMap)
   , sock(static_cast<asio::io_context &>(core))
 {
@@ -58,8 +61,14 @@ void Endpoint<TXType>::async_write()
   int i = 0;
   for (auto &d : data)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Send buffer ", i, "=", d.size(),
-                    " bytes on thr=", std::this_thread::get_id());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Send buffer ",
+        i,
+        "=",
+        d.size(),
+        " bytes on thr=",
+        std::this_thread::get_id());
     ++i;
   }
 
@@ -85,10 +94,13 @@ void Endpoint<TXType>::async_read(const std::size_t &bytes_needed)
   auto space    = readBuffer.GetSpaceBuffers();
   auto my_state = state;
 
-  asio::async_read(sock, space, asio::transfer_at_least(bytes_needed),
-                   [this, my_state](std::error_code const &ec, const size_t &bytes) {
-                     this->complete_reading(my_state, ec, bytes);
-                   });
+  asio::async_read(
+      sock,
+      space,
+      asio::transfer_at_least(bytes_needed),
+      [this, my_state](std::error_code const &ec, const size_t &bytes) {
+        this->complete_reading(my_state, ec, bytes);
+      });
 }
 
 template <typename TXType>

@@ -84,8 +84,11 @@ template <int POSITION, typename T, typename... Ts>
 struct AssignParameters<POSITION, T, Ts...>
 {
   // Invoked on non-final parameter
-  static void Assign(Variant *stack, RegisteredTypes const &types, T const &parameter,
-                     Ts const &... parameters)
+  static void Assign(
+      Variant *              stack,
+      RegisteredTypes const &types,
+      T const &              parameter,
+      Ts const &... parameters)
   {
     TypeId type_id = Getter<T>::GetTypeId(types, parameter);
     if (type_id != TypeIds::Unknown)
@@ -128,8 +131,10 @@ class ParameterPack
 {
 public:
   // Construction / Destruction
-  explicit ParameterPack(RegisteredTypes const &registered_types, VariantArray params = {},
-                         VM *vm = nullptr)
+  explicit ParameterPack(
+      RegisteredTypes const &registered_types,
+      VariantArray           params = {},
+      VM *                   vm     = nullptr)
     : registered_types_{registered_types}
     , params_{std::move(params)}
     , vm_{vm}
@@ -240,9 +245,13 @@ private:
 };
 
 using ContractInvocationHandler = std::function<bool(
-    VM * /* vm */, std::string const & /* identity */, Executable::Contract const & /* contract */,
-    Executable::Function const & /* function */, VariantArray /* parameters */,
-    std::string & /* error */, Variant & /* output */)>;
+    VM * /* vm */,
+    std::string const & /* identity */,
+    Executable::Contract const & /* contract */,
+    Executable::Function const & /* function */,
+    VariantArray /* parameters */,
+    std::string & /* error */,
+    Variant & /* output */)>;
 
 class VM
 {
@@ -260,12 +269,19 @@ public:
     return registered_types_;
   }
 
-  bool GenerateExecutable(IR const &ir, std::string const &name, Executable &executable,
-                          std::vector<std::string> &errors);
+  bool GenerateExecutable(
+      IR const &                ir,
+      std::string const &       name,
+      Executable &              executable,
+      std::vector<std::string> &errors);
 
   template <typename... Ts>
-  bool Execute(Executable const &executable, std::string const &name, std::string &error,
-               Variant &output, Ts const &... parameters)
+  bool Execute(
+      Executable const & executable,
+      std::string const &name,
+      std::string &      error,
+      Variant &          output,
+      Ts const &... parameters)
   {
     ParameterPack parameter_pack{registered_types_};
 
@@ -278,8 +294,12 @@ public:
     return Execute(executable, name, error, output, parameter_pack);
   }
 
-  bool Execute(Executable const &executable, std::string const &name, std::string &error,
-               Variant &output, ParameterPack const &parameters)
+  bool Execute(
+      Executable const &   executable,
+      std::string const &  name,
+      std::string &        error,
+      Variant &            output,
+      ParameterPack const &parameters)
   {
     bool success{false};
 
@@ -681,8 +701,11 @@ private:
   ChargeAmount charge_total_{0};
   /// @}
 
-  void AddOpcodeInfo(uint16_t opcode, std::string unique_name, Handler handler,
-                     ChargeAmount static_charge = 1)
+  void AddOpcodeInfo(
+      uint16_t     opcode,
+      std::string  unique_name,
+      Handler      handler,
+      ChargeAmount static_charge = 1)
   {
     opcode_info_array_[opcode] =
         OpcodeInfo(std::move(unique_name), std::move(handler), static_charge);
@@ -775,10 +798,12 @@ private:
     {
       if (rhso)
       {
-        if (EstimateCharge(this, ChargeEstimator<>([lhso, rhso]() -> ChargeAmount {
-                             return lhso->IsEqualChargeEstimator(lhso, rhso);
-                           }),
-                           std::tuple<>{}))
+        if (EstimateCharge(
+                this,
+                ChargeEstimator<>([lhso, rhso]() -> ChargeAmount {
+                  return lhso->IsEqualChargeEstimator(lhso, rhso);
+                }),
+                std::tuple<>{}))
         {
           return lhso->IsEqual(lhso, rhso);
         }
@@ -794,10 +819,12 @@ private:
     {
       if (rhso)
       {
-        if (EstimateCharge(this, ChargeEstimator<>([lhso, rhso]() -> ChargeAmount {
-                             return lhso->IsNotEqualChargeEstimator(lhso, rhso);
-                           }),
-                           std::tuple<>{}))
+        if (EstimateCharge(
+                this,
+                ChargeEstimator<>([lhso, rhso]() -> ChargeAmount {
+                  return lhso->IsNotEqualChargeEstimator(lhso, rhso);
+                }),
+                std::tuple<>{}))
         {
           return lhso->IsNotEqual(lhso, rhso);
         }
@@ -1596,10 +1623,11 @@ private:
     Variant &lhsv = Top();
     if (lhsv.object && rhsv.object)
     {
-      if (EstimateCharge(this, ChargeEstimator<>([lhsv, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhsv, rhsv);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>(
+                  [lhsv, rhsv]() -> ChargeAmount { return Op::ApplyChargeEstimator(lhsv, rhsv); }),
+              std::tuple<>{}))
       {
         Op::Apply(lhsv, rhsv);
         rhsv.Reset();
@@ -1655,10 +1683,12 @@ private:
     Variant &lhsv = Top();
     if (lhsv.object && rhsv.object)
     {
-      if (EstimateCharge(this, ChargeEstimator<>([lhsv, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhsv.object, rhsv.object);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>([lhsv, rhsv]() -> ChargeAmount {
+                return Op::ApplyChargeEstimator(lhsv.object, rhsv.object);
+              }),
+              std::tuple<>{}))
       {
         Op::Apply(lhsv.object, rhsv.object);
         rhsv.Reset();
@@ -1680,10 +1710,11 @@ private:
         RuntimeError("null reference");
         return;
       }
-      if (EstimateCharge(this, ChargeEstimator<>([lhsv, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhsv, rhsv);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>(
+                  [lhsv, rhsv]() -> ChargeAmount { return Op::ApplyChargeEstimator(lhsv, rhsv); }),
+              std::tuple<>{}))
       {
         Op::Apply(lhsv, rhsv);
         rhsv.Reset();
@@ -1705,10 +1736,11 @@ private:
         RuntimeError("null reference");
         return;
       }
-      if (EstimateCharge(this, ChargeEstimator<>([lhsv, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhsv, rhsv);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>(
+                  [lhsv, rhsv]() -> ChargeAmount { return Op::ApplyChargeEstimator(lhsv, rhsv); }),
+              std::tuple<>{}))
       {
         Op::Apply(lhsv, rhsv);
         rhsv.Reset();
@@ -1740,10 +1772,12 @@ private:
     Variant &rhsv = Pop();
     if (lhso && rhsv.object)
     {
-      if (EstimateCharge(this, ChargeEstimator<>([lhso, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhso, rhsv.object);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>([lhso, rhsv]() -> ChargeAmount {
+                return Op::ApplyChargeEstimator(lhso, rhsv.object);
+              }),
+              std::tuple<>{}))
       {
         Op::Apply(lhso, rhsv.object);
         rhsv.Reset();
@@ -1764,10 +1798,11 @@ private:
         RuntimeError("null reference");
         return;
       }
-      if (EstimateCharge(this, ChargeEstimator<>([lhso, rhsv]() -> ChargeAmount {
-                           return Op::ApplyChargeEstimator(lhso, rhsv);
-                         }),
-                         std::tuple<>{}))
+      if (EstimateCharge(
+              this,
+              ChargeEstimator<>(
+                  [lhso, rhsv]() -> ChargeAmount { return Op::ApplyChargeEstimator(lhso, rhsv); }),
+              std::tuple<>{}))
       {
         Op::Apply(lhso, rhsv);
         rhsv.Reset();

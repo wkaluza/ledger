@@ -58,9 +58,12 @@ constexpr uint64_t MAX_SENSIBLE_STEP_BACK = 10000;
 
 }  // namespace
 
-MainChainRpcService::MainChainRpcService(MuddleEndpoint &             endpoint,
-                                         MainChainRpcClientInterface &rpc_client, MainChain &chain,
-                                         TrustSystem &trust, ConsensusPtr consensus)
+MainChainRpcService::MainChainRpcService(
+    MuddleEndpoint &             endpoint,
+    MainChainRpcClientInterface &rpc_client,
+    MainChain &                  chain,
+    TrustSystem &                trust,
+    ConsensusPtr                 consensus)
   : muddle::rpc::Server(endpoint, SERVICE_MAIN_CHAIN, CHANNEL_RPC)
   , endpoint_(endpoint)
   , chain_(chain)
@@ -69,8 +72,10 @@ MainChainRpcService::MainChainRpcService(MuddleEndpoint &             endpoint,
   , block_subscription_(endpoint.Subscribe(SERVICE_MAIN_CHAIN, CHANNEL_BLOCKS))
   , main_chain_protocol_(chain_)
   , rpc_client_(rpc_client)
-  , state_machine_{std::make_shared<StateMachine>("MainChain", State::SYNCHRONISING,
-                                                  [](State state) { return ToString(state); })}
+  , state_machine_{std::make_shared<StateMachine>(
+        "MainChain",
+        State::SYNCHRONISING,
+        [](State state) { return ToString(state); })}
   , recv_block_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_mainchain_service_recv_block_total",
         "The number of received blocks from the network")}
@@ -112,7 +117,8 @@ MainChainRpcService::MainChainRpcService(MuddleEndpoint &             endpoint,
         "The number of times in the complete sync with peer state")}
   , new_block_duration_{telemetry::Registry::Instance().CreateHistogram(
         {1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0, 1e1, 1e2, 1e3},
-        "ledger_mainchain_service_new_block_duration", "The duration of the new block handler")}
+        "ledger_mainchain_service_new_block_duration",
+        "The duration of the new block handler")}
 {
   assert(consensus_);
 
@@ -139,9 +145,13 @@ MainChainRpcService::MainChainRpcService(MuddleEndpoint &             endpoint,
   resync_interval_.Restart(std::chrono::seconds{uint64_t{PERIODIC_RESYNC_SECONDS}});
 
   // set the main chain rpc sync to accept gossip blocks
-  block_subscription_->SetMessageHandler([this](Address const &from, uint16_t, uint16_t, uint16_t,
-                                                Packet::Payload const &payload,
-                                                Address                transmitter) {
+  block_subscription_->SetMessageHandler([this](
+                                             Address const &from,
+                                             uint16_t,
+                                             uint16_t,
+                                             uint16_t,
+                                             Packet::Payload const &payload,
+                                             Address                transmitter) {
     telemetry::FunctionTimer timer{*new_block_duration_};
 
     BlockSerializer serialiser(payload);
@@ -220,9 +230,19 @@ void MainChainRpcService::OnNewBlock(Address const &from, Block &block, Address 
     break;
   }
 
-  FETCH_LOG_INFO(LOGGING_NAME, "New Block: #", block.block_number, " 0x", block.hash.ToHex(),
-                 " (from peer: ", ToBase64(from), " num txs: ", block.GetTransactionCount(),
-                 " status: ", ToString(status), ")");
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "New Block: #",
+      block.block_number,
+      " 0x",
+      block.hash.ToHex(),
+      " (from peer: ",
+      ToBase64(from),
+      " num txs: ",
+      block.GetTransactionCount(),
+      " status: ",
+      ToString(status),
+      ")");
 }
 
 MainChainRpcService::Address MainChainRpcService::GetRandomTrustedPeer() const
@@ -274,8 +294,12 @@ void MainChainRpcService::HandleChainResponse(Address const &address, Begin begi
     // add the block
     if (!ValidBlock(*block))
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Synced bad proof block 0x", block->hash.ToHex(),
-                      " from muddle://", ToBase64(address));
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Synced bad proof block 0x",
+          block->hash.ToHex(),
+          " from muddle://",
+          ToBase64(address));
       ++status_stats[BlockStatus::INVALID];
       continue;
     }
@@ -283,25 +307,49 @@ void MainChainRpcService::HandleChainResponse(Address const &address, Begin begi
     auto const status = chain_.AddBlock(std::move(block));
 
     ++status_stats[status];
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Sync: ", ToString(status), " block 0x", (*it)->hash.ToHex(),
-                    " from muddle://", ToBase64(address));
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Sync: ",
+        ToString(status),
+        " block 0x",
+        (*it)->hash.ToHex(),
+        " from muddle://",
+        ToBase64(address));
   }
 
   if (status_stats.count(BlockStatus::INVALID) != 0u)
   {
     FETCH_LOG_WARN(
-        LOGGING_NAME, "Synced Summary:", " Invalid: ", status_stats[BlockStatus::INVALID],
-        " Added: ", status_stats[BlockStatus::ADDED], " Loose: ", status_stats[BlockStatus::LOOSE],
-        " Duplicate: ", status_stats[BlockStatus::DUPLICATE],
-        " Dirty: ", status_stats[BlockStatus::DIRTY], " from muddle://", ToBase64(address));
+        LOGGING_NAME,
+        "Synced Summary:",
+        " Invalid: ",
+        status_stats[BlockStatus::INVALID],
+        " Added: ",
+        status_stats[BlockStatus::ADDED],
+        " Loose: ",
+        status_stats[BlockStatus::LOOSE],
+        " Duplicate: ",
+        status_stats[BlockStatus::DUPLICATE],
+        " Dirty: ",
+        status_stats[BlockStatus::DIRTY],
+        " from muddle://",
+        ToBase64(address));
   }
   else
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Synced Summary:", " Added: ", status_stats[BlockStatus::ADDED],
-                   " Loose: ", status_stats[BlockStatus::LOOSE],
-                   " Duplicate: ", status_stats[BlockStatus::DUPLICATE],
-                   " Dirty: ", status_stats[BlockStatus::DIRTY], " from muddle://",
-                   ToBase64(address));
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Synced Summary:",
+        " Added: ",
+        status_stats[BlockStatus::ADDED],
+        " Loose: ",
+        status_stats[BlockStatus::LOOSE],
+        " Duplicate: ",
+        status_stats[BlockStatus::DUPLICATE],
+        " Dirty: ",
+        status_stats[BlockStatus::DIRTY],
+        " from muddle://",
+        ToBase64(address));
   }
 }
 
@@ -374,9 +422,14 @@ State MainChainRpcService::OnStartSyncWithPeer()
 
   if (block_resolving_ && !current_peer_address_.empty())
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Resolving: #", block_resolving_->block_number, " 0x",
-                    block_resolving_->hash.ToHex(), " from: muddle://",
-                    current_peer_address_.ToBase64());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Resolving: #",
+        block_resolving_->block_number,
+        " 0x",
+        block_resolving_->hash.ToHex(),
+        " from: muddle://",
+        current_peer_address_.ToBase64());
   }
 
   return State::REQUEST_NEXT_BLOCKS;
@@ -563,10 +616,14 @@ State MainChainRpcService::WalkBack()
     auto next_block_resolving = chain_.GetBlock(block_resolving_->previous_hash);
     if (!next_block_resolving)
     {
-      FETCH_LOG_CRITICAL(LOGGING_NAME, __func__, ": block 0x",
-                         block_resolving_->previous_hash.ToHex(),
-                         ", previous to current resolving 0x", block_resolving_->hash.ToHex(),
-                         ", is not on the chain");
+      FETCH_LOG_CRITICAL(
+          LOGGING_NAME,
+          __func__,
+          ": block 0x",
+          block_resolving_->previous_hash.ToHex(),
+          ", previous to current resolving 0x",
+          block_resolving_->hash.ToHex(),
+          ", is not on the chain");
       return State::SYNCHRONISING;
     }
     block_resolving_ = std::move(next_block_resolving);

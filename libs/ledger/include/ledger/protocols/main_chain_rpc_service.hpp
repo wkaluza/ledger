@@ -128,8 +128,12 @@ public:
   };
 
   // Construction / Destruction
-  MainChainRpcService(MuddleEndpoint &endpoint, MainChainRpcClientInterface &rpc_client,
-                      MainChain &chain, TrustSystem &trust, ConsensusPtr consensus);
+  MainChainRpcService(
+      MuddleEndpoint &             endpoint,
+      MainChainRpcClientInterface &rpc_client,
+      MainChain &                  chain,
+      TrustSystem &                trust,
+      ConsensusPtr                 consensus);
   MainChainRpcService(MainChainRpcService const &) = delete;
   MainChainRpcService(MainChainRpcService &&)      = delete;
   ~MainChainRpcService() override                  = default;

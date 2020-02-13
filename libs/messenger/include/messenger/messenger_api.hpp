@@ -77,8 +77,10 @@ public:
 
   /// Search interface
   /// @{
-  ResultList FindAgents(service::CallContext const &call_context, ConstByteArray const &query_type,
-                        ConstByteArray const &query);
+  ResultList FindAgents(
+      service::CallContext const &call_context,
+      ConstByteArray const &      query_type,
+      ConstByteArray const &      query);
 
   void Advertise(service::CallContext const &call_context);
   /// @}
@@ -97,8 +99,8 @@ private:
   {
     serializers::MsgPackSerializer serializer;
     serializer << message;
-    messenger_endpoint_.Send(message.to.messenger, SERVICE_MESSENGER, CHANNEL_MESSENGER_MESSAGE,
-                             serializer.data());
+    messenger_endpoint_.Send(
+        message.to.messenger, SERVICE_MESSENGER, CHANNEL_MESSENGER_MESSAGE, serializer.data());
   }
 
   /// Networking

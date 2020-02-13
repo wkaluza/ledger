@@ -132,9 +132,14 @@ public:
   {
     if (src_offset + dest_size > size())
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "ReadBytes target array is too big for us to fill. dest_size=", dest_size,
-                     " src_offset=", src_offset, " size=", size());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "ReadBytes target array is too big for us to fill. dest_size=",
+          dest_size,
+          " src_offset=",
+          src_offset,
+          " size=",
+          size());
 
       throw std::range_error("ReadBytes target array is too big");
     }
@@ -396,8 +401,10 @@ protected:
    * @zero_reserved_space If true then the amount of new memory reserved/allocated (if any) ABOVE
    * of already allocated will be zeroed byte by byte.
    */
-  void Resize(std::size_t n, ResizeParadigm const resize_paradigm = ResizeParadigm::ABSOLUTE,
-              bool const zero_reserved_space = true)
+  void Resize(
+      std::size_t          n,
+      ResizeParadigm const resize_paradigm     = ResizeParadigm::ABSOLUTE,
+      bool const           zero_reserved_space = true)
   {
     std::size_t const new_length = resize_paradigm == ResizeParadigm::ABSOLUTE ? n : length_ + n;
 
@@ -426,8 +433,10 @@ protected:
    * @zero_reserved_space If true then the amount of new memory reserved/allocated (if any) ABOVE
    * of already allocated will be zeroed byte by byte.
    */
-  void Reserve(std::size_t n, ResizeParadigm const resize_paradigm = ResizeParadigm::ABSOLUTE,
-               bool const zero_reserved_space = true)
+  void Reserve(
+      std::size_t          n,
+      ResizeParadigm const resize_paradigm     = ResizeParadigm::ABSOLUTE,
+      bool const           zero_reserved_space = true)
   {
     std::size_t const new_capacity_for_reserve =
         resize_paradigm == ResizeParadigm::ABSOLUTE ? n : data_.size() + n;
@@ -568,9 +577,10 @@ private:
   };
 
   template <typename T>
-  using AppendedType =
-      std::conditional_t<type_util::IsAnyOfV<std::decay_t<T>, uint8_t, char, int8_t>,
-                         std::decay_t<T>, SelfType const &>;
+  using AppendedType = std::conditional_t<
+      type_util::IsAnyOfV<std::decay_t<T>, uint8_t, char, int8_t>,
+      std::decay_t<T>,
+      SelfType const &>;
 
   /**
    * Appends args to this array in left-to-right order.

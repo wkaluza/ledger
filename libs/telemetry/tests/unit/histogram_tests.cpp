@@ -35,8 +35,8 @@ class HistogramTests : public ::testing::Test
 protected:
   void SetUp() override
   {
-    histogram_ = std::make_unique<Histogram>(std::initializer_list<double>{0.2, 0.4, 0.6, 0.8},
-                                             "request_time", "Test Metric");
+    histogram_ = std::make_unique<Histogram>(
+        std::initializer_list<double>{0.2, 0.4, 0.6, 0.8}, "request_time", "Test Metric");
   }
 
   void TearDown() override

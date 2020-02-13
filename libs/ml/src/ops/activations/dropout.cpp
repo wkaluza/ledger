@@ -116,8 +116,9 @@ void Dropout<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
 }
 
 template <typename TensorType>
-std::vector<TensorType> Dropout<TensorType>::Backward(VecTensorType const &inputs,
-                                                      TensorType const &   error_signal)
+std::vector<TensorType> Dropout<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 1);

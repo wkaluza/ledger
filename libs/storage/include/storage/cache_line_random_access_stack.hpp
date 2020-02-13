@@ -231,8 +231,9 @@ public:
     data_[cache_lookup_i].reads++;
     data_[cache_lookup_j].reads++;
 
-    std::swap(data_[cache_lookup_i].elements[cache_subindex_i],
-              data_[cache_lookup_j].elements[cache_subindex_j]);
+    std::swap(
+        data_[cache_lookup_i].elements[cache_subindex_i],
+        data_[cache_lookup_j].elements[cache_subindex_j]);
   }
 
   std::size_t size() const

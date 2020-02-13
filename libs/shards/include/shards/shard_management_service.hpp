@@ -46,8 +46,11 @@ public:
   using Addresses       = MuddleInterface::Addresses;
 
   // Construction / Destruction
-  ShardManagementService(Manifest manifest, ShardManagementInterface &shards,
-                         MuddleInterface &muddle, uint32_t log2_num_lanes);
+  ShardManagementService(
+      Manifest                  manifest,
+      ShardManagementInterface &shards,
+      MuddleInterface &         muddle,
+      uint32_t                  log2_num_lanes);
   ShardManagementService(ShardManagementService const &) = delete;
   ShardManagementService(ShardManagementService &&)      = delete;
   ~ShardManagementService() override                     = default;

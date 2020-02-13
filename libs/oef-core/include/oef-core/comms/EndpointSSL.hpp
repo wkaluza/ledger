@@ -54,8 +54,11 @@ public:
   bool         operator==(const EndpointSSL &other) = delete;
   bool         operator<(const EndpointSSL &other)  = delete;
 
-  EndpointSSL(Core &core, std::size_t sendBufferSize, std::size_t readBufferSize,
-              ConfigMap configMap);
+  EndpointSSL(
+      Core &      core,
+      std::size_t sendBufferSize,
+      std::size_t readBufferSize,
+      ConfigMap   configMap);
 
   ~EndpointSSL() override;
 

@@ -92,8 +92,10 @@ namespace ml {
 namespace utilities {
 
 template <typename T>
-void BuildNodeAndInsertTrainables(NodeSaveableParams<T> const &nsp, std::string const &name,
-                                  std::shared_ptr<Graph<T>> g)
+void BuildNodeAndInsertTrainables(
+    NodeSaveableParams<T> const &nsp,
+    std::string const &          name,
+    std::shared_ptr<Graph<T>>    g)
 {
   auto node = std::make_shared<Node<T>>();
   // construct the concrete op
@@ -418,31 +420,40 @@ void BuildNodeAndInsertTrainables(NodeSaveableParams<T> const &nsp, std::string 
 ///////////////////////////////
 
 template void BuildNodeAndInsertTrainables<math::Tensor<int8_t>>(
-    NodeSaveableParams<math::Tensor<int8_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<int8_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<int8_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<int16_t>>(
-    NodeSaveableParams<math::Tensor<int16_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<int16_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<int16_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<int32_t>>(
-    NodeSaveableParams<math::Tensor<int32_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<int32_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<int32_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<int64_t>>(
-    NodeSaveableParams<math::Tensor<int64_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<int64_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<int64_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<float>>(
-    NodeSaveableParams<math::Tensor<float>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<float>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<float>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<double>>(
-    NodeSaveableParams<math::Tensor<double>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<double>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<double>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<fixed_point::fp32_t>>(
-    NodeSaveableParams<math::Tensor<fixed_point::fp32_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<fixed_point::fp32_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<fixed_point::fp32_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<fixed_point::fp64_t>>(
-    NodeSaveableParams<math::Tensor<fixed_point::fp64_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<fixed_point::fp64_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<fixed_point::fp64_t>>>);
 template void BuildNodeAndInsertTrainables<math::Tensor<fixed_point::fp128_t>>(
-    NodeSaveableParams<math::Tensor<fixed_point::fp128_t>> const &, std::string const &,
+    NodeSaveableParams<math::Tensor<fixed_point::fp128_t>> const &,
+    std::string const &,
     std::shared_ptr<Graph<math::Tensor<fixed_point::fp128_t>>>);
 
 }  // namespace utilities

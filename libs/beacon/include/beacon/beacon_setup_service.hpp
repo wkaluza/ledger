@@ -120,8 +120,10 @@ public:
   using SharedNotarisationManager    = std::shared_ptr<NotarisationManager>;
   using NotarisationCallbackFunction = std::function<void(SharedNotarisationManager)>;
 
-  BeaconSetupService(MuddleInterface &muddle, ManifestCacheInterface &manifest_cache,
-                     CertificatePtr certificate);
+  BeaconSetupService(
+      MuddleInterface &       muddle,
+      ManifestCacheInterface &manifest_cache,
+      CertificatePtr          certificate);
   BeaconSetupService(BeaconSetupService const &) = delete;
   BeaconSetupService(BeaconSetupService &&)      = delete;
   virtual ~BeaconSetupService()                  = default;
@@ -146,8 +148,13 @@ public:
 
   /// Setup management
   /// @{
-  void StartNewCabinet(CabinetMemberList members, uint32_t threshold, uint64_t round_start,
-                       uint64_t round_end, uint64_t start_time, BlockEntropy const &prev_entropy);
+  void StartNewCabinet(
+      CabinetMemberList   members,
+      uint32_t            threshold,
+      uint64_t            round_start,
+      uint64_t            round_end,
+      uint64_t            start_time,
+      BlockEntropy const &prev_entropy);
   void Abort(uint64_t abort_below);
   void SetBeaconReadyCallback(CallbackFunction callback);
   void SetNotarisationCallback(NotarisationCallbackFunction callback);

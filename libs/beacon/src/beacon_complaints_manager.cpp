@@ -44,8 +44,10 @@ void ComplaintsManager::AddComplaintAgainst(MuddleAddress const &complaint_addre
   complaints_counter_[complaint_address].insert(address_);
 }
 
-void ComplaintsManager::AddComplaintsFrom(MuddleAddress const & from,
-                                          ComplaintsList const &complaints, Cabinet const &cabinet)
+void ComplaintsManager::AddComplaintsFrom(
+    MuddleAddress const & from,
+    ComplaintsList const &complaints,
+    Cabinet const &       cabinet)
 {
   FETCH_LOCK(mutex_);
   // Check if we have received a complaints message from this node before and if not log that we
@@ -131,8 +133,9 @@ std::unordered_set<ComplaintsManager::MuddleAddress> ComplaintsManager::Complain
   return complaints_counter_.at(address_);
 }
 
-bool ComplaintsManager::FindComplaint(MuddleAddress const &complaint_address,
-                                      MuddleAddress const &complainer_address) const
+bool ComplaintsManager::FindComplaint(
+    MuddleAddress const &complaint_address,
+    MuddleAddress const &complainer_address) const
 {
   FETCH_LOCK(mutex_);
   assert(finished_);
@@ -141,8 +144,9 @@ bool ComplaintsManager::FindComplaint(MuddleAddress const &complaint_address,
   {
     return false;
   }
-  return (complaints_counter_.at(complaint_address).find(complainer_address) !=
-          complaints_counter_.at(complaint_address).end());
+  return (
+      complaints_counter_.at(complaint_address).find(complainer_address) !=
+      complaints_counter_.at(complaint_address).end());
 }
 
 uint32_t ComplaintsManager::ComplaintsCount(MuddleAddress const &address) const
@@ -184,8 +188,9 @@ void ComplaintAnswersManager::AddComplaintAgainst(MuddleAddress const &member)
   complaints_.insert(member);
 }
 
-void ComplaintAnswersManager::AddComplaintAnswerFrom(MuddleAddress const &from,
-                                                     Answer const &       complaint_answer)
+void ComplaintAnswersManager::AddComplaintAnswerFrom(
+    MuddleAddress const &from,
+    Answer const &       complaint_answer)
 {
   FETCH_LOCK(mutex_);
   if (complaint_answers_received_.find(from) != complaint_answers_received_.end())
@@ -249,8 +254,12 @@ std::set<ComplaintAnswersManager::MuddleAddress> ComplaintAnswersManager::BuildQ
   FETCH_LOCK(mutex_);
   assert(finished_);
   std::set<MuddleAddress> qual;
-  std::set_difference(cabinet.begin(), cabinet.end(), complaints_.begin(), complaints_.end(),
-                      std::inserter(qual, qual.begin()));
+  std::set_difference(
+      cabinet.begin(),
+      cabinet.end(),
+      complaints_.begin(),
+      complaints_.end(),
+      std::inserter(qual, qual.begin()));
   return qual;
 }
 
@@ -276,7 +285,8 @@ std::set<QualComplaintsManager::MuddleAddress> QualComplaintsManager::Complaints
 }
 
 void QualComplaintsManager::AddComplaintsFrom(
-    MuddleAddress const &id, std::unordered_map<MuddleAddress, ExposedShares> const &complaints)
+    MuddleAddress const &                                   id,
+    std::unordered_map<MuddleAddress, ExposedShares> const &complaints)
 {
   FETCH_LOCK(mutex_);
   if (complaints_received_.find(id) != complaints_received_.end())

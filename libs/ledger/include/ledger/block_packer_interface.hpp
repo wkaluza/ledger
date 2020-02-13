@@ -72,8 +72,11 @@ public:
    * @param num_slices The number of slices for the block
    * @param chain The main chain
    */
-  virtual void GenerateBlock(Block &block, std::size_t num_lanes, std::size_t num_slices,
-                             MainChain const &chain) = 0;
+  virtual void GenerateBlock(
+      Block &          block,
+      std::size_t      num_lanes,
+      std::size_t      num_slices,
+      MainChain const &chain) = 0;
 
   /**
    * How many transactions are yet to be processed (mem-pool size). Not guaranteed to be accurate.

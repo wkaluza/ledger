@@ -38,8 +38,10 @@ public:
   using SPType        = OpRandomisedReluSaveableParams<TensorType>;
   using MyType        = RandomisedRelu<TensorType>;
 
-  RandomisedRelu(DataType lower_bound, DataType upper_bound,
-                 SizeType const &random_seed = 25102015);
+  RandomisedRelu(
+      DataType        lower_bound,
+      DataType        upper_bound,
+      SizeType const &random_seed = 25102015);
 
   explicit RandomisedRelu(SPType const &sp);
 
@@ -52,8 +54,8 @@ public:
 
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
 
   std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override;
 
@@ -69,8 +71,8 @@ public:
 private:
   void UpdateRandomValue()
   {
-    random_value_ = static_cast<DataType>(lower_bound_ +
-                                          rng_.AsType<DataType>() * (upper_bound_ - lower_bound_));
+    random_value_ = static_cast<DataType>(
+        lower_bound_ + rng_.AsType<DataType>() * (upper_bound_ - lower_bound_));
   }
 
   DataType random_value_;

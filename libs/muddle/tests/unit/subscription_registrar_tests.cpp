@@ -50,8 +50,10 @@ protected:
     registrar_ = std::make_unique<SubscriptionRegistrar>(NetworkId{"TEST"});
   }
 
-  PacketPtr CreatePacket(uint16_t service, uint16_t channel,
-                         Packet::Address const &address = Packet::Address{})
+  PacketPtr CreatePacket(
+      uint16_t               service,
+      uint16_t               channel,
+      Packet::Address const &address = Packet::Address{})
   {
     auto packet = std::make_shared<Packet>();
 
@@ -75,9 +77,11 @@ TEST_F(SubscriptionManagerTests, SingleHandler)
 
   // register the message handler for the subscription
   uint32_t dispatches = 0;
-  subscription->SetMessageHandler([&dispatches](Address const &, uint16_t, uint16_t, uint16_t,
-                                                Packet::Payload const &,
-                                                Address const &) { ++dispatches; });
+  subscription->SetMessageHandler(
+      [&dispatches](
+          Address const &, uint16_t, uint16_t, uint16_t, Packet::Payload const &, Address const &) {
+        ++dispatches;
+      });
 
   // create the packet
   auto packet = CreatePacket(1, 2);
@@ -102,12 +106,16 @@ TEST_F(SubscriptionManagerTests, MultipleHandlers)
 
   // register the message handler for the subscription
   uint32_t dispatches = 0;
-  subscription1->SetMessageHandler([&dispatches](Address const &, uint16_t, uint16_t, uint16_t,
-                                                 Packet::Payload const &,
-                                                 Address const &) { ++dispatches; });
-  subscription2->SetMessageHandler([&dispatches](Address const &, uint16_t, uint16_t, uint16_t,
-                                                 Packet::Payload const &,
-                                                 Address const &) { ++dispatches; });
+  subscription1->SetMessageHandler(
+      [&dispatches](
+          Address const &, uint16_t, uint16_t, uint16_t, Packet::Payload const &, Address const &) {
+        ++dispatches;
+      });
+  subscription2->SetMessageHandler(
+      [&dispatches](
+          Address const &, uint16_t, uint16_t, uint16_t, Packet::Payload const &, Address const &) {
+        ++dispatches;
+      });
 
   // create the packet
   auto packet = CreatePacket(1, 2);
@@ -140,12 +148,16 @@ TEST_F(SubscriptionManagerTests, MultipleDifferentHandlers)
 
   // register the message handler for the subscription
   uint32_t dispatches = 0;
-  subscription1->SetMessageHandler([&dispatches](Address const &, uint16_t, uint16_t, uint16_t,
-                                                 Packet::Payload const &,
-                                                 Address const &) { ++dispatches; });
-  subscription2->SetMessageHandler([&dispatches](Address const &, uint16_t, uint16_t, uint16_t,
-                                                 Packet::Payload const &,
-                                                 Address const &) { ++dispatches; });
+  subscription1->SetMessageHandler(
+      [&dispatches](
+          Address const &, uint16_t, uint16_t, uint16_t, Packet::Payload const &, Address const &) {
+        ++dispatches;
+      });
+  subscription2->SetMessageHandler(
+      [&dispatches](
+          Address const &, uint16_t, uint16_t, uint16_t, Packet::Payload const &, Address const &) {
+        ++dispatches;
+      });
 
   // create the packet
   auto packet = CreatePacket(1, 2, SAMPLE_ADDRESS);

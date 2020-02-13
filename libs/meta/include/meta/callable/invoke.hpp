@@ -53,8 +53,9 @@ template <typename F, typename Context, typename... Args>
 constexpr decltype(auto) InvokeNonStaticMemberFn_(F &&f, Context *ctx, Args &&... args)
 {
   using OwningType = typename CallableTraits<F>::OwningType;
-  static_assert(std::is_base_of<OwningType, std::decay_t<Context>>::value,
-                "Called member function and context do not match");
+  static_assert(
+      std::is_base_of<OwningType, std::decay_t<Context>>::value,
+      "Called member function and context do not match");
 
   return (ctx->*f)(std::forward<Args>(args)...);
 }
@@ -64,8 +65,9 @@ template <typename F, typename Context, typename... Args>
 constexpr decltype(auto) InvokeNonStaticMemberFn_(F &&f, Context &&ctx, Args &&... args)
 {
   using OwningType = typename CallableTraits<F>::OwningType;
-  static_assert(std::is_base_of<OwningType, std::remove_reference_t<Context>>::value,
-                "Called member function and context do not match");
+  static_assert(
+      std::is_base_of<OwningType, std::remove_reference_t<Context>>::value,
+      "Called member function and context do not match");
 
   return (std::forward<Context>(ctx).*f)(std::forward<Args>(args)...);
 }
@@ -75,8 +77,8 @@ struct CallableCategory<const_member_fn_tag>
   template <typename F, typename Context, typename... Args>
   static constexpr decltype(auto) Invoke(F &&f, Context &&ctx, Args &&... args)
   {
-    return InvokeNonStaticMemberFn_(std::forward<F>(f), std::forward<Context>(ctx),
-                                    std::forward<Args>(args)...);
+    return InvokeNonStaticMemberFn_(
+        std::forward<F>(f), std::forward<Context>(ctx), std::forward<Args>(args)...);
   }
 };
 template <>
@@ -85,8 +87,8 @@ struct CallableCategory<member_fn_tag>
   template <typename F, typename Context, typename... Args>
   static constexpr decltype(auto) Invoke(F &&f, Context &&ctx, Args &&... args)
   {
-    return InvokeNonStaticMemberFn_(std::forward<F>(f), std::forward<Context>(ctx),
-                                    std::forward<Args>(args)...);
+    return InvokeNonStaticMemberFn_(
+        std::forward<F>(f), std::forward<Context>(ctx), std::forward<Args>(args)...);
   }
 };
 

@@ -28,8 +28,11 @@
 #include <string>
 
 template <typename PROTO>
-void SendReply(const std::string &log_message, const Uri &uri, std::shared_ptr<PROTO> response,
-               std::shared_ptr<OefSearchEndpoint> &endpoint)
+void SendReply(
+    const std::string &                 log_message,
+    const Uri &                         uri,
+    std::shared_ptr<PROTO>              response,
+    std::shared_ptr<OefSearchEndpoint> &endpoint)
 {
   try
   {
@@ -47,7 +50,12 @@ void SendReply(const std::string &log_message, const Uri &uri, std::shared_ptr<P
   }
 }
 
-void SendExceptionReply(const std::string &where, const Uri &uri, const std::exception &e,
-                        std::shared_ptr<OefSearchEndpoint> &endpoint);
-void SendErrorReply(const std::string &message, const Uri &uri,
-                    std::shared_ptr<OefSearchEndpoint> &endpoint);
+void SendExceptionReply(
+    const std::string &                 where,
+    const Uri &                         uri,
+    const std::exception &              e,
+    std::shared_ptr<OefSearchEndpoint> &endpoint);
+void SendErrorReply(
+    const std::string &                 message,
+    const Uri &                         uri,
+    std::shared_ptr<OefSearchEndpoint> &endpoint);

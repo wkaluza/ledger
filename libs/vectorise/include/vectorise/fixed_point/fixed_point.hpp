@@ -519,8 +519,9 @@ private:
   // Note: We need to disable the static analysis check here because of the friend declaration
   template <typename T, typename U>
   // NOLINTNEXTLINE
-  friend constexpr math::meta::IfIsFixedPoint<T, T> fetch::math::AsType(U val,
-                                                                        meta::IfIsFloat<U> *);
+  friend constexpr math::meta::IfIsFixedPoint<T, T> fetch::math::AsType(
+      U val,
+      meta::IfIsFloat<U> *);
 
   /**
    * helper function that checks no rounding error when casting
@@ -743,7 +744,8 @@ template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::_half{FixedPoint<I, F>::FromFloat(0.5)}; /* 0.5 */
 template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::TOLERANCE(
-    0, FixedPoint<I, F>::BaseTypeInfo::tolerance); /* 0 */
+    0,
+    FixedPoint<I, F>::BaseTypeInfo::tolerance); /* 0 */
 template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::CONST_SMALLEST_FRACTION{
     FixedPoint<I, F>(0, FixedPoint<I, F>::SMALLEST_FRACTION)};
@@ -931,8 +933,9 @@ constexpr FixedPoint<I, F>::FixedPoint(FixedPoint<I, F> const &o)
  * @param fraction
  */
 template <uint16_t I, uint16_t F>
-constexpr FixedPoint<I, F>::FixedPoint(typename FixedPoint<I, F>::Type const &        integer,
-                                       typename FixedPoint<I, F>::UnsignedType const &fraction)
+constexpr FixedPoint<I, F>::FixedPoint(
+    typename FixedPoint<I, F>::Type const &        integer,
+    typename FixedPoint<I, F>::UnsignedType const &fraction)
   : data_{(INTEGER_MASK & (Type(integer) << FRACTIONAL_BITS)) | Type(fraction & FRACTIONAL_MASK)}
 {
   if (CheckOverflow(data_))
@@ -1028,8 +1031,9 @@ FixedPoint<I, F>::FixedPoint(std::string const &s)
   s_copy = std::string(s_copy, 0, index);
 #endif
 
-  bool contains_alpha = std::find_if(s_copy.begin(), s_copy.end(),
-                                     [](char c) { return std::isalpha(c); }) != s_copy.end();
+  bool contains_alpha = std::find_if(s_copy.begin(), s_copy.end(), [](char c) {
+                          return std::isalpha(c);
+                        }) != s_copy.end();
   if (contains_alpha)
   {
     throw std::runtime_error("FixedPoint parsing from string does not allow alpha characters!");
@@ -2079,8 +2083,8 @@ constexpr FixedPoint<64, 64> &FixedPoint<64, 64>::operator*=(FixedPoint<64, 64> 
       --integer_part;
       fractional_part = ~fractional_part + 1;
     }
-    prod = static_cast<UnsignedType>((static_cast<Type>(integer_part) << FRACTIONAL_BITS) |
-                                     static_cast<Type>(fractional_part));
+    prod = static_cast<UnsignedType>(
+        (static_cast<Type>(integer_part) << FRACTIONAL_BITS) | static_cast<Type>(fractional_part));
   }
   data_ = static_cast<Type>(prod);
   return *this;
@@ -2534,8 +2538,9 @@ constexpr typename FixedPoint<I, F>::Type *FixedPoint<I, F>::pointer()
  * @return the result of x - Round(x/y) * y
  */
 template <uint16_t I, uint16_t F>
-constexpr FixedPoint<I, F> FixedPoint<I, F>::Remainder(FixedPoint<I, F> const &x,
-                                                       FixedPoint<I, F> const &y)
+constexpr FixedPoint<I, F> FixedPoint<I, F>::Remainder(
+    FixedPoint<I, F> const &x,
+    FixedPoint<I, F> const &y)
 {
   FixedPoint result = x / y;
   return x - Round(result) * y;
@@ -2548,8 +2553,9 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::Remainder(FixedPoint<I, F> const &x
  * @return the result of the Fmod operation
  */
 template <uint16_t I, uint16_t F>
-constexpr FixedPoint<I, F> FixedPoint<I, F>::Fmod(FixedPoint<I, F> const &x,
-                                                  FixedPoint<I, F> const &y)
+constexpr FixedPoint<I, F> FixedPoint<I, F>::Fmod(
+    FixedPoint<I, F> const &x,
+    FixedPoint<I, F> const &y)
 {
   FixedPoint result = Remainder(Abs(x), Abs(y));
   if (result < _0)
@@ -2986,8 +2992,9 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::Sqrt(FixedPoint<I, F> const &x)
  * @return the result of pow(x, y)
  */
 template <uint16_t I, uint16_t F>
-constexpr FixedPoint<I, F> FixedPoint<I, F>::Pow(FixedPoint<I, F> const &x,
-                                                 FixedPoint<I, F> const &y)
+constexpr FixedPoint<I, F> FixedPoint<I, F>::Pow(
+    FixedPoint<I, F> const &x,
+    FixedPoint<I, F> const &y)
 {
   if (IsNaN(x) || IsNaN(y))
   {
@@ -3574,8 +3581,9 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::ATan(FixedPoint<I, F> const &x)
  * @return the result of atan2(y, x)
  */
 template <uint16_t I, uint16_t F>
-constexpr FixedPoint<I, F> FixedPoint<I, F>::ATan2(FixedPoint<I, F> const &y,
-                                                   FixedPoint<I, F> const &x)
+constexpr FixedPoint<I, F> FixedPoint<I, F>::ATan2(
+    FixedPoint<I, F> const &y,
+    FixedPoint<I, F> const &x)
 {
   if (IsNaN(y) || IsNaN(x))
   {

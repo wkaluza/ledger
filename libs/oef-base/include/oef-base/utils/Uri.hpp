@@ -56,8 +56,19 @@ public:
 
   void diagnostic() const
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "valid=", valid, " proto=\"", proto, "\" host=\"", host,
-                   "\" port=", port, " path=\"", path, "\"");
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "valid=",
+        valid,
+        " proto=\"",
+        proto,
+        "\" host=\"",
+        host,
+        "\" port=",
+        port,
+        " path=\"",
+        path,
+        "\"");
   }
 
   std::string GetSocketAddress() const

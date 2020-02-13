@@ -248,16 +248,19 @@ public:
    * @param address The address to connect to
    * @param uri_hint The hint to the connection URI
    */
-  virtual void ConnectTo(Address const &address, network::Uri const &uri_hint,
-                         Duration const &expire = NeverExpire()) = 0;
+  virtual void ConnectTo(
+      Address const &     address,
+      network::Uri const &uri_hint,
+      Duration const &    expire = NeverExpire()) = 0;
 
   /**
    * Connect to the specified addresses with the provided connection hints
    *
    * @param address_hints The map of address => URI hint
    */
-  virtual void ConnectTo(AddressHints const &address_hints,
-                         Duration const &    expire = NeverExpire()) = 0;
+  virtual void ConnectTo(
+      AddressHints const &address_hints,
+      Duration const &    expire = NeverExpire()) = 0;
 
   /**
    * Request that muddle disconnected from the specified address
@@ -309,20 +312,36 @@ using MuddlePtr = std::shared_ptr<MuddleInterface>;
 using ProverPtr = std::shared_ptr<crypto::Prover>;
 
 // creation
-MuddlePtr CreateMuddle(NetworkId const &network, ProverPtr certificate,
-                       network::NetworkManager const &nm, std::string const &external_address,
-                       bool enable_message_signing);
-MuddlePtr CreateMuddle(NetworkId const &network, ProverPtr certificate,
-                       network::NetworkManager const &nm, std::string const &external_address);
-MuddlePtr CreateMuddle(char const network[4], ProverPtr certificate,
-                       network::NetworkManager const &nm, std::string const &external_address);
-MuddlePtr CreateMuddle(char const network[4], ProverPtr certificate,
-                       network::NetworkManager const &nm, std::string const &external_address,
-                       bool enable_message_signing);
-MuddlePtr CreateMuddle(NetworkId const &network, network::NetworkManager const &nm,
-                       std::string const &external_address);
-MuddlePtr CreateMuddle(char const network[4], network::NetworkManager const &nm,
-                       std::string const &external_address);
+MuddlePtr CreateMuddle(
+    NetworkId const &              network,
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address,
+    bool                           enable_message_signing);
+MuddlePtr CreateMuddle(
+    NetworkId const &              network,
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
+MuddlePtr CreateMuddle(
+    char const                     network[4],
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
+MuddlePtr CreateMuddle(
+    char const                     network[4],
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address,
+    bool                           enable_message_signing);
+MuddlePtr CreateMuddle(
+    NetworkId const &              network,
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
+MuddlePtr CreateMuddle(
+    char const                     network[4],
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
 
 }  // namespace muddle
 }  // namespace fetch

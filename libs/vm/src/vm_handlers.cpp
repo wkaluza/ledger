@@ -631,10 +631,11 @@ void VM::Handler__ObjectNegate()
   Variant &top = Top();
   if (top.object)
   {
-    if (EstimateCharge(this, ChargeEstimator<>([top]() -> ChargeAmount {
-                         return top.object->NegateChargeEstimator(top.object);
-                       }),
-                       std::tuple<>{}))
+    if (EstimateCharge(
+            this,
+            ChargeEstimator<>(
+                [top]() -> ChargeAmount { return top.object->NegateChargeEstimator(top.object); }),
+            std::tuple<>{}))
     {
       top.object->Negate(top.object);
     }
@@ -871,8 +872,8 @@ void VM::Handler__InvokeContractFunction()
   {
     if (output.type_id != function.return_type_id)
     {
-      RuntimeError("Call to " + function.name + " in contract " + identity +
-                   " returned unexpected type_id");
+      RuntimeError(
+          "Call to " + function.name + " in contract " + identity + " returned unexpected type_id");
       return;
     }
     if (++sp_ < STACK_SIZE)

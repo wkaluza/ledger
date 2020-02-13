@@ -40,11 +40,12 @@ class DirectorTaskFactory : public IOefTaskFactory<OefSearchEndpoint>,
 public:
   static constexpr char const *LOGGING_NAME = "DirectorTaskFactory";
 
-  DirectorTaskFactory(std::shared_ptr<OefSearchEndpoint>     the_endpoint,
-                      std::shared_ptr<OutboundConversations> outbounds,
-                      std::shared_ptr<DapManager>            dap_manager,
-                      fetch::oef::pb::SearchConfig &         node_config,
-                      std::shared_ptr<IAddSearchPeer>        peers)
+  DirectorTaskFactory(
+      std::shared_ptr<OefSearchEndpoint>     the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<DapManager>            dap_manager,
+      fetch::oef::pb::SearchConfig &         node_config,
+      std::shared_ptr<IAddSearchPeer>        peers)
     : IOefTaskFactory(the_endpoint, outbounds)
     , dap_manager_{std::move(dap_manager)}
     , node_config_{node_config}

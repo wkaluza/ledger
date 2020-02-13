@@ -47,8 +47,8 @@ void DirectorTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCha
       }
       else
       {
-        FETCH_LOG_WARN(LOGGING_NAME,
-                       "Failed to lock weak pointer, response can't be sent to director!");
+        FETCH_LOG_WARN(
+            LOGGING_NAME, "Failed to lock weak pointer, response can't be sent to director!");
       }
     });
   }
@@ -71,8 +71,8 @@ void DirectorTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCha
         }
         else
         {
-          FETCH_LOG_WARN(LOGGING_NAME,
-                         "Failed to lock weak pointer, response can't be sent to director!");
+          FETCH_LOG_WARN(
+              LOGGING_NAME, "Failed to lock weak pointer, response can't be sent to director!");
         }
       });
     }
@@ -118,8 +118,10 @@ void DirectorTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCha
   else
   {
     FETCH_LOG_ERROR(LOGGING_NAME, "Can't handle path: ", current_uri.path);
-    SendExceptionReply("UnknownPath", current_uri,
-                       std::runtime_error("Path " + current_uri.path + " not supported!"),
-                       endpoint);
+    SendExceptionReply(
+        "UnknownPath",
+        current_uri,
+        std::runtime_error("Path " + current_uri.path + " not supported!"),
+        endpoint);
   }
 }

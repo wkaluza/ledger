@@ -92,20 +92,26 @@ public:
   //////////////////////////////
 
   template <class OperationType, typename... Params>
-  std::string AddNode(std::string const &node_name, std::vector<std::string> const &inputs,
-                      Params... params);
+  std::string AddNode(
+      std::string const &             node_name,
+      std::vector<std::string> const &inputs,
+      Params... params);
 
   void         ResetCompile();
   virtual void Compile();
   void         ComputeAllNodeShapes();
 
   void AddTrainable(NodePtrType node_ptr, std::string const &node_name);
-  void AddTrainable(NodePtrType node_ptr, std::string const &node_name,
-                    std::map<std::string, NodePtrType> &trainable_lookup);
+  void AddTrainable(
+      NodePtrType                         node_ptr,
+      std::string const &                 node_name,
+      std::map<std::string, NodePtrType> &trainable_lookup);
 
   void SetRegularisation(RegPtrType regulariser, DataType regularisation_rate = DataType{0});
-  bool SetRegularisation(std::string const &node_name, RegPtrType regulariser,
-                         DataType regularisation_rate = DataType{0});
+  bool SetRegularisation(
+      std::string const &node_name,
+      RegPtrType         regulariser,
+      DataType           regularisation_rate = DataType{0});
 
   void SetFrozenState(bool frozen_state);
   bool SetFrozenState(std::string const &node_name, bool frozen_state);
@@ -170,8 +176,10 @@ private:
   friend class optimisers::Optimiser<TensorType>;
   friend class model::ModelInterface<TensorType>;
 
-  TensorType ForwardImplementation(std::string const &node_name, bool is_training,
-                                   bool evaluate_mode);
+  TensorType ForwardImplementation(
+      std::string const &node_name,
+      bool               is_training,
+      bool               evaluate_mode);
 
   template <typename OperationType>
   bool UpdateVariableName(std::string const &name, std::string &ret);
@@ -180,11 +188,13 @@ private:
 
   template <class OperationType, typename... Params>
   meta::IfIsShareable<TensorType, OperationType, NodePtrType> DuplicateNode(
-      std::string const &node_name, std::string &updated_name);
+      std::string const &node_name,
+      std::string &      updated_name);
 
   template <class OperationType, typename... Params>
   meta::IfIsNotShareable<TensorType, OperationType, NodePtrType> DuplicateNode(
-      std::string const &node_name, std::string &updated_name);
+      std::string const &node_name,
+      std::string &      updated_name);
 
   void ResetGraphCache(bool input_size_changed, std::shared_ptr<Node<T>> n = {});
 
@@ -210,8 +220,8 @@ private:
   void RecursiveApply(ValType &val, GraphFunc graph_func) const;
 
   template <typename Val1Type, typename Val2Type, typename NodeFunc, typename GraphFunc>
-  void RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, NodeFunc node_func,
-                         GraphFunc graph_func) const;
+  void RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, NodeFunc node_func, GraphFunc graph_func)
+      const;
 
   template <typename Val1Type, typename Val2Type, typename GraphFunc>
   void RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, GraphFunc graph_func) const;
@@ -222,8 +232,10 @@ private:
   std::map<std::string, NodePtrType> &GetNodesLookup();
 
   template <typename LookupFunction>
-  void GetNamesRecursively(std::vector<std::string> &ret, LookupFunction lookup_function,
-                           std::string const &level = "");
+  void GetNamesRecursively(
+      std::vector<std::string> &ret,
+      LookupFunction            lookup_function,
+      std::string const &       level = "");
 };
 
 //////////////////////
@@ -244,8 +256,10 @@ private:
  */
 template <typename TensorType>
 template <class OperationType, typename... Params>
-std::string Graph<TensorType>::AddNode(std::string const &             node_name,
-                                       std::vector<std::string> const &inputs, Params... params)
+std::string Graph<TensorType>::AddNode(
+    std::string const &             node_name,
+    std::vector<std::string> const &inputs,
+    Params... params)
 {
   if (!IsValidNodeName(node_name))
   {
@@ -262,9 +276,10 @@ std::string Graph<TensorType>::AddNode(std::string const &             node_name
   if (!is_duplicate)
   {
     // Instantiate the node based on params
-    node_ptr = std::make_shared<Node<TensorType>>(
-        OperationType::OpCode(), updated_name,
-        [params...]() { return std::make_shared<OperationType>(params...); });
+    node_ptr =
+        std::make_shared<Node<TensorType>>(OperationType::OpCode(), updated_name, [params...]() {
+          return std::make_shared<OperationType>(params...);
+        });
   }
   else
   {
@@ -323,8 +338,8 @@ bool Graph<TensorType>::UpdateVariableName(std::string const &name, std::string 
 
 template <typename TensorType>
 template <class OperationType, typename... Params>
-meta::IfIsShareable<TensorType, OperationType, typename Graph<TensorType>::NodePtrType>
-Graph<TensorType>::DuplicateNode(std::string const &node_name, std::string &updated_name)
+meta::IfIsShareable<TensorType, OperationType, typename Graph<TensorType>::NodePtrType> Graph<
+    TensorType>::DuplicateNode(std::string const &node_name, std::string &updated_name)
 {
   // if name is duplicated then shared node is required
   NodePtrType target_node = GetNode(node_name);
@@ -338,8 +353,8 @@ Graph<TensorType>::DuplicateNode(std::string const &node_name, std::string &upda
 
 template <typename TensorType>
 template <class OperationType, typename... Params>
-meta::IfIsNotShareable<TensorType, OperationType, typename Graph<TensorType>::NodePtrType>
-Graph<TensorType>::DuplicateNode(std::string const &node_name, std::string & /* updated_name */)
+meta::IfIsNotShareable<TensorType, OperationType, typename Graph<TensorType>::NodePtrType> Graph<
+    TensorType>::DuplicateNode(std::string const &node_name, std::string & /* updated_name */)
 {
   throw ml::exceptions::InvalidMode(
       "OperationType is not shareable. Cannot make duplicate of node named: " + node_name);

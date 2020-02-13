@@ -36,8 +36,10 @@ public:
 
   /// @name Stake Update Interface
   /// @{
-  virtual void AddStakeUpdate(BlockIndex block_index, crypto::Identity const &identity,
-                              StakeAmount stake) = 0;
+  virtual void AddStakeUpdate(
+      BlockIndex              block_index,
+      crypto::Identity const &identity,
+      StakeAmount             stake) = 0;
   /// @}
 };
 

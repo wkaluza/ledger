@@ -29,11 +29,11 @@ class IOefTaskFactory;
 class ProtoPathMessageReader;
 class ProtoPathMessageSender;
 
-class OefSearchEndpoint
-  : public EndpointPipe<
-        ProtoMessageEndpoint<std::pair<Uri, std::shared_ptr<google::protobuf::Message>>,
-                             ProtoPathMessageReader, ProtoPathMessageSender>>,
-    public std::enable_shared_from_this<OefSearchEndpoint>
+class OefSearchEndpoint : public EndpointPipe<ProtoMessageEndpoint<
+                              std::pair<Uri, std::shared_ptr<google::protobuf::Message>>,
+                              ProtoPathMessageReader,
+                              ProtoPathMessageSender>>,
+                          public std::enable_shared_from_this<OefSearchEndpoint>
 {
 public:
   static constexpr char const *LOGGING_NAME = "OefSearchEndpoint";

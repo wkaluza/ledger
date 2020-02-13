@@ -78,8 +78,8 @@ ScaledDotProductAttention<TensorType>::ScaledDotProductAttention(SizeType dk, Da
 
   // dropout
   std::string dropout_attention_weight =
-      this->template AddNode<fetch::ml::ops::Dropout<TensorType>>(name + "_Dropout",
-                                                                  {attention_weight}, dropout_);
+      this->template AddNode<fetch::ml::ops::Dropout<TensorType>>(
+          name + "_Dropout", {attention_weight}, dropout_);
   // attention vectors
   std::string weight_value_matmul =
       this->template AddNode<fetch::ml::ops::MatrixMultiply<TensorType>>(

@@ -46,12 +46,14 @@ public:
 
   /// @name Stake Update Interface
   /// @{
-  void AddStakeUpdate(BlockIndex block_index, crypto::Identity const &identity,
-                      StakeAmount stake) override;
+  void AddStakeUpdate(BlockIndex block_index, crypto::Identity const &identity, StakeAmount stake)
+      override;
   /// @}
 
-  bool ApplyUpdates(BlockIndex block_index, StakeSnapshotPtr const &reference,
-                    StakeSnapshotPtr &next);
+  bool ApplyUpdates(
+      BlockIndex              block_index,
+      StakeSnapshotPtr const &reference,
+      StakeSnapshotPtr &      next);
 
   /// @name Accessors
   /// @{

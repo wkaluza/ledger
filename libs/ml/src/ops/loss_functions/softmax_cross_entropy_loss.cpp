@@ -46,9 +46,8 @@ std::shared_ptr<OpsSaveableParams> SoftmaxCrossEntropyLoss<TensorType>::GetOpSav
 }
 
 template <typename TensorType>
-std::shared_ptr<fetch::ml::ops::Ops<TensorType>>
-SoftmaxCrossEntropyLoss<TensorType>::MakeSharedCopy(
-    std::shared_ptr<fetch::ml::ops::Ops<TensorType>> me)
+std::shared_ptr<fetch::ml::ops::Ops<TensorType>> SoftmaxCrossEntropyLoss<
+    TensorType>::MakeSharedCopy(std::shared_ptr<fetch::ml::ops::Ops<TensorType>> me)
 {
   FETCH_UNUSED(me);
   assert(me.get() == this);
@@ -66,8 +65,9 @@ void SoftmaxCrossEntropyLoss<TensorType>::Forward(VecTensorType const &inputs, T
   assert(inputs.at(0)->size() == inputs.at(1)->size());
 
   // sanity check the softmax adds up to 1
-  assert(Sum(fetch::math::Softmax((*inputs.at(0))) - (DataType(inputs.at(0)->shape().at(1)))) <
-         fetch::math::function_tolerance<DataType>());
+  assert(
+      Sum(fetch::math::Softmax((*inputs.at(0))) - (DataType(inputs.at(0)->shape().at(1)))) <
+      fetch::math::function_tolerance<DataType>());
 
   // softmax forward & then CrossEntropy
   output(0, 0) =
@@ -76,7 +76,8 @@ void SoftmaxCrossEntropyLoss<TensorType>::Forward(VecTensorType const &inputs, T
 
 template <typename TensorType>
 std::vector<TensorType> SoftmaxCrossEntropyLoss<TensorType>::Backward(
-    VecTensorType const &inputs, TensorType const &error_signal)
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(error_signal);
 

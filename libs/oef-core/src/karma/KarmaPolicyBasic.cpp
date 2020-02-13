@@ -44,8 +44,20 @@ void KarmaPolicyBasic::Account::BringUpToDate()
     // Write this as long as nothing has updated karma while we were thinking.
     if (karma.compare_exchange_strong(old_karma, new_karma, std::memory_order_seq_cst))
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "KARMA: Bring up to date: ticks=", diff, " step=", tick_amounts,
-                     " when=", when, " now=", tc, " old=", old_karma, " new=", new_karma);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "KARMA: Bring up to date: ticks=",
+          diff,
+          " step=",
+          tick_amounts,
+          " when=",
+          when,
+          " now=",
+          tc,
+          " old=",
+          old_karma,
+          " new=",
+          new_karma);
       when = tc;
       break;
     }
@@ -98,8 +110,10 @@ KarmaAccount KarmaPolicyBasic::GetAccount(const std::string &pubkey, const std::
   }
 }
 
-void KarmaPolicyBasic::upgrade(KarmaAccount &account, const std::string &pubkey,
-                               const std::string &ip)
+void KarmaPolicyBasic::upgrade(
+    KarmaAccount &     account,
+    const std::string &pubkey,
+    const std::string &ip)
 {
   auto k = GetAccount(pubkey, ip);
   std::swap(account, k);
@@ -184,8 +198,9 @@ const std::string &KarmaPolicyBasic::getPolicy(const std::string &action) const
   return zero;
 }
 
-KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(KARMA              currentBalance,
-                                                     const std::string &actions)
+KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(
+    KARMA              currentBalance,
+    const std::string &actions)
 {
   auto policies = getPolicies(actions);
   auto worst    = currentBalance;
@@ -195,8 +210,8 @@ KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(KARMA              currentB
     for (const auto &policy : policies)
     {
       auto result = parseEffect(currentBalance, policy);
-      FETCH_LOG_INFO(LOGGING_NAME, "KARMA: afterwards ", policy, "    ", currentBalance, " => ",
-                     result);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "KARMA: afterwards ", policy, "    ", currentBalance, " => ", result);
       if (result < worst)
       {
         worst = result;
@@ -211,8 +226,9 @@ KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(KARMA              currentB
   return worst;
 }
 
-KarmaPolicyBasic::KARMA KarmaPolicyBasic::parseEffect(KARMA              currentBalance,
-                                                      const std::string &effect)
+KarmaPolicyBasic::KARMA KarmaPolicyBasic::parseEffect(
+    KARMA              currentBalance,
+    const std::string &effect)
 {
   switch (effect[0])
   {
@@ -252,14 +268,28 @@ bool KarmaPolicyBasic::perform(const KarmaAccount &identifier, const std::string
 
   if (next >= 0 || force)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "KARMA: Event ", event, " for ", identifier.GetName(),
-                   " karma change ", prev, " => ", next);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "KARMA: Event ",
+        event,
+        " for ",
+        identifier.GetName(),
+        " karma change ",
+        prev,
+        " => ",
+        next);
     accounts.access(*identifier).karma = next;
     return true;
   }
 
-  FETCH_LOG_INFO(LOGGING_NAME, "KARMA: Event ", event, " for ", identifier.GetName(),
-                 " rejected because result karma = ", next);
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "KARMA: Event ",
+      event,
+      " for ",
+      identifier.GetName(),
+      " rejected because result karma = ",
+      next);
   throw XKarma(event);
 }
 

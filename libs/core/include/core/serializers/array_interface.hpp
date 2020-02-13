@@ -104,9 +104,9 @@ public:
     default:
       if ((opcode & TypeCodes::FIXED_MASK1) != CODE_FIXED)
       {
-        throw SerializableException(
-            std::string("incorrect size opcode for array size: " + std::to_string(int(opcode)) +
-                        " vs " + std::to_string(int(CODE_FIXED))));
+        throw SerializableException(std::string(
+            "incorrect size opcode for array size: " + std::to_string(int(opcode)) + " vs " +
+            std::to_string(int(CODE_FIXED))));
       }
       size = static_cast<uint32_t>(opcode & TypeCodes::FIXED_VAL_MASK);
       break;

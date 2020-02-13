@@ -81,8 +81,12 @@ public:
   static Packet::Address    ConvertAddress(Packet::RawAddress const &address);
 
   // Construction / Destruction
-  Router(NetworkId network_id, Address address, MuddleRegister &reg, Prover const &prover,
-         bool enable_message_signing);
+  Router(
+      NetworkId       network_id,
+      Address         address,
+      MuddleRegister &reg,
+      Prover const &  prover,
+      bool            enable_message_signing);
   Router(Router const &) = delete;
   Router(Router &&)      = delete;
   ~Router() override     = default;
@@ -102,17 +106,30 @@ public:
   /// @{
   Address const &GetAddress() const override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel,
-            Payload const &message) override;
+  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
+      override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message,
-            Options options) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message,
+      Options        options) override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload) override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload, Options options) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload,
+      Options        options) override;
 
   void Broadcast(uint16_t service, uint16_t channel, Payload const &payload) override;
 
@@ -163,8 +180,11 @@ private:
 
   static constexpr std::size_t NUMBER_OF_ROUTER_THREADS = 1;
 
-  void SendToConnection(Handle handle, PacketPtr const &packet, bool external = true,
-                        bool reschedule_on_fail = false);
+  void SendToConnection(
+      Handle           handle,
+      PacketPtr const &packet,
+      bool             external           = true,
+      bool             reschedule_on_fail = false);
   void RoutePacket(PacketPtr const &packet, bool external = true);
   void DispatchDirect(Handle handle, PacketPtr const &packet);
 

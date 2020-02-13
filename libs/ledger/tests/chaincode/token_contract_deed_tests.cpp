@@ -67,8 +67,10 @@ protected:
     return addresses;
   }
 
-  static ConstByteArray CreateTxTransferData(ConstByteArray const &from, ConstByteArray const &to,
-                                             Amount const amount)
+  static ConstByteArray CreateTxTransferData(
+      ConstByteArray const &from,
+      ConstByteArray const &to,
+      Amount const          amount)
   {
     Variant v_data{Variant::Object()};
     v_data["from"]   = from;
@@ -82,8 +84,10 @@ protected:
   }
 
   static TransactionBuilder::TransactionPtr CreateTransferTx(
-      Address const &from, Address const &to, std::vector<PrivateKey *> const &signing_keys,
-      Amount amount)
+      Address const &                  from,
+      Address const &                  to,
+      std::vector<PrivateKey *> const &signing_keys,
+      Amount                           amount)
   {
     TransactionBuilder builder;
     builder.From(from);

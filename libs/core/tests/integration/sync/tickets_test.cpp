@@ -36,9 +36,10 @@ class TicketsTest : public testing::Test
 protected:
   using ThreadsContainer = std::vector<std::unique_ptr<std::thread>>;
 
-  ThreadsContainer wait_with_no_timeout(Tickets &             ticket_under_test,
-                                        Tickets::Count const &num_of_posts,
-                                        Tickets::Count const &num_of_waits)
+  ThreadsContainer wait_with_no_timeout(
+      Tickets &             ticket_under_test,
+      Tickets::Count const &num_of_posts,
+      Tickets::Count const &num_of_waits)
   {
     std::vector<std::unique_ptr<std::thread>> threads{num_of_waits};
     for (auto &t : threads)
@@ -61,7 +62,8 @@ protected:
   }
 
   void wait_for_finalising_threads_for_wait_with_no_timeout(
-      ThreadsContainer &threads, Tickets &ticket,
+      ThreadsContainer &    threads,
+      Tickets &             ticket,
       Tickets::Count const &expected_number_of_threads_left_stuck_in_waiting_mode,
       bool const &          expected_number_of_threads_is_negative)
   {
@@ -112,9 +114,10 @@ protected:
     EXPECT_EQ(expected_number_of_threads_is_negative, is_diff_positive);
   }
 
-  Tickets::Count test_wait_with_timeout(Tickets &             ticket_under_test,
-                                        Tickets::Count const &num_of_posts,
-                                        Tickets::Count const &num_of_waits)
+  Tickets::Count test_wait_with_timeout(
+      Tickets &             ticket_under_test,
+      Tickets::Count const &num_of_posts,
+      Tickets::Count const &num_of_waits)
   {
     std::atomic<Tickets::Count>               num_of_failed_waits{0};
     std::vector<std::unique_ptr<std::thread>> threads{num_of_waits};
@@ -250,8 +253,8 @@ TEST_F(TicketsTest, multiple_cycles_no_timeout_fail_if_less_posts_than_waits)
   Tickets          ticket;
   ThreadsContainer threads = wait_with_no_timeout(ticket, num_of_posts, num_of_waits);
 
-  wait_for_finalising_threads_for_wait_with_no_timeout(threads, ticket, num_of_waits - num_of_posts,
-                                                       num_of_waits >= num_of_posts);
+  wait_for_finalising_threads_for_wait_with_no_timeout(
+      threads, ticket, num_of_waits - num_of_posts, num_of_waits >= num_of_posts);
 }
 
 TEST_F(TicketsTest, multiple_cycles_no_timeout_fail_if_more_posts_than_waits)
@@ -265,8 +268,8 @@ TEST_F(TicketsTest, multiple_cycles_no_timeout_fail_if_more_posts_than_waits)
   Tickets          ticket;
   ThreadsContainer threads = wait_with_no_timeout(ticket, num_of_posts, num_of_waits);
 
-  wait_for_finalising_threads_for_wait_with_no_timeout(threads, ticket, num_of_posts - num_of_waits,
-                                                       num_of_waits >= num_of_posts);
+  wait_for_finalising_threads_for_wait_with_no_timeout(
+      threads, ticket, num_of_posts - num_of_waits, num_of_waits >= num_of_posts);
 }
 
 }  // namespace

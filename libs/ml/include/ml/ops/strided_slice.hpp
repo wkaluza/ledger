@@ -38,8 +38,10 @@ public:
   using SPType        = OpStridedSliceSaveableParams<T>;
   using MyType        = StridedSlice<TensorType>;
 
-  explicit StridedSlice(SizeVector const &begins, SizeVector const &ends,
-                        SizeVector const &strides = {});
+  explicit StridedSlice(
+      SizeVector const &begins,
+      SizeVector const &ends,
+      SizeVector const &strides = {});
 
   explicit StridedSlice(SPType const &sp);
 
@@ -52,8 +54,8 @@ public:
 
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
 
   SizeVector ComputeOutputShape(VecTensorType const &inputs) const override;
 

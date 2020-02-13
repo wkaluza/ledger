@@ -28,9 +28,10 @@ namespace math {
 namespace distance {
 
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, typename ArrayType::Type> Minkowski(ArrayType const &        a,
-                                                                   ArrayType const &        b,
-                                                                   typename ArrayType::Type n)
+meta::IfIsMathArray<ArrayType, typename ArrayType::Type> Minkowski(
+    ArrayType const &        a,
+    ArrayType const &        b,
+    typename ArrayType::Type n)
 {
   detailed_assert(a.size() == b.size());
   using DataType = typename ArrayType::Type;

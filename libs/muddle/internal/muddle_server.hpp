@@ -46,8 +46,9 @@ public:
   using MsgPackSerializer    = serializers::MsgPackSerializer;
 
   // ensure the NETWORK_SERVER type that we are using is actually what we where expecting
-  static_assert(std::is_base_of<network::AbstractNetworkServer, NETWORK_SERVER>::value,
-                "The network server type must be of network::AbstractNetworkServer");
+  static_assert(
+      std::is_base_of<network::AbstractNetworkServer, NETWORK_SERVER>::value,
+      "The network server type must be of network::AbstractNetworkServer");
 
   static constexpr char const *LOGGING_NAME = "MuddleSrv";
 

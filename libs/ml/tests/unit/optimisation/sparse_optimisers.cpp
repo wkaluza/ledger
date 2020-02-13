@@ -43,8 +43,11 @@ namespace sparse_optimiser_details {
 
 template <typename TypeParam>
 std::shared_ptr<fetch::ml::Graph<TypeParam>> PrepareTestGraph(
-    typename TypeParam::SizeType embedding_dimensions, typename TypeParam::SizeType n_datapoints,
-    std::string &input_name, std::string &label_name, std::string &error_name)
+    typename TypeParam::SizeType embedding_dimensions,
+    typename TypeParam::SizeType n_datapoints,
+    std::string &                input_name,
+    std::string &                label_name,
+    std::string &                error_name)
 {
   using SizeType = fetch::math::SizeType;
   using DataType = typename TypeParam::Type;
@@ -127,8 +130,8 @@ TYPED_TEST(SparseOptimisersTest, lazy_adam_optimiser_training_2D)
   std::string                                  label_name;
   std::string                                  output_name;
   std::shared_ptr<fetch::ml::Graph<TypeParam>> g =
-      sparse_optimiser_details::PrepareTestGraph<TypeParam>(10, 50, input_name, label_name,
-                                                            output_name);
+      sparse_optimiser_details::PrepareTestGraph<TypeParam>(
+          10, 50, input_name, label_name, output_name);
 
   // Prepare data and labels
   TypeParam data_1;
@@ -140,8 +143,8 @@ TYPED_TEST(SparseOptimisersTest, lazy_adam_optimiser_training_2D)
   sparse_optimiser_details::PrepareTestDataAndLabelsSecond(data_2, gt_2);
 
   // Initialise Optimiser
-  fetch::ml::optimisers::LazyAdamOptimiser<TypeParam> optimiser(g, {input_name}, label_name,
-                                                                output_name, learning_rate);
+  fetch::ml::optimisers::LazyAdamOptimiser<TypeParam> optimiser(
+      g, {input_name}, label_name, output_name, learning_rate);
 
   // Do multiple steps
   DataType loss1 = optimiser.Run({data_1}, gt_1);
@@ -149,18 +152,26 @@ TYPED_TEST(SparseOptimisersTest, lazy_adam_optimiser_training_2D)
 
   // Test weights
   std::vector<TypeParam> weights = g->GetWeights();
-  EXPECT_NEAR(static_cast<double>(weights[0].At(7, 0)), 0.5,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(3, 4)), 0.49001598358154297,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(8, 32)), -0.5,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(0, 9)), -0.49001598358154297,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(7, 0)),
+      0.5,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(3, 4)),
+      0.49001598358154297,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(8, 32)),
+      -0.5,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(0, 9)),
+      -0.49001598358154297,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
 
   for (math::SizeType i{0}; i < 50; i++)
   {
@@ -184,8 +195,8 @@ TYPED_TEST(SparseOptimisersTest, adam_optimiser_training_2D)
   std::string                                  label_name;
   std::string                                  output_name;
   std::shared_ptr<fetch::ml::Graph<TypeParam>> g =
-      sparse_optimiser_details::PrepareTestGraph<TypeParam>(10, 50, input_name, label_name,
-                                                            output_name);
+      sparse_optimiser_details::PrepareTestGraph<TypeParam>(
+          10, 50, input_name, label_name, output_name);
 
   // Prepare data and labels
   TypeParam data_1;
@@ -197,8 +208,8 @@ TYPED_TEST(SparseOptimisersTest, adam_optimiser_training_2D)
   sparse_optimiser_details::PrepareTestDataAndLabelsSecond(data_2, gt_2);
 
   // Initialise Optimiser
-  fetch::ml::optimisers::AdamOptimiser<TypeParam> optimiser(g, {input_name}, label_name,
-                                                            output_name, learning_rate);
+  fetch::ml::optimisers::AdamOptimiser<TypeParam> optimiser(
+      g, {input_name}, label_name, output_name, learning_rate);
 
   // Do multiple steps
   DataType loss1 = optimiser.Run({data_1}, gt_1);
@@ -206,18 +217,26 @@ TYPED_TEST(SparseOptimisersTest, adam_optimiser_training_2D)
 
   // Test weights
   std::vector<TypeParam> weights = g->GetWeights();
-  EXPECT_NEAR(static_cast<double>(weights[0].At(7, 0)), 0.5,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(3, 4)), 0.48399609327316284,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(8, 32)), -0.5,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
-  EXPECT_NEAR(static_cast<double>(weights[0].At(0, 9)), -0.48399609327316284,
-              static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
-                  static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(7, 0)),
+      0.5,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(3, 4)),
+      0.48399609327316284,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(8, 32)),
+      -0.5,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
+  EXPECT_NEAR(
+      static_cast<double>(weights[0].At(0, 9)),
+      -0.48399609327316284,
+      static_cast<double>(fetch::math::function_tolerance<DataType>()) * 2 *
+          static_cast<double>(gt_1.size()));
 
   for (math::SizeType i{0}; i < 50; i++)
   {

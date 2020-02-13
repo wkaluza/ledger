@@ -45,8 +45,10 @@ using SizeType   = fetch::math::SizeType;
 /// MODEL DEFINITION ///
 ////////////////////////
 
-std::pair<std::string, std::string> Model(fetch::ml::Graph<TensorType> &g, SizeType embeddings_size,
-                                          SizeType vocab_size)
+std::pair<std::string, std::string> Model(
+    fetch::ml::Graph<TensorType> &g,
+    SizeType                      embeddings_size,
+    SizeType                      vocab_size)
 {
   g.AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input", {});
   g.AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Context", {});
@@ -126,8 +128,8 @@ int main(int argc, char **argv)
 
   std::cout << "Setting up training data...: " << std::endl;
 
-  GraphW2VLoader<TensorType> data_loader(tp.window_size, tp.negative_sample_size, tp.freq_thresh,
-                                         tp.max_word_count);
+  GraphW2VLoader<TensorType> data_loader(
+      tp.window_size, tp.negative_sample_size, tp.freq_thresh, tp.max_word_count);
   // set up dataloader
   /// DATA LOADING ///
   data_loader.BuildVocabAndData({utilities::ReadFile(train_file)}, tp.min_count);
@@ -172,8 +174,8 @@ int main(int argc, char **argv)
   std::cout << "beginning training...: " << std::endl;
 
   // Initialise Optimiser
-  fetch::ml::optimisers::LazyAdamOptimiser<TensorType> optimiser(g, {"Input", "Context"}, "Label",
-                                                                 error, tp.learning_rate_param);
+  fetch::ml::optimisers::LazyAdamOptimiser<TensorType> optimiser(
+      g, {"Input", "Context"}, "Label", error, tp.learning_rate_param);
 
   SizeType n_batches              = static_cast<SizeType>(est_total_samples) / tp.batch_size;
   SizeType samples_per_graph_save = n_batches / tp.graph_saves_per_epoch * tp.batch_size;
@@ -195,8 +197,16 @@ int main(int argc, char **argv)
     // Test trained embeddings
     if (i % tp.test_frequency == 0)
     {
-      fetch::ml::utilities::TestEmbeddings(*g, skipgram_layer, *(data_loader.GetVocab()), tp.word0,
-                                           tp.word1, tp.word2, tp.word3, tp.k, analogies_test_file);
+      fetch::ml::utilities::TestEmbeddings(
+          *g,
+          skipgram_layer,
+          *(data_loader.GetVocab()),
+          tp.word0,
+          tp.word1,
+          tp.word2,
+          tp.word3,
+          tp.k,
+          analogies_test_file);
     }
 
     fetch::ml::utilities::SaveGraph(*g, save_file + std::to_string(i));

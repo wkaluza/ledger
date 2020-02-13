@@ -31,13 +31,16 @@ namespace math {
 
 namespace {
 template <typename DataType, typename ArrayType>
-static void ArangeImplementation(DataType const &from, DataType const &to, DataType const &delta,
-                                 ArrayType &ret)
+static void ArangeImplementation(
+    DataType const &from,
+    DataType const &to,
+    DataType const &delta,
+    ArrayType &     ret)
 {
   auto N = SizeType((to - from) / delta);
   ret.Resize({N});
-  ret.FillArange(static_cast<typename ArrayType::Type>(from),
-                 static_cast<typename ArrayType::Type>(to));
+  ret.FillArange(
+      static_cast<typename ArrayType::Type>(from), static_cast<typename ArrayType::Type>(to));
 }
 }  // namespace
 
@@ -79,8 +82,8 @@ typename Tensor<T, C>::IteratorType Tensor<T, C>::begin()
 template <typename T, typename C>
 typename Tensor<T, C>::IteratorType Tensor<T, C>::end()
 {
-  return IteratorType(data().pointer() + data().size(), size(), data().size(), height(),
-                      padded_height());
+  return IteratorType(
+      data().pointer() + data().size(), size(), data().size(), height(), padded_height());
 }
 
 template <typename T, typename C>
@@ -92,8 +95,8 @@ typename Tensor<T, C>::ConstIteratorType Tensor<T, C>::begin() const
 template <typename T, typename C>
 typename Tensor<T, C>::ConstIteratorType Tensor<T, C>::end() const
 {
-  return ConstIteratorType(data().pointer() + data().size(), size(), data().size(), height(),
-                           padded_height());
+  return ConstIteratorType(
+      data().pointer() + data().size(), size(), data().size(), height(), padded_height());
 }
 
 template <typename T, typename C>
@@ -105,8 +108,8 @@ typename Tensor<T, C>::ConstIteratorType Tensor<T, C>::cbegin() const
 template <typename T, typename C>
 typename Tensor<T, C>::ConstIteratorType Tensor<T, C>::cend() const
 {
-  return ConstIteratorType(data().pointer() + data().size(), size(), data().size(), height(),
-                           padded_height());
+  return ConstIteratorType(
+      data().pointer() + data().size(), size(), data().size(), height(), padded_height());
 }
 
 ///////////////////////
@@ -304,7 +307,9 @@ void Tensor<T, C>::Assign(Tensor const &other)
               FETCH_UNUSED(x);
               z = y;
             },
-            *this, other, *this)))
+            *this,
+            other,
+            *this)))
     {
       throw exceptions::WrongShape("arrays not broadcastable for assignment!");
     }
@@ -1321,8 +1326,9 @@ typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(SizeType index, SizeTy
  * @return
  */
 template <typename T, typename C>
-typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(std::vector<SizeType> indices,
-                                                          std::vector<SizeType> axes) const
+typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(
+    std::vector<SizeType> indices,
+    std::vector<SizeType> axes) const
 {
   std::vector<std::vector<SizeType>> range;
 
@@ -1343,7 +1349,8 @@ typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(std::vector<SizeType> 
 
 template <typename T, typename C>
 typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(
-    std::vector<SizeType> const &begins, std::vector<SizeType> const &ends,
+    std::vector<SizeType> const &begins,
+    std::vector<SizeType> const &ends,
     std::vector<SizeType> const &strides) const
 {
   std::vector<std::vector<SizeType>> range;
@@ -1409,7 +1416,8 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(SizeType index, SizeType 
  */
 template <typename T, typename C>
 typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
-    std::pair<SizeType, SizeType> start_end_index, SizeType axis)
+    std::pair<SizeType, SizeType> start_end_index,
+    SizeType                      axis)
 {
   std::vector<SizeVector> range;
 
@@ -1440,8 +1448,9 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
  * @return
  */
 template <typename T, typename C>
-typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(std::vector<SizeType> indices,
-                                                       std::vector<SizeType> axes)
+typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
+    std::vector<SizeType> indices,
+    std::vector<SizeType> axes)
 {
   std::vector<std::vector<SizeType>> range;
 
@@ -1461,9 +1470,10 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(std::vector<SizeType> ind
 }
 
 template <typename T, typename C>
-typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(std::vector<SizeType> const &begins,
-                                                       std::vector<SizeType> const &ends,
-                                                       std::vector<SizeType> const &strides)
+typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
+    std::vector<SizeType> const &begins,
+    std::vector<SizeType> const &ends,
+    std::vector<SizeType> const &strides)
 {
   std::vector<std::vector<SizeType>> range;
   std::vector<SizeType>              axis;
@@ -1482,8 +1492,10 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(std::vector<SizeType> con
 //////////////////
 
 template <typename T, typename C>
-bool Tensor<T, C>::AllClose(Tensor const &o, Type const &relative_tolerance,
-                            Type const &absolute_tolerance) const
+bool Tensor<T, C>::AllClose(
+    Tensor const &o,
+    Type const &  relative_tolerance,
+    Type const &  absolute_tolerance) const
 {
   // Only enforcing number of elements
   // we allow for different shapes as long as element are in same order
@@ -1675,9 +1687,10 @@ Tensor<T, C> Tensor<T, C>::Concat(std::vector<Tensor> const &tensors, SizeType c
  * @returnf
  */
 template <typename T, typename C>
-typename std::vector<Tensor<T, C>> Tensor<T, C>::Split(Tensor const &    tensor,
-                                                       SizeVector const &concat_points,
-                                                       SizeType const    axis)
+typename std::vector<Tensor<T, C>> Tensor<T, C>::Split(
+    Tensor const &    tensor,
+    SizeVector const &concat_points,
+    SizeType const    axis)
 {
   std::vector<Tensor> ret{concat_points.size()};
 

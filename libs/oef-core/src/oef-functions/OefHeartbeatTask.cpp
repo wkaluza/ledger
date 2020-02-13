@@ -33,8 +33,14 @@ fetch::oef::base::ExitState OefHeartbeatTask::run()
   auto sp = ep.lock();
   if (sp)
   {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "running on connection id=", sp->GetIdentifier(),
-                    "  task=", GetTaskId(), "  group=", GetGroupId());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "running on connection id=",
+        sp->GetIdentifier(),
+        "  task=",
+        GetTaskId(),
+        "  group=",
+        GetGroupId());
     sp->heartbeat();
     submit(std::chrono::milliseconds(200));
     return fetch::oef::base::COMPLETE;

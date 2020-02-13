@@ -25,7 +25,8 @@ namespace constellation {
 
 MuddleStatusModule::MuddleStatusModule()
 {
-  Get("/api/status/muddle", "Returns the status of the muddle instances present on the node",
+  Get("/api/status/muddle",
+      "Returns the status of the muddle instances present on the node",
       [](http::ViewParameters const &, http::HTTPRequest const &request) {
         auto const &params = request.query();
 

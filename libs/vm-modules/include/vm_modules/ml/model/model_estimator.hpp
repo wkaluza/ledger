@@ -55,57 +55,77 @@ public:
   ModelEstimator(ModelEstimator &&other)      = delete;
   ModelEstimator &operator                    =(ModelEstimator &&other) noexcept;
 
-  ChargeAmount LayerAddDense(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                             math::SizeType const &inputs, math::SizeType const &hidden_nodes);
-  ChargeAmount LayerAddDenseAutoInputs(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                       math::SizeType const &                   hidden_nodes);
-  ChargeAmount LayerAddDenseActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                       math::SizeType const &                   inputs,
-                                       math::SizeType const &                   hidden_nodes,
-                                       fetch::vm::Ptr<fetch::vm::String> const &activation);
+  ChargeAmount LayerAddDense(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes);
+  ChargeAmount LayerAddDenseAutoInputs(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   hidden_nodes);
+  ChargeAmount LayerAddDenseActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
 
-  ChargeAmount LayerAddConv(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                            math::SizeType const &                   output_channels,
-                            math::SizeType const &input_channels, math::SizeType const &kernel_size,
-                            math::SizeType const &stride_size);
-  ChargeAmount LayerAddPool(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                            math::SizeType const &kernel_size, math::SizeType const &stride_size);
-  ChargeAmount LayerAddEmbeddings(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                  math::SizeType const &                   dimensions,
-                                  math::SizeType const &data_points, bool stub);
-  ChargeAmount LayerAddConvActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                      math::SizeType const &                   output_channels,
-                                      math::SizeType const &                   input_channels,
-                                      math::SizeType const &                   kernel_size,
-                                      math::SizeType const &                   stride_size,
-                                      fetch::vm::Ptr<fetch::vm::String> const &activation);
+  ChargeAmount LayerAddConv(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   output_channels,
+      math::SizeType const &                   input_channels,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size);
+  ChargeAmount LayerAddPool(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size);
+  ChargeAmount LayerAddEmbeddings(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   dimensions,
+      math::SizeType const &                   data_points,
+      bool                                     stub);
+  ChargeAmount LayerAddConvActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   output_channels,
+      math::SizeType const &                   input_channels,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
   ChargeAmount LayerAddDenseActivationExperimental(
-      fetch::vm::Ptr<fetch::vm::String> const &layer, math::SizeType const &inputs,
-      math::SizeType const &hidden_nodes, fetch::vm::Ptr<fetch::vm::String> const &activation);
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
 
   ChargeAmount LayerAddFlatten(fetch::vm::Ptr<fetch::vm::String> const &layer);
 
-  ChargeAmount LayerAddDropout(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                               math::DataType const &                   probability);
+  ChargeAmount LayerAddDropout(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::DataType const &                   probability);
 
-  ChargeAmount LayerAddActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                  fetch::vm::Ptr<fetch::vm::String> const &activation);
-  ChargeAmount LayerAddReshape(fetch::vm::Ptr<fetch::vm::String> const &               layer,
-                               fetch::vm::Ptr<fetch::vm::Array<math::SizeType>> const &shape);
+  ChargeAmount LayerAddActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
+  ChargeAmount LayerAddReshape(
+      fetch::vm::Ptr<fetch::vm::String> const &               layer,
+      fetch::vm::Ptr<fetch::vm::Array<math::SizeType>> const &shape);
 
-  ChargeAmount LayerAddInput(fetch::vm::Ptr<fetch::vm::String> const &        layer,
-                             fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape);
+  ChargeAmount LayerAddInput(
+      fetch::vm::Ptr<fetch::vm::String> const &        layer,
+      fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape);
 
-  ChargeAmount CompileSequential(fetch::vm::Ptr<fetch::vm::String> const &loss,
-                                 fetch::vm::Ptr<fetch::vm::String> const &optimiser);
+  ChargeAmount CompileSequential(
+      fetch::vm::Ptr<fetch::vm::String> const &loss,
+      fetch::vm::Ptr<fetch::vm::String> const &optimiser);
 
   ChargeAmount CompileSequentialWithMetrics(
-      vm::Ptr<vm::String> const &loss, vm::Ptr<vm::String> const &optimiser,
+      vm::Ptr<vm::String> const &                           loss,
+      vm::Ptr<vm::String> const &                           optimiser,
       vm::Ptr<vm::Array<vm::Ptr<fetch::vm::String>>> const &metrics);
 
-  ChargeAmount Fit(vm::Ptr<vm_modules::math::VMTensor> const &data,
-                   vm::Ptr<vm_modules::math::VMTensor> const &labels,
-                   ::fetch::math::SizeType const &            batch_size);
+  ChargeAmount Fit(
+      vm::Ptr<vm_modules::math::VMTensor> const &data,
+      vm::Ptr<vm_modules::math::VMTensor> const &labels,
+      ::fetch::math::SizeType const &            batch_size);
 
   ChargeAmount SerializeToString();
 

@@ -115,9 +115,11 @@ VmStructuredDataArray CreateProblemData(vm::VM *vm, ProblemData const &problem_d
   }
 
   // create the array
-  auto *ret = new vm::Array<VmStructuredData>(vm, vm->GetTypeId<vm::IArray>(),
-                                              vm->GetTypeId<VmStructuredData>(),
-                                              static_cast<int32_t>(elements.size()));
+  auto *ret = new vm::Array<VmStructuredData>(
+      vm,
+      vm->GetTypeId<vm::IArray>(),
+      vm->GetTypeId<VmStructuredData>(),
+      static_cast<int32_t>(elements.size()));
 
   // move the constructed elements over to the array
   ret->elements = std::move(elements);
@@ -143,8 +145,8 @@ SynergeticContract::SynergeticContract(ConstByteArray const &source)
   vm_modules::ledger::BindTransferFunction(*module_, *this);
 
   vm_modules::ledger::BindLedgerContext(*module_);
-  module_->CreateFreeFunction("getContext",
-                              [](vm::VM *) -> vm_modules::ledger::ContextPtr { return {}; });
+  module_->CreateFreeFunction(
+      "getContext", [](vm::VM *) -> vm_modules::ledger::ContextPtr { return {}; });
 
   // create the compiler and IR
   compiler_   = std::make_shared<vm::Compiler>(module_.get());
@@ -164,8 +166,8 @@ SynergeticContract::SynergeticContract(ConstByteArray const &source)
   auto vm = std::make_unique<vm::VM>(module_.get());
   if (!vm->GenerateExecutable(*ir_, "default_exe", *executable_, errors))
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Failed to generate executable for contract: ", ErrorsToLog(errors));
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Failed to generate executable for contract: ", ErrorsToLog(errors));
     throw std::runtime_error("Failed to generate executable for contract");
   }
 
@@ -283,8 +285,8 @@ Status SynergeticContract::Work(vectorise::UInt<256> const &nonce, WorkScore &sc
 
   // execute the objective function of the contract
   vm::Variant objective_output{};
-  if (!vm->Execute(*executable_, objective_function_, error, objective_output, *problem_,
-                   *solution_))
+  if (!vm->Execute(
+          *executable_, objective_function_, error, objective_output, *problem_, *solution_))
   {
     FETCH_LOG_WARN(LOGGING_NAME, "Objective evaluation execution error: ", error);
     charge_ += vm->GetChargeTotal();
@@ -306,8 +308,10 @@ Status SynergeticContract::Work(vectorise::UInt<256> const &nonce, WorkScore &sc
   return Status::SUCCESS;
 }
 
-Status SynergeticContract::Complete(chain::Address const &address, BitVector const &shards,
-                                    CompletionValidator const &validator)
+Status SynergeticContract::Complete(
+    chain::Address const &     address,
+    BitVector const &          shards,
+    CompletionValidator const &validator)
 {
   if (storage_ == nullptr)
   {

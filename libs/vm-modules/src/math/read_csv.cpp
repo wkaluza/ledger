@@ -33,7 +33,8 @@ namespace math {
 namespace {
 
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> ReadCSV(
-    fetch::vm::VM *vm, fetch::vm::Ptr<fetch::vm::String> const &filename)
+    fetch::vm::VM *                          vm,
+    fetch::vm::Ptr<fetch::vm::String> const &filename)
 {
   fetch::vm_modules::math::VMTensor::TensorType tensor =
       fetch::math::utilities::ReadCSV<fetch::vm_modules::math::VMTensor::TensorType>(

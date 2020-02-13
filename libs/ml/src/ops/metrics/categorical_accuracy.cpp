@@ -129,8 +129,9 @@ void CategoricalAccuracy<TensorType>::Forward(VecTensorType const &inputs, Tenso
  * f'(input0)=sign(input0)*error_signal
  */
 template <typename TensorType>
-std::vector<TensorType> CategoricalAccuracy<TensorType>::Backward(VecTensorType const &inputs,
-                                                                  TensorType const &   error_signal)
+std::vector<TensorType> CategoricalAccuracy<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(error_signal);
   FETCH_UNUSED(inputs);

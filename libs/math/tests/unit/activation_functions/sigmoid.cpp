@@ -137,8 +137,8 @@ TYPED_TEST(SigmoidTest, exact_values)
   ASSERT_EQ(test_array.shape(), gt_array.shape());
 
   // test correct values
-  ASSERT_TRUE(test_array.AllClose(gt_array, function_tolerance<DataType>(),
-                                  function_tolerance<DataType>()));
+  ASSERT_TRUE(test_array.AllClose(
+      gt_array, function_tolerance<DataType>(), function_tolerance<DataType>()));
 }
 
 ///////////////////

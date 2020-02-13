@@ -49,7 +49,9 @@ using ActivationType  = fetch::ml::details::ActivationType;
 // IMDB dataset loading and preparing
 std::vector<TensorType> LoadIMDBFinetuneData(std::string const &file_path);
 std::vector<std::pair<std::vector<TensorType>, TensorType>> PrepareIMDBFinetuneTrainData(
-    std::string const &file_path, SizeType train_size, SizeType test_size,
+    std::string const &           file_path,
+    SizeType                      train_size,
+    SizeType                      test_size,
     BERTConfig<TensorType> const &config);
 
 int main(int ac, char **av)
@@ -92,8 +94,14 @@ int main(int ac, char **av)
       "ClsTokenOutput", {layer_output}, 0u, 1u);
   std::string classification_output =
       g.template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-          "ClassificationOutput", {cls_token_output}, config.model_dims, 2u,
-          ActivationType::SOFTMAX, RegType::NONE, DataType{0}, WeightsInitType::XAVIER_GLOROT,
+          "ClassificationOutput",
+          {cls_token_output},
+          config.model_dims,
+          2u,
+          ActivationType::SOFTMAX,
+          RegType::NONE,
+          DataType{0},
+          WeightsInitType::XAVIER_GLOROT,
           false);
 
   // Set up error signal
@@ -109,8 +117,13 @@ int main(int ac, char **av)
   std::cout << "epochs: " << epochs << std::endl;
   std::cout << "lr: " << lr << std::endl;
 
-  EvaluateGraph(g, bert_inputs, classification_output, all_train_data[1].first,
-                all_train_data[1].second, true);
+  EvaluateGraph(
+      g,
+      bert_inputs,
+      classification_output,
+      all_train_data[1].first,
+      all_train_data[1].second,
+      true);
 
   // create optimizer
   std::cout << "START TRAINING" << std::endl;
@@ -119,15 +132,22 @@ int main(int ac, char **av)
   {
     DataType loss = optimiser.Run(all_train_data[0].first, all_train_data[0].second, batch_size);
     std::cout << "loss: " << loss << std::endl;
-    EvaluateGraph(g, bert_inputs, classification_output, all_train_data[1].first,
-                  all_train_data[1].second, true);
+    EvaluateGraph(
+        g,
+        bert_inputs,
+        classification_output,
+        all_train_data[1].first,
+        all_train_data[1].second,
+        true);
   }
 
   return 0;
 }
 
 std::vector<std::pair<std::vector<TensorType>, TensorType>> PrepareIMDBFinetuneTrainData(
-    std::string const &file_path, SizeType train_size, SizeType test_size,
+    std::string const &           file_path,
+    SizeType                      train_size,
+    SizeType                      test_size,
     BERTConfig<TensorType> const &config)
 {
   // prepare IMDB data

@@ -52,8 +52,9 @@ struct FileBlockType
   static constexpr uint64_t CAPACITY        = BS - META_DATA_BYTES;
   static constexpr uint64_t UNDEFINED       = std::numeric_limits<uint64_t>::max();
 
-  static_assert(BS > META_DATA_BYTES,
-                "Block size needs to exceed the min requirement for metadata");
+  static_assert(
+      BS > META_DATA_BYTES,
+      "Block size needs to exceed the min requirement for metadata");
 
   FileBlockType()
   {
@@ -350,9 +351,10 @@ void FileObject<S>::Write(byte_array::ConstByteArray const &arr)
 template <typename S>
 void FileObject<S>::ReadWriteHelper(uint8_t const *bytes, uint64_t num, Action action)
 {
-  assert(id_ != 0 &&
-         "Attempt to write to the free block as if it were a file is a programmer error in "
-         "FileObject");
+  assert(
+      id_ != 0 &&
+      "Attempt to write to the free block as if it were a file is a programmer error in "
+      "FileObject");
 
   uint64_t bytes_left_to_write = num;
   uint64_t bytes_to_write_in_block =
@@ -374,8 +376,10 @@ void FileObject<S>::ReadWriteHelper(uint8_t const *bytes, uint64_t num, Action a
     {
     case Action::READ:
       // NOLINTNEXTLINE
-      memcpy((uint8_t *)(bytes + bytes_offset), block_being_written.data + byte_index_,
-             bytes_to_write_in_block);
+      memcpy(
+          (uint8_t *)(bytes + bytes_offset),
+          block_being_written.data + byte_index_,
+          bytes_to_write_in_block);
       break;
     case Action::WRITE:
       memcpy(block_being_written.data + byte_index_, bytes + bytes_offset, bytes_to_write_in_block);
@@ -865,9 +869,10 @@ bool FileObject<S>::VerifyConsistency(std::vector<uint64_t> const &ids)
   {
     if (block.next != index || block.previous != index)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME,
-                      "Free block is malformed - size is 0 but prev and next pointers don't refer "
-                      "back to itself.");
+      FETCH_LOG_ERROR(
+          LOGGING_NAME,
+          "Free block is malformed - size is 0 but prev and next pointers don't refer "
+          "back to itself.");
       return false;
     }
   }

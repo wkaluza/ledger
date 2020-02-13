@@ -40,8 +40,9 @@ public:
   virtual int              rank() const                  = 0;
 
   virtual bool VisitSubmodelsWithVocabulary(
-      std::function<void(std::string, std::string, Vocabulary)> callback, Vocabulary,
-      std::string                                               name = "")                                   = 0;
+      std::function<void(std::string, std::string, Vocabulary)> callback,
+      Vocabulary,
+      std::string name = "")                                   = 0;
   virtual bool            IsSame(ModelInterface const &) const = 0;
   virtual std::type_index type() const                         = 0;
 

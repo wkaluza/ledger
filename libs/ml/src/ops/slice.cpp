@@ -117,8 +117,9 @@ void Slice<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
 }
 
 template <typename TensorType>
-std::vector<TensorType> Slice<TensorType>::Backward(VecTensorType const &inputs,
-                                                    TensorType const &   error_signal)
+std::vector<TensorType> Slice<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 1);

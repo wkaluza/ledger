@@ -143,8 +143,9 @@ int MtCore::run()
   Uri core_uri(config_.core_uri());
   Uri search_uri(config_.search_uri());
   outbounds->AddConversationCreator(
-      Uri("outbound://search:0"), std::make_shared<OutboundSearchConversationCreator>(
-                                      config_.core_key(), core_uri, search_uri, *core, outbounds));
+      Uri("outbound://search:0"),
+      std::make_shared<OutboundSearchConversationCreator>(
+          config_.core_key(), core_uri, search_uri, *core, outbounds));
   agents_ = std::make_shared<Agents>();
 
   if (config_.karma_policy().size())
@@ -173,13 +174,18 @@ int MtCore::run()
     white_list_enabled_ = true;
     if (load_ssl_pub_keys(config_.white_list_file()))
     {
-      FETCH_LOG_INFO(LOGGING_NAME, white_list_->size(),
-                     " keys loaded successfully from white list file: ", config_.white_list_file());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          white_list_->size(),
+          " keys loaded successfully from white list file: ",
+          config_.white_list_file());
     }
     else
     {
-      FETCH_LOG_WARN(LOGGING_NAME, " error when loading ssl keys from white list file: ",
-                     config_.white_list_file());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          " error when loading ssl keys from white list file: ",
+          config_.white_list_file());
     }
   }
   else
@@ -275,8 +281,8 @@ void MtCore::startListeners(IKarmaPolicy *karmaPolicy)
           auto timeout = std::make_shared<OefLoginTimeoutTask>(self);
           timeout->submit(login_timeout);
         });
-        return std::make_shared<InitialHandshakeTaskFactory>(config_.core_key(), endpoint,
-                                                             outbounds, agents_);
+        return std::make_shared<InitialHandshakeTaskFactory>(
+            config_.core_key(), endpoint, outbounds, agents_);
       };
 
   Uri core_uri(config_.core_uri());
@@ -322,7 +328,9 @@ void MtCore::startListeners(IKarmaPolicy *karmaPolicy)
       FETCH_LOG_WARN(
           LOGGING_NAME,
           "Cannot create SSL endpoint because required files not set: core_cert_pk_file=",
-          config_.core_cert_pk_file(), ", tmp_dh_file=", config_.tmp_dh_file());
+          config_.core_cert_pk_file(),
+          ", tmp_dh_file=",
+          config_.tmp_dh_file());
     }
   }
   if (!config_.secure_uri().empty())
@@ -332,8 +340,8 @@ void MtCore::startListeners(IKarmaPolicy *karmaPolicy)
         auto timeout = std::make_shared<OefLoginTimeoutTask>(self);
         timeout->submit(login_timeout);
       });
-      return std::make_shared<InitialSecureHandshakeTaskFactory>(config_.core_key(), endpoint,
-                                                                 outbounds, agents_);
+      return std::make_shared<InitialSecureHandshakeTaskFactory>(
+          config_.core_key(), endpoint, outbounds, agents_);
     };
 
     Uri                                          secure_uri(config_.secure_uri());
@@ -410,8 +418,8 @@ bool MtCore::load_ssl_pub_keys(std::string white_list_file)
       }
       catch (std::exception const &e)
       {
-        FETCH_LOG_WARN(LOGGING_NAME, " error inserting file in white list: ", line, " - ",
-                       e.what());
+        FETCH_LOG_WARN(
+            LOGGING_NAME, " error inserting file in white list: ", line, " - ", e.what());
       }
     }
     return true;

@@ -28,8 +28,10 @@ namespace internal {
 
 template <template <typename...> class, typename, template <typename...> class>
 struct ConveyTypeParameterPackImpl;
-template <template <typename...> class Source, template <typename...> class Destination,
-          typename... Args>
+template <
+    template <typename...> class Source,
+    template <typename...> class Destination,
+    typename... Args>
 struct ConveyTypeParameterPackImpl<Source, Source<Args...>, Destination>
 {
   using type = Destination<Args...>;
@@ -58,8 +60,10 @@ struct ConveyTypeParameterPackImpl<Source, Source<Args...>, Destination>
  *       NeedsParamPackToWork>;
  *   }
  */
-template <template <typename...> class Source, typename SourceInstantiation,
-          template <typename...> class Destination>
+template <
+    template <typename...> class Source,
+    typename SourceInstantiation,
+    template <typename...> class Destination>
 using ConveyTypeParameterPack =
     typename internal::ConveyTypeParameterPackImpl<Source, SourceInstantiation, Destination>::type;
 

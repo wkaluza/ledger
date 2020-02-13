@@ -41,10 +41,12 @@ void Optimiser<TensorType>::Init()
 }
 
 template <class TensorType>
-Optimiser<TensorType>::Optimiser(std::shared_ptr<Graph<TensorType>> graph,
-                                 std::vector<std::string>           input_node_names,
-                                 std::string label_node_name, std::string output_node_name,
-                                 DataType const &learning_rate)
+Optimiser<TensorType>::Optimiser(
+    std::shared_ptr<Graph<TensorType>> graph,
+    std::vector<std::string>           input_node_names,
+    std::string                        label_node_name,
+    std::string                        output_node_name,
+    DataType const &                   learning_rate)
   : graph_(std::move(graph))
   , input_node_names_(std::move(input_node_names))
   , label_node_name_(std::move(label_node_name))
@@ -56,10 +58,12 @@ Optimiser<TensorType>::Optimiser(std::shared_ptr<Graph<TensorType>> graph,
 }
 
 template <class TensorType>
-Optimiser<TensorType>::Optimiser(std::shared_ptr<Graph<TensorType>> graph,
-                                 std::vector<std::string>           input_node_names,
-                                 std::string label_node_name, std::string output_node_name,
-                                 LearningRateParam<DataType> learning_rate_param)
+Optimiser<TensorType>::Optimiser(
+    std::shared_ptr<Graph<TensorType>> graph,
+    std::vector<std::string>           input_node_names,
+    std::string                        label_node_name,
+    std::string                        output_node_name,
+    LearningRateParam<DataType>        learning_rate_param)
   : graph_(std::move(graph))
   , input_node_names_(std::move(input_node_names))
   , label_node_name_(std::move(label_node_name))
@@ -83,8 +87,10 @@ Optimiser<TensorType>::Optimiser(std::shared_ptr<Graph<TensorType>> graph,
  * @return Sum of losses from all mini-batches
  */
 template <class TensorType>
-typename TensorType::Type Optimiser<TensorType>::Run(std::vector<TensorType> const &data,
-                                                     TensorType const &labels, SizeType batch_size)
+typename TensorType::Type Optimiser<TensorType>::Run(
+    std::vector<TensorType> const &data,
+    TensorType const &             labels,
+    SizeType                       batch_size)
 {
   assert(!data.empty());
   // Get trailing dimensions
@@ -194,7 +200,9 @@ typename TensorType::Type Optimiser<TensorType>::Run(std::vector<TensorType> con
 template <class TensorType>
 typename TensorType::Type Optimiser<TensorType>::Run(
     fetch::ml::dataloaders::DataLoader<TensorType> &loader,
-    LearningRateParam<DataType> learning_rate_param, SizeType batch_size, SizeType subset_size)
+    LearningRateParam<DataType>                     learning_rate_param,
+    SizeType                                        batch_size,
+    SizeType                                        subset_size)
 {
   // setting up learning_rate_param_
   learning_rate_param_ = learning_rate_param;
@@ -209,16 +217,18 @@ typename TensorType::Type Optimiser<TensorType>::Run(
 
 template <class TensorType>
 typename TensorType::Type Optimiser<TensorType>::Run(
-    fetch::ml::dataloaders::DataLoader<TensorType> &loader, SizeType batch_size,
-    SizeType subset_size)
+    fetch::ml::dataloaders::DataLoader<TensorType> &loader,
+    SizeType                                        batch_size,
+    SizeType                                        subset_size)
 {
   return RunImplementation(loader, batch_size, subset_size);
 }
 
 template <class TensorType>
 typename TensorType::Type Optimiser<TensorType>::RunImplementation(
-    fetch::ml::dataloaders::DataLoader<TensorType> &loader, SizeType batch_size,
-    SizeType subset_size)
+    fetch::ml::dataloaders::DataLoader<TensorType> &loader,
+    SizeType                                        batch_size,
+    SizeType                                        subset_size)
 {
   if (loader.IsDone())
   {
@@ -304,8 +314,8 @@ void Optimiser<TensorType>::PrintStats(SizeType batch_size, SizeType subset_size
   {
     stat_string_ =
         "step " + std::to_string(step_) + " / " + std::to_string(subset_size) + " (" +
-        std::to_string(static_cast<SizeType>(100.0 * static_cast<double>(step_) /
-                                             static_cast<double>(subset_size))) +
+        std::to_string(static_cast<SizeType>(
+            100.0 * static_cast<double>(step_) / static_cast<double>(subset_size))) +
         "%) -- " + "learning rate: " + std::to_string(static_cast<double>(learning_rate_)) +
         " -- " +
         std::to_string(static_cast<double>(step_) / static_cast<double>(time_span_.count())) +
@@ -329,9 +339,10 @@ void Optimiser<TensorType>::UpdateLearningRate()
   {
   case LearningRateParam<DataType>::LearningRateDecay::EXPONENTIAL:
   {
-    learning_rate_ = learning_rate_param_.starting_learning_rate *
-                     fetch::math::Pow(learning_rate_param_.exponential_decay_rate,
-                                      static_cast<DataType>(epoch_ + 1));
+    learning_rate_ =
+        learning_rate_param_.starting_learning_rate *
+        fetch::math::Pow(
+            learning_rate_param_.exponential_decay_rate, static_cast<DataType>(epoch_ + 1));
     break;
   }
   case LearningRateParam<DataType>::LearningRateDecay::LINEAR:
@@ -389,7 +400,9 @@ void Optimiser<TensorType>::IncrementBatchCounters(SizeType batch_size)
  */
 template <class TensorType>
 typename Optimiser<TensorType>::SizeType Optimiser<TensorType>::UpdateBatchSize(
-    SizeType const &batch_size, SizeType const &data_size, SizeType const &subset_size)
+    SizeType const &batch_size,
+    SizeType const &data_size,
+    SizeType const &subset_size)
 {
   SizeType updated_batch_size = batch_size;
   // If batch_size not specified do full batch

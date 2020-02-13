@@ -80,11 +80,15 @@ public:
   }
 
 private:
-  template <template <class...> class Container, class... ContainerArgs,
-            class... NamesAndContainers>
-  static Patterns KeepPatterns(Patterns patterns, std::string const &name,
-                               Container<BlockPtr, ContainerArgs...> const &container,
-                               NamesAndContainers &&... names_and_containers);
+  template <
+      template <class...> class Container,
+      class... ContainerArgs,
+      class... NamesAndContainers>
+  static Patterns KeepPatterns(
+      Patterns                                     patterns,
+      std::string const &                          name,
+      Container<BlockPtr, ContainerArgs...> const &container,
+      NamesAndContainers &&... names_and_containers);
 
   static Patterns KeepPatterns(Patterns patterns)
   {
@@ -121,7 +125,8 @@ inline Matcher<byte_array::ConstByteArray> ExpectedHash(byte_array::ConstByteArr
 
 template <template <class...> class Container, class... ContainerArgs, class... NamesAndContainers>
 DigestMatcher::Patterns DigestMatcher::KeepPatterns(
-    Patterns patterns, std::string const &name,
+    Patterns                                     patterns,
+    std::string const &                          name,
     Container<BlockPtr, ContainerArgs...> const &container,
     NamesAndContainers &&... names_and_containers)
 {
@@ -130,8 +135,8 @@ DigestMatcher::Patterns DigestMatcher::KeepPatterns(
   {
     patterns.emplace(block->hash, name + '[' + std::to_string(index++) + ']');
   }
-  return KeepPatterns(std::move(patterns),
-                      std::forward<NamesAndContainers>(names_and_containers)...);
+  return KeepPatterns(
+      std::move(patterns), std::forward<NamesAndContainers>(names_and_containers)...);
 }
 
 }  // namespace testing

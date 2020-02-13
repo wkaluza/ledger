@@ -37,17 +37,21 @@ public:
   using DataType   = typename TensorType::Type;
   using SizeType   = fetch::math::SizeType;
 
-  MomentumOptimiser(std::shared_ptr<Graph<T>>       graph,
-                    std::vector<std::string> const &input_node_names,
-                    std::string const &label_node_name, std::string const &output_node_name,
-                    DataType const &learning_rate   = fetch::math::Type<DataType>("0.001"),
-                    DataType const &momentum_update = fetch::math::Type<DataType>("0.9"));
+  MomentumOptimiser(
+      std::shared_ptr<Graph<T>>       graph,
+      std::vector<std::string> const &input_node_names,
+      std::string const &             label_node_name,
+      std::string const &             output_node_name,
+      DataType const &                learning_rate   = fetch::math::Type<DataType>("0.001"),
+      DataType const &                momentum_update = fetch::math::Type<DataType>("0.9"));
 
-  MomentumOptimiser(std::shared_ptr<Graph<T>>       graph,
-                    std::vector<std::string> const &input_node_names,
-                    std::string const &label_node_name, std::string const &output_node_name,
-                    fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
-                    DataType const &momentum_update = fetch::math::Type<DataType>("0.9"));
+  MomentumOptimiser(
+      std::shared_ptr<Graph<T>>                                 graph,
+      std::vector<std::string> const &                          input_node_names,
+      std::string const &                                       label_node_name,
+      std::string const &                                       output_node_name,
+      fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
+      DataType const &momentum_update = fetch::math::Type<DataType>("0.9"));
 
   ~MomentumOptimiser() override = default;
 

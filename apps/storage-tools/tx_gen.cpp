@@ -109,7 +109,8 @@ static std::vector<AddressPtr> GenerateAddresses(std::vector<SignerPtr> const &s
 }
 
 static std::vector<ConstByteArray> GenerateTransactionsInParallel(
-    std::size_t count, std::vector<SignerPtr> const &signers,
+    std::size_t                    count,
+    std::vector<SignerPtr> const & signers,
     std::vector<AddressPtr> const &addresses)
 {
   Pool pool{};
@@ -181,9 +182,10 @@ static std::vector<ConstByteArray> GenerateTransactionsInParallel(
   return encoded_tx;
 }
 
-static std::vector<ConstByteArray> GenerateTransactions(std::size_t                    count,
-                                                        std::vector<SignerPtr> const & signers,
-                                                        std::vector<AddressPtr> const &addresses)
+static std::vector<ConstByteArray> GenerateTransactions(
+    std::size_t                    count,
+    std::vector<SignerPtr> const & signers,
+    std::vector<AddressPtr> const &addresses)
 {
   std::cout << "Generating transactions..." << std::endl;
 

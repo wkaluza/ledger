@@ -62,7 +62,8 @@ static const TestCase TEST_CASES[] = {
     {"muddle://rOA3MfBt0DdRtZRSo/gBFP2aD/YQTsd9lOh/Oc/Pzchrzz1wfhTUMpf9z8cc1kRltUpdlWznGzwroO8/"
      "rbdPXA==",
      "rOA3MfBt0DdRtZRSo/gBFP2aD/YQTsd9lOh/Oc/Pzchrzz1wfhTUMpf9z8cc1kRltUpdlWznGzwroO8/rbdPXA==",
-     Uri::Scheme::Muddle, true},
+     Uri::Scheme::Muddle,
+     true},
     {"tcp://foo:bar", "foo:bar", Uri::Scheme::Muddle, false},
     {"muddle://badIdentityName", "badIdentityName", Uri::Scheme::Muddle, false}};
 

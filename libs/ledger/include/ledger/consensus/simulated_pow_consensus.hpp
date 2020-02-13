@@ -34,8 +34,10 @@ public:
   using MainChain = ledger::MainChain;
 
   // Construction / Destruction
-  SimulatedPowConsensus(Identity mining_identity, uint64_t block_interval_ms,
-                        MainChain const &chain);
+  SimulatedPowConsensus(
+      Identity         mining_identity,
+      uint64_t         block_interval_ms,
+      MainChain const &chain);
 
   SimulatedPowConsensus(SimulatedPowConsensus const &) = delete;
   SimulatedPowConsensus(SimulatedPowConsensus &&)      = delete;

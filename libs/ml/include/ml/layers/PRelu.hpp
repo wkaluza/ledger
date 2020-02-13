@@ -37,8 +37,10 @@ public:
 
   PRelu() = default;
 
-  explicit PRelu(uint64_t in, std::string const &name = "PRelu",
-                 WeightsInit init_mode = WeightsInit::XAVIER_GLOROT);
+  explicit PRelu(
+      uint64_t           in,
+      std::string const &name      = "PRelu",
+      WeightsInit        init_mode = WeightsInit::XAVIER_GLOROT);
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 

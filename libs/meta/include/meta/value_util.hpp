@@ -53,8 +53,8 @@ constexpr auto Accumulate(F &&f, A &&a, B &&b)
 template <typename F, typename A, typename B, typename... Seq>
 constexpr auto Accumulate(F &&f, A &&a, B &&b, Seq &&... seq)
 {
-  return Accumulate(std::forward<F>(f), f(std::forward<A>(a), std::forward<B>(b)),
-                    std::forward<Seq>(seq)...);
+  return Accumulate(
+      std::forward<F>(f), f(std::forward<A>(a), std::forward<B>(b)), std::forward<Seq>(seq)...);
 }
 
 template <class T>

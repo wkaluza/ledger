@@ -25,11 +25,17 @@ namespace muddle {
 using MuddlePtr = std::shared_ptr<MuddleInterface>;
 using ProverPtr = std::shared_ptr<crypto::Prover>;
 
-MuddlePtr CreateMuddleFake(NetworkId const &network, ProverPtr certificate,
-                           network::NetworkManager const &nm, std::string const &external_address);
+MuddlePtr CreateMuddleFake(
+    NetworkId const &              network,
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
 
-MuddlePtr CreateMuddleFake(char const network[4], ProverPtr certificate,
-                           network::NetworkManager const &nm, std::string const &external_address);
+MuddlePtr CreateMuddleFake(
+    char const                     network[4],
+    ProverPtr                      certificate,
+    network::NetworkManager const &nm,
+    std::string const &            external_address);
 
 }  // namespace muddle
 }  // namespace fetch

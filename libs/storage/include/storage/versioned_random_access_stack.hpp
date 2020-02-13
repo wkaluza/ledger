@@ -305,8 +305,10 @@ public:
     return StackType::DirectWrite();
   }
 
-  void Load(std::string const &filename, std::string const &history,
-            bool const &create_if_not_exist = true)
+  void Load(
+      std::string const &filename,
+      std::string const &history,
+      bool const &       create_if_not_exist = true)
   {
     stack_.Load(filename, create_if_not_exist);
     history_.Load(history, create_if_not_exist);

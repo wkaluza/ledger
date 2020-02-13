@@ -101,9 +101,12 @@ const uint32_t crypto_begin = tensor_end,
  * @param baseline_name Name of baseline benchmark (baseline time is subtracted to get net time)
  * @param Index of benchmark (used to encode several Etch-code benchmarks in each function)
  */
-void EtchCodeBenchmark(benchmark::State &state, std::string const &benchmark_name,
-                       std::string const &etch_code, std::string const &baseline_name,
-                       uint32_t const bm_ind)
+void EtchCodeBenchmark(
+    benchmark::State & state,
+    std::string const &benchmark_name,
+    std::string const &etch_code,
+    std::string const &baseline_name,
+    uint32_t const     bm_ind)
 {
   auto     module = VMFactory::GetModule(VMFactory::USE_SMART_CONTRACTS);
   Compiler compiler(module.get());
@@ -196,8 +199,10 @@ std::string IfThen(std::string const &condition, std::string const &consequent)
   return "if (" + condition + ")\n" + consequent + "endif\n";
 }
 
-std::string IfThenElse(std::string const &condition, std::string const &consequent,
-                       std::string const &alternate)
+std::string IfThenElse(
+    std::string const &condition,
+    std::string const &consequent,
+    std::string const &alternate)
 {
   return "if (" + condition + ")\n" + consequent + "else\n" + alternate + "endif\n";
 }
@@ -237,9 +242,12 @@ std::string ArrayErase(std::string const &arr, std::string const &ind)
   return arr + ".erase(" + ind + ");\n";
 }
 
-std::string TensorDec(std::string const &tensor, std::string const &prim,
-                      std::string const &tensor_shape, std::string const &tensor_size,
-                      const uint32_t tensor_dim)
+std::string TensorDec(
+    std::string const &tensor,
+    std::string const &prim,
+    std::string const &tensor_shape,
+    std::string const &tensor_size,
+    const uint32_t     tensor_dim)
 {
   auto tensor_dec = ArrayDec(tensor_shape, prim, std::to_string(tensor_dim));
   for (uint32_t i = 0; i != tensor_dim; ++i)
@@ -324,8 +332,8 @@ void BasicBenchmarks(benchmark::State &state)
   const static BenchmarkPair FOR_LOOP("ForLoop", FunMain(For(EMPTY, ONE)));
   const static BenchmarkPair BREAK("Break", FunMain(For(BRK, ONE)));
   const static BenchmarkPair CONTINUE("Continue", FunMain(For(CONT, ONE)));
-  const static BenchmarkPair DESTRUCT_BASE("DestructBase",
-                                           FunMain(VarDec(STRING) + For(EMPTY, ONE)));
+  const static BenchmarkPair DESTRUCT_BASE(
+      "DestructBase", FunMain(VarDec(STRING) + For(EMPTY, ONE)));
   const static BenchmarkPair DESTRUCT("Destruct", FunMain(For(VarDec(STRING), ONE)));
   const static BenchmarkPair FUNC("Function", FunMain(FUN_CALL) + FunUser(""));
   const static BenchmarkPair VAR_DEC_STRING("VariableDeclareStr", FunMain(VarDec(STRING)));
@@ -346,9 +354,21 @@ void BasicBenchmarks(benchmark::State &state)
                                                              {"Function", "Return"},
                                                              {"VariableDeclareStr", "Return"}});
 
-  std::vector<BenchmarkPair> const etch_codes = {
-      RETURN,   PUSH_FALSE, PUSH_TRUE, JUMP_IF_FALSE, JUMP,     NOT,  AND,           OR,
-      FOR_LOOP, BREAK,      CONTINUE,  DESTRUCT_BASE, DESTRUCT, FUNC, VAR_DEC_STRING};
+  std::vector<BenchmarkPair> const etch_codes = {RETURN,
+                                                 PUSH_FALSE,
+                                                 PUSH_TRUE,
+                                                 JUMP_IF_FALSE,
+                                                 JUMP,
+                                                 NOT,
+                                                 AND,
+                                                 OR,
+                                                 FOR_LOOP,
+                                                 BREAK,
+                                                 CONTINUE,
+                                                 DESTRUCT_BASE,
+                                                 DESTRUCT,
+                                                 FUNC,
+                                                 VAR_DEC_STRING};
 
   auto bm_ind = static_cast<uint32_t>(state.range(0));
 
@@ -360,8 +380,12 @@ void BasicBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void ObjectBenchmarks(benchmark::State &state)
@@ -385,21 +409,21 @@ void ObjectBenchmarks(benchmark::State &state)
                            GTE = "x >= x;\n";
 
   const BenchmarkPair PUSH_STRING("PushString_" + length, FunMain(str + ";\n"));
-  const BenchmarkPair VAR_DEC_ASS_STRING("VariableDeclareAssignString_" + length,
-                                         FunMain(VarDecAss(STRING, str)));
-  const BenchmarkPair PUSH_VAR_STRING("PushVariableString_" + length,
-                                      FunMain(VarDecAss(STRING, str) + PUSH));
+  const BenchmarkPair VAR_DEC_ASS_STRING(
+      "VariableDeclareAssignString_" + length, FunMain(VarDecAss(STRING, str)));
+  const BenchmarkPair PUSH_VAR_STRING(
+      "PushVariableString_" + length, FunMain(VarDecAss(STRING, str) + PUSH));
   const BenchmarkPair OBJ_EQ("ObjectEqualString_" + length, FunMain(VarDecAss(STRING, str) + EQ));
-  const BenchmarkPair OBJ_NEQ("ObjectNotEqualString_" + length,
-                              FunMain(VarDecAss(STRING, str) + NEQ));
-  const BenchmarkPair OBJ_LT("ObjectLessThanString_" + length,
-                             FunMain(VarDecAss(STRING, str) + LT));
-  const BenchmarkPair OBJ_GT("ObjectGreaterThanString_" + length,
-                             FunMain(VarDecAss(STRING, str) + GT));
-  const BenchmarkPair OBJ_LTE("ObjectLessThanOrEqualString_" + length,
-                              FunMain(VarDecAss(STRING, str) + LTE));
-  const BenchmarkPair OBJ_GTE("ObjectGreaterThanOrEqualString_" + length,
-                              FunMain(VarDecAss(STRING, str) + GTE));
+  const BenchmarkPair OBJ_NEQ(
+      "ObjectNotEqualString_" + length, FunMain(VarDecAss(STRING, str) + NEQ));
+  const BenchmarkPair OBJ_LT(
+      "ObjectLessThanString_" + length, FunMain(VarDecAss(STRING, str) + LT));
+  const BenchmarkPair OBJ_GT(
+      "ObjectGreaterThanString_" + length, FunMain(VarDecAss(STRING, str) + GT));
+  const BenchmarkPair OBJ_LTE(
+      "ObjectLessThanOrEqualString_" + length, FunMain(VarDecAss(STRING, str) + LTE));
+  const BenchmarkPair OBJ_GTE(
+      "ObjectGreaterThanOrEqualString_" + length, FunMain(VarDecAss(STRING, str) + GTE));
   const BenchmarkPair OBJ_ADD("ObjectAddString_" + length, FunMain(VarDecAss(STRING, str) + ADD));
 
   // Define {benchmark,baseline} pairs
@@ -415,11 +439,16 @@ void ObjectBenchmarks(benchmark::State &state)
        {"ObjectGreaterThanOrEqualString_" + length, "PushVariableString_" + length},
        {"ObjectAddString_" + length, "PushVariableString_" + length}});
 
-  std::vector<BenchmarkPair> const etch_codes = {PUSH_STRING,     VAR_DEC_ASS_STRING,
-                                                 PUSH_VAR_STRING, OBJ_EQ,
-                                                 OBJ_NEQ,         OBJ_LT,
-                                                 OBJ_GT,          OBJ_LTE,
-                                                 OBJ_GTE,         OBJ_ADD};
+  std::vector<BenchmarkPair> const etch_codes = {PUSH_STRING,
+                                                 VAR_DEC_ASS_STRING,
+                                                 PUSH_VAR_STRING,
+                                                 OBJ_EQ,
+                                                 OBJ_NEQ,
+                                                 OBJ_LT,
+                                                 OBJ_GT,
+                                                 OBJ_LTE,
+                                                 OBJ_GTE,
+                                                 OBJ_ADD};
 
   if (etch_ind >= etch_codes.size())
   {
@@ -427,19 +456,43 @@ void ObjectBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void PrimitiveOpBenchmarks(benchmark::State &state)
 {
-  const static std::vector<std::string> primitives{
-      "Int8",   "Int16",   "Int32",   "Int64",   "UInt8",   "UInt16",  "UInt32",
-      "UInt64", "Float32", "Float64", "Fixed32", "Fixed64", "Fixed128"};
+  const static std::vector<std::string> primitives{"Int8",
+                                                   "Int16",
+                                                   "Int32",
+                                                   "Int64",
+                                                   "UInt8",
+                                                   "UInt16",
+                                                   "UInt32",
+                                                   "UInt64",
+                                                   "Float32",
+                                                   "Float64",
+                                                   "Fixed32",
+                                                   "Fixed64",
+                                                   "Fixed128"};
 
-  const static std::vector<std::string> values{"1i8",     "1i16",    "1i32",    "1i64", "1u8",
-                                               "1u16",    "1u32",    "1u64",    "0.5f", "0.5",
-                                               "0.5fp32", "0.5fp64", "0.5fp128"};
+  const static std::vector<std::string> values{"1i8",
+                                               "1i16",
+                                               "1i32",
+                                               "1i64",
+                                               "1u8",
+                                               "1u16",
+                                               "1u32",
+                                               "1u64",
+                                               "0.5f",
+                                               "0.5",
+                                               "0.5fp32",
+                                               "0.5fp64",
+                                               "0.5fp128"};
 
   auto bm_ind = static_cast<uint32_t>(state.range(0));
 
@@ -462,8 +515,8 @@ void PrimitiveOpBenchmarks(benchmark::State &state)
 
   const BenchmarkPair RET_VAL("PrimReturnValue_" + prim, FunMainRet("return " + val + ";\n", prim));
   const BenchmarkPair VAR_DEC("PrimVariableDeclare_" + prim, FunMain(VarDec(prim)));
-  const BenchmarkPair VAR_DEC_ASS("PrimVariableDeclareAssign_" + prim,
-                                  FunMain(VarDecAss(prim, val)));
+  const BenchmarkPair VAR_DEC_ASS(
+      "PrimVariableDeclareAssign_" + prim, FunMain(VarDecAss(prim, val)));
   const BenchmarkPair PUSH_CONST("PrimPushConst_" + prim, FunMain(val + ";\n"));
   const BenchmarkPair PUSH_VAR("PrimPushVariable_" + prim, FunMain(VarDecAss(prim, val) + PUSH));
   const BenchmarkPair POP_TO_VAR("PrimPopToVariable_" + prim, FunMain(VarDecAss(prim, val) + POP));
@@ -478,26 +531,26 @@ void PrimitiveOpBenchmarks(benchmark::State &state)
   const BenchmarkPair PRIM_LT("PrimLessThan_" + prim, FunMain(VarDecAss(prim, val) + LT));
   const BenchmarkPair PRIM_GT("PrimGreaterThan_" + prim, FunMain(VarDecAss(prim, val) + GT));
   const BenchmarkPair PRIM_LTE("PrimLessThanOrEqual_" + prim, FunMain(VarDecAss(prim, val) + LTE));
-  const BenchmarkPair PRIM_GTE("PrimGreaterThanOrEqual_" + prim,
-                               FunMain(VarDecAss(prim, val) + GTE));
-  const BenchmarkPair PRIM_PRE_INC("PrimVariablePrefixInc_" + prim,
-                                   FunMain(VarDecAss(prim, val) + PRE_INC));
-  const BenchmarkPair PRIM_PRE_DEC("PrimVariablePrefixDec_" + prim,
-                                   FunMain(VarDecAss(prim, val) + PRE_DEC));
-  const BenchmarkPair PRIM_POST_INC("PrimVariablePostfixInc_" + prim,
-                                    FunMain(VarDecAss(prim, val) + POST_INC));
-  const BenchmarkPair PRIM_POST_DEC("PrimVariablePostfixDec_" + prim,
-                                    FunMain(VarDecAss(prim, val) + POST_DEC));
-  const BenchmarkPair VAR_PRIM_INP_ADD("PrimVariableInplaceAdd_" + prim,
-                                       FunMain(VarDecAss(prim, val) + INP_ADD));
-  const BenchmarkPair VAR_PRIM_INP_SUB("PrimVariableInplaceSubtract_" + prim,
-                                       FunMain(VarDecAss(prim, val) + INP_SUB));
-  const BenchmarkPair VAR_PRIM_INP_MUL("PrimVariableInplaceMultiply_" + prim,
-                                       FunMain(VarDecAss(prim, val) + INP_MUL));
-  const BenchmarkPair VAR_PRIM_INP_DIV("PrimVariableInplaceDivide_" + prim,
-                                       FunMain(VarDecAss(prim, val) + INP_DIV));
-  const BenchmarkPair VAR_PRIM_INP_MOD("PrimVariableInplaceModulo_" + prim,
-                                       FunMain(VarDecAss(prim, val) + INP_MOD));
+  const BenchmarkPair PRIM_GTE(
+      "PrimGreaterThanOrEqual_" + prim, FunMain(VarDecAss(prim, val) + GTE));
+  const BenchmarkPair PRIM_PRE_INC(
+      "PrimVariablePrefixInc_" + prim, FunMain(VarDecAss(prim, val) + PRE_INC));
+  const BenchmarkPair PRIM_PRE_DEC(
+      "PrimVariablePrefixDec_" + prim, FunMain(VarDecAss(prim, val) + PRE_DEC));
+  const BenchmarkPair PRIM_POST_INC(
+      "PrimVariablePostfixInc_" + prim, FunMain(VarDecAss(prim, val) + POST_INC));
+  const BenchmarkPair PRIM_POST_DEC(
+      "PrimVariablePostfixDec_" + prim, FunMain(VarDecAss(prim, val) + POST_DEC));
+  const BenchmarkPair VAR_PRIM_INP_ADD(
+      "PrimVariableInplaceAdd_" + prim, FunMain(VarDecAss(prim, val) + INP_ADD));
+  const BenchmarkPair VAR_PRIM_INP_SUB(
+      "PrimVariableInplaceSubtract_" + prim, FunMain(VarDecAss(prim, val) + INP_SUB));
+  const BenchmarkPair VAR_PRIM_INP_MUL(
+      "PrimVariableInplaceMultiply_" + prim, FunMain(VarDecAss(prim, val) + INP_MUL));
+  const BenchmarkPair VAR_PRIM_INP_DIV(
+      "PrimVariableInplaceDivide_" + prim, FunMain(VarDecAss(prim, val) + INP_DIV));
+  const BenchmarkPair VAR_PRIM_INP_MOD(
+      "PrimVariableInplaceModulo_" + prim, FunMain(VarDecAss(prim, val) + INP_MOD));
 
   // Define {benchmark,baseline} pairs
   std::unordered_map<std::string, std::string> baseline_map(
@@ -543,14 +596,18 @@ void PrimitiveOpBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void MathBenchmarks(benchmark::State &state)
 {
-  const static std::vector<std::string> primitives{"Float32", "Float64", "Fixed32", "Fixed64",
-                                                   "Fixed128"};
+  const static std::vector<std::string> primitives{
+      "Float32", "Float64", "Fixed32", "Fixed64", "Fixed128"};
   const static std::vector<std::string> values{"0.5f", "0.5", "0.5fp32", "0.5fp64", "0.5fp128"};
   const static std::vector<std::string> alt_values{"1.5f", "1.5", "1.5fp32", "1.5fp64", "1.5fp128"};
 
@@ -610,9 +667,22 @@ void MathBenchmarks(benchmark::State &state)
        {"MathPow_" + prim, "PrimPushVariable_" + prim},
        {"MathRand_" + prim, "Return"}});
 
-  std::vector<BenchmarkPair> const etch_codes = {
-      PRIM_ABS,  PRIM_SIN,  PRIM_COS,   PRIM_TAN,   PRIM_ASIN,  PRIM_ACOS, PRIM_ATAN, PRIM_SINH,
-      PRIM_COSH, PRIM_TANH, PRIM_ASINH, PRIM_ACOSH, PRIM_ATANH, PRIM_SQRT, PRIM_EXP,  PRIM_POW};
+  std::vector<BenchmarkPair> const etch_codes = {PRIM_ABS,
+                                                 PRIM_SIN,
+                                                 PRIM_COS,
+                                                 PRIM_TAN,
+                                                 PRIM_ASIN,
+                                                 PRIM_ACOS,
+                                                 PRIM_ATAN,
+                                                 PRIM_SINH,
+                                                 PRIM_COSH,
+                                                 PRIM_TANH,
+                                                 PRIM_ASINH,
+                                                 PRIM_ACOSH,
+                                                 PRIM_ATANH,
+                                                 PRIM_SQRT,
+                                                 PRIM_EXP,
+                                                 PRIM_POW};
 
   if (etch_ind >= etch_codes.size())
   {
@@ -620,8 +690,12 @@ void MathBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void ArrayBenchmarks(benchmark::State &state)
@@ -644,22 +718,22 @@ void ArrayBenchmarks(benchmark::State &state)
                            POPBACK = "x.popBack();\n", POPFRONT = "x.popFront();\n";
 
   const BenchmarkPair ARRAY_DEC("DeclareArray_" + len, FunMain(ArrayDec(arr1, prim, len)));
-  const BenchmarkPair ARRAY_ASS("AssignArray_" + len,
-                                FunMain(ArrayDec(arr1, prim, len) + ArrayAss(arr1, ind, val)));
+  const BenchmarkPair ARRAY_ASS(
+      "AssignArray_" + len, FunMain(ArrayDec(arr1, prim, len) + ArrayAss(arr1, ind, val)));
   const BenchmarkPair ARRAY_COUNT("CountArray_" + len, FunMain(ArrayDec(arr1, prim, len) + COUNT));
-  const BenchmarkPair ARRAY_APP("AppendArray_" + len,
-                                FunMain(ArrayDec(arr1, prim, len) + ArrayAppend(arr1, val)));
-  const BenchmarkPair ARRAY_DEC_2("DeclareTwoArray_" + len,
-                                  FunMain(ArrayDec(arr1, prim, len) + ArrayDec(arr2, prim, len)));
+  const BenchmarkPair ARRAY_APP(
+      "AppendArray_" + len, FunMain(ArrayDec(arr1, prim, len) + ArrayAppend(arr1, val)));
+  const BenchmarkPair ARRAY_DEC_2(
+      "DeclareTwoArray_" + len, FunMain(ArrayDec(arr1, prim, len) + ArrayDec(arr2, prim, len)));
   const BenchmarkPair ARRAY_EXT(
       "ExtendArray_" + len,
       FunMain(ArrayDec(arr1, prim, len) + ArrayDec(arr2, prim, len) + ArrayExtend(arr1, arr2)));
-  const BenchmarkPair ARRAY_POPBACK("PopBackArray_" + len,
-                                    FunMain(ArrayDec(arr1, prim, len) + POPBACK));
-  const BenchmarkPair ARRAY_POPFRONT("PopFrontArray_" + len,
-                                     FunMain(ArrayDec(arr1, prim, len) + POPFRONT));
-  const BenchmarkPair ARRAY_ERASE("EraseArray_" + len,
-                                  FunMain(ArrayDec(arr1, prim, len) + ArrayErase(arr1, ind)));
+  const BenchmarkPair ARRAY_POPBACK(
+      "PopBackArray_" + len, FunMain(ArrayDec(arr1, prim, len) + POPBACK));
+  const BenchmarkPair ARRAY_POPFRONT(
+      "PopFrontArray_" + len, FunMain(ArrayDec(arr1, prim, len) + POPFRONT));
+  const BenchmarkPair ARRAY_ERASE(
+      "EraseArray_" + len, FunMain(ArrayDec(arr1, prim, len) + ArrayErase(arr1, ind)));
   const BenchmarkPair ARRAY_REV("ReverseArray_" + len, FunMain(ArrayDec(arr1, prim, len) + REV));
 
   // Define {benchmark,baseline} pairs
@@ -675,9 +749,16 @@ void ArrayBenchmarks(benchmark::State &state)
        {"EraseArray_" + len, "DeclareArray_" + len},
        {"ReverseArray_" + len, "DeclareArray_" + len}});
 
-  std::vector<BenchmarkPair> const etch_codes = {
-      ARRAY_DEC, ARRAY_ASS,     ARRAY_COUNT,    ARRAY_APP,   ARRAY_DEC_2,
-      ARRAY_EXT, ARRAY_POPBACK, ARRAY_POPFRONT, ARRAY_ERASE, ARRAY_REV};
+  std::vector<BenchmarkPair> const etch_codes = {ARRAY_DEC,
+                                                 ARRAY_ASS,
+                                                 ARRAY_COUNT,
+                                                 ARRAY_APP,
+                                                 ARRAY_DEC_2,
+                                                 ARRAY_EXT,
+                                                 ARRAY_POPBACK,
+                                                 ARRAY_POPFRONT,
+                                                 ARRAY_ERASE,
+                                                 ARRAY_REV};
 
   if (etch_ind >= etch_codes.size())
   {
@@ -685,8 +766,12 @@ void ArrayBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void TensorBenchmarks(benchmark::State &state)
@@ -715,8 +800,9 @@ void TensorBenchmarks(benchmark::State &state)
   static std::string SIZE = tensor + ".size();\n", FILL = tensor + ".fill(1.0fp64);\n",
                      FILL_RAND = tensor + ".fillRandom();\n";
 
-  const BenchmarkPair TENSOR_DEC("DeclareTensor_" + dim_str + "-" + size,
-                                 FunMain(TensorDec(tensor, prim, tensor_shape, size_u64, dim)));
+  const BenchmarkPair TENSOR_DEC(
+      "DeclareTensor_" + dim_str + "-" + size,
+      FunMain(TensorDec(tensor, prim, tensor_shape, size_u64, dim)));
   const BenchmarkPair TENSOR_SIZE(
       "SizeTensor_" + dim_str + "-" + size,
       FunMain(TensorDec(tensor, prim, tensor_shape, size_u64, dim) + SIZE));
@@ -726,9 +812,10 @@ void TensorBenchmarks(benchmark::State &state)
   const BenchmarkPair TENSOR_FILL_RAND(
       "FillRandTensor_" + dim_str + "-" + size,
       FunMain(TensorDec(tensor, prim, tensor_shape, size_u64, dim) + FILL_RAND));
-  const BenchmarkPair TENSOR_FROM_STR("FromStrTensor_" + dim_str + "-" + size,
-                                      FunMain(TensorDec(tensor, prim, tensor_shape, size_u64, dim) +
-                                              FromString(tensor, val, n_elem)));
+  const BenchmarkPair TENSOR_FROM_STR(
+      "FromStrTensor_" + dim_str + "-" + size,
+      FunMain(
+          TensorDec(tensor, prim, tensor_shape, size_u64, dim) + FromString(tensor, val, n_elem)));
 
   // Define {benchmark,baseline} pairs
   std::unordered_map<std::string, std::string> baseline_map(
@@ -738,8 +825,8 @@ void TensorBenchmarks(benchmark::State &state)
        {"FillRandTensor_" + dim_str + "-" + size, "DeclareTensor_" + dim_str + "-" + size},
        {"FromStrTensor_" + dim_str + "-" + size, "DeclareTensor_" + dim_str + "-" + size}});
 
-  std::vector<BenchmarkPair> const etch_codes = {TENSOR_DEC, TENSOR_SIZE, TENSOR_FILL,
-                                                 TENSOR_FILL_RAND, TENSOR_FROM_STR};
+  std::vector<BenchmarkPair> const etch_codes = {
+      TENSOR_DEC, TENSOR_SIZE, TENSOR_FILL, TENSOR_FILL_RAND, TENSOR_FROM_STR};
 
   if (etch_ind >= etch_codes.size())
   {
@@ -747,8 +834,12 @@ void TensorBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 void CryptoBenchmarks(benchmark::State &state)
@@ -778,10 +869,10 @@ void CryptoBenchmarks(benchmark::State &state)
   const BenchmarkPair SHA256_DEC("Sha256Declare", FunMain(DEC));
   const BenchmarkPair SHA256_RESET("Sha256Reset_" + length, FunMain(DEC + RESET));
   const BenchmarkPair SHA256_FINAL("Sha256Final_" + length, FunMain(DEC + FINAL));
-  const BenchmarkPair SHA256_BUF_DEC("Sha256DeclareBuf_" + length,
-                                     FunMain(BufferDec(buffer, length)));
-  const BenchmarkPair SHA256_UPDATE_STR("Sha256UpdateStr_" + length,
-                                        FunMain(DEC + Sha256UpdateStr(lengths[len_ind])));
+  const BenchmarkPair SHA256_BUF_DEC(
+      "Sha256DeclareBuf_" + length, FunMain(BufferDec(buffer, length)));
+  const BenchmarkPair SHA256_UPDATE_STR(
+      "Sha256UpdateStr_" + length, FunMain(DEC + Sha256UpdateStr(lengths[len_ind])));
   const BenchmarkPair SHA256_UPDATE_BUF(
       "Sha256UpdateBuf_" + length,
       FunMain(DEC + BufferDec(buffer, length) + Sha256UpdateBuf(buffer)));
@@ -804,8 +895,12 @@ void CryptoBenchmarks(benchmark::State &state)
     return;
   }
 
-  EtchCodeBenchmark(state, etch_codes[etch_ind].first, etch_codes[etch_ind].second,
-                    baseline_map[etch_codes[etch_ind].first], bm_ind);
+  EtchCodeBenchmark(
+      state,
+      etch_codes[etch_ind].first,
+      etch_codes[etch_ind].second,
+      baseline_map[etch_codes[etch_ind].first],
+      bm_ind);
 }
 
 bool RegisterBenchmarks()

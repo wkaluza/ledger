@@ -79,8 +79,11 @@ Executor::Executor(StorageUnitPtr storage)
  * @param shards The bit vector outlining the shards in use by this transaction
  * @return The status code for the operation
  */
-Executor::Result Executor::Execute(Digest const &digest, BlockIndex block, SliceIndex slice,
-                                   BitVector const &shards)
+Executor::Result Executor::Execute(
+    Digest const &   digest,
+    BlockIndex       block,
+    SliceIndex       slice,
+    BitVector const &shards)
 {
   telemetry::FunctionTimer const timer{*overall_duration_};
 
@@ -138,15 +141,19 @@ Executor::Result Executor::Execute(Digest const &digest, BlockIndex block, Slice
   return result;
 }
 
-void Executor::SettleFees(chain::Address const &miner, BlockIndex block, TokenAmount amount,
-                          uint32_t log2_num_lanes, StakeUpdateEvents const &stake_updates)
+void Executor::SettleFees(
+    chain::Address const &   miner,
+    BlockIndex               block,
+    TokenAmount              amount,
+    uint32_t                 log2_num_lanes,
+    StakeUpdateEvents const &stake_updates)
 {
   telemetry::FunctionTimer const timer{*settle_fees_duration_};
 
   FETCH_LOG_TRACE(LOGGING_NAME, "Settling fees");
 
-  fee_manager_.SettleFees(miner, amount, current_tx_->contract_address(), log2_num_lanes, block_,
-                          *storage_);
+  fee_manager_.SettleFees(
+      miner, amount, current_tx_->contract_address(), log2_num_lanes, block_, *storage_);
 
   FETCH_LOG_TRACE(LOGGING_NAME, "Aggregating stake updates...");
 
@@ -272,8 +279,11 @@ bool Executor::ExecuteTransactionContract(Result &result)
 
     Contract::Result contract_status;
     {
-      ContractContext context{&token_contract_, current_tx_->contract_address(), storage_.get(),
-                              &storage_adapter, block_};
+      ContractContext         context{&token_contract_,
+                              current_tx_->contract_address(),
+                              storage_.get(),
+                              &storage_adapter,
+                              block_};
       ContractContextAttacher raii(*contract, context);
       contract_status = contract->DispatchTransaction(*current_tx_);
     }
@@ -297,8 +307,8 @@ bool Executor::ExecuteTransactionContract(Result &result)
 
     result.return_value = contract_status.return_value;
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Executing tx ", byte_array::ToBase64(current_tx_->digest()),
-                    " (success)");
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME, "Executing tx ", byte_array::ToBase64(current_tx_->digest()), " (success)");
 
     // attempt to generate a fee for this transaction
     if (success)
@@ -322,8 +332,12 @@ bool Executor::ExecuteTransactionContract(Result &result)
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Exception during execution of tx 0x",
-                   current_tx_->digest().ToHex(), " : ", ex.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Exception during execution of tx 0x",
+        current_tx_->digest().ToHex(),
+        " : ",
+        ex.what());
 
     result.status = Status::CONTRACT_EXECUTION_FAILURE;
   }
@@ -343,8 +357,8 @@ bool Executor::ProcessTransfers(Result &result)
     // attach the token contract to the storage engine
     StateSentinelAdapter storage_adapter{*storage_cache_, "fetch.token", allowed_shards_};
 
-    ContractContext         context{&token_contract_, current_tx_->contract_address(), nullptr,
-                            &storage_adapter, block_};
+    ContractContext context{
+        &token_contract_, current_tx_->contract_address(), nullptr, &storage_adapter, block_};
     ContractContextAttacher raii(token_contract_, context);
 
     // only process transfers if the previous steps have been successful

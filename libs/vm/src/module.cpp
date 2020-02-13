@@ -274,14 +274,17 @@ Module::Module()
       .CreateInstantiationType<Array<fixed_point::fp64_t>>()
       .CreateCPPCopyConstructor<std::vector<fixed_point::fp64_t>>(
           [](VM *vm, TypeId, std::vector<fixed_point::fp64_t> const &arr) -> Ptr<IArray> {
-            auto ret = Ptr<Array<fixed_point::fp64_t>>(
-                new Array<fixed_point::fp64_t>(vm, vm->GetTypeId<Array<fixed_point::fp64_t>>(),
-                                               vm->GetTypeId<fixed_point::fp64_t>(), 0));
+            auto ret      = Ptr<Array<fixed_point::fp64_t>>(new Array<fixed_point::fp64_t>(
+                vm,
+                vm->GetTypeId<Array<fixed_point::fp64_t>>(),
+                vm->GetTypeId<fixed_point::fp64_t>(),
+                0));
             ret->elements = arr;
             return ret;
           })
       .CreateCPPCopyConstructor<std::vector<std::vector<fixed_point::fp64_t>>>(
-          [](VM *                                                 vm, TypeId,
+          [](VM *vm,
+             TypeId,
              std::vector<std::vector<fixed_point::fp64_t>> const &arr) -> Ptr<IArray> {
             auto outerid = vm->GetTypeId<Array<Ptr<Array<fixed_point::fp64_t>>>>();
             auto innerid = vm->GetTypeId<Array<fixed_point::fp64_t>>();
@@ -292,9 +295,11 @@ Module::Module()
 
             for (auto &element : arr)
             {
-              auto a = Ptr<Array<fixed_point::fp64_t>>(
-                  new Array<fixed_point::fp64_t>(vm, vm->GetTypeId<Array<fixed_point::fp64_t>>(),
-                                                 vm->GetTypeId<fixed_point::fp64_t>(), 0));
+              auto a = Ptr<Array<fixed_point::fp64_t>>(new Array<fixed_point::fp64_t>(
+                  vm,
+                  vm->GetTypeId<Array<fixed_point::fp64_t>>(),
+                  vm->GetTypeId<fixed_point::fp64_t>(),
+                  0));
 
               a->elements = element;
               ret->elements.emplace_back(a);

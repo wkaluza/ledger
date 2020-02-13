@@ -78,8 +78,9 @@ TransactionBuilder::Sealer &TransactionBuilder::Sealer::Sign(crypto::Prover cons
   auto &signatories = partial_transaction_->signatories_;
 
   // find the identity to which this prover is associated
-  auto it = std::find_if(signatories.begin(), signatories.end(),
-                         [&prover](Signatory const &s) { return s.identity == prover.identity(); });
+  auto it = std::find_if(signatories.begin(), signatories.end(), [&prover](Signatory const &s) {
+    return s.identity == prover.identity();
+  });
 
   // ensure that we have found the target signatory
   if (it != signatories.end())
@@ -88,8 +89,8 @@ TransactionBuilder::Sealer &TransactionBuilder::Sealer::Sign(crypto::Prover cons
     it->signature = prover.Sign(serialized_payload_);
     if (!it->signature.empty())
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Signed: 0x", it->signature.ToHex(),
-                      " len: ", it->signature.size());
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME, "Signed: 0x", it->signature.ToHex(), " len: ", it->signature.size());
       FETCH_LOG_DEBUG(LOGGING_NAME, "- Payload: 0x", serialized_payload_.ToHex());
     }
     else
@@ -176,8 +177,8 @@ TransactionBuilder &TransactionBuilder::Transfer(Address const &to, TokenAmount 
   auto &transfers = partial_transaction_->transfers_;
 
   // determine if the address has already been used
-  auto it = std::find_if(transfers.begin(), transfers.end(),
-                         [&to](Transfer const &t) { return t.to == to; });
+  auto it = std::find_if(
+      transfers.begin(), transfers.end(), [&to](Transfer const &t) { return t.to == to; });
 
   if (it != transfers.end())
   {
@@ -259,8 +260,9 @@ TransactionBuilder &TransactionBuilder::Counter(CounterValue counter)
  * @param shard_mask The resource shard mask
  * @return The current builder instance
  */
-TransactionBuilder &TransactionBuilder::TargetSmartContract(Address const &  address,
-                                                            BitVector const &shard_mask)
+TransactionBuilder &TransactionBuilder::TargetSmartContract(
+    Address const &  address,
+    BitVector const &shard_mask)
 {
   partial_transaction_->contract_mode_    = Transaction::ContractMode::PRESENT;
   partial_transaction_->contract_address_ = address;
@@ -276,8 +278,9 @@ TransactionBuilder &TransactionBuilder::TargetSmartContract(Address const &  add
  * @param shard_mask The resource shard mask
  * @return The current builder instance
  */
-TransactionBuilder &TransactionBuilder::TargetChainCode(byte_array::ConstByteArray const &ref,
-                                                        BitVector const &shard_mask)
+TransactionBuilder &TransactionBuilder::TargetChainCode(
+    byte_array::ConstByteArray const &ref,
+    BitVector const &                 shard_mask)
 {
   partial_transaction_->contract_mode_    = Transaction::ContractMode::CHAIN_CODE;
   partial_transaction_->contract_address_ = Address{};
@@ -325,8 +328,9 @@ TransactionBuilder &TransactionBuilder::Signer(crypto::Identity const &identity)
 
   auto &signatories = partial_transaction_->signatories_;
 
-  auto it = std::find_if(signatories.begin(), signatories.end(),
-                         [&identity](Signatory const &s) { return s.identity == identity; });
+  auto it = std::find_if(signatories.begin(), signatories.end(), [&identity](Signatory const &s) {
+    return s.identity == identity;
+  });
 
   // restrict duplicates being added to the list
   if (it == signatories.end())

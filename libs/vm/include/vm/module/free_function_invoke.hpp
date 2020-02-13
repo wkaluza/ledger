@@ -33,15 +33,19 @@ template <int sp_offset, typename ReturnType, typename Callable, typename EtchAr
 struct VmFreeFunctionInvoker
 {
   template <typename Estimator, typename... ExtraArgs>
-  static void Invoke(VM *vm, Estimator &&estimator, Callable &&callable,
-                     EtchArgsTuple &&etch_arguments, ExtraArgs const &... extra_args)
+  static void Invoke(
+      VM *            vm,
+      Estimator &&    estimator,
+      Callable &&     callable,
+      EtchArgsTuple &&etch_arguments,
+      ExtraArgs const &... extra_args)
   {
     auto estimator_args_tuple = etch_arguments;
     if (EstimateCharge(vm, std::forward<Estimator>(estimator), std::move(estimator_args_tuple)))
     {
       // prepend extra non-etch arguments (e.g. VM*, TypeId)
-      auto args_tuple = std::tuple_cat(std::make_tuple(extra_args...),
-                                       std::forward<EtchArgsTuple>(etch_arguments));
+      auto args_tuple = std::tuple_cat(
+          std::make_tuple(extra_args...), std::forward<EtchArgsTuple>(etch_arguments));
 
       ReturnType result = meta::Apply(std::forward<Callable>(callable), std::move(args_tuple));
       auto const return_type_id = vm->instruction_->type_id;
@@ -61,15 +65,19 @@ template <int sp_offset, typename Callable, typename EtchArgsTuple>
 struct VmFreeFunctionInvoker<sp_offset, void, Callable, EtchArgsTuple>
 {
   template <typename Estimator, typename... ExtraArgs>
-  static void Invoke(VM *vm, Estimator &&estimator, Callable &&callable,
-                     EtchArgsTuple &&etch_arguments, ExtraArgs const &... extra_args)
+  static void Invoke(
+      VM *            vm,
+      Estimator &&    estimator,
+      Callable &&     callable,
+      EtchArgsTuple &&etch_arguments,
+      ExtraArgs const &... extra_args)
   {
     auto estimator_args_tuple = etch_arguments;
     if (EstimateCharge(vm, std::forward<Estimator>(estimator), std::move(estimator_args_tuple)))
     {
       // prepend extra non-etch arguments (e.g. VM*, TypeId)
-      auto args_tuple = std::tuple_cat(std::make_tuple(extra_args...),
-                                       std::forward<EtchArgsTuple>(etch_arguments));
+      auto args_tuple = std::tuple_cat(
+          std::make_tuple(extra_args...), std::forward<EtchArgsTuple>(etch_arguments));
 
       meta::Apply(std::forward<Callable>(callable), std::move(args_tuple));
       vm->sp_ -= sp_offset;

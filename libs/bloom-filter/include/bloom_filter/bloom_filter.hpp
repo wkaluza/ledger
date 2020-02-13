@@ -144,8 +144,9 @@ public:
   HashSourceIterator cend() const;
 
 private:
-  HashSource(HashSourceFactory::Functions const &     hash_functions,
-             fetch::byte_array::ConstByteArray const &input);
+  HashSource(
+      HashSourceFactory::Functions const &     hash_functions,
+      fetch::byte_array::ConstByteArray const &input);
 
   /*
    * Used by instances of HashSourceIterator to retrieve a hash at the given index.

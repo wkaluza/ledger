@@ -145,8 +145,8 @@ bool TxStorageTool::Download(fetch::Digest const &digest)
       // flush the transaction to disk
       auto const    file_path = GenerateTxFilename(digest);
       std::ofstream file_stream{file_path.c_str(), std::ios::out | std::ios::binary};
-      file_stream.write(serialiser.data().char_pointer(),
-                        static_cast<std::streamsize>(serialiser.data().size()));
+      file_stream.write(
+          serialiser.data().char_pointer(), static_cast<std::streamsize>(serialiser.data().size()));
 
       success = true;
     }

@@ -37,31 +37,32 @@ void SearchTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCharA
       FETCH_LOG_INFO(LOGGING_NAME, "Got search: ", query.DebugString());
 
       auto handle_query_result = dap_manager_->ShouldQueryBeHandled(query);
-      handle_query_result->MakeNotification().Then([this_wp, handle_query_result, current_uri,
-                                                    query]() mutable {
-        auto sp = this_wp.lock();
-        if (sp)
-        {
-          if (handle_query_result->get())
-          {
-            FETCH_LOG_INFO(LOGGING_NAME, "Query accepted! Moving to handler function..");
-            sp->HandleQuery(query, current_uri);
-          }
-          else
-          {
-            FETCH_LOG_INFO(LOGGING_NAME, "Query ignored!");
-            auto empty = std::make_shared<IdentifierSequence>();
-            empty->mutable_status()->set_success(false);
-            empty->mutable_status()->add_narrative("Ignored");
-            SendReply<IdentifierSequence>("", current_uri, std::move(empty), sp->endpoint);
-          }
-        }
-        else
-        {
-          FETCH_LOG_WARN(LOGGING_NAME, "Failed to lock weak pointer, query cannot be executed!");
-        }
-        handle_query_result.reset();
-      });
+      handle_query_result->MakeNotification().Then(
+          [this_wp, handle_query_result, current_uri, query]() mutable {
+            auto sp = this_wp.lock();
+            if (sp)
+            {
+              if (handle_query_result->get())
+              {
+                FETCH_LOG_INFO(LOGGING_NAME, "Query accepted! Moving to handler function..");
+                sp->HandleQuery(query, current_uri);
+              }
+              else
+              {
+                FETCH_LOG_INFO(LOGGING_NAME, "Query ignored!");
+                auto empty = std::make_shared<IdentifierSequence>();
+                empty->mutable_status()->set_success(false);
+                empty->mutable_status()->add_narrative("Ignored");
+                SendReply<IdentifierSequence>("", current_uri, std::move(empty), sp->endpoint);
+              }
+            }
+            else
+            {
+              FETCH_LOG_WARN(
+                  LOGGING_NAME, "Failed to lock weak pointer, query cannot be executed!");
+            }
+            handle_query_result.reset();
+          });
     }
     catch (std::exception const &e)
     {
@@ -90,8 +91,8 @@ void SearchTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCharA
           }
           else
           {
-            FETCH_LOG_WARN(LOGGING_NAME,
-                           "Failed to lock weak pointer, response can't be sent to agent!");
+            FETCH_LOG_WARN(
+                LOGGING_NAME, "Failed to lock weak pointer, response can't be sent to agent!");
           }
         });
       }
@@ -142,9 +143,11 @@ void SearchTaskFactory::ProcessMessageWithUri(const Uri &current_uri, ConstCharA
   else
   {
     FETCH_LOG_ERROR(LOGGING_NAME, "Can't handle path: ", current_uri.path);
-    SendExceptionReply("UnknownPath", current_uri,
-                       std::runtime_error("Path " + current_uri.path + " not supported!"),
-                       endpoint);
+    SendExceptionReply(
+        "UnknownPath",
+        current_uri,
+        std::runtime_error("Path " + current_uri.path + " not supported!"),
+        endpoint);
   }
 }
 
@@ -178,15 +181,17 @@ void SearchTaskFactory::HandleQuery(fetch::oef::pb::SearchQuery &query, const Ur
     }
     else
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Query execution failed, because SearchTaskFactory weak ptr can't be locked!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Query execution failed, because SearchTaskFactory weak ptr can't be locked!");
     }
   });
 }
 
-void SearchTaskFactory::ExecuteQuery(std::shared_ptr<Branch> &          root,
-                                     const fetch::oef::pb::SearchQuery &query,
-                                     const Uri &                        current_uri)
+void SearchTaskFactory::ExecuteQuery(
+    std::shared_ptr<Branch> &          root,
+    const fetch::oef::pb::SearchQuery &query,
+    const Uri &                        current_uri)
 {
   auto                             this_sp = shared_from_this();
   std::weak_ptr<SearchTaskFactory> this_wp = this_sp;

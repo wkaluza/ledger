@@ -137,16 +137,25 @@ private:
   void              HandleMinus();
   bool              HandleBinaryOp(NodeKind kind, OpInfo const &op_info);
   void              HandleNot();
-  void              HandlePrefixPostfix(NodeKind prefix_kind, OpInfo const &prefix_op_info,
-                                        NodeKind postfix_kind, OpInfo const &postfix_op_info);
-  bool              HandleDot();
-  bool HandleOpener(NodeKind prefix_kind, NodeKind postfix_kind, Token::Kind closer_token_kind,
-                    std::string const &closer_token_text);
+  void              HandlePrefixPostfix(
+                   NodeKind      prefix_kind,
+                   OpInfo const &prefix_op_info,
+                   NodeKind      postfix_kind,
+                   OpInfo const &postfix_op_info);
+  bool HandleDot();
+  bool HandleOpener(
+      NodeKind           prefix_kind,
+      NodeKind           postfix_kind,
+      Token::Kind        closer_token_kind,
+      std::string const &closer_token_text);
   bool HandleCloser(bool is_conditional_expression);
   bool HandleComma();
   void HandleOp(NodeKind kind, OpInfo const &op_info);
-  void AddGroup(NodeKind kind, int arity, Token::Kind closer_token_kind,
-                std::string const &closer_token_text);
+  void AddGroup(
+      NodeKind           kind,
+      int                arity,
+      Token::Kind        closer_token_kind,
+      std::string const &closer_token_text);
   void AddOp(NodeKind kind, OpInfo const &op_info);
   void AddOperand(NodeKind kind);
   void AddError(std::string const &message);

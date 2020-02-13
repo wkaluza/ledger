@@ -26,8 +26,9 @@ class OutboundConversations;
 class SearchTaskFactory : public IOefTaskFactory<OefSearchEndpoint>
 {
 public:
-  SearchTaskFactory(std::shared_ptr<OefSearchEndpoint>     the_endpoint,
-                    std::shared_ptr<OutboundConversations> outbounds)
+  SearchTaskFactory(
+      std::shared_ptr<OefSearchEndpoint>     the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds)
     : IOefTaskFactory(the_endpoint, outbounds)
   {}
 

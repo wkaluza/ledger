@@ -77,8 +77,8 @@ public:
     {
       return {nullptr, 0};
     }
-    return mutable_buffer(AddressOf(writep % size),
-                          std::min(writep + LocklessGetFreeSpace(), size) - writep);
+    return mutable_buffer(
+        AddressOf(writep % size), std::min(writep + LocklessGetFreeSpace(), size) - writep);
   }
 
   buffer GetDataBuffer()
@@ -88,8 +88,8 @@ public:
     {
       return {nullptr, 0};
     }
-    return buffer(AddressOf(readp % size),
-                  std::min(readp + LocklessGetDataAvailable(), size) - readp);
+    return buffer(
+        AddressOf(readp % size), std::min(readp + LocklessGetDataAvailable(), size) - readp);
   }
 
   std::vector<mutable_buffer> GetSpaceBuffers()

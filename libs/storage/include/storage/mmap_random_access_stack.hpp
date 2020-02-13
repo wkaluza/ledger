@@ -565,8 +565,8 @@ private:
     try
     {
       file_handle_.seekg(static_cast<int64_t>(total_length), std::ios::beg);
-      std::fill_n((std::ostreambuf_iterator<char>(file_handle_)), adjusted_obj_count * sizeof(type),
-                  '\0');
+      std::fill_n(
+          (std::ostreambuf_iterator<char>(file_handle_)), adjusted_obj_count * sizeof(type), '\0');
       file_handle_.flush();
     }
     catch (storage::StorageException const &e)

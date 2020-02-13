@@ -61,14 +61,14 @@ LaneService::LaneService(NetworkManager const &nm, ShardConfig config, Mode mode
   , reactor_("LaneServiceReactor")
   , cfg_{std::move(config)}
 {
-  external_muddle_ = muddle::CreateMuddle(cfg_.external_network_id, cfg_.external_identity, nm,
-                                          cfg_.external_name);
+  external_muddle_ = muddle::CreateMuddle(
+      cfg_.external_network_id, cfg_.external_identity, nm, cfg_.external_name);
   external_rpc_server_ =
       std::make_shared<Server>(external_muddle_->GetEndpoint(), SERVICE_LANE, CHANNEL_RPC);
 
   // Internal muddle network
-  internal_muddle_ = muddle::CreateMuddle(cfg_.internal_network_id, cfg_.internal_identity, nm,
-                                          cfg_.internal_name, false);
+  internal_muddle_ = muddle::CreateMuddle(
+      cfg_.internal_network_id, cfg_.internal_identity, nm, cfg_.internal_name, false);
   internal_rpc_server_ =
       std::make_shared<Server>(internal_muddle_->GetEndpoint(), SERVICE_LANE_CTRL, CHANNEL_RPC);
 
@@ -107,8 +107,9 @@ LaneService::LaneService(NetworkManager const &nm, ShardConfig config, Mode mode
   sync_cfg.fetch_object_wait_duration = cfg_.sync_service_fetch_period;
 
   tx_sync_service_ = std::make_shared<TransactionStoreSyncService>(
-      sync_cfg, external_muddle_->GetEndpoint(), *tx_store_, tx_finder_protocol_.get(),
-      [this]() { tx_sync_protocol_->TrimCache(); });
+      sync_cfg, external_muddle_->GetEndpoint(), *tx_store_, tx_finder_protocol_.get(), [this]() {
+        tx_sync_protocol_->TrimCache();
+      });
 
   tx_store_->SetNewTransactionHandler(
       [this](chain::Transaction const &tx) { tx_sync_protocol_->OnNewTx(tx); });
@@ -121,12 +122,20 @@ LaneService::LaneService(NetworkManager const &nm, ShardConfig config, Mode mode
   switch (mode)
   {
   case Mode::CREATE_DATABASE:
-    state_db_->New(prefix + "state.db", prefix + "state_deltas.db", prefix + "state_index.db",
-                   prefix + "state_index_deltas.db", false);
+    state_db_->New(
+        prefix + "state.db",
+        prefix + "state_deltas.db",
+        prefix + "state_index.db",
+        prefix + "state_index_deltas.db",
+        false);
     break;
   case Mode::LOAD_DATABASE:
-    state_db_->Load(prefix + "state.db", prefix + "state_deltas.db", prefix + "state_index.db",
-                    prefix + "state_index_deltas.db", true);
+    state_db_->Load(
+        prefix + "state.db",
+        prefix + "state_deltas.db",
+        prefix + "state_index.db",
+        prefix + "state_index_deltas.db",
+        true);
     break;
   }
 
@@ -143,12 +152,22 @@ LaneService::~LaneService() = default;
 
 void LaneService::StartInternal()
 {
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting External Lane ", cfg_.lane_id,
-                 " Service on tcp://0.0.0.0:", cfg_.external_port,
-                 " ID: ", ToBase64(cfg_.external_identity->identity().identifier()));
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting Internal Lane ", cfg_.lane_id,
-                 " Service on tcp://127.0.0.1:", cfg_.internal_port,
-                 " ID: ", ToBase64(cfg_.internal_identity->identity().identifier()));
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting External Lane ",
+      cfg_.lane_id,
+      " Service on tcp://0.0.0.0:",
+      cfg_.external_port,
+      " ID: ",
+      ToBase64(cfg_.external_identity->identity().identifier()));
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting Internal Lane ",
+      cfg_.lane_id,
+      " Service on tcp://127.0.0.1:",
+      cfg_.internal_port,
+      " ID: ",
+      ToBase64(cfg_.internal_identity->identity().identifier()));
 
   external_muddle_->Start({cfg_.external_port});
   internal_muddle_->Start({cfg_.internal_port});
@@ -156,20 +175,31 @@ void LaneService::StartInternal()
   tx_sync_service_->Start();
 
   // TX Sync service - attach to reactor once #892 is merged
-  workthread_ =
-      std::make_shared<BackgroundedWorkThread>(&bg_work_, "BW:LS-" + std::to_string(cfg_.lane_id),
-                                               [this]() { tx_sync_service_->Execute(); });
+  workthread_ = std::make_shared<BackgroundedWorkThread>(
+      &bg_work_, "BW:LS-" + std::to_string(cfg_.lane_id), [this]() {
+        tx_sync_service_->Execute();
+      });
   workthread_->ChangeWaitTime(std::chrono::milliseconds{unsigned{SYNC_PERIOD_MS}});
 }
 
 void LaneService::StartExternal()
 {
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting External Lane ", cfg_.lane_id,
-                 " Service on tcp://0.0.0.0:", cfg_.external_port,
-                 " ID: ", ToBase64(cfg_.external_identity->identity().identifier()));
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting Internal Lane ", cfg_.lane_id,
-                 " Service on tcp://127.0.0.1:", cfg_.internal_port,
-                 " ID: ", ToBase64(cfg_.internal_identity->identity().identifier()));
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting External Lane ",
+      cfg_.lane_id,
+      " Service on tcp://0.0.0.0:",
+      cfg_.external_port,
+      " ID: ",
+      ToBase64(cfg_.external_identity->identity().identifier()));
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting Internal Lane ",
+      cfg_.lane_id,
+      " Service on tcp://127.0.0.1:",
+      cfg_.internal_port,
+      " ID: ",
+      ToBase64(cfg_.internal_identity->identity().identifier()));
 
   external_muddle_->Start({cfg_.external_port});
   internal_muddle_->Start({cfg_.internal_port});
@@ -177,9 +207,10 @@ void LaneService::StartExternal()
   tx_sync_service_->Start();
 
   // TX Sync service - attach to reactor once #892 is merged
-  workthread_ =
-      std::make_shared<BackgroundedWorkThread>(&bg_work_, "BW:LS-" + std::to_string(cfg_.lane_id),
-                                               [this]() { tx_sync_service_->Execute(); });
+  workthread_ = std::make_shared<BackgroundedWorkThread>(
+      &bg_work_, "BW:LS-" + std::to_string(cfg_.lane_id), [this]() {
+        tx_sync_service_->Execute();
+      });
   workthread_->ChangeWaitTime(std::chrono::milliseconds{unsigned{SYNC_PERIOD_MS}});
 }
 

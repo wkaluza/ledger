@@ -49,11 +49,15 @@ public:
    * @param init_mode mode in which wights(kernel) will be initialised
    * @param seed random seed for weights(kernel) initialisation
    */
-  Convolution1D(SizeType output_channels, SizeType input_channels, SizeType kernel_size,
-                SizeType                stride_size,
-                details::ActivationType activation_type = details::ActivationType::NOTHING,
-                std::string const &     name            = "Conv1D",
-                WeightsInit init_mode = WeightsInit::XAVIER_GLOROT, SizeType seed = 123456789);
+  Convolution1D(
+      SizeType                output_channels,
+      SizeType                input_channels,
+      SizeType                kernel_size,
+      SizeType                stride_size,
+      details::ActivationType activation_type = details::ActivationType::NOTHING,
+      std::string const &     name            = "Conv1D",
+      WeightsInit             init_mode       = WeightsInit::XAVIER_GLOROT,
+      SizeType                seed            = 123456789);
 
   void CompleteShapeDeduction() override;
 

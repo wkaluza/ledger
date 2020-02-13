@@ -105,8 +105,9 @@ public:
 
   static_assert(std::is_pod<RoutingHeader>::value, "Routing header must be POD");
   static_assert(sizeof(RoutingHeader) == 12 + (2 * ADDRESS_SIZE), "The header must be packed");
-  static_assert(sizeof(RoutingHeader) == sizeof(BinaryHeader),
-                "The header and binary header must be equivalent");
+  static_assert(
+      sizeof(RoutingHeader) == sizeof(BinaryHeader),
+      "The header and binary header must be equivalent");
 
   // Construction / Destruction
   Packet() = default;

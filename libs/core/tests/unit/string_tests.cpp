@@ -135,8 +135,15 @@ TEST(StringTests, check_TrimFromRight_does_not_remove_leading_whitespace)
 
 TEST(StringTests, check_Trim)
 {
-  for (std::string s : {"1234    ", "1234 \t \n ", "    1234", " \t \n 1234", "    1234     ",
-                        " \t \n 1234     ", "    1234 \t \n  ", " \t \n 1234 \t \n  ", "1234"})
+  for (std::string s : {"1234    ",
+                        "1234 \t \n ",
+                        "    1234",
+                        " \t \n 1234",
+                        "    1234     ",
+                        " \t \n 1234     ",
+                        "    1234 \t \n  ",
+                        " \t \n 1234 \t \n  ",
+                        "1234"})
   {
     Trim(s);
     EXPECT_EQ(s, "1234");

@@ -70,9 +70,11 @@ const FreeFunctionPtr<EC_GROUP> DeleterPrimitive<EC_GROUP, eDeleteStrategy::clea
 template <>
 const FreeFunctionPtr<ECDSA_SIG> DeleterPrimitive<ECDSA_SIG>::function;
 
-template <typename T, eDeleteStrategy P_DeleteStrategy = eDeleteStrategy::canonical,
-          typename T_DeleterPrimitive =
-              detail::DeleterPrimitive<std::remove_const_t<T>, P_DeleteStrategy>>
+template <
+    typename T,
+    eDeleteStrategy P_DeleteStrategy = eDeleteStrategy::canonical,
+    typename T_DeleterPrimitive =
+        detail::DeleterPrimitive<std::remove_const_t<T>, P_DeleteStrategy>>
 struct OpenSSLDeleter
 {
   using Type                                      = T;

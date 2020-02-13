@@ -75,8 +75,9 @@ void OneHot<T>::Forward(const VecTensorType &inputs, TensorType &output)
 }
 
 template <typename TensorType>
-std::vector<TensorType> OneHot<TensorType>::Backward(const VecTensorType &inputs,
-                                                     const TensorType &   error_signal)
+std::vector<TensorType> OneHot<TensorType>::Backward(
+    const VecTensorType &inputs,
+    const TensorType &   error_signal)
 {
   FETCH_UNUSED(error_signal);
   assert(inputs.size() == 1);

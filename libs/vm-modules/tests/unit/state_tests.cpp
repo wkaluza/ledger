@@ -377,8 +377,10 @@ TEST_F(StateTests, test_serialisation_of_complex_type)
 }
 
 template <typename T>
-std::enable_if_t<!IsPtr<T>> ArrayFromVariant(Variant const &array, int32_t expected_size,
-                                             Ptr<Array<T>> &out)
+std::enable_if_t<!IsPtr<T>> ArrayFromVariant(
+    Variant const &array,
+    int32_t        expected_size,
+    Ptr<Array<T>> &out)
 {
   out = array.Get<Ptr<Array<T>>>();
   ASSERT_TRUE(out);
@@ -514,9 +516,10 @@ TEST_F(StateTests, test_serialisation_of_structured_data)
   EXPECT_CALL(toolkit.observer(), Write(state_name, _, _));
 
   ASSERT_TRUE(toolkit.Compile(ser_src));
-  ASSERT_TRUE(
-      toolkit.RunWithParams(nullptr, std::numeric_limits<ChargeAmount>::max(),
-                            toolkit.vm().CreateNewObject<ByteArrayWrapper>(expected_buffer)));
+  ASSERT_TRUE(toolkit.RunWithParams(
+      nullptr,
+      std::numeric_limits<ChargeAmount>::max(),
+      toolkit.vm().CreateNewObject<ByteArrayWrapper>(expected_buffer)));
 
   static char const *deser_src = R"(
     function main(buffer : Buffer) : Buffer
@@ -561,17 +564,19 @@ TEST_F(StateTests, test_serialisation_of_structured_data)
   ASSERT_TRUE(toolkit.Compile(deser_src));
 
   Variant buffer;
-  ASSERT_TRUE(
-      toolkit.RunWithParams(&buffer, std::numeric_limits<ChargeAmount>::max(),
-                            toolkit.vm().CreateNewObject<ByteArrayWrapper>(expected_buffer)));
+  ASSERT_TRUE(toolkit.RunWithParams(
+      &buffer,
+      std::numeric_limits<ChargeAmount>::max(),
+      toolkit.vm().CreateNewObject<ByteArrayWrapper>(expected_buffer)));
 
   auto const acquired_buffer{buffer.Get<Ptr<ByteArrayWrapper>>()};
   EXPECT_TRUE(acquired_buffer);
   EXPECT_EQ(expected_buffer, acquired_buffer->byte_array());
 }
 
-TEST_F(StateTests,
-       primitive_state_variables_bound_to_the_same_resource_give_consistent_view_of_the_storage)
+TEST_F(
+    StateTests,
+    primitive_state_variables_bound_to_the_same_resource_give_consistent_view_of_the_storage)
 {
   static char const *TEXT = R"(
     function main()
@@ -595,8 +600,9 @@ TEST_F(StateTests,
   ASSERT_EQ(out.str(), "2.2");
 }
 
-TEST_F(StateTests,
-       pointer_state_variables_bound_to_the_same_resource_give_consistent_view_of_the_storage)
+TEST_F(
+    StateTests,
+    pointer_state_variables_bound_to_the_same_resource_give_consistent_view_of_the_storage)
 {
   static char const *TEXT = R"(
     function main()
@@ -711,12 +717,14 @@ TEST_F(StateTests, test_serialisation_of_fixed_point32)
   ASSERT_TRUE(static_cast<bool>(retval));
   ASSERT_EQ(int32_t{3}, retval->Count());
 
-  EXPECT_EQ(fetch::fixed_point::fp32_t("1.0"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
-  EXPECT_EQ(fetch::fixed_point::fp32_t("101.01"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
-  EXPECT_EQ(fetch::fixed_point::fp32_t("10101.0101"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp32_t("1.0"), retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp32_t("101.01"),
+      retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp32_t("10101.0101"),
+      retval->PopFrontOne().Get<fetch::fixed_point::fp32_t>());
 }
 
 TEST_F(StateTests, test_serialisation_of_fixed_point64)
@@ -756,12 +764,14 @@ TEST_F(StateTests, test_serialisation_of_fixed_point64)
   auto retval{output.Get<Ptr<IArray>>()};
   ASSERT_TRUE(static_cast<bool>(retval));
   ASSERT_EQ(int32_t{3}, retval->Count());
-  EXPECT_EQ(fetch::fixed_point::fp64_t("1.0"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
-  EXPECT_EQ(fetch::fixed_point::fp64_t("101.01"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
-  EXPECT_EQ(fetch::fixed_point::fp64_t("10101.0101"),
-            retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp64_t("1.0"), retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp64_t("101.01"),
+      retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
+  EXPECT_EQ(
+      fetch::fixed_point::fp64_t("10101.0101"),
+      retval->PopFrontOne().Get<fetch::fixed_point::fp64_t>());
 }
 
 TEST_F(StateTests, test_serialisation_of_fixed_point128)
@@ -801,12 +811,15 @@ TEST_F(StateTests, test_serialisation_of_fixed_point128)
   auto retval{output.Get<Ptr<IArray>>()};
   ASSERT_TRUE(static_cast<bool>(retval));
   ASSERT_EQ(int32_t{3}, retval->Count());
-  EXPECT_EQ(fetch::fixed_point::fp128_t("1.0"),
-            retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
-  EXPECT_EQ(fetch::fixed_point::fp128_t("101.01"),
-            retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
-  EXPECT_EQ(fetch::fixed_point::fp128_t("10101.0101"),
-            retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
+  EXPECT_EQ(
+      fetch::fixed_point::fp128_t("1.0"),
+      retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
+  EXPECT_EQ(
+      fetch::fixed_point::fp128_t("101.01"),
+      retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
+  EXPECT_EQ(
+      fetch::fixed_point::fp128_t("10101.0101"),
+      retval->PopFrontOne().Get<Ptr<fetch::vm::Fixed128>>()->data_);
 }
 
 }  // namespace

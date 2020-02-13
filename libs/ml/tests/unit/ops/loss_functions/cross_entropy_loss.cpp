@@ -90,8 +90,10 @@ TYPED_TEST(CrossEntropyTest, onehot_forward_test)
   TypeParam                                   result({1, 1});
   op.Forward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, result);
 
-  EXPECT_NEAR(static_cast<double>(result(0, 0)),
-              static_cast<double>(3.6888794541) / static_cast<float>(n_data_points), 3e-7);
+  EXPECT_NEAR(
+      static_cast<double>(result(0, 0)),
+      static_cast<double>(3.6888794541) / static_cast<float>(n_data_points),
+      3e-7);
 }
 
 TYPED_TEST(CrossEntropyTest, onehot_forward_log_zero_test)
@@ -144,8 +146,8 @@ TYPED_TEST(CrossEntropyTest, binary_forward_test)
   TypeParam                                   result({1, 1});
   op.Forward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, result);
 
-  ASSERT_FLOAT_EQ(static_cast<float>(result(0, 0)),
-                  float(3.7942399698) / static_cast<float>(n_data_points));
+  ASSERT_FLOAT_EQ(
+      static_cast<float>(result(0, 0)), float(3.7942399698) / static_cast<float>(n_data_points));
 }
 
 TYPED_TEST(CrossEntropyTest, binary_backward_test)
@@ -181,16 +183,20 @@ TYPED_TEST(CrossEntropyTest, binary_backward_test)
   error_signal(0, 0) = DataType{1};
 
   fetch::ml::ops::CrossEntropyLoss<TypeParam> op;
-  std::cout << op.Backward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)},
-                           error_signal)
+  std::cout << op.Backward(
+                     {std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)},
+                     error_signal)
                    .at(0)
                    .ToString()
             << std::endl;
-  EXPECT_TRUE(op.Backward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)},
-                          error_signal)
-                  .at(0)
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(
+      op.Backward(
+            {std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, error_signal)
+          .at(0)
+          .AllClose(
+              gt,
+              fetch::math::function_tolerance<DataType>(),
+              fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(CrossEntropyTest, onehot_backward_test)
@@ -218,11 +224,14 @@ TYPED_TEST(CrossEntropyTest, onehot_backward_test)
   error_signal(0, 0) = DataType{1};
 
   fetch::ml::ops::CrossEntropyLoss<TypeParam> op;
-  EXPECT_TRUE(op.Backward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)},
-                          error_signal)
-                  .at(0)
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(
+      op.Backward(
+            {std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, error_signal)
+          .at(0)
+          .AllClose(
+              gt,
+              fetch::math::function_tolerance<DataType>(),
+              fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(CrossEntropyTest, saveparams_test)
@@ -300,8 +309,10 @@ TYPED_TEST(CrossEntropyTest, saveparams_test)
   op.Forward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, new_result);
 
   // test correct values
-  EXPECT_NEAR(static_cast<double>(result(0, 0)), static_cast<double>(new_result(0, 0)),
-              static_cast<double>(0));
+  EXPECT_NEAR(
+      static_cast<double>(result(0, 0)),
+      static_cast<double>(new_result(0, 0)),
+      static_cast<double>(0));
 }
 
 TYPED_TEST(CrossEntropyTest, saveparams_one_dimensional_backward_test)
@@ -348,8 +359,8 @@ TYPED_TEST(CrossEntropyTest, saveparams_one_dimensional_backward_test)
   b << *dsp;
 
   // make another prediction with the original op
-  gradients = op.Backward({std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)},
-                          error_signal);
+  gradients = op.Backward(
+      {std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, error_signal);
 
   // deserialize
   b.seek(0);
@@ -364,9 +375,10 @@ TYPED_TEST(CrossEntropyTest, saveparams_one_dimensional_backward_test)
       {std::make_shared<TypeParam>(data1), std::make_shared<TypeParam>(data2)}, error_signal);
 
   // test correct values
-  EXPECT_TRUE(gradients.at(0).AllClose(new_gradients.at(0),
-                                       fetch::math::function_tolerance<DataType>() * DataType{4},
-                                       fetch::math::function_tolerance<DataType>() * DataType{4}));
+  EXPECT_TRUE(gradients.at(0).AllClose(
+      new_gradients.at(0),
+      fetch::math::function_tolerance<DataType>() * DataType{4},
+      fetch::math::function_tolerance<DataType>() * DataType{4}));
 }
 
 }  // namespace test

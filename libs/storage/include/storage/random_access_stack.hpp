@@ -286,8 +286,9 @@ public:
     auto start = int64_t((i * sizeof(type)) + header_.size());
 
     file_handle_.seekg(start, std::fstream::beg);
-    file_handle_.write(reinterpret_cast<char const *>(objects),
-                       std::streamsize(sizeof(type)) * std::streamsize(elements));
+    file_handle_.write(
+        reinterpret_cast<char const *>(objects),
+        std::streamsize(sizeof(type)) * std::streamsize(elements));
 
     // Catch case where a set extends the underlying stack
     if ((i + elements) > header_.objects)
@@ -325,8 +326,9 @@ public:
     elements = std::min(elements, std::size_t(header_.objects - i));
 
     file_handle_.seekg(start, std::fstream::beg);
-    file_handle_.read(reinterpret_cast<char *>(objects),
-                      std::streamsize(sizeof(type)) * std::streamsize(elements));
+    file_handle_.read(
+        reinterpret_cast<char *>(objects),
+        std::streamsize(sizeof(type)) * std::streamsize(elements));
   }
 
   void SetExtraHeader(HeaderExtraType const &he)

@@ -118,8 +118,9 @@ public:
   }
 
   bool VisitSubmodelsWithVocabulary(
-      std::function<void(std::string, std::string, Vocabulary)> callback, Vocabulary obj,
-      std::string name = "") override
+      std::function<void(std::string, std::string, Vocabulary)> callback,
+      Vocabulary                                                obj,
+      std::string                                               name = "") override
   {
 
     if (type() != obj->type())

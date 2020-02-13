@@ -44,7 +44,9 @@ using WeightsInitType = fetch::ml::ops::WeightsInitialisation;
 using ActivationType  = fetch::ml::details::ActivationType;
 
 std::pair<std::vector<TensorType>, TensorType> PrepareToyClsDataset(
-    SizeType size, BERTConfig<TensorType> const &config, SizeType seed = 1337);
+    SizeType                      size,
+    BERTConfig<TensorType> const &config,
+    SizeType                      seed = 1337);
 
 int main()
 {
@@ -80,8 +82,14 @@ int main()
       "ClsTokenOutput", {interface.outputs[interface.outputs.size() - 1]}, 0u, 1u);
   std::string classification_output =
       g.template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-          "ClassificationOutput", {cls_token_output}, config.model_dims, 2u,
-          ActivationType::SOFTMAX, RegType::NONE, DataType{0}, WeightsInitType::XAVIER_GLOROT,
+          "ClassificationOutput",
+          {cls_token_output},
+          config.model_dims,
+          2u,
+          ActivationType::SOFTMAX,
+          RegType::NONE,
+          DataType{0},
+          WeightsInitType::XAVIER_GLOROT,
           false);
   // Set up error signal
   std::string label = g.template AddNode<PlaceHolder<TensorType>>("Label", {});
@@ -90,8 +98,8 @@ int main()
 
   // Do pre-validation
   auto test_data = PrepareToyClsDataset(test_size, config, static_cast<SizeType>(1));
-  EvaluateGraph(g, interface.inputs, classification_output, test_data.first, test_data.second,
-                true);
+  EvaluateGraph(
+      g, interface.inputs, classification_output, test_data.first, test_data.second, true);
 
   // Do training
   auto          train_data = PrepareToyClsDataset(train_size, config, static_cast<SizeType>(0));
@@ -100,19 +108,21 @@ int main()
   for (SizeType i = 0; i < epochs; i++)
   {
     optimiser.Run(train_data.first, train_data.second, batch_size);
-    EvaluateGraph(g, interface.inputs, classification_output, test_data.first, test_data.second,
-                  false);
+    EvaluateGraph(
+        g, interface.inputs, classification_output, test_data.first, test_data.second, false);
   }
 
   // Do validation
-  EvaluateGraph(g, interface.inputs, classification_output, test_data.first, test_data.second,
-                true);
+  EvaluateGraph(
+      g, interface.inputs, classification_output, test_data.first, test_data.second, true);
 
   return 0;
 }
 
 std::pair<std::vector<TensorType>, TensorType> PrepareToyClsDataset(
-    SizeType size, BERTConfig<TensorType> const &config, SizeType seed)
+    SizeType                      size,
+    BERTConfig<TensorType> const &config,
+    SizeType                      seed)
 {
   // create a toy cls dataset that generated balanced training data for the aforementioned
   // classification task

@@ -60,8 +60,10 @@ constexpr char const *MERKLE_FILENAME_INDEX = "merkle_stack_index.db";
 
 }  // namespace
 
-StorageUnitClient::StorageUnitClient(MuddleEndpoint &muddle, ShardConfigs const &shards,
-                                     uint32_t log2_num_lanes)
+StorageUnitClient::StorageUnitClient(
+    MuddleEndpoint &    muddle,
+    ShardConfigs const &shards,
+    uint32_t            log2_num_lanes)
   : addresses_(GenerateAddressList(shards))
   , log2_num_lanes_(log2_num_lanes)
   , rpc_client_{std::make_shared<Client>("STUC", muddle, SERVICE_LANE_CTRL, CHANNEL_RPC)}
@@ -73,8 +75,10 @@ StorageUnitClient::StorageUnitClient(MuddleEndpoint &muddle, ShardConfigs const 
   }
 
   permanent_state_merkle_stack_.Load(MERKLE_FILENAME_DOC, MERKLE_FILENAME_INDEX, true);
-  FETCH_LOG_INFO(LOGGING_NAME,
-                 "After recovery, size of merkle stack is: ", permanent_state_merkle_stack_.size());
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "After recovery, size of merkle stack is: ",
+      permanent_state_merkle_stack_.size());
 }
 
 // Get the current hash of the world state (merkle tree root)
@@ -85,8 +89,8 @@ byte_array::ConstByteArray StorageUnitClient::CurrentHash()
 
   for (uint32_t i = 0; i < num_lanes(); ++i)
   {
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(i), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::CURRENT_HASH);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(i), RPC_STATE, RevertibleDocumentStoreProtocol::CURRENT_HASH);
 
     promises.push_back(promise);
   }
@@ -156,9 +160,12 @@ bool StorageUnitClient::RevertToHash(Hash const &hash, uint64_t index)
 
   if (index >= merkle_stack_size)
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Unsuccessful attempt to revert to hash ahead in the stack! Stack size: ",
-                   merkle_stack_size, " revert index: ", index);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Unsuccessful attempt to revert to hash ahead in the stack! Stack size: ",
+        merkle_stack_size,
+        " revert index: ",
+        index);
     return false;
   }
 
@@ -168,9 +175,16 @@ bool StorageUnitClient::RevertToHash(Hash const &hash, uint64_t index)
 
   if (tree.root() != hash)
   {
-    FETCH_LOG_ERROR(LOGGING_NAME, "Index given for merkle hash didn't match merkle stack! root: 0x",
-                    tree.root().ToHex(), " expected: 0x", hash.ToHex(), " Note: index: ", index,
-                    " genesis merk: 0x", chain::GetGenesisMerkleRoot().ToHex());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Index given for merkle hash didn't match merkle stack! root: 0x",
+        tree.root().ToHex(),
+        " expected: 0x",
+        hash.ToHex(),
+        " Note: index: ",
+        index,
+        " genesis merk: 0x",
+        chain::GetGenesisMerkleRoot().ToHex());
     return false;
   }
 
@@ -189,9 +203,11 @@ bool StorageUnitClient::RevertToHash(Hash const &hash, uint64_t index)
     FETCH_LOG_DEBUG(LOGGING_NAME, "reverting tree leaf: 0x", lane_merkle_hash.ToHex());
 
     // make the call to the RPC server
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(lane_index++), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::REVERT_TO_HASH,
-                                                    lane_merkle_hash);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(lane_index++),
+        RPC_STATE,
+        RevertibleDocumentStoreProtocol::REVERT_TO_HASH,
+        lane_merkle_hash);
 
     // add the promise to the queue
     promises.emplace_back(std::move(promise));
@@ -204,8 +220,8 @@ bool StorageUnitClient::RevertToHash(Hash const &hash, uint64_t index)
     bool item_success{false};
     if (!(p->GetResult(item_success, 180) && item_success))
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to revert shard ", lane_index, " to 0x",
-                     tree[lane_index].ToHex());
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Failed to revert shard ", lane_index, " to 0x", tree[lane_index].ToHex());
 
       all_success &= false;
     }
@@ -246,8 +262,8 @@ byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t const commit_index
   for (uint32_t lane_idx = 0; lane_idx < num_lanes(); ++lane_idx)
   {
     // make the request to the RPC server
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(lane_idx), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::COMMIT);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(lane_idx), RPC_STATE, RevertibleDocumentStoreProtocol::COMMIT);
 
     // add the promise to the waiting queue
     promises.push_back(promise);
@@ -284,7 +300,9 @@ byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t const commit_index
       FETCH_LOG_WARN(
           LOGGING_NAME,
           "Committing to an index where there is a mismatch to the merkle stack! commit: ",
-          commit_index, " stack: ", permanent_state_merkle_stack_.size());
+          commit_index,
+          " stack: ",
+          permanent_state_merkle_stack_.size());
     }
 
     while (permanent_state_merkle_stack_.size() != commit_index)
@@ -299,8 +317,12 @@ byte_array::ConstByteArray StorageUnitClient::Commit(uint64_t const commit_index
       }
     }
 
-    FETCH_LOG_INFO(LOGGING_NAME, "Committing merkle hash at index: ", commit_index, " to stack: 0x",
-                   tree.root().ToHex());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Committing merkle hash at index: ",
+        commit_index,
+        " to stack: 0x",
+        tree.root().ToHex());
 
     permanent_state_merkle_stack_.Push(tree);
     permanent_state_merkle_stack_.Flush(false);
@@ -324,8 +346,12 @@ bool StorageUnitClient::HashInStack(Hash const &hash, uint64_t index)
 
   if (index >= merkle_stack_size)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Tried to find hash in merkle tree when index more than stack: ",
-                   merkle_stack_size, " index: ", index);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Tried to find hash in merkle tree when index more than stack: ",
+        merkle_stack_size,
+        " index: ",
+        index);
     return false;
   }
 
@@ -356,8 +382,8 @@ void StorageUnitClient::AddTransaction(chain::Transaction const &tx)
     ResourceID const resource{tx.digest()};
 
     // make the RPC request
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(resource), RPC_TX_STORE,
-                                                    TransactionStorageProtocol::ADD, tx);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(resource), RPC_TX_STORE, TransactionStorageProtocol::ADD, tx);
 
     // wait the for the response
     promise->Wait();
@@ -378,9 +404,11 @@ StorageUnitClient::TxLayouts StorageUnitClient::PollRecentTx(uint32_t max_to_pol
   // Assume that the lanes are roughly balanced in terms of new TXs
   for (auto const &lane_address : addresses_)
   {
-    auto promise = rpc_client_->CallSpecificAddress(lane_address, RPC_TX_STORE,
-                                                    TransactionStorageProtocol::GET_RECENT,
-                                                    uint32_t(max_to_poll / addresses_.size()));
+    auto promise = rpc_client_->CallSpecificAddress(
+        lane_address,
+        RPC_TX_STORE,
+        TransactionStorageProtocol::GET_RECENT,
+        uint32_t(max_to_poll / addresses_.size()));
     promises.push_back(promise);
   }
 
@@ -390,8 +418,8 @@ StorageUnitClient::TxLayouts StorageUnitClient::PollRecentTx(uint32_t max_to_pol
 
     if (promise->GetResult(txs))
     {
-      layouts.insert(layouts.end(), std::make_move_iterator(txs.begin()),
-                     std::make_move_iterator(txs.end()));
+      layouts.insert(
+          layouts.end(), std::make_move_iterator(txs.begin()), std::make_move_iterator(txs.end()));
     }
     else
     {
@@ -402,14 +430,15 @@ StorageUnitClient::TxLayouts StorageUnitClient::PollRecentTx(uint32_t max_to_pol
   return layouts;
 }
 
-bool StorageUnitClient::GetTransaction(byte_array::ConstByteArray const &digest,
-                                       chain::Transaction &              tx)
+bool StorageUnitClient::GetTransaction(
+    byte_array::ConstByteArray const &digest,
+    chain::Transaction &              tx)
 {
   ResourceID resource{digest};
 
   // make the request to the RPC server
-  auto promise = rpc_client_->CallSpecificAddress(LookupAddress(resource), RPC_TX_STORE,
-                                                  TransactionStorageProtocol::GET, resource);
+  auto promise = rpc_client_->CallSpecificAddress(
+      LookupAddress(resource), RPC_TX_STORE, TransactionStorageProtocol::GET, resource);
 
   // wait for the response to be delivered
   bool const success = promise->GetResult(tx);
@@ -426,8 +455,8 @@ bool StorageUnitClient::HasTransaction(ConstByteArray const &digest)
   ResourceID resource{digest};
 
   // make the request to the RPC server
-  auto promise = rpc_client_->CallSpecificAddress(LookupAddress(resource), RPC_TX_STORE,
-                                                  TransactionStorageProtocol::HAS, resource);
+  auto promise = rpc_client_->CallSpecificAddress(
+      LookupAddress(resource), RPC_TX_STORE, TransactionStorageProtocol::HAS, resource);
 
   // wait for the response to be delivered
   bool present{false};
@@ -449,18 +478,22 @@ void StorageUnitClient::IssueCallForMissingTxs(DigestSet const &digest_set)
   for (auto const &lane_resources : lanes_of_interest)
   {
     FETCH_LOG_WARN(LOGGING_NAME, "Request sent ", lane_resources.second.size(), " resources");
-    rpc_client_->CallSpecificAddress(lane_resources.first, RPC_MISSING_TX_FINDER,
-                                     TxFinderProtocol::ISSUE_CALL_FOR_MISSING_TXS,
-                                     lane_resources.second);
+    rpc_client_->CallSpecificAddress(
+        lane_resources.first,
+        RPC_MISSING_TX_FINDER,
+        TxFinderProtocol::ISSUE_CALL_FOR_MISSING_TXS,
+        lane_resources.second);
   }
 }
 
 StorageUnitClient::Document StorageUnitClient::GetOrCreate(ResourceAddress const &key)
 {
   // make the request to the RPC client
-  auto promise = rpc_client_->CallSpecificAddress(LookupAddress(key), RPC_STATE,
-                                                  RevertibleDocumentStoreProtocol::GET_OR_CREATE,
-                                                  key.as_resource_id());
+  auto promise = rpc_client_->CallSpecificAddress(
+      LookupAddress(key),
+      RPC_STATE,
+      RevertibleDocumentStoreProtocol::GET_OR_CREATE,
+      key.as_resource_id());
 
   // wait for the document to be returned
   Document doc;
@@ -477,7 +510,9 @@ StorageUnitClient::Document StorageUnitClient::Get(ResourceAddress const &key) c
 {
   // make the request to the RPC server
   auto promise = rpc_client_->CallSpecificAddress(
-      LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::GET,
+      LookupAddress(key),
+      RPC_STATE,
+      fetch::storage::RevertibleDocumentStoreProtocol::GET,
       key.as_resource_id());
 
   // wait for the document response
@@ -499,8 +534,11 @@ void StorageUnitClient::Set(ResourceAddress const &key, StateValue const &value)
   {
     // make the request to the RPC server
     auto promise = rpc_client_->CallSpecificAddress(
-        LookupAddress(key), RPC_STATE, fetch::storage::RevertibleDocumentStoreProtocol::SET,
-        key.as_resource_id(), value);
+        LookupAddress(key),
+        RPC_STATE,
+        fetch::storage::RevertibleDocumentStoreProtocol::SET,
+        key.as_resource_id(),
+        value);
 
     // wait for the response
     promise->Wait();
@@ -518,8 +556,8 @@ bool StorageUnitClient::Lock(ShardIndex index)
   try
   {
     // make the request to the RPC server
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(index), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::LOCK);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(index), RPC_STATE, RevertibleDocumentStoreProtocol::LOCK);
 
     // wait for the promise
     success = promise->GetResult(success) && success;
@@ -539,8 +577,8 @@ bool StorageUnitClient::Unlock(ShardIndex index)
   try
   {
     // make the request to the RPC server
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(index), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::UNLOCK);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(index), RPC_STATE, RevertibleDocumentStoreProtocol::UNLOCK);
 
     // wait for the result
     success = promise->GetResult(success) && success;
@@ -560,8 +598,8 @@ void StorageUnitClient::Reset()
 
   for (uint32_t i = 0; i < num_lanes(); ++i)
   {
-    auto promise = rpc_client_->CallSpecificAddress(LookupAddress(i), RPC_STATE,
-                                                    RevertibleDocumentStoreProtocol::RESET);
+    auto promise = rpc_client_->CallSpecificAddress(
+        LookupAddress(i), RPC_STATE, RevertibleDocumentStoreProtocol::RESET);
 
     promises.push_back(promise);
   }

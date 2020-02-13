@@ -33,20 +33,29 @@ ProgressiveBloomFilter::ProgressiveBloomFilter(uint64_t const overlap)
 {}
 
 std::pair<bool, std::size_t> ProgressiveBloomFilter::Match(
-    fetch::byte_array::ConstByteArray const &element, std::size_t element_index) const
+    fetch::byte_array::ConstByteArray const &element,
+    std::size_t                              element_index) const
 {
   if (!IsInCurrentRange(element_index))
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Match out of range: ", element_index,
-                   " min: ", current_min_index_, " max: ", current_min_index_ + (overlap_ * 2u));
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Match out of range: ",
+        element_index,
+        " min: ",
+        current_min_index_,
+        " max: ",
+        current_min_index_ + (overlap_ * 2u));
     return {false, 0u};
   }
 
   return filter1_->Match(element);
 }
 
-void ProgressiveBloomFilter::Add(fetch::byte_array::ConstByteArray const &element,
-                                 std::size_t element_index, std::size_t current_head_index)
+void ProgressiveBloomFilter::Add(
+    fetch::byte_array::ConstByteArray const &element,
+    std::size_t                              element_index,
+    std::size_t                              current_head_index)
 {
   // Advance filter if necessary
   if (!IsInCurrentRange(current_head_index))
@@ -58,8 +67,14 @@ void ProgressiveBloomFilter::Add(fetch::byte_array::ConstByteArray const &elemen
 
   if (!IsInCurrentRange(element_index))
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Add out of range: ", element_index, " min: ", current_min_index_,
-                   " max: ", current_min_index_ + (overlap_ * 2u));
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Add out of range: ",
+        element_index,
+        " min: ",
+        current_min_index_,
+        " max: ",
+        current_min_index_ + (overlap_ * 2u));
     return;
   }
 

@@ -25,8 +25,11 @@
 #include <memory>
 
 template <template <typename> class EndpointType>
-Oefv1Listener<EndpointType>::Oefv1Listener(std::shared_ptr<Core> const &core, unsigned short port,
-                                           IKarmaPolicy *karmaPolicy, ConfigMap endpointConfig)
+Oefv1Listener<EndpointType>::Oefv1Listener(
+    std::shared_ptr<Core> const &core,
+    unsigned short               port,
+    IKarmaPolicy *               karmaPolicy,
+    ConfigMap                    endpointConfig)
   : listener(*core, port)
 {
   this->port           = port;

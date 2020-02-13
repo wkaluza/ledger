@@ -46,8 +46,10 @@ meta::IfIsInteger<T, T> ToInteger(VM * /*vm*/, Ptr<UInt256Wrapper> const &a)
   return {*reinterpret_cast<T const *>(a->number().pointer())};
 }
 
-Ptr<UInt256Wrapper> ConstructorFromBytesBigEndian(VM *vm, TypeId type_id,
-                                                  Ptr<ByteArrayWrapper> const &ba)
+Ptr<UInt256Wrapper> ConstructorFromBytesBigEndian(
+    VM *                         vm,
+    TypeId                       type_id,
+    Ptr<ByteArrayWrapper> const &ba)
 {
   try
   {
@@ -107,8 +109,11 @@ UInt256Wrapper::UInt256Wrapper(VM *vm, UInt256 data)
   : UInt256Wrapper{vm, TypeIds::UInt256, std::move(data)}
 {}
 
-UInt256Wrapper::UInt256Wrapper(VM *vm, TypeId type_id, byte_array::ConstByteArray const &data,
-                               platform::Endian endianess_of_input_data)
+UInt256Wrapper::UInt256Wrapper(
+    VM *                              vm,
+    TypeId                            type_id,
+    byte_array::ConstByteArray const &data,
+    platform::Endian                  endianess_of_input_data)
   : Object(vm, type_id)
   , number_(data, endianess_of_input_data)
 {}
@@ -359,8 +364,9 @@ bool UInt256Wrapper::IsLessThan(Ptr<Object> const &lhso, Ptr<Object> const &rhso
   return lhs->number_ < rhs->number_;
 }
 
-bool UInt256Wrapper::IsLessThanOrEqual(fetch::vm::Ptr<Object> const &lhso,
-                                       fetch::vm::Ptr<Object> const &rhso)
+bool UInt256Wrapper::IsLessThanOrEqual(
+    fetch::vm::Ptr<Object> const &lhso,
+    fetch::vm::Ptr<Object> const &rhso)
 {
   auto &lhs = static_cast<Ptr<UInt256Wrapper> const &>(lhso);
   auto &rhs = static_cast<Ptr<UInt256Wrapper> const &>(rhso);
@@ -374,94 +380,109 @@ bool UInt256Wrapper::IsGreaterThan(Ptr<Object> const &lhso, Ptr<Object> const &r
   return rhs->number_ < lhs->number_;
 }
 
-bool UInt256Wrapper::IsGreaterThanOrEqual(fetch::vm::Ptr<Object> const &lhso,
-                                          fetch::vm::Ptr<Object> const &rhso)
+bool UInt256Wrapper::IsGreaterThanOrEqual(
+    fetch::vm::Ptr<Object> const &lhso,
+    fetch::vm::Ptr<Object> const &rhso)
 {
   auto &lhs = static_cast<Ptr<UInt256Wrapper> const &>(lhso);
   auto &rhs = static_cast<Ptr<UInt256Wrapper> const &>(rhso);
   return rhs->number_ <= lhs->number_;
 }
 
-vm::ChargeAmount UInt256Wrapper::AddChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                    fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::AddChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::InplaceAddChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                           fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::InplaceAddChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::SubtractChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                         fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::SubtractChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 vm::ChargeAmount UInt256Wrapper::InplaceSubtractChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::MultiplyChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                         fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::MultiplyChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 vm::ChargeAmount UInt256Wrapper::InplaceMultiplyChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::DivideChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                       fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::DivideChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 vm::ChargeAmount UInt256Wrapper::InplaceDivideChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::IsEqualChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                        fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::IsEqualChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::IsNotEqualChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                           fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::IsNotEqualChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
-vm::ChargeAmount UInt256Wrapper::IsLessThanChargeEstimator(fetch::vm::Ptr<Object> const & /*lhso*/,
-                                                           fetch::vm::Ptr<Object> const & /*rhso*/)
+vm::ChargeAmount UInt256Wrapper::IsLessThanChargeEstimator(
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 vm::ChargeAmount UInt256Wrapper::IsLessThanOrEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount UInt256Wrapper::IsGreaterThanChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 vm::ChargeAmount UInt256Wrapper::IsGreaterThanOrEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/,
+    fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }

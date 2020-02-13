@@ -76,8 +76,9 @@ void Divide<TensorType>::Forward(VecTensorType const &inputs, TensorType &output
  * f'(b)=-(a/(b^2))*err
  */
 template <class TensorType>
-std::vector<TensorType> Divide<TensorType>::Backward(VecTensorType const &inputs,
-                                                     TensorType const &   error_signal)
+std::vector<TensorType> Divide<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   TensorType return_signal_1(inputs.at(0)->shape());
   TensorType return_signal_2(inputs.at(1)->shape());

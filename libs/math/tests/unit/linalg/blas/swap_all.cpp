@@ -31,8 +31,11 @@ using namespace fetch::math::linalg;
 
 TEST(blas_A_withA, blas_swap_all1)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -67,8 +70,11 @@ TEST(blas_A_withA, blas_swap_all1)
 
 TEST(blas_A_withA, blas_swap_all2)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -103,8 +109,11 @@ TEST(blas_A_withA, blas_swap_all2)
 
 TEST(blas_A_withA, blas_swap_all3)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -139,8 +148,11 @@ TEST(blas_A_withA, blas_swap_all3)
 
 TEST(blas_A_withA, blas_swap_all4)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -175,8 +187,11 @@ TEST(blas_A_withA, blas_swap_all4)
 
 TEST(blas_A_withA, blas_swap_all5)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -211,8 +226,11 @@ TEST(blas_A_withA, blas_swap_all5)
 
 TEST(blas_A_withA, blas_swap_all6)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 
@@ -247,8 +265,11 @@ TEST(blas_A_withA, blas_swap_all6)
 
 TEST(blas_A_withA, blas_swap_all7)
 {
-  Blas<double, Signature(_x, _y <= _n, _x, _m, _y, _p), Computes(_x, _y <= _y, _x),  // NOLINT
-       platform::Parallelisation::NOT_PARALLEL>
+  Blas<
+      double,
+      Signature(_x, _y <= _n, _x, _m, _y, _p),
+      Computes(_x, _y <= _y, _x),  // NOLINT
+      platform::Parallelisation::NOT_PARALLEL>
       swap_all;
   using Type = double;
 

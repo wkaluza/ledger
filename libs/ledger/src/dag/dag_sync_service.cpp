@@ -29,8 +29,9 @@ namespace ledger {
 
 using DAGNodesSerializer = fetch::serializers::MsgPackSerializer;
 
-DAGSyncService::DAGSyncService(MuddleEndpoint &                      muddle_endpoint,
-                               std::shared_ptr<ledger::DAGInterface> dag)
+DAGSyncService::DAGSyncService(
+    MuddleEndpoint &                      muddle_endpoint,
+    std::shared_ptr<ledger::DAGInterface> dag)
   : muddle_endpoint_(muddle_endpoint)
   , client_(std::make_shared<Client>("R:DAGSync-L", muddle_endpoint_, SERVICE_DAG, CHANNEL_RPC))
   , state_machine_{std::make_shared<core::StateMachine<State>>("DAGSyncService", State::INITIAL)}
@@ -38,35 +39,44 @@ DAGSyncService::DAGSyncService(MuddleEndpoint &                      muddle_endp
   , dag_subscription_(muddle_endpoint_.Subscribe(SERVICE_DAG, CHANNEL_RPC_BROADCAST))
 {
   state_machine_->RegisterHandler(State::INITIAL, this, &DAGSyncService::OnInitial);
-  state_machine_->RegisterHandler(State::BROADCAST_RECENT, this,
-                                  &DAGSyncService::OnBroadcastRecent);
-  state_machine_->RegisterHandler(State::ADD_BROADCAST_RECENT, this,
-                                  &DAGSyncService::OnAddBroadcastRecent);
+  state_machine_->RegisterHandler(
+      State::BROADCAST_RECENT, this, &DAGSyncService::OnBroadcastRecent);
+  state_machine_->RegisterHandler(
+      State::ADD_BROADCAST_RECENT, this, &DAGSyncService::OnAddBroadcastRecent);
   state_machine_->RegisterHandler(State::QUERY_MISSING, this, &DAGSyncService::OnQueryMissing);
   state_machine_->RegisterHandler(State::RESOLVE_MISSING, this, &DAGSyncService::OnResolveMissing);
 
 #ifdef FETCH_LOG_DEBUG_ENABLED
   state_machine_->OnStateChange([](State current, State previous) {
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Current state: ", ToString(current),
-                    " (previous: ", ToString(previous), ")");
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Current state: ",
+        ToString(current),
+        " (previous: ",
+        ToString(previous),
+        ")");
   });
 #endif  // FETCH_LOG_DEBUG_ENABLED
 
   // Broadcast blocks arrive here
-  dag_subscription_->SetMessageHandler(
-      [this](muddle::Packet::Address const &from, uint16_t, uint16_t, uint16_t,
-             muddle::Packet::Payload const &payload, muddle::Packet::Address transmitter) {
-        FETCH_UNUSED(from);
-        FETCH_UNUSED(transmitter);
+  dag_subscription_->SetMessageHandler([this](
+                                           muddle::Packet::Address const &from,
+                                           uint16_t,
+                                           uint16_t,
+                                           uint16_t,
+                                           muddle::Packet::Payload const &payload,
+                                           muddle::Packet::Address        transmitter) {
+    FETCH_UNUSED(from);
+    FETCH_UNUSED(transmitter);
 
-        DAGNodesSerializer serialiser(payload);
+    DAGNodesSerializer serialiser(payload);
 
-        std::vector<DAGNode> result;
-        serialiser >> result;
+    std::vector<DAGNode> result;
+    serialiser >> result;
 
-        FETCH_LOCK(mutex_);
-        this->recvd_broadcast_nodes_.push_back(std::move(result));
-      });
+    FETCH_LOCK(mutex_);
+    this->recvd_broadcast_nodes_.push_back(std::move(result));
+  });
 }
 
 DAGSyncService::State DAGSyncService::OnInitial()

@@ -37,12 +37,16 @@ public:
   using IOutboundConversationCreator::ident2conversation_;
   using IOutboundConversationCreator::mutex_;
 
-  OutboundSearchConversationCreator(const std::string &core_key, const Uri &core_uri,
-                                    const Uri &search_uri, Core &core,
-                                    std::shared_ptr<OutboundConversations> outbounds);
+  OutboundSearchConversationCreator(
+      const std::string &                    core_key,
+      const Uri &                            core_uri,
+      const Uri &                            search_uri,
+      Core &                                 core,
+      std::shared_ptr<OutboundConversations> outbounds);
   ~OutboundSearchConversationCreator() override;
   std::shared_ptr<OutboundConversation> start(
-      const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator) override;
+      const Uri &                                target_path,
+      std::shared_ptr<google::protobuf::Message> initiator) override;
 
 protected:
 private:

@@ -46,10 +46,12 @@ constexpr char const *LOGGING_NAME = "TransactionProcessor";
  * @param storage The reference to the storage unit
  * @param miner The reference to the system miner
  */
-TransactionProcessor::TransactionProcessor(DAGPtr dag, StorageUnitInterface &storage,
-                                           BlockPackerInterface &packer,
-                                           TxStatusCachePtr      tx_status_cache,
-                                           std::size_t           num_threads)
+TransactionProcessor::TransactionProcessor(
+    DAGPtr                dag,
+    StorageUnitInterface &storage,
+    BlockPackerInterface &packer,
+    TxStatusCachePtr      tx_status_cache,
+    std::size_t           num_threads)
   : dag_{std::move(dag)}
   , storage_{storage}
   , packer_{packer}

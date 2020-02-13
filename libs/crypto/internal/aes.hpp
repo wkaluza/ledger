@@ -29,10 +29,18 @@ public:
 
   static std::size_t GetKeyLength(BlockCipher::Type type) noexcept;
   static std::size_t GetIVLength(BlockCipher::Type type) noexcept;
-  static bool Encrypt(BlockCipher::Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                      ConstByteArray const &clear_text, ConstByteArray &cipher_text);
-  static bool Decrypt(BlockCipher::Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                      ConstByteArray const &cipher_text, ConstByteArray &clear_text);
+  static bool        Encrypt(
+             BlockCipher::Type     type,
+             ConstByteArray const &key,
+             ConstByteArray const &iv,
+             ConstByteArray const &clear_text,
+             ConstByteArray &      cipher_text);
+  static bool Decrypt(
+      BlockCipher::Type     type,
+      ConstByteArray const &key,
+      ConstByteArray const &iv,
+      ConstByteArray const &cipher_text,
+      ConstByteArray &      clear_text);
 };
 
 }  // namespace crypto

@@ -71,8 +71,11 @@ struct TrustedDealerCabinetNode
   BeaconService                    beacon_service;
   crypto::Identity                 identity;
 
-  TrustedDealerCabinetNode(uint16_t port_number, uint16_t index, double threshold,
-                           uint64_t aeon_period)
+  TrustedDealerCabinetNode(
+      uint16_t port_number,
+      uint16_t index,
+      double   threshold,
+      uint64_t aeon_period)
     : event_manager{EventManager::New()}
     , muddle_port{port_number}
     , network_manager{"NetworkManager" + std::to_string(index), 1}
@@ -98,8 +101,11 @@ struct TrustedDealerCabinetNode
   }
 };
 
-void RunTrustedDealer(uint16_t total_renewals = 4, uint32_t cabinet_size = 4,
-                      double threshold = 0.5, uint64_t aeon_period = 10)
+void RunTrustedDealer(
+    uint16_t total_renewals = 4,
+    uint32_t cabinet_size   = 4,
+    double   threshold      = 0.5,
+    uint64_t aeon_period    = 10)
 {
   fetch::crypto::mcl::details::MCLInitialiser();
 
@@ -149,8 +155,10 @@ void RunTrustedDealer(uint16_t total_renewals = 4, uint32_t cabinet_size = 4,
 
       if (timer == 100)
       {
-        FETCH_LOG_ERROR("TrustedDealerTest", "Only connected to: ",
-                        static_cast<uint32_t>(muddle.GetNumDirectlyConnectedPeers()));
+        FETCH_LOG_ERROR(
+            "TrustedDealerTest",
+            "Only connected to: ",
+            static_cast<uint32_t>(muddle.GetNumDirectlyConnectedPeers()));
       }
     }
     ++timer;
@@ -193,9 +201,12 @@ void RunTrustedDealer(uint16_t total_renewals = 4, uint32_t cabinet_size = 4,
         GetTime(fetch::moment::GetClock("default", fetch::moment::ClockType::SYSTEM)) + 5;
     for (auto &member : cabinet)
     {
-      member->setup_service.StartNewCabinet(cabinet_addresses, i * aeon_period, start_time,
-                                            prev_entropy,
-                                            dealer.GetDkgKeys(member->identity.identifier()));
+      member->setup_service.StartNewCabinet(
+          cabinet_addresses,
+          i * aeon_period,
+          start_time,
+          prev_entropy,
+          dealer.GetDkgKeys(member->identity.identifier()));
 
       // Note, to avoid limiting the 'look ahead' entropy gen, set the block to ahead of numbers per
       // aeon
@@ -247,11 +258,18 @@ TEST(beacon_service, trusted_dealer)
 class BeaconServiceStateRecovery : public BeaconService
 {
 public:
-  BeaconServiceStateRecovery(MuddleInterface &muddle, const CertificatePtr &certificate,
-                             BeaconSetupService &beacon_setup, SharedEventManager event_manager,
-                             bool load_and_reload_on_crash)
-    : BeaconService(muddle, certificate, beacon_setup, std::move(event_manager),
-                    load_and_reload_on_crash)
+  BeaconServiceStateRecovery(
+      MuddleInterface &     muddle,
+      const CertificatePtr &certificate,
+      BeaconSetupService &  beacon_setup,
+      SharedEventManager    event_manager,
+      bool                  load_and_reload_on_crash)
+    : BeaconService(
+          muddle,
+          certificate,
+          beacon_setup,
+          std::move(event_manager),
+          load_and_reload_on_crash)
   {}
 
   // getters/setters for the variables that should change
@@ -289,12 +307,12 @@ TEST(beacon_service, correctly_recovers_state)
   muddle::MuddlePtr                dummy_muddle{
       muddle::CreateMuddleFake("Test", dummy_certificate, network_manager, "127.0.0.1")};
   DummyManifestCache        dummy_manifest_cache;
-  TrustedDealerSetupService dummy_beacon_setup{*dummy_muddle, dummy_manifest_cache,
-                                               dummy_certificate, 0, 0};
+  TrustedDealerSetupService dummy_beacon_setup{
+      *dummy_muddle, dummy_manifest_cache, dummy_certificate, 0, 0};
 
   {
-    BeaconServiceStateRecovery initial{*dummy_muddle, dummy_certificate, dummy_beacon_setup,
-                                       dummy_event_manager, true};
+    BeaconServiceStateRecovery initial{
+        *dummy_muddle, dummy_certificate, dummy_beacon_setup, dummy_event_manager, true};
 
     // Must be manually called since no attached reactor
     // Note this also checks reloading an empty file is not invalid
@@ -313,8 +331,8 @@ TEST(beacon_service, correctly_recovers_state)
   }
 
   // Scope ends, re-load
-  BeaconServiceStateRecovery recovered{*dummy_muddle, dummy_certificate, dummy_beacon_setup,
-                                       dummy_event_manager, true};
+  BeaconServiceStateRecovery recovered{
+      *dummy_muddle, dummy_certificate, dummy_beacon_setup, dummy_event_manager, true};
   recovered.Reload();
 
   ASSERT_EQ(recovered.signatures_being_built().size(), 3);

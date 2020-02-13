@@ -193,8 +193,9 @@ TEST_F(ArrayTests, popBack_fails_if_array_is_empty)
   ASSERT_FALSE(toolkit.Run());
 }
 
-TEST_F(ArrayTests,
-       when_passed_an_integer_N_popBack_removes_the_last_N_elements_and_returns_them_as_an_array)
+TEST_F(
+    ArrayTests,
+    when_passed_an_integer_N_popBack_removes_the_last_N_elements_and_returns_them_as_an_array)
 {
   static char const *TEXT = R"(
     function main()
@@ -355,8 +356,9 @@ TEST_F(ArrayTests, popFront_fails_if_array_is_empty)
   ASSERT_FALSE(toolkit.Run());
 }
 
-TEST_F(ArrayTests,
-       when_passed_an_integer_N_popFront_removes_the_last_N_elements_and_returns_them_as_an_array)
+TEST_F(
+    ArrayTests,
+    when_passed_an_integer_N_popFront_removes_the_last_N_elements_and_returns_them_as_an_array)
 {
   static char const *TEXT = R"(
     function main()

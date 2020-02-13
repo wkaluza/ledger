@@ -33,14 +33,21 @@ public:
 
   ArrayTests()
   {
-    static_assert(sizeof(mem) >= ArrU64::size() * sizeof(ArrU64::value_type),
-                  "Size of pre-set memory must be bigger or equal to memory needed for array type "
-                  "under test");
+    static_assert(
+        sizeof(mem) >= ArrU64::size() * sizeof(ArrU64::value_type),
+        "Size of pre-set memory must be bigger or equal to memory needed for array type "
+        "under test");
   }
 
-  uint64_t mem[10] = {0x0f0f0f0f0f0f0f0full, 0xf0f0f0f0f0f0f0f0ull, 0x0707070707070707ull,
-                      0x7070707070707070ull, 0x0a0a0a0a0a0a0a0aull, 0xa0a0a0a0a0a0a0a0ull,
-                      0x0505050505050505ull, 0x5050505050505050ull, 0xaaaaaaaaaaaaaaaaull,
+  uint64_t mem[10] = {0x0f0f0f0f0f0f0f0full,
+                      0xf0f0f0f0f0f0f0f0ull,
+                      0x0707070707070707ull,
+                      0x7070707070707070ull,
+                      0x0a0a0a0a0a0a0a0aull,
+                      0xa0a0a0a0a0a0a0a0ull,
+                      0x0505050505050505ull,
+                      0x5050505050505050ull,
+                      0xaaaaaaaaaaaaaaaaull,
                       0x5555555555555555ull};
 };
 

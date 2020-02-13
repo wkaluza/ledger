@@ -30,10 +30,11 @@ class InitialSecureHandshakeTaskFactory : public IOefTaskFactory<OefAgentEndpoin
 public:
   static constexpr char const *LOGGING_NAME = "InitialSecureHandshakeTaskFactory";
 
-  InitialSecureHandshakeTaskFactory(std::string                            core_key,
-                                    std::shared_ptr<OefAgentEndpoint>      the_endpoint,
-                                    std::shared_ptr<OutboundConversations> outbounds,
-                                    std::shared_ptr<Agents>                agents)
+  InitialSecureHandshakeTaskFactory(
+      std::string                            core_key,
+      std::shared_ptr<OefAgentEndpoint>      the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<Agents>                agents)
     : IOefTaskFactory(the_endpoint, outbounds)
     , agents_{std::move(agents)}
     , public_key_{""}

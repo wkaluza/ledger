@@ -53,18 +53,26 @@ public:
   /// @{
   CounterPtr CreateCounter(std::string name, std::string description, Labels labels = Labels{});
 
-  CounterMapPtr CreateCounterMap(std::string name, std::string description,
-                                 Labels labels = Labels{});
+  CounterMapPtr CreateCounterMap(
+      std::string name,
+      std::string description,
+      Labels      labels = Labels{});
 
   template <typename T>
   GaugePtr<T> CreateGauge(std::string name, std::string description, Labels labels = Labels{});
 
-  HistogramPtr CreateHistogram(std::initializer_list<double> const &buckets, std::string name,
-                               std::string description = "", Labels labels = Labels{});
+  HistogramPtr CreateHistogram(
+      std::initializer_list<double> const &buckets,
+      std::string                          name,
+      std::string                          description = "",
+      Labels                               labels      = Labels{});
 
-  HistogramMapPtr CreateHistogramMap(std::vector<double> buckets, std::string name,
-                                     std::string field, std::string description,
-                                     Labels labels = Labels{});
+  HistogramMapPtr CreateHistogramMap(
+      std::vector<double> buckets,
+      std::string         name,
+      std::string         field,
+      std::string         description,
+      Labels              labels = Labels{});
   /// @}
 
   /// @name Metric Lookups
@@ -103,8 +111,10 @@ private:
  * @return The pointer to the created metric if successful, otherwise a nullptr
  */
 template <typename T>
-Registry::GaugePtr<T> Registry::CreateGauge(std::string name, std::string description,
-                                            Labels labels)
+Registry::GaugePtr<T> Registry::CreateGauge(
+    std::string name,
+    std::string description,
+    Labels      labels)
 {
   GaugePtr<T> gauge{};
 

@@ -75,11 +75,17 @@ public:
   /// @{
   ConstByteArray Ping(Address const &address, PortList port);
   Peers          FindPeer(Address const &address);
-  Peers          FindPeer(Address const &address, uint64_t log_id, bool scan_left = true,
-                          bool scan_right = true);
-  Peers          FindPeerByHamming(Address const &address);
-  Peers       FindPeerByHamming(Address const &address, uint64_t hamming_id, bool scan_left = true,
-                                bool scan_right = true);
+  Peers          FindPeer(
+               Address const &address,
+               uint64_t       log_id,
+               bool           scan_left  = true,
+               bool           scan_right = true);
+  Peers FindPeerByHamming(Address const &address);
+  Peers FindPeerByHamming(
+      Address const &address,
+      uint64_t       hamming_id,
+      bool           scan_left  = true,
+      bool           scan_right = true);
   bool        HasPeerDetails(Address const &address);
   PeerInfo    GetPeerDetails(Address const &address);
   bool        HasUri(Uri const &uri) const;
@@ -154,10 +160,16 @@ private:
   void AddDesiredPeerInternal(Address const &address, Duration const &expiry);
   void AddDesiredPeerInternal(Uri const &uri, Duration const &expiry);
 
-  Peers FindPeerInternal(KademliaAddress const &kam_address, uint64_t log_id, bool scan_left = true,
-                         bool scan_right = true);
-  Peers FindPeerByHammingInternal(KademliaAddress const &kam_address, uint64_t hamming_id,
-                                  bool scan_left = true, bool scan_right = true);
+  Peers FindPeerInternal(
+      KademliaAddress const &kam_address,
+      uint64_t               log_id,
+      bool                   scan_left  = true,
+      bool                   scan_right = true);
+  Peers FindPeerByHammingInternal(
+      KademliaAddress const &kam_address,
+      uint64_t               hamming_id,
+      bool                   scan_left  = true,
+      bool                   scan_right = true);
   std::string const logging_name_;
 
   // The mutex locking order should be in the order in which

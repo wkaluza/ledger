@@ -54,9 +54,13 @@ void InitialSslHandshakeTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
     auto connected_pb = std::make_shared<fetch::oef::pb::Server_Connected>();
     connected_pb->set_status(true);
 
-    FETCH_LOG_INFO(LOGGING_NAME, "Agent ", public_key_,
-                   " ssl authenticated and white listed ( or white list disabled = ",
-                   white_list_enabled_, "), moving to OefFunctions...");
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Agent ",
+        public_key_,
+        " ssl authenticated and white listed ( or white list disabled = ",
+        white_list_enabled_,
+        "), moving to OefFunctions...");
     auto senderTask = std::make_shared<
         TSendProtoTask<OefAgentEndpoint, std::shared_ptr<fetch::oef::pb::Server_Connected>>>(
         connected_pb, GetEndpoint());
@@ -81,9 +85,12 @@ void InitialSslHandshakeTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
   }
   else
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Agent ", public_key_,
-                   " ssl authenticated and NOT white listed. Disconnecting ... ",
-                   white_list_->size());
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Agent ",
+        public_key_,
+        " ssl authenticated and NOT white listed. Disconnecting ... ",
+        white_list_->size());
 
     // send failure
     auto connected_pb = std::make_shared<fetch::oef::pb::Server_Connected>();

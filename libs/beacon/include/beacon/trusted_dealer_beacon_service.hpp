@@ -38,13 +38,19 @@ public:
   using SharedNotarisationManager = TrustedDealer::SharedNotarisationManager;
   using CabinetNotarisationKeys   = TrustedDealer::CabinetNotarisationKeys;
 
-  TrustedDealerSetupService(MuddleInterface &muddle, ManifestCacheInterface &manifest_cache,
-                            CertificatePtr const &certificate, double threshold,
-                            uint64_t aeon_period);
+  TrustedDealerSetupService(
+      MuddleInterface &       muddle,
+      ManifestCacheInterface &manifest_cache,
+      CertificatePtr const &  certificate,
+      double                  threshold,
+      uint64_t                aeon_period);
 
   void StartNewCabinet(
-      CabinetMemberList members, uint64_t round_start, uint64_t start_time,
-      BlockEntropy const &prev_entropy, DkgOutput const &output,
+      CabinetMemberList                                             members,
+      uint64_t                                                      round_start,
+      uint64_t                                                      start_time,
+      BlockEntropy const &                                          prev_entropy,
+      DkgOutput const &                                             output,
       std::pair<SharedNotarisationManager, CabinetNotarisationKeys> notarisation_keys = {nullptr,
                                                                                          {}});
 

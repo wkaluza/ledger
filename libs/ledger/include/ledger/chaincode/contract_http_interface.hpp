@@ -77,24 +77,31 @@ private:
 
   /// @name Query Handler
   /// @{
-  http::HTTPResponse OnQuery(ConstByteArray const &contract_name, ConstByteArray const &query,
-                             http::HTTPRequest const &request);
+  http::HTTPResponse OnQuery(
+      ConstByteArray const &   contract_name,
+      ConstByteArray const &   query,
+      http::HTTPRequest const &request);
   /// @}
 
   /// @name Transaction Handlers
   /// @{
-  http::HTTPResponse OnTransaction(http::HTTPRequest const &request,
-                                   ConstByteArray const &   expected_contract);
-  SubmitTxStatus     SubmitJsonTx(http::HTTPRequest const &request, TxHashes &txs);
-  SubmitTxStatus     SubmitBulkTx(http::HTTPRequest const &request, TxHashes &txs);
+  http::HTTPResponse OnTransaction(
+      http::HTTPRequest const &request,
+      ConstByteArray const &   expected_contract);
+  SubmitTxStatus SubmitJsonTx(http::HTTPRequest const &request, TxHashes &txs);
+  SubmitTxStatus SubmitBulkTx(http::HTTPRequest const &request, TxHashes &txs);
   /// @}
 
   /// @name Access Log
   /// @{
-  void RecordTransaction(SubmitTxStatus const &status, http::HTTPRequest const &request,
-                         ConstByteArray const &expected_contract);
-  void RecordQuery(ConstByteArray const &contract_name, ConstByteArray const &query,
-                   http::HTTPRequest const &request);
+  void RecordTransaction(
+      SubmitTxStatus const &   status,
+      http::HTTPRequest const &request,
+      ConstByteArray const &   expected_contract);
+  void RecordQuery(
+      ConstByteArray const &   contract_name,
+      ConstByteArray const &   query,
+      http::HTTPRequest const &request);
   void WriteToAccessLog(variant::Variant const &entry);
   /// @}
 

@@ -106,9 +106,10 @@ void TCPServer::Start()
 
     if (!network_manager_.Running())
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "TCP server trying to start with non-running network manager. This will block "
-                     "until the network manager starts!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "TCP server trying to start with non-running network manager. This will block "
+          "until the network manager starts!");
     }
 
     network_manager_.Post(closure);
@@ -120,9 +121,12 @@ void TCPServer::Start()
     // allow start up time before showing warnings
     if (loop > 5)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "TCP server is waiting to open. Use count: ", closure_alive.use_count(),
-                     " NM running: ", network_manager_.Running());
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "TCP server is waiting to open. Use count: ",
+          closure_alive.use_count(),
+          " NM running: ",
+          network_manager_.Running());
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));

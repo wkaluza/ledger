@@ -60,22 +60,21 @@ public:
     WIDE_ELEMENTS     = ((UINT_SIZE + WIDE_ELEMENT_SIZE) - 1) / WIDE_ELEMENT_SIZE,
     RESIDUAL_BITS     = WIDE_ELEMENTS * WIDE_ELEMENT_SIZE - UINT_SIZE,
   };
-  static_assert(S == (ELEMENTS * ELEMENT_SIZE),
-                "Size must be a multiple of 8 times the base type size.");
+  static_assert(
+      S == (ELEMENTS * ELEMENT_SIZE),
+      "Size must be a multiple of 8 times the base type size.");
 
   using WideContainerType                   = core::Array<WideType, WIDE_ELEMENTS>;
   using ContainerType                       = BaseType[ELEMENTS];
   static constexpr char const *LOGGING_NAME = "UInt";
 
   template <typename... T>
-  using IfIsWideInitialiserList =
-      std::enable_if_t<meta::Is<WideType>::SameAsEvery<meta::Decay<T>...>::value &&
-                       (sizeof...(T) <= WIDE_ELEMENTS)>;
+  using IfIsWideInitialiserList = std::enable_if_t<
+      meta::Is<WideType>::SameAsEvery<meta::Decay<T>...>::value && (sizeof...(T) <= WIDE_ELEMENTS)>;
 
   template <typename... T>
-  using IfIsBaseInitialiserList =
-      std::enable_if_t<meta::Is<BaseType>::SameAsEvery<meta::Decay<T>...>::value &&
-                       (sizeof...(T) <= ELEMENTS)>;
+  using IfIsBaseInitialiserList = std::enable_if_t<
+      meta::Is<BaseType>::SameAsEvery<meta::Decay<T>...>::value && (sizeof...(T) <= ELEMENTS)>;
 
   ////////////////////
   /// constructors ///
@@ -242,7 +241,8 @@ public:
 
   template <typename T>
   constexpr meta::EnableIf<std::is_same<meta::Decay<T>, byte_array::ByteArray>::value, T> As(
-      platform::Endian endianess_of_output_data, bool include_leading_zeroes = false) const;
+      platform::Endian endianess_of_output_data,
+      bool             include_leading_zeroes = false) const;
 
   /////////////////
   /// constants ///
@@ -271,9 +271,10 @@ private:
   }
 
   template <typename T>
-  constexpr meta::IfIsAByteArray<T> FromArrayInternal(T const &        arr,
-                                                      platform::Endian endianess_of_input_data,
-                                                      bool             zero_content);  // NOLINT
+  constexpr meta::IfIsAByteArray<T> FromArrayInternal(
+      T const &        arr,
+      platform::Endian endianess_of_input_data,
+      bool             zero_content);  // NOLINT
 
   struct MaxValueConstructorEnabler
   {};
@@ -344,8 +345,8 @@ constexpr UInt<S> &UInt<S>::operator=(UInt const &v)
 
 template <uint16_t S>
 template <typename T>
-constexpr meta::IfIsAByteArray<T, UInt<S>> &UInt<S>::FromArray(
-    T const &arr, platform::Endian endianess_of_input_data)  // NOLINT
+constexpr meta::IfIsAByteArray<T, UInt<S>>
+    &UInt<S>::FromArray(T const &arr, platform::Endian endianess_of_input_data)  // NOLINT
 {
   FromArrayInternal(arr, endianess_of_input_data, true);
   return *this;
@@ -354,8 +355,9 @@ constexpr meta::IfIsAByteArray<T, UInt<S>> &UInt<S>::FromArray(
 template <uint16_t S>
 template <typename T>
 constexpr meta::IfIsAByteArray<T> UInt<S>::FromArrayInternal(
-    T const &arr, platform::Endian endianess_of_input_data,
-    bool zero_content)  // NOLINT
+    T const &        arr,
+    platform::Endian endianess_of_input_data,
+    bool             zero_content)  // NOLINT
 {
   auto const size{arr.size()};
 
@@ -1175,7 +1177,8 @@ UInt<S>::operator std::string() const
 template <uint16_t S>
 template <typename T>
 constexpr meta::EnableIf<std::is_same<meta::Decay<T>, byte_array::ByteArray>::value, T> UInt<S>::As(
-    platform::Endian endianess_of_output_data, bool include_leading_zeroes) const
+    platform::Endian endianess_of_output_data,
+    bool             include_leading_zeroes) const
 {
   auto const size_{include_leading_zeroes ? size() : TrimmedSize()};
 

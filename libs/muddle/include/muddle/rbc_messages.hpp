@@ -151,8 +151,12 @@ public:
   HashDigest               hash() const;
   /// @}
 protected:
-  explicit RBCMessage(RBCMessageType type, uint16_t channel = 0, uint32_t id = 0,
-                      uint8_t counter = 0, SerialisedMessage msg = "");
+  explicit RBCMessage(
+      RBCMessageType    type,
+      uint16_t          channel = 0,
+      uint32_t          id      = 0,
+      uint8_t           counter = 0,
+      SerialisedMessage msg     = "");
 
 private:
   RBCMessageType    type_;
@@ -186,8 +190,11 @@ template <RBCMessageType TYPE, typename Parent>
 class RBCMessageImpl final : public Parent
 {
 public:
-  explicit RBCMessageImpl(uint16_t channel = 0, uint32_t id = 0, uint8_t counter = 0,
-                          SerialisedMessage msg = "")
+  explicit RBCMessageImpl(
+      uint16_t          channel = 0,
+      uint32_t          id      = 0,
+      uint8_t           counter = 0,
+      SerialisedMessage msg     = "")
     : Parent{TYPE, channel, id, counter, msg}
   {}
 
@@ -234,8 +241,9 @@ public:
     uint8_t type;
     map.ExpectKeyGetValue(TYPE, type);
     map.ExpectKeyGetValue(CHANNEL, msg.channel_);
-    map.ExpectKeyGetValue(ADDRESS,
-                          msg.id_);  // TODO (ed): Remove and deduce from network connection
+    map.ExpectKeyGetValue(
+        ADDRESS,
+        msg.id_);  // TODO (ed): Remove and deduce from network connection
     map.ExpectKeyGetValue(COUNTER, msg.counter_);
     map.ExpectKeyGetValue(PAYLOAD, msg.payload_);
 

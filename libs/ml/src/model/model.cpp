@@ -39,8 +39,10 @@ Model<TensorType>::Model(const Model &other)
 }
 
 template <typename TensorType>
-void Model<TensorType>::Compile(OptimiserType optimiser_type, ops::LossType loss_type,
-                                std::vector<ops::MetricType> const &metrics)
+void Model<TensorType>::Compile(
+    OptimiserType                       optimiser_type,
+    ops::LossType                       loss_type,
+    std::vector<ops::MetricType> const &metrics)
 {
   // add loss to graph
   if (!loss_set_)
@@ -49,8 +51,8 @@ void Model<TensorType>::Compile(OptimiserType optimiser_type, ops::LossType loss
     {
     case (ops::LossType::CROSS_ENTROPY):
     {
-      error_ = graph_ptr_->template AddNode<ops::CrossEntropyLoss<TensorType>>("Error",
-                                                                               {output_, label_});
+      error_ = graph_ptr_->template AddNode<ops::CrossEntropyLoss<TensorType>>(
+          "Error", {output_, label_});
       break;
     }
     case (ops::LossType::MEAN_SQUARE_ERROR):
@@ -126,8 +128,13 @@ void Model<TensorType>::Compile(OptimiserType optimiser_type, ops::LossType loss
   if (!optimiser_set_)
   {
     if (!(fetch::ml::optimisers::AddOptimiser<TensorType>(
-            optimiser_type, optimiser_ptr_, graph_ptr_, std::vector<std::string>{input_}, label_,
-            error_, model_config_.learning_rate_param)))
+            optimiser_type,
+            optimiser_ptr_,
+            graph_ptr_,
+            std::vector<std::string>{input_},
+            label_,
+            error_,
+            model_config_.learning_rate_param)))
     {
       throw ml::exceptions::InvalidMode("DNNClassifier initialised with unrecognised optimiser");
     }
@@ -209,7 +216,8 @@ void Model<TensorType>::Predict(TensorType &input, TensorType &output)
 
 template <typename TensorType>
 typename Model<TensorType>::DataVectorType Model<TensorType>::Evaluate(
-    dataloaders::DataLoaderMode dl_mode, SizeType batch_size)
+    dataloaders::DataLoaderMode dl_mode,
+    SizeType                    batch_size)
 {
   if (!compiled_)
   {
@@ -276,8 +284,8 @@ std::shared_ptr<const typename Model<TensorType>::DataLoaderType> Model<TensorTy
  * @return
  */
 template <typename TensorType>
-std::shared_ptr<const typename Model<TensorType>::ModelOptimiserType>
-Model<TensorType>::GetOptimiser()
+std::shared_ptr<const typename Model<TensorType>::ModelOptimiserType> Model<
+    TensorType>::GetOptimiser()
 {
   return optimiser_ptr_;
 }
@@ -363,8 +371,8 @@ void Model<TensorType>::TrainImplementation(DataType &loss, SizeType n_rounds)
 
     if (this->model_config_.save_graph)
     {
-      fetch::ml::utilities::SaveGraph(*graph_ptr_,
-                                      model_config_.graph_save_location + std::to_string(step));
+      fetch::ml::utilities::SaveGraph(
+          *graph_ptr_, model_config_.graph_save_location + std::to_string(step));
     }
 
     // run optimiser for one epoch (or subset)

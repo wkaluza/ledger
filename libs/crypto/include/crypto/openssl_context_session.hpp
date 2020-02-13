@@ -27,8 +27,10 @@ namespace crypto {
 namespace openssl {
 namespace context {
 
-template <typename T, typename T_SessionPrimitive = detail::SessionPrimitive<T>,
-          typename T_ContextSmartPtr = memory::OsslSharedPtr<T>>
+template <
+    typename T,
+    typename T_SessionPrimitive = detail::SessionPrimitive<T>,
+    typename T_ContextSmartPtr  = memory::OsslSharedPtr<T>>
 class Session
 {
 public:

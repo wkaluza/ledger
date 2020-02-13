@@ -57,12 +57,18 @@ public:
     return Ptr<SelfType>{new SelfType{vm, type_id, x, y}};
   }
 
-  static void AffordableStatic(VM * /*vm*/, TypeId /*type_id*/, uint8_t /*unused*/,
-                               uint16_t /*unused*/)
+  static void AffordableStatic(
+      VM * /*vm*/,
+      TypeId /*type_id*/,
+      uint8_t /*unused*/,
+      uint16_t /*unused*/)
   {}
 
-  static void TooExpensiveStatic(VM * /*vm*/, TypeId /*type_id*/, uint8_t /*unused*/,
-                                 uint16_t /*unused*/)
+  static void TooExpensiveStatic(
+      VM * /*vm*/,
+      TypeId /*type_id*/,
+      uint8_t /*unused*/,
+      uint16_t /*unused*/)
   {}
 
   void Affordable(uint8_t /*unused*/, uint16_t /*unused*/)
@@ -91,15 +97,17 @@ public:
     }
     else
     {
-      Ptr<SelfType> temp{new SelfType(vm_, vm_->GetTypeId<SelfType>(),
-                                      static_cast<uint8_t>(lhs->x + rhs->x),
-                                      static_cast<uint16_t>(lhs->y + lhs->y))};
+      Ptr<SelfType> temp{new SelfType(
+          vm_,
+          vm_->GetTypeId<SelfType>(),
+          static_cast<uint8_t>(lhs->x + rhs->x),
+          static_cast<uint16_t>(lhs->y + lhs->y))};
       lhso = std::move(temp);
     }
   }
 
-  ChargeAmount AddChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                  Ptr<Object> const & /*rhso*/) override
+  ChargeAmount AddChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return operator_charge;
   }
@@ -115,9 +123,11 @@ public:
     }
     else
     {
-      Ptr<SelfType> temp{new SelfType(vm_, vm_->GetTypeId<SelfType>(),
-                                      static_cast<uint8_t>(-obj->x),
-                                      static_cast<uint16_t>(-obj->y))};
+      Ptr<SelfType> temp{new SelfType(
+          vm_,
+          vm_->GetTypeId<SelfType>(),
+          static_cast<uint8_t>(-obj->x),
+          static_cast<uint16_t>(-obj->y))};
       object = std::move(temp);
     }
   }
@@ -135,8 +145,8 @@ public:
     return lhs->x == rhs->x && lhs->y == rhs->y;
   }
 
-  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                      Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return operator_charge;
   }
@@ -149,8 +159,8 @@ public:
     return lhs->x != rhs->x && lhs->y != rhs->y;
   }
 
-  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                         Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return operator_charge;
   }
@@ -176,12 +186,12 @@ auto affordable_estimator = [](uint8_t x, uint16_t y) -> ChargeAmount {
 auto expensive_estimator = [](uint8_t x, uint16_t y) -> ChargeAmount {
   return static_cast<ChargeAmount>(high_charge_limit + x * y);
 };
-auto affordable_member_estimator = [](Ptr<CustomType> const & /*this_*/, uint8_t x,
-                                      uint16_t y) -> ChargeAmount {
+auto affordable_member_estimator =
+    [](Ptr<CustomType> const & /*this_*/, uint8_t x, uint16_t y) -> ChargeAmount {
   return static_cast<ChargeAmount>(low_charge_limit + x * y);
 };
-auto expensive_member_estimator = [](Ptr<CustomType> const & /*this_*/, uint8_t x,
-                                     uint16_t y) -> ChargeAmount {
+auto expensive_member_estimator =
+    [](Ptr<CustomType> const & /*this_*/, uint8_t x, uint16_t y) -> ChargeAmount {
   return static_cast<ChargeAmount>(high_charge_limit + x * y);
 };
 auto max_charge_estimator = [](uint8_t /*x*/, uint16_t /*y*/) -> ChargeAmount {
@@ -329,8 +339,9 @@ TEST_F(VmChargeTests, member_function_bind_with_charge_estimate_execution_fails_
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+TEST_F(
+    VmChargeTests,
+    member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
@@ -348,13 +359,14 @@ TEST_F(VmChargeTests,
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       static_member_function_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
+TEST_F(
+    VmChargeTests,
+    static_member_function_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
-      .CreateStaticMemberFunction("tooExpensive", &CustomType::TooExpensiveStatic,
-                                  expensive_charge);
+      .CreateStaticMemberFunction(
+          "tooExpensive", &CustomType::TooExpensiveStatic, expensive_charge);
 
   static char const *TEXT = R"(
     function main()
@@ -366,8 +378,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       static_member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+TEST_F(
+    VmChargeTests,
+    static_member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
@@ -391,8 +404,8 @@ TEST_F(VmChargeTests, index_operator_bind_with_charge_estimate_execution_fails_w
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
       .CreateConstructor(&CustomType::Constructor)
-      .EnableIndexOperator(&CustomType::GetIndexedValue, &CustomType::SetIndexedValue,
-                           getter_charge, setter_charge);
+      .EnableIndexOperator(
+          &CustomType::GetIndexedValue, &CustomType::SetIndexedValue, getter_charge, setter_charge);
 
   static char const *TEXT = R"(
     function main()
@@ -414,8 +427,8 @@ TEST_F(VmChargeTests, index_operator_bind_with_charge_estimate_execution_succeed
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
       .CreateConstructor(&CustomType::Constructor)
-      .EnableIndexOperator(&CustomType::GetIndexedValue, &CustomType::SetIndexedValue,
-                           getter_charge, setter_charge);
+      .EnableIndexOperator(
+          &CustomType::GetIndexedValue, &CustomType::SetIndexedValue, getter_charge, setter_charge);
 
   static char const *TEXT = R"(
     function main()
@@ -429,8 +442,9 @@ TEST_F(VmChargeTests, index_operator_bind_with_charge_estimate_execution_succeed
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       functor_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
+TEST_F(
+    VmChargeTests,
+    functor_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
 {
   toolkit.module().CreateFreeFunction("tooExpensive", handler, expensive_estimator);
 
@@ -444,8 +458,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       functor_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
+TEST_F(
+    VmChargeTests,
+    functor_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
 {
   toolkit.module().CreateFreeFunction("affordable", handler, affordable_estimator);
 
@@ -459,8 +474,9 @@ TEST_F(VmChargeTests,
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       ctor_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
+TEST_F(
+    VmChargeTests,
+    ctor_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
 {
   toolkit.module()
       .CreateClassType<CustomType>("TooExpensive")
@@ -476,8 +492,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       ctor_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
+TEST_F(
+    VmChargeTests,
+    ctor_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
 {
   toolkit.module()
       .CreateClassType<CustomType>("Affordable")
@@ -493,8 +510,9 @@ TEST_F(VmChargeTests,
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       member_function_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
+TEST_F(
+    VmChargeTests,
+    member_function_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
@@ -538,8 +556,8 @@ TEST_F(
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
-      .CreateStaticMemberFunction("tooExpensive", &CustomType::TooExpensiveStatic,
-                                  expensive_estimator);
+      .CreateStaticMemberFunction(
+          "tooExpensive", &CustomType::TooExpensiveStatic, expensive_estimator);
 
   static char const *TEXT = R"(
     function main()
@@ -557,8 +575,8 @@ TEST_F(
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
-      .CreateStaticMemberFunction("affordable", &CustomType::AffordableStatic,
-                                  affordable_estimator);
+      .CreateStaticMemberFunction(
+          "affordable", &CustomType::AffordableStatic, affordable_estimator);
 
   static char const *TEXT = R"(
     function main()
@@ -570,8 +588,9 @@ TEST_F(
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       functor_bind_with_charge_estimate_execution_does_not_overflow_charge_total_with_estimator)
+TEST_F(
+    VmChargeTests,
+    functor_bind_with_charge_estimate_execution_does_not_overflow_charge_total_with_estimator)
 {
   toolkit.module().CreateFreeFunction("overflowExpensive", handler, max_charge_estimator);
 
@@ -585,18 +604,22 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, max_charge_amount));
 }
 
-TEST_F(VmChargeTests,
-       index_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
+TEST_F(
+    VmChargeTests,
+    index_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded_with_estimator)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
       .CreateConstructor(&CustomType::Constructor)
-      .EnableIndexOperator(&CustomType::GetIndexedValue, &CustomType::SetIndexedValue,
-                           [](Ptr<CustomType> const &, AnyInteger const &) -> ChargeAmount {
-                             return expensive_charge;
-                           },
-                           [](Ptr<CustomType> const &, AnyInteger const &,
-                              int16_t const &) -> ChargeAmount { return expensive_charge; });
+      .EnableIndexOperator(
+          &CustomType::GetIndexedValue,
+          &CustomType::SetIndexedValue,
+          [](Ptr<CustomType> const &, AnyInteger const &) -> ChargeAmount {
+            return expensive_charge;
+          },
+          [](Ptr<CustomType> const &, AnyInteger const &, int16_t const &) -> ChargeAmount {
+            return expensive_charge;
+          });
 
   static char const *TEXT = R"(
     function main()
@@ -610,18 +633,22 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       index_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
+TEST_F(
+    VmChargeTests,
+    index_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed_with_estimator)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
       .CreateConstructor(&CustomType::Constructor)
-      .EnableIndexOperator(&CustomType::GetIndexedValue, &CustomType::SetIndexedValue,
-                           [](Ptr<CustomType> const &, AnyInteger const &) -> ChargeAmount {
-                             return affordable_charge;
-                           },
-                           [](Ptr<CustomType> const &, AnyInteger const &,
-                              int16_t const &) -> ChargeAmount { return affordable_charge; });
+      .EnableIndexOperator(
+          &CustomType::GetIndexedValue,
+          &CustomType::SetIndexedValue,
+          [](Ptr<CustomType> const &, AnyInteger const &) -> ChargeAmount {
+            return affordable_charge;
+          },
+          [](Ptr<CustomType> const &, AnyInteger const &, int16_t const &) -> ChargeAmount {
+            return affordable_charge;
+          });
 
   static char const *TEXT = R"(
     function main()
@@ -699,8 +726,9 @@ TEST_F(VmChargeTests, add_operator_bind_with_charge_estimate_execution_fails_whe
   ASSERT_FALSE(toolkit.Run(nullptr, max_charge_amount));
 }
 
-TEST_F(VmChargeTests,
-       negate_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+TEST_F(
+    VmChargeTests,
+    negate_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   using AffordableOperatorChargeCustomType = CustomTypeTemplate<affordable_charge>;
 
@@ -740,8 +768,9 @@ TEST_F(VmChargeTests, negate_operator_bind_with_charge_estimate_execution_fails_
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       negate_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
+TEST_F(
+    VmChargeTests,
+    negate_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
 {
   using MaxOperatorChargeCustomType = CustomTypeTemplate<max_charge_amount>;
 
@@ -761,8 +790,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, max_charge_amount));
 }
 
-TEST_F(VmChargeTests,
-       isequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+TEST_F(
+    VmChargeTests,
+    isequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   using AffordableOperatorChargeCustomType = CustomTypeTemplate<affordable_charge>;
 
@@ -783,8 +813,9 @@ TEST_F(VmChargeTests,
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       isequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
+TEST_F(
+    VmChargeTests,
+    isequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
 {
   using ExpensiveOperatorChargeCustomType = CustomTypeTemplate<expensive_charge>;
 
@@ -805,8 +836,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       isequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
+TEST_F(
+    VmChargeTests,
+    isequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
 {
   using MaxOperatorChargeCustomType = CustomTypeTemplate<max_charge_amount>;
 
@@ -827,8 +859,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, max_charge_amount));
 }
 
-TEST_F(VmChargeTests,
-       isnotequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+TEST_F(
+    VmChargeTests,
+    isnotequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   using AffordableOperatorChargeCustomType = CustomTypeTemplate<affordable_charge>;
 
@@ -849,8 +882,9 @@ TEST_F(VmChargeTests,
   ASSERT_TRUE(toolkit.Run(nullptr, high_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       isnotequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
+TEST_F(
+    VmChargeTests,
+    isnotequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
 {
   using ExpensiveOperatorChargeCustomType = CustomTypeTemplate<expensive_charge>;
 
@@ -871,8 +905,9 @@ TEST_F(VmChargeTests,
   ASSERT_FALSE(toolkit.Run(nullptr, low_charge_limit));
 }
 
-TEST_F(VmChargeTests,
-       isnotequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
+TEST_F(
+    VmChargeTests,
+    isnotequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
 {
   using MaxOperatorChargeCustomType = CustomTypeTemplate<max_charge_amount>;
 

@@ -60,8 +60,11 @@ bool IsAbsWithinRange(DataType a, DataType b, DataType lower_bound, DataType upp
  * @param upper_bound
  */
 template <typename TypeParam>
-void CheckForwardValues(TypeParam &data, TypeParam &prediction,
-                        typename TypeParam::Type lower_bound, typename TypeParam::Type upper_bound)
+void CheckForwardValues(
+    TypeParam &              data,
+    TypeParam &              prediction,
+    typename TypeParam::Type lower_bound,
+    typename TypeParam::Type upper_bound)
 {
   auto data_it = data.begin();
   auto pred_it = prediction.begin();
@@ -90,8 +93,8 @@ TYPED_TEST(RandomisedReluTest, forward_test)
   DataType lower_bound = fetch::math::Type<DataType>("0.03");
   DataType upper_bound = fetch::math::Type<DataType>("0.08");
 
-  fetch::ml::ops::RandomisedRelu<TensorType> op(fetch::math::Type<DataType>("0.03"),
-                                                fetch::math::Type<DataType>("0.08"), 12345);
+  fetch::ml::ops::RandomisedRelu<TensorType> op(
+      fetch::math::Type<DataType>("0.03"), fetch::math::Type<DataType>("0.08"), 12345);
   TensorType prediction(op.ComputeOutputShape({std::make_shared<const TensorType>(data)}));
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
@@ -104,8 +107,8 @@ TYPED_TEST(RandomisedReluTest, forward_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction_2);
 
   // test if values changed
-  EXPECT_FALSE(prediction_2.AllClose(prediction, math::function_tolerance<DataType>(),
-                                     math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction_2.AllClose(
+      prediction, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 
   // test if values are within ranges
   CheckForwardValues(data, prediction_2, lower_bound, upper_bound);
@@ -120,8 +123,8 @@ TYPED_TEST(RandomisedReluTest, forward_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  EXPECT_TRUE(prediction.AllClose(gt, math::function_tolerance<DataType>(),
-                                  math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(RandomisedReluTest, forward_3d_tensor_test)
@@ -177,8 +180,8 @@ TYPED_TEST(RandomisedReluTest, backward_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test if values changed
-  EXPECT_FALSE(prediction_2[0].AllClose(prediction[0], math::function_tolerance<DataType>(),
-                                        math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction_2[0].AllClose(
+      prediction[0], math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 
   // test if values are within ranges
   EXPECT_TRUE(prediction_2[0].At(0, 0) == DataType{0});
@@ -197,8 +200,8 @@ TYPED_TEST(RandomisedReluTest, backward_test)
   prediction    = op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  EXPECT_TRUE(prediction[0].AllClose(gt, math::function_tolerance<DataType>(),
-                                     math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction[0].AllClose(
+      gt, math::function_tolerance<DataType>(), math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(RandomisedReluTest, backward_3d_tensor_test)
@@ -325,7 +328,8 @@ TYPED_TEST(RandomisedReluTest, saveparams_backward_3d_tensor_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 

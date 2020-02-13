@@ -75,8 +75,12 @@ std::size_t hash_size(Hasher hash_type)
 class HasherTestParam
 {
 public:
-  HasherTestParam(Hasher type_, ByteArray output_empty_, ByteArray output1_, ByteArray output2_,
-                  ByteArray output3_)
+  HasherTestParam(
+      Hasher    type_,
+      ByteArray output_empty_,
+      ByteArray output1_,
+      ByteArray output2_,
+      ByteArray output3_)
     : type{type_}
     , expected_size{hash_size(type)}
     , input_empty("")

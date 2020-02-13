@@ -60,8 +60,9 @@ void SubGraph<TensorType>::Forward(VecTensorType const &inputs, TensorType &outp
  * @return
  */
 template <typename TensorType>
-std::vector<TensorType> SubGraph<TensorType>::Backward(VecTensorType const &inputs,
-                                                       TensorType const &   error_signal)
+std::vector<TensorType> SubGraph<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == this->input_node_names_.size());
   FETCH_UNUSED(inputs);

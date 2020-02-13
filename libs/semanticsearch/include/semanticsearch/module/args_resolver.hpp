@@ -66,8 +66,12 @@ struct VectorToArguments
   {
     using CallerSignature = std::function<R(UsedArgs..., A, RemainingArguments...)>;
 
-    static void Apply(std::size_t i, CallerSignature fnc, R &return_value,
-                      std::vector<void const *> &data, UsedArgs &... args)
+    static void Apply(
+        std::size_t                i,
+        CallerSignature            fnc,
+        R &                        return_value,
+        std::vector<void const *> &data,
+        UsedArgs &... args)
     {
       using B = std::decay_t<A>;
       B val   = *reinterpret_cast<B const *>(data[i]);
@@ -81,8 +85,12 @@ struct VectorToArguments
   {
     using CallerSignature = std::function<R(UsedArgs..., A)>;
 
-    static void Apply(std::size_t i, CallerSignature fnc, R &return_value,
-                      std::vector<void const *> &data, UsedArgs &... args)
+    static void Apply(
+        std::size_t                i,
+        CallerSignature            fnc,
+        R &                        return_value,
+        std::vector<void const *> &data,
+        UsedArgs &... args)
     {
       using B      = std::decay_t<A>;
       B val        = *reinterpret_cast<B const *>(data[i]);

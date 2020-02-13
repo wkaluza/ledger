@@ -36,8 +36,10 @@ namespace meta {
 template <typename DataType, typename ReturnType>
 struct IsMathArrayImpl
 {};
-template <typename DataType, typename ContainerType /*template<class> class ContainerType*/,
-          typename ReturnType>
+template <
+    typename DataType,
+    typename ContainerType /*template<class> class ContainerType*/,
+    typename ReturnType>
 struct IsMathArrayImpl<Tensor<DataType, ContainerType>, ReturnType>
 {
   using Type = ReturnType;
@@ -54,9 +56,8 @@ using IfIsMathNonFixedPointArray =
     IfIsNotFixedPoint<typename DataType::Type, IfIsMathArray<DataType, ReturnType>>;
 
 template <typename DataType, typename ReturnType>
-using IfIsUnsignedInteger =
-    fetch::meta::EnableIf<fetch::meta::IsUnsignedInteger<DataType> && !IsFloat<DataType>,
-                          ReturnType>;
+using IfIsUnsignedInteger = fetch::meta::
+    EnableIf<fetch::meta::IsUnsignedInteger<DataType> && !IsFloat<DataType>, ReturnType>;
 
 template <typename DataType, typename ReturnType>
 using IfIsSignedInteger =

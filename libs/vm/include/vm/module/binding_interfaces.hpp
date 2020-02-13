@@ -43,8 +43,11 @@ struct EtchInvocation
   static_assert(meta::IsStdTuple<EtchArgsTuple>, "Pass binding argument types as a std::tuple");
 
   template <typename Estimator, typename Callable, typename... ExtraArgs>
-  static void InvokeHandler(VM *vm, Estimator &&estimator, Callable &&callable,
-                            ExtraArgs const &... extra_args)
+  static void InvokeHandler(
+      VM *        vm,
+      Estimator &&estimator,
+      Callable && callable,
+      ExtraArgs const &... extra_args)
   {
     using Config = PrepareInvocation<Invoker, Callable, EtchArgsTuple>;
 
@@ -56,9 +59,12 @@ struct EtchInvocation
 
     // Invoke C++ handler
     using ConfiguredInvoker = typename Config::ConfiguredInvoker;
-    ConfiguredInvoker::Invoke(vm, EstimatorType{std::forward<Estimator>(estimator)},
-                              std::forward<Callable>(callable), std::move(etch_args_tuple),
-                              extra_args...);
+    ConfiguredInvoker::Invoke(
+        vm,
+        EstimatorType{std::forward<Estimator>(estimator)},
+        std::forward<Callable>(callable),
+        std::move(etch_args_tuple),
+        extra_args...);
   }
 };
 

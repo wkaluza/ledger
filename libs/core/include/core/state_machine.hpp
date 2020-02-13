@@ -66,8 +66,10 @@ public:
   /// @name State Control
   /// @{
   template <typename C>
-  void RegisterHandler(State state, C *instance,
-                       State (C::*func)(State /*current*/, State /*previous*/));
+  void RegisterHandler(
+      State state,
+      C *   instance,
+      State (C::*func)(State /*current*/, State /*previous*/));
   template <typename C>
   void RegisterHandler(State state, C *instance, State (C::*func)(State /*current*/));
   template <typename C>
@@ -117,8 +119,8 @@ private:
 
   static std::string ToLowerCase(std::string data)
   {
-    std::transform(data.begin(), data.end(), data.begin(),
-                   [](unsigned char c) { return std::tolower(c); });
+    std::transform(
+        data.begin(), data.end(), data.begin(), [](unsigned char c) { return std::tolower(c); });
     return data;
   }
 
@@ -148,7 +150,8 @@ StateMachine<S>::StateMachine(std::string name, S initial, StateMapper mapper)
   , mapper_{std::move(mapper)}
   , current_state_{initial}
   , state_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        ToLowerCase(name_) + "_state_gauge", "Generic state machine state as integer")}
+        ToLowerCase(name_) + "_state_gauge",
+        "Generic state machine state as integer")}
 {}
 
 /**
@@ -173,8 +176,10 @@ StateMachine<S>::~StateMachine()
  */
 template <typename S>
 template <typename C>
-void StateMachine<S>::RegisterHandler(S state, C *instance,
-                                      S (C::*func)(S /*current*/, S /*previous*/))
+void StateMachine<S>::RegisterHandler(
+    S  state,
+    C *instance,
+    S (C::*func)(S /*current*/, S /*previous*/))
 {
   callbacks_.ApplyVoid([func, instance, state](auto &callbacks) {
     callbacks[state] = [func, instance](S state, S prev) { return (instance->*func)(state, prev); };

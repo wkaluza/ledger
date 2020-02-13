@@ -64,21 +64,24 @@ void Flatten<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
   assert(output.shape() == ComputeOutputShape(inputs));
   input_shape_ = inputs.front()->shape();
 
-  assert(output.shape().at(output.shape().size() - 1) ==
-         inputs.front()->shape().at(inputs.front()->shape().size() - 1));
+  assert(
+      output.shape().at(output.shape().size() - 1) ==
+      inputs.front()->shape().at(inputs.front()->shape().size() - 1));
   output.Assign(inputs.front()->View());
 }
 
 template <class TensorType>
-std::vector<TensorType> Flatten<TensorType>::Backward(VecTensorType const &inputs,
-                                                      TensorType const &   error_signal)
+std::vector<TensorType> Flatten<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 1);
   TensorType ret(input_shape_);
 
-  assert(ret.shape().at(ret.shape().size() - 1) ==
-         error_signal.shape().at(error_signal.shape().size() - 1));
+  assert(
+      ret.shape().at(ret.shape().size() - 1) ==
+      error_signal.shape().at(error_signal.shape().size() - 1));
   ret.Assign(error_signal.View());
 
   return {ret};

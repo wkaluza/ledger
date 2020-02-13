@@ -55,8 +55,11 @@ struct TrainingParams
   bool     normalise = true;
 };
 
-std::shared_ptr<GraphType> BuildModel(std::string &input_name, std::string &output_name,
-                                      std::string &label_name, std::string &error_name)
+std::shared_ptr<GraphType> BuildModel(
+    std::string &input_name,
+    std::string &output_name,
+    std::string &label_name,
+    std::string &error_name)
 {
   auto g = std::make_shared<GraphType>();
 
@@ -76,13 +79,22 @@ std::shared_ptr<GraphType> BuildModel(std::string &input_name, std::string &outp
   label_name = g->AddNode<PlaceHolder<TensorType>>("Label", {});
 
   std::string layer_1 = g->AddNode<fetch::ml::layers::Convolution1D<TensorType>>(
-      "Conv1D_1", {input_name}, conv1D_1_filters, conv1D_1_input_channels, conv1D_1_kernel_size,
-      conv1D_1_stride, fetch::ml::details::ActivationType::LEAKY_RELU);
+      "Conv1D_1",
+      {input_name},
+      conv1D_1_filters,
+      conv1D_1_input_channels,
+      conv1D_1_kernel_size,
+      conv1D_1_stride,
+      fetch::ml::details::ActivationType::LEAKY_RELU);
 
   std::string layer_2 = g->AddNode<Dropout<TensorType>>("Dropout_1", {layer_1}, keep_prob_1);
 
   output_name = g->AddNode<fetch::ml::layers::Convolution1D<TensorType>>(
-      "Output", {layer_2}, conv1D_2_filters, conv1D_2_input_channels, conv1D_2_kernel_size,
+      "Output",
+      {layer_2},
+      conv1D_2_filters,
+      conv1D_2_input_channels,
+      conv1D_2_kernel_size,
       conv1D_2_stride);
 
   error_name = g->AddNode<fetch::ml::ops::MeanSquareErrorLoss<TensorType>>(
@@ -90,10 +102,11 @@ std::shared_ptr<GraphType> BuildModel(std::string &input_name, std::string &outp
   return g;
 }
 
-std::vector<TensorType> LoadData(std::string const &train_data_filename,
-                                 std::string const &train_labels_filename,
-                                 std::string const &test_data_filename,
-                                 std::string const &test_labels_filename)
+std::vector<TensorType> LoadData(
+    std::string const &train_data_filename,
+    std::string const &train_labels_filename,
+    std::string const &test_data_filename,
+    std::string const &test_labels_filename)
 {
 
   std::cout << "loading train data...: " << std::endl;

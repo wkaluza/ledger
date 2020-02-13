@@ -341,8 +341,8 @@ TEST(MsgPacker, short_strings)  // NOLINT
   value  = "Lorem ipsum dolor sit amet, co";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("be4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("be4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f"), stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -352,8 +352,8 @@ TEST(MsgPacker, short_strings)  // NOLINT
   value  = "Lorem ipsum dolor sit amet, con";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("bf4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("bf4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e"), stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -363,8 +363,9 @@ TEST(MsgPacker, short_strings)  // NOLINT
   value  = "Lorem ipsum dolor sit amet, cons";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9204c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e73"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9204c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e73"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -374,8 +375,9 @@ TEST(MsgPacker, short_strings)  // NOLINT
   value  = "Lorem ipsum dolor sit amet, conse";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9214c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9214c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -385,8 +387,9 @@ TEST(MsgPacker, short_strings)  // NOLINT
   value  = "Lorem ipsum dolor sit amet, consec";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9224c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9224c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -398,16 +401,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9644c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9644c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed");
 
   // len(value) = 101
   value =
@@ -415,16 +420,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9654c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e6775652073656420"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9654c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e6775652073656420"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed ");
 
   // len(value) = 102
   value =
@@ -432,16 +439,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed l";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9664c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9664c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed l");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed l");
 
   // len(value) = 103
   value =
@@ -449,16 +458,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed le";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9674c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c65"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9674c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c65"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed le");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed le");
 
   // len(value) = 104
   value =
@@ -466,16 +477,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9684c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9684c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo");
 
   // len(value) = 105
   value =
@@ -483,16 +496,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9694c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9694c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo ");
 
   // len(value) = 106
   value =
@@ -500,16 +515,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo i";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f2069"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f2069"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo i");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo i");
 
   // len(value) = 107
   value =
@@ -517,16 +534,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in");
 
   // len(value) = 108
   value =
@@ -534,16 +553,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in ");
 
   // len(value) = 109
   value =
@@ -551,16 +572,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in p";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96d4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e2070"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96d4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e2070"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in p");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in p");
 
   // len(value) = 110
   value =
@@ -568,16 +591,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in pl";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96e4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96e4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in pl");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in pl");
 
   // len(value) = 111
   value =
@@ -585,16 +610,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in pla";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d96f4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d96f4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in pla");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in pla");
 
   // len(value) = 112
   value =
@@ -602,16 +629,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in plac";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9704c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9704c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in plac");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in plac");
 
   // len(value) = 113
   value =
@@ -619,16 +648,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in place";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9714c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c616365"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9714c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c616365"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in place");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in place");
 
   // len(value) = 114
   value =
@@ -636,16 +667,18 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placer";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9724c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9724c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placer");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placer");
 
   // len(value) = 115
   value =
@@ -661,9 +694,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placera");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placera");
 
   // len(value) = 116
   value =
@@ -679,9 +713,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat");
 
   // len(value) = 117
   value =
@@ -697,9 +732,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat.");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat.");
 
   // len(value) = 118
   value =
@@ -715,9 +751,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. ");
 
   // len(value) = 119
   value =
@@ -733,9 +770,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. M");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. M");
 
   // len(value) = 120
   value =
@@ -751,9 +789,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Ma");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Ma");
 
   // len(value) = 121
   value =
@@ -769,9 +808,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mau");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mau");
 
   // len(value) = 122
   value =
@@ -787,9 +827,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Maur");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Maur");
 
   // len(value) = 123
   value =
@@ -805,9 +846,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauri");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauri");
 
   // len(value) = 124
   value =
@@ -824,9 +866,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris");
 
   // len(value) = 125
   value =
@@ -843,9 +886,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris ");
 
   // len(value) = 126
   value =
@@ -862,9 +906,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris e");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris e");
 
   // len(value) = 127
   value =
@@ -881,9 +926,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et");
 
   // len(value) = 128
   value =
@@ -900,9 +946,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et ");
 
   // len(value) = 129
   value =
@@ -919,9 +966,10 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et e");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et e");
 
   // len(value) = 130
   value =
@@ -929,17 +977,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et el";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9824c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9824c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et el");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et el");
 
   // len(value) = 131
   value =
@@ -947,17 +997,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et eli";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9834c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c69"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9834c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c69"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et eli");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et eli");
 
   // len(value) = 132
   value =
@@ -965,17 +1017,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9844c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c6974"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9844c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c6974"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit");
 
   // len(value) = 133
   value =
@@ -983,17 +1037,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9854c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9854c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit ");
 
   // len(value) = 134
   value =
@@ -1001,17 +1057,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit i";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9864c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c69742069"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9864c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c69742069"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit i");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit i");
 
   // len(value) = 135
   value =
@@ -1019,17 +1077,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9874c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9874c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in");
 
   // len(value) = 136
   value =
@@ -1037,17 +1097,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9884c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e20"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9884c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e20"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in ");
 
   // len(value) = 137
   value =
@@ -1055,17 +1117,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in q";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d9894c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e2071"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d9894c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e2071"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in q");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in q");
 
   // len(value) = 138
   value =
@@ -1073,17 +1137,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in qu";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d98a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e207175"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d98a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e207175"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in qu");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in qu");
 
   // len(value) = 139
   value =
@@ -1091,17 +1157,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in qua";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d98b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e20717561"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d98b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e20717561"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in qua");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in qua");
 
   // len(value) = 140
   value =
@@ -1109,17 +1177,19 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "congue sed leo in placerat. Mauris et elit in quam";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("d98c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
-                    "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
-                    "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
-                    "742e204d617572697320657420656c697420696e207175616d"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("d98c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e736563746574"
+              "75722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f64"
+              "696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c6163657261"
+              "742e204d617572697320657420656c697420696e207175616d"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam");
 
   // len(value) = 240
   value =
@@ -1139,10 +1209,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neq");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neq");
 
   // len(value) = 241
   value =
@@ -1162,10 +1233,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris nequ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris nequ");
 
   // len(value) = 242
   value =
@@ -1185,10 +1257,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque");
 
   // len(value) = 243
   value =
@@ -1208,10 +1281,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque ");
 
   // len(value) = 244
   value =
@@ -1231,10 +1305,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque f");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque f");
 
   // len(value) = 245
   value =
@@ -1254,10 +1329,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque fe");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque fe");
 
   // len(value) = 246
   value =
@@ -1277,10 +1353,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque fel");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque fel");
 
   // len(value) = 247
   value =
@@ -1300,10 +1377,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque feli");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque feli");
 
   // len(value) = 248
   value =
@@ -1323,10 +1401,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis");
 
   // len(value) = 249
   value =
@@ -1346,10 +1425,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis,");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis,");
 
   // len(value) = 250
   value =
@@ -1370,10 +1450,11 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, ");
 
   // len(value) = 251
   value =
@@ -1633,14 +1714,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum v";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da01054c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d2076"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da01054c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d2076"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1657,14 +1739,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vi";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da01064c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d207669"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da01064c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d207669"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1681,14 +1764,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vit";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da01074c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d20766974"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da01074c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d20766974"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1705,14 +1789,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vita";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da01084c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d2076697461"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da01084c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d2076697461"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1729,14 +1814,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vitae";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da01094c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da01094c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1753,14 +1839,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vitae ";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da010a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d20766974616520"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da010a4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d20766974616520"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1777,14 +1864,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vitae m";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da010b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da010b4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1801,14 +1889,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vitae ma";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da010c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d61"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da010c4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d61"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1825,14 +1914,15 @@ TEST(MsgPacker, short_strings)  // NOLINT
       "porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, elementum vitae mas";
   stream = MsgPackSerializer();
   stream << value;
-  EXPECT_EQ(FromHex("da010d4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
-                    "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
-                    "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
-                    "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
-                    "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
-                    "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
-                    "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d6173"),
-            stream.data());
+  EXPECT_EQ(
+      FromHex("da010d4c6f72656d20697073756d20646f6c6f722073697420616d65742c20636f6e7365637465"
+              "7475722061646970697363696e6720656c69742e20446f6e65632076656c2074656d706f72206f"
+              "64696f2e2050686173656c6c757320636f6e67756520736564206c656f20696e20706c61636572"
+              "61742e204d617572697320657420656c697420696e207175616d20756c7472696365732076756c"
+              "707574617465207574206163206a7573746f2e20446f6e6563206120706f727461206f7263692e"
+              "2043757261626974757220657569736d6f642068656e64726572697420666575676961742e204d"
+              "6175726973206e657175652066656c69732c20656c656d656e74756d207669746165206d6173"),
+      stream.data());
   stream.seek(0);
   value = "";
   stream >> value;
@@ -1911,11 +2001,12 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
-            "elementum vitae massa ");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
+      "elementum vitae massa ");
 
   // len(value) = 273
   value =
@@ -1937,11 +2028,12 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
-            "elementum vitae massa a");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
+      "elementum vitae massa a");
 
   // len(value) = 274
   value =
@@ -1963,11 +2055,12 @@ TEST(MsgPacker, short_strings)  // NOLINT
   stream.seek(0);
   value = "";
   stream >> value;
-  EXPECT_EQ(value,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
-            "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
-            "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
-            "elementum vitae massa a,");
+  EXPECT_EQ(
+      value,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tempor odio. "
+      "Phasellus congue sed leo in placerat. Mauris et elit in quam ultrices vulputate ut ac "
+      "justo. Donec a porta orci. Curabitur euismod hendrerit feugiat. Mauris neque felis, "
+      "elementum vitae massa a,");
 }
 
 }  // namespace serializers

@@ -38,8 +38,8 @@ void MessengerPrototype::Register(bool require_mailbox)
   // Registering with all connected nodes
   for (auto &address : node_addresses_)
   {
-    rpc_client_.CallSpecificAddress(address, RPC_MESSENGER_INTERFACE,
-                                    MessengerProtocol::REGISTER_MESSENGER, require_mailbox);
+    rpc_client_.CallSpecificAddress(
+        address, RPC_MESSENGER_INTERFACE, MessengerProtocol::REGISTER_MESSENGER, require_mailbox);
   }
 }
 
@@ -47,8 +47,8 @@ void MessengerPrototype::Unregister()
 {
   for (auto &address : node_addresses_)
   {
-    rpc_client_.CallSpecificAddress(address, RPC_MESSENGER_INTERFACE,
-                                    MessengerProtocol::UNREGISTER_MESSENGER);
+    rpc_client_.CallSpecificAddress(
+        address, RPC_MESSENGER_INTERFACE, MessengerProtocol::UNREGISTER_MESSENGER);
   }
 }
 
@@ -68,8 +68,8 @@ void MessengerPrototype::SendMessage(Message msg)
   {
     if (msg.to.node == address)
     {
-      rpc_client_.CallSpecificAddress(address, RPC_MESSENGER_INTERFACE,
-                                      MessengerProtocol::SEND_MESSAGE, msg);
+      rpc_client_.CallSpecificAddress(
+          address, RPC_MESSENGER_INTERFACE, MessengerProtocol::SEND_MESSAGE, msg);
       return;
     }
   }
@@ -81,8 +81,8 @@ void MessengerPrototype::SendMessage(Message msg)
     msg.from.node = address;
   }
 
-  rpc_client_.CallSpecificAddress(msg.from.node, RPC_MESSENGER_INTERFACE,
-                                  MessengerProtocol::SEND_MESSAGE, msg);
+  rpc_client_.CallSpecificAddress(
+      msg.from.node, RPC_MESSENGER_INTERFACE, MessengerProtocol::SEND_MESSAGE, msg);
 }
 
 void MessengerPrototype::PullMessages()
@@ -91,8 +91,8 @@ void MessengerPrototype::PullMessages()
   // such they can be realised later.
   for (auto &address : node_addresses_)
   {
-    auto promise = rpc_client_.CallSpecificAddress(address, RPC_MESSENGER_INTERFACE,
-                                                   MessengerProtocol::GET_MESSAGES);
+    auto promise = rpc_client_.CallSpecificAddress(
+        address, RPC_MESSENGER_INTERFACE, MessengerProtocol::GET_MESSAGES);
     promises_.push_back({address, promise});
   }
 }
@@ -130,9 +130,11 @@ void MessengerPrototype::ResolveMessages()
       }
 
       // Removing messages from the mailbox
-      rpc_client_.CallSpecificAddress(address, RPC_MESSENGER_INTERFACE,
-                                      MessengerProtocol::CLEAR_MESSAGES,
-                                      static_cast<uint64_t>(list.size()));
+      rpc_client_.CallSpecificAddress(
+          address,
+          RPC_MESSENGER_INTERFACE,
+          MessengerProtocol::CLEAR_MESSAGES,
+          static_cast<uint64_t>(list.size()));
       break;
     }
     case service::PromiseState::FAILED:
@@ -198,8 +200,9 @@ MessengerPrototype::MessageList MessengerPrototype::GetMessages(uint64_t wait)
   return ret;
 }
 
-void MessengerPrototype::OnNewMessagePacket(muddle::Packet const &packet,
-                                            Address const & /*last_hop*/)
+void MessengerPrototype::OnNewMessagePacket(
+    muddle::Packet const &packet,
+    Address const & /*last_hop*/)
 {
   fetch::serializers::MsgPackSerializer serialiser(packet.GetPayload());
 
@@ -211,13 +214,14 @@ void MessengerPrototype::OnNewMessagePacket(muddle::Packet const &packet,
   }
   catch (std::exception const &e)
   {
-    FETCH_LOG_ERROR("MessengerPrototype",
-                    "Retrieved messages malformed: ", static_cast<std::string>(e.what()));
+    FETCH_LOG_ERROR(
+        "MessengerPrototype", "Retrieved messages malformed: ", static_cast<std::string>(e.what()));
   }
 }
 
-MessengerPrototype::ResultList MessengerPrototype::FindAgents(ConstByteArray const & /*type*/,
-                                                              ConstByteArray const & /*query*/)
+MessengerPrototype::ResultList MessengerPrototype::FindAgents(
+    ConstByteArray const & /*type*/,
+    ConstByteArray const & /*query*/)
 {
   return {};
 }

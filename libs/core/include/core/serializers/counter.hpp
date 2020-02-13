@@ -47,16 +47,21 @@ public:
   /// Array Helpers
   /// @{
   using ArrayConstructor = interfaces::ContainerConstructorInterface<
-      SizeCounter, interfaces::ArrayInterface<SizeCounter>, TypeCodes::ARRAY_CODE_FIXED,
-      TypeCodes::ARRAY_CODE16, TypeCodes::ARRAY_CODE32>;
+      SizeCounter,
+      interfaces::ArrayInterface<SizeCounter>,
+      TypeCodes::ARRAY_CODE_FIXED,
+      TypeCodes::ARRAY_CODE16,
+      TypeCodes::ARRAY_CODE32>;
   /// @}
 
   /// Map Helpers
   /// @{
-  using MapConstructor =
-      interfaces::ContainerConstructorInterface<SizeCounter, interfaces::MapInterface<SizeCounter>,
-                                                TypeCodes::MAP_CODE_FIXED, TypeCodes::MAP_CODE16,
-                                                TypeCodes::MAP_CODE32>;
+  using MapConstructor = interfaces::ContainerConstructorInterface<
+      SizeCounter,
+      interfaces::MapInterface<SizeCounter>,
+      TypeCodes::MAP_CODE_FIXED,
+      TypeCodes::MAP_CODE16,
+      TypeCodes::MAP_CODE32>;
   /// @}
 
   void Allocate(std::size_t delta)
@@ -64,8 +69,10 @@ public:
     Resize(delta, ResizeParadigm::RELATIVE);
   }
 
-  void Resize(std::size_t size, ResizeParadigm const &resize_paradigm = ResizeParadigm::RELATIVE,
-              bool const zero_reserved_space = true)
+  void Resize(
+      std::size_t           size,
+      ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+      bool const            zero_reserved_space = true)
   {
     FETCH_UNUSED(zero_reserved_space);
 
@@ -87,8 +94,10 @@ public:
     };
   }
 
-  void Reserve(std::size_t size, ResizeParadigm const &resize_paradigm = ResizeParadigm::RELATIVE,
-               bool const zero_reserved_space = true)
+  void Reserve(
+      std::size_t           size,
+      ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+      bool const            zero_reserved_space = true)
   {
     FETCH_UNUSED(zero_reserved_space);
 
@@ -267,8 +276,9 @@ typename ForwardSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -283,8 +293,9 @@ typename ForwardSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -299,8 +310,9 @@ typename IntegerSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -315,8 +327,9 @@ typename IntegerSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -331,8 +344,9 @@ typename FloatSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T 
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -347,8 +361,9 @@ typename FloatSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T 
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -363,8 +378,9 @@ typename BooleanSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -379,8 +395,9 @@ typename BooleanSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -395,8 +412,9 @@ typename StringSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -411,8 +429,9 @@ typename StringSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
   return *this;
 }
@@ -420,10 +439,12 @@ typename StringSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T
 template <typename T>
 typename BinarySerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T const &val)
 {
-  using Serializer = BinarySerializer<T, SizeCounter>;
-  using Constructor =
-      interfaces::BinaryConstructorInterface<SizeCounter, TypeCodes::BINARY_CODE8,
-                                             TypeCodes::BINARY_CODE16, TypeCodes::BINARY_CODE32>;
+  using Serializer  = BinarySerializer<T, SizeCounter>;
+  using Constructor = interfaces::BinaryConstructorInterface<
+      SizeCounter,
+      TypeCodes::BINARY_CODE8,
+      TypeCodes::BINARY_CODE16,
+      TypeCodes::BINARY_CODE32>;
 
   try
   {
@@ -432,8 +453,9 @@ typename BinarySerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -450,8 +472,9 @@ typename BinarySerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -473,8 +496,9 @@ typename ArraySerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T 
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -493,8 +517,9 @@ typename ArraySerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T 
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -517,8 +542,9 @@ typename MapSerializer<T, SizeCounter>::DriverType &SizeCounter::operator<<(T co
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -537,8 +563,9 @@ typename MapSerializer<T, SizeCounter>::DriverType &SizeCounter::operator>>(T &v
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;

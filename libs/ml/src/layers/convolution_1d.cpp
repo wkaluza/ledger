@@ -26,12 +26,15 @@ namespace ml {
 namespace layers {
 
 template <typename TensorType>
-Convolution1D<TensorType>::Convolution1D(SizeType const output_channels,
-                                         SizeType const input_channels, SizeType const kernel_size,
-                                         SizeType const                stride_size,
-                                         details::ActivationType const activation_type,
-                                         std::string const &name, WeightsInit const init_mode,
-                                         SizeType const seed)
+Convolution1D<TensorType>::Convolution1D(
+    SizeType const                output_channels,
+    SizeType const                input_channels,
+    SizeType const                kernel_size,
+    SizeType const                stride_size,
+    details::ActivationType const activation_type,
+    std::string const &           name,
+    WeightsInit const             init_mode,
+    SizeType const                seed)
   : kernel_size_{kernel_size}
   , input_channels_{input_channels}
   , output_channels_{output_channels}
@@ -45,8 +48,8 @@ Convolution1D<TensorType>::Convolution1D(SizeType const output_channels,
   std::string output = this->template AddNode<fetch::ml::ops::Convolution1D<TensorType>>(
       name + "_Conv1D", {input, weights_}, stride_size_);
 
-  output = fetch::ml::details::AddActivationNode<TensorType>(activation_type, this,
-                                                             name + "_Activation", output);
+  output = fetch::ml::details::AddActivationNode<TensorType>(
+      activation_type, this, name + "_Activation", output);
 
   this->GetNode(weights_)->SetBatchOutputShape(
       {output_channels_, input_channels_, kernel_size_, 1});

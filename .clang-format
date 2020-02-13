@@ -2,13 +2,17 @@
 BasedOnStyle: Google
 Language: Cpp
 AccessModifierOffset: -2
+AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
 AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+BinPackParameters: false
 BraceWrapping:
   AfterClass: true
   AfterControlStatement: true
@@ -50,6 +54,7 @@ IndentWidth: 2
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
+PenaltyReturnTypeOnItsOwnLine: 100000
 PointerAlignment: Right
 SortIncludes: true
 SortUsingDeclarations: true

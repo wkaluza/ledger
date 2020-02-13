@@ -35,12 +35,14 @@ TYPED_TEST_SUITE(TensorBasicTests, FloatIntAndUIntTypes, );
 
 // template for producing a random array of FixedPoints
 template <uint16_t I, uint16_t F>
-Tensor<fetch::fixed_point::FixedPoint<I, F>,
-       fetch::memory::SharedArray<fetch::fixed_point::FixedPoint<I, F>>>
+Tensor<
+    fetch::fixed_point::FixedPoint<I, F>,
+    fetch::memory::SharedArray<fetch::fixed_point::FixedPoint<I, F>>>
 RandomArray(std::size_t n, fetch::fixed_point::FixedPoint<I, F> adj)
 {
-  Tensor<fetch::fixed_point::FixedPoint<I, F>,
-         fetch::memory::SharedArray<fetch::fixed_point::FixedPoint<I, F>>>
+  Tensor<
+      fetch::fixed_point::FixedPoint<I, F>,
+      fetch::memory::SharedArray<fetch::fixed_point::FixedPoint<I, F>>>
       a1(n);
 
   fetch::fixed_point::FixedPoint<I, F> rn{0};
@@ -54,8 +56,9 @@ RandomArray(std::size_t n, fetch::fixed_point::FixedPoint<I, F> adj)
 
 // template for producing a random array of integer types
 template <typename T>
-fetch::meta::IfIsInteger<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(std::size_t n,
-                                                                                  T           adj)
+fetch::meta::IfIsInteger<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(
+    std::size_t n,
+    T           adj)
 {
   Tensor<T, fetch::memory::SharedArray<T>> a1(n);
 
@@ -73,8 +76,9 @@ fetch::meta::IfIsInteger<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArra
 
 // template for producing a random array of float types
 template <typename T>
-fetch::meta::IfIsFloat<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(std::size_t n,
-                                                                                T           adj)
+fetch::meta::IfIsFloat<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(
+    std::size_t n,
+    T           adj)
 {
   Tensor<T, fetch::memory::SharedArray<T>> a1(n);
 

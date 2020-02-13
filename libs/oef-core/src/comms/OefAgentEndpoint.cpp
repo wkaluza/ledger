@@ -83,9 +83,14 @@ void OefAgentEndpoint::setup(IKarmaPolicy *karmaPolicy)
       auto k = karmaPolicy->GetAccount(myself_sp->endpoint->GetRemoteId(), "");
       std::swap(k, myself_sp->karma);
       myself_sp->karma.perform("login");
-      FETCH_LOG_INFO(LOGGING_NAME, "id=", myself_sp->GetIdentifier(),
-                     " KARMA: account=", myself_sp->endpoint->GetRemoteId(),
-                     "  balance=", myself_sp->karma.GetBalance());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "id=",
+          myself_sp->GetIdentifier(),
+          " KARMA: account=",
+          myself_sp->endpoint->GetRemoteId(),
+          "  balance=",
+          myself_sp->karma.GetBalance());
     }
   });
 
@@ -111,8 +116,8 @@ void OefAgentEndpoint::setup(IKarmaPolicy *karmaPolicy)
       myself_sp->factory->EndpointClosed();
       myself_sp->factory.reset();
       fetch::oef::base::Taskpool::GetDefaultTaskpool().lock()->CancelTaskGroup(myGroupId);
-      FETCH_LOG_INFO(LOGGING_NAME, "OnErrorHandler.CancelTaskGroup group=", myGroupId,
-                     " , ec=", ec);
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "OnErrorHandler.CancelTaskGroup group=", myGroupId, " , ec=", ec);
     }
   });
 
@@ -138,8 +143,12 @@ void OefAgentEndpoint::setup(IKarmaPolicy *karmaPolicy)
       myself_sp->factory->EndpointClosed();
       myself_sp->factory.reset();
       fetch::oef::base::Taskpool::GetDefaultTaskpool().lock()->CancelTaskGroup(myGroupId);
-      FETCH_LOG_INFO(LOGGING_NAME, "OnProtoErrorHandler.CancelTaskGroup group=", myGroupId,
-                     ", message=", message);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "OnProtoErrorHandler.CancelTaskGroup group=",
+          myGroupId,
+          ", message=",
+          message);
     }
   });
 }
@@ -172,8 +181,14 @@ void OefAgentEndpoint::heartbeat()
     if (outstanding_heartbeats > 0)
     {
       hb_max_os.max(outstanding_heartbeats);
-      FETCH_LOG_DEBUG(LOGGING_NAME, "id=", GetIdentifier(), " HB:", GetIdentifier(),
-                      " outstanding=", outstanding_heartbeats);
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "id=",
+          GetIdentifier(),
+          " HB:",
+          GetIdentifier(),
+          " outstanding=",
+          outstanding_heartbeats);
       karma.perform("comms.outstanding_heartbeats." + std::to_string(outstanding_heartbeats));
     }
 
@@ -198,7 +213,14 @@ void OefAgentEndpoint::heartbeat()
 void OefAgentEndpoint::heartbeat_recvd()
 {
   hb_recvd++;
-  FETCH_LOG_DEBUG(LOGGING_NAME, "id=", GetIdentifier(), " HB:", GetIdentifier(),
-                  " PONG  outstanding=", outstanding_heartbeats, " -> 0");
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "id=",
+      GetIdentifier(),
+      " HB:",
+      GetIdentifier(),
+      " PONG  outstanding=",
+      outstanding_heartbeats,
+      " -> 0");
   outstanding_heartbeats = 0;
 }

@@ -49,12 +49,16 @@ TYPED_TEST(SoftmaxTest, equal_proportion_test)
   // check that all values equal proportion
   auto inv_n     = fetch::math::Type<DataType>("0.001");
   auto tolerance = fetch::math::function_tolerance<DataType>();
-  EXPECT_NEAR(static_cast<double>(result_array[0]), static_cast<double>(inv_n),
-              static_cast<double>(tolerance));
+  EXPECT_NEAR(
+      static_cast<double>(result_array[0]),
+      static_cast<double>(inv_n),
+      static_cast<double>(tolerance));
   for (std::size_t i = 1; i < n; ++i)
   {
-    EXPECT_NEAR(static_cast<double>(result_array[i]), static_cast<double>(result_array[0]),
-                static_cast<double>(tolerance));
+    EXPECT_NEAR(
+        static_cast<double>(result_array[i]),
+        static_cast<double>(result_array[0]),
+        static_cast<double>(tolerance));
   }
 }
 
@@ -109,8 +113,8 @@ TYPED_TEST(SoftmaxTest, exact_values_test)
 
   fetch::math::Softmax(test_array, test_array);
 
-  ASSERT_TRUE(test_array.AllClose(gt_array, function_tolerance<DataType>(),
-                                  function_tolerance<DataType>()));
+  ASSERT_TRUE(test_array.AllClose(
+      gt_array, function_tolerance<DataType>(), function_tolerance<DataType>()));
 }
 
 }  // namespace test

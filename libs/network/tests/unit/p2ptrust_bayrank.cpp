@@ -59,8 +59,8 @@ public:
 TEST(TrustTests, BayNewInfo)
 {
   P2PTrustBayRankExtendedForTest<std::string> trust;
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::NEW_INFORMATION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::NEW_INFORMATION);
   auto g  = trust.GetGaussianOfPeer("peer1");
   auto rg = LookupReferencePlayer(TrustQuality::NEW_INFORMATION);
   EXPECT_EQ(g.mu() > rg.mu(), true);
@@ -81,13 +81,13 @@ TEST(TrustTests, BayBadInfo)
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), false);
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::NEW_INFORMATION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::NEW_INFORMATION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), false);
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::NEW_INFORMATION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::NEW_INFORMATION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), true);
 }
@@ -96,41 +96,41 @@ TEST(TrustTests, BayBadConnection)
 {
   P2PTrustBayRankExtendedForTest<std::string> trust;
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), true);
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), false);
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::BAD_CONNECTION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), false);
 
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::NEW_INFORMATION);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::NEW_INFORMATION);
 
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), true);
 }
@@ -138,11 +138,11 @@ TEST(TrustTests, BayBadConnection)
 TEST(TrustTests, BayDuplicate)
 {
   P2PTrustBayRank<std::string> trust;
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::DUPLICATE);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::DUPLICATE);
-  trust.AddFeedback("peer1", ConstByteArray{}, TrustSubject::BLOCK,
-                    fetch::p2p::TrustQuality::DUPLICATE);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::DUPLICATE);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::DUPLICATE);
+  trust.AddFeedback(
+      "peer1", ConstByteArray{}, TrustSubject::BLOCK, fetch::p2p::TrustQuality::DUPLICATE);
   EXPECT_EQ(trust.IsPeerTrusted("peer1"), true);
 }

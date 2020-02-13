@@ -29,8 +29,10 @@ namespace vm {
 
 namespace internal {
 
-template <typename EtchArgumentTuple, template <int, typename, typename, typename...> class Invoker,
-          typename ReturnType>
+template <
+    typename EtchArgumentTuple,
+    template <int, typename, typename, typename...> class Invoker,
+    typename ReturnType>
 struct EtchArgumentTupleComposer
 {
   static constexpr auto Compose(VM *vm)
@@ -50,11 +52,15 @@ private:
   }
 };
 
-template <template <int, typename, typename, typename> class Invoker, typename Callable,
-          typename EtchArgsTuple>
+template <
+    template <int, typename, typename, typename> class Invoker,
+    typename Callable,
+    typename EtchArgsTuple>
 class PrepareInvocationImpl;
-template <template <int, typename, typename, typename> class Invoker, typename Callable,
-          typename... EtchArgs>
+template <
+    template <int, typename, typename, typename> class Invoker,
+    typename Callable,
+    typename... EtchArgs>
 class PrepareInvocationImpl<Invoker, Callable, std::tuple<EtchArgs...>>
 {
   constexpr static int num_parameters = int(sizeof...(EtchArgs));
@@ -74,8 +80,10 @@ public:
 
 }  // namespace internal
 
-template <template <int, typename, typename, typename> class Invoker, typename Callable,
-          typename EtchArgsTuple>
+template <
+    template <int, typename, typename, typename> class Invoker,
+    typename Callable,
+    typename EtchArgsTuple>
 using PrepareInvocation =
     typename internal::PrepareInvocationImpl<Invoker, Callable, EtchArgsTuple>;
 

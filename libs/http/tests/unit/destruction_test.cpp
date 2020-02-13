@@ -36,7 +36,8 @@ struct TestModule : HTTPModule
 {
   TestModule()
   {
-    Get("/test", "Test page",
+    Get("/test",
+        "Test page",
         [](fetch::http::ViewParameters const & /*params*/,
            fetch::http::HTTPRequest const & /*request*/) {
           return fetch::http::CreateJsonResponse("{}", fetch::http::Status::SUCCESS_OK);

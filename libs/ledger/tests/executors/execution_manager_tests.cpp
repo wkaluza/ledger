@@ -57,9 +57,12 @@ protected:
     executors_.clear();
 
     // create the manager
-    manager_ =
-        std::make_shared<ExecutionManager>(config.executors, config.log2_lanes, mock_storage_,
-                                           [this]() { return CreateExecutor(); }, tx_status_cache_);
+    manager_ = std::make_shared<ExecutionManager>(
+        config.executors,
+        config.log2_lanes,
+        mock_storage_,
+        [this]() { return CreateExecutor(); },
+        tx_status_cache_);
   }
 
   bool IsManagerIdle() const
@@ -187,7 +190,9 @@ TEST_P(ExecutionManagerTests, DISABLED_CheckIncrementalExecution)
   manager_->Stop();
 }
 
-INSTANTIATE_TEST_SUITE_P(Param, ExecutionManagerTests,
-                         ::testing::ValuesIn(BlockConfig::REDUCED_SET));
+INSTANTIATE_TEST_SUITE_P(
+    Param,
+    ExecutionManagerTests,
+    ::testing::ValuesIn(BlockConfig::REDUCED_SET));
 
 }  // namespace

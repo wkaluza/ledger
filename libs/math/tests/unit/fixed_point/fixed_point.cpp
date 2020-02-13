@@ -227,15 +227,19 @@ TEST(FixedPointTest, Conversion_64_64)
               static_cast<fp128_t>(fp64_t::FP_MAX);
   auto x64    = static_cast<fp64_t>(x128);
   auto x128_2 = static_cast<fp128_t>(x64);
-  EXPECT_NEAR(static_cast<double>(x128), static_cast<double>(x128_2),
-              static_cast<double>(fp64_t::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(x128),
+      static_cast<double>(x128_2),
+      static_cast<double>(fp64_t::TOLERANCE));
 
   x128 = fetch::math::AsType<fp128_t>(r) * static_cast<fp128_t>(fp32_t::FP_MAX) -
          static_cast<fp128_t>(fp32_t::FP_MAX);
   auto x32 = static_cast<fp32_t>(x128);
   x128_2   = static_cast<fp128_t>(x32);
-  EXPECT_NEAR(static_cast<double>(x128), static_cast<double>(x128_2),
-              static_cast<double>(fp32_t::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(x128),
+      static_cast<double>(x128_2),
+      static_cast<double>(fp32_t::TOLERANCE));
 }
 
 TEST(FixedPointTest, FromString_16_16)
@@ -510,19 +514,19 @@ TEST(FixedPointTest, Constants_16_16)
   EXPECT_TRUE(fp32_t::CONST_INV_PI == fp32_t(0, 0x517C));  // 0.318309886183790671537767526745028724
   EXPECT_TRUE(fp32_t::CONST_TWO_INV_PI.Near(
       fetch::math::AsType<fp32_t>(0.636619772367581343075535053490057448)));
-  EXPECT_TRUE(fp32_t::CONST_TWO_INV_PI ==
-              fp32_t(0, 0xA2F9));  // 0 .636619772367581343075535053490057448
+  EXPECT_TRUE(
+      fp32_t::CONST_TWO_INV_PI == fp32_t(0, 0xA2F9));  // 0 .636619772367581343075535053490057448
   EXPECT_TRUE(fp32_t::CONST_TWO_INV_SQRTPI.Near(
       fetch::math::AsType<fp32_t>(1.128379167095512573896158903121545172)));
-  EXPECT_TRUE(fp32_t::CONST_TWO_INV_SQRTPI ==
-              fp32_t(1, 0x20DD));  // 1.128379167095512573896158903121545172
+  EXPECT_TRUE(
+      fp32_t::CONST_TWO_INV_SQRTPI == fp32_t(1, 0x20DD));  // 1.128379167095512573896158903121545172
   EXPECT_TRUE(fp32_t::CONST_SQRT2.Near(
       fetch::math::AsType<fp32_t>(1.414213562373095048801688724209698079)));
   EXPECT_TRUE(fp32_t::CONST_SQRT2 == fp32_t(1, 0x6A09));  // 1.414213562373095048801688724209698079
   EXPECT_TRUE(fp32_t::CONST_INV_SQRT2.Near(
       fetch::math::AsType<fp32_t>(0.707106781186547524400844362104849039)));
-  EXPECT_TRUE(fp32_t::CONST_INV_SQRT2 ==
-              fp32_t(0, 0xB504));  // 0.707106781186547524400844362104849039
+  EXPECT_TRUE(
+      fp32_t::CONST_INV_SQRT2 == fp32_t(0, 0xB504));  // 0.707106781186547524400844362104849039
 
   EXPECT_EQ(fp32_t::MAX_INT, 0x7ffe0000);
   EXPECT_EQ(fp32_t::MIN_INT, 0x80020000);
@@ -539,53 +543,55 @@ TEST(FixedPointTest, Constants_32_32)
   EXPECT_TRUE(fp64_t::CONST_E == fp64_t(2, 0xB7E15162));  // 2.718281828459045235360287471352662498
   EXPECT_TRUE(fp64_t::CONST_LOG2E.Near(
       fetch::math::AsType<fp64_t>(1.442695040888963407359924681001892137)));
-  EXPECT_TRUE(fp64_t::CONST_LOG2E ==
-              fp64_t(1, 0x71547652));  // 1.442695040888963407359924681001892137
+  EXPECT_TRUE(
+      fp64_t::CONST_LOG2E == fp64_t(1, 0x71547652));  // 1.442695040888963407359924681001892137
   EXPECT_TRUE(fp64_t::CONST_LOG210.Near(fetch::math::AsType<fp64_t>(3.32192809488736234787)));
   EXPECT_TRUE(fp64_t::CONST_LOG210 == fp64_t(3, 0x5269E12F));  // 3.32192809488736234787
   EXPECT_TRUE(fp64_t::CONST_LOG10E.Near(
       fetch::math::AsType<fp64_t>(0.434294481903251827651128918916605082)));
-  EXPECT_TRUE(fp64_t::CONST_LOG10E ==
-              fp64_t(0, 0x6F2DEC54));  // 0.434294481903251827651128918916605082
+  EXPECT_TRUE(
+      fp64_t::CONST_LOG10E == fp64_t(0, 0x6F2DEC54));  // 0.434294481903251827651128918916605082
   EXPECT_TRUE(
       fp64_t::CONST_LN2.Near(fetch::math::AsType<fp64_t>(0.693147180559945309417232121458176568)));
-  EXPECT_TRUE(fp64_t::CONST_LN2 ==
-              fp64_t(0, 0xB17217F7));  // 0.693147180559945309417232121458176568
+  EXPECT_TRUE(
+      fp64_t::CONST_LN2 == fp64_t(0, 0xB17217F7));  // 0.693147180559945309417232121458176568
   EXPECT_TRUE(
       fp64_t::CONST_LN10.Near(fetch::math::AsType<fp64_t>(2.302585092994045684017991454684364208)));
-  EXPECT_TRUE(fp64_t::CONST_LN10 ==
-              fp64_t(2, 0x4D763776));  // 2.302585092994045684017991454684364208
+  EXPECT_TRUE(
+      fp64_t::CONST_LN10 == fp64_t(2, 0x4D763776));  // 2.302585092994045684017991454684364208
   EXPECT_TRUE(
       fp64_t::CONST_PI.Near(fetch::math::AsType<fp64_t>(3.141592653589793238462643383279502884)));
   EXPECT_TRUE(fp64_t::CONST_PI == fp64_t(3, 0x243F6A88));  // 3.141592653589793238462643383279502884
   EXPECT_TRUE(
       fp64_t::CONST_PI_2.Near(fetch::math::AsType<fp64_t>(1.570796326794896619231321691639751442)));
-  EXPECT_TRUE(fp64_t::CONST_PI_2 ==
-              fp64_t(1, 0x921FB544));  // 1.570796326794896619231321691639751442
+  EXPECT_TRUE(
+      fp64_t::CONST_PI_2 == fp64_t(1, 0x921FB544));  // 1.570796326794896619231321691639751442
   EXPECT_TRUE(
       fp64_t::CONST_PI_4.Near(fetch::math::AsType<fp64_t>(0.785398163397448309615660845819875721)));
-  EXPECT_TRUE(fp64_t::CONST_PI_4 ==
-              fp64_t(0, 0xC90FDAA2));  // 0.785398163397448309615660845819875721
+  EXPECT_TRUE(
+      fp64_t::CONST_PI_4 == fp64_t(0, 0xC90FDAA2));  // 0.785398163397448309615660845819875721
   EXPECT_TRUE(fp64_t::CONST_INV_PI.Near(
       fetch::math::AsType<fp64_t>(0.318309886183790671537767526745028724)));
-  EXPECT_TRUE(fp64_t::CONST_INV_PI ==
-              fp64_t(0, 0x517CC1B7));  // 0.318309886183790671537767526745028724
+  EXPECT_TRUE(
+      fp64_t::CONST_INV_PI == fp64_t(0, 0x517CC1B7));  // 0.318309886183790671537767526745028724
   EXPECT_TRUE(fp64_t::CONST_TWO_INV_PI.Near(
       fetch::math::AsType<fp64_t>(0.636619772367581343075535053490057448)));
-  EXPECT_TRUE(fp64_t::CONST_TWO_INV_PI ==
-              fp64_t(0, 0xA2F9836E));  // 0 .636619772367581343075535053490057448
+  EXPECT_TRUE(
+      fp64_t::CONST_TWO_INV_PI ==
+      fp64_t(0, 0xA2F9836E));  // 0 .636619772367581343075535053490057448
   EXPECT_TRUE(fp64_t::CONST_TWO_INV_SQRTPI.Near(
       fetch::math::AsType<fp64_t>(1.128379167095512573896158903121545172)));
-  EXPECT_TRUE(fp64_t::CONST_TWO_INV_SQRTPI ==
-              fp64_t(1, 0x20DD7504));  // 1.128379167095512573896158903121545172
+  EXPECT_TRUE(
+      fp64_t::CONST_TWO_INV_SQRTPI ==
+      fp64_t(1, 0x20DD7504));  // 1.128379167095512573896158903121545172
   EXPECT_TRUE(fp64_t::CONST_SQRT2.Near(
       fetch::math::AsType<fp64_t>(1.414213562373095048801688724209698079)));
-  EXPECT_TRUE(fp64_t::CONST_SQRT2 ==
-              fp64_t(1, 0x6A09E667));  // 1.414213562373095048801688724209698079
+  EXPECT_TRUE(
+      fp64_t::CONST_SQRT2 == fp64_t(1, 0x6A09E667));  // 1.414213562373095048801688724209698079
   EXPECT_TRUE(fp64_t::CONST_INV_SQRT2.Near(
       fetch::math::AsType<fp64_t>(0.707106781186547524400844362104849039)));
-  EXPECT_TRUE(fp64_t::CONST_INV_SQRT2 ==
-              fp64_t(0, 0xB504F333));  // 0.707106781186547524400844362104849039
+  EXPECT_TRUE(
+      fp64_t::CONST_INV_SQRT2 == fp64_t(0, 0xB504F333));  // 0.707106781186547524400844362104849039
 
   EXPECT_EQ(fp64_t::MAX_INT, 0x7ffffffe00000000);
   EXPECT_EQ(fp64_t::MIN_INT, 0x8000000200000000);
@@ -599,58 +605,71 @@ TEST(FixedPointTest, Constants_64_64)
 {
   EXPECT_TRUE(
       fp128_t::CONST_E.Near(fetch::math::AsType<fp128_t>(2.718281828459045235360287471352662498)));
-  EXPECT_TRUE(fp128_t::CONST_E ==
-              fp128_t(2, 0xB7E151628AED2A6A));  // 2.718281828459045235360287471352662498
+  EXPECT_TRUE(
+      fp128_t::CONST_E ==
+      fp128_t(2, 0xB7E151628AED2A6A));  // 2.718281828459045235360287471352662498
   EXPECT_TRUE(fp128_t::CONST_LOG2E.Near(
       fetch::math::AsType<fp128_t>(1.442695040888963407359924681001892137)));
-  EXPECT_TRUE(fp128_t::CONST_LOG2E ==
-              fp128_t(1, 0x71547652B82FE177));  // 1.442695040888963407359924681001892137
+  EXPECT_TRUE(
+      fp128_t::CONST_LOG2E ==
+      fp128_t(1, 0x71547652B82FE177));  // 1.442695040888963407359924681001892137
   EXPECT_TRUE(fp128_t::CONST_LOG210.Near(fetch::math::AsType<fp128_t>(3.32192809488736234787)));
   EXPECT_TRUE(fp128_t::CONST_LOG210 == fp128_t(3, 0x5269E12F346E2BF9));  // 3.32192809488736234787
   EXPECT_TRUE(fp128_t::CONST_LOG10E.Near(
       fetch::math::AsType<fp128_t>(0.434294481903251827651128918916605082)));
-  EXPECT_TRUE(fp128_t::CONST_LOG10E ==
-              fp128_t(0, 0x6F2DEC549B9438CA));  // 0.434294481903251827651128918916605082
+  EXPECT_TRUE(
+      fp128_t::CONST_LOG10E ==
+      fp128_t(0, 0x6F2DEC549B9438CA));  // 0.434294481903251827651128918916605082
   EXPECT_TRUE(fp128_t::CONST_LN2.Near(
       fetch::math::AsType<fp128_t>(0.693147180559945309417232121458176568)));
-  EXPECT_TRUE(fp128_t::CONST_LN2 ==
-              fp128_t(0, 0xB17217F7D1CF79AB));  // 0.693147180559945309417232121458176568
+  EXPECT_TRUE(
+      fp128_t::CONST_LN2 ==
+      fp128_t(0, 0xB17217F7D1CF79AB));  // 0.693147180559945309417232121458176568
   EXPECT_TRUE(fp128_t::CONST_LN10.Near(
       fetch::math::AsType<fp128_t>(2.302585092994045684017991454684364208)));
-  EXPECT_TRUE(fp128_t::CONST_LN10 ==
-              fp128_t(2, 0x4D763776AAA2B05B));  // 2.302585092994045684017991454684364208
+  EXPECT_TRUE(
+      fp128_t::CONST_LN10 ==
+      fp128_t(2, 0x4D763776AAA2B05B));  // 2.302585092994045684017991454684364208
   EXPECT_TRUE(
       fp128_t::CONST_PI.Near(fetch::math::AsType<fp128_t>(3.141592653589793238462643383279502884)));
-  EXPECT_TRUE(fp128_t::CONST_PI ==
-              fp128_t(3, 0x243F6A8885A308D3));  // 3.141592653589793238462643383279502884
+  EXPECT_TRUE(
+      fp128_t::CONST_PI ==
+      fp128_t(3, 0x243F6A8885A308D3));  // 3.141592653589793238462643383279502884
   EXPECT_TRUE(fp128_t::CONST_PI_2.Near(
       fetch::math::AsType<fp128_t>(1.570796326794896619231321691639751442)));
-  EXPECT_TRUE(fp128_t::CONST_PI_2 ==
-              fp128_t(1, 0x921FB54442D18469));  // 1.570796326794896619231321691639751442
+  EXPECT_TRUE(
+      fp128_t::CONST_PI_2 ==
+      fp128_t(1, 0x921FB54442D18469));  // 1.570796326794896619231321691639751442
   EXPECT_TRUE(fp128_t::CONST_PI_4.Near(
       fetch::math::AsType<fp128_t>(0.785398163397448309615660845819875721)));
-  EXPECT_TRUE(fp128_t::CONST_PI_4 ==
-              fp128_t(0, 0xC90FDAA22168C234));  // 0.785398163397448309615660845819875721
+  EXPECT_TRUE(
+      fp128_t::CONST_PI_4 ==
+      fp128_t(0, 0xC90FDAA22168C234));  // 0.785398163397448309615660845819875721
   EXPECT_TRUE(fp128_t::CONST_INV_PI.Near(
       fetch::math::AsType<fp128_t>(0.318309886183790671537767526745028724)));
-  EXPECT_TRUE(fp128_t::CONST_INV_PI ==
-              fp128_t(0, 0x517CC1B727220A94));  // 0.318309886183790671537767526745028724
+  EXPECT_TRUE(
+      fp128_t::CONST_INV_PI ==
+      fp128_t(0, 0x517CC1B727220A94));  // 0.318309886183790671537767526745028724
   EXPECT_TRUE(fp128_t::CONST_TWO_INV_PI.Near(
       fetch::math::AsType<fp128_t>(0.636619772367581343075535053490057448)));
-  EXPECT_TRUE(fp128_t::CONST_TWO_INV_PI ==
-              fp128_t(0, 0xA2F9836E4E441529));  // 0 .636619772367581343075535053490057448
+  EXPECT_TRUE(
+      fp128_t::CONST_TWO_INV_PI ==
+      fp128_t(0, 0xA2F9836E4E441529));  // 0 .636619772367581343075535053490057448
   EXPECT_TRUE(fp128_t::CONST_TWO_INV_SQRTPI.Near(
       fetch::math::AsType<fp128_t>(1.128379167095512573896158903121545172)));
-  EXPECT_TRUE(fp128_t::CONST_TWO_INV_SQRTPI ==
-              fp128_t(1, 0x20DD750429B6D11A));  // 1.128379167095512573896158903121545172
+  EXPECT_TRUE(
+      fp128_t::CONST_TWO_INV_SQRTPI ==
+      fp128_t(1, 0x20DD750429B6D11A));  // 1.128379167095512573896158903121545172
   EXPECT_TRUE(fp128_t::CONST_SQRT2.Near(
       fetch::math::AsType<fp128_t>(1.414213562373095048801688724209698079)));
-  EXPECT_TRUE(fp128_t::CONST_SQRT2 ==
-              fp128_t(1, 0x6A09E667F3BCC908));  // 1.414213562373095048801688724209698079
+  EXPECT_TRUE(
+      fp128_t::CONST_SQRT2 ==
+      fp128_t(1, 0x6A09E667F3BCC908));  // 1.414213562373095048801688724209698079
   EXPECT_TRUE(fp128_t::CONST_INV_SQRT2.Near(
       fetch::math::AsType<fp128_t>(0.707106781186547524400844362104849039)));
-  EXPECT_TRUE(fp128_t::CONST_INV_SQRT2 ==
-              fp128_t(0, 0xB504F333F9DE6484));  // 0.707106781186547524400844362104849039
+  EXPECT_TRUE(
+      fp128_t::CONST_INV_SQRT2 ==
+      fp128_t(0, 0xB504F333F9DE6484));  // 0.707106781186547524400844362104849039
 
   EXPECT_EQ(fp128_t::MAX_INT, (static_cast<uint128_t>(0x7ffffffffffffffe) << 64));
   EXPECT_EQ(fp128_t::MIN_INT, (static_cast<uint128_t>(0x8000000000000002) << 64));
@@ -658,8 +677,9 @@ TEST(FixedPointTest, Constants_64_64)
   EXPECT_EQ(fp128_t::MIN, (static_cast<uint128_t>(0x8000000000000001) << 64) | 0x0000000000000001);
 
   EXPECT_EQ(fp128_t::MAX_EXP.Data(), (static_cast<uint128_t>(0x2b) << 64) | 0xab13e5fca20ef141);
-  EXPECT_EQ(fp128_t::MIN_EXP.Data(),
-            (static_cast<uint128_t>(0xffffffffffffffd4) << 64) | 0x54ec1a035df10ebf);
+  EXPECT_EQ(
+      fp128_t::MIN_EXP.Data(),
+      (static_cast<uint128_t>(0xffffffffffffffd4) << 64) | 0x54ec1a035df10ebf);
 }
 
 template <typename T>
@@ -1046,39 +1066,46 @@ TYPED_TEST(BasicTest, Remainder)
   TypeParam huge(10000);
   huge >>= 2;
   TypeParam e = TypeParam::Remainder(ten, one);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(ten), static_cast<double>(one)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(ten), static_cast<double>(one)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(ten, m_one);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(ten), static_cast<double>(m_one)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(ten), static_cast<double>(m_one)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(ten, one_point_five);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(ten), static_cast<double>(one_point_five)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(ten), static_cast<double>(one_point_five)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(ten, m_one_point_five);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(ten), static_cast<double>(m_one_point_five)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(ten), static_cast<double>(m_one_point_five)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(ten, x);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(ten), static_cast<double>(x)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(ten), static_cast<double>(x)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(m_ten, x);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(m_ten), static_cast<double>(x)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(m_ten), static_cast<double>(x)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   e = TypeParam::Remainder(huge, x);
-  EXPECT_NEAR(static_cast<double>(e),
-              std::remainder(static_cast<double>(huge), static_cast<double>(x)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e),
+      std::remainder(static_cast<double>(huge), static_cast<double>(x)),
+      static_cast<double>(TypeParam::TOLERANCE));
 }
 
 TYPED_TEST(BasicTest, Fmod)
@@ -1098,12 +1125,14 @@ TYPED_TEST(BasicTest, Fmod)
   TypeParam e6 = TypeParam::Fmod(m_ten, x);
 
   EXPECT_EQ(static_cast<double>(e1), std::fmod(static_cast<double>(ten), static_cast<double>(one)));
-  EXPECT_EQ(static_cast<double>(e2),
-            std::fmod(static_cast<double>(ten), static_cast<double>(m_one)));
-  EXPECT_EQ(static_cast<double>(e3),
-            std::fmod(static_cast<double>(ten), static_cast<double>(one_point_five)));
-  EXPECT_EQ(static_cast<double>(e4),
-            std::fmod(static_cast<double>(ten), static_cast<double>(m_one_point_five)));
+  EXPECT_EQ(
+      static_cast<double>(e2), std::fmod(static_cast<double>(ten), static_cast<double>(m_one)));
+  EXPECT_EQ(
+      static_cast<double>(e3),
+      std::fmod(static_cast<double>(ten), static_cast<double>(one_point_five)));
+  EXPECT_EQ(
+      static_cast<double>(e4),
+      std::fmod(static_cast<double>(ten), static_cast<double>(m_one_point_five)));
   EXPECT_EQ(static_cast<double>(e5), std::fmod(static_cast<double>(ten), static_cast<double>(x)));
   EXPECT_EQ(static_cast<double>(e6), std::fmod(static_cast<double>(m_ten), static_cast<double>(x)));
 }
@@ -1128,48 +1157,74 @@ TYPED_TEST(TranscendentalTest, Exp)
   TypeParam e6    = TypeParam::Exp(ten);
   TypeParam e_max = TypeParam::Exp(TypeParam::MAX_EXP);
 
-  EXPECT_NEAR(static_cast<double>(e1) - std::exp(static_cast<double>(one)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e2) - std::exp(static_cast<double>(two)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e3) - std::exp(static_cast<double>(small)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e4) - std::exp(static_cast<double>(tiny)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e5) - std::exp(static_cast<double>(negative)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e1) - std::exp(static_cast<double>(one)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e2) - std::exp(static_cast<double>(two)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e3) - std::exp(static_cast<double>(small)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e4) - std::exp(static_cast<double>(tiny)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e5) - std::exp(static_cast<double>(negative)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   // For bigger values check relative error
-  EXPECT_NEAR((static_cast<double>(e6) - std::exp(static_cast<double>(ten))) /
-                  std::exp(static_cast<double>(ten)),
-              0, static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR((static_cast<double>(e_max) - std::exp(static_cast<double>(TypeParam::MAX_EXP))) /
-                  std::exp(static_cast<double>(TypeParam::MAX_EXP)),
-              0, static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      (static_cast<double>(e6) - std::exp(static_cast<double>(ten))) /
+          std::exp(static_cast<double>(ten)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      (static_cast<double>(e_max) - std::exp(static_cast<double>(TypeParam::MAX_EXP))) /
+          std::exp(static_cast<double>(TypeParam::MAX_EXP)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   // Out of range
   TypeParam::StateClear();
-  EXPECT_EQ(TypeParam::Exp(TypeParam::MAX_EXP + TypeParam::CONST_SMALLEST_FRACTION),
-            TypeParam::FP_MAX);
+  EXPECT_EQ(
+      TypeParam::Exp(TypeParam::MAX_EXP + TypeParam::CONST_SMALLEST_FRACTION), TypeParam::FP_MAX);
   EXPECT_TRUE(TypeParam::IsStateOverflow());
 
   // Negative values
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(-one)) - std::exp(-static_cast<double>(one)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(-two)) - std::exp(-static_cast<double>(two)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(-one)) - std::exp(-static_cast<double>(one)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(-two)) - std::exp(-static_cast<double>(two)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   // This particular error produces more than 1e-6 error failing the test
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(-ten)) - std::exp(-static_cast<double>(ten)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(-ten)) - std::exp(-static_cast<double>(ten)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
   // The rest pass with fp64_t::TOLERANCE
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(-small)) - std::exp(-static_cast<double>(small)),
-              0, static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(-tiny)) - std::exp(-static_cast<double>(tiny)), 0,
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(TypeParam::Exp(TypeParam::MIN_EXP)) -
-                  std::exp(static_cast<double>(fp64_t::MIN_EXP)),
-              0, static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(-small)) - std::exp(-static_cast<double>(small)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(-tiny)) - std::exp(-static_cast<double>(tiny)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(TypeParam::Exp(TypeParam::MIN_EXP)) -
+          std::exp(static_cast<double>(fp64_t::MIN_EXP)),
+      0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   double    r;
   double    delta, max_error = 0, avg_error = 0;
@@ -1221,9 +1276,9 @@ TYPED_TEST(TranscendentalTest, Pow_positive_x_gt_1)
     r      = static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
     x      = fetch::math::AsType<TypeParam>(r * scalex + margin);
     r      = static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
-    scaley = std::floor(std::log(static_cast<double>(TypeParam::FP_MAX)) /
-                        std::log(static_cast<double>(x)));
-    y      = fetch::math::AsType<TypeParam>(r * scaley);
+    scaley = std::floor(
+        std::log(static_cast<double>(TypeParam::FP_MAX)) / std::log(static_cast<double>(x)));
+    y = fetch::math::AsType<TypeParam>(r * scaley);
     TypeParam::StateClear();
     TypeParam e = TypeParam::Pow(x, y);
     if (TypeParam::IsStateOverflow())
@@ -1253,9 +1308,9 @@ TYPED_TEST(TranscendentalTest, Pow_positive_x_lt_1)
     r      = static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
     x      = fetch::math::AsType<TypeParam>(r) * (scalex) + margin;
     r      = static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
-    scaley = std::floor(std::log(static_cast<double>(TypeParam::FP_MAX)) /
-                        std::log(static_cast<double>(x)));
-    y      = fetch::math::AsType<TypeParam>(r * scaley);
+    scaley = std::floor(
+        std::log(static_cast<double>(TypeParam::FP_MAX)) / std::log(static_cast<double>(x)));
+    y = fetch::math::AsType<TypeParam>(r * scaley);
     TypeParam::StateClear();
     TypeParam e = TypeParam::Pow(x, y);
     if (TypeParam::IsStateOverflow())
@@ -1323,18 +1378,30 @@ TYPED_TEST(TranscendentalTest, Logarithm)
   TypeParam e5 = TypeParam::Log2(small);
   TypeParam e6 = TypeParam::Log2(tiny);
 
-  EXPECT_NEAR(static_cast<double>(e1), std::log2(static_cast<double>(one)),
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e2), std::log2(static_cast<double>(one_point_five)),
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e3), std::log2(static_cast<double>(ten)),
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e4), std::log2(static_cast<double>(huge)),
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e5), std::log2(static_cast<double>(small)),
-              static_cast<double>(TypeParam::TOLERANCE));
-  EXPECT_NEAR(static_cast<double>(e6), std::log2(static_cast<double>(tiny)),
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e1),
+      std::log2(static_cast<double>(one)),
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e2),
+      std::log2(static_cast<double>(one_point_five)),
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e3),
+      std::log2(static_cast<double>(ten)),
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e4),
+      std::log2(static_cast<double>(huge)),
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e5),
+      std::log2(static_cast<double>(small)),
+      static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      static_cast<double>(e6),
+      std::log2(static_cast<double>(tiny)),
+      static_cast<double>(TypeParam::TOLERANCE));
 
   double    r;
   double    delta, max_error = 0, avg_error = 0;
@@ -1377,32 +1444,38 @@ TYPED_TEST(TranscendentalTest, Sqrt)
   TypeParam e8 = TypeParam::Sqrt(tiny);
 
   double delta = static_cast<double>(e1) - std::sqrt(static_cast<double>(one));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(one)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(one)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e2) - std::sqrt(static_cast<double>(one_point_five));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(one_point_five)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(one_point_five)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e3) - std::sqrt(static_cast<double>(two));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(two)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(two)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e3 - TypeParam::CONST_SQRT2);
-  EXPECT_NEAR(delta / static_cast<double>(TypeParam::CONST_SQRT2), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / static_cast<double>(TypeParam::CONST_SQRT2),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e4) - std::sqrt(static_cast<double>(four));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(four)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(four)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e5) - std::sqrt(static_cast<double>(ten));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(ten)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(ten)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e6) - std::sqrt(static_cast<double>(huge));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(huge)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(huge)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e7) - std::sqrt(static_cast<double>(small));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(small)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(small)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e8) - std::sqrt(static_cast<double>(tiny));
-  EXPECT_NEAR(delta / std::sqrt(static_cast<double>(tiny)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sqrt(static_cast<double>(tiny)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
 
   // Sqrt of a negative
   EXPECT_TRUE(TypeParam::IsNaN(TypeParam::Sqrt(-one)));
@@ -1456,21 +1529,25 @@ TYPED_TEST(TrigonometryTest, Sin)
   TypeParam e16 = TypeParam::Sin(TypeParam::CONST_PI_4 * TypeParam{3});
 
   double delta = static_cast<double>(e1) - std::sin(static_cast<double>(one));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(one)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(one)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e2) - std::sin(static_cast<double>(one_point_five));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(one_point_five)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(one_point_five)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e3) - std::sin(static_cast<double>(TypeParam::_0));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e4) - std::sin(static_cast<double>(huge));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(huge)), 0.0,
-              0.002);  // Sin for larger arguments loses precision
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(huge)),
+      0.0,
+      0.002);  // Sin for larger arguments loses precision
   delta = static_cast<double>(e5) - std::sin(static_cast<double>(small));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e6) - std::sin(static_cast<double>(tiny));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(tiny)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(tiny)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e7) - std::sin(static_cast<double>(TypeParam::CONST_PI));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e8) - std::sin(static_cast<double>((-TypeParam::CONST_PI)));
@@ -1482,20 +1559,30 @@ TYPED_TEST(TrigonometryTest, Sin)
   delta = static_cast<double>(e11) - std::sin(static_cast<double>(TypeParam::CONST_PI) * 100);
   EXPECT_NEAR(delta, 0.0, 0.001);  // Sin for larger arguments loses precision
   delta = static_cast<double>(e12) - std::sin(static_cast<double>((TypeParam::CONST_PI_2)));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(TypeParam::CONST_PI_2)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(TypeParam::CONST_PI_2)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e13) - std::sin(static_cast<double>((-TypeParam::CONST_PI_2)));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(-TypeParam::CONST_PI_2)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(-TypeParam::CONST_PI_2)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e14) - std::sin(static_cast<double>((TypeParam::CONST_PI_4)));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e15) - std::sin(static_cast<double>((-TypeParam::CONST_PI_4)));
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(-TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(-TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e16) - std::sin(static_cast<double>(TypeParam::CONST_PI_4) * 3);
-  EXPECT_NEAR(delta / std::sin(static_cast<double>(TypeParam::CONST_PI_4) * 3), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::sin(static_cast<double>(TypeParam::CONST_PI_4) * 3),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   double    r;
   double    max_error = 0, avg_error = 0;
@@ -1543,23 +1630,29 @@ TYPED_TEST(TrigonometryTest, Cos)
   TypeParam e16 = TypeParam::Cos(TypeParam::CONST_PI_4 * TypeParam{3});
 
   double delta = static_cast<double>(e1) - std::cos(static_cast<double>(one));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(one)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(one)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e2) - std::cos(static_cast<double>(one_point_five));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(one_point_five)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(one_point_five)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e3) - std::cos(static_cast<double>(TypeParam::_0));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(TypeParam::_0)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(TypeParam::_0)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e4) - std::cos(static_cast<double>(huge));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(huge)), 0.0,
-              0.012);  // Sin for larger arguments loses precision
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(huge)),
+      0.0,
+      0.012);  // Sin for larger arguments loses precision
   delta = static_cast<double>(e5) - std::cos(static_cast<double>(small));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(small)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(small)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e6) - std::cos(static_cast<double>(tiny));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(tiny)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(tiny)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e7) - std::cos(static_cast<double>(TypeParam::CONST_PI));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e8) - std::cos(static_cast<double>(-TypeParam::CONST_PI));
@@ -1575,14 +1668,20 @@ TYPED_TEST(TrigonometryTest, Cos)
   delta = static_cast<double>(e13) - std::cos(static_cast<double>(-TypeParam::CONST_PI_2));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e14) - std::cos(static_cast<double>(TypeParam::CONST_PI_4));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e15) - std::cos(static_cast<double>(-TypeParam::CONST_PI_4));
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(-TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(-TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e16) - std::cos(static_cast<double>(TypeParam::CONST_PI_4) * 3);
-  EXPECT_NEAR(delta / std::cos(static_cast<double>(TypeParam::CONST_PI_4) * 3), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::cos(static_cast<double>(TypeParam::CONST_PI_4) * 3),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   double    r;
   double    max_error = 0, avg_error = 0;
@@ -1628,11 +1727,13 @@ TYPED_TEST(TrigonometryTest, Tan)
   TypeParam e14 = TypeParam::Tan(TypeParam::CONST_PI_4 * TypeParam{3});
 
   double delta = static_cast<double>(e1) - std::tan(static_cast<double>(one));
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(one)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(one)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e2) - std::tan(static_cast<double>(one_point_five));
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(one_point_five)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(one_point_five)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e3) - std::tan(static_cast<double>(TypeParam::_0));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e4) - std::tan(static_cast<double>(huge));
@@ -1641,8 +1742,8 @@ TYPED_TEST(TrigonometryTest, Tan)
   delta = static_cast<double>(e5) - std::tan(static_cast<double>(small));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e6) - std::tan(static_cast<double>(tiny));
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(tiny)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(tiny)), 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e7) - std::tan(static_cast<double>(TypeParam::CONST_PI));
   EXPECT_NEAR(delta, 0.0, static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e8) - std::tan(static_cast<double>(-TypeParam::CONST_PI));
@@ -1654,14 +1755,20 @@ TYPED_TEST(TrigonometryTest, Tan)
   delta = static_cast<double>(e11) - std::tan(static_cast<double>(TypeParam::CONST_PI) * 100);
   EXPECT_NEAR(delta, 0.0, 0.001);  // Sin for larger arguments loses precision
   delta = static_cast<double>(e12) - std::tan(static_cast<double>(TypeParam::CONST_PI_4));
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e13) - std::tan(static_cast<double>(-TypeParam::CONST_PI_4));
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(-TypeParam::CONST_PI_4)), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(-TypeParam::CONST_PI_4)),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
   delta = static_cast<double>(e14) - std::tan(static_cast<double>(TypeParam::CONST_PI_4) * 3);
-  EXPECT_NEAR(delta / std::tan(static_cast<double>(TypeParam::CONST_PI_4) * 3), 0.0,
-              static_cast<double>(TypeParam::TOLERANCE));
+  EXPECT_NEAR(
+      delta / std::tan(static_cast<double>(TypeParam::CONST_PI_4) * 3),
+      0.0,
+      static_cast<double>(TypeParam::TOLERANCE));
 
   EXPECT_TRUE(TypeParam::IsPosInfinity(TypeParam::Tan(TypeParam::CONST_PI_2)));
   EXPECT_TRUE(TypeParam::IsNegInfinity(TypeParam::Tan(-TypeParam::CONST_PI_2)));

@@ -33,14 +33,17 @@ KarmaAccount KarmaPolicyNone::GetAccount(const std::string & /*pubkey*/, const s
   return mkAccount(0, "NO_KARMA_POLICY");
 }
 
-bool KarmaPolicyNone::perform(const KarmaAccount & /*identifier*/, const std::string & /*action*/,
-                              bool /*force*/)
+bool KarmaPolicyNone::perform(
+    const KarmaAccount & /*identifier*/,
+    const std::string & /*action*/,
+    bool /*force*/)
 {
   return true;
 }
 
-bool KarmaPolicyNone::CouldPerform(const KarmaAccount & /*identifier*/,
-                                   const std::string & /*action*/)
+bool KarmaPolicyNone::CouldPerform(
+    const KarmaAccount & /*identifier*/,
+    const std::string & /*action*/)
 {
   return true;
 }

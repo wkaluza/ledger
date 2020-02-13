@@ -31,8 +31,11 @@ namespace telemetry {
  * @param description The description of the metric
  * @param labels The labels associated with the metric
  */
-Histogram::Histogram(std::initializer_list<double> const &buckets, std::string const &name,
-                     std::string const &description, Labels const &labels)
+Histogram::Histogram(
+    std::initializer_list<double> const &buckets,
+    std::string const &                  name,
+    std::string const &                  description,
+    Labels const &                       labels)
   : Histogram(buckets.begin(), buckets.end(), name, description, labels)
 {}
 
@@ -44,8 +47,11 @@ Histogram::Histogram(std::initializer_list<double> const &buckets, std::string c
  * @param description The description of the metric
  * @param labels The labels associated with the metric
  */
-Histogram::Histogram(std::vector<double> const &buckets, std::string const &name,
-                     std::string const &description, Labels const &labels)
+Histogram::Histogram(
+    std::vector<double> const &buckets,
+    std::string const &        name,
+    std::string const &        description,
+    Labels const &             labels)
   : Histogram(buckets.begin(), buckets.end(), name, description, labels)
 {}
 
@@ -60,8 +66,12 @@ Histogram::Histogram(std::vector<double> const &buckets, std::string const &name
  * @param labels The labels associated with the metric
  */
 template <typename Iterator>
-Histogram::Histogram(Iterator const &begin, Iterator const &end, std::string const &name,
-                     std::string const &description, Labels const &labels)
+Histogram::Histogram(
+    Iterator const &   begin,
+    Iterator const &   end,
+    std::string const &name,
+    std::string const &description,
+    Labels const &     labels)
   : Measurement{name, description, labels}
 {
   std::lock_guard<std::mutex> guard(lock_);

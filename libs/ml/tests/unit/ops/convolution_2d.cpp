@@ -243,10 +243,14 @@ TYPED_TEST(Convolution2DTest, backward_3x3x3x2_5x3x3x3x2)
   ASSERT_EQ(prediction.at(1).shape(), kernels.shape());
 
   // Test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt1, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction[1].AllClose(gt2, fetch::math::function_tolerance<DataType>(),
-                                     fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt1,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction[1].AllClose(
+      gt2,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace

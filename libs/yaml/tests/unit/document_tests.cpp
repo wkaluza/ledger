@@ -567,12 +567,14 @@ application specific tag: !something |
   auto const &notdate = root["not-date"];
   EXPECT_EQ(notdate.As<string>(), "2002-04-28");
   auto const &picture = root["picture"];
-  EXPECT_EQ(picture.As<string>(),
-            "R0lGODlhDAAMAIQAAP//9/"
-            "X\n17unp5WZmZgAAAOfn515eXv\nPz7Y6OjuDg4J+fn5OTk6enp\n56enmleECcgggoBADs=");
+  EXPECT_EQ(
+      picture.As<string>(),
+      "R0lGODlhDAAMAIQAAP//9/"
+      "X\n17unp5WZmZgAAAOfn515eXv\nPz7Y6OjuDg4J+fn5OTk6enp\n56enmleECcgggoBADs=");
   auto const &spectag = root["application specific tag"];
-  EXPECT_EQ(spectag.As<string>(),
-            "The semantics of the tag\nabove may be different for\ndifferent documents.");
+  EXPECT_EQ(
+      spectag.As<string>(),
+      "The semantics of the tag\nabove may be different for\ndifferent documents.");
 }
 
 TEST(YamlTests, Example2_24Test)

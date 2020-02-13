@@ -96,8 +96,9 @@ TEST_F(WaitableTests, Wait_returns_when_the_condition_is_true)
   check_thread.join();
 }
 
-TEST_F(WaitableTests,
-       Wait_allows_to_specify_optional_timeout_and_returns_true_if_condition_was_true_on_return)
+TEST_F(
+    WaitableTests,
+    Wait_allows_to_specify_optional_timeout_and_returns_true_if_condition_was_true_on_return)
 {
   auto const no_timeout =
       waitable.Wait([](auto const &) { return true; }, std::chrono::milliseconds{1u});

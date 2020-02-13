@@ -88,10 +88,20 @@ TYPED_TEST(SerializersTestNoInt, serialize_graph_saveable_params)
   std::string layer_1 = g->template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
       "FC1", {input}, 10u, 20u, ::fetch::ml::details::ActivationType::RELU, regulariser, reg_rate);
   std::string layer_2 = g->template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-      "FC2", {layer_1}, 20u, 10u, ::fetch::ml::details::ActivationType::RELU, regulariser,
+      "FC2",
+      {layer_1},
+      20u,
+      10u,
+      ::fetch::ml::details::ActivationType::RELU,
+      regulariser,
       reg_rate);
   std::string output = g->template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-      "FC3", {layer_2}, 10u, 10u, ::fetch::ml::details::ActivationType::SOFTMAX, regulariser,
+      "FC3",
+      {layer_2},
+      10u,
+      10u,
+      ::fetch::ml::details::ActivationType::SOFTMAX,
+      regulariser,
       reg_rate);
 
   // Add loss function
@@ -135,8 +145,10 @@ TYPED_TEST(SerializersTestNoInt, serialize_graph_saveable_params)
   TensorType prediction2 = g2->Evaluate(output);
 
   // test correct values
-  EXPECT_TRUE(prediction.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                  ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // train g
   g->SetInput(label_name, labels);
@@ -166,11 +178,15 @@ TYPED_TEST(SerializersTestNoInt, serialize_graph_saveable_params)
   g2->SetInput("Input", data.Transpose());
   TensorType prediction4 = g2->Evaluate(output);
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
-  EXPECT_TRUE(prediction3.AllClose(prediction4, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction3.AllClose(
+      prediction4,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(GraphRebuildTest, graph_rebuild_every_op)
@@ -298,8 +314,8 @@ TYPED_TEST(GraphRebuildTest, graph_rebuild_every_op)
       AddOp<fetch::ml::layers::ScaledDotProductAttention<TensorType>>(
           g, {input_query, input_key, input_value, input_mask}, 4);
   std::string layer_selfattentionencoder =
-      AddOp<fetch::ml::layers::SelfAttentionEncoder<TensorType>>(g, {input_query, input_mask}, 4,
-                                                                 12, 24);
+      AddOp<fetch::ml::layers::SelfAttentionEncoder<TensorType>>(
+          g, {input_query, input_mask}, 4, 12, 24);
   std::string layer_skipgram =
       AddOp<fetch::ml::layers::SkipGram<TensorType>>(g, {input_1, input_1}, 1, 1, 10, 10);
 

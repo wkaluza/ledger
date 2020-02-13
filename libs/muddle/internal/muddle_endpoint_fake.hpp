@@ -43,24 +43,40 @@ public:
   using DirectMessageHandler = std::function<void(Handle, PacketPtr)>;
 
   // Construction / Destruction
-  FakeMuddleEndpoint(NetworkId network_id, Address address, Prover *certificate = nullptr,
-                     bool sign_broadcasts = false);
+  FakeMuddleEndpoint(
+      NetworkId network_id,
+      Address   address,
+      Prover *  certificate     = nullptr,
+      bool      sign_broadcasts = false);
 
   ~FakeMuddleEndpoint() override;
 
   Address const &GetAddress() const override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel,
-            Payload const &message) override;
+  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
+      override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message,
-            Options options) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      Payload const &message,
+      Options        options) override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload) override;
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, uint16_t message_num,
-            Payload const &payload, Options options) override;
+  void Send(
+      Address const &address,
+      uint16_t       service,
+      uint16_t       channel,
+      uint16_t       message_num,
+      Payload const &payload,
+      Options        options) override;
 
   void Broadcast(uint16_t service, uint16_t channel, Payload const &payload) override;
 

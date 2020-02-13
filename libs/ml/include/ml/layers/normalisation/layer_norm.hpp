@@ -36,8 +36,10 @@ public:
 
   LayerNorm() = default;
 
-  explicit LayerNorm(std::vector<SizeType> data_shape, SizeType axis = static_cast<SizeType>(0),
-                     DataType epsilon = fetch::math::function_tolerance<DataType>());
+  explicit LayerNorm(
+      std::vector<SizeType> data_shape,
+      SizeType              axis    = static_cast<SizeType>(0),
+      DataType              epsilon = fetch::math::function_tolerance<DataType>());
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 

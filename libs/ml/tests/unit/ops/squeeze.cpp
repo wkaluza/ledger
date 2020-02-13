@@ -52,8 +52,10 @@ TYPED_TEST(SqueezeTest, forward_1_6_1_test)
   ASSERT_EQ(prediction.shape().at(0), 1);
   ASSERT_EQ(prediction.shape().at(1), 6);
 
-  ASSERT_TRUE(prediction.AllClose(data, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   TypeParam prediction2(op.ComputeOutputShape({std::make_shared<const TensorType>(prediction)}));
   op.Forward({std::make_shared<const TensorType>(prediction)}, prediction2);
@@ -61,8 +63,10 @@ TYPED_TEST(SqueezeTest, forward_1_6_1_test)
   ASSERT_EQ(prediction2.shape().size(), 1);
   ASSERT_EQ(prediction2.shape().at(0), 6);
 
-  ASSERT_TRUE(prediction2.AllClose(data, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction2.AllClose(
+      data,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SqueezeTest, forward_throw_test)
@@ -101,8 +105,10 @@ TYPED_TEST(SqueezeTest, backward_1_5_1_test)
   ASSERT_EQ(error_signal.at(0).shape().at(1), 5);
   ASSERT_EQ(error_signal.at(0).shape().at(2), 1);
 
-  ASSERT_TRUE(error_signal.at(0).AllClose(error, fetch::math::function_tolerance<DataType>(),
-                                          fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(error_signal.at(0).AllClose(
+      error,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   fetch::math::state_clear<DataType>();
 }
 
@@ -127,8 +133,10 @@ TYPED_TEST(SqueezeTest, backward_1_5_test)
   ASSERT_EQ(error_signal.at(0).shape().at(0), 1);
   ASSERT_EQ(error_signal.at(0).shape().at(1), 5);
 
-  ASSERT_TRUE(error_signal.at(0).AllClose(error, fetch::math::function_tolerance<DataType>(),
-                                          fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(error_signal.at(0).AllClose(
+      error,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   fetch::math::state_clear<DataType>();
 }
 

@@ -46,45 +46,50 @@ VMOptimiser::VMOptimiser(VM *vm, TypeId type_id)
   mode_ = OptimiserMode::NONE;
 }
 
-VMOptimiser::VMOptimiser(VM *vm, TypeId type_id, std::string const &mode, GraphType const &graph,
-                         Ptr<VMDataLoader> const &       loader,
-                         std::vector<std::string> const &input_node_names,
-                         std::string const &label_node_name, std::string const &output_node_name)
+VMOptimiser::VMOptimiser(
+    VM *                            vm,
+    TypeId                          type_id,
+    std::string const &             mode,
+    GraphType const &               graph,
+    Ptr<VMDataLoader> const &       loader,
+    std::vector<std::string> const &input_node_names,
+    std::string const &             label_node_name,
+    std::string const &             output_node_name)
   : Object(vm, type_id)
 {
   if (mode == "adagrad")
   {
     mode_ = OptimiserMode::ADAGRAD;
-    AdagradOptimiserType optimiser(std::make_shared<GraphType>(graph), input_node_names,
-                                   label_node_name, output_node_name);
+    AdagradOptimiserType optimiser(
+        std::make_shared<GraphType>(graph), input_node_names, label_node_name, output_node_name);
     optimiser_ = std::make_shared<AdagradOptimiserType>(optimiser);
   }
   else if (mode == "adam")
   {
     mode_ = OptimiserMode::ADAM;
-    AdamOptimiserType optimiser(std::make_shared<GraphType>(graph), input_node_names,
-                                label_node_name, output_node_name);
+    AdamOptimiserType optimiser(
+        std::make_shared<GraphType>(graph), input_node_names, label_node_name, output_node_name);
     optimiser_ = std::make_shared<AdamOptimiserType>(optimiser);
   }
   else if (mode == "momentum")
   {
     mode_ = OptimiserMode::MOMENTUM;
-    MomentumOptimiserType optimiser(std::make_shared<GraphType>(graph), input_node_names,
-                                    label_node_name, output_node_name);
+    MomentumOptimiserType optimiser(
+        std::make_shared<GraphType>(graph), input_node_names, label_node_name, output_node_name);
     optimiser_ = std::make_shared<MomentumOptimiserType>(optimiser);
   }
   else if (mode == "rmsprop")
   {
     mode_ = OptimiserMode::RMSPROP;
-    RmspropOptimiserType optimiser(std::make_shared<GraphType>(graph), input_node_names,
-                                   label_node_name, output_node_name);
+    RmspropOptimiserType optimiser(
+        std::make_shared<GraphType>(graph), input_node_names, label_node_name, output_node_name);
     optimiser_ = std::make_shared<RmspropOptimiserType>(optimiser);
   }
   else if (mode == "sgd")
   {
     mode_ = OptimiserMode::SGD;
-    SgdOptimiserType optimiser(std::make_shared<GraphType>(graph), input_node_names,
-                               label_node_name, output_node_name);
+    SgdOptimiserType optimiser(
+        std::make_shared<GraphType>(graph), input_node_names, label_node_name, output_node_name);
     optimiser_ = std::make_shared<SgdOptimiserType>(optimiser);
   }
   else
@@ -113,10 +118,14 @@ void VMOptimiser::Bind(Module &module, bool const enable_experimental)
 }
 
 Ptr<VMOptimiser> VMOptimiser::Constructor(
-    VM *vm, TypeId type_id, Ptr<String> const &mode, Ptr<VMGraph> const &graph,
+    VM *                                                 vm,
+    TypeId                                               type_id,
+    Ptr<String> const &                                  mode,
+    Ptr<VMGraph> const &                                 graph,
     Ptr<VMDataLoader> const &                            loader,
     Ptr<fetch::vm::Array<Ptr<fetch::vm::String>>> const &input_node_names,
-    Ptr<String> const &label_node_name, Ptr<String> const &output_node_names)
+    Ptr<String> const &                                  label_node_name,
+    Ptr<String> const &                                  output_node_names)
 {
   auto                     n_elements = input_node_names->elements.size();
   std::vector<std::string> input_names(n_elements);
@@ -127,14 +136,21 @@ Ptr<VMOptimiser> VMOptimiser::Constructor(
     input_names.at(i)                 = (ptr_string)->string();
   }
 
-  return Ptr<VMOptimiser>{new VMOptimiser(vm, type_id, mode->string(), graph->GetGraph(), loader,
-                                          input_names, label_node_name->string(),
-                                          output_node_names->string())};
+  return Ptr<VMOptimiser>{new VMOptimiser(
+      vm,
+      type_id,
+      mode->string(),
+      graph->GetGraph(),
+      loader,
+      input_names,
+      label_node_name->string(),
+      output_node_names->string())};
 }
 
-VMOptimiser::DataType VMOptimiser::RunData(Ptr<fetch::vm_modules::math::VMTensor> const &data,
-                                           Ptr<fetch::vm_modules::math::VMTensor> const &labels,
-                                           uint64_t                                      batch_size)
+VMOptimiser::DataType VMOptimiser::RunData(
+    Ptr<fetch::vm_modules::math::VMTensor> const &data,
+    Ptr<fetch::vm_modules::math::VMTensor> const &labels,
+    uint64_t                                      batch_size)
 {
   return optimiser_->Run({(data->GetTensor())}, labels->GetTensor(), batch_size);
 }

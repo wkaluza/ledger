@@ -152,7 +152,8 @@ int main(int ac, char **av)
   // EMBEDDING_SIZE, BATCH_SIZE), (N_CONTEXTS, EMBEDDING_SIZE, BATCH_SIZE), (N_CONTEXTS,
   // EMBEDDING_SIZE, BATCH_SIZE))
   std::string context_vectors = g->AddNode<fetch::ml::ops::Concatenate<TensorType>>(
-      "ContextVectors", {embedding_source_words, embeddings_paths, embedding_target_words},
+      "ContextVectors",
+      {embedding_source_words, embeddings_paths, embedding_target_words},
       SizeType(0));
 
   // Fully connected layer
@@ -179,9 +180,10 @@ int main(int ac, char **av)
 
   // Reshaping
   // DImension: (N_CONTEXTS,BATCH_SIZE) = Reshape((N_CONTEXTS, 1, BATCH_SIZE))
-  std::string scalar_product_contexts_with_attention_reshaped =
-      g->AddNode<Reshape>("ScalarProductContextsWithAttentionTransposed",
-                          {scalar_product_contexts_with_attention}, std::vector<SizeType>{0u, 2u});
+  std::string scalar_product_contexts_with_attention_reshaped = g->AddNode<Reshape>(
+      "ScalarProductContextsWithAttentionTransposed",
+      {scalar_product_contexts_with_attention},
+      std::vector<SizeType>{0u, 2u});
 
   // (Softmax) normalisation
   // Dimensions: (N_CONTEXTS, BATCH_SIZE)

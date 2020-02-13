@@ -62,9 +62,10 @@ SubscriptionRegistrar::SubscriptionRegistrar(NetworkId const &network)
  * @param channel The target channel
  * @return A valid subscription pointer if successful, otherwise an invalid pointer
  */
-SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(Address const &address,
-                                                                       uint16_t       service,
-                                                                       uint16_t       channel)
+SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(
+    Address const &address,
+    uint16_t       service,
+    uint16_t       channel)
 {
   SubscriptionPtr subscription;
 
@@ -87,8 +88,9 @@ SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(Address c
  * @param channel The target channel
  * @return A valid subscription pointer if successful, otherwise an invalid pointer
  */
-SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(uint16_t service,
-                                                                       uint16_t channel)
+SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(
+    uint16_t service,
+    uint16_t channel)
 {
   SubscriptionPtr subscription;
 
@@ -142,8 +144,8 @@ bool SubscriptionRegistrar::Dispatch(PacketPtr const &packet, Address const &tra
 
       if (!success)
       {
-        FETCH_LOG_WARN(logging_name_,
-                       "Failed to dispatch message to a given subscription (address specific)");
+        FETCH_LOG_WARN(
+            logging_name_, "Failed to dispatch message to a given subscription (address specific)");
       }
     }
   }

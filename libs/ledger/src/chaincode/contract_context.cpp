@@ -22,10 +22,12 @@
 namespace fetch {
 namespace ledger {
 
-ContractContext::ContractContext(TokenContract *token_contract_param, chain::Address address,
-                                 StorageInterface const *                   storage_param,
-                                 StateAdapter *                             state_adapter_param,
-                                 chain::TransactionLayout::BlockIndex const block_index_param)
+ContractContext::ContractContext(
+    TokenContract *                            token_contract_param,
+    chain::Address                             address,
+    StorageInterface const *                   storage_param,
+    StateAdapter *                             state_adapter_param,
+    chain::TransactionLayout::BlockIndex const block_index_param)
   : token_contract{token_contract_param}
   , contract_address{std::move(address)}
   , storage{storage_param}

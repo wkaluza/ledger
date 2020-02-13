@@ -56,8 +56,10 @@ public:
   using Reducer = std::function<SemanticPosition(T const &)>;
 
   template <typename T>
-  void RegisterType(std::string const &name, bool hidden = false,
-                    SemanticReducer cdr = SemanticReducer{})
+  void RegisterType(
+      std::string const &name,
+      bool               hidden = false,
+      SemanticReducer    cdr    = SemanticReducer{})
   {
     if (!hidden)
     {

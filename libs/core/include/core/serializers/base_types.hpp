@@ -39,9 +39,14 @@
 namespace fetch {
 namespace serializers {
 
-template <typename T, typename D, uint8_t UL = 128, uint8_t C8 = TypeCodes::UINT8,
-          uint8_t C16 = TypeCodes::UINT16, uint8_t C32 = TypeCodes::UINT32,
-          uint8_t C64 = TypeCodes::UINT64>
+template <
+    typename T,
+    typename D,
+    uint8_t UL  = 128,
+    uint8_t C8  = TypeCodes::UINT8,
+    uint8_t C16 = TypeCodes::UINT16,
+    uint8_t C32 = TypeCodes::UINT32,
+    uint8_t C64 = TypeCodes::UINT64>
 struct UnsignedIntegerSerializerImplementation
 {
   using Type       = T;
@@ -118,9 +123,9 @@ struct UnsignedIntegerSerializerImplementation
   {
     if (sizeof(ResultType) > sizeof(Type))
     {
-      throw std::runtime_error("Unable to fit integer type of size " +
-                               std::to_string(sizeof(ResultType)) + " in type of size " +
-                               std::to_string(sizeof(Type)));
+      throw std::runtime_error(
+          "Unable to fit integer type of size " + std::to_string(sizeof(ResultType)) +
+          " in type of size " + std::to_string(sizeof(Type)));
     }
 
     ResultType deser_val;
@@ -182,32 +187,32 @@ struct SignedIntegerSerializerImplementation
     case TypeCodes::UINT8:
     {
       UnsignedType x;
-      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint8_t>(interface,
-                                                                                         x);
+      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint8_t>(
+          interface, x);
       val = static_cast<Type>(x);
       break;
     }
     case TypeCodes::UINT16:
     {
       UnsignedType x;
-      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint16_t>(interface,
-                                                                                          x);
+      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint16_t>(
+          interface, x);
       val = static_cast<Type>(x);
       break;
     }
     case TypeCodes::UINT32:
     {
       UnsignedType x;
-      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint32_t>(interface,
-                                                                                          x);
+      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint32_t>(
+          interface, x);
       val = static_cast<Type>(x);
       break;
     }
     case TypeCodes::UINT64:
     {
       UnsignedType x;
-      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint64_t>(interface,
-                                                                                          x);
+      UnsignedIntegerSerializerImplementation<U, D>::template Unpack<Interface, uint64_t>(
+          interface, x);
       val = static_cast<Type>(x);
       break;
     }
@@ -257,9 +262,9 @@ struct SignedIntegerSerializerImplementation
   {
     if (sizeof(ResultType) > sizeof(Type))
     {
-      throw std::runtime_error("Unable to fit integer type of size " +
-                               std::to_string(sizeof(ResultType)) + " in type of size " +
-                               std::to_string(sizeof(Type)));
+      throw std::runtime_error(
+          "Unable to fit integer type of size " + std::to_string(sizeof(ResultType)) +
+          " in type of size " + std::to_string(sizeof(Type)));
     }
     ResultType deser_val;
     interface.ReadBytes(reinterpret_cast<uint8_t *>(&deser_val), sizeof(ResultType));
@@ -539,8 +544,9 @@ public:
       if ((opcode & TypeCodes::FIXED_MASK2) != CODE_FIXED)
       {
         // TODO(tfr): Change to serializable exception.
-        throw std::runtime_error("expected CODE_FIXED in opcode: " + std::to_string(int(opcode)) +
-                                 " vs " + std::to_string(int(CODE_FIXED)));
+        throw std::runtime_error(
+            "expected CODE_FIXED in opcode: " + std::to_string(int(opcode)) + " vs " +
+            std::to_string(int(CODE_FIXED)));
       }
       size = static_cast<uint32_t>(opcode & TypeCodes::FIXED_VAL_MASK2);
     }
@@ -1005,9 +1011,9 @@ public:
   {
     if (array.size() != u.elements())
     {
-      throw std::runtime_error("Deserializing UInt<S> type has wrong number of elements: " +
-                               std::to_string(array.size()) + " instead of " +
-                               std::to_string(u.elements()));
+      throw std::runtime_error(
+          "Deserializing UInt<S> type has wrong number of elements: " +
+          std::to_string(array.size()) + " instead of " + std::to_string(u.elements()));
     }
     for (std::size_t i = 0; i < u.elements(); i++)
     {

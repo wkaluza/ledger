@@ -58,8 +58,12 @@ void ReadFile(std::fstream &stream, char *data, std::streamsize size)
 
   if (stream.gcount() != size)
   {
-    FETCH_LOG_WARN("ReadFileHelper", "Failed to read enough bytes. Expected: ", size,
-                   " got: ", stream.gcount());
+    FETCH_LOG_WARN(
+        "ReadFileHelper",
+        "Failed to read enough bytes. Expected: ",
+        size,
+        " got: ",
+        stream.gcount());
     throw StorageException("Attempted to read file failed");
   }
 
@@ -91,8 +95,9 @@ bool SingleObjectStore::Load(std::string const &file_name)
   // If does not exist
   if (!file_handle_)
   {
-    file_handle_.open(file_name, std::fstream::in | std::fstream::out | std::fstream::binary |
-                                     std::fstream::trunc);
+    file_handle_.open(
+        file_name,
+        std::fstream::in | std::fstream::out | std::fstream::binary | std::fstream::trunc);
   }
 
   if (!(file_handle_ && file_handle_.is_open()))
@@ -141,10 +146,16 @@ bool SingleObjectStore::Load(std::string const &file_name)
 
   if ((meta.object_size + sizeof(meta)) != FileSize())
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "mismatch in file sizes. Expected: ", (meta.object_size + sizeof(meta)),
-                    " got: ", FileSize(), " note: metadata is ", sizeof(meta),
-                    " while filesize is ", meta.object_size);
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "mismatch in file sizes. Expected: ",
+        (meta.object_size + sizeof(meta)),
+        " got: ",
+        FileSize(),
+        " note: metadata is ",
+        sizeof(meta),
+        " while filesize is ",
+        meta.object_size);
     return false;
   }
 
@@ -162,8 +173,10 @@ void SingleObjectStore::GetRaw(ByteArray &data) const
 
   if (FileSize() < sizeof(meta))
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "Attempt to get on an empty or too small file is invalid. Size: ", FileSize());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Attempt to get on an empty or too small file is invalid. Size: ",
+        FileSize());
     throw StorageException("Attempt to read empty or almost empty file");
   }
 
@@ -182,8 +195,12 @@ void SingleObjectStore::GetRaw(ByteArray &data) const
 
   if (!file_handle_)
   {
-    FETCH_LOG_ERROR(LOGGING_NAME, "Only able to read ", file_handle_.gcount(), " when expecting ",
-                    meta.object_size);
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Only able to read ",
+        file_handle_.gcount(),
+        " when expecting ",
+        meta.object_size);
     throw StorageException("After reading from file, the stream could not provide enough data");
   }
 }
@@ -229,8 +246,9 @@ uint16_t SingleObjectStore::Version() const
 void SingleObjectStore::Clear()
 {
   file_handle_.close();
-  file_handle_.open(file_name_, std::fstream::in | std::fstream::out | std::fstream::binary |
-                                    std::fstream::trunc);
+  file_handle_.open(
+      file_name_,
+      std::fstream::in | std::fstream::out | std::fstream::binary | std::fstream::trunc);
 }
 
 uint64_t SingleObjectStore::FileSize() const

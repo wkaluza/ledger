@@ -45,8 +45,9 @@ public:
   using SPType        = OpLayerNormSaveableParams<T>;
   using MyType        = LayerNorm<TensorType>;
 
-  explicit LayerNorm(SizeType axis    = static_cast<SizeType>(0),
-                     DataType epsilon = fetch::math::function_tolerance<DataType>());
+  explicit LayerNorm(
+      SizeType axis    = static_cast<SizeType>(0),
+      DataType epsilon = fetch::math::function_tolerance<DataType>());
 
   explicit LayerNorm(SPType const &sp);
 
@@ -59,8 +60,8 @@ public:
 
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
 
   std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override;
 

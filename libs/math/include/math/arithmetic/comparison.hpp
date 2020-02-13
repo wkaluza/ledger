@@ -30,15 +30,19 @@ static const double DEFAULT_RELATIVE_DBL_TOLERANCE = 1e-14;
 static const double DEFAULT_ABSOLUTE_DBL_TOLERANCE = 1e-14;
 }  // namespace details
 
-inline float Tolerance(float const &a, float const &b,
-                       float const &rel_tol = details::DEFAULT_RELATIVE_FLT_TOLERANCE,
-                       float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
+inline float Tolerance(
+    float const &a,
+    float const &b,
+    float const &rel_tol = details::DEFAULT_RELATIVE_FLT_TOLERANCE,
+    float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
 {
   return std::max(rel_tol * std::max(fabsf(a), fabsf(b)), abs_tol);
 }
-inline double Tolerance(double const &a, double const &b,
-                        double const &rel_tol = details::DEFAULT_RELATIVE_DBL_TOLERANCE,
-                        double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
+inline double Tolerance(
+    double const &a,
+    double const &b,
+    double const &rel_tol = details::DEFAULT_RELATIVE_DBL_TOLERANCE,
+    double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
 {
   return std::max(rel_tol * std::max(fabs(a), fabs(b)), abs_tol);
 }
@@ -61,14 +65,16 @@ bool IsZero(T const &x)
   return x == T{0};
 }
 
-inline bool IsNonZero(float const &x,
-                      float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
+inline bool IsNonZero(
+    float const &x,
+    float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
 {
   return fabsf(x) > abs_tol;
 }
 
-inline bool IsNonZero(double const &x,
-                      double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
+inline bool IsNonZero(
+    double const &x,
+    double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
 {
   return fabs(x) > abs_tol;
 }

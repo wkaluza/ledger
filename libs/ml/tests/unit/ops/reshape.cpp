@@ -36,8 +36,9 @@ class ReshapeTest : public ::testing::Test
 TYPED_TEST_SUITE(ReshapeTest, fetch::math::test::TensorFloatingTypes, );
 
 template <typename TensorType>
-void ReshapeTestForward(std::vector<SizeType> const &initial_shape,
-                        std::vector<SizeType> const &final_shape)
+void ReshapeTestForward(
+    std::vector<SizeType> const &initial_shape,
+    std::vector<SizeType> const &final_shape)
 {
   TensorType                          data(initial_shape);
   TensorType                          gt(final_shape);
@@ -54,8 +55,9 @@ void ReshapeTestForward(std::vector<SizeType> const &initial_shape,
 }
 
 template <typename TensorType>
-void ReshapeTestForwardWrong(std::vector<SizeType> const &initial_shape,
-                             std::vector<SizeType> const &final_shape)
+void ReshapeTestForwardWrong(
+    std::vector<SizeType> const &initial_shape,
+    std::vector<SizeType> const &final_shape)
 {
   TensorType                          data(initial_shape);
   TensorType                          gt(final_shape);
@@ -66,8 +68,9 @@ void ReshapeTestForwardWrong(std::vector<SizeType> const &initial_shape,
 }
 
 template <typename TensorType>
-void ReshapeTestBackward(std::vector<SizeType> const &initial_shape,
-                         std::vector<SizeType> const &final_shape)
+void ReshapeTestBackward(
+    std::vector<SizeType> const &initial_shape,
+    std::vector<SizeType> const &final_shape)
 {
 
   TensorType data(initial_shape);

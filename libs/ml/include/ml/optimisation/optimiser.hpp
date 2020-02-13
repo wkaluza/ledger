@@ -47,13 +47,19 @@ public:
   using SizeType   = fetch::math::SizeType;
 
   Optimiser() = default;
-  Optimiser(std::shared_ptr<Graph<T>> graph, std::vector<std::string> input_node_names,
-            std::string label_node_name, std::string output_node_name,
-            DataType const &learning_rate = fetch::math::Type<DataType>("0.001"));
+  Optimiser(
+      std::shared_ptr<Graph<T>> graph,
+      std::vector<std::string>  input_node_names,
+      std::string               label_node_name,
+      std::string               output_node_name,
+      DataType const &          learning_rate = fetch::math::Type<DataType>("0.001"));
 
-  Optimiser(std::shared_ptr<Graph<T>> graph, std::vector<std::string> input_node_names,
-            std::string label_node_name, std::string output_node_name,
-            LearningRateParam<DataType> learning_rate_param);
+  Optimiser(
+      std::shared_ptr<Graph<T>>   graph,
+      std::vector<std::string>    input_node_names,
+      std::string                 label_node_name,
+      std::string                 output_node_name,
+      LearningRateParam<DataType> learning_rate_param);
 
   virtual ~Optimiser() = default;
 
@@ -63,21 +69,29 @@ public:
   }
 
   /// DATA RUN INTERFACES ///
-  DataType Run(std::vector<TensorType> const &data, TensorType const &labels,
-               SizeType batch_size = SIZE_NOT_SET);
+  DataType Run(
+      std::vector<TensorType> const &data,
+      TensorType const &             labels,
+      SizeType                       batch_size = SIZE_NOT_SET);
 
   /// DATALOADER RUN INTERFACES ///
-  DataType Run(fetch::ml::dataloaders::DataLoader<TensorType> &loader,
-               SizeType batch_size = SIZE_NOT_SET, SizeType subset_size = SIZE_NOT_SET);
-  DataType Run(fetch::ml::dataloaders::DataLoader<TensorType> &loader,
-               LearningRateParam<DataType> learning_rate_param, SizeType batch_size = SIZE_NOT_SET,
-               SizeType subset_size = SIZE_NOT_SET);
+  DataType Run(
+      fetch::ml::dataloaders::DataLoader<TensorType> &loader,
+      SizeType                                        batch_size  = SIZE_NOT_SET,
+      SizeType                                        subset_size = SIZE_NOT_SET);
+  DataType Run(
+      fetch::ml::dataloaders::DataLoader<TensorType> &loader,
+      LearningRateParam<DataType>                     learning_rate_param,
+      SizeType                                        batch_size  = SIZE_NOT_SET,
+      SizeType                                        subset_size = SIZE_NOT_SET);
 
   void     UpdateLearningRate();
   void     IncrementEpochCounter();
   void     IncrementBatchCounters(SizeType batch_size);
-  SizeType UpdateBatchSize(SizeType const &batch_size, SizeType const &data_size,
-                           SizeType const &subset_size = SIZE_NOT_SET);
+  SizeType UpdateBatchSize(
+      SizeType const &batch_size,
+      SizeType const &data_size,
+      SizeType const &subset_size = SIZE_NOT_SET);
 
   std::shared_ptr<Graph<T>> GetGraph();
   virtual void              ApplyGradients(SizeType batch_size) = 0;
@@ -118,9 +132,10 @@ private:
 
   void Init();
 
-  DataType RunImplementation(fetch::ml::dataloaders::DataLoader<TensorType> &loader,
-                             SizeType batch_size  = SIZE_NOT_SET,
-                             SizeType subset_size = SIZE_NOT_SET);
+  DataType RunImplementation(
+      fetch::ml::dataloaders::DataLoader<TensorType> &loader,
+      SizeType                                        batch_size  = SIZE_NOT_SET,
+      SizeType                                        subset_size = SIZE_NOT_SET);
 };
 }  // namespace optimisers
 }  // namespace ml

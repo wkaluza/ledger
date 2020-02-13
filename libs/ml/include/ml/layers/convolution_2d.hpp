@@ -49,11 +49,15 @@ public:
    * @param init_mode mode in which wights(kernel) will be initialised
    * @param seed random seed for weights(kernel) initialisation
    */
-  Convolution2D(SizeType output_channels, SizeType input_channels, SizeType kernel_size,
-                SizeType                stride_size,
-                details::ActivationType activation_type = details::ActivationType::NOTHING,
-                std::string const &     name            = "Conv2D",
-                WeightsInit init_mode = WeightsInit::XAVIER_GLOROT, SizeType seed = 123456789);
+  Convolution2D(
+      SizeType                output_channels,
+      SizeType                input_channels,
+      SizeType                kernel_size,
+      SizeType                stride_size,
+      details::ActivationType activation_type = details::ActivationType::NOTHING,
+      std::string const &     name            = "Conv2D",
+      WeightsInit             init_mode       = WeightsInit::XAVIER_GLOROT,
+      SizeType                seed            = 123456789);
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 
@@ -87,8 +91,8 @@ public:
 private:
   void Initialise(TensorType &weights, WeightsInit init_mode)
   {
-    fetch::ml::ops::Weights<TensorType>::Initialise(weights, input_channels_, output_channels_,
-                                                    init_mode);
+    fetch::ml::ops::Weights<TensorType>::Initialise(
+        weights, input_channels_, output_channels_, init_mode);
   }
 
   SizeType kernel_size_{};

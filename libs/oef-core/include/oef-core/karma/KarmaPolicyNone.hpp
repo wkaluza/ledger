@@ -30,8 +30,8 @@ public:
 
   KarmaAccount GetAccount(const std::string &pubkey = "", const std::string &ip = "") override;
 
-  bool        perform(const KarmaAccount &identifier, const std::string &action,
-                      bool force = false) override;
+  bool perform(const KarmaAccount &identifier, const std::string &action, bool force = false)
+      override;
   bool        CouldPerform(const KarmaAccount &identifier, const std::string &action) override;
   std::string GetBalance(const KarmaAccount & /*identifier*/) override
   {

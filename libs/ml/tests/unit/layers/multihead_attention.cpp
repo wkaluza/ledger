@@ -49,8 +49,11 @@ TYPED_TEST(MultiheadAttention, input_output_dimension_check)  // Use the class a
   std::string value = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Value", {});
   std::string mask  = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Mask", {});
   g.template AddNode<fetch::ml::layers::MultiheadAttention<TypeParam>>(
-      "MultiheadAttention", {query, key, value, mask}, static_cast<SizeType>(4),
-      static_cast<SizeType>(12), fetch::math::Type<DataType>("0.1"));
+      "MultiheadAttention",
+      {query, key, value, mask},
+      static_cast<SizeType>(4),
+      static_cast<SizeType>(12),
+      fetch::math::Type<DataType>("0.1"));
   TypeParam query_data = TypeParam({12, 25, 4});
   query_data.Fill(DataType{0});
   TypeParam key_data   = query_data;
@@ -81,15 +84,20 @@ TYPED_TEST(MultiheadAttention, backward_test)  // Use the class as an Ops
   TypeParam mask_data = TypeParam({20, 20, 5});
   mask_data.Fill(DataType{1});
   TypeParam output(m_att.ComputeOutputShape({std::make_shared<TypeParam>(input_data)}));
-  m_att.Forward({std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(input_data),
-                 std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(mask_data)},
-                output);
+  m_att.Forward(
+      {std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(mask_data)},
+      output);
 
   TypeParam error_signal(std::vector<typename TypeParam::SizeType>({12, 20, 5}));
 
   std::vector<TypeParam> backprop_error = m_att.Backward(
-      {std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(input_data),
-       std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(mask_data)},
+      {std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(input_data),
+       std::make_shared<TypeParam>(mask_data)},
       error_signal);
 
   // check there are proper number of error signals, this is an indirect test for subgraph backward

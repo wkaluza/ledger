@@ -139,8 +139,9 @@ typename ForwardSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -155,8 +156,9 @@ typename ForwardSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -172,8 +174,9 @@ typename IntegerSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -188,8 +191,9 @@ typename IntegerSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -205,8 +209,9 @@ typename FloatSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::o
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -221,8 +226,9 @@ typename FloatSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::o
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -238,8 +244,9 @@ typename BooleanSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -254,8 +261,9 @@ typename BooleanSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer:
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -271,8 +279,9 @@ typename StringSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -287,8 +296,9 @@ typename StringSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
   return *this;
 }
@@ -297,10 +307,12 @@ template <typename T>
 typename BinarySerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::operator<<(
     T const &val)
 {
-  using Serializer = BinarySerializer<T, MsgPackSerializer>;
-  using Constructor =
-      interfaces::BinaryConstructorInterface<MsgPackSerializer, TypeCodes::BINARY_CODE8,
-                                             TypeCodes::BINARY_CODE16, TypeCodes::BINARY_CODE32>;
+  using Serializer  = BinarySerializer<T, MsgPackSerializer>;
+  using Constructor = interfaces::BinaryConstructorInterface<
+      MsgPackSerializer,
+      TypeCodes::BINARY_CODE8,
+      TypeCodes::BINARY_CODE16,
+      TypeCodes::BINARY_CODE32>;
 
   try
   {
@@ -309,8 +321,9 @@ typename BinarySerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -327,8 +340,9 @@ typename BinarySerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -347,8 +361,9 @@ typename ArraySerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::o
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -365,8 +380,9 @@ typename ArraySerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::o
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -385,8 +401,9 @@ typename MapSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::ope
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error serializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error serializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;
@@ -403,8 +420,9 @@ typename MapSerializer<T, MsgPackSerializer>::DriverType &MsgPackSerializer::ope
   }
   catch (std::exception const &e)
   {
-    throw std::runtime_error("Error deserializing " + static_cast<std::string>(typeid(T).name()) +
-                             ".\n" + std::string(e.what()));
+    throw std::runtime_error(
+        "Error deserializing " + static_cast<std::string>(typeid(T).name()) + ".\n" +
+        std::string(e.what()));
   }
 
   return *this;

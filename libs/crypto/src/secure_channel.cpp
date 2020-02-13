@@ -64,9 +64,13 @@ SecureChannel::SecureChannel(Prover const &prover)
   : prover_{prover}
 {}
 
-bool SecureChannel::Encrypt(ConstByteArray const &destination_public_key, uint16_t service,
-                            uint16_t channel, uint16_t counter, ConstByteArray const &payload,
-                            ConstByteArray &encrypted_payload)
+bool SecureChannel::Encrypt(
+    ConstByteArray const &destination_public_key,
+    uint16_t              service,
+    uint16_t              channel,
+    uint16_t              counter,
+    ConstByteArray const &payload,
+    ConstByteArray &      encrypted_payload)
 {
   bool success{false};
 
@@ -85,16 +89,20 @@ bool SecureChannel::Encrypt(ConstByteArray const &destination_public_key, uint16
     generated_payload.Append(payload, payload_digest);
 
     // encrypt the payload
-    success = BlockCipher::Encrypt(BlockCipher::AES_256_CBC, shared_key, iv, generated_payload,
-                                   encrypted_payload);
+    success = BlockCipher::Encrypt(
+        BlockCipher::AES_256_CBC, shared_key, iv, generated_payload, encrypted_payload);
   }
 
   return success;
 }
 
-bool SecureChannel::Decrypt(ConstByteArray const &sender_public_key, uint16_t service,
-                            uint16_t channel, uint16_t counter,
-                            ConstByteArray const &encrypted_payload, ConstByteArray &payload)
+bool SecureChannel::Decrypt(
+    ConstByteArray const &sender_public_key,
+    uint16_t              service,
+    uint16_t              channel,
+    uint16_t              counter,
+    ConstByteArray const &encrypted_payload,
+    ConstByteArray &      payload)
 {
   bool success{false};
 
@@ -108,8 +116,8 @@ bool SecureChannel::Decrypt(ConstByteArray const &sender_public_key, uint16_t se
 
     // encrypt the payload
     ConstByteArray decrypted_payload{};
-    bool const decryption_success = BlockCipher::Decrypt(BlockCipher::AES_256_CBC, shared_key, iv,
-                                                         encrypted_payload, decrypted_payload);
+    bool const     decryption_success = BlockCipher::Decrypt(
+        BlockCipher::AES_256_CBC, shared_key, iv, encrypted_payload, decrypted_payload);
 
     // ensure the decryption was a success and that we have the required payload size
     if (decryption_success && (decrypted_payload.size() >= MINIMUM_PAYLOAD_SIZE))

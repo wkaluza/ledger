@@ -49,23 +49,27 @@ public:
 
   LazyAdamOptimiser() = default;
 
-  LazyAdamOptimiser(std::shared_ptr<Graph<T>>       graph,
-                    std::vector<std::string> const &input_node_names,
-                    std::string const &label_node_name, std::string const &output_node_name,
-                    DataType const &learning_rate      = fetch::math::Type<DataType>("0.001"),
-                    DataType const &beta1              = fetch::math::Type<DataType>("0.9"),
-                    DataType const &beta2              = fetch::math::Type<DataType>("0.999"),
-                    SizeType        sparsity_threshold = 2,
-                    DataType const &epsilon            = fetch::math::Type<DataType>("0.0001"));
+  LazyAdamOptimiser(
+      std::shared_ptr<Graph<T>>       graph,
+      std::vector<std::string> const &input_node_names,
+      std::string const &             label_node_name,
+      std::string const &             output_node_name,
+      DataType const &                learning_rate      = fetch::math::Type<DataType>("0.001"),
+      DataType const &                beta1              = fetch::math::Type<DataType>("0.9"),
+      DataType const &                beta2              = fetch::math::Type<DataType>("0.999"),
+      SizeType                        sparsity_threshold = 2,
+      DataType const &                epsilon            = fetch::math::Type<DataType>("0.0001"));
 
-  LazyAdamOptimiser(std::shared_ptr<Graph<T>>       graph,
-                    std::vector<std::string> const &input_node_names,
-                    std::string const &label_node_name, std::string const &output_node_name,
-                    fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
-                    DataType const &beta1              = fetch::math::Type<DataType>("0.9"),
-                    DataType const &beta2              = fetch::math::Type<DataType>("0.999"),
-                    SizeType        sparsity_threshold = 2,
-                    DataType const &epsilon            = fetch::math::Type<DataType>("0.0001"));
+  LazyAdamOptimiser(
+      std::shared_ptr<Graph<T>>                                 graph,
+      std::vector<std::string> const &                          input_node_names,
+      std::string const &                                       label_node_name,
+      std::string const &                                       output_node_name,
+      fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param,
+      DataType const &beta1              = fetch::math::Type<DataType>("0.9"),
+      DataType const &beta2              = fetch::math::Type<DataType>("0.999"),
+      SizeType        sparsity_threshold = 2,
+      DataType const &epsilon            = fetch::math::Type<DataType>("0.0001"));
 
   ~LazyAdamOptimiser() override = default;
 
@@ -84,9 +88,14 @@ private:
   // Current value was empirically derived from ml/benchmarks/embeddings benchmark results
   SizeType sparsity_threshold_ = 2;
 
-  void ApplyLogic(SizeType batch_size, TensorType &gradient_tensor, TensorType &momentum_tensor,
-                  TensorType &mt_tensor, TensorType &v_tensor, TensorType &cache_tensor,
-                  TensorType const &refs_tensor);
+  void ApplyLogic(
+      SizeType          batch_size,
+      TensorType &      gradient_tensor,
+      TensorType &      momentum_tensor,
+      TensorType &      mt_tensor,
+      TensorType &      v_tensor,
+      TensorType &      cache_tensor,
+      TensorType const &refs_tensor);
 };
 
 }  // namespace optimisers

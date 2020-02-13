@@ -50,7 +50,9 @@ TYPED_TEST(ScaledDotProductAttention, input_output_dimension_check)  // Use the 
   std::string value = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Value", {});
   std::string mask  = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Mask", {});
   g.template AddNode<fetch::ml::layers::ScaledDotProductAttention<TypeParam>>(
-      "ScaledDotProductAttention", {query, key, value, mask}, static_cast<SizeType>(4),
+      "ScaledDotProductAttention",
+      {query, key, value, mask},
+      static_cast<SizeType>(4),
       fetch::math::Type<DataType>("0.1"));
   TypeParam query_data = TypeParam({4, 7, 2});
   query_data.Fill(fetch::math::Type<DataType>("0.1"));
@@ -72,8 +74,9 @@ TYPED_TEST(ScaledDotProductAttention, input_output_dimension_check)  // Use the 
   ASSERT_EQ(prediction.shape()[2], 2);
 }
 
-TYPED_TEST(ScaledDotProductAttention,
-           self_attention_output_value_test)  // Use the class as a subgraph
+TYPED_TEST(
+    ScaledDotProductAttention,
+    self_attention_output_value_test)  // Use the class as a subgraph
 {
   using DataType = typename TypeParam::Type;
   using SizeType = fetch::math::SizeType;
@@ -85,7 +88,9 @@ TYPED_TEST(ScaledDotProductAttention,
   std::string value = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Value", {});
   std::string mask  = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Mask", {});
   g.template AddNode<fetch::ml::layers::ScaledDotProductAttention<TypeParam>>(
-      "ScaledDotProductAttention", {query, key, value, mask}, static_cast<SizeType>(3),
+      "ScaledDotProductAttention",
+      {query, key, value, mask},
+      static_cast<SizeType>(3),
       fetch::math::Type<DataType>("0.1"));
   TypeParam query_data = TypeParam::FromString("1, 2, 0.5, 0.1; 2, 1, 0.3, -0.2;2, 4, 0, 1");
   query_data.Reshape({3, 2, 2});
@@ -109,14 +114,15 @@ TYPED_TEST(ScaledDotProductAttention,
   EXPECT_TRUE(prediction.AllClose(gt, DataType{5} * fetch::math::function_tolerance<DataType>()));
 }
 
-TYPED_TEST(ScaledDotProductAttention,
-           self_attention_backward_exact_value_test)  // Use the class as a layer
+TYPED_TEST(
+    ScaledDotProductAttention,
+    self_attention_backward_exact_value_test)  // Use the class as a layer
 {
   using DataType = typename TypeParam::Type;
   using SizeType = fetch::math::SizeType;
 
-  fetch::ml::layers::ScaledDotProductAttention<TypeParam> att(static_cast<SizeType>(3),
-                                                              DataType{0});
+  fetch::ml::layers::ScaledDotProductAttention<TypeParam> att(
+      static_cast<SizeType>(3), DataType{0});
 
   TypeParam query_data = TypeParam::FromString("1, 2, 0.5, 0.1; 2, 1, 0.3, -0.2;2, 4, 0, 1");
   query_data.Reshape({3, 2, 2});
@@ -145,33 +151,43 @@ TYPED_TEST(ScaledDotProductAttention,
   att.Compile();
 
   // do the forward
-  TypeParam output(att.ComputeOutputShape(
-      {std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-       std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)}));
-  att.Forward({std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-               std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)},
-              output);
+  TypeParam output(att.ComputeOutputShape({std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(mask_data)}));
+  att.Forward(
+      {std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(mask_data)},
+      output);
 
   // do the backprop
   std::vector<TypeParam> backprop_error = att.Backward(
-      {std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-       std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)},
+      {std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(mask_data)},
       error_signal);
 
-  EXPECT_TRUE(
-      backprop_error[0].AllClose(gt_query_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(
-      backprop_error[1].AllClose(gt_key_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(
-      backprop_error[2].AllClose(gt_value_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[0].AllClose(
+      gt_query_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[1].AllClose(
+      gt_key_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[2].AllClose(
+      gt_value_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
   EXPECT_TRUE(backprop_error[3].AllClose(gt_mask_grad));
 }
 
-TYPED_TEST(ScaledDotProductAttention,
-           self_attention_output_value_test_with_mask)  // Use the class as a subgraph
+TYPED_TEST(
+    ScaledDotProductAttention,
+    self_attention_output_value_test_with_mask)  // Use the class as a subgraph
 {
   using DataType = typename TypeParam::Type;
   using SizeType = fetch::math::SizeType;
@@ -183,7 +199,9 @@ TYPED_TEST(ScaledDotProductAttention,
   std::string value = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Value", {});
   std::string mask  = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Mask", {});
   g.template AddNode<fetch::ml::layers::ScaledDotProductAttention<TypeParam>>(
-      "ScaledDotProductAttention", {query, key, value, mask}, static_cast<SizeType>(3),
+      "ScaledDotProductAttention",
+      {query, key, value, mask},
+      static_cast<SizeType>(3),
       fetch::math::Type<DataType>("0.1"));
   TypeParam query_data =
       TypeParam::FromString("1, 2, 0.5, 0.1, 5, 3; 2, 1, 0.3, -0.2, -2, 0.5; 2, 4, 0, 1, 1.1, -3");
@@ -214,14 +232,15 @@ TYPED_TEST(ScaledDotProductAttention,
   EXPECT_TRUE(prediction.AllClose(gt, DataType{5} * fetch::math::function_tolerance<DataType>()));
 }
 
-TYPED_TEST(ScaledDotProductAttention,
-           self_attention_backward_exact_value_test_with_mask)  // Use the class as a layer
+TYPED_TEST(
+    ScaledDotProductAttention,
+    self_attention_backward_exact_value_test_with_mask)  // Use the class as a layer
 {
   using DataType = typename TypeParam::Type;
   using SizeType = fetch::math::SizeType;
 
-  fetch::ml::layers::ScaledDotProductAttention<TypeParam> att(static_cast<SizeType>(3),
-                                                              DataType{0});
+  fetch::ml::layers::ScaledDotProductAttention<TypeParam> att(
+      static_cast<SizeType>(3), DataType{0});
 
   TypeParam query_data =
       TypeParam::FromString("1, 2, 0.5, 0.1, 5, 3; 2, 1, 0.3, -0.2, -2, 0.5; 2, 4, 0, 1, 1.1, -3");
@@ -259,28 +278,37 @@ TYPED_TEST(ScaledDotProductAttention,
   TypeParam gt_mask_grad({3, 3, 2});
 
   // do the forward
-  TypeParam output(att.ComputeOutputShape(
-      {std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-       std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)}));
-  att.Forward({std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-               std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)},
-              output);
+  TypeParam output(att.ComputeOutputShape({std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(query_data),
+                                           std::make_shared<TypeParam>(mask_data)}));
+  att.Forward(
+      {std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(mask_data)},
+      output);
 
   // do the backprop
   std::vector<TypeParam> backprop_error = att.Backward(
-      {std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(query_data),
-       std::make_shared<TypeParam>(query_data), std::make_shared<TypeParam>(mask_data)},
+      {std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(query_data),
+       std::make_shared<TypeParam>(mask_data)},
       error_signal);
 
-  EXPECT_TRUE(
-      backprop_error[0].AllClose(gt_query_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(
-      backprop_error[1].AllClose(gt_key_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
-  EXPECT_TRUE(
-      backprop_error[2].AllClose(gt_value_grad, fetch::math::function_tolerance<DataType>(),
-                                 DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[0].AllClose(
+      gt_query_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[1].AllClose(
+      gt_key_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(backprop_error[2].AllClose(
+      gt_value_grad,
+      fetch::math::function_tolerance<DataType>(),
+      DataType{10} * fetch::math::function_tolerance<DataType>()));
   EXPECT_TRUE(backprop_error[3].AllClose(gt_mask_grad));
 }
 

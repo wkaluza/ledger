@@ -169,8 +169,8 @@ bool CachedStorageAdapter::Unlock(ShardIndex index)
  * @param address The address of the resource being stored
  * @param value The value being stored
  */
-void CachedStorageAdapter::AddCacheEntry(ResourceAddress const &address,
-                                         StateValue const &     value) const
+void CachedStorageAdapter::AddCacheEntry(ResourceAddress const &address, StateValue const &value)
+    const
 {
   // update the cache and signal that a flush is required
   cache_.ApplyVoid([&address, &value](auto &cache) { cache[address] = CacheEntry{value}; });

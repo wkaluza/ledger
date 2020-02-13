@@ -27,8 +27,9 @@ namespace ledger {
  * @param pool The reference to the pool
  * @param store The reference to the store
  */
-TransactionStoreAggregator::TransactionStoreAggregator(TransactionStoreInterface &pool,
-                                                       TransactionStoreInterface &store)
+TransactionStoreAggregator::TransactionStoreAggregator(
+    TransactionStoreInterface &pool,
+    TransactionStoreInterface &store)
   : pool_{pool}
   , store_{store}
 {}

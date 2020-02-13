@@ -24,8 +24,10 @@
 namespace fetch {
 namespace version {
 
-void DisplayCLIHeader(std::string const &name, std::string const &years,
-                      std::string const &additional)
+void DisplayCLIHeader(
+    std::string const &name,
+    std::string const &years,
+    std::string const &additional)
 {
 
   std::cout << "\u25A0 \u25A0 \u25A0 .\n";

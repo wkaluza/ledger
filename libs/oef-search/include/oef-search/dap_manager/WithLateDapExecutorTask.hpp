@@ -44,9 +44,10 @@ public:
 
   static constexpr char const *LOGGING_NAME = "WithLateDapExecutorTask";
 
-  WithLateDapExecutorTask(std::shared_ptr<NodeExecutorTask> task,
-                          std::vector<Node::DapMemento>     late_mementos,
-                          std::shared_ptr<DapManager>       dap_manager)
+  WithLateDapExecutorTask(
+      std::shared_ptr<NodeExecutorTask> task,
+      std::vector<Node::DapMemento>     late_mementos,
+      std::shared_ptr<DapManager>       dap_manager)
     : Parent()
     , main_task_{std::move(task)}
     , late_mementos_{std::move(late_mementos)}
@@ -87,8 +88,12 @@ public:
       }
       else
       {
-        FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to WithLateDapExecutorTask(", id,
-                        ")! Called from task ", task_id);
+        FETCH_LOG_ERROR(
+            LOGGING_NAME,
+            "No shared pointer to WithLateDapExecutorTask(",
+            id,
+            ")! Called from task ",
+            task_id);
       }
     };
   }
@@ -99,8 +104,8 @@ public:
     std::weak_ptr<WithLateDapExecutorTask> this_wp = this_sp;
     auto                                   id      = this->GetTaskId();
 
-    return [this_wp, id, task_id](const std::string &dap_name, const std::string &path,
-                                  const std::string &msg) {
+    return [this_wp, id, task_id](
+               const std::string &dap_name, const std::string &path, const std::string &msg) {
       auto sp = this_wp.lock();
       if (sp)
       {
@@ -114,8 +119,12 @@ public:
       }
       else
       {
-        FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to WithLateDapExecutorTask(", id,
-                        ")! Called from task ", task_id);
+        FETCH_LOG_ERROR(
+            LOGGING_NAME,
+            "No shared pointer to WithLateDapExecutorTask(",
+            id,
+            ")! Called from task ",
+            task_id);
       }
     };
   }
@@ -140,8 +149,12 @@ public:
             })
             .Waiting())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Sleeping (id=", this->GetTaskId(), "), will be woken by task ",
-                     main_task_->GetTaskId());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Sleeping (id=",
+          this->GetTaskId(),
+          "), will be woken by task ",
+          main_task_->GetTaskId());
       return StateResult(1, fetch::oef::base::DEFER);
     }
 
@@ -153,8 +166,11 @@ public:
   {
     if (!task_done.load())
     {
-      FETCH_LOG_INFO(LOGGING_NAME,
-                     "Spurious wakeup in DoLateMementos(). Sleeping (id=", this->GetTaskId(), ")");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Spurious wakeup in DoLateMementos(). Sleeping (id=",
+          this->GetTaskId(),
+          ")");
       return StateResult(1, fetch::oef::base::DEFER);
     }
     if (!last_output_)
@@ -185,8 +201,12 @@ public:
             })
             .Waiting())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Sleeping (id=", this->GetTaskId(),
-                     ", do late mementos), will be woken by task ", task->GetTaskId());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Sleeping (id=",
+          this->GetTaskId(),
+          ", do late mementos), will be woken by task ",
+          task->GetTaskId());
       return StateResult(2, fetch::oef::base::DEFER);
     }
 
@@ -198,8 +218,8 @@ public:
   {
     if (!task_done.load())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Spurious wakeup in Done(). Sleeping (id=", this->GetTaskId(),
-                     ")");
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "Spurious wakeup in Done(). Sleeping (id=", this->GetTaskId(), ")");
       return StateResult(2, fetch::oef::base::DEFER);
     }
     if (messageHandler)

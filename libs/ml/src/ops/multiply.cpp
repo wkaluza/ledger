@@ -62,10 +62,12 @@ template <typename T>
 void Multiply<T>::Forward(const VecTensorType &inputs, TensorType &output)
 {
   assert(inputs.size() == 2);
-  assert(inputs.at(0)->shape().size() <=
-         3);  // we do not support input of more than 3D (including batch dims)
-  assert(inputs.at(0)->shape().size() ==
-         inputs.at(1)->shape().size());  // check if addition is broadcastable
+  assert(
+      inputs.at(0)->shape().size() <=
+      3);  // we do not support input of more than 3D (including batch dims)
+  assert(
+      inputs.at(0)->shape().size() ==
+      inputs.at(1)->shape().size());  // check if addition is broadcastable
   assert(output.shape() == inputs.front()->shape());
 
   fetch::math::Multiply((*inputs.at(0)), (*inputs.at(1)), output);
@@ -77,14 +79,17 @@ void Multiply<T>::Forward(const VecTensorType &inputs, TensorType &output)
  * f'(input1)=input0*error_signal
  */
 template <typename TensorType>
-std::vector<TensorType> Multiply<TensorType>::Backward(const VecTensorType &inputs,
-                                                       const TensorType &   error_signal)
+std::vector<TensorType> Multiply<TensorType>::Backward(
+    const VecTensorType &inputs,
+    const TensorType &   error_signal)
 {
   assert(inputs.size() == 2);
-  assert(inputs.at(0)->shape().size() <=
-         3);  // we do not support input of more than 3D (including batch dims)
-  assert(inputs.at(0)->shape().size() ==
-         inputs.at(1)->shape().size());  // check if addition is broadcastable
+  assert(
+      inputs.at(0)->shape().size() <=
+      3);  // we do not support input of more than 3D (including batch dims)
+  assert(
+      inputs.at(0)->shape().size() ==
+      inputs.at(1)->shape().size());  // check if addition is broadcastable
   assert(error_signal.shape() == inputs.front()->shape());
 
   TensorType error_signal_1(error_signal.shape());

@@ -36,8 +36,9 @@ public:
   using buffer  = asio::const_buffer;
   using buffers = std::vector<buffer>;
 
-  IOefTaskFactory(std::shared_ptr<OefEndpoint>           the_endpoint,
-                  std::shared_ptr<OutboundConversations> outbounds)
+  IOefTaskFactory(
+      std::shared_ptr<OefEndpoint>           the_endpoint,
+      std::shared_ptr<OutboundConversations> outbounds)
     : outbounds(std::move(outbounds))
     , endpoint(the_endpoint)
   {}
@@ -73,9 +74,9 @@ protected:
     }
     if (eaten != expected_size)
     {
-      throw std::invalid_argument(std::string("Proto deserialisation used ") +
-                                  std::to_string(eaten) + " bytes instead of " +
-                                  std::to_string(expected_size) + ".");
+      throw std::invalid_argument(
+          std::string("Proto deserialisation used ") + std::to_string(eaten) +
+          " bytes instead of " + std::to_string(expected_size) + ".");
     }
   }
 
@@ -100,8 +101,9 @@ protected:
     }
     if (chars.RemainingData() != 0)
     {
-      throw std::invalid_argument(std::string("Proto deserialisation left used ") +
-                                  std::to_string(chars.RemainingData()) + "unused bytes.");
+      throw std::invalid_argument(
+          std::string("Proto deserialisation left used ") + std::to_string(chars.RemainingData()) +
+          "unused bytes.");
     }
   }
 

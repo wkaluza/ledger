@@ -41,9 +41,13 @@ public:
 
   SkipGram() = default;
 
-  SkipGram(SizeType in_size, SizeType out, SizeType embedding_size, SizeType vocab_size,
-           std::string const &name      = "SkipGram",
-           WeightsInit        init_mode = WeightsInit::XAVIER_FAN_OUT);
+  SkipGram(
+      SizeType           in_size,
+      SizeType           out,
+      SizeType           embedding_size,
+      SizeType           vocab_size,
+      std::string const &name      = "SkipGram",
+      WeightsInit        init_mode = WeightsInit::XAVIER_FAN_OUT);
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 
@@ -86,8 +90,11 @@ private:
   SizeType    out_size_{};
   SizeType    vocab_size_{};
 
-  void Initialise(TensorType &weights, WeightsInit init_mode, SizeType dim_1_size,
-                  SizeType dim_2_size)
+  void Initialise(
+      TensorType &weights,
+      WeightsInit init_mode,
+      SizeType    dim_1_size,
+      SizeType    dim_2_size)
   {
     fetch::ml::ops::Weights<TensorType>::Initialise(weights, dim_1_size, dim_2_size, init_mode);
   }

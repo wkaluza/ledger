@@ -209,8 +209,12 @@ enum class FunctionKind : uint8_t
 struct TypeInfo
 {
   TypeInfo() = default;
-  TypeInfo(TypeKind kind__, std::string name__, TypeId type_id__, TypeId template_type_id__,
-           TypeIdArray template_parameter_type_ids__)
+  TypeInfo(
+      TypeKind    kind__,
+      std::string name__,
+      TypeId      type_id__,
+      TypeId      template_type_id__,
+      TypeIdArray template_parameter_type_ids__)
     : kind{kind__}
     , name{std::move(name__)}
     , type_id{type_id__}
@@ -245,8 +249,11 @@ using CPPCopyConstructorHandler = std::function<Ptr<Object>(VM *, void const *)>
 struct FunctionInfo
 {
   FunctionInfo() = default;
-  FunctionInfo(FunctionKind function_kind__, std::string unique_name__, Handler handler__,
-               ChargeAmount static_charge__)
+  FunctionInfo(
+      FunctionKind function_kind__,
+      std::string  unique_name__,
+      Handler      handler__,
+      ChargeAmount static_charge__)
     : function_kind{function_kind__}
     , unique_name{std::move(unique_name__)}
     , handler{std::move(handler__)}

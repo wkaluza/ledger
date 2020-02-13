@@ -32,8 +32,11 @@ class Outbound : public Endpoint<google::protobuf::Message>
 {
 public:
   Outbound(const Uri &uri, Core &core, std::size_t sendBufferSize, std::size_t readBufferSize)
-    : Endpoint<google::protobuf::Message>(core, sendBufferSize, readBufferSize,
-                                          std::unordered_map<std::string, std::string>())
+    : Endpoint<google::protobuf::Message>(
+          core,
+          sendBufferSize,
+          readBufferSize,
+          std::unordered_map<std::string, std::string>())
     , uri(uri)
     , core(core)
   {

@@ -62,12 +62,14 @@ public:
    * @param regularisation_rate
    * @param init_mode
    */
-  FullyConnected(SizeType in, SizeType out,
-                 details::ActivationType       activation_type = details::ActivationType::NOTHING,
-                 fetch::ml::RegularisationType regulariser = fetch::ml::RegularisationType::NONE,
-                 DataType                      regularisation_rate = DataType{0},
-                 WeightsInit                   init_mode           = WeightsInit::XAVIER_GLOROT,
-                 bool                          time_distributed    = !TIME_DISTRIBUTED);
+  FullyConnected(
+      SizeType                      in,
+      SizeType                      out,
+      details::ActivationType       activation_type     = details::ActivationType::NOTHING,
+      fetch::ml::RegularisationType regulariser         = fetch::ml::RegularisationType::NONE,
+      DataType                      regularisation_rate = DataType{0},
+      WeightsInit                   init_mode           = WeightsInit::XAVIER_GLOROT,
+      bool                          time_distributed    = !TIME_DISTRIBUTED);
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 

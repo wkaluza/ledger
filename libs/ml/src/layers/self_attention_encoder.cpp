@@ -31,12 +31,15 @@ namespace ml {
 namespace layers {
 
 template <typename TensorType>
-SelfAttentionEncoder<TensorType>::SelfAttentionEncoder(SizeType n_heads, SizeType model_dim,
-                                                       SizeType ff_dim, DataType residual_dropout,
-                                                       DataType       attention_dropout,
-                                                       DataType       feedforward_dropout,
-                                                       DataType       epsilon,
-                                                       ActivationType activation_type)
+SelfAttentionEncoder<TensorType>::SelfAttentionEncoder(
+    SizeType       n_heads,
+    SizeType       model_dim,
+    SizeType       ff_dim,
+    DataType       residual_dropout,
+    DataType       attention_dropout,
+    DataType       feedforward_dropout,
+    DataType       epsilon,
+    ActivationType activation_type)
   : n_heads_(n_heads)
   , model_dim_(model_dim)
   , ff_dim_(ff_dim)
@@ -60,7 +63,10 @@ SelfAttentionEncoder<TensorType>::SelfAttentionEncoder(SizeType n_heads, SizeTyp
   // multihead attention on input time series vector
   std::string multihead_self_attention =
       this->template AddNode<fetch::ml::layers::MultiheadAttention<TensorType>>(
-          name + "_Multihead_Attention", {input, input, input, mask}, n_heads, model_dim_,
+          name + "_Multihead_Attention",
+          {input, input, input, mask},
+          n_heads,
+          model_dim_,
           attention_dropout_);
 
   // make residual connection
@@ -119,15 +125,22 @@ void SelfAttentionEncoder<TensorType>::SetOpSaveableParams(SPType const &sp)
 }
 
 template <typename TensorType>
-std::string SelfAttentionEncoder<TensorType>::positionwise_feedforward(std::string const &name,
-                                                                       std::string const &input)
+std::string SelfAttentionEncoder<TensorType>::positionwise_feedforward(
+    std::string const &name,
+    std::string const &input)
 {
   // position wise feedforward with gelu acitvation
   std::string ff_first_layer =
       this->template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-          name + "_Feedforward_No_1", {input}, static_cast<SizeType>(model_dim_),
-          static_cast<SizeType>(ff_dim_), activation_type_, RegType::NONE, DataType{0},
-          WeightsInitType::XAVIER_GLOROT, true);
+          name + "_Feedforward_No_1",
+          {input},
+          static_cast<SizeType>(model_dim_),
+          static_cast<SizeType>(ff_dim_),
+          activation_type_,
+          RegType::NONE,
+          DataType{0},
+          WeightsInitType::XAVIER_GLOROT,
+          true);
 
   // do dropout
   std::string ff_first_layer_dropout = this->template AddNode<fetch::ml::ops::Dropout<TensorType>>(
@@ -136,16 +149,23 @@ std::string SelfAttentionEncoder<TensorType>::positionwise_feedforward(std::stri
   // position wise feedforward stage 2
   std::string ff_second_layer =
       this->template AddNode<fetch::ml::layers::FullyConnected<TensorType>>(
-          name + "_Feedforward_No_2", {ff_first_layer_dropout}, static_cast<SizeType>(ff_dim_),
-          static_cast<SizeType>(model_dim_), ActivationType::NOTHING, RegType::NONE, DataType{0},
-          WeightsInitType::XAVIER_GLOROT, true);
+          name + "_Feedforward_No_2",
+          {ff_first_layer_dropout},
+          static_cast<SizeType>(ff_dim_),
+          static_cast<SizeType>(model_dim_),
+          ActivationType::NOTHING,
+          RegType::NONE,
+          DataType{0},
+          WeightsInitType::XAVIER_GLOROT,
+          true);
 
   return ff_second_layer;
 }
 
 template <typename TensorType>
 std::string SelfAttentionEncoder<TensorType>::residual_connection(
-    std::string const &name, std::string const &prev_layer_input,
+    std::string const &name,
+    std::string const &prev_layer_input,
     std::string const &prev_layer_output)
 {
   // do a dropout of prev output before doing residual connection

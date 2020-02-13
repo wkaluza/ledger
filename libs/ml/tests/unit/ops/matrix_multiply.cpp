@@ -108,10 +108,10 @@ TYPED_TEST(MatrixMultiplyTest, backward_batch_test)
 
   // test correct shapes
   ASSERT_EQ(backpropagated_signals.size(), 2);
-  ASSERT_EQ(backpropagated_signals[0].shape(),
-            std::vector<typename TypeParam::SizeType>({3, 4, 2}));
-  ASSERT_EQ(backpropagated_signals[1].shape(),
-            std::vector<typename TypeParam::SizeType>({4, 3, 2}));
+  ASSERT_EQ(
+      backpropagated_signals[0].shape(), std::vector<typename TypeParam::SizeType>({3, 4, 2}));
+  ASSERT_EQ(
+      backpropagated_signals[1].shape(), std::vector<typename TypeParam::SizeType>({4, 3, 2}));
 
   // test correct values
   EXPECT_TRUE(backpropagated_signals[0].AllClose(gradient_a));

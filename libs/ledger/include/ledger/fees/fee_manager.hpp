@@ -47,9 +47,13 @@ public:
   struct TransactionDetails
   {
     TransactionDetails(chain::Transaction &tx, BitVector const &shards);
-    TransactionDetails(chain::Address const &from_addr, chain::Address const &contract_addr,
-                       BitVector const &shards, Digest const &tx_digest, TokenAmount const &rate,
-                       TokenAmount const &limit);
+    TransactionDetails(
+        chain::Address const &from_addr,
+        chain::Address const &contract_addr,
+        BitVector const &     shards,
+        Digest const &        tx_digest,
+        TokenAmount const &   rate,
+        TokenAmount const &   limit);
 
     chain::Address const &from;
     chain::Address const &contract_address;
@@ -65,13 +69,22 @@ public:
   FeeManager(FeeManager &&)      = delete;
   virtual ~FeeManager()          = default;
 
-  bool CalculateChargeAndValidate(TransactionDetails &             tx,
-                                  std::vector<Chargeable *> const &chargeables, Result &result);
-  void Execute(TransactionDetails &tx, Result &result, BlockIndex const &block,
-               StorageInterface &storage);
-  void SettleFees(chain::Address const &miner, TokenAmount amount,
-                  chain::Address const &contract_address, uint32_t log2_num_lanes,
-                  BlockIndex const &block, StorageInterface &storage);
+  bool CalculateChargeAndValidate(
+      TransactionDetails &             tx,
+      std::vector<Chargeable *> const &chargeables,
+      Result &                         result);
+  void Execute(
+      TransactionDetails &tx,
+      Result &            result,
+      BlockIndex const &  block,
+      StorageInterface &  storage);
+  void SettleFees(
+      chain::Address const &miner,
+      TokenAmount           amount,
+      chain::Address const &contract_address,
+      uint32_t              log2_num_lanes,
+      BlockIndex const &    block,
+      StorageInterface &    storage);
 
   // Operators
   FeeManager &operator=(FeeManager const &) = delete;

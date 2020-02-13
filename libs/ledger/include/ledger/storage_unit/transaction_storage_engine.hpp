@@ -60,8 +60,8 @@ public:
   std::size_t GetCount() const override;
   void        Confirm(Digest const &tx_digest) override;
   TxLayouts   GetRecent(uint32_t max_to_poll) override;
-  TxArray     PullSubtree(Digest const &partial_digest, uint64_t bit_count,
-                          uint64_t pull_limit) override;
+  TxArray     PullSubtree(Digest const &partial_digest, uint64_t bit_count, uint64_t pull_limit)
+      override;
   /// @}
 
   // Operators

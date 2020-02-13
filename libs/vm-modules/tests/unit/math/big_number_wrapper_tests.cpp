@@ -192,8 +192,8 @@ TEST_F(UInt256Tests, uint256_raw_increase)
   // Increase is tested via digit carriage while incrementing.
   UInt256Wrapper carriage_inside(uint64max);
 
-  carriage_inside.InplaceAdd(Ptr<Object>::PtrFromThis(&carriage_inside),
-                             Ptr<Object>::PtrFromThis(&_1));
+  carriage_inside.InplaceAdd(
+      Ptr<Object>::PtrFromThis(&carriage_inside), Ptr<Object>::PtrFromThis(&_1));
 
   EXPECT_EQ(carriage_inside.number().ElementAt(0), uint64_t(0));
   EXPECT_EQ(carriage_inside.number().ElementAt(1), uint64_t(1));

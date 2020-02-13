@@ -87,9 +87,17 @@ protected:
     beacon_       = nullptr;
     notarisation_ = nullptr;
 
-    consensus_ = std::make_shared<Consensus>(stake_, beacon_setup_, beacon_, chain_, storage_,
-                                             mining_identity_, aeon_period_, max_cabinet_size_,
-                                             block_interval_ms_, notarisation_);
+    consensus_ = std::make_shared<Consensus>(
+        stake_,
+        beacon_setup_,
+        beacon_,
+        chain_,
+        storage_,
+        mining_identity_,
+        aeon_period_,
+        max_cabinet_size_,
+        block_interval_ms_,
+        notarisation_);
 
     // A newly constructed chain is at genesis
     auto const genesis = chain_.GetHeaviestBlock();

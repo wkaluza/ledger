@@ -31,8 +31,9 @@ namespace ledger {
  * @param max_cache_size The maximum size of the cache in entries
  * @param log2_num_lanes The log2 of the number of lanes in the system
  */
-RecentTransactionsCache::RecentTransactionsCache(std::size_t max_cache_size,
-                                                 uint32_t    log2_num_lanes)
+RecentTransactionsCache::RecentTransactionsCache(
+    std::size_t max_cache_size,
+    uint32_t    log2_num_lanes)
   : max_cache_size_{max_cache_size}
   , log2_num_lanes_{log2_num_lanes}
 {}

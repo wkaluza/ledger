@@ -99,8 +99,9 @@ void LayerNorm<TensorType>::Forward(VecTensorType const &inputs, TensorType &out
 }
 
 template <class TensorType>
-std::vector<TensorType> LayerNorm<TensorType>::Backward(VecTensorType const &inputs,
-                                                        TensorType const &   error_signal)
+std::vector<TensorType> LayerNorm<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   // refer to https://kevinzakka.github.io/2016/09/14/batch_normalization/ for detailed
   // derivation of gradient N.B. gradient for batch norm and layer norm is the same, apart from

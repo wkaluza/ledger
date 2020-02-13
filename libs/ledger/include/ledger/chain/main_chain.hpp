@@ -177,7 +177,10 @@ public:
   Blocks     GetChainPreceding(BlockHash start, uint64_t limit = UPPER_BOUND) const;
   Travelogue TimeTravel(BlockHash current_hash, std::size_t limit = UPPER_BOUND) const;
   bool       GetPathToCommonAncestor(
-            Blocks &blocks, BlockHash tip_hash, BlockHash node_hash, uint64_t limit = UPPER_BOUND,
+            Blocks &           blocks,
+            BlockHash          tip_hash,
+            BlockHash          node_hash,
+            uint64_t           limit     = UPPER_BOUND,
             BehaviourWhenLimit behaviour = BehaviourWhenLimit::RETURN_MOST_RECENT) const;
   /// @}
 
@@ -196,8 +199,9 @@ public:
 
   /// @name Transaction Duplication Filtering
   /// @{
-  DigestSet DetectDuplicateTransactions(BlockHash const &           starting_hash,
-                                        TransactionLayoutSet const &transactions) const;
+  DigestSet DetectDuplicateTransactions(
+      BlockHash const &           starting_hash,
+      TransactionLayoutSet const &transactions) const;
   /// @}
 
   // Operators
@@ -270,11 +274,13 @@ private:
   bool LookupBlock(BlockHash const &hash, BlockPtr &block, BlockHash *next_hash = nullptr) const;
   BlockPtr LookupBlock(BlockHash const &hash) const;
   bool     LookupBlockFromCache(BlockHash const &hash, BlockPtr &block) const;
-  bool     LookupBlockFromStorage(BlockHash const &hash, BlockPtr &block,
-                                  BlockHash *next_hash = nullptr) const;
-  bool     IsBlockInCache(BlockHash const &hash) const;
-  void     AddBlockToCache(BlockPtr const &block) const;
-  void     AddBlockToBloomFilter(Block const &block) const;
+  bool     LookupBlockFromStorage(
+          BlockHash const &hash,
+          BlockPtr &       block,
+          BlockHash *      next_hash = nullptr) const;
+  bool IsBlockInCache(BlockHash const &hash) const;
+  void AddBlockToCache(BlockPtr const &block) const;
+  void AddBlockToBloomFilter(Block const &block) const;
   void CacheReference(BlockHash const &hash, BlockHash const &next_hash, bool unique = false) const;
   void ForgetReference(BlockHash const &hash, BlockHash const &next_hash = {}) const;
   bool LookupReference(BlockHash const &hash, BlockHash &next_hash) const;

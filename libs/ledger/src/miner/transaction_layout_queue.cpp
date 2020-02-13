@@ -61,9 +61,10 @@ bool TransactionLayoutQueue::Remove(Digest const &digest)
   bool success{false};
 
   // attempt to find the target digest
-  auto const it = std::find_if(
-      list_.begin(), list_.end(),
-      [&digest](TransactionLayout const &layout) { return layout.digest() == digest; });
+  auto const it =
+      std::find_if(list_.begin(), list_.end(), [&digest](TransactionLayout const &layout) {
+        return layout.digest() == digest;
+      });
 
   // if we found the target element then remove the list entry and the digest from the set
   if (list_.end() != it)
@@ -212,8 +213,9 @@ TransactionLayoutQueue::Iterator TransactionLayoutQueue::Erase(ConstIterator ite
   return list_.erase(iterator);
 }
 
-TransactionLayoutQueue::Iterator TransactionLayoutQueue::Erase(ConstIterator first,
-                                                               ConstIterator last)
+TransactionLayoutQueue::Iterator TransactionLayoutQueue::Erase(
+    ConstIterator first,
+    ConstIterator last)
 {
   // remove the associated digests from the set
   for (auto itr = first; itr != last; ++itr)

@@ -340,8 +340,10 @@ public:
    *
    */
   template <typename... Args>
-  void Set(byte_array::ConstByteArray const &key_str, uint64_t val,
-           byte_array::ConstByteArray const &data)
+  void Set(
+      byte_array::ConstByteArray const &key_str,
+      uint64_t                          val,
+      byte_array::ConstByteArray const &data)
   {
     key_type       key(key_str);
     bool           split;
@@ -847,8 +849,14 @@ private:
    *
    * @return: the index which this kv can be found in the stack
    */
-  IndexType FindNearest(key_type const &key, key_value_pair &kv, bool &split, int &pos,
-                        int &left_right, uint64_t &depth, uint64_t max_bits = key_type::BITS)
+  IndexType FindNearest(
+      key_type const &key,
+      key_value_pair &kv,
+      bool &          split,
+      int &           pos,
+      int &           left_right,
+      uint64_t &      depth,
+      uint64_t        max_bits = key_type::BITS)
   {
     depth = 0;
     if (this->empty())
@@ -1133,8 +1141,8 @@ private:
 
         if (leaf_values.find(kv.value) != leaf_values.end())
         {
-          throw StorageException("Duplicate values found in key value index! " +
-                                 std::to_string(kv.value));
+          throw StorageException(
+              "Duplicate values found in key value index! " + std::to_string(kv.value));
         }
       }
       else

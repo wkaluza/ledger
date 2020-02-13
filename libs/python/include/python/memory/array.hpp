@@ -35,8 +35,9 @@ void BuildArray(std::string const &custom_name, pybind11::module &module)
       .def("At", static_cast<T &(Array<T>::*)(std::size_t const &)>(&Array<T>::At))
       .def("At", static_cast<T const &(Array<T>::*)(std::size_t const &)const>(&Array<T>::At))
       .def("operator[]", static_cast<T &(Array<T>::*)(std::size_t const &)>(&Array<T>::operator[]))
-      .def("operator[]",
-           static_cast<T const &(Array<T>::*)(std::size_t const &)const>(&Array<T>::operator[]))
+      .def(
+          "operator[]",
+          static_cast<T const &(Array<T>::*)(std::size_t const &)const>(&Array<T>::operator[]))
       .def("Copy", &Array<T>::Copy)
       .def("size", [](Array<T> const &o) { return o.size(); });
 }

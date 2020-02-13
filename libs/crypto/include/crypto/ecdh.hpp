@@ -27,11 +27,15 @@ class ECDSASigner;
 class Prover;
 class Verifier;
 
-bool ComputeSharedKey(ECDSASigner const &signer, ECDSAVerifier const &verifier,
-                      byte_array::ConstByteArray &shared_key);
+bool ComputeSharedKey(
+    ECDSASigner const &         signer,
+    ECDSAVerifier const &       verifier,
+    byte_array::ConstByteArray &shared_key);
 
-bool ComputeSharedKey(Prover const &prover, Verifier const &verifier,
-                      byte_array::ConstByteArray &shared_key);
+bool ComputeSharedKey(
+    Prover const &              prover,
+    Verifier const &            verifier,
+    byte_array::ConstByteArray &shared_key);
 
 }  // namespace crypto
 }  // namespace fetch

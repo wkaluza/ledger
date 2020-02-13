@@ -76,8 +76,9 @@ void TanH<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
 }
 
 template <class TensorType>
-std::vector<TensorType> TanH<TensorType>::Backward(VecTensorType const &inputs,
-                                                   TensorType const &   error_signal)
+std::vector<TensorType> TanH<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
 

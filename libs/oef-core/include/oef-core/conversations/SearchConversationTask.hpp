@@ -39,11 +39,16 @@ public:
 
   static constexpr char const *LOGGING_NAME = "SearchConversationTask";
 
-  SearchConversationTask(std::string path, std::shared_ptr<IN_PROTO> initiator,
-                         std::shared_ptr<OutboundConversations> outbounds,
-                         std::shared_ptr<OefAgentEndpoint> endpoint, uint32_t msg_id,
-                         std::string core_key, std::string agent_uri, const EntryPoint *entryPoints,
-                         IMPL_CLASS *impl_class_ptr)
+  SearchConversationTask(
+      std::string                            path,
+      std::shared_ptr<IN_PROTO>              initiator,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<OefAgentEndpoint>      endpoint,
+      uint32_t                               msg_id,
+      std::string                            core_key,
+      std::string                            agent_uri,
+      const EntryPoint *                     entryPoints,
+      IMPL_CLASS *                           impl_class_ptr)
     : fetch::oef::base::StateMachineTask<IMPL_CLASS>(impl_class_ptr, entryPoints)
     , initiator(std::move(initiator))
     , outbounds(std::move(outbounds))
@@ -97,8 +102,8 @@ public:
 
   void SetDefaultSendReplyFunc(const char *logging_name, const char *log_message)
   {
-    sendReply = [logging_name, log_message](std::shared_ptr<OUT_PROTO>        response,
-                                            std::shared_ptr<OefAgentEndpoint> e) {
+    sendReply = [logging_name, log_message](
+                    std::shared_ptr<OUT_PROTO> response, std::shared_ptr<OefAgentEndpoint> e) {
       FETCH_LOG_INFO(logging_name, log_message, response->DebugString());
       auto reply_sender = std::make_shared<
           TSendProtoTask<OefAgentEndpoint, std::shared_ptr<fetch::oef::pb::Server_AgentMessage>>>(

@@ -29,11 +29,15 @@ void BuildLinearCongruentialGenerator(pybind11::module &module)
       .def(py::init<>()) /* No constructors found */
       .def("Reset", &LinearCongruentialGenerator::Reset)
       .def("operator()", &LinearCongruentialGenerator::operator())
-      .def("Seed", static_cast<uint64_t (LinearCongruentialGenerator::*)() const>(
-                       &LinearCongruentialGenerator::Seed))
-      .def("Seed", static_cast<uint64_t (LinearCongruentialGenerator::*)(
-                       fetch::random::LinearCongruentialGenerator::RandomType const &)>(
-                       &LinearCongruentialGenerator::Seed))
+      .def(
+          "Seed",
+          static_cast<uint64_t (LinearCongruentialGenerator::*)() const>(
+              &LinearCongruentialGenerator::Seed))
+      .def(
+          "Seed",
+          static_cast<uint64_t (LinearCongruentialGenerator::*)(
+              fetch::random::LinearCongruentialGenerator::RandomType const &)>(
+              &LinearCongruentialGenerator::Seed))
       .def("AsDouble", &LinearCongruentialGenerator::AsDouble);
 }
 

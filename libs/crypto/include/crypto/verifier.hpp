@@ -24,8 +24,10 @@
 namespace fetch {
 namespace crypto {
 
-bool Verify(byte_array::ConstByteArray key, byte_array::ConstByteArray const &data,
-            byte_array::ConstByteArray const &signature);
+bool Verify(
+    byte_array::ConstByteArray        key,
+    byte_array::ConstByteArray const &data,
+    byte_array::ConstByteArray const &signature);
 
 class Verifier
 {
@@ -33,8 +35,10 @@ public:
   using ConstByteArray = byte_array::ConstByteArray;
 
   static std::unique_ptr<Verifier> Build(Identity const &identity);
-  static bool                      Verify(Identity const &identity, ConstByteArray const &data,
-                                          ConstByteArray const &signature);
+  static bool                      Verify(
+                           Identity const &      identity,
+                           ConstByteArray const &data,
+                           ConstByteArray const &signature);
 
   Verifier()          = default;
   virtual ~Verifier() = default;

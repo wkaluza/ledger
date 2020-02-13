@@ -31,11 +31,15 @@ void BuildLaggedFibonacciGenerator(std::string const &custom_name, pybind11::mod
       .def(py::init<>())
       .def("Reset", &LaggedFibonacciGenerator<P, Q>::Reset)
       .def("operator()", &LaggedFibonacciGenerator<P, Q>::operator())
-      .def("Seed", static_cast<uint64_t (LaggedFibonacciGenerator<P, Q>::*)() const>(
-                       &LaggedFibonacciGenerator<P, Q>::Seed))
-      .def("Seed", static_cast<uint64_t (LaggedFibonacciGenerator<P, Q>::*)(
-                       typename fetch::random::LaggedFibonacciGenerator<P, Q>::RandomType const &)>(
-                       &LaggedFibonacciGenerator<P, Q>::Seed))
+      .def(
+          "Seed",
+          static_cast<uint64_t (LaggedFibonacciGenerator<P, Q>::*)() const>(
+              &LaggedFibonacciGenerator<P, Q>::Seed))
+      .def(
+          "Seed",
+          static_cast<uint64_t (LaggedFibonacciGenerator<P, Q>::*)(
+              typename fetch::random::LaggedFibonacciGenerator<P, Q>::RandomType const &)>(
+              &LaggedFibonacciGenerator<P, Q>::Seed))
       .def("AsDouble", &LaggedFibonacciGenerator<P, Q>::AsDouble);
 }
 

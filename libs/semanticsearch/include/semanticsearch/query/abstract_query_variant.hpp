@@ -64,9 +64,9 @@ public:
     if (std::type_index(typeid(T)) != type_index_)
     {
       auto t = std::type_index(typeid(T));
-      throw std::runtime_error("Type mismatch in QueryVariant: stored " +
-                               std::string(type_index_.name()) + " vs. requested " +
-                               std::string(t.name()));
+      throw std::runtime_error(
+          "Type mismatch in QueryVariant: stored " + std::string(type_index_.name()) +
+          " vs. requested " + std::string(t.name()));
     }
     return *reinterpret_cast<T const *>(data());
   }
@@ -95,8 +95,8 @@ public:
 
   static QueryVariant New(T value, int32_t type = 0, Token token = static_cast<Token>(""))
   {
-    return QueryVariant(new SpecialisedQueryVariant<T>(std::move(value), type, std::move(token),
-                                                       std::type_index(typeid(T))));
+    return QueryVariant(new SpecialisedQueryVariant<T>(
+        std::move(value), type, std::move(token), std::type_index(typeid(T))));
   }
 
   void const *data() const override
@@ -117,7 +117,8 @@ using QueryVariant = std::shared_ptr<AbstractQueryVariant>;
 
 template <typename T>
 QueryVariant NewQueryVariant(
-    T val, int type = 0,
+    T                           val,
+    int                         type  = 0,
     AbstractQueryVariant::Token token = static_cast<AbstractQueryVariant::Token>(""))
 {
   return SpecialisedQueryVariant<T>::New(std::move(val), type, std::move(token));

@@ -32,13 +32,24 @@ SearchRemoveTask::EntryPoint searchRemoveTaskEntryPoints[] = {
     &SearchRemoveTask::HandleResponse,
 };
 
-SearchRemoveTask::SearchRemoveTask(std::shared_ptr<SearchRemoveTask::IN_PROTO> initiator,
-                                   std::shared_ptr<OutboundConversations>      outbounds,
-                                   std::shared_ptr<OefAgentEndpoint> endpoint, uint32_t msg_id,
-                                   std::string core_key, std::string agent_uri, bool remove_row)
-  : SearchConversationTask("remove", std::move(initiator), std::move(outbounds),
-                           std::move(endpoint), msg_id, std::move(core_key), std::move(agent_uri),
-                           searchRemoveTaskEntryPoints, this)
+SearchRemoveTask::SearchRemoveTask(
+    std::shared_ptr<SearchRemoveTask::IN_PROTO> initiator,
+    std::shared_ptr<OutboundConversations>      outbounds,
+    std::shared_ptr<OefAgentEndpoint>           endpoint,
+    uint32_t                                    msg_id,
+    std::string                                 core_key,
+    std::string                                 agent_uri,
+    bool                                        remove_row)
+  : SearchConversationTask(
+        "remove",
+        std::move(initiator),
+        std::move(outbounds),
+        std::move(endpoint),
+        msg_id,
+        std::move(core_key),
+        std::move(agent_uri),
+        searchRemoveTaskEntryPoints,
+        this)
   , remove_row_(remove_row)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "Task created.");
@@ -67,8 +78,8 @@ SearchRemoveTask::StateResult SearchRemoveTask::HandleResponse()
 
   if (!response->success())
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Error response from search, code: ", response->errorcode(),
-                   ", narrative:");
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Error response from search, code: ", response->errorcode(), ", narrative:");
     for (const auto &n : response->narrative())
     {
       FETCH_LOG_WARN(LOGGING_NAME, "  ", n);

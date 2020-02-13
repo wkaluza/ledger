@@ -255,13 +255,13 @@ public:
   ConstSliceType Slice() const;
   ConstSliceType Slice(SizeType index, SizeType axis = 0) const;
   ConstSliceType Slice(SizeVector indices, SizeVector axes) const;
-  ConstSliceType Slice(SizeVector const &begins, SizeVector const &ends,
-                       SizeVector const &strides) const;
-  TensorSlice    Slice();
-  TensorSlice    Slice(SizeType index, SizeType axis = 0);
-  TensorSlice    Slice(std::pair<SizeType, SizeType> start_end_index, SizeType axis = 0);
-  TensorSlice    Slice(SizeVector indices, SizeVector axes);
-  TensorSlice    Slice(SizeVector const &begins, SizeVector const &ends, SizeVector const &strides);
+  ConstSliceType Slice(SizeVector const &begins, SizeVector const &ends, SizeVector const &strides)
+      const;
+  TensorSlice Slice();
+  TensorSlice Slice(SizeType index, SizeType axis = 0);
+  TensorSlice Slice(std::pair<SizeType, SizeType> start_end_index, SizeType axis = 0);
+  TensorSlice Slice(SizeVector indices, SizeVector axes);
+  TensorSlice Slice(SizeVector const &begins, SizeVector const &ends, SizeVector const &strides);
 
   /////////////
   /// Views ///
@@ -283,8 +283,10 @@ public:
   template <typename TensorType>
   static Tensor              Stack(std::vector<TensorType> const &tensors);
   static Tensor              Concat(std::vector<Tensor> const &tensors, SizeType axis);
-  static std::vector<Tensor> Split(Tensor const &tensor, SizeVector const &concat_points,
-                                   SizeType axis);
+  static std::vector<Tensor> Split(
+      Tensor const &    tensor,
+      SizeVector const &concat_points,
+      SizeType          axis);
 
   void Sort();
   void Sort(memory::Range const &range);
@@ -295,9 +297,10 @@ public:
   /// COMPARISON OPERATORS ///
   ////////////////////////////
 
-  bool AllClose(Tensor const &o,
-                Type const &  relative_tolerance = fetch::math::Type<Type>("0.00001"),
-                Type const &  absolute_tolerance = fetch::math::Type<Type>("0.00000001")) const;
+  bool AllClose(
+      Tensor const &o,
+      Type const &  relative_tolerance = fetch::math::Type<Type>("0.00001"),
+      Type const &  absolute_tolerance = fetch::math::Type<Type>("0.00000001")) const;
   bool operator==(Tensor const &other) const;
   bool operator!=(Tensor const &other) const;
 
@@ -833,8 +836,9 @@ void Tensor<T, C>::Set(Args... args)
 // TODO(private issue 123)
 template <typename T, typename C>
 template <typename S>
-fetch::meta::IfIsUnsignedInteger<S, void> Tensor<T, C>::Set(std::vector<S> const &indices,
-                                                            Type const &          val)
+fetch::meta::IfIsUnsignedInteger<S, void> Tensor<T, C>::Set(
+    std::vector<S> const &indices,
+    Type const &          val)
 {
   if (indices.size() != shape_.size())
   {
@@ -990,15 +994,18 @@ struct Tensor<T, C>::TensorSetter
   using Type = typename TensorSetter<N + 1, Args...>::Type;
 
   // Computing index
-  static SizeType IndexOf(SizeVector const &stride, SizeVector const &shape, TSType const &index,
-                          Args &&... args)
+  static SizeType IndexOf(
+      SizeVector const &stride,
+      SizeVector const &shape,
+      TSType const &    index,
+      Args &&... args)
   {
     if (SizeType(index) >= shape[N])
     {
-      throw exceptions::WrongIndices("Tensor::IndexOf : index " + std::to_string(SizeType(index)) +
-                                     " is out of bounds of axis " + std::to_string(N) +
-                                     " (max possible index is " + std::to_string(shape[N] - 1) +
-                                     ").");
+      throw exceptions::WrongIndices(
+          "Tensor::IndexOf : index " + std::to_string(SizeType(index)) +
+          " is out of bounds of axis " + std::to_string(N) + " (max possible index is " +
+          std::to_string(shape[N] - 1) + ").");
     }
     return stride[N] * SizeType(index) +
            TensorSetter<N + 1, Args...>::IndexOf(stride, shape, std::forward<Args>(args)...);
@@ -1202,7 +1209,8 @@ Tensor<T, C> Tensor<T, C>::TensorSliceImplementation<STensor>::Copy() const
 template <typename T, typename C>
 template <typename STensor>
 typename Tensor<T, C>::ConstSliceType Tensor<T, C>::TensorSliceImplementation<STensor>::Slice(
-    SizeType i, SizeType axis) const
+    SizeType i,
+    SizeType axis) const
 {
   std::vector<SizeType> new_axes(axes_);
 
@@ -1250,8 +1258,8 @@ void Tensor<T, C>::TensorSliceImplementation<STensor>::ModifyRange(SizeType i, S
 
 template <typename T, typename C>
 template <typename STensor>
-typename Tensor<T, C>::ConstSliceIteratorType
-Tensor<T, C>::TensorSliceImplementation<STensor>::cbegin() const
+typename Tensor<T, C>::ConstSliceIteratorType Tensor<T, C>::TensorSliceImplementation<
+    STensor>::cbegin() const
 {
   auto ret = ConstSliceIteratorType(tensor_, range_);
 
@@ -1278,8 +1286,8 @@ Tensor<T, C>::TensorSliceImplementation<STensor>::cbegin() const
 
 template <typename T, typename C>
 template <typename STensor>
-typename Tensor<T, C>::ConstSliceIteratorType
-Tensor<T, C>::TensorSliceImplementation<STensor>::cend() const
+typename Tensor<T, C>::ConstSliceIteratorType Tensor<T, C>::TensorSliceImplementation<
+    STensor>::cend() const
 {
   return ConstSliceIteratorType::EndIterator(tensor_);
 }

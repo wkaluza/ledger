@@ -36,8 +36,9 @@ public:
   ~Listener() = default;
 
   void start_accept();
-  void handle_accept(std::shared_ptr<ISocketOwner> const &new_connection,
-                     std::error_code const &              error);
+  void handle_accept(
+      std::shared_ptr<ISocketOwner> const &new_connection,
+      std::error_code const &              error);
 
   std::shared_ptr<tcp::acceptor> acceptor;
   CONN_CREATOR                   creator;

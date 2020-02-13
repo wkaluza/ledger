@@ -48,8 +48,8 @@ protected:
   /// @{
   bool        Connect() override;
   void        Write(asio::streambuf const &buffer, std::error_code &ec) override;
-  std::size_t ReadUntil(asio::streambuf &buffer, char const *delimiter,
-                        std::error_code &ec) override;
+  std::size_t ReadUntil(asio::streambuf &buffer, char const *delimiter, std::error_code &ec)
+      override;
   void ReadExactly(asio::streambuf &buffer, std::size_t length, std::error_code &ec) override;
   /// @}
 

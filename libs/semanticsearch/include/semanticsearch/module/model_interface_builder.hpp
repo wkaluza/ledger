@@ -33,8 +33,9 @@ public:
   using ModelField       = std::shared_ptr<VocabularyToSubspaceMapInterface>;
   using VocabularySchema = std::shared_ptr<PropertiesToSubspace>;
 
-  explicit ModelInterfaceBuilder(VocabularySchema      model   = nullptr,
-                                 SemanticSearchModule *factory = nullptr);
+  explicit ModelInterfaceBuilder(
+      VocabularySchema      model   = nullptr,
+      SemanticSearchModule *factory = nullptr);
 
   explicit               operator bool() const;
   ModelInterfaceBuilder &Field(std::string const &name, std::string const &type);

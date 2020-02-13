@@ -72,8 +72,9 @@ void LogSoftmax<TensorType>::Forward(VecTensorType const &inputs, TensorType &ou
 }
 
 template <typename TensorType>
-std::vector<TensorType> LogSoftmax<TensorType>::Backward(VecTensorType const &inputs,
-                                                         TensorType const &   error_signal)
+std::vector<TensorType> LogSoftmax<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(inputs.front()->shape() == error_signal.shape());

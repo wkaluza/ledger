@@ -79,8 +79,9 @@ bool HttpClient::Request(HTTPRequest const &request, HTTPResponse &response)
   }
 
   // work out the start of the header
-  response.ParseHeader(input_buffer,
-                       header_length);  // will consume header_length bytes from the buffer
+  response.ParseHeader(
+      input_buffer,
+      header_length);  // will consume header_length bytes from the buffer
 
   // determine if any further read is required
   std::size_t content_length = 0;
@@ -170,8 +171,10 @@ void HttpClient::Write(asio::streambuf const &buffer, std::error_code &ec)
  * @param ec The output error code from the operation
  * @return The number of bytes read from the stream
  */
-std::size_t HttpClient::ReadUntil(asio::streambuf &buffer, char const *delimiter,
-                                  std::error_code &ec)
+std::size_t HttpClient::ReadUntil(
+    asio::streambuf &buffer,
+    char const *     delimiter,
+    std::error_code &ec)
 {
   return asio::read_until(socket_, buffer, delimiter, ec);
 }

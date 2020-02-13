@@ -89,8 +89,9 @@ private:
     return state->Get();
   }
 
-  TemplateParameter1 GetIndexedValueInternal(Ptr<String> const &       index,
-                                             TemplateParameter1 const &default_value)
+  TemplateParameter1 GetIndexedValueInternal(
+      Ptr<String> const &       index,
+      TemplateParameter1 const &default_value)
   {
     auto state{
         IState::ConstructIntrinsic(vm_, TypeIds::Unknown, value_type_id_, ComposeFullKey(index))};
@@ -119,14 +120,16 @@ private:
     return GetIndexedValueInternal(key->AsString());
   }
 
-  TemplateParameter1 GetFromStringWithDefault(Ptr<String> const &       key,
-                                              TemplateParameter1 const &default_value) override
+  TemplateParameter1 GetFromStringWithDefault(
+      Ptr<String> const &       key,
+      TemplateParameter1 const &default_value) override
   {
     return GetIndexedValueInternal(key, default_value);
   }
 
-  TemplateParameter1 GetFromAddressWithDefault(Ptr<Address> const &      key,
-                                               TemplateParameter1 const &default_value) override
+  TemplateParameter1 GetFromAddressWithDefault(
+      Ptr<Address> const &      key,
+      TemplateParameter1 const &default_value) override
   {
     if (!key)
     {
@@ -153,8 +156,10 @@ private:
 
 }  // namespace
 
-Ptr<IShardedState> IShardedState::ConstructorFromString(VM *vm, TypeId type_id,
-                                                        Ptr<String> const &name)
+Ptr<IShardedState> IShardedState::ConstructorFromString(
+    VM *               vm,
+    TypeId             type_id,
+    Ptr<String> const &name)
 {
   if (name)
   {
@@ -167,8 +172,10 @@ Ptr<IShardedState> IShardedState::ConstructorFromString(VM *vm, TypeId type_id,
   return {};
 }
 
-Ptr<IShardedState> IShardedState::ConstructorFromAddress(VM *vm, TypeId type_id,
-                                                         Ptr<Address> const &name)
+Ptr<IShardedState> IShardedState::ConstructorFromAddress(
+    VM *                vm,
+    TypeId              type_id,
+    Ptr<Address> const &name)
 {
   return ConstructorFromString(vm, type_id, name ? name->AsString() : Ptr<String>{});
 }

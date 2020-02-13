@@ -36,10 +36,18 @@ public:
   using UnderlyingType = storage::Document;
   using Keys           = std::vector<ResourceID>;
 
-  bool New(std::string const &state, std::string const &state_history, std::string const &index,
-           std::string const &index_history, bool create_if_not_exist);
-  bool Load(std::string const &state, std::string const &state_history, std::string const &index,
-            std::string const &index_history, bool create);
+  bool New(
+      std::string const &state,
+      std::string const &state_history,
+      std::string const &index,
+      std::string const &index_history,
+      bool               create_if_not_exist);
+  bool Load(
+      std::string const &state,
+      std::string const &state_history,
+      std::string const &index,
+      std::string const &index_history,
+      bool               create);
 
   UnderlyingType Get(ResourceID const &rid);
   UnderlyingType GetOrCreate(ResourceID const &rid);

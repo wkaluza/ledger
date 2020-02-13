@@ -139,8 +139,8 @@ int StringConsumerSSE(byte_array::ConstByteArray const &str, uint64_t &pos)
   }
 
   uint8_t const *     ptr         = str.pointer() + pos;
-  alignas(16) uint8_t compare[16] = {'"', '"', '"', '"', '"', '"', '"', '"',
-                                     '"', '"', '"', '"', '"', '"', '"', '"'};
+  alignas(16) uint8_t compare[16] = {
+      '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"', '"'};
 
   __m128i comp = _mm_load_si128(reinterpret_cast<__m128i *>(compare));
   // TODO(issue 37): Optimise to follow alignment

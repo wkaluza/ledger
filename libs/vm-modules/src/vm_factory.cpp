@@ -43,8 +43,10 @@ using namespace fetch::vm;
 namespace fetch {
 namespace vm_modules {
 
-VMFactory::Errors VMFactory::Compile(std::shared_ptr<Module> const &module,
-                                     SourceFiles const &files, Executable &executable)
+VMFactory::Errors VMFactory::Compile(
+    std::shared_ptr<Module> const &module,
+    SourceFiles const &            files,
+    Executable &                   executable)
 {
   std::vector<std::string> errors;
 

@@ -22,8 +22,10 @@
 namespace fetch {
 namespace version {
 
-void DisplayCLIHeader(std::string const &name, std::string const &years = "2018-2020",
-                      std::string const &additional = "");
+void DisplayCLIHeader(
+    std::string const &name,
+    std::string const &years      = "2018-2020",
+    std::string const &additional = "");
 
 }  // namespace version
 }  // namespace fetch

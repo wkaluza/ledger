@@ -30,11 +30,14 @@ void BuildJSONDocument(pybind11::module &module)
   py::class_<JSONDocument>(module, "JSONDocument")
       .def(py::init<>())
       .def("Parse", &JSONDocument::Parse)
-      .def("operator[]", static_cast<script::Variant &(JSONDocument::*)(std::size_t const &)>(
-                             &JSONDocument::operator[]))
-      .def("operator[]",
-           static_cast<script::Variant const &(JSONDocument::*)(std::size_t const &)const>(
-               &JSONDocument::operator[]));
+      .def(
+          "operator[]",
+          static_cast<script::Variant &(JSONDocument::*)(std::size_t const &)>(
+              &JSONDocument::operator[]))
+      .def(
+          "operator[]",
+          static_cast<script::Variant const &(JSONDocument::*)(std::size_t const &)const>(
+              &JSONDocument::operator[]));
 }
 
 };  // namespace json

@@ -65,8 +65,11 @@ public:
   bool Get(ConstByteArray const &endpoint, Headers const &headers, Variant &response);
   bool Post(ConstByteArray const &endpoint, Variant const &request, Variant &response);
   bool Post(ConstByteArray const &endpoint, Variant &response);
-  bool Post(ConstByteArray const &endpoint, Headers const &headers, Variant const &request,
-            Variant &response);
+  bool Post(
+      ConstByteArray const &endpoint,
+      Headers const &       headers,
+      Variant const &       request,
+      Variant &             response);
   bool Post(ConstByteArray const &endpoint, Headers const &headers, Variant &response);
   /// @}
 
@@ -84,8 +87,12 @@ private:
 
   using ClientPtr = std::unique_ptr<HttpClientInterface>;
 
-  bool Request(Method method, ConstByteArray const &endpoint, Headers const *headers,
-               Variant const *request, Variant &response);
+  bool Request(
+      Method                method,
+      ConstByteArray const &endpoint,
+      Headers const *       headers,
+      Variant const *       request,
+      Variant &             response);
 
   ClientPtr client_;
 };

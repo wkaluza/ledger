@@ -43,7 +43,9 @@ public:
       int p,
       std::shared_ptr<OefListenerSet<IOefTaskFactory<OefSearchEndpoint>, OefSearchEndpoint>>
                             listeners,
-      std::shared_ptr<Core> core, FactoryCreator initialFactoryCreator, ConfigMap endpointConfig)
+      std::shared_ptr<Core> core,
+      FactoryCreator        initialFactoryCreator,
+      ConfigMap             endpointConfig)
   {
     this->p                     = p;
     this->listeners             = listeners;

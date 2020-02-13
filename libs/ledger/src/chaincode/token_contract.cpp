@@ -48,8 +48,10 @@ std::string ConvertToString(T const &value)
   return oss.str();
 }
 
-bool IsOperationValid(WalletRecord const &record, chain::Transaction const &tx,
-                      Deed::Operation const &operation)
+bool IsOperationValid(
+    WalletRecord const &      record,
+    chain::Transaction const &tx,
+    Deed::Operation const &   operation)
 {
   // perform validation checks
   if (record.deed)
@@ -162,8 +164,10 @@ bool TokenContract::SubtractTokens(chain::Address const &address, uint64_t amoun
   return status == StateAdapter::Status::OK;
 }
 
-bool TokenContract::TransferTokens(chain::Transaction const &tx, chain::Address const &to,
-                                   uint64_t amount)
+bool TokenContract::TransferTokens(
+    chain::Transaction const &tx,
+    chain::Address const &    to,
+    uint64_t                  amount)
 {
   // look up the state record (to see if there is a deed associated with this address)
   WalletRecord from_record{};
@@ -302,7 +306,8 @@ Contract::Result TokenContract::AddStake(chain::Transaction const &tx)
             // record the stake update event
             stake_updates_.emplace_back(
                 StakeUpdateEvent{context().block_index + chain::STAKE_WARM_UP_PERIOD,
-                                 crypto::Identity(input.FromBase64()), amount});
+                                 crypto::Identity(input.FromBase64()),
+                                 amount});
 
             // save the state
             auto const status = SetStateRecord(record, tx.from());

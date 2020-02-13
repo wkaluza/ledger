@@ -115,27 +115,29 @@ public:
     {
       HTTPServer &server_ref = *this;
 
-      networkManager_.Post([&socRef, &accepRef, &manager, &threadMan, port, ref_counter,
-                            &server_ref] {
-        // Important to keep this alive during cb scope
-        FETCH_UNUSED(ref_counter);
+      networkManager_.Post(
+          [&socRef, &accepRef, &manager, &threadMan, port, ref_counter, &server_ref] {
+            // Important to keep this alive during cb scope
+            FETCH_UNUSED(ref_counter);
 
-        auto soc = threadMan.CreateIO<Socket>();
-        auto accep =
-            threadMan.CreateIO<Acceptor>(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
-        auto strong_manager = std::make_shared<ConnectionManager>(server_ref);
+            auto soc = threadMan.CreateIO<Socket>();
+            auto accep =
+                threadMan.CreateIO<Acceptor>(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
+            auto strong_manager = std::make_shared<ConnectionManager>(server_ref);
 
-        FETCH_LOG_INFO(LOGGING_NAME,
-                       "Starting HTTPServer on http://127.0.0.1:", accep->local_endpoint().port());
+            FETCH_LOG_INFO(
+                LOGGING_NAME,
+                "Starting HTTPServer on http://127.0.0.1:",
+                accep->local_endpoint().port());
 
-        // allow initiating class to post closes to these
-        socRef   = soc;
-        accepRef = accep;
-        manager  = strong_manager;
+            // allow initiating class to post closes to these
+            socRef   = soc;
+            accepRef = accep;
+            manager  = strong_manager;
 
-        FETCH_LOG_DEBUG(LOGGING_NAME, "Starting HTTPServer Accept");
-        HTTPServer::Accept(soc, accep, strong_manager);
-      });
+            FETCH_LOG_DEBUG(LOGGING_NAME, "Starting HTTPServer Accept");
+            HTTPServer::Accept(soc, accep, strong_manager);
+          });
     }
 
     // Block until we know the closure above has either been executed or destructed as the network
@@ -156,12 +158,13 @@ public:
     if (req.method() == Method::OPTIONS)
     {
 
-      HTTPResponse res("", fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
-                       Status::SUCCESS_OK);
+      HTTPResponse res(
+          "", fetch::http::mime_types::GetMimeTypeFromExtension(".html"), Status::SUCCESS_OK);
       res.AddHeader("Access-Control-Allow-Origin", "*");
       res.AddHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-      res.AddHeader("Access-Control-Allow-Headers",
-                    "Content-Type, Authorization, Content-Length, X-Requested-With");
+      res.AddHeader(
+          "Access-Control-Allow-Headers",
+          "Content-Type, Authorization, Content-Length, X-Requested-With");
 
       SendToManager(client, res);
       return;
@@ -169,8 +172,10 @@ public:
 
     // TODO(issue 28): improve such that it works for multiple threads.
     FETCH_LOCK(eval_mutex_);
-    HTTPResponse res("page not found", mime_types::GetMimeTypeFromExtension(".html"),
-                     Status::CLIENT_ERROR_NOT_FOUND);
+    HTTPResponse res(
+        "page not found",
+        mime_types::GetMimeTypeFromExtension(".html"),
+        Status::CLIENT_ERROR_NOT_FOUND);
 
     // Ensure that the HTTP server remains operational
     // even if exceptions are thrown
@@ -197,9 +202,10 @@ public:
           // checking that the correct level of authentication is present
           if (!v.authenticator(req))
           {
-            res = HTTPResponse("authentication required",
-                               fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
-                               Status::SERVER_ERROR_NETWORK_AUTHENTICATION_REQUIRED);
+            res = HTTPResponse(
+                "authentication required",
+                fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
+                Status::SERVER_ERROR_NETWORK_AUTHENTICATION_REQUIRED);
             SendToManager(client, res);
             return;
           }
@@ -220,17 +226,19 @@ public:
     }
     catch (std::exception const &e)
     {
-      HTTPResponse response("internal error: " + std::string(e.what()),
-                            fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
-                            Status::SERVER_ERROR_INTERNAL_SERVER_ERROR);
+      HTTPResponse response(
+          "internal error: " + std::string(e.what()),
+          fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
+          Status::SERVER_ERROR_INTERNAL_SERVER_ERROR);
       SendToManager(client, response);
       return;
     }
     catch (...)
     {
-      HTTPResponse response("unknown internal error",
-                            fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
-                            Status::SERVER_ERROR_INTERNAL_SERVER_ERROR);
+      HTTPResponse response(
+          "unknown internal error",
+          fetch::http::mime_types::GetMimeTypeFromExtension(".html"),
+          Status::SERVER_ERROR_INTERNAL_SERVER_ERROR);
       SendToManager(client, response);
       return;
     }
@@ -239,8 +247,10 @@ public:
   }
 
   // Accept static void to avoid having to create shared ptr to this class
-  static void Accept(std::shared_ptr<Socket> const &soc, std::shared_ptr<Acceptor> const &accep,
-                     std::shared_ptr<ConnectionManager> const &manager)
+  static void Accept(
+      std::shared_ptr<Socket> const &           soc,
+      std::shared_ptr<Acceptor> const &         accep,
+      std::shared_ptr<ConnectionManager> const &manager)
   {
     auto cb = [soc, accep, manager](std::error_code ec) {
       if (!ec)
@@ -278,9 +288,13 @@ public:
     post_view_middleware_.push_back(middleware);
   }
 
-  void AddView(byte_array::ConstByteArray description, Method method,
-               byte_array::ByteArray const &path, std::vector<HTTPParameter> const &parameters,
-               ViewType const &view, Authenticator authenticator)
+  void AddView(
+      byte_array::ConstByteArray        description,
+      Method                            method,
+      byte_array::ByteArray const &     path,
+      std::vector<HTTPParameter> const &parameters,
+      ViewType const &                  view,
+      Authenticator                     authenticator)
   {
     auto route = Route::FromString(path);
 
@@ -299,8 +313,13 @@ public:
   {
     for (auto const &view : module.views())
     {
-      AddView(view.description, view.method, view.route, view.parameters, view.view,
-              view.authenticator);
+      AddView(
+          view.description,
+          view.method,
+          view.route,
+          view.parameters,
+          view.view,
+          view.authenticator);
     }
   }
 

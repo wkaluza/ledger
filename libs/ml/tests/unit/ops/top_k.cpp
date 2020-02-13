@@ -89,8 +89,10 @@ TYPED_TEST(TopKOpTest, backward_2D_test)
   ASSERT_EQ(error_signal.at(0).shape().at(0), 4);
   ASSERT_EQ(error_signal.at(0).shape().at(1), 4);
 
-  ASSERT_TRUE(error_signal.at(0).AllClose(gt_error, fetch::math::function_tolerance<DataType>(),
-                                          fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(error_signal.at(0).AllClose(
+      gt_error,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
   fetch::math::state_clear<DataType>();
 }
 

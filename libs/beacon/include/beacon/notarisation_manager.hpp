@@ -43,22 +43,29 @@ public:
   /// Setup management
   /// @{
   PublicKey GenerateKeys();
-  void      SetAeonDetails(uint64_t round_start, uint64_t round_end, uint32_t threshold,
-                           std::map<MuddleAddress, PublicKey> const &cabinet_public_keys);
+  void      SetAeonDetails(
+           uint64_t                                  round_start,
+           uint64_t                                  round_end,
+           uint32_t                                  threshold,
+           std::map<MuddleAddress, PublicKey> const &cabinet_public_keys);
   /// @}
 
   /// Construction and verification of aggregate signatures
   /// @{
-  Signature          Sign(MessagePayload const &message);
-  bool               Verify(MessagePayload const &message, Signature const &signature,
-                            MuddleAddress const &member);
+  Signature Sign(MessagePayload const &message);
+  bool      Verify(
+           MessagePayload const &message,
+           Signature const &     signature,
+           MuddleAddress const & member);
   AggregateSignature ComputeAggregateSignature(
       std::unordered_map<MuddleAddress, Signature> const &cabinet_signatures);
-  bool        VerifyAggregateSignature(MessagePayload const &    message,
-                                       AggregateSignature const &aggregate_signature);
-  static bool VerifyAggregateSignature(MessagePayload const &        message,
-                                       AggregateSignature const &    aggregate_signature,
-                                       std::vector<PublicKey> const &public_keys);
+  bool VerifyAggregateSignature(
+      MessagePayload const &    message,
+      AggregateSignature const &aggregate_signature);
+  static bool VerifyAggregateSignature(
+      MessagePayload const &        message,
+      AggregateSignature const &    aggregate_signature,
+      std::vector<PublicKey> const &public_keys);
   /// @}
 
   /// Helper functions

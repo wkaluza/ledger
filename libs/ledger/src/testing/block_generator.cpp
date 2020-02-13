@@ -105,8 +105,10 @@ BlockGenerator::BlockPtr BlockGenerator::operator()(BlockPtrConst const &from, u
   return Generate(from, weight);
 }
 
-BlockGenerator::BlockPtrs BlockGenerator::operator()(std::size_t amount, BlockPtrConst from,
-                                                     uint64_t weight)
+BlockGenerator::BlockPtrs BlockGenerator::operator()(
+    std::size_t   amount,
+    BlockPtrConst from,
+    uint64_t      weight)
 {
   BlockPtrs ret_val;
   ret_val.reserve(amount);

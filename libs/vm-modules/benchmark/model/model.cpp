@@ -61,8 +61,9 @@ fetch::vm::Ptr<fetch::vm::String> vmString(VMPtr &vm, std::string const &str)
   return fetch::vm::Ptr<fetch::vm::String>{new fetch::vm::String{vm.get(), str}};
 }
 
-fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> vmTensor(VMPtr &                      vm,
-                                                           std::vector<SizeType> const &shape)
+fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> vmTensor(
+    VMPtr &                      vm,
+    std::vector<SizeType> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
@@ -75,7 +76,9 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(VMPtr &v
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
-    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations)
+    VMPtr &                vm,
+    std::vector<SizeType> &sizes,
+    std::vector<bool> &    activations)
 {
   if (sizes.size() != (activations.size() + 1))
   {
@@ -94,8 +97,8 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
 
     if (activations[i])
     {
-      model->Estimator().LayerAddDenseActivation(layer_type, input_size, output_size,
-                                                 activation_type);
+      model->Estimator().LayerAddDenseActivation(
+          layer_type, input_size, output_size, activation_type);
       model->LayerAddDenseActivation(layer_type, input_size, output_size, activation_type);
     }
     else
@@ -109,8 +112,11 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
-    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations,
-    std::string const &loss, std::string const &optimiser)
+    VMPtr &                vm,
+    std::vector<SizeType> &sizes,
+    std::vector<bool> &    activations,
+    std::string const &    loss,
+    std::string const &    optimiser)
 {
   auto model = vmSequentialModel(vm, sizes, activations);
 
@@ -123,13 +129,14 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
   return model;
 }
 
-fetch::vm::Ptr<fetch::vm::Array<uint64_t>> CreateArray(std::shared_ptr<fetch::vm::VM> &vm,
-                                                       std::vector<uint64_t> const &   values)
+fetch::vm::Ptr<fetch::vm::Array<uint64_t>> CreateArray(
+    std::shared_ptr<fetch::vm::VM> &vm,
+    std::vector<uint64_t> const &   values)
 {
   std::size_t                                size = values.size();
   fetch::vm::Ptr<fetch::vm::Array<uint64_t>> array =
-      vm->CreateNewObject<fetch::vm::Array<uint64_t>>(vm->GetTypeId<uint64_t>(),
-                                                      static_cast<int32_t>(size));
+      vm->CreateNewObject<fetch::vm::Array<uint64_t>>(
+          vm->GetTypeId<uint64_t>(), static_cast<int32_t>(size));
 
   for (std::size_t i{0}; i < size; ++i)
   {
@@ -197,8 +204,8 @@ void BM_AddLayer(::benchmark::State &state)
       state.counters["SizesSum"] = static_cast<double>(model->Estimator().GetSizesSum());
 
       state.ResumeTiming();
-      model->LayerAddDenseActivation(layer_type, config.input_size, config.output_size,
-                                     activation_type);
+      model->LayerAddDenseActivation(
+          layer_type, config.input_size, config.output_size, activation_type);
     }
   }
 }
@@ -261,9 +268,12 @@ void BM_AddConvLayer(::benchmark::State &state)
 
     if (config.activation)
     {
-      state.counters["charge"] = static_cast<double>(
-          model->Estimator().LayerAddConv(layer_type, config.output_channels, config.input_channels,
-                                          config.kernel_size, config.stride_size));
+      state.counters["charge"] = static_cast<double>(model->Estimator().LayerAddConv(
+          layer_type,
+          config.output_channels,
+          config.input_channels,
+          config.kernel_size,
+          config.stride_size));
 
       state.counters["PaddedSizesSum"] =
           static_cast<double>(model->Estimator().GetPaddedSizesSum());
@@ -273,14 +283,22 @@ void BM_AddConvLayer(::benchmark::State &state)
 
       state.ResumeTiming();
 
-      model->LayerAddConv(layer_type, config.output_channels, config.input_channels,
-                          config.kernel_size, config.stride_size);
+      model->LayerAddConv(
+          layer_type,
+          config.output_channels,
+          config.input_channels,
+          config.kernel_size,
+          config.stride_size);
     }
     else
     {
       state.counters["charge"] = static_cast<double>(model->Estimator().LayerAddConvActivation(
-          layer_type, config.output_channels, config.input_channels, config.kernel_size,
-          config.stride_size, activation_type));
+          layer_type,
+          config.output_channels,
+          config.input_channels,
+          config.kernel_size,
+          config.stride_size,
+          activation_type));
 
       state.counters["PaddedSizesSum"] =
           static_cast<double>(model->Estimator().GetPaddedSizesSum());
@@ -289,8 +307,13 @@ void BM_AddConvLayer(::benchmark::State &state)
       state.counters["SizesSum"]    = static_cast<double>(model->Estimator().GetSizesSum());
 
       state.ResumeTiming();
-      model->LayerAddConvActivation(layer_type, config.output_channels, config.input_channels,
-                                    config.kernel_size, config.stride_size, activation_type);
+      model->LayerAddConvActivation(
+          layer_type,
+          config.output_channels,
+          config.input_channels,
+          config.kernel_size,
+          config.stride_size,
+          activation_type);
     }
   }
 }
@@ -367,17 +390,24 @@ void BM_ConvLayer(::benchmark::State &state)
     auto                  data        = vmTensor(vm, data_shape);
     auto                  input_shape = CreateArray(vm, data_shape);
 
-    state.counters["charge"] = static_cast<double>(
-        model->Estimator().LayerAddConv(layer_type, config.output_channels, config.input_channels,
-                                        config.kernel_size, config.stride_size));
+    state.counters["charge"]         = static_cast<double>(model->Estimator().LayerAddConv(
+        layer_type,
+        config.output_channels,
+        config.input_channels,
+        config.kernel_size,
+        config.stride_size));
     state.counters["ForwardCost"]    = static_cast<double>(model->Estimator().GetForwardCost());
     state.counters["OpsCount"]       = static_cast<double>(model->Estimator().GetOpsCount());
     state.counters["PaddedSizesSum"] = static_cast<double>(model->Estimator().GetPaddedSizesSum());
     state.counters["SizesSum"]       = static_cast<double>(model->Estimator().GetSizesSum());
 
     model->LayerAddInput(input_layer_type, input_shape);
-    model->LayerAddConv(layer_type, config.output_channels, config.input_channels,
-                        config.kernel_size, config.stride_size);
+    model->LayerAddConv(
+        layer_type,
+        config.output_channels,
+        config.input_channels,
+        config.kernel_size,
+        config.stride_size);
     model->CompileSequential(loss, optimiser);
 
     state.ResumeTiming();
@@ -897,8 +927,13 @@ BENCHMARK(BM_Fit)
 int64_t getId(std::string const &str)
 {
   std::map<std::string, SizeType> const activations_{
-      {"leaky_relu", 0}, {"log_sigmoid", 1}, {"log_softmax", 2}, {"relu", 3},
-      {"sigmoid", 4},    {"softmax", 5},     {"gelu", 6},
+      {"leaky_relu", 0},
+      {"log_sigmoid", 1},
+      {"log_softmax", 2},
+      {"relu", 3},
+      {"sigmoid", 4},
+      {"softmax", 5},
+      {"gelu", 6},
   };
 
   return static_cast<int64_t>(activations_.find(str)->second);
@@ -923,8 +958,8 @@ void BM_Activation(::benchmark::State &state)
   // Get config
   BM_Activation_config config{state};
 
-  std::vector<std::string> const activations_{"leaky_relu", "log_sigmoid", "log_softmax", "relu",
-                                              "sigmoid",    "softmax",     "gelu"};
+  std::vector<std::string> const activations_{
+      "leaky_relu", "log_sigmoid", "log_softmax", "relu", "sigmoid", "softmax", "gelu"};
 
   for (auto _ : state)
   {
@@ -1021,8 +1056,8 @@ void BM_AddActivation(::benchmark::State &state)
   // Get config
   BM_AddActivation_config config{state};
 
-  std::vector<std::string> const activations_{"leaky_relu", "log_sigmoid", "log_softmax", "relu",
-                                              "sigmoid",    "softmax",     "gelu"};
+  std::vector<std::string> const activations_{
+      "leaky_relu", "log_sigmoid", "log_softmax", "relu", "sigmoid", "softmax", "gelu"};
 
   for (auto _ : state)
   {

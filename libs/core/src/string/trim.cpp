@@ -27,8 +27,9 @@ namespace string {
 
 void TrimFromRight(std::string &s)
 {
-  s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) { return std::isspace(c) == 0; }).base(),
-          s.end());
+  s.erase(
+      std::find_if(s.rbegin(), s.rend(), [](int c) { return std::isspace(c) == 0; }).base(),
+      s.end());
 }
 
 void TrimFromLeft(std::string &s)

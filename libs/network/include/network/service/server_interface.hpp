@@ -41,8 +41,9 @@ public:
 
   virtual ~ServiceServerInterface() = default;
 
-  void Add(ProtocolHandlerType const &name,
-           Protocol *                 protocol)  // TODO(issue 19): Rename to AddProtocol
+  void Add(
+      ProtocolHandlerType const &name,
+      Protocol *                 protocol)  // TODO(issue 19): Rename to AddProtocol
   {
     if (name < 1 || name > 255)
     {
@@ -63,8 +64,10 @@ public:
 protected:
   virtual bool DeliverResponse(ConstByteArray const &address, network::MessageBuffer const &) = 0;
 
-  bool PushProtocolRequest(ConstByteArray const &address, network::MessageBuffer const &msg,
-                           CallContext const &context = CallContext())
+  bool PushProtocolRequest(
+      ConstByteArray const &        address,
+      network::MessageBuffer const &msg,
+      CallContext const &           context = CallContext())
   {
     SerializerType            params(msg);
     ServiceClassificationType type;
@@ -87,8 +90,10 @@ protected:
     return success;
   }
 
-  bool HandleRPCCallRequest(ConstByteArray const &address, SerializerType params,
-                            CallContext const &context = CallContext())
+  bool HandleRPCCallRequest(
+      ConstByteArray const &address,
+      SerializerType        params,
+      CallContext const &   context = CallContext())
   {
     bool           ret = true;
     SerializerType result;
@@ -109,8 +114,12 @@ protected:
       result << SERVICE_ERROR << id << e;
     }
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Service Server responding to call from ", address.ToHex(),
-                    " data size=", result.tell());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Service Server responding to call from ",
+        address.ToHex(),
+        " data size=",
+        result.tell());
 
     {
       DeliverResponse(address, result.data());
@@ -119,8 +128,10 @@ protected:
   }
 
 private:
-  void ExecuteCall(SerializerType &result, SerializerType params,
-                   CallContext const &context = CallContext())
+  void ExecuteCall(
+      SerializerType &   result,
+      SerializerType     params,
+      CallContext const &context = CallContext())
   {
     ProtocolHandlerType protocol_number;
     FunctionHandlerType function_number;
@@ -129,16 +140,23 @@ private:
     auto protocol_pointer = members_[protocol_number];
     if (protocol_pointer == nullptr)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "ServerInterface::ExecuteCall: Could not find protocol ",
-                     protocol_number, ":", function_number);
-      throw serializers::SerializableException(error::PROTOCOL_NOT_FOUND,
-                                               "Could not find protocol");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "ServerInterface::ExecuteCall: Could not find protocol ",
+          protocol_number,
+          ":",
+          function_number);
+      throw serializers::SerializableException(
+          error::PROTOCOL_NOT_FOUND, "Could not find protocol");
     }
 
     auto function = (*protocol_pointer)[function_number];
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, std::string("ServerInterface::ExecuteCall: "), protocol_number,
-                    " expecting following signature " + function->signature());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        std::string("ServerInterface::ExecuteCall: "),
+        protocol_number,
+        " expecting following signature " + function->signature());
 
     // If we need to add client id to function arguments
     try

@@ -134,8 +134,8 @@ int MtSearch::run()
 
   dap_store_         = std::make_shared<DapStore>();
   search_peer_store_ = std::make_shared<SearchPeerStore>();
-  dap_manager_       = std::make_shared<DapManager>(dap_store_, search_peer_store_, outbounds,
-                                              config_.query_cache_lifetime_sec());
+  dap_manager_       = std::make_shared<DapManager>(
+      dap_store_, search_peer_store_, outbounds, config_.query_cache_lifetime_sec());
 
   for (const auto &dap_config : config_.daps())
   {
@@ -239,17 +239,18 @@ void MtSearch::startListeners()
   auto                    this_sp = this->shared_from_this();
   std::weak_ptr<MtSearch> this_wp = this_sp;
 
-  IOefListener<IOefTaskFactory<OefSearchEndpoint>,
-               OefSearchEndpoint>::FactoryCreator initialFactoryCreator =
-      [this_wp](std::shared_ptr<OefSearchEndpoint> endpoint) -> std::shared_ptr<SearchTaskFactory> {
+  IOefListener<IOefTaskFactory<OefSearchEndpoint>, OefSearchEndpoint>::FactoryCreator
+      initialFactoryCreator =
+          [this_wp](
+              std::shared_ptr<OefSearchEndpoint> endpoint) -> std::shared_ptr<SearchTaskFactory> {
     auto sp = this_wp.lock();
     if (sp)
     {
-      return std::make_shared<SearchTaskFactory>(std::move(endpoint), sp->outbounds,
-                                                 sp->dap_manager_);
+      return std::make_shared<SearchTaskFactory>(
+          std::move(endpoint), sp->outbounds, sp->dap_manager_);
     }
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "Can't create SearchTaskFactory because can't lock week pointer!");
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, "Can't create SearchTaskFactory because can't lock week pointer!");
     return nullptr;
   };
 
@@ -271,11 +272,11 @@ void MtSearch::startListeners()
       auto sp = this_wp.lock();
       if (sp)
       {
-        return std::make_shared<DirectorTaskFactory>(std::move(endpoint), sp->outbounds,
-                                                     sp->dap_manager_, sp->config_, sp);
+        return std::make_shared<DirectorTaskFactory>(
+            std::move(endpoint), sp->outbounds, sp->dap_manager_, sp->config_, sp);
       }
-      FETCH_LOG_ERROR(LOGGING_NAME,
-                      "Can't create DirectorTaskFactory because can't lock week pointer!");
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "Can't create DirectorTaskFactory because can't lock week pointer!");
       return nullptr;
     };
 

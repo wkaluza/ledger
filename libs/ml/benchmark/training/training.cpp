@@ -29,8 +29,13 @@
 #include <memory>
 #include <string>
 
-template <typename T, fetch::math::SizeType B, fetch::math::SizeType I, fetch::math::SizeType H,
-          fetch::math::SizeType O, fetch::math::SizeType E>
+template <
+    typename T,
+    fetch::math::SizeType B,
+    fetch::math::SizeType I,
+    fetch::math::SizeType H,
+    fetch::math::SizeType O,
+    fetch::math::SizeType E>
 void BM_Setup_And_Train(benchmark::State &state)
 {
   using SizeType   = fetch::math::SizeType;
@@ -72,8 +77,8 @@ void BM_Setup_And_Train(benchmark::State &state)
         "", {output_name, label_name});
 
     // Initialise Optimiser
-    fetch::ml::optimisers::SGDOptimiser<TensorType> optimiser(g, {input_name}, label_name,
-                                                              error_name, learning_rate);
+    fetch::ml::optimisers::SGDOptimiser<TensorType> optimiser(
+        g, {input_name}, label_name, error_name, learning_rate);
 
     // Do optimisation
     for (SizeType i = 0; i < n_epochs; ++i)

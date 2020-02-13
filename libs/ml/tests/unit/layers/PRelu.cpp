@@ -96,8 +96,9 @@ TYPED_TEST(PReluTest, node_forward_test)  // Use the class as a Node
 
   TypeParam data({input_dim_0, input_dim_1, input_dim_2});
   auto      placeholder_node = std::make_shared<fetch::ml::Node<TypeParam>>(
-      fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-      []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>(); });
+      fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+        return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>();
+      });
   auto placeholder_op_ptr =
       std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TypeParam>>(placeholder_node->GetOp());
   placeholder_op_ptr->SetData(data);
@@ -124,16 +125,18 @@ TYPED_TEST(PReluTest, node_backward_test)  // Use the class as a Node
 
   TypeParam data({input_dim_0, input_dim_1, input_dim_2});
   auto      placeholder_node = std::make_shared<fetch::ml::Node<TypeParam>>(
-      fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-      []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>(); });
+      fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+        return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>();
+      });
   auto placeholder_op_ptr =
       std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TypeParam>>(placeholder_node->GetOp());
   placeholder_op_ptr->SetData(data);
 
-  fetch::math::SizeType in_size    = input_dim_0 * input_dim_1;
-  auto                  prelu_node = fetch::ml::Node<TypeParam>(
-      fetch::ml::OpType::LAYER_PRELU, "PRelu",
-      [in_size]() { return std::make_shared<fetch::ml::layers::PRelu<TypeParam>>(in_size); });
+  fetch::math::SizeType in_size = input_dim_0 * input_dim_1;
+  auto                  prelu_node =
+      fetch::ml::Node<TypeParam>(fetch::ml::OpType::LAYER_PRELU, "PRelu", [in_size]() {
+        return std::make_shared<fetch::ml::layers::PRelu<TypeParam>>(in_size);
+      });
   prelu_node.AddInput(placeholder_node);
   TypeParam prediction = *prelu_node.Evaluate(true);
 
@@ -157,8 +160,8 @@ TYPED_TEST(PReluTest, graph_forward_test)  // Use the class as a Node
   math::SizeType input_dim_2 = 2;
 
   g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Input", {});
-  g.template AddNode<fetch::ml::layers::PRelu<TypeParam>>("PRelu", {"Input"},
-                                                          input_dim_0 * input_dim_1);
+  g.template AddNode<fetch::ml::layers::PRelu<TypeParam>>(
+      "PRelu", {"Input"}, input_dim_0 * input_dim_1);
 
   TypeParam data({input_dim_0, input_dim_1, input_dim_2});
   g.SetInput("Input", data);

@@ -259,9 +259,14 @@ bool Taskpool::MakeRunnable(TaskP task)
         break;
       }
     }
-    FETCH_LOG_WARN(LOGGING_NAME, "Task ", task->GetTaskId(),
-                   " not in suspended_tasks list! in_pending=", in_pending,
-                   ", in_running=", in_running);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Task ",
+        task->GetTaskId(),
+        " not in suspended_tasks list! in_pending=",
+        in_pending,
+        ", in_running=",
+        in_running);
   }
   return status;
 }
@@ -345,8 +350,9 @@ void Taskpool::after(TaskP task, const Milliseconds &delay)
   Counter("mt-core.tasks.futured")++;
 }
 
-Taskpool::Timestamp Taskpool::lockless_getNextWakeTime(const Timestamp &   current_time,
-                                                       const Milliseconds &deflt)
+Taskpool::Timestamp Taskpool::lockless_getNextWakeTime(
+    const Timestamp &   current_time,
+    const Milliseconds &deflt)
 {
   Timestamp result = current_time + deflt;
   if (!future_tasks_.empty())

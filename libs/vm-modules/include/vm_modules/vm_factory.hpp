@@ -75,9 +75,10 @@ public:
    *
    * @return: Vector of strings which represent errors found during compilation
    */
-  static std::vector<std::string> Compile(std::shared_ptr<fetch::vm::Module> const &module,
-                                          fetch::vm::SourceFiles const &            files,
-                                          fetch::vm::Executable &                   executable);
+  static std::vector<std::string> Compile(
+      std::shared_ptr<fetch::vm::Module> const &module,
+      fetch::vm::SourceFiles const &            files,
+      fetch::vm::Executable &                   executable);
 };
 
 }  // namespace vm_modules

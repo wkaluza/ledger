@@ -50,8 +50,9 @@ struct Aeon
 
   bool operator==(Aeon const &other) const
   {
-    return ((members == other.members) && (round_start == other.round_start) &&
-            (round_end == other.round_end));
+    return (
+        (members == other.members) && (round_start == other.round_start) &&
+        (round_end == other.round_end));
   }
 };
 

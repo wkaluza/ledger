@@ -36,8 +36,11 @@ void Generator::Initialise(VM *vm, uint16_t num_system_types)
   num_system_types_ = num_system_types;
 }
 
-bool Generator::GenerateExecutable(IR const &ir, std::string const &executable_name,
-                                   Executable &executable, std::vector<std::string> &errors)
+bool Generator::GenerateExecutable(
+    IR const &                ir,
+    std::string const &       executable_name,
+    Executable &              executable,
+    std::vector<std::string> &errors)
 {
   executable_ = Executable(executable_name, num_system_types_);
   scopes_.clear();
@@ -198,8 +201,8 @@ void Generator::CreateUserDefinedTemplateInstantiationTypes(IR const &ir)
       template_parameter_type_ids.push_back(template_parameter_type->id);
     }
     type->id = next_type_id++;
-    TypeInfo type_info(type->type_kind, type->name, type->id, template_type_id,
-                       template_parameter_type_ids);
+    TypeInfo type_info(
+        type->type_kind, type->name, type->id, template_type_id, template_parameter_type_ids);
     executable_.AddTypeInfo(std::move(type_info));
   }
   executable_.user_defined_types_start_type_id = next_type_id;
@@ -293,9 +296,11 @@ void Generator::CreateUserDefinedTypeMembers(IRBlockNodePtr const &block_node)
           executable_.InternalGetUserDefinedType(struct_type->id);
       // Create the default constructor at index 0
       IRFunctionPtr        default_constructor = struct_name_node->function;
-      Executable::Function exe_default_constructor(default_constructor->function_kind,
-                                                   default_constructor->name, {},
-                                                   default_constructor->return_type->id);
+      Executable::Function exe_default_constructor(
+          default_constructor->function_kind,
+          default_constructor->name,
+          {},
+          default_constructor->return_type->id);
       default_constructor->id = exe_type.AddFunction(exe_default_constructor);
       for (IRNodePtr const &member_node : struct_definition_node->block_children)
       {
@@ -359,8 +364,9 @@ void Generator::CreateUserDefinedFreeFunctions(IRBlockNodePtr const &block_node)
   }
 }
 
-IRFunctionPtr Generator::CreateFunction(IRNodePtr const &     function_definition_node,
-                                        Executable::Function &exe_function)
+IRFunctionPtr Generator::CreateFunction(
+    IRNodePtr const &     function_definition_node,
+    Executable::Function &exe_function)
 {
   IRNodePtr       annotations_node = function_definition_node->children[0];
   AnnotationArray annotations;
@@ -368,8 +374,8 @@ IRFunctionPtr Generator::CreateFunction(IRNodePtr const &     function_definitio
   IRExpressionNodePtr function_name_node =
       ConvertToIRExpressionNodePtr(function_definition_node->children[1]);
   IRFunctionPtr function = function_name_node->function;
-  exe_function = Executable::Function(function->function_kind, function->name, annotations,
-                                      function->return_type->id);
+  exe_function           = Executable::Function(
+      function->function_kind, function->name, annotations, function->return_type->id);
   for (IRVariablePtr const &variable : function->parameter_variables)
   {
     exe_function.AddParameter(variable->name, variable->type->id);
@@ -572,8 +578,9 @@ void Generator::HandleFile(IRBlockNodePtr const &block_node)
   HandleBlock(block_node);
 }
 
-void Generator::HandleMemberFunctionBody(IRBlockNodePtr const &struct_definition_node,
-                                         IRBlockNodePtr const &function_definition_node)
+void Generator::HandleMemberFunctionBody(
+    IRBlockNodePtr const &struct_definition_node,
+    IRBlockNodePtr const &function_definition_node)
 {
   IRExpressionNodePtr struct_name_node =
       ConvertToIRExpressionNodePtr(struct_definition_node->children[0]);
@@ -864,8 +871,10 @@ void Generator::HandleUseAnyStatement(IRNodePtr const &node)
   }
 }
 
-void Generator::HandleUseVariable(std::string const &name, uint16_t line,
-                                  IRExpressionNodePtr const &node)
+void Generator::HandleUseVariable(
+    std::string const &        name,
+    uint16_t                   line,
+    IRExpressionNodePtr const &node)
 {
   IRVariablePtr variable     = node->variable;
   IRFunctionPtr function     = node->function;
@@ -1033,8 +1042,9 @@ void Generator::HandleInplaceAssignmentStatement(IRExpressionNodePtr const &node
   }
 }
 
-void Generator::HandleVariableAssignmentStatement(IRExpressionNodePtr const &lhs,
-                                                  IRExpressionNodePtr const &rhs)
+void Generator::HandleVariableAssignmentStatement(
+    IRExpressionNodePtr const &lhs,
+    IRExpressionNodePtr const &rhs)
 {
   IRVariablePtr const &variable = lhs->variable;
   uint16_t             opcode;
@@ -1057,9 +1067,10 @@ void Generator::HandleVariableAssignmentStatement(IRExpressionNodePtr const &lhs
   AddInstruction(instruction, lhs->line);
 }
 
-void Generator::HandleVariableInplaceAssignmentStatement(IRExpressionNodePtr const &node,
-                                                         IRExpressionNodePtr const &lhs,
-                                                         IRExpressionNodePtr const &rhs)
+void Generator::HandleVariableInplaceAssignmentStatement(
+    IRExpressionNodePtr const &node,
+    IRExpressionNodePtr const &lhs,
+    IRExpressionNodePtr const &rhs)
 {
   IRVariablePtr const &variable         = lhs->variable;
   bool                 lhs_is_primitive = variable->type->IsPrimitive();
@@ -1079,41 +1090,60 @@ void Generator::HandleVariableInplaceAssignmentStatement(IRExpressionNodePtr con
   case NodeKind::InplaceAdd:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, lhs_type_id, rhs_type_id, group,
-        {Opcodes::LocalVariablePrimitiveInplaceAdd, Opcodes::LocalVariableObjectInplaceAdd,
-         Opcodes::LocalVariableObjectInplaceRightAdd, Opcodes::MemberVariablePrimitiveInplaceAdd,
-         Opcodes::MemberVariableObjectInplaceAdd, Opcodes::MemberVariableObjectInplaceRightAdd});
+        lhs_is_primitive,
+        lhs_type_id,
+        rhs_type_id,
+        group,
+        {Opcodes::LocalVariablePrimitiveInplaceAdd,
+         Opcodes::LocalVariableObjectInplaceAdd,
+         Opcodes::LocalVariableObjectInplaceRightAdd,
+         Opcodes::MemberVariablePrimitiveInplaceAdd,
+         Opcodes::MemberVariableObjectInplaceAdd,
+         Opcodes::MemberVariableObjectInplaceRightAdd});
     break;
   }
   case NodeKind::InplaceSubtract:
   {
-    opcode = GetInplaceArithmeticOpcode(lhs_is_primitive, lhs_type_id, rhs_type_id, group,
-                                        {Opcodes::LocalVariablePrimitiveInplaceSubtract,
-                                         Opcodes::LocalVariableObjectInplaceSubtract,
-                                         Opcodes::LocalVariableObjectInplaceRightSubtract,
-                                         Opcodes::MemberVariablePrimitiveInplaceSubtract,
-                                         Opcodes::MemberVariableObjectInplaceSubtract,
-                                         Opcodes::MemberVariableObjectInplaceRightSubtract});
+    opcode = GetInplaceArithmeticOpcode(
+        lhs_is_primitive,
+        lhs_type_id,
+        rhs_type_id,
+        group,
+        {Opcodes::LocalVariablePrimitiveInplaceSubtract,
+         Opcodes::LocalVariableObjectInplaceSubtract,
+         Opcodes::LocalVariableObjectInplaceRightSubtract,
+         Opcodes::MemberVariablePrimitiveInplaceSubtract,
+         Opcodes::MemberVariableObjectInplaceSubtract,
+         Opcodes::MemberVariableObjectInplaceRightSubtract});
     break;
   }
   case NodeKind::InplaceMultiply:
   {
-    opcode = GetInplaceArithmeticOpcode(lhs_is_primitive, lhs_type_id, rhs_type_id, group,
-                                        {Opcodes::LocalVariablePrimitiveInplaceMultiply,
-                                         Opcodes::LocalVariableObjectInplaceMultiply,
-                                         Opcodes::LocalVariableObjectInplaceRightMultiply,
-                                         Opcodes::MemberVariablePrimitiveInplaceMultiply,
-                                         Opcodes::MemberVariableObjectInplaceMultiply,
-                                         Opcodes::MemberVariableObjectInplaceRightMultiply});
+    opcode = GetInplaceArithmeticOpcode(
+        lhs_is_primitive,
+        lhs_type_id,
+        rhs_type_id,
+        group,
+        {Opcodes::LocalVariablePrimitiveInplaceMultiply,
+         Opcodes::LocalVariableObjectInplaceMultiply,
+         Opcodes::LocalVariableObjectInplaceRightMultiply,
+         Opcodes::MemberVariablePrimitiveInplaceMultiply,
+         Opcodes::MemberVariableObjectInplaceMultiply,
+         Opcodes::MemberVariableObjectInplaceRightMultiply});
     break;
   }
   case NodeKind::InplaceDivide:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, lhs_type_id, rhs_type_id, group,
-        {Opcodes::LocalVariablePrimitiveInplaceDivide, Opcodes::LocalVariableObjectInplaceDivide,
+        lhs_is_primitive,
+        lhs_type_id,
+        rhs_type_id,
+        group,
+        {Opcodes::LocalVariablePrimitiveInplaceDivide,
+         Opcodes::LocalVariableObjectInplaceDivide,
          Opcodes::LocalVariableObjectInplaceRightDivide,
-         Opcodes::MemberVariablePrimitiveInplaceDivide, Opcodes::MemberVariableObjectInplaceDivide,
+         Opcodes::MemberVariablePrimitiveInplaceDivide,
+         Opcodes::MemberVariableObjectInplaceDivide,
          Opcodes::MemberVariableObjectInplaceRightDivide});
     break;
   }
@@ -1162,9 +1192,10 @@ void Generator::PushSelf(IRExpressionNodePtr const &node)
   AddInstruction(instruction, node->line);
 }
 
-void Generator::HandleIndexedAssignmentStatement(IRExpressionNodePtr const &node,
-                                                 IRExpressionNodePtr const &lhs,
-                                                 IRExpressionNodePtr const &rhs)
+void Generator::HandleIndexedAssignmentStatement(
+    IRExpressionNodePtr const &node,
+    IRExpressionNodePtr const &lhs,
+    IRExpressionNodePtr const &rhs)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(lhs->children[0]);
@@ -1185,9 +1216,10 @@ void Generator::HandleIndexedAssignmentStatement(IRExpressionNodePtr const &node
   AddInstruction(instruction, lhs->line);
 }
 
-void Generator::HandleIndexedInplaceAssignmentStatement(IRExpressionNodePtr const &node,
-                                                        IRExpressionNodePtr const &lhs,
-                                                        IRExpressionNodePtr const &rhs)
+void Generator::HandleIndexedInplaceAssignmentStatement(
+    IRExpressionNodePtr const &node,
+    IRExpressionNodePtr const &lhs,
+    IRExpressionNodePtr const &rhs)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(lhs->children[0]);
@@ -1223,28 +1255,40 @@ void Generator::HandleIndexedInplaceAssignmentStatement(IRExpressionNodePtr cons
   case NodeKind::InplaceAdd:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, type_id, rhs_type_id, 0,
+        lhs_is_primitive,
+        type_id,
+        rhs_type_id,
+        0,
         {Opcodes::PrimitiveAdd, Opcodes::ObjectAdd, Opcodes::ObjectRightAdd});
     break;
   }
   case NodeKind::InplaceSubtract:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, type_id, rhs_type_id, 0,
+        lhs_is_primitive,
+        type_id,
+        rhs_type_id,
+        0,
         {Opcodes::PrimitiveSubtract, Opcodes::ObjectSubtract, Opcodes::ObjectRightSubtract});
     break;
   }
   case NodeKind::InplaceMultiply:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, type_id, rhs_type_id, 0,
+        lhs_is_primitive,
+        type_id,
+        rhs_type_id,
+        0,
         {Opcodes::PrimitiveMultiply, Opcodes::ObjectMultiply, Opcodes::ObjectRightMultiply});
     break;
   }
   case NodeKind::InplaceDivide:
   {
     opcode = GetInplaceArithmeticOpcode(
-        lhs_is_primitive, type_id, rhs_type_id, 0,
+        lhs_is_primitive,
+        type_id,
+        rhs_type_id,
+        0,
         {Opcodes::PrimitiveDivide, Opcodes::ObjectDivide, Opcodes::ObjectRightDivide});
     break;
   }
@@ -1634,34 +1678,63 @@ void Generator::HandleBinaryOp(IRExpressionNodePtr const &node)
   {
   case NodeKind::Add:
   {
-    opcode = GetArithmeticOpcode(lhs_is_primitive, node_type_id, lhs_type_id, rhs_type_id,
-                                 Opcodes::PrimitiveAdd, Opcodes::ObjectAdd, Opcodes::ObjectLeftAdd,
-                                 Opcodes::ObjectRightAdd, type_id, other_type_id);
+    opcode = GetArithmeticOpcode(
+        lhs_is_primitive,
+        node_type_id,
+        lhs_type_id,
+        rhs_type_id,
+        Opcodes::PrimitiveAdd,
+        Opcodes::ObjectAdd,
+        Opcodes::ObjectLeftAdd,
+        Opcodes::ObjectRightAdd,
+        type_id,
+        other_type_id);
 
     break;
   }
   case NodeKind::Subtract:
   {
-    opcode = GetArithmeticOpcode(lhs_is_primitive, node_type_id, lhs_type_id, rhs_type_id,
-                                 Opcodes::PrimitiveSubtract, Opcodes::ObjectSubtract,
-                                 Opcodes::ObjectLeftSubtract, Opcodes::ObjectRightSubtract, type_id,
-                                 other_type_id);
+    opcode = GetArithmeticOpcode(
+        lhs_is_primitive,
+        node_type_id,
+        lhs_type_id,
+        rhs_type_id,
+        Opcodes::PrimitiveSubtract,
+        Opcodes::ObjectSubtract,
+        Opcodes::ObjectLeftSubtract,
+        Opcodes::ObjectRightSubtract,
+        type_id,
+        other_type_id);
     break;
   }
   case NodeKind::Multiply:
   {
-    opcode = GetArithmeticOpcode(lhs_is_primitive, node_type_id, lhs_type_id, rhs_type_id,
-                                 Opcodes::PrimitiveMultiply, Opcodes::ObjectMultiply,
-                                 Opcodes::ObjectLeftMultiply, Opcodes::ObjectRightMultiply, type_id,
-                                 other_type_id);
+    opcode = GetArithmeticOpcode(
+        lhs_is_primitive,
+        node_type_id,
+        lhs_type_id,
+        rhs_type_id,
+        Opcodes::PrimitiveMultiply,
+        Opcodes::ObjectMultiply,
+        Opcodes::ObjectLeftMultiply,
+        Opcodes::ObjectRightMultiply,
+        type_id,
+        other_type_id);
     break;
   }
   case NodeKind::Divide:
   {
-    opcode = GetArithmeticOpcode(lhs_is_primitive, node_type_id, lhs_type_id, rhs_type_id,
-                                 Opcodes::PrimitiveDivide, Opcodes::ObjectDivide,
-                                 Opcodes::ObjectLeftDivide, Opcodes::ObjectRightDivide, type_id,
-                                 other_type_id);
+    opcode = GetArithmeticOpcode(
+        lhs_is_primitive,
+        node_type_id,
+        lhs_type_id,
+        rhs_type_id,
+        Opcodes::PrimitiveDivide,
+        Opcodes::ObjectDivide,
+        Opcodes::ObjectLeftDivide,
+        Opcodes::ObjectRightDivide,
+        type_id,
+        other_type_id);
     break;
   }
   case NodeKind::Modulo:
@@ -1745,8 +1818,9 @@ void Generator::HandleUnaryOp(IRExpressionNodePtr const &node)
   AddInstruction(instruction, node->line);
 }
 
-Generator::Chain Generator::HandleConditionExpression(IRBlockNodePtr const &     block_node,
-                                                      IRExpressionNodePtr const &node)
+Generator::Chain Generator::HandleConditionExpression(
+    IRBlockNodePtr const &     block_node,
+    IRExpressionNodePtr const &node)
 {
   if ((node->node_kind == NodeKind::And) || (node->node_kind == NodeKind::Or))
   {
@@ -1757,8 +1831,9 @@ Generator::Chain Generator::HandleConditionExpression(IRBlockNodePtr const &    
   return Chain();
 }
 
-Generator::Chain Generator::HandleShortCircuitOp(IRNodePtr const &          parent_node,
-                                                 IRExpressionNodePtr const &node)
+Generator::Chain Generator::HandleShortCircuitOp(
+    IRNodePtr const &          parent_node,
+    IRExpressionNodePtr const &node)
 {
   IRExpressionNodePtr lhs = ConvertToIRExpressionNodePtr(node->children[0]);
   IRExpressionNodePtr rhs = ConvertToIRExpressionNodePtr(node->children[1]);
@@ -1813,8 +1888,10 @@ Generator::Chain Generator::HandleShortCircuitOp(IRNodePtr const &          pare
   return Chain();
 }
 
-void Generator::FinaliseShortCircuitChain(Chain const &chain, bool is_condition_chain,
-                                          uint16_t destination_pc)
+void Generator::FinaliseShortCircuitChain(
+    Chain const &chain,
+    bool         is_condition_chain,
+    uint16_t     destination_pc)
 {
   uint16_t opcode;
   if (is_condition_chain)
@@ -1951,8 +2028,9 @@ void Generator::HandleInvokeOp(IRExpressionNodePtr const &node)
   AddInstruction(instruction, node->line);
 }
 
-void Generator::HandleVariablePrefixPostfixOp(IRExpressionNodePtr const &node,
-                                              IRExpressionNodePtr const &operand)
+void Generator::HandleVariablePrefixPostfixOp(
+    IRExpressionNodePtr const &node,
+    IRExpressionNodePtr const &operand)
 {
   IRVariablePtr const &variable          = operand->variable;
   bool                 is_local_variable = true;
@@ -2000,8 +2078,9 @@ void Generator::HandleVariablePrefixPostfixOp(IRExpressionNodePtr const &node,
   AddInstruction(instruction, operand->line);
 }
 
-void Generator::HandleIndexedPrefixPostfixOp(IRExpressionNodePtr const &node,
-                                             IRExpressionNodePtr const &operand)
+void Generator::HandleIndexedPrefixPostfixOp(
+    IRExpressionNodePtr const &node,
+    IRExpressionNodePtr const &operand)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(operand->children[0]);
@@ -2154,9 +2233,12 @@ uint16_t Generator::AddLargeConstant(Executable::LargeConstant const &c)
   return index;
 }
 
-uint16_t Generator::GetInplaceArithmeticOpcode(bool is_primitive, TypeId lhs_type_id,
-                                               TypeId rhs_type_id, uint16_t group,
-                                               std::vector<uint16_t> const &opcodes)
+uint16_t Generator::GetInplaceArithmeticOpcode(
+    bool                         is_primitive,
+    TypeId                       lhs_type_id,
+    TypeId                       rhs_type_id,
+    uint16_t                     group,
+    std::vector<uint16_t> const &opcodes)
 {
   uint16_t index;
   if (is_primitive)
@@ -2174,10 +2256,17 @@ uint16_t Generator::GetInplaceArithmeticOpcode(bool is_primitive, TypeId lhs_typ
   return opcodes[group * 3 + index];
 }
 
-uint16_t Generator::GetArithmeticOpcode(bool lhs_is_primitive, TypeId node_type_id,
-                                        TypeId lhs_type_id, TypeId rhs_type_id, uint16_t opcode1,
-                                        uint16_t opcode2, uint16_t opcode3, uint16_t opcode4,
-                                        TypeId &type_id, TypeId &other_type_id)
+uint16_t Generator::GetArithmeticOpcode(
+    bool     lhs_is_primitive,
+    TypeId   node_type_id,
+    TypeId   lhs_type_id,
+    TypeId   rhs_type_id,
+    uint16_t opcode1,
+    uint16_t opcode2,
+    uint16_t opcode3,
+    uint16_t opcode4,
+    TypeId & type_id,
+    TypeId & other_type_id)
 {
   uint16_t opcode;
   if (lhs_type_id != node_type_id)
@@ -2274,8 +2363,9 @@ bool Generator::ConstantComparator::operator()(Variant const &lhs, Variant const
   }  // switch
 }
 
-bool Generator::LargeConstantComparator::operator()(Executable::LargeConstant const &lhs,
-                                                    Executable::LargeConstant const &rhs) const
+bool Generator::LargeConstantComparator::operator()(
+    Executable::LargeConstant const &lhs,
+    Executable::LargeConstant const &rhs) const
 {
   if (lhs.type_id < rhs.type_id)
   {

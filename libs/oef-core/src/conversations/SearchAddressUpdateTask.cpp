@@ -28,9 +28,18 @@ SearchAddressUpdateTask::EntryPoint searchAddressUpdateTaskEntryPoints[] = {
 
 SearchAddressUpdateTask::SearchAddressUpdateTask(
     std::shared_ptr<SearchAddressUpdateTask::IN_PROTO> initiator,
-    std::shared_ptr<OutboundConversations> outbounds, std::shared_ptr<OefAgentEndpoint> endpoint)
-  : SearchConversationTask("update", std::move(initiator), std::move(outbounds),
-                           std::move(endpoint), 1, "", "", searchAddressUpdateTaskEntryPoints, this)
+    std::shared_ptr<OutboundConversations>             outbounds,
+    std::shared_ptr<OefAgentEndpoint>                  endpoint)
+  : SearchConversationTask(
+        "update",
+        std::move(initiator),
+        std::move(outbounds),
+        std::move(endpoint),
+        1,
+        "",
+        "",
+        searchAddressUpdateTaskEntryPoints,
+        this)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "Task created.");
 }
@@ -72,8 +81,8 @@ SearchAddressUpdateTask::StateResult SearchAddressUpdateTask::HandleResponse()
   return {0, fetch::oef::base::COMPLETE};
 }
 
-std::shared_ptr<SearchAddressUpdateTask::REQUEST_PROTO>
-SearchAddressUpdateTask::make_request_proto()
+std::shared_ptr<SearchAddressUpdateTask::REQUEST_PROTO> SearchAddressUpdateTask::
+    make_request_proto()
 {
   auto update = std::make_shared<fetch::oef::pb::Update>();
 

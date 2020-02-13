@@ -80,8 +80,12 @@ public:
     , children_(std::move(children))
   {}
 
-  TaggedTree(Tag tag, Content content, Children children, Params params = {},
-             TaggingPolicy policy = {})
+  TaggedTree(
+      Tag           tag,
+      Content       content,
+      Children      children,
+      Params        params = {},
+      TaggingPolicy policy = {})
     : tagging_policy_(std::move(policy))
     , tag_(std::move(tag))
     , params_(std::move(params))
@@ -193,11 +197,13 @@ typename TaggedTree<TaggingPolicy>::Content TaggedTree<TaggingPolicy>::Render() 
     return tagging_policy_(tag_, params_);
   }
 
-  Content content = std::accumulate(children_.begin(), children_.end(), Content{},
-                                    [](auto accum, auto const &child) {
-                                      return std::move(accum) + child.Render();
-                                    }) +
-                    content_;
+  Content content =
+      std::accumulate(
+          children_.begin(),
+          children_.end(),
+          Content{},
+          [](auto accum, auto const &child) { return std::move(accum) + child.Render(); }) +
+      content_;
 
   return tagging_policy_(tag_, params_, content);
 }

@@ -44,8 +44,11 @@ static Counter endpoint_closed("mt-core.oef_functions_endpoint_closed");
 
 void OefFunctionsTaskFactory::EndpointClosed()
 {
-  FETCH_LOG_WARN(LOGGING_NAME, "Endpoint closed for agent: ", agent_public_key_,
-                 ". Sending removeRow to search...");
+  FETCH_LOG_WARN(
+      LOGGING_NAME,
+      "Endpoint closed for agent: ",
+      agent_public_key_,
+      ". Sending removeRow to search...");
   agents_->remove(agent_public_key_);
 
   std::random_device                      r;
@@ -113,7 +116,11 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
       FETCH_LOG_INFO(LOGGING_NAME, "kRegisterService", envelope.register_service().DebugString());
       auto convTask = std::make_shared<SearchUpdateTask>(
           std::shared_ptr<fetch::oef::pb::AgentDescription>(envelope.release_register_service()),
-          outbounds, GetEndpoint(), envelope.msg_id(), core_key_, uri.AgentPartAsString());
+          outbounds,
+          GetEndpoint(),
+          envelope.msg_id(),
+          core_key_,
+          uri.AgentPartAsString());
       convTask->SetDefaultSendReplyFunc(LOGGING_NAME, "kRegisterService REPLY ");
       convTask->submit();
       break;
@@ -122,11 +129,15 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
     {
       operation_code = fetch::oef::pb::Server_AgentMessage_OEFError_Operation_UNREGISTER_SERVICE;
       GetEndpoint()->karma.perform("oef.kUnregisterService");
-      FETCH_LOG_INFO(LOGGING_NAME, "kUnregisterService",
-                     envelope.unregister_service().DebugString());
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "kUnregisterService", envelope.unregister_service().DebugString());
       auto convTask = std::make_shared<SearchRemoveTask>(
           std::shared_ptr<fetch::oef::pb::AgentDescription>(envelope.release_unregister_service()),
-          outbounds, GetEndpoint(), envelope.msg_id(), core_key_, uri.AgentPartAsString());
+          outbounds,
+          GetEndpoint(),
+          envelope.msg_id(),
+          core_key_,
+          uri.AgentPartAsString());
       convTask->SetDefaultSendReplyFunc(LOGGING_NAME, "kUnregisterService REPLY ");
       convTask->submit();
       break;
@@ -137,8 +148,13 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
       GetEndpoint()->karma.perform("oef.kSearchAgents");
       FETCH_LOG_INFO(LOGGING_NAME, "kSearchAgents", envelope.search_agents().DebugString());
       auto convTask = std::make_shared<SearchQueryTask>(
-          std::shared_ptr<fetch::oef::pb::AgentSearch>(envelope.release_search_agents()), outbounds,
-          GetEndpoint(), envelope.msg_id(), core_key_, uri.ToString(), 1,
+          std::shared_ptr<fetch::oef::pb::AgentSearch>(envelope.release_search_agents()),
+          outbounds,
+          GetEndpoint(),
+          envelope.msg_id(),
+          core_key_,
+          uri.ToString(),
+          1,
           query_id_distribution_(random_engine_));
       convTask->SetDefaultSendReplyFunc(LOGGING_NAME, "kSearchAgents ");
       convTask->submit();
@@ -151,7 +167,12 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
       FETCH_LOG_INFO(LOGGING_NAME, "kSearchServices", envelope.search_services().DebugString());
       auto convTask = std::make_shared<SearchQueryTask>(
           std::shared_ptr<fetch::oef::pb::AgentSearch>(envelope.release_search_services()),
-          outbounds, GetEndpoint(), envelope.msg_id(), core_key_, uri.ToString(), 1,
+          outbounds,
+          GetEndpoint(),
+          envelope.msg_id(),
+          core_key_,
+          uri.ToString(),
+          1,
           query_id_distribution_(random_engine_));
       convTask->SetDefaultSendReplyFunc(LOGGING_NAME, "kSearchServices ");
       convTask->submit();
@@ -161,11 +182,16 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
     {
       operation_code = fetch::oef::pb::Server_AgentMessage_OEFError_Operation_SEARCH_SERVICES_WIDE;
       GetEndpoint()->karma.perform("oef.kSearchServicesWide");
-      FETCH_LOG_INFO(LOGGING_NAME, "kSearchServicesWide",
-                     envelope.search_services_wide().DebugString());
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "kSearchServicesWide", envelope.search_services_wide().DebugString());
       auto convTask = std::make_shared<SearchQueryTask>(
           std::shared_ptr<fetch::oef::pb::AgentSearch>(envelope.release_search_services_wide()),
-          outbounds, GetEndpoint(), envelope.msg_id(), core_key_, uri.ToString(), 4,
+          outbounds,
+          GetEndpoint(),
+          envelope.msg_id(),
+          core_key_,
+          uri.ToString(),
+          4,
           query_id_distribution_(random_engine_));
       convTask->SetDefaultSendReplyFunc(LOGGING_NAME, "kSearchServicesWide ");
       convTask->submit();
@@ -174,8 +200,8 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
     case fetch::oef::pb::Envelope::PAYLOAD_NOT_SET:
       operation_code = fetch::oef::pb::Server_AgentMessage_OEFError_Operation_OTHER;
       GetEndpoint()->karma.perform("oef.bad.nopayload");
-      FETCH_LOG_ERROR(LOGGING_NAME, "Cannot process payload ", payload_case, " from ",
-                      agent_public_key_);
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "Cannot process payload ", payload_case, " from ", agent_public_key_);
       throw XError("payload not set");
       break;
     }
@@ -218,8 +244,8 @@ void OefFunctionsTaskFactory::ProcessMessage(ConstCharArrayBuffer &data)
   }
   catch (XDisconnect const &x)
   {
-    FETCH_LOG_INFO(LOGGING_NAME,
-                   "XDISCONNECT was thrown while processing OEF operation: ", x.what());
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "XDISCONNECT was thrown while processing OEF operation: ", x.what());
     throw;
   }
 }

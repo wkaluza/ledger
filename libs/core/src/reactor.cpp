@@ -47,31 +47,39 @@ namespace core {
 
 Reactor::Reactor(std::string name)
   : name_{std::move(name)}
-  , runnables_time_{CreateHistogram("ledger_reactor_runnable_time",
-                                    "The histogram of runnables execution time")}
-  , attach_total_{CreateCounter("ledger_reactor_attach_total",
-                                "The total number of times a runnable was attached to the reactor")}
+  , runnables_time_{CreateHistogram(
+        "ledger_reactor_runnable_time",
+        "The histogram of runnables execution time")}
+  , attach_total_{CreateCounter(
+        "ledger_reactor_attach_total",
+        "The total number of times a runnable was attached to the reactor")}
   , detach_total_{CreateCounter(
         "ledger_reactor_detach_total",
         "The total number of times a runnable was detached from the reactor")}
-  , runnable_total_{CreateCounter("ledger_reactor_runnables_total",
-                                  "The total number of runnables processed")}
-  , sleep_total_{CreateCounter("ledger_reactor_sleep_total",
-                               "The total number of times the reactor has slept")}
+  , runnable_total_{CreateCounter(
+        "ledger_reactor_runnables_total",
+        "The total number of runnables processed")}
+  , sleep_total_{CreateCounter(
+        "ledger_reactor_sleep_total",
+        "The total number of times the reactor has slept")}
   , success_total_{CreateCounter(
         "ledger_reactor_success_total",
         "The total number of times the reactor has successfully executed a runable")}
   , failure_total_{CreateCounter(
         "ledger_reactor_failure_total",
         "The total number of times the reactor has failed to execute a runnable")}
-  , expired_total_{CreateCounter("ledger_reactor_expired_total",
-                                 "The total number of expired runnables")}
-  , too_long_total_{CreateCounter("ledger_reactor_too_long_total",
-                                  "The total number of runnables that took too long")}
-  , way_too_long_total_{CreateCounter("ledger_reactor_way_too_long_total",
-                                      "The total number of runnables that took way too long")}
-  , work_queue_length_{CreateGauge("ledger_reactor_work_queue_length",
-                                   "The current size of the work queue")}
+  , expired_total_{CreateCounter(
+        "ledger_reactor_expired_total",
+        "The total number of expired runnables")}
+  , too_long_total_{CreateCounter(
+        "ledger_reactor_too_long_total",
+        "The total number of runnables that took too long")}
+  , way_too_long_total_{CreateCounter(
+        "ledger_reactor_way_too_long_total",
+        "The total number of runnables that took way too long")}
+  , work_queue_length_{CreateGauge(
+        "ledger_reactor_work_queue_length",
+        "The current size of the work queue")}
   , work_queue_max_length_{
         CreateGauge("ledger_reactor_max_work_queue_length", "The max size of the work queue")}
 {}
@@ -188,9 +196,14 @@ void Reactor::ReactorWatch()
 
     if ((last_seen_executed == execution_counter_) && currently_executing_)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Very long execution noticed at execution counter: ", last_seen_executed,
-                     ". from runnable: ", runnable_name, " debug: ", runnable_debug);
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Very long execution noticed at execution counter: ",
+          last_seen_executed,
+          ". from runnable: ",
+          runnable_name,
+          " debug: ",
+          runnable_debug);
       executions_way_too_long_++;
       way_too_long_total_->increment();
     }
@@ -282,25 +295,42 @@ void Reactor::Monitor()
 
         if (execution_too_long_timer.HasExpired())
         {
-          FETCH_LOG_WARN(LOGGING_NAME,
-                         "Execution took longer than was polite! From: ", runnable->GetId(),
-                         " Debug: ", runnable->GetDebug());
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "Execution took longer than was polite! From: ",
+              runnable->GetId(),
+              " Debug: ",
+              runnable->GetDebug());
           executions_too_long_++;
           too_long_total_->increment();
         }
       }
       catch (std::exception const &ex)
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "The reactor ", name_, " caught an exception in ",
-                       runnable->GetId(), "! ", " error: ", ex.what(),
-                       " Debug: ", runnable->GetDebug());
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "The reactor ",
+            name_,
+            " caught an exception in ",
+            runnable->GetId(),
+            "! ",
+            " error: ",
+            ex.what(),
+            " Debug: ",
+            runnable->GetDebug());
 
         failure_total_->increment();
       }
       catch (...)
       {
-        FETCH_LOG_INFO(LOGGING_NAME, "Unknown error generated in reactor: ", name_,
-                       " From: ", runnable->GetId(), " Debug: ", runnable->GetDebug());
+        FETCH_LOG_INFO(
+            LOGGING_NAME,
+            "Unknown error generated in reactor: ",
+            name_,
+            " From: ",
+            runnable->GetId(),
+            " Debug: ",
+            runnable->GetDebug());
 
         failure_total_->increment();
       }
@@ -314,7 +344,9 @@ telemetry::HistogramPtr Reactor::CreateHistogram(char const *name, char const *d
 {
   return telemetry::Registry::Instance().CreateHistogram(
       {0.000000001, 0.00000001, 0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0},
-      name, description, {{"reactor", name_}});
+      name,
+      description,
+      {{"reactor", name_}});
 }
 
 telemetry::CounterPtr Reactor::CreateCounter(char const *name, char const *description) const
@@ -324,8 +356,8 @@ telemetry::CounterPtr Reactor::CreateCounter(char const *name, char const *descr
 
 telemetry::GaugePtr<uint64_t> Reactor::CreateGauge(char const *name, char const *description) const
 {
-  return telemetry::Registry::Instance().CreateGauge<uint64_t>(name, description,
-                                                               {{"reactor", name_}});
+  return telemetry::Registry::Instance().CreateGauge<uint64_t>(
+      name, description, {{"reactor", name_}});
 }
 
 uint64_t &Reactor::ExecutionTooLongMs()

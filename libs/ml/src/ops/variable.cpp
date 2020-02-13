@@ -39,8 +39,9 @@ Variable<TensorType>::Variable(SPType const &sp)
     gradient_accumulation_ = std::make_shared<TensorType>(sp.gradient_accumulation->Copy());
   }
 
-  this->SetRegularisation(fetch::ml::details::CreateRegulariser<TensorType>(sp.regularisation_type),
-                          sp.regularisation_rate);
+  this->SetRegularisation(
+      fetch::ml::details::CreateRegulariser<TensorType>(sp.regularisation_type),
+      sp.regularisation_rate);
 
   this->value_frozen_ = sp.value_frozen;
 }
@@ -100,8 +101,9 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> Variable<TensorType>::MakeShare
  * @return
  */
 template <typename TensorType>
-std::vector<TensorType> Variable<TensorType>::Backward(VecTensorType const &inputs,
-                                                       TensorType const &   error_signal)
+std::vector<TensorType> Variable<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.empty());
@@ -172,8 +174,9 @@ void Variable<TensorType>::AddToGradient(TensorType const &extern_grad, SizeSet 
  * @param rows_updated stored as vector
  */
 template <class TensorType>
-void Variable<TensorType>::AddToGradient(TensorType const &extern_grad,
-                                         SizeVector const &rows_updated)
+void Variable<TensorType>::AddToGradient(
+    TensorType const &extern_grad,
+    SizeVector const &rows_updated)
 {
 
   if (!this->value_frozen_)

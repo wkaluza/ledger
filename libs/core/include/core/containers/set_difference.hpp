@@ -29,20 +29,25 @@ std::unordered_set<K> operator-(std::unordered_set<K> const &lhs, std::unordered
 {
   std::unordered_set<K> result;
 
-  std::copy_if(lhs.begin(), lhs.end(), std::inserter(result, result.begin()),
-               [&rhs](K const &item) { return rhs.find(item) == rhs.end(); });
+  std::copy_if(
+      lhs.begin(), lhs.end(), std::inserter(result, result.begin()), [&rhs](K const &item) {
+        return rhs.find(item) == rhs.end();
+      });
 
   return result;
 }
 
 template <typename K, typename V, typename H>
-std::unordered_set<K, H> operator-(std::unordered_set<K, H> const &   lhs,
-                                   std::unordered_map<K, V, H> const &rhs)
+std::unordered_set<K, H> operator-(
+    std::unordered_set<K, H> const &   lhs,
+    std::unordered_map<K, V, H> const &rhs)
 {
   std::unordered_set<K> result;
 
-  std::copy_if(lhs.begin(), lhs.end(), std::inserter(result, result.begin()),
-               [&rhs](K const &item) { return rhs.find(item) == rhs.end(); });
+  std::copy_if(
+      lhs.begin(), lhs.end(), std::inserter(result, result.begin()), [&rhs](K const &item) {
+        return rhs.find(item) == rhs.end();
+      });
 
   return result;
 }

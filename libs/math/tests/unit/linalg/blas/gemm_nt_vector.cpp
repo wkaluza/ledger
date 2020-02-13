@@ -29,8 +29,11 @@ using namespace fetch::math::linalg;
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector1)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -69,8 +72,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector1)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector2)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -109,8 +115,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector2)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector3)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -149,8 +158,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector3)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector4)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -189,8 +201,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector4)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector5)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -246,8 +261,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector5)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector6)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;
@@ -302,8 +320,11 @@ TEST(blas_gemm_vectorised, blas_gemm_nt_vector6)
 
 TEST(blas_gemm_vectorised, blas_gemm_nt_vector7)
 {
-  Blas<double, Signature(_C <= _alpha, _A, _B, _beta, _C),
-       Computes(_C <= _alpha * _A * T(_B) + _beta * _C), platform::Parallelisation::VECTORISE>
+  Blas<
+      double,
+      Signature(_C <= _alpha, _A, _B, _beta, _C),
+      Computes(_C <= _alpha * _A * T(_B) + _beta * _C),
+      platform::Parallelisation::VECTORISE>
       gemm_nt_vector;
   // Computing _C <= _alpha * _A * T(_B) + _beta * _C
   using Type = double;

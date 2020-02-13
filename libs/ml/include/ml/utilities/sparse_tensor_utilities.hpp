@@ -34,22 +34,28 @@ namespace utilities {
  * @param sparsity_threshold
  */
 template <class TensorType>
-void SparseAdd(TensorType const &src, TensorType &dst,
-               std::unordered_set<fetch::math::SizeType> const &update_rows,
-               fetch::math::SizeType                            sparsity_threshold = 2);
+void SparseAdd(
+    TensorType const &                               src,
+    TensorType &                                     dst,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            sparsity_threshold = 2);
 
 template <class TensorType>
-void SparseAdd(TensorType const &src, TensorType &dst,
-               std::vector<fetch::math::SizeType> const &update_rows);
+void SparseAdd(
+    TensorType const &                        src,
+    TensorType &                              dst,
+    std::vector<fetch::math::SizeType> const &update_rows);
 
 template <class TensorType>
-TensorType ToSparse(TensorType const &                               src,
-                    std::unordered_set<fetch::math::SizeType> const &update_rows);
+TensorType ToSparse(
+    TensorType const &                               src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 
 template <class TensorType>
-TensorType FromSparse(TensorType const &                               src,
-                      std::unordered_set<fetch::math::SizeType> const &update_rows,
-                      fetch::math::SizeType                            output_rows);
+TensorType FromSparse(
+    TensorType const &                               src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 
 }  // namespace utilities
 }  // namespace ml

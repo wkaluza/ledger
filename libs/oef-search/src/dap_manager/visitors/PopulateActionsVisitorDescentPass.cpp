@@ -22,13 +22,15 @@
 #include "oef-search/dap_manager/visitors/PopulateActionsVisitorDescentPass.hpp"
 
 PopulateActionsVisitorDescentPass::PopulateActionsVisitorDescentPass(
-    std::shared_ptr<DapManager> dap_manager, std::shared_ptr<DapStore> dap_store)
+    std::shared_ptr<DapManager> dap_manager,
+    std::shared_ptr<DapStore>   dap_store)
   : dap_manager_{std::move(dap_manager)}
   , dap_store_{std::move(dap_store)}
 {}
 
 PopulateActionsVisitorDescentPass::VisitNodeExitStates PopulateActionsVisitorDescentPass::VisitNode(
-    Branch &node, uint32_t /*depth*/)
+    Branch &node,
+    uint32_t /*depth*/)
 {
   if (future_)
   {
@@ -60,8 +62,8 @@ PopulateActionsVisitorDescentPass::VisitNodeExitStates PopulateActionsVisitorDes
       this->shared_from_base<PopulateActionsVisitorDescentPass>();
   for (const auto &dap_name : dap_names_)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Dear ", dap_name, " would you like to consume ", node.ToString(),
-                   " ?");
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Dear ", dap_name, " would you like to consume ", node.ToString(), " ?");
 
     current_dap_ = dap_name;
     future_ =
@@ -87,7 +89,8 @@ PopulateActionsVisitorDescentPass::VisitNodeExitStates PopulateActionsVisitorDes
 }
 
 PopulateActionsVisitorDescentPass::VisitNodeExitStates PopulateActionsVisitorDescentPass::VisitLeaf(
-    Leaf &leaf, uint32_t /*depth*/)
+    Leaf &leaf,
+    uint32_t /*depth*/)
 {
   if (future_)
   {
@@ -117,8 +120,13 @@ PopulateActionsVisitorDescentPass::VisitNodeExitStates PopulateActionsVisitorDes
       this->shared_from_base<PopulateActionsVisitorDescentPass>();
   for (const auto &dap_name : dap_names_)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Dear ", dap_name, " would you write a constraint for ",
-                   leaf.ToString(), " ?");
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Dear ",
+        dap_name,
+        " would you write a constraint for ",
+        leaf.ToString(),
+        " ?");
 
     current_dap_ = dap_name;
     future_ =

@@ -89,12 +89,12 @@ protected:
   void SetUp() override
   {
     managerA_ = std::make_unique<NetworkManager>("NetMgrA", 4);
-    networkA_ = std::make_shared<Muddle>(NetworkId{"Test"}, LoadIdentity(NETWORK_A_PRIVATE_KEY),
-                                         *managerA_);
+    networkA_ = std::make_shared<Muddle>(
+        NetworkId{"Test"}, LoadIdentity(NETWORK_A_PRIVATE_KEY), *managerA_);
 
     managerB_ = std::make_unique<NetworkManager>("NetMgrB", 4);
-    networkB_ = std::make_shared<Muddle>(NetworkId{"Test"}, LoadIdentity(NETWORK_B_PRIVATE_KEY),
-                                         *managerB_);
+    networkB_ = std::make_shared<Muddle>(
+        NetworkId{"Test"}, LoadIdentity(NETWORK_B_PRIVATE_KEY), *managerB_);
 
     managerA_->Start();
     managerB_->Start();
@@ -138,9 +138,13 @@ protected:
     std::atomic<std::size_t> num_messages{0};
 
     auto subscription = endpoint.Subscribe(SERVICE, CHANNEL);
-    subscription->SetMessageHandler([&num_messages](Address const &from, uint16_t service,
-                                                    uint16_t channel, uint16_t counter,
-                                                    Payload const &payload, Address const &) {
+    subscription->SetMessageHandler([&num_messages](
+                                        Address const &from,
+                                        uint16_t       service,
+                                        uint16_t       channel,
+                                        uint16_t       counter,
+                                        Payload const &payload,
+                                        Address const &) {
       FETCH_UNUSED(from);
       FETCH_UNUSED(counter);
 

@@ -46,9 +46,11 @@ class DapManager : public std::enable_shared_from_this<DapManager>
 public:
   static constexpr char const *LOGGING_NAME = "DapManager";
 
-  DapManager(std::shared_ptr<DapStore>              dap_store,
-             std::shared_ptr<SearchPeerStore>       search_peer_store,
-             std::shared_ptr<OutboundConversations> outbounds, uint64_t query_cache_lifetime_sec)
+  DapManager(
+      std::shared_ptr<DapStore>              dap_store,
+      std::shared_ptr<SearchPeerStore>       search_peer_store,
+      std::shared_ptr<OutboundConversations> outbounds,
+      uint64_t                               query_cache_lifetime_sec)
     : dap_store_{std::move(dap_store)}
     , search_peer_store_{std::move(search_peer_store)}
     , outbounds_{std::move(outbounds)}
@@ -141,7 +143,9 @@ public:
 
   template <typename IN_PROTO, typename OUT_PROTO>
   std::shared_ptr<fetch::oef::base::FutureComplexType<std::shared_ptr<OUT_PROTO>>> SingleDapCall(
-      std::string const &dap_name, std::string const &path, std::shared_ptr<IN_PROTO> in_proto)
+      std::string const &       dap_name,
+      std::string const &       path,
+      std::shared_ptr<IN_PROTO> in_proto)
   {
     auto future =
         std::make_shared<fetch::oef::base::FutureComplexType<std::shared_ptr<OUT_PROTO>>>();
@@ -166,19 +170,20 @@ public:
       }
     };
 
-    convTask->errorHandler = [future_wp](const std::string &dap_name, const std::string &path,
-                                         const std::string &msg) {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to call ", dap_name, " with path: ", path, ": ", msg);
-      auto sp = future_wp.lock();
-      if (sp)
-      {
-        sp->set(nullptr);
-      }
-      else
-      {
-        FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to Future");
-      }
-    };
+    convTask->errorHandler =
+        [future_wp](const std::string &dap_name, const std::string &path, const std::string &msg) {
+          FETCH_LOG_WARN(
+              LOGGING_NAME, "Failed to call ", dap_name, " with path: ", path, ": ", msg);
+          auto sp = future_wp.lock();
+          if (sp)
+          {
+            sp->set(nullptr);
+          }
+          else
+          {
+            FETCH_LOG_ERROR(LOGGING_NAME, "No shared pointer to Future");
+          }
+        };
 
     return future;
   }
@@ -253,7 +258,8 @@ public:
   }
 
   std::shared_ptr<fetch::oef::base::FutureComplexType<std::shared_ptr<IdentifierSequence>>> execute(
-      std::shared_ptr<Branch> root, const fetch::oef::pb::SearchQuery &query)
+      std::shared_ptr<Branch>            root,
+      const fetch::oef::pb::SearchQuery &query)
   {
     auto result = std::make_shared<
         fetch::oef::base::FutureComplexType<std::shared_ptr<IdentifierSequence>>>();
@@ -269,39 +275,42 @@ public:
       distance = query.directed_search().distance().geo();
     }
 
-    visit_res->MakeNotification().Then([result, root, identifier_sequence, this_sp,
-                                        distance]() mutable {
-      FETCH_LOG_INFO(LOGGING_NAME, "--------------------- AFTER VISIT");
-      root->Print();
-      FETCH_LOG_INFO(LOGGING_NAME, "---------------------");
+    visit_res->MakeNotification().Then(
+        [result, root, identifier_sequence, this_sp, distance]() mutable {
+          FETCH_LOG_INFO(LOGGING_NAME, "--------------------- AFTER VISIT");
+          root->Print();
+          FETCH_LOG_INFO(LOGGING_NAME, "---------------------");
 
-      auto execute_task =
-          NodeExecutorFactory(BranchExecutorTask::NodeDataType(root), identifier_sequence, this_sp);
+          auto execute_task = NodeExecutorFactory(
+              BranchExecutorTask::NodeDataType(root), identifier_sequence, this_sp);
 
-      execute_task->SetMessageHandler(
-          [result, distance](std::shared_ptr<IdentifierSequence> response) {
-            response->mutable_status()->set_success(true);
-            for (int i = 0; i < response->identifiers_size(); ++i)
-            {
-              response->mutable_identifiers(i)->set_distance(distance);
-            }
-            result->set(std::move(response));
-          });
+          execute_task->SetMessageHandler(
+              [result, distance](std::shared_ptr<IdentifierSequence> response) {
+                response->mutable_status()->set_success(true);
+                for (int i = 0; i < response->identifiers_size(); ++i)
+                {
+                  response->mutable_identifiers(i)->set_distance(distance);
+                }
+                result->set(std::move(response));
+              });
 
-      execute_task->submit();
-    });
+          execute_task->submit();
+        });
 
     return result;
   }
 
-  double SetQueryHeader(std::shared_ptr<Branch> &root, fetch::oef::pb::SearchQuery &query,
-                        std::function<void(fetch::oef::pb::SearchQuery &)> done)
+  double SetQueryHeader(
+      std::shared_ptr<Branch> &                          root,
+      fetch::oef::pb::SearchQuery &                      query,
+      std::function<void(fetch::oef::pb::SearchQuery &)> done)
   {
     if (!query.has_directed_search() || !query.directed_search().has_target() ||
         !query.directed_search().target().has_geo())
     {
-      FETCH_LOG_INFO(LOGGING_NAME,
-                     "No location set in header, looking for location constraint in the query...");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "No location set in header, looking for location constraint in the query...");
       auto this_sp = this->shared_from_this();
       auto v       = std::make_shared<FindGeoLocationVisitor>(dap_store_);
       v->SubmitVisitTask(root);
@@ -316,8 +325,8 @@ public:
           {
             if (loc->GetQueryFieldType() == "location")
             {
-              FETCH_LOG_INFO(LOGGING_NAME,
-                             "Setting location in query header from location constraint..");
+              FETCH_LOG_INFO(
+                  LOGGING_NAME, "Setting location in query header from location constraint..");
               ds->mutable_target()->mutable_geo()->CopyFrom(loc->GetQueryFieldValue().l());
               break;
             }
@@ -402,9 +411,11 @@ public:
     auto address_daps = dap_store_->GetDapsForAttributeType("address");
     if (address_daps.empty() || address_daps.size() > 1)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Address registry not found or more then one (size=", address_daps.size(),
-                     ")");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Address registry not found or more then one (size=",
+          address_daps.size(),
+          ")");
       response->set(std::make_pair("", ""));
       return response;
     }
@@ -434,25 +445,29 @@ public:
           response->set(std::move(resp));
           if (proto->query_field_value().v_s_size() > 1)
           {
-            FETCH_LOG_WARN(LOGGING_NAME,
-                           "Multiple core registered with the node! Using only the first! Proto: ",
-                           proto->DebugString());
+            FETCH_LOG_WARN(
+                LOGGING_NAME,
+                "Multiple core registered with the node! Using only the first! Proto: ",
+                proto->DebugString());
           }
         }
       }
       else
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Got unexpected response for distance calculation call: ",
-                       proto->DebugString());
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Got unexpected response for distance calculation call: ",
+            proto->DebugString());
         response->set(std::make_pair("", ""));
       }
     };
 
-    convTask->errorHandler = [response](const std::string &dap_name, const std::string &path,
-                                        const std::string &msg) {
-      FETCH_LOG_WARN(LOGGING_NAME, "Failed to call ", dap_name, " with path: ", path, ": ", msg);
-      response->set(std::make_pair("", ""));
-    };
+    convTask->errorHandler =
+        [response](const std::string &dap_name, const std::string &path, const std::string &msg) {
+          FETCH_LOG_WARN(
+              LOGGING_NAME, "Failed to call ", dap_name, " with path: ", path, ": ", msg);
+          response->set(std::make_pair("", ""));
+        };
 
     return response;
   }
@@ -471,14 +486,16 @@ protected:
     return result;
   }
 
-  void PlaneDistanceCheck(const std::string &                               plane,
-                          const fetch::oef::pb::SearchQuery_DirectedSearch &header,
-                          std::shared_ptr<fetch::oef::base::Future<bool>> & future)
+  void PlaneDistanceCheck(
+      const std::string &                               plane,
+      const fetch::oef::pb::SearchQuery_DirectedSearch &header,
+      std::shared_ptr<fetch::oef::base::Future<bool>> & future)
   {
     std::weak_ptr<fetch::oef::base::Future<bool>> future_wp = future;
 
     bool resp = PlaneDistanceLookup(
-        plane, header,
+        plane,
+        header,
         [future_wp](const double &source_distance, const double &distance) {
           auto sp = future_wp.lock();
           if (sp)
@@ -489,8 +506,13 @@ protected:
             }
             else
             {
-              FETCH_LOG_INFO(LOGGING_NAME, "Query will be ignored, because node distance (",
-                             distance, ") is greater then source distance (", source_distance, ")");
+              FETCH_LOG_INFO(
+                  LOGGING_NAME,
+                  "Query will be ignored, because node distance (",
+                  distance,
+                  ") is greater then source distance (",
+                  source_distance,
+                  ")");
               sp->set(false);
             }
           }
@@ -516,16 +538,20 @@ protected:
     }
   }
 
-  bool PlaneDistanceLookup(const std::string &                                 plane,
-                           const fetch::oef::pb::SearchQuery_DirectedSearch &  header,
-                           std::function<void(const double &, const double &)> successHandler,
-                           std::function<void()>                               errorHandler)
+  bool PlaneDistanceLookup(
+      const std::string &                                 plane,
+      const fetch::oef::pb::SearchQuery_DirectedSearch &  header,
+      std::function<void(const double &, const double &)> successHandler,
+      std::function<void()>                               errorHandler)
   {
     auto plane_desc = dap_store_->GetPlaneDescription(plane);
     if (plane_desc == nullptr)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Distance check is not possible, because there isn't a ", plane,
-                     " dap with plane field!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Distance check is not possible, because there isn't a ",
+          plane,
+          " dap with plane field!");
       return false;
     }
     auto request = std::make_shared<ConstructQueryConstraintObjectRequest>();
@@ -551,8 +577,8 @@ protected:
       FETCH_LOG_WARN(LOGGING_NAME, "Plane ", plane, " not yet supported by PlaneDistanceCheck!");
       return false;
     }
-    FETCH_LOG_INFO(LOGGING_NAME, "Send distance query to DAP(", dap_name,
-                   "): ", request->DebugString());
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Send distance query to DAP(", dap_name, "): ", request->DebugString());
 
     using IN_PROTO  = ConstructQueryConstraintObjectRequest;
     using OUT_PROTO = ConstructQueryConstraintObjectRequest;
@@ -562,34 +588,40 @@ protected:
 
     convTask->submit();
 
-    convTask->messageHandler = [distance, successHandler,
-                                errorHandler](std::shared_ptr<OUT_PROTO> response) {
-      if (response->operator_() == "DISTANCE" &&
-          response->query_field_value().typecode() == "double")
-      {
-        successHandler(distance, response->query_field_value().d());
-      }
-      else
-      {
-        FETCH_LOG_WARN(LOGGING_NAME, "Got unexpected response for distance calculation call: ",
-                       response->DebugString());
-        errorHandler();
-      }
-    };
+    convTask->messageHandler =
+        [distance, successHandler, errorHandler](std::shared_ptr<OUT_PROTO> response) {
+          if (response->operator_() == "DISTANCE" &&
+              response->query_field_value().typecode() == "double")
+          {
+            successHandler(distance, response->query_field_value().d());
+          }
+          else
+          {
+            FETCH_LOG_WARN(
+                LOGGING_NAME,
+                "Got unexpected response for distance calculation call: ",
+                response->DebugString());
+            errorHandler();
+          }
+        };
 
-    convTask->errorHandler = [errorHandler](const std::string &dap_name, const std::string &path,
-                                            const std::string &msg) {
+    convTask->errorHandler = [errorHandler](
+                                 const std::string &dap_name,
+                                 const std::string &path,
+                                 const std::string &msg) {
       FETCH_LOG_WARN(LOGGING_NAME, "Failed to call ", dap_name, " with path: ", path, ": ", msg);
       errorHandler();
     };
     return true;
   }
 
-  void SetDistanceInHeader(fetch::oef::pb::SearchQuery &                      query,
-                           std::function<void(fetch::oef::pb::SearchQuery &)> done)
+  void SetDistanceInHeader(
+      fetch::oef::pb::SearchQuery &                      query,
+      std::function<void(fetch::oef::pb::SearchQuery &)> done)
   {
     auto res = PlaneDistanceLookup(
-        "geo", query.directed_search(),
+        "geo",
+        query.directed_search(),
         [query, done](const double & /*source_distance*/, const double &distance) mutable {
           query.mutable_directed_search()->mutable_distance()->set_geo(distance);
           done(query);
@@ -628,8 +660,13 @@ protected:
       {
         if (res->status().success())
         {
-          FETCH_LOG_WARN(LOGGING_NAME, "Search-node ", convTask->GetDapName(idx), " returned ",
-                         res->identifiers_size(), " results!");
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "Search-node ",
+              convTask->GetDapName(idx),
+              " returned ",
+              res->identifiers_size(),
+              " results!");
           for (const auto &id : res->identifiers())
           {
             idseq->add_identifiers()->CopyFrom(id);
@@ -637,9 +674,13 @@ protected:
         }
         else
         {
-          FETCH_LOG_WARN(LOGGING_NAME, "Search-node ", convTask->GetDapName(idx),
-                         " returned error message (", res->status().errorcode(),
-                         ") when calling search:");
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "Search-node ",
+              convTask->GetDapName(idx),
+              " returned error message (",
+              res->status().errorcode(),
+              ") when calling search:");
           for (const auto &m : res->status().narrative())
           {
             FETCH_LOG_WARN(LOGGING_NAME, "--> ", m);

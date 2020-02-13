@@ -69,9 +69,13 @@ int main(int ac, char **av)
   LoadPretrainedBertModel(pretrained_model_dir, config, *g);
 
   std::cout << "get an output for the bert loaded from txt files" << std::endl;
-  TensorType first_output =
-      RunPseudoForwardPass(interface.inputs, interface.outputs[interface.outputs.size() - 1],
-                           config, *g, static_cast<SizeType>(1), false);
+  TensorType first_output = RunPseudoForwardPass(
+      interface.inputs,
+      interface.outputs[interface.outputs.size() - 1],
+      config,
+      *g,
+      static_cast<SizeType>(1),
+      false);
 
   std::cout << "save the pretrained bert model to file: \n" << saved_model_path << std::endl;
   SaveGraph<GraphType>(*g, saved_model_path);
@@ -83,9 +87,13 @@ int main(int ac, char **av)
   GraphType g2 = *(LoadGraph<GraphType>(saved_model_path));
 
   std::cout << "get another output for the bert loaded from bin file" << std::endl;
-  TensorType second_output =
-      RunPseudoForwardPass(interface.inputs, interface.outputs[interface.outputs.size() - 1],
-                           config, g2, static_cast<SizeType>(1), false);
+  TensorType second_output = RunPseudoForwardPass(
+      interface.inputs,
+      interface.outputs[interface.outputs.size() - 1],
+      config,
+      g2,
+      static_cast<SizeType>(1),
+      false);
 
   if (first_output == second_output)
   {

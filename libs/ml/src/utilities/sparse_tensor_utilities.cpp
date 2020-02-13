@@ -27,9 +27,11 @@ namespace ml {
 namespace utilities {
 
 template <class TensorType>
-void SparseAdd(TensorType const &src, TensorType &dst,
-               std::unordered_set<fetch::math::SizeType> const &update_rows,
-               fetch::math::SizeType                            sparsity_threshold)
+void SparseAdd(
+    TensorType const &                               src,
+    TensorType &                                     dst,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            sparsity_threshold)
 {
   using SizeType = fetch::math::SizeType;
 
@@ -78,8 +80,10 @@ void SparseAdd(TensorType const &src, TensorType &dst,
 }
 
 template <class TensorType>
-void SparseAdd(TensorType const &src, TensorType &dst,
-               std::vector<fetch::math::SizeType> const &update_rows)
+void SparseAdd(
+    TensorType const &                        src,
+    TensorType &                              dst,
+    std::vector<fetch::math::SizeType> const &update_rows)
 {
   using SizeType = fetch::math::SizeType;
 
@@ -105,8 +109,9 @@ void SparseAdd(TensorType const &src, TensorType &dst,
 }
 
 template <class TensorType>
-TensorType ToSparse(TensorType const &                               src,
-                    std::unordered_set<fetch::math::SizeType> const &update_rows)
+TensorType ToSparse(
+    TensorType const &                               src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows)
 {
   using SizeType = fetch::math::SizeType;
 
@@ -130,9 +135,10 @@ TensorType ToSparse(TensorType const &                               src,
 }
 
 template <class TensorType>
-TensorType FromSparse(TensorType const &                               src,
-                      std::unordered_set<fetch::math::SizeType> const &update_rows,
-                      fetch::math::SizeType                            output_rows)
+TensorType FromSparse(
+    TensorType const &                               src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows)
 {
   using SizeType = fetch::math::SizeType;
 
@@ -152,82 +158,106 @@ TensorType FromSparse(TensorType const &                               src,
 }
 
 template void SparseAdd<math::Tensor<int8_t>>(
-    math::Tensor<int8_t> const &src, math::Tensor<int8_t> &dst,
+    math::Tensor<int8_t> const &                     src,
+    math::Tensor<int8_t> &                           dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<int16_t>>(
-    math::Tensor<int16_t> const &src, math::Tensor<int16_t> &dst,
+    math::Tensor<int16_t> const &                    src,
+    math::Tensor<int16_t> &                          dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<int32_t>>(
-    math::Tensor<int32_t> const &src, math::Tensor<int32_t> &dst,
+    math::Tensor<int32_t> const &                    src,
+    math::Tensor<int32_t> &                          dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<int64_t>>(
-    math::Tensor<int64_t> const &src, math::Tensor<int64_t> &dst,
+    math::Tensor<int64_t> const &                    src,
+    math::Tensor<int64_t> &                          dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<float>>(
-    math::Tensor<float> const &src, math::Tensor<float> &dst,
+    math::Tensor<float> const &                      src,
+    math::Tensor<float> &                            dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<double>>(
-    math::Tensor<double> const &src, math::Tensor<double> &dst,
+    math::Tensor<double> const &                     src,
+    math::Tensor<double> &                           dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<fixed_point::fp32_t>>(
-    math::Tensor<fixed_point::fp32_t> const &src, math::Tensor<fixed_point::fp32_t> &dst,
+    math::Tensor<fixed_point::fp32_t> const &        src,
+    math::Tensor<fixed_point::fp32_t> &              dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<fixed_point::fp64_t>>(
-    math::Tensor<fixed_point::fp64_t> const &src, math::Tensor<fixed_point::fp64_t> &dst,
+    math::Tensor<fixed_point::fp64_t> const &        src,
+    math::Tensor<fixed_point::fp64_t> &              dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 template void SparseAdd<math::Tensor<fixed_point::fp128_t>>(
-    math::Tensor<fixed_point::fp128_t> const &src, math::Tensor<fixed_point::fp128_t> &dst,
+    math::Tensor<fixed_point::fp128_t> const &       src,
+    math::Tensor<fixed_point::fp128_t> &             dst,
     std::unordered_set<fetch::math::SizeType> const &update_rows,
     fetch::math::SizeType                            sparsity_threshold);
 
 template void SparseAdd<math::Tensor<int8_t>>(
-    math::Tensor<int8_t> const &src, math::Tensor<int8_t> &dst,
+    math::Tensor<int8_t> const &              src,
+    math::Tensor<int8_t> &                    dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<int16_t>>(
-    math::Tensor<int16_t> const &src, math::Tensor<int16_t> &dst,
+    math::Tensor<int16_t> const &             src,
+    math::Tensor<int16_t> &                   dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<int32_t>>(
-    math::Tensor<int32_t> const &src, math::Tensor<int32_t> &dst,
+    math::Tensor<int32_t> const &             src,
+    math::Tensor<int32_t> &                   dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<int64_t>>(
-    math::Tensor<int64_t> const &src, math::Tensor<int64_t> &dst,
+    math::Tensor<int64_t> const &             src,
+    math::Tensor<int64_t> &                   dst,
     std::vector<fetch::math::SizeType> const &update_rows);
-template void SparseAdd<math::Tensor<float>>(math::Tensor<float> const &               src,
-                                             math::Tensor<float> &                     dst,
-                                             std::vector<fetch::math::SizeType> const &update_rows);
+template void SparseAdd<math::Tensor<float>>(
+    math::Tensor<float> const &               src,
+    math::Tensor<float> &                     dst,
+    std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<double>>(
-    math::Tensor<double> const &src, math::Tensor<double> &dst,
+    math::Tensor<double> const &              src,
+    math::Tensor<double> &                    dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<fixed_point::fp32_t>>(
-    math::Tensor<fixed_point::fp32_t> const &src, math::Tensor<fixed_point::fp32_t> &dst,
+    math::Tensor<fixed_point::fp32_t> const & src,
+    math::Tensor<fixed_point::fp32_t> &       dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<fixed_point::fp64_t>>(
-    math::Tensor<fixed_point::fp64_t> const &src, math::Tensor<fixed_point::fp64_t> &dst,
+    math::Tensor<fixed_point::fp64_t> const & src,
+    math::Tensor<fixed_point::fp64_t> &       dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 template void SparseAdd<math::Tensor<fixed_point::fp128_t>>(
-    math::Tensor<fixed_point::fp128_t> const &src, math::Tensor<fixed_point::fp128_t> &dst,
+    math::Tensor<fixed_point::fp128_t> const &src,
+    math::Tensor<fixed_point::fp128_t> &      dst,
     std::vector<fetch::math::SizeType> const &update_rows);
 
 template math::Tensor<int8_t> ToSparse<math::Tensor<int8_t>>(
-    math::Tensor<int8_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<int8_t> const &                     src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<int16_t> ToSparse<math::Tensor<int16_t>>(
-    math::Tensor<int16_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<int16_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<int32_t> ToSparse<math::Tensor<int32_t>>(
-    math::Tensor<int32_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<int32_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<int64_t> ToSparse<math::Tensor<int64_t>>(
-    math::Tensor<int64_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<int64_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<float> ToSparse<math::Tensor<float>>(
-    math::Tensor<float> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<float> const &                      src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<double> ToSparse<math::Tensor<double>>(
-    math::Tensor<double> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
+    math::Tensor<double> const &                     src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows);
 template math::Tensor<fixed_point::fp32_t> ToSparse<math::Tensor<fixed_point::fp32_t>>(
     math::Tensor<fixed_point::fp32_t> const &        src,
     std::unordered_set<fetch::math::SizeType> const &update_rows);
@@ -239,23 +269,29 @@ template math::Tensor<fixed_point::fp128_t> ToSparse<math::Tensor<fixed_point::f
     std::unordered_set<fetch::math::SizeType> const &update_rows);
 
 template math::Tensor<int8_t> FromSparse<math::Tensor<int8_t>>(
-    math::Tensor<int8_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<int8_t> const &                     src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<int16_t> FromSparse<math::Tensor<int16_t>>(
-    math::Tensor<int16_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<int16_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<int32_t> FromSparse<math::Tensor<int32_t>>(
-    math::Tensor<int32_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<int32_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<int64_t> FromSparse<math::Tensor<int64_t>>(
-    math::Tensor<int64_t> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<int64_t> const &                    src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<float> FromSparse<math::Tensor<float>>(
-    math::Tensor<float> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<float> const &                      src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<double> FromSparse<math::Tensor<double>>(
-    math::Tensor<double> const &src, std::unordered_set<fetch::math::SizeType> const &update_rows,
-    fetch::math::SizeType output_rows);
+    math::Tensor<double> const &                     src,
+    std::unordered_set<fetch::math::SizeType> const &update_rows,
+    fetch::math::SizeType                            output_rows);
 template math::Tensor<fixed_point::fp32_t> FromSparse<math::Tensor<fixed_point::fp32_t>>(
     math::Tensor<fixed_point::fp32_t> const &        src,
     std::unordered_set<fetch::math::SizeType> const &update_rows,

@@ -51,8 +51,8 @@ public:
   using HistoryElementCache = std::vector<HistoryElement>;
   using StorageInterface    = fetch::ledger::StorageInterface;
 
-  Result Execute(Digest const &digest, BlockIndex block, SliceIndex slice,
-                 BitVector const &shards) override
+  Result Execute(Digest const &digest, BlockIndex block, SliceIndex slice, BitVector const &shards)
+      override
   {
     history_.emplace_back(HistoryElement{digest, block, slice, shards, Clock::now()});
 
@@ -65,8 +65,12 @@ public:
     return {Status::SUCCESS};
   }
 
-  void SettleFees(Address const &miner, BlockIndex block, TokenAmount amount,
-                  uint32_t log2_num_lanes, StakeUpdateEvents const &stake_updates) override
+  void SettleFees(
+      Address const &          miner,
+      BlockIndex               block,
+      TokenAmount              amount,
+      uint32_t                 log2_num_lanes,
+      StakeUpdateEvents const &stake_updates) override
   {
     FETCH_UNUSED(miner);
     FETCH_UNUSED(block);

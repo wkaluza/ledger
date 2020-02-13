@@ -33,8 +33,10 @@ void BuildConstByteArray(pybind11::module &module)
       .def(py::init<std::initializer_list<ConstByteArray::ValueType>>())
       .def(py::init<std::string const &>())
       .def(py::init<fetch::byte_array::ConstByteArray::SelfType const &>())
-      .def(py::init<fetch::byte_array::ConstByteArray::SelfType const &, std::size_t const &,
-                    std::size_t const &>())
+      .def(py::init<
+           fetch::byte_array::ConstByteArray::SelfType const &,
+           std::size_t const &,
+           std::size_t const &>())
       .def("AsInt", &ConstByteArray::AsInt)
       .def(py::self != fetch::byte_array::ConstByteArray::SelfType())
       .def(py::self < fetch::byte_array::ConstByteArray::SelfType())
@@ -42,21 +44,26 @@ void BuildConstByteArray(pybind11::module &module)
       .def("AsFloat", &ConstByteArray::AsFloat)
       .def(py::self == fetch::byte_array::ConstByteArray::SelfType())
       .def(py::self + fetch::byte_array::ConstByteArray::SelfType())
-      .def("SubArray",
-           static_cast<ConstByteArray (ConstByteArray::*)(std::size_t, std::size_t) const>(
-               &ConstByteArray::SubArray))
+      .def(
+          "SubArray",
+          static_cast<ConstByteArray (ConstByteArray::*)(std::size_t, std::size_t) const>(
+              &ConstByteArray::SubArray))
       .def("capacity", &ConstByteArray::capacity)
       .def("Copy", &ConstByteArray::Copy)
       .def("Find", &ConstByteArray::Find)
-      .def("Match",
-           static_cast<bool (ConstByteArray::*)(fetch::byte_array::ConstByteArray::SelfType const &,
-                                                std::size_t) const>(&ConstByteArray::Match))
-      .def("Match", static_cast<bool (ConstByteArray::*)(
-                        fetch::byte_array::ConstByteArray::ValueType const *, std::size_t) const>(
-                        &ConstByteArray::Match))
+      .def(
+          "Match",
+          static_cast<bool (ConstByteArray::*)(
+              fetch::byte_array::ConstByteArray::SelfType const &, std::size_t) const>(
+              &ConstByteArray::Match))
+      .def(
+          "Match",
+          static_cast<bool (ConstByteArray::*)(
+              fetch::byte_array::ConstByteArray::ValueType const *, std::size_t) const>(
+              &ConstByteArray::Match))
       .def("size", &ConstByteArray::size)
-      .def("AsBytes",
-           [](ConstByteArray const &a) { return py::bytes(a.char_pointer(), a.size()); });
+      .def(
+          "AsBytes", [](ConstByteArray const &a) { return py::bytes(a.char_pointer(), a.size()); });
 }
 
 }  // namespace byte_array

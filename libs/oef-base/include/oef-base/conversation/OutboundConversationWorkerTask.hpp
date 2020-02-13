@@ -41,8 +41,8 @@
 #endif
 
 class OutboundConversationWorkerTask
-  : public fetch::oef::base::TNonBlockingWorkerTask<OutboundConversation,
-                                                    TNONBLOCKINGWORKERTASK_SIZE>
+  : public fetch::oef::base::
+        TNonBlockingWorkerTask<OutboundConversation, TNONBLOCKINGWORKERTASK_SIZE>
 {
 public:
   using Parent       = TNonBlockingWorkerTask<OutboundConversation, TNONBLOCKINGWORKERTASK_SIZE>;
@@ -53,8 +53,10 @@ public:
 
   static constexpr char const *LOGGING_NAME = "OutboundConversationWorkerTask";
 
-  OutboundConversationWorkerTask(Core &core, const Uri &uri,
-                                 const IOutboundConversationCreator &conversation_creator)
+  OutboundConversationWorkerTask(
+      Core &                              core,
+      const Uri &                         uri,
+      const IOutboundConversationCreator &conversation_creator)
     : uri(uri)
     , core(core)
     , conversation_creator_(conversation_creator)
@@ -63,8 +65,9 @@ public:
 
   ~OutboundConversationWorkerTask() override = default;
 
-  fetch::oef::base::WorkloadProcessed process(WorkloadP                       workload,
-                                              fetch::oef::base::WorkloadState state) override;
+  fetch::oef::base::WorkloadProcessed process(
+      WorkloadP                       workload,
+      fetch::oef::base::WorkloadState state) override;
 
 protected:
   virtual bool connect();

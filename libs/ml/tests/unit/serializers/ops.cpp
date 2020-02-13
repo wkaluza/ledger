@@ -98,7 +98,8 @@ TYPED_TEST(OpsSaveParamsTest, abs_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -174,11 +175,13 @@ TYPED_TEST(OpsSaveParamsTest, add_saveparams_backward_2D_broadcast_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   // test correct values
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -269,7 +272,8 @@ TYPED_TEST(OpsSaveParamsTest, avg_pool_1d_saveparams_backward_test_2_channels)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -376,7 +380,8 @@ TYPED_TEST(OpsSaveParamsTest, avg_pool_2d_saveparams_backward_2_channels_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -446,10 +451,12 @@ TYPED_TEST(OpsSaveParamsTest, concatenate_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(gradients.at(0).AllClose(
-      new_gradients.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_gradients.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   EXPECT_TRUE(gradients.at(1).AllClose(
-      new_gradients.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_gradients.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -592,10 +599,12 @@ TYPED_TEST(OpsSaveParamsTest, conv1d_op_saveparams_backward_3x3x2_5x3x3x2)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -733,11 +742,13 @@ TYPED_TEST(OpsSaveParamsTest, conv2d_op_saveparams_backward_3x3x3x2_5x3x3x3x2)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   // test correct values
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -813,10 +824,12 @@ TYPED_TEST(OpsSaveParamsTest, divide_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -910,7 +923,8 @@ TYPED_TEST(OpsSaveParamsTest, embeddings_saveparams_backward)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -975,7 +989,8 @@ TYPED_TEST(OpsSaveParamsTest, exp_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1069,7 +1084,8 @@ TYPED_TEST(OpsSaveParamsTest, flatten_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(gradients.at(0).AllClose(
-      new_gradients.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_gradients.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1139,7 +1155,8 @@ TYPED_TEST(OpsSaveParamsTest, layer_norm_op_saveparams_backward_test_3d)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1200,7 +1217,8 @@ TYPED_TEST(OpsSaveParamsTest, log_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -1451,7 +1469,8 @@ TYPED_TEST(OpsSaveParamsTest, maxpool_saveparams_backward_test_1d_2_channels)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1554,7 +1573,8 @@ TYPED_TEST(OpsSaveParamsTest, maxpool_saveparams_backward_2_channels_test_2d)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1646,7 +1666,8 @@ TYPED_TEST(OpsSaveParamsTest, maxpool_1d_saveparams_backward_test_2_channels)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1753,7 +1774,8 @@ TYPED_TEST(OpsSaveParamsTest, maxpool_2d_saveparams_backward_2_channels_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1829,10 +1851,12 @@ TYPED_TEST(OpsSaveParamsTest, maximum_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -1908,11 +1932,13 @@ TYPED_TEST(OpsSaveParamsTest, multiply_saveparams_backward_test_NB_NB)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 
   ASSERT_TRUE(!::fetch::math::state_overflow<typename TypeParam::Type>());
@@ -2058,7 +2084,8 @@ TYPED_TEST(OpsSaveParamsTest, prelu_op_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -2122,7 +2149,8 @@ TYPED_TEST(OpsSaveParamsTest, reduce_mean_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -2166,8 +2194,10 @@ TYPED_TEST(OpsSaveParamsTest, ReduceMean_graph_serialization_test)
 
   // Test correct values
   ASSERT_EQ(output.shape(), output2.shape());
-  ASSERT_TRUE(output.AllClose(output2, ::fetch::math::function_tolerance<DataType>(),
-                              ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(output.AllClose(
+      output2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 /////////////////////
@@ -2215,8 +2245,10 @@ TYPED_TEST(OpsSaveParamsTest, Reshape_graph_serialisation_test)
 
   // Test correct values
   ASSERT_EQ(output.shape(), output2.shape());
-  ASSERT_TRUE(output.AllClose(output2, ::fetch::math::function_tolerance<DataType>(),
-                              ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(output.AllClose(
+      output2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(OpsSaveParamsTest, reshape_saveparams_test)
@@ -2278,7 +2310,8 @@ TYPED_TEST(OpsSaveParamsTest, reshape_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -2351,7 +2384,8 @@ TYPED_TEST(OpsSaveParamsTest, slice_single_axis_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -2425,7 +2459,8 @@ TYPED_TEST(OpsSaveParamsTest, slice_ranged_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -2522,7 +2557,8 @@ TYPED_TEST(OpsSaveParamsTest, sqrt_saveparams_backward_all_positive_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -2586,7 +2622,8 @@ TYPED_TEST(OpsSaveParamsTest, saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -2630,8 +2667,10 @@ TYPED_TEST(OpsSaveParamsTest, squeeze_graph_serialization_test)
 
   // Test correct values
   ASSERT_EQ(output.shape(), output2.shape());
-  ASSERT_TRUE(output.AllClose(output2, ::fetch::math::function_tolerance<DataType>(),
-                              ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(output.AllClose(
+      output2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 /////////////////////
@@ -2674,10 +2713,12 @@ TYPED_TEST(OpsSaveParamsTest, strided_slice_saveparams_test)
         {
           for (SizeType m{0}; m < gt.shape().at(4); m++)
           {
-            gt.At(i, j, k, l, m) =
-                input.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                         begins.at(2) + k * strides.at(2), begins.at(3) + l * strides.at(3),
-                         begins.at(4) + m * strides.at(4));
+            gt.At(i, j, k, l, m) = input.At(
+                begins.at(0) + i * strides.at(0),
+                begins.at(1) + j * strides.at(1),
+                begins.at(2) + k * strides.at(2),
+                begins.at(3) + l * strides.at(3),
+                begins.at(4) + m * strides.at(4));
           }
         }
       }
@@ -2817,10 +2858,12 @@ TYPED_TEST(OpsSaveParamsTest, subtract_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -2850,7 +2893,8 @@ TYPED_TEST(OpsSaveParamsTest, switch_saveparams_back_test_broadcast_mask)
   fetch::ml::ops::Switch<TensorType> op;
 
   std::vector<TypeParam> prediction = op.Backward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(target_input),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(target_input),
        std::make_shared<const TensorType>(mask_value)},
       error_signal);
 
@@ -2859,21 +2903,25 @@ TYPED_TEST(OpsSaveParamsTest, switch_saveparams_back_test_broadcast_mask)
 
   // check that new predictions match the old
   std::vector<TypeParam> new_prediction = new_op.Backward(
-      {std::make_shared<const TensorType>(mask), std::make_shared<const TensorType>(target_input),
+      {std::make_shared<const TensorType>(mask),
+       std::make_shared<const TensorType>(target_input),
        std::make_shared<const TensorType>(mask_value)},
       error_signal);
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 
   EXPECT_TRUE(prediction.at(1).AllClose(
-      new_prediction.at(1), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(1),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 
   EXPECT_TRUE(prediction.at(2).AllClose(
-      new_prediction.at(2), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(2),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -2939,7 +2987,8 @@ TYPED_TEST(OpsSaveParamsTest, tanh_saveparams_backward_all_negative_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
@@ -3018,7 +3067,8 @@ TYPED_TEST(OpsSaveParamsTest, top_k_saveparams_backward_test)
 
   // test correct values
   EXPECT_TRUE(error_signal.at(0).AllClose(
-      new_error_signal.at(0), ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_error_signal.at(0),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
       ::fetch::math::function_tolerance<typename TypeParam::Type>()));
   ::fetch::math::state_clear<DataType>();
 }
@@ -3157,9 +3207,10 @@ TYPED_TEST(OpsSaveParamsTest, weights_saveparams_gradient_step_test)
   new_op.Forward({}, new_prediction);
 
   // test correct values
-  EXPECT_TRUE(prediction.AllClose(new_prediction,
-                                  ::fetch::math::function_tolerance<typename TypeParam::Type>(),
-                                  ::fetch::math::function_tolerance<typename TypeParam::Type>()));
+  EXPECT_TRUE(prediction.AllClose(
+      new_prediction,
+      ::fetch::math::function_tolerance<typename TypeParam::Type>(),
+      ::fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 
 }  // namespace

@@ -27,8 +27,11 @@
 namespace fetch {
 namespace testing {
 
-template <typename T, std::size_t SIZE, std::size_t BITS = (SIZE * sizeof(T) * 8),
-          meta::EnableIf<meta::IsUnsignedInteger<T> && meta::IsLog2(BITS)> * = nullptr>
+template <
+    typename T,
+    std::size_t SIZE,
+    std::size_t BITS                                                   = (SIZE * sizeof(T) * 8),
+    meta::EnableIf<meta::IsUnsignedInteger<T> && meta::IsLog2(BITS)> * = nullptr>
 using StdArray = std::array<T, SIZE>;
 
 template <typename T, std::size_t BITS>

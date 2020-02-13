@@ -42,8 +42,9 @@ public:
   }
 
   MOCK_METHOD4(Execute, Result(Digest const &, BlockIndex, SliceIndex, BitVector const &));
-  MOCK_METHOD5(SettleFees,
-               void(Address const &, BlockIndex, TokenAmount, uint32_t, StakeUpdateEvents const &));
+  MOCK_METHOD5(
+      SettleFees,
+      void(Address const &, BlockIndex, TokenAmount, uint32_t, StakeUpdateEvents const &));
 
 private:
   FakeExecutor fake_;

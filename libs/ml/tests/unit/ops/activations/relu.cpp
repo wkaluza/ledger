@@ -80,8 +80,8 @@ TYPED_TEST(ReluTest, forward_3d_tensor_test)
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::Type<DataType>("0.00001"),
-                                  fetch::math::Type<DataType>("0.00001")));
+  ASSERT_TRUE(prediction.AllClose(
+      gt, fetch::math::Type<DataType>("0.00001"), fetch::math::Type<DataType>("0.00001")));
 }
 
 TYPED_TEST(ReluTest, forward_all_negative_integer_test)
@@ -161,8 +161,8 @@ TYPED_TEST(ReluTest, backward_3d_tensor_test)
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
   // test correct values
-  ASSERT_TRUE(prediction[0].AllClose(gt, fetch::math::Type<DataType>("0.00001"),
-                                     fetch::math::Type<DataType>("0.00001")));
+  ASSERT_TRUE(prediction[0].AllClose(
+      gt, fetch::math::Type<DataType>("0.00001"), fetch::math::Type<DataType>("0.00001")));
 }
 
 TYPED_TEST(ReluTest, saveparams_test)
@@ -269,7 +269,8 @@ TYPED_TEST(ReluTest, saveparams_backward_3d_tensor_test)
 
   // test correct values
   EXPECT_TRUE(prediction.at(0).AllClose(
-      new_prediction.at(0), fetch::math::function_tolerance<typename TypeParam::Type>(),
+      new_prediction.at(0),
+      fetch::math::function_tolerance<typename TypeParam::Type>(),
       fetch::math::function_tolerance<typename TypeParam::Type>()));
 }
 }  // namespace test

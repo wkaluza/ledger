@@ -56,8 +56,8 @@ fetch::meta::IsIterableTwoArg<T1, T2, void> Assign(T1 ret, T2 const &other)
     auto ret_slice = ret.data().slice(ret.padded_height() * j, ret.padded_height());
     auto slice     = other.data().slice(other.padded_height() * j, other.padded_height());
 
-    ret_slice.in_parallel().RangedApplyMultiple(range, [](auto const &a, auto &b) { b = a; },
-                                                slice);
+    ret_slice.in_parallel().RangedApplyMultiple(
+        range, [](auto const &a, auto &b) { b = a; }, slice);
   }
 }
 

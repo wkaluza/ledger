@@ -47,8 +47,11 @@ using fetch::shards::ServiceIdentifier;
  * @param num_lanes The number of lanes to be configured
  * @param manifest The output manifest to be populated
  */
-void GenerateDefaultManifest(std::string const &external_address, uint16_t port, uint32_t num_lanes,
-                             Manifest &manifest)
+void GenerateDefaultManifest(
+    std::string const &external_address,
+    uint16_t           port,
+    uint32_t           num_lanes,
+    Manifest &         manifest)
 {
   Peer peer;
 
@@ -69,8 +72,9 @@ void GenerateDefaultManifest(std::string const &external_address, uint16_t port,
   {
     peer.Update(external_address, static_cast<uint16_t>(port + STORAGE_PORT_OFFSET + (2 * i)));
 
-    manifest.AddService(ServiceIdentifier{ServiceIdentifier::Type::LANE, static_cast<uint16_t>(i)},
-                        ManifestEntry{peer});
+    manifest.AddService(
+        ServiceIdentifier{ServiceIdentifier::Type::LANE, static_cast<uint16_t>(i)},
+        ManifestEntry{peer});
   }
 }
 
@@ -134,8 +138,8 @@ bool BuildManifest(Settings const &settings, shards::Manifest &manifest)
   // need to supply a default configuration
   if (!success)
   {
-    GenerateDefaultManifest(settings.external.value(), settings.port.value(),
-                            settings.num_lanes.value(), manifest);
+    GenerateDefaultManifest(
+        settings.external.value(), settings.port.value(), settings.num_lanes.value(), manifest);
 
     success = true;
   }

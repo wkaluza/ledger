@@ -44,8 +44,9 @@ HashSource HashSourceFactory::operator()(fetch::byte_array::ConstByteArray const
   return HashSource(this->hash_functions_, element);
 }
 
-HashSource::HashSource(HashSourceFactory::Functions const &     hash_functions,
-                       fetch::byte_array::ConstByteArray const &input)
+HashSource::HashSource(
+    HashSourceFactory::Functions const &     hash_functions,
+    fetch::byte_array::ConstByteArray const &input)
 {
   // TODO(LDGR-319): lazily evaluate hashes
   for (auto const &fn : hash_functions)
@@ -128,8 +129,8 @@ HashSource::Hashes raw_data(fetch::byte_array::ConstByteArray const &input)
 template <typename Hasher>
 HashSource::Hashes HashSourceFunction(fetch::byte_array::ConstByteArray const &input)
 {
-  HashSource::Hashes output((Hasher::SIZE_IN_BYTES + sizeof(std::size_t) - 1) /
-                            sizeof(std::size_t));
+  HashSource::Hashes output(
+      (Hasher::SIZE_IN_BYTES + sizeof(std::size_t) - 1) / sizeof(std::size_t));
   crypto::Hash<Hasher>(input.pointer(), input.size(), reinterpret_cast<uint8_t *>(output.data()));
 
   return output;
@@ -149,7 +150,8 @@ HashSource::Hashes md5(fetch::byte_array::ConstByteArray const &input)
 
 }  // namespace internal
 
-BasicBloomFilter::Functions const default_hash_functions{internal::raw_data, internal::fnv,
+BasicBloomFilter::Functions const default_hash_functions{internal::raw_data,
+                                                         internal::fnv,
                                                          internal::md5};
 
 BasicBloomFilter::BasicBloomFilter()

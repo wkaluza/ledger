@@ -44,8 +44,10 @@ struct LockLocation
 class MutexRegister
 {
 public:
-  void RegisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread,
-                                LockLocation const &location);
+  void RegisterMutexAcquisition(
+      DebugMutex *        mutex,
+      std::thread::id     thread,
+      LockLocation const &location);
   void UnregisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread);
   void QueueUpFor(DebugMutex *mutex, std::thread::id thread, LockLocation const &location);
   void DeadlockDetected(std::string const &message)
@@ -71,8 +73,10 @@ public:
 
 private:
   void FindDeadlock(DebugMutex *first_mutex, std::thread::id thread, LockLocation const &location);
-  std::string CreateTrace(DebugMutex *first_mutex, std::thread::id thread,
-                          LockLocation const &location);
+  std::string CreateTrace(
+      DebugMutex *        first_mutex,
+      std::thread::id     thread,
+      LockLocation const &location);
 
   static std::atomic<bool>                          throw_on_deadlock_;
   std::mutex                                        mutex_;
@@ -83,11 +87,15 @@ private:
   std::unordered_map<std::thread::id, LockLocation> waiting_location_;
 };
 
-void RegisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread,
-                              LockLocation const &location = LockLocation());
+void RegisterMutexAcquisition(
+    DebugMutex *        mutex,
+    std::thread::id     thread,
+    LockLocation const &location = LockLocation());
 void UnregisterMutexAcquisition(DebugMutex *mutex, std::thread::id thread);
-void QueueUpFor(DebugMutex *mutex, std::thread::id thread,
-                LockLocation const &location = LockLocation());
+void QueueUpFor(
+    DebugMutex *        mutex,
+    std::thread::id     thread,
+    LockLocation const &location = LockLocation());
 
 class DebugMutex : public std::mutex
 {

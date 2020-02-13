@@ -130,8 +130,10 @@ void Graph<TensorType>::AddTrainable(NodePtrType node_ptr, std::string const &no
  * @param node_name
  */
 template <typename TensorType>
-void Graph<TensorType>::AddTrainable(NodePtrType node_ptr, std::string const &node_name,
-                                     std::map<std::string, NodePtrType> &trainable_lookup)
+void Graph<TensorType>::AddTrainable(
+    NodePtrType                         node_ptr,
+    std::string const &                 node_name,
+    std::map<std::string, NodePtrType> &trainable_lookup)
 {
   auto op_ptr        = node_ptr->GetOp();
   auto trainable_ptr = std::dynamic_pointer_cast<fetch::ml::ops::Trainable<TensorType>>(op_ptr);
@@ -176,8 +178,10 @@ TensorType Graph<TensorType>::ForwardPropagate(std::string const &node_name, boo
  * @return
  */
 template <typename TensorType>
-TensorType Graph<TensorType>::ForwardImplementation(std::string const &node_name, bool is_training,
-                                                    bool evaluate_mode)
+TensorType Graph<TensorType>::ForwardImplementation(
+    std::string const &node_name,
+    bool               is_training,
+    bool               evaluate_mode)
 {
   if (nodes_.find(node_name) != nodes_.end())
   {
@@ -239,8 +243,9 @@ void Graph<TensorType>::ComputeAllNodeShapes()
 
     if (output_shape.empty())
     {
-      FETCH_LOG_ERROR(DESCRIPTOR, " Batch output shape computing failed for node " +
-                                      node_name_and_ptr.first + ".");
+      FETCH_LOG_ERROR(
+          DESCRIPTOR,
+          " Batch output shape computing failed for node " + node_name_and_ptr.first + ".");
     }
   }
 }
@@ -286,8 +291,8 @@ void Graph<TensorType>::BackPropagate(std::string const &node_name, TensorType c
   }
   else
   {
-    throw ml::exceptions::InvalidMode("Cannot backpropagate: node [" + node_name +
-                                      "] not in graph");
+    throw ml::exceptions::InvalidMode(
+        "Cannot backpropagate: node [" + node_name + "] not in graph");
   }
 }
 
@@ -323,8 +328,10 @@ void Graph<TensorType>::SetRegularisation(RegPtrType regulariser, DataType regul
  * @param regularisation_rate
  */
 template <typename TensorType>
-bool Graph<TensorType>::SetRegularisation(std::string const &node_name, RegPtrType regulariser,
-                                          DataType regularisation_rate)
+bool Graph<TensorType>::SetRegularisation(
+    std::string const &node_name,
+    RegPtrType         regulariser,
+    DataType           regularisation_rate)
 {
   NodePtrType t             = trainable_lookup_.at(node_name);
   auto        trainable_ptr = std::dynamic_pointer_cast<ops::Trainable<TensorType>>(t->GetOp());
@@ -426,8 +433,9 @@ void Graph<TensorType>::ApplyGradients(std::vector<TensorType> &grad)
  * @param update_rows vector of sets of rows to update for each trainable stored in SizeSet
  */
 template <typename TensorType>
-void Graph<TensorType>::ApplySparseGradients(std::vector<TensorType> &grad,
-                                             std::vector<SizeSet> &   update_rows)
+void Graph<TensorType>::ApplySparseGradients(
+    std::vector<TensorType> &grad,
+    std::vector<SizeSet> &   update_rows)
 {
   switch (graph_state_)
   {
@@ -565,8 +573,8 @@ void Graph<TensorType>::SetInputReference(std::string const &node_name, TensorTy
   }
   else
   {
-    throw ml::exceptions::InvalidMode("No placeholder node with name [" + node_name +
-                                      "] found in graph!");
+    throw ml::exceptions::InvalidMode(
+        "No placeholder node with name [" + node_name + "] found in graph!");
   }
 }
 
@@ -716,8 +724,9 @@ void Graph<TensorType>::ResetGradients()
  * @param unlink
  */
 template <typename TensorType>
-void Graph<TensorType>::LinkNodesInGraph(std::string const &             node_name,
-                                         std::vector<std::string> const &inputs)
+void Graph<TensorType>::LinkNodesInGraph(
+    std::string const &             node_name,
+    std::vector<std::string> const &inputs)
 {
   // assign inputs and outputs
   for (auto const &i : inputs)
@@ -820,7 +829,8 @@ void Graph<TensorType>::GetGradientsReferences(std::vector<TensorType> &ret) con
   using graph_func_signature = void (Graph<TensorType>::*)(ret_type &) const;
 
   RecursiveApply<ret_type, node_func_signature, graph_func_signature>(
-      ret, &ops::Trainable<TensorType>::GetGradientsReferences,
+      ret,
+      &ops::Trainable<TensorType>::GetGradientsReferences,
       &Graph<TensorType>::GetGradientsReferences);
 }
 
@@ -832,14 +842,16 @@ void Graph<TensorType>::GetUpdatedRowsReferences(std::vector<SizeSet> &ret) cons
   using graph_func_signature = void (Graph<TensorType>::*)(ret_type &) const;
 
   RecursiveApply<ret_type, node_func_signature, graph_func_signature>(
-      ret, &ops::Trainable<TensorType>::GetUpdatedRowsReferences,
+      ret,
+      &ops::Trainable<TensorType>::GetUpdatedRowsReferences,
       &Graph<TensorType>::GetUpdatedRowsReferences);
 }
 
 template <typename TensorType>
 template <typename TensorIteratorType, typename VectorIteratorType>
-void Graph<TensorType>::ApplySparseGradients(TensorIteratorType &grad_it,
-                                             VectorIteratorType &rows_it)
+void Graph<TensorType>::ApplySparseGradients(
+    TensorIteratorType &grad_it,
+    VectorIteratorType &rows_it)
 {
   using graph_func_signature =
       void (Graph<TensorType>::*)(TensorIteratorType &, VectorIteratorType &);
@@ -869,8 +881,8 @@ void Graph<TensorType>::ApplyGradients(TensorIteratorType &grad_it)
     ++grad_it;
   }
 
-  RecursiveApply<TensorIteratorType, graph_func_signature>(grad_it,
-                                                           &Graph<TensorType>::ApplyGradients);
+  RecursiveApply<TensorIteratorType, graph_func_signature>(
+      grad_it, &Graph<TensorType>::ApplyGradients);
 }
 
 /**
@@ -941,8 +953,11 @@ void Graph<TensorType>::RecursiveApply(ValType &val, GraphFunc graph_func) const
  */
 template <typename TensorType>
 template <typename Val1Type, typename Val2Type, typename NodeFunc, typename GraphFunc>
-void Graph<TensorType>::RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, NodeFunc node_func,
-                                          GraphFunc graph_func) const
+void Graph<TensorType>::RecursiveApplyTwo(
+    Val1Type &val_1,
+    Val2Type &val_2,
+    NodeFunc  node_func,
+    GraphFunc graph_func) const
 {
   for (auto const &t : trainable_lookup_)
   {
@@ -966,8 +981,8 @@ void Graph<TensorType>::RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, Node
  */
 template <typename TensorType>
 template <typename Val1Type, typename Val2Type, typename GraphFunc>
-void Graph<TensorType>::RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2,
-                                          GraphFunc graph_func) const
+void Graph<TensorType>::RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, GraphFunc graph_func)
+    const
 {
   // get gradients from subgraphs
   for (auto &node_pair : nodes_)
@@ -1052,9 +1067,10 @@ typename Graph<TensorType>::NodePtrType Graph<TensorType>::GetNode(
  */
 template <typename TensorType>
 template <typename LookupFunction>
-void Graph<TensorType>::GetNamesRecursively(std::vector<std::string> &ret,
-                                            LookupFunction            lookup_function,
-                                            std::string const &       level)
+void Graph<TensorType>::GetNamesRecursively(
+    std::vector<std::string> &ret,
+    LookupFunction            lookup_function,
+    std::string const &       level)
 {
   for (auto const &t : (this->*lookup_function)())
   {

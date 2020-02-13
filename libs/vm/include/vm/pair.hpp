@@ -207,13 +207,16 @@ private:
   }
 
   template <typename U, typename TemplateParameterType>
-  IfIsPtr<U, bool> DeserializeElement(TypeId type_id, MsgPackSerializer &buffer,
-                                      TemplateParameterType &v)
+  IfIsPtr<U, bool> DeserializeElement(
+      TypeId                 type_id,
+      MsgPackSerializer &    buffer,
+      TemplateParameterType &v)
   {
     if (!vm_->IsDefaultSerializeConstructable(type_id))
     {
-      vm_->RuntimeError("Cannot deserialize type " + vm_->GetTypeName(type_id) +
-                        " as no serialisation constructor exists.");
+      vm_->RuntimeError(
+          "Cannot deserialize type " + vm_->GetTypeName(type_id) +
+          " as no serialisation constructor exists.");
       return false;
     }
 
@@ -222,8 +225,10 @@ private:
   }
 
   template <typename U, typename TemplateParameterType>
-  IfIsPrimitive<U, bool> DeserializeElement(TypeId type_id, MsgPackSerializer &buffer,
-                                            TemplateParameterType &v)
+  IfIsPrimitive<U, bool> DeserializeElement(
+      TypeId                 type_id,
+      MsgPackSerializer &    buffer,
+      TemplateParameterType &v)
   {
     U data;
     buffer >> data;

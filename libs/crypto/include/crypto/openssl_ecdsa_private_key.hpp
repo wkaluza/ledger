@@ -35,9 +35,10 @@ struct SupportedEncodingForPublicKey<eECDSAEncoding::DER>
   static constexpr eECDSAEncoding value = eECDSAEncoding::bin;
 };
 
-template <eECDSAEncoding          P_ECDSABinaryDataFormat = eECDSAEncoding::canonical,
-          int                     P_ECDSA_Curve_NID       = NID_secp256k1,
-          point_conversion_form_t P_ConversionForm        = POINT_CONVERSION_UNCOMPRESSED>
+template <
+    eECDSAEncoding          P_ECDSABinaryDataFormat = eECDSAEncoding::canonical,
+    int                     P_ECDSA_Curve_NID       = NID_secp256k1,
+    point_conversion_form_t P_ConversionForm        = POINT_CONVERSION_UNCOMPRESSED>
 class ECDSAPrivateKey
 {
 public:
@@ -52,14 +53,17 @@ public:
   // canonical
   // encoding to void
   // failures when constructing this class (ECDSAPrivateKey) with DER encoding.
-  using PublicKeyType =
-      ECDSAPublicKey<SupportedEncodingForPublicKey<P_ECDSABinaryDataFormat>::value,
-                     P_ECDSA_Curve_NID, P_ConversionForm>;
+  using PublicKeyType = ECDSAPublicKey<
+      SupportedEncodingForPublicKey<P_ECDSABinaryDataFormat>::value,
+      P_ECDSA_Curve_NID,
+      P_ConversionForm>;
 
   using EcdsaCurveType = ECDSACurve<P_ECDSA_Curve_NID>;
 
-  template <eECDSAEncoding P_ECDSABinaryDataFormat2, int P_ECDSA_Curve_NID2,
-            point_conversion_form_t P_ConversionForm2>
+  template <
+      eECDSAEncoding          P_ECDSABinaryDataFormat2,
+      int                     P_ECDSA_Curve_NID2,
+      point_conversion_form_t P_ConversionForm2>
   friend class ECDSAPrivateKey;
 
 private:
@@ -78,8 +82,10 @@ public:
     : ECDSAPrivateKey(Convert(key_data))
   {}
 
-  template <eECDSAEncoding P_ECDSABinaryDataFormat2, int P_ECDSA_Curve_NID2,
-            point_conversion_form_t P_ConversionForm2>
+  template <
+      eECDSAEncoding          P_ECDSABinaryDataFormat2,
+      int                     P_ECDSA_Curve_NID2,
+      point_conversion_form_t P_ConversionForm2>
   friend class ECDSAPrivateKey;
 
   template <eECDSAEncoding BINARY_DATA_FORMAT>
@@ -169,8 +175,10 @@ private:
     }
 
     UniquePointerType<BIGNUM, DeleteStrategyType::clearing> private_key_as_BN(BN_new());
-    BN_bin2bn(key_data.pointer(), static_cast<int>(EcdsaCurveType::privateKeySize),
-              private_key_as_BN.get());
+    BN_bin2bn(
+        key_data.pointer(),
+        static_cast<int>(EcdsaCurveType::privateKeySize),
+        private_key_as_BN.get());
 
     if (!private_key_as_BN)
     {
@@ -198,9 +206,10 @@ private:
     return private_key;
   }
 
-  static PublicKeyType DerivePublicKey(BIGNUM const *const private_key_as_BN,
-                                       EC_KEY *const       private_key,
-                                       bool const regenerate_even_if_already_exists = false)
+  static PublicKeyType DerivePublicKey(
+      BIGNUM const *const private_key_as_BN,
+      EC_KEY *const       private_key,
+      bool const          regenerate_even_if_already_exists = false)
   {
     EC_GROUP const *const    group = EC_KEY_get0_group(private_key);
     context::Session<BN_CTX> session;
@@ -224,8 +233,13 @@ private:
           "EC_POINT_(new/dup)(...) failed.");
     }
 
-    if (EC_POINT_mul(group, public_key.get(), private_key_as_BN, nullptr, nullptr,
-                     session.context().get()) == 0)
+    if (EC_POINT_mul(
+            group,
+            public_key.get(),
+            private_key_as_BN,
+            nullptr,
+            nullptr,
+            session.context().get()) == 0)
     {
       throw std::runtime_error("ECDSAPrivateKey::DerivePublicKey(...): EC_POINT_mul(...) failed.");
     }

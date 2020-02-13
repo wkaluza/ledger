@@ -40,15 +40,18 @@ namespace math {
 namespace linalg {
 
 template <typename S>
-class Blas<S, Signature(_C <= _alpha, _A, _B, _beta, _C),
-           Computes(_C <= _alpha * T(_A) * _B + _beta * _C), platform::Parallelisation::VECTORISE>
+class Blas<
+    S,
+    Signature(_C <= _alpha, _A, _B, _beta, _C),
+    Computes(_C <= _alpha * T(_A) * _B + _beta * _C),
+    platform::Parallelisation::VECTORISE>
 {
 public:
   using Type               = S;
   using VectorRegisterType = typename TensorView<Type>::VectorRegisterType;
 
-  void operator()(Type alpha, TensorView<Type> a, TensorView<Type> b, Type beta,
-                  TensorView<Type> c) const;
+  void operator()(Type alpha, TensorView<Type> a, TensorView<Type> b, Type beta, TensorView<Type> c)
+      const;
 };
 
 }  // namespace linalg

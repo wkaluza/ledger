@@ -38,10 +38,13 @@ namespace {
  */
 HtmlTags::Content OpeningBracket(HtmlTags::Tag const &tag, HtmlTags::Params const &params)
 {
-  return std::accumulate(params.begin(), params.end(), "<" + tag,
-                         [](HtmlTags::Content accum, HtmlTags::Params::value_type const &param) {
-                           return accum + " " + param.first + "=\"" + param.second + "\"";
-                         });
+  return std::accumulate(
+      params.begin(),
+      params.end(),
+      "<" + tag,
+      [](HtmlTags::Content accum, HtmlTags::Params::value_type const &param) {
+        return accum + " " + param.first + "=\"" + param.second + "\"";
+      });
 }
 
 }  // namespace

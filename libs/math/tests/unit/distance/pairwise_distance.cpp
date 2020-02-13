@@ -40,12 +40,13 @@ TYPED_TEST(PairWiseDistanceTest, simple_test)
 
   TypeParam R = TypeParam({1, data.shape(0) * (data.shape(0) - 1) / 2});
 
-  distance::PairWiseDistance(data,
-                             [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
-                               TypeParam z = x - y;
-                               return fetch::math::Sum(z);
-                             },
-                             R);
+  distance::PairWiseDistance(
+      data,
+      [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
+        TypeParam z = x - y;
+        return fetch::math::Sum(z);
+      },
+      R);
 
   EXPECT_TRUE(R.AllClose(gt));
 
@@ -54,12 +55,13 @@ TYPED_TEST(PairWiseDistanceTest, simple_test)
 
   R = TypeParam({1, data.shape(0) * (data.shape(0) - 1) / 2});
 
-  distance::PairWiseDistance(data,
-                             [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
-                               TypeParam z = x - y;
-                               return fetch::math::Sum(z);
-                             },
-                             R);
+  distance::PairWiseDistance(
+      data,
+      [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
+        TypeParam z = x - y;
+        return fetch::math::Sum(z);
+      },
+      R);
 
   EXPECT_TRUE(R.AllClose(gt));
 
@@ -68,12 +70,13 @@ TYPED_TEST(PairWiseDistanceTest, simple_test)
 
   R = TypeParam({1, data.shape(0) * (data.shape(0) - 1) / 2});
 
-  distance::PairWiseDistance(data,
-                             [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
-                               TypeParam z = x - y;
-                               return fetch::math::Sum(z);
-                             },
-                             R);
+  distance::PairWiseDistance(
+      data,
+      [](TypeParam x, TypeParam y) -> typename TypeParam::Type {
+        TypeParam z = x - y;
+        return fetch::math::Sum(z);
+      },
+      R);
 
   EXPECT_TRUE(R.AllClose(gt));
 }

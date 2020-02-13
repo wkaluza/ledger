@@ -52,9 +52,12 @@ bool IsAllZeros(Hash const &hash)
 }
 }  // namespace
 
-bool NewRevertibleDocumentStore::Load(std::string const &state, std::string const &state_history,
-                                      std::string const &index, std::string const &index_history,
-                                      bool create = true)
+bool NewRevertibleDocumentStore::Load(
+    std::string const &state,
+    std::string const &state_history,
+    std::string const &index,
+    std::string const &index_history,
+    bool               create = true)
 {
   // cache the filenames
   state_path_         = state;
@@ -67,9 +70,12 @@ bool NewRevertibleDocumentStore::Load(std::string const &state, std::string cons
   return true;
 }
 
-bool NewRevertibleDocumentStore::New(std::string const &state, std::string const &state_history,
-                                     std::string const &index, std::string const &index_history,
-                                     bool /*create*/ = true)
+bool NewRevertibleDocumentStore::New(
+    std::string const &state,
+    std::string const &state_history,
+    std::string const &index,
+    std::string const &index_history,
+    bool /*create*/ = true)
 {
   // cache the filenames
   state_path_         = state;

@@ -19,11 +19,13 @@
 #include "oef-base/conversation/OutboundConversationWorkerTask.hpp"
 #include "oef-base/threading/WorkloadState.hpp"
 
-void OutboundConversationWorkerTask::OnPeerError(unsigned long id, int status_code,
-                                                 const std::string &message)
+void OutboundConversationWorkerTask::OnPeerError(
+    unsigned long      id,
+    int                status_code,
+    const std::string &message)
 {
-  FETCH_LOG_WARN(LOGGING_NAME, "error message uri=(", uri.ToString(), ") id=", id,
-                 " message=", message);
+  FETCH_LOG_WARN(
+      LOGGING_NAME, "error message uri=(", uri.ToString(), ") id=", id, " message=", message);
   conversation_creator_.HandleError(id, uri, status_code, message);
 }
 
@@ -64,12 +66,15 @@ bool OutboundConversationWorkerTask::connect()
 }
 
 fetch::oef::base::WorkloadProcessed OutboundConversationWorkerTask::process(
-    WorkloadP workload, fetch::oef::base::WorkloadState /*state*/)
+    WorkloadP workload,
+    fetch::oef::base::WorkloadState /*state*/)
 {
   if (connect_failures_ > CONNECT_FAILURE_LIMIT)
   {
-    OnPeerError(workload->GetIdentifier(), 61,
-                "Connection (" + uri.ToString() + ") failure because limit reached! ");
+    OnPeerError(
+        workload->GetIdentifier(),
+        61,
+        "Connection (" + uri.ToString() + ") failure because limit reached! ");
     return fetch::oef::base::WorkloadProcessed ::COMPLETE;
   }
   FETCH_LOG_WARN(LOGGING_NAME, "process search conversation (uri=", uri.ToString(), ")...");

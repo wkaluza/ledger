@@ -33,10 +33,16 @@ class Histogram : public Measurement
 {
 public:
   // Construction / Destruction
-  Histogram(std::initializer_list<double> const &buckets, std::string const &name,
-            std::string const &description, Labels const &labels = Labels{});
-  Histogram(std::vector<double> const &buckets, std::string const &name,
-            std::string const &description, Labels const &labels = Labels{});
+  Histogram(
+      std::initializer_list<double> const &buckets,
+      std::string const &                  name,
+      std::string const &                  description,
+      Labels const &                       labels = Labels{});
+  Histogram(
+      std::vector<double> const &buckets,
+      std::string const &        name,
+      std::string const &        description,
+      Labels const &             labels = Labels{});
   Histogram(Histogram const &) = delete;
   Histogram(Histogram &&)      = delete;
   ~Histogram() override        = default;
@@ -59,8 +65,12 @@ private:
   using BucketMap = std::map<double, uint64_t>;
 
   template <typename Iterator>
-  Histogram(Iterator const &begin, Iterator const &end, std::string const &name,
-            std::string const &description, Labels const &labels = Labels{});
+  Histogram(
+      Iterator const &   begin,
+      Iterator const &   end,
+      std::string const &name,
+      std::string const &description,
+      Labels const &     labels = Labels{});
 
   mutable std::mutex lock_;
   BucketMap          buckets_;

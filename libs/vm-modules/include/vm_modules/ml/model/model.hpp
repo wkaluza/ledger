@@ -98,29 +98,36 @@ public:
 
   VMModel(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
 
-  VMModel(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
-          fetch::vm::Ptr<fetch::vm::String> const &model_category);
+  VMModel(
+      fetch::vm::VM *                          vm,
+      fetch::vm::TypeId                        type_id,
+      fetch::vm::Ptr<fetch::vm::String> const &model_category);
 
   VMModel(fetch::vm::VM *vm, fetch::vm::TypeId type_id, std::string const &model_category);
 
   static fetch::vm::Ptr<VMModel> Constructor(
-      fetch::vm::VM *vm, fetch::vm::TypeId type_id,
+      fetch::vm::VM *                          vm,
+      fetch::vm::TypeId                        type_id,
       fetch::vm::Ptr<fetch::vm::String> const &model_category);
 
-  void CompileSequential(fetch::vm::Ptr<fetch::vm::String> const &loss,
-                         fetch::vm::Ptr<fetch::vm::String> const &optimiser);
+  void CompileSequential(
+      fetch::vm::Ptr<fetch::vm::String> const &loss,
+      fetch::vm::Ptr<fetch::vm::String> const &optimiser);
 
   void CompileSequentialWithMetrics(
       fetch::vm::Ptr<fetch::vm::String> const &                    loss,
       fetch::vm::Ptr<fetch::vm::String> const &                    optimiser,
       fetch::vm::Ptr<vm::Array<vm::Ptr<fetch::vm::String>>> const &metrics);
 
-  void CompileSequentialImplementation(fetch::vm::Ptr<fetch::vm::String> const &      loss,
-                                       fetch::vm::Ptr<fetch::vm::String> const &      optimiser,
-                                       std::vector<fetch::ml::ops::MetricType> const &metrics);
+  void CompileSequentialImplementation(
+      fetch::vm::Ptr<fetch::vm::String> const &      loss,
+      fetch::vm::Ptr<fetch::vm::String> const &      optimiser,
+      std::vector<fetch::ml::ops::MetricType> const &metrics);
 
-  void Fit(vm::Ptr<VMTensor> const &data, vm::Ptr<VMTensor> const &labels,
-           ::fetch::math::SizeType const &batch_size);
+  void Fit(
+      vm::Ptr<VMTensor> const &      data,
+      vm::Ptr<VMTensor> const &      labels,
+      ::fetch::math::SizeType const &batch_size);
 
   vm::Ptr<vm::Array<math::DataType>> Evaluate();
 
@@ -145,44 +152,63 @@ public:
 
   ModelEstimator &Estimator();
 
-  void LayerAddDense(fetch::vm::Ptr<fetch::vm::String> const &layer, math::SizeType const &inputs,
-                     math::SizeType const &hidden_nodes);
-  void LayerAddDenseAutoInputs(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                               math::SizeType const &                   hidden_nodes);
-  void LayerAddDenseActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                               math::SizeType const &inputs, math::SizeType const &hidden_nodes,
-                               fetch::vm::Ptr<fetch::vm::String> const &activation);
+  void LayerAddDense(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes);
+  void LayerAddDenseAutoInputs(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   hidden_nodes);
+  void LayerAddDenseActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
 
   // Experimental Layers
-  void LayerAddConv(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                    math::SizeType const &output_channels, math::SizeType const &input_channels,
-                    math::SizeType const &kernel_size, math::SizeType const &stride_size);
-  void LayerAddConvActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                              math::SizeType const &                   output_channels,
-                              math::SizeType const &                   input_channels,
-                              math::SizeType const &kernel_size, math::SizeType const &stride_size,
-                              fetch::vm::Ptr<fetch::vm::String> const &activation);
-  void LayerAddDenseActivationExperimental(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                           math::SizeType const &                   inputs,
-                                           math::SizeType const &                   hidden_nodes,
-                                           fetch::vm::Ptr<fetch::vm::String> const &activation);
+  void LayerAddConv(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   output_channels,
+      math::SizeType const &                   input_channels,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size);
+  void LayerAddConvActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   output_channels,
+      math::SizeType const &                   input_channels,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
+  void LayerAddDenseActivationExperimental(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes,
+      fetch::vm::Ptr<fetch::vm::String> const &activation);
   void LayerAddFlatten(fetch::vm::Ptr<fetch::vm::String> const &layer);
 
-  void LayerAddDropout(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                       math::DataType const &                   probability);
+  void LayerAddDropout(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::DataType const &                   probability);
 
-  void LayerAddActivation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                          fetch::vm::Ptr<fetch::vm::String> const &activation_name);
-  void LayerAddReshape(fetch::vm::Ptr<fetch::vm::String> const &                     layer,
-                       fetch::vm::Ptr<fetch::vm::Array<TensorType::SizeType>> const &shape);
+  void LayerAddActivation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      fetch::vm::Ptr<fetch::vm::String> const &activation_name);
+  void LayerAddReshape(
+      fetch::vm::Ptr<fetch::vm::String> const &                     layer,
+      fetch::vm::Ptr<fetch::vm::Array<TensorType::SizeType>> const &shape);
 
-  void LayerAddInput(fetch::vm::Ptr<fetch::vm::String> const &        layer,
-                     fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape);
-  void LayerAddPool(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                    math::SizeType const &kernel_size, math::SizeType const &stride_size);
-  void LayerAddEmbeddings(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                          math::SizeType const &dimensions, math::SizeType const &data_points,
-                          bool stub);
+  void LayerAddInput(
+      fetch::vm::Ptr<fetch::vm::String> const &        layer,
+      fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape);
+  void LayerAddPool(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size);
+  void LayerAddEmbeddings(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   dimensions,
+      math::SizeType const &                   data_points,
+      bool                                     stub);
 
   fetch::ml::OperationsCount ChargeForward() const
   {
@@ -215,24 +241,28 @@ private:
 
   void PrepareDataloader();
 
-  void LayerAddDenseActivationImplementation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                             math::SizeType const &                   inputs,
-                                             math::SizeType const &                   hidden_nodes,
-                                             fetch::ml::details::ActivationType       activation);
+  void LayerAddDenseActivationImplementation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   inputs,
+      math::SizeType const &                   hidden_nodes,
+      fetch::ml::details::ActivationType       activation);
 
-  void LayerAddConvActivationImplementation(fetch::vm::Ptr<fetch::vm::String> const &layer,
-                                            math::SizeType const &             output_channels,
-                                            math::SizeType const &             input_channels,
-                                            math::SizeType const &             kernel_size,
-                                            math::SizeType const &             stride_size,
-                                            fetch::ml::details::ActivationType activation);
+  void LayerAddConvActivationImplementation(
+      fetch::vm::Ptr<fetch::vm::String> const &layer,
+      math::SizeType const &                   output_channels,
+      math::SizeType const &                   input_channels,
+      math::SizeType const &                   kernel_size,
+      math::SizeType const &                   stride_size,
+      fetch::ml::details::ActivationType       activation);
 
-  void AssertLayerTypeMatches(SupportedLayerType                layer,
-                              std::vector<SupportedLayerType> &&valids) const;
+  void AssertLayerTypeMatches(SupportedLayerType layer, std::vector<SupportedLayerType> &&valids)
+      const;
 
   template <typename T>
-  T ParseName(std::string const &name, std::map<std::string, T> const &dict,
-              std::string const &errmsg) const;
+  T ParseName(
+      std::string const &             name,
+      std::map<std::string, T> const &dict,
+      std::string const &             errmsg) const;
 
   SequentialModelPtr GetMeAsSequentialIfPossible();
 };
@@ -245,8 +275,10 @@ private:
  * @param errmsg preferred display name of expected type, that was not parsed
  */
 template <typename T>
-T VMModel::ParseName(std::string const &name, std::map<std::string, T> const &dict,
-                     std::string const &errmsg) const
+T VMModel::ParseName(
+    std::string const &             name,
+    std::map<std::string, T> const &dict,
+    std::string const &             errmsg) const
 {
   if (dict.find(name) == dict.end())
   {

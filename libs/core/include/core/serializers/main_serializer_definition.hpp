@@ -38,24 +38,33 @@ public:
   /// Array Helpers
   /// @{
   using ArrayConstructor = interfaces::ContainerConstructorInterface<
-      MsgPackSerializer, interfaces::ArrayInterface<MsgPackSerializer>, TypeCodes::ARRAY_CODE_FIXED,
-      TypeCodes::ARRAY_CODE16, TypeCodes::ARRAY_CODE32>;
+      MsgPackSerializer,
+      interfaces::ArrayInterface<MsgPackSerializer>,
+      TypeCodes::ARRAY_CODE_FIXED,
+      TypeCodes::ARRAY_CODE16,
+      TypeCodes::ARRAY_CODE32>;
   using ArrayDeserializer = interfaces::ArrayDeserializer<MsgPackSerializer>;
   /// @}
 
   /// Map Helpers
   /// @{
   using MapConstructor = interfaces::ContainerConstructorInterface<
-      MsgPackSerializer, interfaces::MapInterface<MsgPackSerializer>, TypeCodes::MAP_CODE_FIXED,
-      TypeCodes::MAP_CODE16, TypeCodes::MAP_CODE32>;
+      MsgPackSerializer,
+      interfaces::MapInterface<MsgPackSerializer>,
+      TypeCodes::MAP_CODE_FIXED,
+      TypeCodes::MAP_CODE16,
+      TypeCodes::MAP_CODE32>;
   using MapDeserializer = interfaces::MapDeserializer<MsgPackSerializer>;
   /// @}
 
   /// Pair Helpers
   /// @{
   using PairConstructor = interfaces::ContainerConstructorInterface<
-      MsgPackSerializer, interfaces::PairInterface<MsgPackSerializer>, TypeCodes::PAIR_CODE_FIXED,
-      TypeCodes::PAIR_CODE16, TypeCodes::PAIR_CODE32>;
+      MsgPackSerializer,
+      interfaces::PairInterface<MsgPackSerializer>,
+      TypeCodes::PAIR_CODE_FIXED,
+      TypeCodes::PAIR_CODE16,
+      TypeCodes::PAIR_CODE32>;
   using PairDeserializer = interfaces::PairDeserializer<MsgPackSerializer>;
   /// @}
 
@@ -92,13 +101,15 @@ public:
 
   void Allocate(uint64_t const &delta);
 
-  void Resize(uint64_t const &      size,
-              ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
-              bool                  zero_reserved_space = true);
+  void Resize(
+      uint64_t const &      size,
+      ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+      bool                  zero_reserved_space = true);
 
-  void Reserve(uint64_t const &      size,
-               ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
-               bool                  zero_reserved_space = true);
+  void Reserve(
+      uint64_t const &      size,
+      ResizeParadigm const &resize_paradigm     = ResizeParadigm::RELATIVE,
+      bool                  zero_reserved_space = true);
   void WriteBytes(uint8_t const *arr, uint64_t const &size);
 
   void WriteByte(uint8_t const &val);

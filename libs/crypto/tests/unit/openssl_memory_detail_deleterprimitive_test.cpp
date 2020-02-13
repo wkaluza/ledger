@@ -53,8 +53,8 @@ TEST_F(DeleterPrimitiveTest, test_EC_POINT_free)
 
 TEST_F(DeleterPrimitiveTest, test_EC_POINT_clear_free)
 {
-  EXPECT_EQ((DeleterPrimitive<EC_POINT, eDeleteStrategy::clearing>::function),
-            &EC_POINT_clear_free);
+  EXPECT_EQ(
+      (DeleterPrimitive<EC_POINT, eDeleteStrategy::clearing>::function), &EC_POINT_clear_free);
 }
 
 TEST_F(DeleterPrimitiveTest, test_EC_KEY_free)
@@ -69,8 +69,8 @@ TEST_F(DeleterPrimitiveTest, test_EC_GROUP_free)
 
 TEST_F(DeleterPrimitiveTest, test_EC_GROUP_clear_free)
 {
-  EXPECT_EQ((DeleterPrimitive<EC_GROUP, eDeleteStrategy::clearing>::function),
-            &EC_GROUP_clear_free);
+  EXPECT_EQ(
+      (DeleterPrimitive<EC_GROUP, eDeleteStrategy::clearing>::function), &EC_GROUP_clear_free);
 }
 
 TEST_F(DeleterPrimitiveTest, test_ECDSA_SIG_clear_free)

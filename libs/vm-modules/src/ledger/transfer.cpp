@@ -42,8 +42,11 @@ void Transfer::Bind(Module &module)
   module.GetClassInterface<IArray>().CreateInstantiationType<GetManagedType<TransfersPtr>>();
 }
 
-TransferPtr Transfer::Constructor(VM *vm, TypeId type_id, AddressPtr const &to,
-                                  NativeTokenAmount amount)
+TransferPtr Transfer::Constructor(
+    VM *              vm,
+    TypeId            type_id,
+    AddressPtr const &to,
+    NativeTokenAmount amount)
 {
   return TransferPtr{new Transfer{vm, type_id, to, amount}};
 }

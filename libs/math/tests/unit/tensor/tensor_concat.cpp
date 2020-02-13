@@ -41,9 +41,10 @@ fetch::math::Tensor<T> PrepareTensor(std::vector<fetch::math::SizeType> const &s
 }
 
 template <typename T>
-fetch::math::Tensor<T> PrepareGroundTruth2D(std::vector<fetch::math::SizeType> const & shape,
-                                            std::vector<fetch::math::Tensor<T>> const &vt,
-                                            typename fetch::math::SizeType const &     axis)
+fetch::math::Tensor<T> PrepareGroundTruth2D(
+    std::vector<fetch::math::SizeType> const & shape,
+    std::vector<fetch::math::Tensor<T>> const &vt,
+    typename fetch::math::SizeType const &     axis)
 {
   using SizeType = fetch::math::SizeType;
 
@@ -76,9 +77,10 @@ fetch::math::Tensor<T> PrepareGroundTruth2D(std::vector<fetch::math::SizeType> c
 }
 
 template <typename T>
-fetch::math::Tensor<T> PrepareGroundTruth3D(std::vector<fetch::math::SizeType> const & shape,
-                                            std::vector<fetch::math::Tensor<T>> const &vt,
-                                            typename fetch::math::SizeType const &     axis)
+fetch::math::Tensor<T> PrepareGroundTruth3D(
+    std::vector<fetch::math::SizeType> const & shape,
+    std::vector<fetch::math::Tensor<T>> const &vt,
+    typename fetch::math::SizeType const &     axis)
 {
   using SizeType = fetch::math::SizeType;
 

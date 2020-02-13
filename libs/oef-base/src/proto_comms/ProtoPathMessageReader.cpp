@@ -48,8 +48,14 @@ ProtoPathMessageReader::consumed_needed_pair ProtoPathMessageReader::CheckForMes
 
   while (true)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "CheckForMessage in ", chars.RemainingData(),
-                   " bytes. Current: ", chars.current, ", size:", chars.size);
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "CheckForMessage in ",
+        chars.RemainingData(),
+        " bytes. Current: ",
+        chars.current,
+        ", size:",
+        chars.size);
     // chars.diagnostic();
 
     uint32_t leader_head_size  = sizeof(uint32_t);
@@ -76,8 +82,9 @@ ProtoPathMessageReader::consumed_needed_pair ProtoPathMessageReader::CheckForMes
 
     if (body_size > 10000)  // TODO(kll)
     {
-      throw std::invalid_argument(std::string("Proto deserialisation refuses incoming ") +
-                                  std::to_string(body_size) + " bytes message header.");
+      throw std::invalid_argument(
+          std::string("Proto deserialisation refuses incoming ") + std::to_string(body_size) +
+          " bytes message header.");
       break;
     }
 
@@ -118,8 +125,13 @@ ProtoPathMessageReader::consumed_needed_pair ProtoPathMessageReader::CheckForMes
       {
         error_code = 132;
       }
-      FETCH_LOG_WARN(LOGGING_NAME, "Got error message from search: error_code=", error_code,
-                     ", message=\"", msg, "\"");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Got error message from search: error_code=",
+          error_code,
+          ", message=\"",
+          msg,
+          "\"");
       Counter("mt-core.comms.protopath.read.error_response")++;
       if (onError)
       {
@@ -138,7 +150,9 @@ ProtoPathMessageReader::consumed_needed_pair ProtoPathMessageReader::CheckForMes
           uri.path = leader.uri();
         }
         onComplete(
-            leader.status().success(), leader.id(), std::move(uri),
+            leader.status().success(),
+            leader.id(),
+            std::move(uri),
             ConstCharArrayBuffer(chars, static_cast<uint32_t>(chars.current + payload_size)));
       }
       else

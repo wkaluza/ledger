@@ -25,7 +25,8 @@ namespace constellation {
 
 OpenAPIHttpModule::OpenAPIHttpModule()
 {
-  Get("/api/definitions", "Returns the API definition.",
+  Get("/api/definitions",
+      "Returns the API definition.",
       [this](http::ViewParameters const &, http::HTTPRequest const &) {
         FETCH_LOCK(server_lock_);
 
@@ -40,8 +41,9 @@ OpenAPIHttpModule::OpenAPIHttpModule()
         {
 
           std::string method = ToString(view.method);
-          std::transform(method.begin(), method.end(), method.begin(),
-                         [](unsigned char c) { return std::tolower(c); });
+          std::transform(method.begin(), method.end(), method.begin(), [](unsigned char c) {
+            return std::tolower(c);
+          });
 
           if (!paths.Has(view.route.path()))
           {

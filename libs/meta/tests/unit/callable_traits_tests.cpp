@@ -42,33 +42,36 @@ using Args    = std::tuple<ARGS>;
 using Void    = void;
 using NonVoid = std::string;
 
-#define ASSERTIONS(callable, return_type, args_tuple_type)                                \
-  {                                                                                       \
-    using Callable = decltype(callable);                                                  \
-                                                                                          \
-    using Traits = CallableTraits<Callable>;                                              \
-    static_assert(Same<return_type, Traits::ReturnType>,                                  \
-                  "Test assertion failed: Same<return_type, Traits::ReturnType>");        \
-    static_assert(Same<args_tuple_type, Traits::ArgsTupleType>,                           \
-                  "Test assertion failed: Same<args_tuple_type, Traits::ArgsTupleType>"); \
-                                                                                          \
-    ASSERT_EQ(Traits::arg_count(), std::tuple_size<args_tuple_type>::value);              \
-                                                                                          \
-    auto const callable_is_void = Same<return_type, Void>;                                \
-    ASSERT_EQ(Traits::is_void(), callable_is_void);                                       \
+#define ASSERTIONS(callable, return_type, args_tuple_type)                      \
+  {                                                                             \
+    using Callable = decltype(callable);                                        \
+                                                                                \
+    using Traits = CallableTraits<Callable>;                                    \
+    static_assert(                                                              \
+        Same<return_type, Traits::ReturnType>,                                  \
+        "Test assertion failed: Same<return_type, Traits::ReturnType>");        \
+    static_assert(                                                              \
+        Same<args_tuple_type, Traits::ArgsTupleType>,                           \
+        "Test assertion failed: Same<args_tuple_type, Traits::ArgsTupleType>"); \
+                                                                                \
+    ASSERT_EQ(Traits::arg_count(), std::tuple_size<args_tuple_type>::value);    \
+                                                                                \
+    auto const callable_is_void = Same<return_type, Void>;                      \
+    ASSERT_EQ(Traits::is_void(), callable_is_void);                             \
   }
 
 // Adds assertions specific to non-static member functions
-#define MEMBER_ASSERTIONS(callable, return_type, args_tuple_type, owning_type)   \
-  {                                                                              \
-    ASSERTIONS(callable, return_type, args_tuple_type);                          \
-                                                                                 \
-    using ClassType = owning_type;                                               \
-    using Callable  = decltype(callable);                                        \
-                                                                                 \
-    using Traits = CallableTraits<Callable>;                                     \
-    static_assert(Same<ClassType, Traits::OwningType>,                           \
-                  "Test assertion failed: Same<ClassType, Traits::OwningType>"); \
+#define MEMBER_ASSERTIONS(callable, return_type, args_tuple_type, owning_type) \
+  {                                                                            \
+    ASSERTIONS(callable, return_type, args_tuple_type);                        \
+                                                                               \
+    using ClassType = owning_type;                                             \
+    using Callable  = decltype(callable);                                      \
+                                                                               \
+    using Traits = CallableTraits<Callable>;                                   \
+    static_assert(                                                             \
+        Same<ClassType, Traits::OwningType>,                                   \
+        "Test assertion failed: Same<ClassType, Traits::OwningType>");         \
   }
 
 Void free_function_void_no_args()
@@ -208,8 +211,8 @@ TEST_F(CallableTraitsTests, test_static_member_function)
 TEST_F(CallableTraitsTests, test_nonconst_member_function)
 {
   MEMBER_ASSERTIONS(&TestFunctions::nonconst_member_void_no_args, Void, EmptyArgs, TestFunctions);
-  MEMBER_ASSERTIONS(&TestFunctions::nonconst_member_nonvoid_no_args, NonVoid, EmptyArgs,
-                    TestFunctions);
+  MEMBER_ASSERTIONS(
+      &TestFunctions::nonconst_member_nonvoid_no_args, NonVoid, EmptyArgs, TestFunctions);
   MEMBER_ASSERTIONS(&TestFunctions::nonconst_member_void, Void, Args, TestFunctions);
   MEMBER_ASSERTIONS(&TestFunctions::nonconst_member_nonvoid, NonVoid, Args, TestFunctions);
 }
@@ -217,8 +220,8 @@ TEST_F(CallableTraitsTests, test_nonconst_member_function)
 TEST_F(CallableTraitsTests, test_const_member_function)
 {
   MEMBER_ASSERTIONS(&TestFunctions::const_member_void_no_args, Void, EmptyArgs, TestFunctions);
-  MEMBER_ASSERTIONS(&TestFunctions::const_member_nonvoid_no_args, NonVoid, EmptyArgs,
-                    TestFunctions);
+  MEMBER_ASSERTIONS(
+      &TestFunctions::const_member_nonvoid_no_args, NonVoid, EmptyArgs, TestFunctions);
   MEMBER_ASSERTIONS(&TestFunctions::const_member_void, Void, Args, TestFunctions);
   MEMBER_ASSERTIONS(&TestFunctions::const_member_nonvoid, NonVoid, Args, TestFunctions);
 }

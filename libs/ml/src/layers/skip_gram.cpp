@@ -27,8 +27,13 @@ namespace ml {
 namespace layers {
 
 template <typename TensorType>
-SkipGram<TensorType>::SkipGram(SizeType in_size, SizeType out, SizeType embedding_size,
-                               SizeType vocab_size, std::string const &name, WeightsInit init_mode)
+SkipGram<TensorType>::SkipGram(
+    SizeType           in_size,
+    SizeType           out,
+    SizeType           embedding_size,
+    SizeType           vocab_size,
+    std::string const &name,
+    WeightsInit        init_mode)
   : out_size_(out)
   , vocab_size_(vocab_size)
 {
@@ -45,8 +50,8 @@ SkipGram<TensorType>::SkipGram(SizeType in_size, SizeType out, SizeType embeddin
   this->Initialise(weights_ctx, init_mode, in_size, embedding_size);
 
   // embed both inputs
-  embed_in_ = this->template AddNode<fetch::ml::ops::Embeddings<TensorType>>(name + "_Embed_Inputs",
-                                                                             {input}, weights_in);
+  embed_in_ = this->template AddNode<fetch::ml::ops::Embeddings<TensorType>>(
+      name + "_Embed_Inputs", {input}, weights_in);
   std::string embed_ctx = this->template AddNode<fetch::ml::ops::Embeddings<TensorType>>(
       name + "_Embed_Context", {context}, weights_ctx);
 

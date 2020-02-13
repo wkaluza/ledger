@@ -44,8 +44,12 @@ public:
     APPEND
   };
 
-  ErrorMessage(ConstByteArray filename, ConstByteArray source, ConstByteArray message, Token token,
-               Type type = SYNTAX_ERROR)
+  ErrorMessage(
+      ConstByteArray filename,
+      ConstByteArray source,
+      ConstByteArray message,
+      Token          token,
+      Type           type = SYNTAX_ERROR)
     : filename_(std::move(filename))
     , source_(std::move(source))
     , message_(std::move(message))

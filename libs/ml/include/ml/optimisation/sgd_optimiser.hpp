@@ -38,13 +38,19 @@ public:
   using SizeSet    = std::unordered_set<SizeType>;
 
   SGDOptimiser() = default;
-  SGDOptimiser(std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-               std::string const &label_node_name, std::string const &output_node_name,
-               DataType const &learning_rate = fetch::math::Type<DataType>("0.001"));
+  SGDOptimiser(
+      std::shared_ptr<Graph<T>>       graph,
+      std::vector<std::string> const &input_node_names,
+      std::string const &             label_node_name,
+      std::string const &             output_node_name,
+      DataType const &                learning_rate = fetch::math::Type<DataType>("0.001"));
 
-  SGDOptimiser(std::shared_ptr<Graph<T>> graph, std::vector<std::string> const &input_node_names,
-               std::string const &label_node_name, std::string const &output_node_name,
-               fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param);
+  SGDOptimiser(
+      std::shared_ptr<Graph<T>>                                 graph,
+      std::vector<std::string> const &                          input_node_names,
+      std::string const &                                       label_node_name,
+      std::string const &                                       output_node_name,
+      fetch::ml::optimisers::LearningRateParam<DataType> const &learning_rate_param);
 
   ~SGDOptimiser() override = default;
 

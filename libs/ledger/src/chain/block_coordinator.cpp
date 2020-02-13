@@ -82,13 +82,18 @@ const std::size_t               MAX_ATTEMPTED_PANIC_REVERTS{10};
  * @param chain The reference to the main change
  * @param execution_manager  The reference to the execution manager
  */
-BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
-                                   ExecutionManagerInterface &execution_manager,
-                                   StorageUnitInterface &storage_unit, BlockPackerInterface &packer,
-                                   BlockSinkInterface &block_sink, ProverPtr prover,
-                                   uint32_t log2_num_lanes, std::size_t num_slices,
-                                   ConsensusPtr         consensus,
-                                   SynergeticExecMgrPtr synergetic_exec_manager)
+BlockCoordinator::BlockCoordinator(
+    MainChain &                chain,
+    DAGPtr                     dag,
+    ExecutionManagerInterface &execution_manager,
+    StorageUnitInterface &     storage_unit,
+    BlockPackerInterface &     packer,
+    BlockSinkInterface &       block_sink,
+    ProverPtr                  prover,
+    uint32_t                   log2_num_lanes,
+    std::size_t                num_slices,
+    ConsensusPtr               consensus,
+    SynergeticExecMgrPtr       synergetic_exec_manager)
   : chain_{chain}
   , dag_{std::move(dag)}
   , consensus_{std::move(consensus)}
@@ -100,8 +105,10 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
   , last_executed_block_{chain::ZERO_HASH}
   , certificate_{std::move(prover)}
   , mining_address_{certificate_->identity()}
-  , state_machine_{std::make_shared<StateMachine>("BlockCoordinator", State::RELOAD_STATE,
-                                                  [](State state) { return ToString(state); })}
+  , state_machine_{std::make_shared<StateMachine>(
+        "BlockCoordinator",
+        State::RELOAD_STATE,
+        [](State state) { return ToString(state); })}
   , log2_num_lanes_{log2_num_lanes}
   , num_slices_{num_slices}
   , tx_wait_periodic_{TX_SYNC_NOTIFY_INTERVAL}
@@ -154,21 +161,26 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
         "ledger_block_coordinator_reset_state_total",
         "The total number of times in the reset state")}
   , executed_block_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_executed_block_total", "The total number of executed blocks")}
+        "ledger_block_coordinator_executed_block_total",
+        "The total number of executed blocks")}
   , mined_block_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_mined_block_total", "The total number of mined blocks")}
+        "ledger_block_coordinator_mined_block_total",
+        "The total number of mined blocks")}
   , executed_tx_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_executed_tx_total", "The total number of executed transactions")}
+        "ledger_block_coordinator_executed_tx_total",
+        "The total number of executed transactions")}
   , request_tx_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_block_coordinator_request_tx_total",
         "The total number of times an explicit request for transactions was made")}
   , unable_to_find_tx_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_block_coordinator_invalidated_tx_total",
         "The total number of times a block was invalidated because transactions were not found")}
-  , blocks_minted_{telemetry::Registry::Instance().CreateCounter("blocks_minted_total",
-                                                                 "Blocks minted")}
+  , blocks_minted_{telemetry::Registry::Instance().CreateCounter(
+        "blocks_minted_total",
+        "Blocks minted")}
   , consensus_update_failure_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_update_failure_total", "Failures to update consensus")}
+        "consensus_update_failure_total",
+        "Failures to update consensus")}
   , remove_block_total_{telemetry::Registry::Instance().CreateCounter(
         "ledger_block_coordinator_remove_block_total",
         "The total number of blocks removed from the chain by the block coordinator")}
@@ -179,7 +191,8 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
         "ledger_block_coordinator_panic_search_total",
         "The total number of times that the main chain has been searched for a block")}
   , tx_sync_times_{telemetry::Registry::Instance().CreateHistogram(
-        {0.001, 0.01, 0.1, 1, 10, 100}, "ledger_block_coordinator_tx_sync_times",
+        {0.001, 0.01, 0.1, 1, 10, 100},
+        "ledger_block_coordinator_tx_sync_times",
         "The histogram of the time it takes to sync transactions")}
   , current_block_num_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
         "ledger_latest_block_num",
@@ -188,15 +201,20 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
         "ledger_next_block_num",
         "The number of the next block which is scheduled to be executed by the block coordinator")}
   , block_hash_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "block_hash", "The last seen block hash beginning")}
+        "block_hash",
+        "The last seen block hash beginning")}
   , total_time_to_create_block_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "total_time_to_create_block", "Total time required to create a block")}
+        "total_time_to_create_block",
+        "Total time required to create a block")}
   , current_block_weight_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_block_weight", "Weight of current block")}
+        "current_block_weight",
+        "Weight of current block")}
   , last_block_interval_s_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "last_block_interval_s", "Measured block interval")}
+        "last_block_interval_s",
+        "Measured block interval")}
   , current_block_coord_state_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_block_coord_state", "Current block coord state")}
+        "current_block_coord_state",
+        "Current block coord state")}
 {
   // configure the state machine
   // clang-format off
@@ -230,8 +248,13 @@ BlockCoordinator::BlockCoordinator(MainChain &chain, DAGPtr dag,
     FETCH_UNUSED(previous);
     if (periodic_print_.Poll())
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Current state: ", ToString(current),
-                      " (previous: ", ToString(previous), ")");
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Current state: ",
+          ToString(current),
+          " (previous: ",
+          ToString(previous),
+          ")");
     }
   });
 
@@ -273,8 +296,14 @@ BlockCoordinator::State BlockCoordinator::OnReloadState()
 
   if (block && storage_unit_.HashExists(block->merkle_hash, block->block_number))
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Found a block to revert to! Block: ", block->block_number,
-                   " hex: 0x", block->hash.ToHex(), " merkle hash: 0x", block->merkle_hash.ToHex());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Found a block to revert to! Block: ",
+        block->block_number,
+        " hex: 0x",
+        block->hash.ToHex(),
+        " merkle hash: 0x",
+        block->merkle_hash.ToHex());
 
     if (!storage_unit_.RevertToHash(block->merkle_hash, block->block_number))
     {
@@ -355,8 +384,10 @@ BlockCoordinator::State BlockCoordinator::OnSynchronising()
     FETCH_LOG_INFO(LOGGING_NAME, "Sync: Current State: 0x", current_state.ToHex());
     FETCH_LOG_INFO(LOGGING_NAME, "Sync: LCommit State: 0x", last_committed_state.ToHex());
     FETCH_LOG_INFO(LOGGING_NAME, "Sync: Last Block...: 0x", last_processed_block.ToHex());
-    FETCH_LOG_INFO(LOGGING_NAME, "Sync: Last BlockInt: 0x",
-                   last_executed_block_.Apply([](auto const &hash) { return hash; }).ToHex());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Sync: Last BlockInt: 0x",
+        last_executed_block_.Apply([](auto const &hash) { return hash; }).ToHex());
     FETCH_LOG_INFO(LOGGING_NAME, "Sync: Last DAGEpoch: 0x", current_dag_epoch);
   }
 #endif  // FETCH_LOG_DEBUG_ENABLED
@@ -400,8 +431,11 @@ BlockCoordinator::State BlockCoordinator::OnSynchronising()
     if (blocks_to_common_ancestor_.empty())
     {
       lookup_success = chain_.GetPathToCommonAncestor(
-          blocks_to_common_ancestor_, current_hash, last_processed_block,
-          COMMON_PATH_TO_ANCESTOR_LENGTH_LIMIT, MainChain::BehaviourWhenLimit::RETURN_LEAST_RECENT);
+          blocks_to_common_ancestor_,
+          current_hash,
+          last_processed_block,
+          COMMON_PATH_TO_ANCESTOR_LENGTH_LIMIT,
+          MainChain::BehaviourWhenLimit::RETURN_LEAST_RECENT);
     }
     else
     {
@@ -410,15 +444,20 @@ BlockCoordinator::State BlockCoordinator::OnSynchronising()
 
     if (!lookup_success)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME, "Unable to look up common ancestor for block: 0x",
-                      current_hash.ToHex(), " last processed: 0x", last_processed_block.ToHex());
+      FETCH_LOG_ERROR(
+          LOGGING_NAME,
+          "Unable to look up common ancestor for block: 0x",
+          current_hash.ToHex(),
+          " last processed: 0x",
+          last_processed_block.ToHex());
 
       Panic();
       return State::RESET;
     }
 
-    assert(blocks_to_common_ancestor_.size() >= 2 &&
-           "Expected at least two blocks from common ancestor: HEAD and current");
+    assert(
+        blocks_to_common_ancestor_.size() >= 2 &&
+        "Expected at least two blocks from common ancestor: HEAD and current");
 
     auto     block_path_it = blocks_to_common_ancestor_.crbegin();
     BlockPtr common_parent = *block_path_it++;
@@ -438,8 +477,15 @@ BlockCoordinator::State BlockCoordinator::OnSynchronising()
       double const      completion =
           static_cast<double>(current_block_num * 100) / static_cast<double>(total_block_num);
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Synchronising of chain in progress. ", completion, "% (block ",
-                     next_block->block_number, " of ", current_block_->block_number, ")");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Synchronising of chain in progress. ",
+          completion,
+          "% (block ",
+          next_block->block_number,
+          " of ",
+          current_block_->block_number,
+          ")");
     }
 
     // revert the state back to the common parent
@@ -474,9 +520,15 @@ BlockCoordinator::State BlockCoordinator::OnSynchronised(State current, State pr
 
   if (State::SYNCHRONISING == previous)
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Chain Sync complete on 0x", current_block_->hash.ToHex(),
-                   " (block: ", current_block_->block_number, " prev: 0x",
-                   current_block_->previous_hash.ToHex(), ")");
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Chain Sync complete on 0x",
+        current_block_->hash.ToHex(),
+        " (block: ",
+        current_block_->block_number,
+        " prev: 0x",
+        current_block_->previous_hash.ToHex(),
+        ")");
   }
 
   // Telemetry
@@ -525,8 +577,12 @@ BlockCoordinator::State BlockCoordinator::OnSynchronised(State current, State pr
   next_block_->block_number   = current_block_->block_number + 1;
   next_block_->log2_num_lanes = log2_num_lanes_;
 
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Minting new block! Number: ", next_block_->block_number,
-                  " beacon: ", next_block_->block_entropy.EntropyAsU64());
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Minting new block! Number: ",
+      next_block_->block_number,
+      " beacon: ",
+      next_block_->block_entropy.EntropyAsU64());
 
   start_block_packing_ = Clock::now();
 
@@ -568,9 +624,12 @@ BlockCoordinator::State BlockCoordinator::OnPreExecBlockValidation()
 
     if (ConsensusInterface::Status::YES != result)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME,
-                      "Block validation failed: Block coordinator failed to verify block (0x",
-                      current_block_->hash.ToHex(), ')', ". This should not happen.");
+      FETCH_LOG_ERROR(
+          LOGGING_NAME,
+          "Block validation failed: Block coordinator failed to verify block (0x",
+          current_block_->hash.ToHex(),
+          ')',
+          ". This should not happen.");
 
       RemoveBlock(current_block_);
       return State::RESET;
@@ -585,10 +644,15 @@ BlockCoordinator::State BlockCoordinator::OnPreExecBlockValidation()
     // Check: Ensure the number of lanes is correct
     if (num_lanes_ != (1u << current_block_->log2_num_lanes))
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Block validation failed: Lane count mismatch. Expected: ", num_lanes_,
-                     " Actual: ", (1u << current_block_->log2_num_lanes), " (0x",
-                     current_block_->hash.ToHex(), ')');
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Block validation failed: Lane count mismatch. Expected: ",
+          num_lanes_,
+          " Actual: ",
+          (1u << current_block_->log2_num_lanes),
+          " (0x",
+          current_block_->hash.ToHex(),
+          ')');
 
       RemoveBlock(current_block_);
       return State::RESET;
@@ -598,8 +662,14 @@ BlockCoordinator::State BlockCoordinator::OnPreExecBlockValidation()
     if (num_slices_ != current_block_->slices.size())
     {
       FETCH_LOG_WARN(
-          LOGGING_NAME, "Block validation failed: Slice count mismatch. Expected: ", num_slices_,
-          " Actual: ", current_block_->slices.size(), " (0x", current_block_->hash.ToHex(), ')');
+          LOGGING_NAME,
+          "Block validation failed: Slice count mismatch. Expected: ",
+          num_slices_,
+          " Actual: ",
+          current_block_->slices.size(),
+          " (0x",
+          current_block_->hash.ToHex(),
+          ')');
 
       RemoveBlock(current_block_);
       return State::RESET;
@@ -615,8 +685,11 @@ BlockCoordinator::State BlockCoordinator::OnPreExecBlockValidation()
     auto const result = synergetic_exec_mgr_->PrepareWorkQueue(*current_block_, *previous_block);
     if (SynExecStatus::SUCCESS != result)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Block certifies work that possibly is malicious (0x",
-                     current_block_->hash.ToHex(), ")");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Block certifies work that possibly is malicious (0x",
+          current_block_->hash.ToHex(),
+          ")");
 
       RemoveBlock(current_block_);
       return State::RESET;
@@ -653,8 +726,8 @@ BlockCoordinator::State BlockCoordinator::OnSynergeticExecution()
     auto const status = synergetic_exec_mgr_->PrepareWorkQueue(*current_block_, *previous_block);
     if (SynExecStatus::SUCCESS != status)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Error preparing synergetic work queue: ", ledger::ToString(status));
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Error preparing synergetic work queue: ", ledger::ToString(status));
       return State::RESET;
     }
 
@@ -702,9 +775,15 @@ BlockCoordinator::State BlockCoordinator::OnWaitForTransactions(State current, S
       {
         request_tx_count_->increment();
 
-        FETCH_LOG_WARN(LOGGING_NAME, "OnWaitForTransactions: Calling IssueCallForMissingTxs for ",
-                       pending_txs_->size(), " TXs (for block: ", current_block_->block_number,
-                       ", heaviest block: ", chain_.GetHeaviestBlock()->block_number, ")");
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "OnWaitForTransactions: Calling IssueCallForMissingTxs for ",
+            pending_txs_->size(),
+            " TXs (for block: ",
+            current_block_->block_number,
+            ", heaviest block: ",
+            chain_.GetHeaviestBlock()->block_number,
+            ")");
 
         storage_unit_.IssueCallForMissingTxs(*pending_txs_);
         have_asked_for_missing_txs_ = true;
@@ -815,16 +894,27 @@ void BlockCoordinator::RemoveBlock(BlockPtrType &block)
 
 bool BlockCoordinator::RevertToBlock(Block const &block)
 {
-  FETCH_LOG_DEBUG(LOGGING_NAME, "Revert back to #", block.block_number, " 0x", block.hash.ToHex(),
-                  " state: 0x", block.merkle_hash.ToHex());
+  FETCH_LOG_DEBUG(
+      LOGGING_NAME,
+      "Revert back to #",
+      block.block_number,
+      " 0x",
+      block.hash.ToHex(),
+      " state: 0x",
+      block.merkle_hash.ToHex());
 
   // we expect that the common parent in this case will always have been processed, but this
   // should be checked
   if (!storage_unit_.HashExists(block.merkle_hash, block.block_number))
   {
-    FETCH_LOG_ERROR(LOGGING_NAME, "Ancestor block's merkle hash cannot be retrieved! block: 0x",
-                    block.hash.ToHex(), " number: ", block.block_number, " merkle hash: 0x",
-                    block.merkle_hash.ToHex());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME,
+        "Ancestor block's merkle hash cannot be retrieved! block: 0x",
+        block.hash.ToHex(),
+        " number: ",
+        block.block_number,
+        " merkle hash: 0x",
+        block.merkle_hash.ToHex());
 
     return false;
   }
@@ -967,8 +1057,10 @@ BlockCoordinator::State BlockCoordinator::OnWaitForExecution()
 
     if (exec_wait_periodic_.Poll())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Waiting for execution to complete for block: 0x",
-                     current_block_->hash.ToHex());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Waiting for execution to complete for block: 0x",
+          current_block_->hash.ToHex());
     }
 
     // signal that the next execution should not happen immediately
@@ -998,20 +1090,34 @@ BlockCoordinator::State BlockCoordinator::OnPostExecBlockValidation()
   {
     if (state_hash != current_block_->merkle_hash)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Block validation failed: Merkle hash mismatch (block num: ",
-                     current_block_->block_number, " block: 0x", current_block_->hash.ToHex(),
-                     " expected: 0x", current_block_->merkle_hash.ToHex(), " actual: 0x",
-                     state_hash.ToHex(), ")");
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Block validation failed: Merkle hash mismatch (block num: ",
+          current_block_->block_number,
+          " block: 0x",
+          current_block_->hash.ToHex(),
+          " expected: 0x",
+          current_block_->merkle_hash.ToHex(),
+          " actual: 0x",
+          state_hash.ToHex(),
+          ")");
 
       // signal the block is invalid
       invalid_block = true;
     }
     else
     {
-      FETCH_LOG_DEBUG(LOGGING_NAME,
-                      "Block validation great success: (block num: ", current_block_->block_number,
-                      " block: 0x", current_block_->hash.ToHex(), " expected: 0x",
-                      current_block_->merkle_hash.ToHex(), " actual: 0x", state_hash.ToHex(), ")");
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Block validation great success: (block num: ",
+          current_block_->block_number,
+          " block: 0x",
+          current_block_->hash.ToHex(),
+          " expected: 0x",
+          current_block_->merkle_hash.ToHex(),
+          " actual: 0x",
+          state_hash.ToHex(),
+          ")");
     }
   }
 
@@ -1088,8 +1194,8 @@ BlockCoordinator::State BlockCoordinator::OnNewSynergeticExecution()
     auto const status = synergetic_exec_mgr_->PrepareWorkQueue(*next_block_, *previous_block);
     if (SynExecStatus::SUCCESS != status)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Error preparing synergetic work queue: ", ledger::ToString(status));
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Error preparing synergetic work queue: ", ledger::ToString(status));
       return State::RESET;
     }
 
@@ -1157,8 +1263,11 @@ BlockCoordinator::State BlockCoordinator::OnWaitForNewBlockExecution()
   case ExecutionStatus::RUNNING:
     if (exec_wait_periodic_.Poll())
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Waiting for new block execution (following: 0x",
-                     next_block_->previous_hash.ToHex(), ")");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Waiting for new block execution (following: 0x",
+          next_block_->previous_hash.ToHex(),
+          ")");
     }
 
     // signal that the next execution should not happen immediately
@@ -1188,8 +1297,14 @@ BlockCoordinator::State BlockCoordinator::OnTransmitBlock()
     next_block_->UpdateDigest();
     next_block_->miner_signature = certificate_->Sign(next_block_->hash);
 
-    FETCH_LOG_DEBUG(LOGGING_NAME, "New Block: 0x", next_block_->hash.ToHex(), " #",
-                    next_block_->block_number, " Merkle: 0x", next_block_->merkle_hash.ToHex());
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "New Block: 0x",
+        next_block_->hash.ToHex(),
+        " #",
+        next_block_->block_number,
+        " Merkle: 0x",
+        next_block_->merkle_hash.ToHex());
 
     // this step is needed because the execution manager is actually unaware of the actual last
     // block that is executed because the merkle hash was not known at this point.
@@ -1202,11 +1317,18 @@ BlockCoordinator::State BlockCoordinator::OnTransmitBlock()
       mined_block_count_->increment();
       executed_block_count_->increment();
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Broadcasting new block: 0x", next_block_->hash.ToHex(),
-                     " merkle: ", next_block_->merkle_hash.ToHex(),
-                     " txs: ", next_block_->GetTransactionCount(),
-                     " entropy: ", next_block_->block_entropy.EntropyAsU64(),
-                     " number: ", next_block_->block_number);
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Broadcasting new block: 0x",
+          next_block_->hash.ToHex(),
+          " merkle: ",
+          next_block_->merkle_hash.ToHex(),
+          " txs: ",
+          next_block_->GetTransactionCount(),
+          " entropy: ",
+          next_block_->block_entropy.EntropyAsU64(),
+          " number: ",
+          next_block_->block_number);
 
       // signal the last block that has been executed
       last_executed_block_.ApplyVoid([this](auto &digest) { digest = next_block_->hash; });
@@ -1221,8 +1343,8 @@ BlockCoordinator::State BlockCoordinator::OnTransmitBlock()
     }
     else
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Attempted to broadcast invalid block: 0x",
-                     next_block_->hash.ToHex());
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Attempted to broadcast invalid block: 0x", next_block_->hash.ToHex());
       RemoveBlock(next_block_);
     }
   }
@@ -1324,8 +1446,8 @@ bool BlockCoordinator::ScheduleBlock(Block const &block)
   }
   else
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    "Execution engine stalled. State: ", ledger::ToString(execution_status));
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, "Execution engine stalled. State: ", ledger::ToString(execution_status));
   }
 
   return success;

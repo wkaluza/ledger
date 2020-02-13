@@ -97,8 +97,9 @@ void Reshape<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
 }
 
 template <typename TensorType>
-std::vector<TensorType> Reshape<TensorType>::Backward(VecTensorType const &inputs,
-                                                      TensorType const &   error_signal)
+std::vector<TensorType> Reshape<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
 

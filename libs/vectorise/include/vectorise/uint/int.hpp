@@ -68,8 +68,8 @@ public:
   static constexpr char const *LOGGING_NAME = "Int";
 
   template <typename... T>
-  using IfIsWideInitialiserList = std::enable_if_t<meta::Is<WideType>::SameAsEvery<T...>::value &&
-                                                   (sizeof...(T) <= WIDE_ELEMENTS)>;
+  using IfIsWideInitialiserList = std::enable_if_t<
+      meta::Is<WideType>::SameAsEvery<T...>::value && (sizeof...(T) <= WIDE_ELEMENTS)>;
 
   template <typename... T>
   using IfIsBaseInitialiserList =

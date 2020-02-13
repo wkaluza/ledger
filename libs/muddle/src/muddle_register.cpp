@@ -166,8 +166,9 @@ bool MuddleRegister::IsEmpty() const
   return handle_index_.empty();
 }
 
-MuddleRegister::UpdateStatus MuddleRegister::UpdateAddress(ConnectionHandle handle,
-                                                           Address const &  address)
+MuddleRegister::UpdateStatus MuddleRegister::UpdateAddress(
+    ConnectionHandle handle,
+    Address const &  address)
 {
   UpdateStatus status{UpdateStatus::HANDLE_NOT_FOUND};
 
@@ -183,11 +184,12 @@ MuddleRegister::UpdateStatus MuddleRegister::UpdateAddress(ConnectionHandle hand
     // determine if this a duplicate address
     bool const duplicate_address = address_index_.find(address) != address_index_.end();
 
-    bool const duplicate_entry =
-        std::find_if(address_index_.begin(), address_index_.end(),
-                     [handle](AddressIndex::value_type const &entry) {
-                       return entry.second && entry.second->handle == handle;
-                     }) != address_index_.end();
+    bool const duplicate_entry = std::find_if(
+                                     address_index_.begin(),
+                                     address_index_.end(),
+                                     [handle](AddressIndex::value_type const &entry) {
+                                       return entry.second && entry.second->handle == handle;
+                                     }) != address_index_.end();
 
     // only add the entry to the map if there isn't already one
     if (!duplicate_entry)
@@ -346,10 +348,12 @@ void MuddleRegister::Leave(ConnectionHandle handle)
       for (;;)
       {
         // attempt to find a corresponding index in the addres map
-        auto addr_it = std::find_if(address_index_.begin(), address_index_.end(),
-                                    [&](AddressIndex::value_type const &entry) {
-                                      return (!entry.second) || (entry.second->handle == handle);
-                                    });
+        auto addr_it = std::find_if(
+            address_index_.begin(),
+            address_index_.end(),
+            [&](AddressIndex::value_type const &entry) {
+              return (!entry.second) || (entry.second->handle == handle);
+            });
 
         if (addr_it == address_index_.end())
         {

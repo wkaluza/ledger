@@ -33,8 +33,9 @@ type Reduction(array_type const &A)
 {
   type ret{0};
 
-  ret = A.in_parallel().Reduce([](auto const &a, auto const &b) { return a + b; },
-                               [](vector_type const &a) -> type { return reduce(a); });
+  ret = A.in_parallel().Reduce(
+      [](auto const &a, auto const &b) { return a + b; },
+      [](vector_type const &a) -> type { return reduce(a); });
 
   return ret;
 }

@@ -33,12 +33,16 @@ void BuildSharedArray(std::string const &custom_name, pybind11::module &module)
       .def(py::init<SharedArray<T> const &>())
       .def("padded_size", &SharedArray<T>::padded_size)
       .def("At", static_cast<T &(SharedArray<T>::*)(std::size_t const &)>(&SharedArray<T>::At))
-      .def("At",
-           static_cast<T const &(SharedArray<T>::*)(std::size_t const &)const>(&SharedArray<T>::At))
-      .def("operator[]",
-           static_cast<T &(SharedArray<T>::*)(std::size_t const &)>(&SharedArray<T>::operator[]))
-      .def("operator[]", static_cast<T const &(SharedArray<T>::*)(std::size_t const &)const>(
-                             &SharedArray<T>::operator[]))
+      .def(
+          "At",
+          static_cast<T const &(SharedArray<T>::*)(std::size_t const &)const>(&SharedArray<T>::At))
+      .def(
+          "operator[]",
+          static_cast<T &(SharedArray<T>::*)(std::size_t const &)>(&SharedArray<T>::operator[]))
+      .def(
+          "operator[]",
+          static_cast<T const &(SharedArray<T>::*)(std::size_t const &)const>(
+              &SharedArray<T>::operator[]))
       .def("Copy", &SharedArray<T>::Copy)
       .def("size", [](SharedArray<T> const &o) { return o.size(); });
 }

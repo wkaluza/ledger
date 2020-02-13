@@ -41,8 +41,8 @@ constexpr decltype(auto) Apply(F &&f, Tuple &&t, IndexSequence<I...> && /*unused
 template <class F, typename Context, typename Tuple, std::size_t... I>
 constexpr decltype(auto) Apply(F &&f, Context &&ctx, Tuple &&t, IndexSequence<I...> && /*unused*/)
 {
-  return Invoke(std::forward<F>(f), std::forward<Context>(ctx),
-                std::get<I>(std::forward<Tuple>(t))...);
+  return Invoke(
+      std::forward<F>(f), std::forward<Context>(ctx), std::get<I>(std::forward<Tuple>(t))...);
 }
 
 }  // namespace internal
@@ -50,24 +50,29 @@ constexpr decltype(auto) Apply(F &&f, Context &&ctx, Tuple &&t, IndexSequence<I.
 template <typename F, typename Tuple>
 constexpr decltype(auto) Apply(F &&f, Tuple &&tuple)
 {
-  static_assert(!CallableTraits<F>::is_non_static_member_function(),
-                "To call non-static member functions, use the overloads with Context argument");
+  static_assert(
+      !CallableTraits<F>::is_non_static_member_function(),
+      "To call non-static member functions, use the overloads with Context argument");
 
   static_assert(IsStdTuple<Tuple>, "Pass function arguments to Apply as a std::tuple");
 
-  return internal::Apply(std::forward<F>(f), std::forward<Tuple>(tuple),
-                         IndexSequenceFromTuple<Tuple>());
+  return internal::Apply(
+      std::forward<F>(f), std::forward<Tuple>(tuple), IndexSequenceFromTuple<Tuple>());
 }
 
 template <typename F, typename Context, typename Tuple>
 constexpr decltype(auto) Apply(F &&f, Context &&ctx, Tuple &&tuple)
 {
-  static_assert(CallableTraits<F>::is_non_static_member_function(),
-                "This overload is intended for calling non-static member functions only");
+  static_assert(
+      CallableTraits<F>::is_non_static_member_function(),
+      "This overload is intended for calling non-static member functions only");
   static_assert(IsStdTuple<Tuple>, "Pass function arguments to Apply as a std::tuple");
 
-  return internal::Apply(std::forward<F>(f), std::forward<Context>(ctx), std::forward<Tuple>(tuple),
-                         meta::IndexSequenceFromTuple<Tuple>());
+  return internal::Apply(
+      std::forward<F>(f),
+      std::forward<Context>(ctx),
+      std::forward<Tuple>(tuple),
+      meta::IndexSequenceFromTuple<Tuple>());
 }
 
 }  // namespace meta

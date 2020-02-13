@@ -43,9 +43,20 @@ struct String;
 struct Fixed128;
 
 template <typename T>
-static constexpr bool IsPrimitive =
-    type_util::IsAnyOfV<T, void, bool, int8_t, uint8_t, int16_t, uint16_t, int32_t, uint32_t,
-                        int64_t, uint64_t, fixed_point::fp32_t, fixed_point::fp64_t>;
+static constexpr bool IsPrimitive = type_util::IsAnyOfV<
+    T,
+    void,
+    bool,
+    int8_t,
+    uint8_t,
+    int16_t,
+    uint16_t,
+    int32_t,
+    uint32_t,
+    int64_t,
+    uint64_t,
+    fixed_point::fp32_t,
+    fixed_point::fp64_t>;
 
 template <typename T, typename R = void>
 using IfIsPrimitive = std::enable_if_t<IsPrimitive<std::decay_t<T>>, R>;
@@ -179,12 +190,15 @@ public:
   virtual ChargeAmount IsEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount IsLessThanChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
-  virtual ChargeAmount IsLessThanOrEqualChargeEstimator(Ptr<Object> const &lhso,
-                                                        Ptr<Object> const &rhso);
-  virtual ChargeAmount IsGreaterThanChargeEstimator(Ptr<Object> const &lhso,
-                                                    Ptr<Object> const &rhso);
-  virtual ChargeAmount IsGreaterThanOrEqualChargeEstimator(Ptr<Object> const &lhso,
-                                                           Ptr<Object> const &rhso);
+  virtual ChargeAmount IsLessThanOrEqualChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
+  virtual ChargeAmount IsGreaterThanChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
+  virtual ChargeAmount IsGreaterThanOrEqualChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
   virtual ChargeAmount NegateChargeEstimator(Ptr<Object> const &object);
   virtual ChargeAmount AddChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount LeftAddChargeEstimator(Variant const &lhsv, Variant const &objectv);
@@ -194,24 +208,30 @@ public:
   virtual ChargeAmount SubtractChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount LeftSubtractChargeEstimator(Variant const &lhsv, Variant const &objectv);
   virtual ChargeAmount RightSubtractChargeEstimator(Variant const &objectv, Variant const &rhsv);
-  virtual ChargeAmount InplaceSubtractChargeEstimator(Ptr<Object> const &lhso,
-                                                      Ptr<Object> const &rhso);
-  virtual ChargeAmount InplaceRightSubtractChargeEstimator(Ptr<Object> const &lhso,
-                                                           Variant const &    rhsv);
+  virtual ChargeAmount InplaceSubtractChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
+  virtual ChargeAmount InplaceRightSubtractChargeEstimator(
+      Ptr<Object> const &lhso,
+      Variant const &    rhsv);
   virtual ChargeAmount MultiplyChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount LeftMultiplyChargeEstimator(Variant const &lhsv, Variant const &objectv);
   virtual ChargeAmount RightMultiplyChargeEstimator(Variant const &objectv, Variant const &rhsv);
-  virtual ChargeAmount InplaceMultiplyChargeEstimator(Ptr<Object> const &lhso,
-                                                      Ptr<Object> const &rhso);
-  virtual ChargeAmount InplaceRightMultiplyChargeEstimator(Ptr<Object> const &lhso,
-                                                           Variant const &    rhsv);
+  virtual ChargeAmount InplaceMultiplyChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
+  virtual ChargeAmount InplaceRightMultiplyChargeEstimator(
+      Ptr<Object> const &lhso,
+      Variant const &    rhsv);
   virtual ChargeAmount DivideChargeEstimator(Ptr<Object> const &lhso, Ptr<Object> const &rhso);
   virtual ChargeAmount LeftDivideChargeEstimator(Variant const &lhsv, Variant const &objectv);
   virtual ChargeAmount RightDivideChargeEstimator(Variant const &objectv, Variant const &rhsv);
-  virtual ChargeAmount InplaceDivideChargeEstimator(Ptr<Object> const &lhso,
-                                                    Ptr<Object> const &rhso);
-  virtual ChargeAmount InplaceRightDivideChargeEstimator(Ptr<Object> const &lhso,
-                                                         Variant const &    rhsv);
+  virtual ChargeAmount InplaceDivideChargeEstimator(
+      Ptr<Object> const &lhso,
+      Ptr<Object> const &rhso);
+  virtual ChargeAmount InplaceRightDivideChargeEstimator(
+      Ptr<Object> const &lhso,
+      Variant const &    rhsv);
 
   virtual bool SerializeTo(MsgPackSerializer &buffer);
   virtual bool DeserializeFrom(MsgPackSerializer &buffer);

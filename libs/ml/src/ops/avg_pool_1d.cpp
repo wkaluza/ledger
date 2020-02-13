@@ -125,8 +125,9 @@ void AvgPool1D<TensorType>::Forward(VecTensorType const &inputs, TensorType &out
  * output[0]=input_error[inputs[0].shape]
  */
 template <typename TensorType>
-std::vector<TensorType> AvgPool1D<TensorType>::Backward(VecTensorType const &inputs,
-                                                        TensorType const &   error_signal)
+std::vector<TensorType> AvgPool1D<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == ComputeOutputShape(inputs));
@@ -172,8 +173,8 @@ std::vector<math::SizeType> AvgPool1D<TensorType>::ComputeOutputShape(
   // output_shape_[0]=number of output channels
   output_shape.emplace_back(inputs.at(0)->shape().at(0));
   // output_shape_[1]=number of stride_size steps over input size
-  output_shape.emplace_back((inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) /
-                            stride_size_);
+  output_shape.emplace_back(
+      (inputs.at(0)->shape().at(1) - (kernel_size_ - stride_size_)) / stride_size_);
   // output_shape_[2]=batch dimension
   output_shape.emplace_back(inputs.at(0)->shape().at(2));
   return output_shape;

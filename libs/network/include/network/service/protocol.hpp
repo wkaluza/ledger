@@ -122,8 +122,8 @@ public:
   template <typename C, typename R, typename... Args>
   void ExposeWithClientContext(FunctionHandlerType const &n, C *instance, R (C::*function)(Args...))
   {
-    StoredType fnc(new service::CallableClassMember<C, R(Args...), 1>(Callable::CLIENT_CONTEXT_ARG,
-                                                                      instance, function));
+    StoredType fnc(new service::CallableClassMember<C, R(Args...), 1>(
+        Callable::CLIENT_CONTEXT_ARG, instance, function));
 
     auto iter = members_.find(n);
     if (iter != members_.end())
@@ -143,8 +143,8 @@ public:
     FETCH_LOG_INFO(LOGGING_NAME, "Contents of function table");
     for (auto const &entry : members_)
     {
-      FETCH_LOG_INFO(LOGGING_NAME, "Entry: ", entry.first,
-                     " valid: ", static_cast<bool>(entry.second));
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "Entry: ", entry.first, " valid: ", static_cast<bool>(entry.second));
     }
   }
 

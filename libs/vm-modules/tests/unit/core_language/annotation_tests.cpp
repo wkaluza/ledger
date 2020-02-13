@@ -47,8 +47,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, unannotated_functions_are_permitte
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       functions_annotated_with_init_action_query_problem_work_objective_clear_are_permitted)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    functions_annotated_with_init_action_query_problem_work_objective_clear_are_permitted)
 {
   static char const *TEXT = R"(
     @init
@@ -87,8 +88,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       annotations_other_than_init_action_query_problem_work_objective_clear_are_forbidden)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    annotations_other_than_init_action_query_problem_work_objective_clear_are_forbidden)
 {
   static char const *TEXT = R"(
     @abc
@@ -139,8 +141,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, action_functions_may_return_void_o
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       action_functions_may_not_return_types_other_than_void_or_Int64)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    action_functions_may_not_return_types_other_than_void_or_Int64)
 {
   static char const *TEXT = R"(
     @action
@@ -182,8 +185,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, init_function_may_return_void_or_I
   ASSERT_TRUE(toolkit.Compile(TEXT2));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       init_function_may_not_return_types_other_than_void_or_Int64)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    init_function_may_not_return_types_other_than_void_or_Int64)
 {
   static char const *TEXT = R"(
     @init
@@ -233,8 +237,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, init_function_may_receive_one_Addr
   ASSERT_TRUE(toolkit.Compile(TEXT2));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       init_function_may_not_receive_arguments_other_than_a_single_Address)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    init_function_may_not_receive_arguments_other_than_a_single_Address)
 {
   static char const *TEXT1 = R"(
     @init
@@ -269,8 +274,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, multiple_init_functions_are_forbid
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_permitted_when_all_four_appear_in_one_contract)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_permitted_when_all_four_appear_in_one_contract)
 {
   static char const *TEXT = R"(
     @clear
@@ -296,8 +302,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       objective_must_receive_two_params_problem_return_type_and_work_return_type)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    objective_must_receive_two_params_problem_return_type_and_work_return_type)
 {
   static char const *TEXT1 = R"(
     @clear
@@ -389,8 +396,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT4));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       clear_must_receive_two_params_problem_return_type_and_work_return_type)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    clear_must_receive_two_params_problem_return_type_and_work_return_type)
 {
   static char const *TEXT1 = R"(
     @clear
@@ -507,8 +515,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, work_function_must_not_be_void)
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       work_function_must_receive_two_args_the_problem_return_and_uint256)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    work_function_must_receive_two_args_the_problem_return_and_uint256)
 {
   static char const *TEXT1 = R"(
     @clear
@@ -625,8 +634,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, problem_function_must_not_be_void)
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       problem_function_must_accept_one_array_of_structured_data)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    problem_function_must_accept_one_array_of_structured_data)
 {
   static char const *TEXT1 = R"(
     @clear
@@ -792,8 +802,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, objective_function_must_have_Int64
   ASSERT_FALSE(toolkit.Compile(TEXT2));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_clear_is_missing)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_clear_is_missing)
 {
   static char const *TEXT = R"(
     @problem
@@ -815,8 +826,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_objective_is_missing)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_objective_is_missing)
 {
   static char const *TEXT = R"(
     @clear
@@ -837,8 +849,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_problem_is_missing)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_problem_is_missing)
 {
   static char const *TEXT = R"(
     @clear
@@ -859,8 +872,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_work_is_missing)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_work_is_missing)
 {
   static char const *TEXT = R"(
     @clear
@@ -881,8 +895,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_clear_is_duplicated)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_clear_is_duplicated)
 {
   static char const *TEXT = R"(
     @clear
@@ -912,8 +927,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_problem_is_duplicated)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_problem_is_duplicated)
 {
   static char const *TEXT = R"(
     @clear
@@ -944,8 +960,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_objective_is_duplicated)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_objective_is_duplicated)
 {
   static char const *TEXT = R"(
     @clear
@@ -976,8 +993,9 @@ TEST_F(EtchFunctionDefinitionAnnotationTests,
   ASSERT_FALSE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchFunctionDefinitionAnnotationTests,
-       synergetic_annotations_are_forbidden_if_work_is_duplicated)
+TEST_F(
+    EtchFunctionDefinitionAnnotationTests,
+    synergetic_annotations_are_forbidden_if_work_is_duplicated)
 {
   static char const *TEXT = R"(
     @clear
@@ -1139,8 +1157,9 @@ TEST_F(EtchContractFunctionPrototypeAnnotationTests, action_functions_may_return
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchContractFunctionPrototypeAnnotationTests,
-       action_functions_may_not_return_types_other_than_void_or_Int64)
+TEST_F(
+    EtchContractFunctionPrototypeAnnotationTests,
+    action_functions_may_not_return_types_other_than_void_or_Int64)
 {
   static char const *TEXT = R"(
     contract contract_interface
@@ -1172,8 +1191,9 @@ public:
   VmTestToolkit     toolkit{&stdout};
 };
 
-TEST_F(EtchMemberFunctionDefinitionAnnotationTests,
-       DISABLED_unannotated_member_functions_are_permitted)
+TEST_F(
+    EtchMemberFunctionDefinitionAnnotationTests,
+    DISABLED_unannotated_member_functions_are_permitted)
 {
   static char const *TEXT = R"(
     struct Clazz
@@ -1186,8 +1206,9 @@ TEST_F(EtchMemberFunctionDefinitionAnnotationTests,
   ASSERT_TRUE(toolkit.Compile(TEXT));
 }
 
-TEST_F(EtchMemberFunctionDefinitionAnnotationTests,
-       DISABLED_annotated_member_functions_are_forbidden)
+TEST_F(
+    EtchMemberFunctionDefinitionAnnotationTests,
+    DISABLED_annotated_member_functions_are_forbidden)
 {
   static char const *TEXT1 = R"(
     struct Clazz

@@ -157,8 +157,10 @@ std::size_t CalcNetworkManagerThreads(std::size_t num_lanes)
   return (num_lanes * THREADS_PER_LANE) + OTHER_THREADS;
 }
 
-uint16_t LookupRemotePort(Manifest const &manifest, ServiceIdentifier::Type service,
-                          uint32_t instance = ServiceIdentifier::SINGLETON_SERVICE)
+uint16_t LookupRemotePort(
+    Manifest const &        manifest,
+    ServiceIdentifier::Type service,
+    uint32_t                instance = ServiceIdentifier::SINGLETON_SERVICE)
 {
   ServiceIdentifier const identifier{service, instance};
 
@@ -171,8 +173,10 @@ uint16_t LookupRemotePort(Manifest const &manifest, ServiceIdentifier::Type serv
   return it->second.uri().GetTcpPeer().port();
 }
 
-uint16_t LookupLocalPort(Manifest const &manifest, ServiceIdentifier::Type service,
-                         uint32_t instance = ServiceIdentifier::SINGLETON_SERVICE)
+uint16_t LookupLocalPort(
+    Manifest const &        manifest,
+    ServiceIdentifier::Type service,
+    uint32_t                instance = ServiceIdentifier::SINGLETON_SERVICE)
 {
   ServiceIdentifier const identifier{service, instance};
 
@@ -186,7 +190,9 @@ uint16_t LookupLocalPort(Manifest const &manifest, ServiceIdentifier::Type servi
 }
 
 std::shared_ptr<ledger::DAGInterface> GenerateDAG(
-    Config const &cfg, std::string const &db_name, bool load_on_start,
+    Config const &                               cfg,
+    std::string const &                          db_name,
+    bool                                         load_on_start,
     constellation::Constellation::CertificatePtr certificate)
 {
   if (cfg.features.IsEnabled("synergetic"))
@@ -249,18 +255,29 @@ StakeManagerPtr CreateStakeManager(constellation::Constellation::Config const &c
   return mgr;
 }
 
-ConsensusPtr CreateConsensus(constellation::Constellation::Config const &cfg, StakeManagerPtr stake,
-                             BeaconSetupServicePtr beacon_setup, BeaconServicePtr beacon,
-                             MainChain const &chain, StorageInterface &storage,
-                             Identity const &identity)
+ConsensusPtr CreateConsensus(
+    constellation::Constellation::Config const &cfg,
+    StakeManagerPtr                             stake,
+    BeaconSetupServicePtr                       beacon_setup,
+    BeaconServicePtr                            beacon,
+    MainChain const &                           chain,
+    StorageInterface &                          storage,
+    Identity const &                            identity)
 {
   ConsensusPtr consensus{};
 
   if (stake)
   {
-    consensus = std::make_shared<ledger::Consensus>(stake, beacon_setup, beacon, chain, storage,
-                                                    identity, cfg.aeon_period, cfg.max_cabinet_size,
-                                                    cfg.block_interval_ms);
+    consensus = std::make_shared<ledger::Consensus>(
+        stake,
+        beacon_setup,
+        beacon,
+        chain,
+        storage,
+        identity,
+        cfg.aeon_period,
+        cfg.max_cabinet_size,
+        cfg.block_interval_ms);
   }
   else
   {
@@ -271,24 +288,30 @@ ConsensusPtr CreateConsensus(constellation::Constellation::Config const &cfg, St
   return consensus;
 }
 
-muddle::MuddlePtr CreateBeaconNetwork(Config const &cfg, CertificatePtr certificate,
-                                      NetworkManager const &nm)
+muddle::MuddlePtr CreateBeaconNetwork(
+    Config const &        cfg,
+    CertificatePtr        certificate,
+    NetworkManager const &nm)
 {
   muddle::MuddlePtr network;
 
   if (cfg.proof_of_stake)
   {
-    network = muddle::CreateMuddle("DKGN", std::move(certificate), nm,
-                                   cfg.manifest.FindExternalAddress(ServiceIdentifier::Type::DKG));
+    network = muddle::CreateMuddle(
+        "DKGN",
+        std::move(certificate),
+        nm,
+        cfg.manifest.FindExternalAddress(ServiceIdentifier::Type::DKG));
   }
 
   return network;
 }
 
-BeaconSetupServicePtr CreateBeaconSetupService(constellation::Constellation::Config const &cfg,
-                                               MuddleInterface &                           muddle,
-                                               shards::ShardManagementService &manifest_cache,
-                                               CertificatePtr                  certificate)
+BeaconSetupServicePtr CreateBeaconSetupService(
+    constellation::Constellation::Config const &cfg,
+    MuddleInterface &                           muddle,
+    shards::ShardManagementService &            manifest_cache,
+    CertificatePtr                              certificate)
 {
   BeaconSetupServicePtr beacon_setup{};
   if (cfg.proof_of_stake)
@@ -299,9 +322,11 @@ BeaconSetupServicePtr CreateBeaconSetupService(constellation::Constellation::Con
   return beacon_setup;
 }
 
-BeaconServicePtr CreateBeaconService(constellation::Constellation::Config const &cfg,
-                                     MuddleInterface &muddle, CertificatePtr certificate,
-                                     BeaconSetupServicePtr const &beacon_setup)
+BeaconServicePtr CreateBeaconService(
+    constellation::Constellation::Config const &cfg,
+    MuddleInterface &                           muddle,
+    CertificatePtr                              certificate,
+    BeaconSetupServicePtr const &               beacon_setup)
 {
   BeaconServicePtr                         beacon{};
   beacon::EventManager::SharedEventManager event_manager = beacon::EventManager::New();
@@ -309,15 +334,17 @@ BeaconServicePtr CreateBeaconService(constellation::Constellation::Config const 
   if (cfg.proof_of_stake)
   {
     assert(beacon_setup);
-    beacon = std::make_unique<fetch::beacon::BeaconService>(muddle, certificate, *beacon_setup,
-                                                            event_manager, true);
+    beacon = std::make_unique<fetch::beacon::BeaconService>(
+        muddle, certificate, *beacon_setup, event_manager, true);
   }
 
   return beacon;
 }
 
-muddle::MuddlePtr CreateMessengerNetwork(Config const &cfg, CertificatePtr const & /*certificate*/,
-                                         NetworkManager const & /*nm*/)
+muddle::MuddlePtr CreateMessengerNetwork(
+    Config const &cfg,
+    CertificatePtr const & /*certificate*/,
+    NetworkManager const & /*nm*/)
 {
   muddle::MuddlePtr network;
 
@@ -346,8 +373,10 @@ Constellation::MailboxPtr CreateMessengerMailbox(Config const &cfg, muddle::Mudd
   return ret;
 }
 
-Constellation::MessengerAPIPtr CreateMessengerAPI(Config const &cfg, muddle::MuddlePtr &network,
-                                                  Constellation::MailboxPtr &mailbox)
+Constellation::MessengerAPIPtr CreateMessengerAPI(
+    Config const &             cfg,
+    muddle::MuddlePtr &        network,
+    Constellation::MailboxPtr &mailbox)
 {
   Constellation::MessengerAPIPtr ret{nullptr};
 
@@ -470,9 +499,12 @@ bool Constellation::OnBringUpLaneServices()
   FETCH_LOG_INFO(LOGGING_NAME, "Starting shard services...complete");
 
   // create the internal muddle instance
-  internal_muddle_ =
-      muddle::CreateMuddle("ISRD", internal_identity_, network_manager_,
-                           cfg_.manifest.FindExternalAddress(ServiceIdentifier::Type::CORE), false);
+  internal_muddle_ = muddle::CreateMuddle(
+      "ISRD",
+      internal_identity_,
+      network_manager_,
+      cfg_.manifest.FindExternalAddress(ServiceIdentifier::Type::CORE),
+      false);
 
   if (!StartInternalMuddle())
   {
@@ -483,11 +515,11 @@ bool Constellation::OnBringUpLaneServices()
   FETCH_LOG_INFO(LOGGING_NAME, "Inter-shard Identity: ", internal_muddle_->GetAddress().ToBase64());
 
   // start the associated services
-  storage_ = std::make_shared<StorageUnitClient>(internal_muddle_->GetEndpoint(), shard_cfgs_,
-                                                 cfg_.log2_num_lanes);
+  storage_ = std::make_shared<StorageUnitClient>(
+      internal_muddle_->GetEndpoint(), shard_cfgs_, cfg_.log2_num_lanes);
 
-  lane_control_ = std::make_unique<LaneRemoteControl>(internal_muddle_->GetEndpoint(), shard_cfgs_,
-                                                      cfg_.log2_num_lanes);
+  lane_control_ = std::make_unique<LaneRemoteControl>(
+      internal_muddle_->GetEndpoint(), shard_cfgs_, cfg_.log2_num_lanes);
 
   return true;
 }
@@ -521,8 +553,11 @@ bool Constellation::OnRestorePreviousData(ledger::GenesisFileCreator::ConsensusP
 
   // necessary when doing state validity checks
   execution_manager_ = std::make_shared<ExecutionManager>(
-      cfg_.num_executors, cfg_.log2_num_lanes, storage_,
-      [this] { return std::make_shared<Executor>(storage_); }, tx_status_cache_);
+      cfg_.num_executors,
+      cfg_.log2_num_lanes,
+      storage_,
+      [this] { return std::make_shared<Executor>(storage_); },
+      tx_status_cache_);
 
   if (!GenesisSanityChecks(genesis_status))
   {
@@ -535,22 +570,32 @@ bool Constellation::OnRestorePreviousData(ledger::GenesisFileCreator::ConsensusP
   }
 
   auto const heaviest_block = chain_->GetHeaviestBlock();
-  FETCH_LOG_INFO(LOGGING_NAME, "Head of chain: #", heaviest_block->block_number, " 0x",
-                 heaviest_block->hash.ToHex(), " Merkle: 0x", heaviest_block->merkle_hash.ToHex());
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Head of chain: #",
+      heaviest_block->block_number,
+      " 0x",
+      heaviest_block->hash.ToHex(),
+      " Merkle: 0x",
+      heaviest_block->merkle_hash.ToHex());
 
   return true;
 }
 
 bool Constellation::OnBringUpExternalNetwork(
-    ledger::GenesisFileCreator::ConsensusParameters &params, UriSet const &initial_peers)
+    ledger::GenesisFileCreator::ConsensusParameters &params,
+    UriSet const &                                   initial_peers)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "OnBringUpExternalNetwork()");
 
-  muddle_ = muddle::CreateMuddle("IHUB", external_identity_, network_manager_,
-                                 cfg_.manifest.FindExternalAddress(ServiceIdentifier::Type::CORE));
+  muddle_ = muddle::CreateMuddle(
+      "IHUB",
+      external_identity_,
+      network_manager_,
+      cfg_.manifest.FindExternalAddress(ServiceIdentifier::Type::CORE));
 
-  shard_management_ = std::make_shared<ShardManagementService>(cfg_.manifest, *lane_control_,
-                                                               *muddle_, cfg_.log2_num_lanes);
+  shard_management_ = std::make_shared<ShardManagementService>(
+      cfg_.manifest, *lane_control_, *muddle_, cfg_.log2_num_lanes);
 
   // setup the consensus infrastructure
   beacon_network_ = CreateBeaconNetwork(cfg_, external_identity_, network_manager_);
@@ -559,8 +604,8 @@ bool Constellation::OnBringUpExternalNetwork(
   beacon_ = CreateBeaconService(cfg_, *beacon_network_, external_identity_, beacon_setup_);
   stake_  = CreateStakeManager(cfg_);
 
-  consensus_ = CreateConsensus(cfg_, stake_, beacon_setup_, beacon_, *chain_, *storage_,
-                               external_identity_->identity());
+  consensus_ = CreateConsensus(
+      cfg_, stake_, beacon_setup_, beacon_, *chain_, *storage_, external_identity_->identity());
 
   consensus_->SetWhitelist(params.whitelist);
   consensus_->SetDefaultStartTime(params.start_time);
@@ -588,8 +633,16 @@ bool Constellation::OnBringUpExternalNetwork(
   block_packer_ = std::make_unique<BlockPackingAlgorithm>(cfg_.log2_num_lanes);
 
   block_coordinator_ = std::make_unique<ledger::BlockCoordinator>(
-      *chain_, dag_, *execution_manager_, *storage_, *block_packer_, *this, external_identity_,
-      cfg_.log2_num_lanes, cfg_.num_slices, consensus_,
+      *chain_,
+      dag_,
+      *execution_manager_,
+      *storage_,
+      *block_packer_,
+      *this,
+      external_identity_,
+      cfg_.log2_num_lanes,
+      cfg_.num_slices,
+      consensus_,
       std::make_unique<ledger::SynergeticExecutionManager>(
           dag_, 1u, [this]() { return std::make_shared<ledger::SynergeticExecutor>(*storage_); }));
 
@@ -608,7 +661,9 @@ bool Constellation::OnBringUpExternalNetwork(
       http_open_api_module_,
       health_check_module_,
       std::make_shared<p2p::P2PHttpInterface>(
-          cfg_.log2_num_lanes, *chain_, *block_packer_,
+          cfg_.log2_num_lanes,
+          *chain_,
+          *block_packer_,
           p2p::P2PHttpInterface::WeakStateMachines{block_coordinator_->GetWeakStateMachine()}),
       std::make_shared<ledger::TxStatusHttpInterface>(tx_status_cache_),
       std::make_shared<ledger::TxQueryHttpInterface>(*storage_),
@@ -622,10 +677,18 @@ bool Constellation::OnBringUpExternalNetwork(
   http_->AddDefaultRootModule();
 
   // print the start up log banner
-  FETCH_LOG_INFO(LOGGING_NAME, "Constellation :: ", cfg_.num_lanes(), "x", cfg_.num_slices, "x",
-                 cfg_.num_executors);
-  FETCH_LOG_INFO(LOGGING_NAME,
-                 "              :: ", Address::FromMuddleAddress(muddle_->GetAddress()).display());
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Constellation :: ",
+      cfg_.num_lanes(),
+      "x",
+      cfg_.num_slices,
+      "x",
+      cfg_.num_executors);
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "              :: ",
+      Address::FromMuddleAddress(muddle_->GetAddress()).display());
   FETCH_LOG_INFO(LOGGING_NAME, "              :: ", muddle_->GetAddress().ToBase64());
   FETCH_LOG_INFO(LOGGING_NAME, "");
 
@@ -963,15 +1026,21 @@ bool Constellation::GenesisSanityChecks(GenesisFileCreator::Result genesis_statu
       // validate the hash and merkle hash
       if (!is_genesis_correct)
       {
-        FETCH_LOG_CRITICAL(LOGGING_NAME,
-                           "Heaviest block recovered as start up was marked as genesis but did not "
-                           "match genesis state");
+        FETCH_LOG_CRITICAL(
+            LOGGING_NAME,
+            "Heaviest block recovered as start up was marked as genesis but did not "
+            "match genesis state");
         return false;
       }
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Heaviest block is genesis. That seems suspicious. Block: #",
-                     heaviest_block->block_number, " 0x", heaviest_block->hash.ToHex(),
-                     " Merkle: 0x", heaviest_block->merkle_hash.ToHex());
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Heaviest block is genesis. That seems suspicious. Block: #",
+          heaviest_block->block_number,
+          " 0x",
+          heaviest_block->hash.ToHex(),
+          " Merkle: 0x",
+          heaviest_block->merkle_hash.ToHex());
     }
   }
   else if (GenesisFileCreator::Result::CREATED_NEW_GENESIS == genesis_status)
@@ -986,9 +1055,10 @@ bool Constellation::GenesisSanityChecks(GenesisFileCreator::Result genesis_statu
 
     if (!is_genesis_correct)
     {
-      FETCH_LOG_CRITICAL(LOGGING_NAME,
-                         "Internal error, genesis block in chain does not match system genesis "
-                         "digest and/or merkle digest");
+      FETCH_LOG_CRITICAL(
+          LOGGING_NAME,
+          "Internal error, genesis block in chain does not match system genesis "
+          "digest and/or merkle digest");
       return false;
     }
   }
@@ -1032,9 +1102,14 @@ bool Constellation::CheckStateIntegrity()
   if (current_block &&
       storage_->HashExists(current_block->merkle_hash, current_block->block_number))
   {
-    FETCH_LOG_INFO(LOGGING_NAME, "Found a block to revert to! Block: ", current_block->block_number,
-                   " hex: 0x", current_block->hash.ToHex(), " merkle hash: 0x",
-                   current_block->merkle_hash.ToHex());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Found a block to revert to! Block: ",
+        current_block->block_number,
+        " hex: 0x",
+        current_block->hash.ToHex(),
+        " merkle hash: 0x",
+        current_block->merkle_hash.ToHex());
 
     if (!storage_->RevertToHash(current_block->merkle_hash, current_block->block_number))
     {

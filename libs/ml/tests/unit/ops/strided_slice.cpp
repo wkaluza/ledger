@@ -226,9 +226,10 @@ TYPED_TEST(StridedSliceTest, forward_3D_test)
     {
       for (SizeType k{0}; k < gt.shape().at(2); k++)
       {
-        gt.At(i, j, k) =
-            input.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                     begins.at(2) + k * strides.at(2));
+        gt.At(i, j, k) = input.At(
+            begins.at(0) + i * strides.at(0),
+            begins.at(1) + j * strides.at(1),
+            begins.at(2) + k * strides.at(2));
       }
     }
   }
@@ -272,8 +273,10 @@ TYPED_TEST(StridedSliceTest, backward_3D_test)
     {
       for (SizeType k{0}; k < error.shape().at(2); k++)
       {
-        gt.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-              begins.at(2) + k * strides.at(2)) = error.At(i, j, k);
+        gt.At(
+            begins.at(0) + i * strides.at(0),
+            begins.at(1) + j * strides.at(1),
+            begins.at(2) + k * strides.at(2)) = error.At(i, j, k);
       }
     }
   }
@@ -322,9 +325,11 @@ TYPED_TEST(StridedSliceTest, forward_4D_test)
       {
         for (SizeType l{0}; l < gt.shape().at(3); l++)
         {
-          gt.At(i, j, k, l) =
-              input.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                       begins.at(2) + k * strides.at(2), begins.at(3) + l * strides.at(3));
+          gt.At(i, j, k, l) = input.At(
+              begins.at(0) + i * strides.at(0),
+              begins.at(1) + j * strides.at(1),
+              begins.at(2) + k * strides.at(2),
+              begins.at(3) + l * strides.at(3));
         }
       }
     }
@@ -371,9 +376,11 @@ TYPED_TEST(StridedSliceTest, backward_4D_test)
       {
         for (SizeType l{0}; l < error.shape().at(3); l++)
         {
-          gt.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                begins.at(2) + k * strides.at(2), begins.at(3) + l * strides.at(3)) =
-              error.At(i, j, k, l);
+          gt.At(
+              begins.at(0) + i * strides.at(0),
+              begins.at(1) + j * strides.at(1),
+              begins.at(2) + k * strides.at(2),
+              begins.at(3) + l * strides.at(3)) = error.At(i, j, k, l);
         }
       }
     }
@@ -425,10 +432,12 @@ TYPED_TEST(StridedSliceTest, forward_5D_test)
         {
           for (SizeType m{0}; m < gt.shape().at(4); m++)
           {
-            gt.At(i, j, k, l, m) =
-                input.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                         begins.at(2) + k * strides.at(2), begins.at(3) + l * strides.at(3),
-                         begins.at(4) + m * strides.at(4));
+            gt.At(i, j, k, l, m) = input.At(
+                begins.at(0) + i * strides.at(0),
+                begins.at(1) + j * strides.at(1),
+                begins.at(2) + k * strides.at(2),
+                begins.at(3) + l * strides.at(3),
+                begins.at(4) + m * strides.at(4));
           }
         }
       }
@@ -479,9 +488,12 @@ TYPED_TEST(StridedSliceTest, backward_5D_test)
           for (SizeType m{0}; m < error.shape().at(4); m++)
           {
 
-            gt.At(begins.at(0) + i * strides.at(0), begins.at(1) + j * strides.at(1),
-                  begins.at(2) + k * strides.at(2), begins.at(3) + l * strides.at(3),
-                  begins.at(4) + m * strides.at(4)) = error.At(i, j, k, l, m);
+            gt.At(
+                begins.at(0) + i * strides.at(0),
+                begins.at(1) + j * strides.at(1),
+                begins.at(2) + k * strides.at(2),
+                begins.at(3) + l * strides.at(3),
+                begins.at(4) + m * strides.at(4)) = error.At(i, j, k, l, m);
           }
         }
       }

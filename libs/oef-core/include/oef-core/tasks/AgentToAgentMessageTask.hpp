@@ -39,8 +39,11 @@ public:
 
   static constexpr char const *LOGGING_NAME = "AgentToAgentMessageTask";
 
-  AgentToAgentMessageTask(AgentP const &sourceAgent, int32_t message_id, ProtoP pb,
-                          AgentsP const &agents)
+  AgentToAgentMessageTask(
+      AgentP const & sourceAgent,
+      int32_t        message_id,
+      ProtoP         pb,
+      AgentsP const &agents)
     : pb_{std::move(pb)}
   {
     OEFURI::URI uri;
@@ -59,8 +62,14 @@ public:
 
     source_key_ = sourceAgent->getPublicKey();
 
-    FETCH_LOG_INFO(LOGGING_NAME, "Message to ", agent_->getPublicKey(), " from ", source_key_, ": ",
-                   message_pb_->DebugString());
+    FETCH_LOG_INFO(
+        LOGGING_NAME,
+        "Message to ",
+        agent_->getPublicKey(),
+        " from ",
+        source_key_,
+        ": ",
+        message_pb_->DebugString());
   }
 
   ~AgentToAgentMessageTask() override = default;
@@ -113,8 +122,8 @@ public:
     }
 
     agent_->run_sending();
-    FETCH_LOG_INFO(LOGGING_NAME, "Message sent to: ", agent_->getPublicKey(),
-                   " from: ", source_key_);
+    FETCH_LOG_INFO(
+        LOGGING_NAME, "Message sent to: ", agent_->getPublicKey(), " from: ", source_key_);
     pb_.reset();
     message_pb_.reset();
     return fetch::oef::base::ExitState::COMPLETE;

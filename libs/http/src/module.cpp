@@ -31,28 +31,38 @@ bool NormalAccessAuthentication(HTTPRequest const &req)
 
 /// Post methods
 /// @{
-void HTTPModule::Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                      std::vector<HTTPParameter> const &parameters,
-                      HTTPModule::ViewType const &      view)
+void HTTPModule::Post(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::POST, path, description, parameters, view);
 }
 
-void HTTPModule::Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                      HTTPModule::ViewType const &view)
+void HTTPModule::Post(
+    byte_array::ByteArray const &path,
+    byte_array::ByteArray const &description,
+    HTTPModule::ViewType const & view)
 {
   AddView(Method::POST, path, description, {}, view);
 }
 
-void HTTPModule::Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                      std::vector<HTTPParameter> const &parameters,
-                      HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Post(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::Authenticator const & auth,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::POST, path, description, parameters, view, auth);
 }
 
-void HTTPModule::Post(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                      HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Post(
+    byte_array::ByteArray const &    path,
+    byte_array::ByteArray const &    description,
+    HTTPModule::Authenticator const &auth,
+    HTTPModule::ViewType const &     view)
 {
   AddView(Method::POST, path, description, {}, view, auth);
 }
@@ -60,27 +70,38 @@ void HTTPModule::Post(byte_array::ByteArray const &path, byte_array::ByteArray c
 
 /// Get methods
 /// @{
-void HTTPModule::Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     std::vector<HTTPParameter> const &parameters, HTTPModule::ViewType const &view)
+void HTTPModule::Get(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::GET, path, description, parameters, view);
 }
 
-void HTTPModule::Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     HTTPModule::ViewType const &view)
+void HTTPModule::Get(
+    byte_array::ByteArray const &path,
+    byte_array::ByteArray const &description,
+    HTTPModule::ViewType const & view)
 {
   AddView(Method::GET, path, description, {}, view);
 }
 
-void HTTPModule::Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     std::vector<HTTPParameter> const &parameters,
-                     HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Get(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::Authenticator const & auth,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::GET, path, description, parameters, view, auth);
 }
 
-void HTTPModule::Get(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Get(
+    byte_array::ByteArray const &    path,
+    byte_array::ByteArray const &    description,
+    HTTPModule::Authenticator const &auth,
+    HTTPModule::ViewType const &     view)
 {
   AddView(Method::GET, path, description, {}, view, auth);
 }
@@ -88,27 +109,38 @@ void HTTPModule::Get(byte_array::ByteArray const &path, byte_array::ByteArray co
 
 /// Put methods
 /// @{
-void HTTPModule::Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     std::vector<HTTPParameter> const &parameters, HTTPModule::ViewType const &view)
+void HTTPModule::Put(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::PUT, path, description, parameters, view);
 }
 
-void HTTPModule::Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     HTTPModule::ViewType const &view)
+void HTTPModule::Put(
+    byte_array::ByteArray const &path,
+    byte_array::ByteArray const &description,
+    HTTPModule::ViewType const & view)
 {
   AddView(Method::PUT, path, description, {}, view);
 }
 
-void HTTPModule::Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     std::vector<HTTPParameter> const &parameters,
-                     HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Put(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::Authenticator const & auth,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::PUT, path, description, parameters, view, auth);
 }
 
-void HTTPModule::Put(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                     HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Put(
+    byte_array::ByteArray const &    path,
+    byte_array::ByteArray const &    description,
+    HTTPModule::Authenticator const &auth,
+    HTTPModule::ViewType const &     view)
 {
   AddView(Method::PUT, path, description, {}, view, auth);
 }
@@ -116,28 +148,38 @@ void HTTPModule::Put(byte_array::ByteArray const &path, byte_array::ByteArray co
 
 /// Patch methods
 /// @{
-void HTTPModule::Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                       std::vector<HTTPParameter> const &parameters,
-                       HTTPModule::ViewType const &      view)
+void HTTPModule::Patch(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::PATCH, path, description, parameters, view);
 }
 
-void HTTPModule::Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                       HTTPModule::ViewType const &view)
+void HTTPModule::Patch(
+    byte_array::ByteArray const &path,
+    byte_array::ByteArray const &description,
+    HTTPModule::ViewType const & view)
 {
   AddView(Method::PATCH, path, description, {}, view);
 }
 
-void HTTPModule::Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                       std::vector<HTTPParameter> const &parameters,
-                       HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Patch(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::Authenticator const & auth,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::PATCH, path, description, parameters, view, auth);
 }
 
-void HTTPModule::Patch(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                       HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Patch(
+    byte_array::ByteArray const &    path,
+    byte_array::ByteArray const &    description,
+    HTTPModule::Authenticator const &auth,
+    HTTPModule::ViewType const &     view)
 {
   AddView(Method::PATCH, path, description, {}, view, auth);
 }
@@ -145,38 +187,50 @@ void HTTPModule::Patch(byte_array::ByteArray const &path, byte_array::ByteArray 
 
 /// Delete methods
 /// @{
-void HTTPModule::Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                        std::vector<HTTPParameter> const &parameters,
-                        HTTPModule::ViewType const &      view)
+void HTTPModule::Delete(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::DELETE, path, description, parameters, view);
 }
 
-void HTTPModule::Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                        HTTPModule::ViewType const &view)
+void HTTPModule::Delete(
+    byte_array::ByteArray const &path,
+    byte_array::ByteArray const &description,
+    HTTPModule::ViewType const & view)
 {
   AddView(Method::DELETE, path, description, {}, view);
 }
 
-void HTTPModule::Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                        HTTPModule::Authenticator const & auth,
-                        std::vector<HTTPParameter> const &parameters,
-                        HTTPModule::ViewType const &      view)
+void HTTPModule::Delete(
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    HTTPModule::Authenticator const & auth,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view)
 {
   AddView(Method::DELETE, path, description, parameters, view, auth);
 }
 
-void HTTPModule::Delete(byte_array::ByteArray const &path, byte_array::ByteArray const &description,
-                        HTTPModule::Authenticator const &auth, HTTPModule::ViewType const &view)
+void HTTPModule::Delete(
+    byte_array::ByteArray const &    path,
+    byte_array::ByteArray const &    description,
+    HTTPModule::Authenticator const &auth,
+    HTTPModule::ViewType const &     view)
 {
   AddView(Method::DELETE, path, description, {}, view, auth);
 }
 /// @}
 
-void HTTPModule::AddView(Method method, byte_array::ByteArray const &path,
-                         byte_array::ByteArray const &     description,
-                         std::vector<HTTPParameter> const &parameters,
-                         HTTPModule::ViewType const &view, HTTPModule::Authenticator const &auth)
+void HTTPModule::AddView(
+    Method                            method,
+    byte_array::ByteArray const &     path,
+    byte_array::ByteArray const &     description,
+    std::vector<HTTPParameter> const &parameters,
+    HTTPModule::ViewType const &      view,
+    HTTPModule::Authenticator const & auth)
 {
   views_.push_back({description, method, path, parameters, view, auth});
 }

@@ -33,9 +33,11 @@ class ECDSACurveTest : public testing::Test
 {
 protected:
   template <int P_ECDSA_Curve_NID>
-  void test_ECDSACurve(uint8_t const expected_sn, std::size_t const expected_privateKeySize,
-                       std::size_t const expected_publicKeySize,
-                       std::size_t const expected_signatureSize)
+  void test_ECDSACurve(
+      uint8_t const     expected_sn,
+      std::size_t const expected_privateKeySize,
+      std::size_t const expected_publicKeySize,
+      std::size_t const expected_signatureSize)
   {
     using EcdsaCurveType = ECDSACurve<P_ECDSA_Curve_NID>;
     EXPECT_EQ(EcdsaCurveType::nid, P_ECDSA_Curve_NID);
@@ -54,17 +56,20 @@ TEST_F(ECDSACurveTest, test_ECDSACurve_for_NID_secp256k1)
 class ECDSAAffineCoordinatesConversionTest : public testing::Test
 {
 protected:
-  void test_convert_canonical_with_padding(SharedPointerType<BIGNUM const> const &x,
-                                           SharedPointerType<BIGNUM const> const &y)
+  void test_convert_canonical_with_padding(
+      SharedPointerType<BIGNUM const> const &x,
+      SharedPointerType<BIGNUM const> const &y)
   {
-    ASSERT_GT(ECDSAAffineCoordinatesConversion<>::x_size,
-              static_cast<std::size_t>(BN_num_bytes(x.get())));
-    ASSERT_GT(ECDSAAffineCoordinatesConversion<>::y_size,
-              static_cast<std::size_t>(BN_num_bytes(y.get())));
+    ASSERT_GT(
+        ECDSAAffineCoordinatesConversion<>::x_size,
+        static_cast<std::size_t>(BN_num_bytes(x.get())));
+    ASSERT_GT(
+        ECDSAAffineCoordinatesConversion<>::y_size,
+        static_cast<std::size_t>(BN_num_bytes(y.get())));
 
     auto serialized_to_ba = ECDSAAffineCoordinatesConversion<>::Convert2Canonical(x.get(), y.get());
-    EXPECT_EQ(ECDSAAffineCoordinatesConversion<>::EcdsaCurveType::publicKeySize,
-              serialized_to_ba.size());
+    EXPECT_EQ(
+        ECDSAAffineCoordinatesConversion<>::EcdsaCurveType::publicKeySize, serialized_to_ba.size());
 
     SharedPointerType<BIGNUM> x2{BN_new()};
     SharedPointerType<BIGNUM> y2{BN_new()};

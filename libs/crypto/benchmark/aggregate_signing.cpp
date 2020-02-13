@@ -77,8 +77,8 @@ void SignatureAggregationCoefficient(benchmark::State &state)
     state.ResumeTiming();
 
     // Compute aggregate signature coefficient
-    fetch::crypto::mcl::SignatureAggregationCoefficient(notarisation_public_keys[sign_index],
-                                                        notarisation_public_keys);
+    fetch::crypto::mcl::SignatureAggregationCoefficient(
+        notarisation_public_keys[sign_index], notarisation_public_keys);
   }
 }
 

@@ -43,8 +43,11 @@ public:
 
   static constexpr char const *LOGGING_NAME = "EndpointWebSocket";
 
-  explicit EndpointWebSocket(asio::io_context &io_context, std::size_t sendBufferSize,
-                             std::size_t readBufferSize, ConfigMap configMap);
+  explicit EndpointWebSocket(
+      asio::io_context &io_context,
+      std::size_t       sendBufferSize,
+      std::size_t       readBufferSize,
+      ConfigMap         configMap);
 
   ~EndpointWebSocket() override;
 
@@ -68,9 +71,11 @@ protected:
   void async_write() override;
   bool is_eof(std::error_code const &ec) const override;
 
-  void async_read_at_least(const std::size_t &bytes_needed, std::size_t bytes_read,
-                           std::vector<RingBuffer::mutable_buffer> &space,
-                           std::shared_ptr<StateType>               my_state);
+  void async_read_at_least(
+      const std::size_t &                      bytes_needed,
+      std::size_t                              bytes_read,
+      std::vector<RingBuffer::mutable_buffer> &space,
+      std::shared_ptr<StateType>               my_state);
 
 private:
   void on_accept(std::error_code const &ec);

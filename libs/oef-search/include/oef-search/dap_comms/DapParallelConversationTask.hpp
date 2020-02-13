@@ -37,19 +37,25 @@ struct DapInputDataType
 };
 
 template <typename IN_PROTO, typename OUT_PROTO>
-class DapParallelConversationTask
-  : virtual public fetch::oef::base::TaskChainParallel<
-        IN_PROTO, OUT_PROTO, DapInputDataType<IN_PROTO>, DapConversationTask<IN_PROTO, OUT_PROTO>>
+class DapParallelConversationTask : virtual public fetch::oef::base::TaskChainParallel<
+                                        IN_PROTO,
+                                        OUT_PROTO,
+                                        DapInputDataType<IN_PROTO>,
+                                        DapConversationTask<IN_PROTO, OUT_PROTO>>
 {
 public:
   using TaskType = DapConversationTask<IN_PROTO, OUT_PROTO>;
-  using Parent =
-      fetch::oef::base::TaskChainParallel<IN_PROTO, OUT_PROTO, DapInputDataType<IN_PROTO>,
-                                          DapConversationTask<IN_PROTO, OUT_PROTO>>;
+  using Parent   = fetch::oef::base::TaskChainParallel<
+      IN_PROTO,
+      OUT_PROTO,
+      DapInputDataType<IN_PROTO>,
+      DapConversationTask<IN_PROTO, OUT_PROTO>>;
   static constexpr char const *LOGGING_NAME = "DapParallelConversationTask";
 
-  DapParallelConversationTask(uint32_t msg_id, std::shared_ptr<OutboundConversations> outbounds,
-                              std::string protocol = "dap")
+  DapParallelConversationTask(
+      uint32_t                               msg_id,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::string                            protocol = "dap")
     : Parent::Parent()
     , Parent()
     , msg_id_{msg_id - 1}
@@ -71,8 +77,9 @@ public:
   bool operator==(const DapParallelConversationTask &other) = delete;
   bool operator<(const DapParallelConversationTask &other)  = delete;
 
-  std::shared_ptr<TaskType> CreateTask(const DapInputDataType<IN_PROTO> &data,
-                                       std::shared_ptr<IN_PROTO>         input) override
+  std::shared_ptr<TaskType> CreateTask(
+      const DapInputDataType<IN_PROTO> &data,
+      std::shared_ptr<IN_PROTO>         input) override
   {
     return std::make_shared<DapConversationTask<IN_PROTO, OUT_PROTO>>(
         data.dap_name, data.path, ++msg_id_, input, outbounds, protocol_);

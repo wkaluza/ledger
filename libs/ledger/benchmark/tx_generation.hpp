@@ -33,7 +33,8 @@ using TransactionList = std::vector<TransactionBuilder::TransactionPtr>;
 
 template <typename Word = uint64_t>
 fetch::meta::IfIsUnsignedInteger<Word, ByteArray> GenerateRandomArray(
-    std::size_t num_of_words, fetch::random::LinearCongruentialGenerator rng)
+    std::size_t                                num_of_words,
+    fetch::random::LinearCongruentialGenerator rng)
 {
   ByteArray array(sizeof(Word) * num_of_words);
   auto      raw_array = reinterpret_cast<Word *>(array.pointer());
@@ -45,8 +46,10 @@ fetch::meta::IfIsUnsignedInteger<Word, ByteArray> GenerateRandomArray(
   return array;
 }
 
-inline TransactionList GenerateTransactions(std::size_t count, ECDSASigner const &signer,
-                                            bool large_packets = false)
+inline TransactionList GenerateTransactions(
+    std::size_t        count,
+    ECDSASigner const &signer,
+    bool               large_packets = false)
 {
   using fetch::BitVector;
   using fetch::chain::Address;

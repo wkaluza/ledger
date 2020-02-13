@@ -52,8 +52,12 @@ static std::size_t const PEER_SELECTION_INTERVAL_MS = 2500;
  *
  * @param certificate The certificate/identity of this node
  */
-Muddle::Muddle(NetworkId network_id, CertificatePtr certificate, NetworkManager const &nm,
-               std::string external_address, bool enabled_message_signing)
+Muddle::Muddle(
+    NetworkId             network_id,
+    CertificatePtr        certificate,
+    NetworkManager const &nm,
+    std::string           external_address,
+    bool                  enabled_message_signing)
   : name_{GenerateLoggingName("Muddle", network_id)}
   , certificate_(std::move(certificate))
   , external_address_(std::move(external_address))
@@ -65,11 +69,17 @@ Muddle::Muddle(NetworkId network_id, CertificatePtr certificate, NetworkManager 
   , network_id_(network_id)
   , reactor_{"muddle"}
   , maintenance_periodic_(std::make_shared<core::PeriodicFunctor>(
-        "Muddle", std::chrono::milliseconds{MAINTENANCE_INTERVAL_MS}, this,
+        "Muddle",
+        std::chrono::milliseconds{MAINTENANCE_INTERVAL_MS},
+        this,
         &Muddle::RunPeriodicMaintenance))
   , direct_message_service_(node_address_, router_, *register_, clients_)
-  , peer_tracker_(PeerTracker::New(std::chrono::milliseconds{PEER_SELECTION_INTERVAL_MS}, reactor_,
-                                   *register_, clients_, router_))
+  , peer_tracker_(PeerTracker::New(
+        std::chrono::milliseconds{PEER_SELECTION_INTERVAL_MS},
+        reactor_,
+        *register_,
+        clients_,
+        router_))
   , rpc_server_(router_, SERVICE_MUDDLE, CHANNEL_RPC)
 {
   // Default configuration is to do no tracking at all
@@ -414,9 +424,10 @@ void Muddle::ConnectTo(Address const &address, network::Uri const &uri_hint, Dur
 {
   if (address.empty())
   {
-    FETCH_LOG_WARN(logging_name_,
-                   "Address is empty, use ConnectTo(uri) to connect directly to uri.",
-                   uri_hint.ToString());
+    FETCH_LOG_WARN(
+        logging_name_,
+        "Address is empty, use ConnectTo(uri) to connect directly to uri.",
+        uri_hint.ToString());
     ConnectTo(uri_hint, expire);
   }
   else if (node_address_ != address)
@@ -677,8 +688,8 @@ void Muddle::CreateTcpClient(Uri const &peer)
   assert(strong_conn);
   auto conn_handle = strong_conn->handle();
 
-  FETCH_LOG_INFO(logging_name_, "Creating connection to ", peer.ToString(), " (conn: ", conn_handle,
-                 ")");
+  FETCH_LOG_INFO(
+      logging_name_, "Creating connection to ", peer.ToString(), " (conn: ", conn_handle, ")");
 
   ConnectionRegPtr reg = std::static_pointer_cast<network::AbstractConnectionRegister>(register_);
 
@@ -743,8 +754,8 @@ void Muddle::CreateTcpClient(Uri const &peer)
       }
       catch (std::exception const &ex)
       {
-        FETCH_LOG_ERROR(logging_name_, "Error processing packet from ", peer.ToString(),
-                        " error: ", ex.what());
+        FETCH_LOG_ERROR(
+            logging_name_, "Error processing packet from ", peer.ToString(), " error: ", ex.what());
       }
     }
   });

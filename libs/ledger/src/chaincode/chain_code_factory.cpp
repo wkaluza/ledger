@@ -82,8 +82,8 @@ ContractPtr CreateChainCode(ConstByteArray const &contract_name)
 
   FETCH_LOG_ERROR(LOGGING_NAME, "Unable to construct requested chain code: ", contract_name);
 
-  throw std::runtime_error(std::string{"Unable to create requested chain code "} +
-                           std::string(contract_name));
+  throw std::runtime_error(
+      std::string{"Unable to create requested chain code "} + std::string(contract_name));
 }
 
 ContractNameSet const &GetChainCodeContracts()

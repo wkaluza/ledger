@@ -80,8 +80,9 @@ void Gelu<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * @return
  */
 template <typename TensorType>
-std::vector<TensorType> Gelu<TensorType>::Backward(VecTensorType const &inputs,
-                                                   TensorType const &   error_signal)
+std::vector<TensorType> Gelu<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(inputs.at(0)->shape() == error_signal.shape());

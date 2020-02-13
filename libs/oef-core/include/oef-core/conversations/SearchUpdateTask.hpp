@@ -25,9 +25,11 @@ class OutboundConversations;
 class OutboundConversation;
 class OefAgentEndpoint;
 
-class SearchUpdateTask : public SearchConversationTask<fetch::oef::pb::AgentDescription,
-                                                       fetch::oef::pb::Server_AgentMessage,
-                                                       fetch::oef::pb::Update, SearchUpdateTask>
+class SearchUpdateTask : public SearchConversationTask<
+                             fetch::oef::pb::AgentDescription,
+                             fetch::oef::pb::Server_AgentMessage,
+                             fetch::oef::pb::Update,
+                             SearchUpdateTask>
 {
 public:
   using StateResult   = fetch::oef::base::StateMachineTask<SearchUpdateTask>::Result;
@@ -35,10 +37,13 @@ public:
   using OUT_PROTO     = fetch::oef::pb::Server_AgentMessage;
   using REQUEST_PROTO = fetch::oef::pb::Update;
 
-  SearchUpdateTask(std::shared_ptr<IN_PROTO>              initiator,
-                   std::shared_ptr<OutboundConversations> outbounds,
-                   std::shared_ptr<OefAgentEndpoint> endpoint, uint32_t msg_id,
-                   std::string core_key, std::string agent_uri);
+  SearchUpdateTask(
+      std::shared_ptr<IN_PROTO>              initiator,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::shared_ptr<OefAgentEndpoint>      endpoint,
+      uint32_t                               msg_id,
+      std::string                            core_key,
+      std::string                            agent_uri);
   virtual ~SearchUpdateTask();
 
   static constexpr char const *LOGGING_NAME = "SearchUpdateTask";

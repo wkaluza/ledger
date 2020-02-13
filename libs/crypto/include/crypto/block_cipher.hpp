@@ -42,10 +42,18 @@ public:
   /// @{
   static std::size_t GetKeyLength(Type type) noexcept;
   static std::size_t GetIVLength(Type type) noexcept;
-  static bool        Encrypt(Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                             ConstByteArray const &clear_text, ConstByteArray &cipher_text);
-  static bool        Decrypt(Type type, ConstByteArray const &key, ConstByteArray const &iv,
-                             ConstByteArray const &cipher_text, ConstByteArray &clear_text);
+  static bool        Encrypt(
+             Type                  type,
+             ConstByteArray const &key,
+             ConstByteArray const &iv,
+             ConstByteArray const &clear_text,
+             ConstByteArray &      cipher_text);
+  static bool Decrypt(
+      Type                  type,
+      ConstByteArray const &key,
+      ConstByteArray const &iv,
+      ConstByteArray const &cipher_text,
+      ConstByteArray &      clear_text);
   /// @}
 };
 

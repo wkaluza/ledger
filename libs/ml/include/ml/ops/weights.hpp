@@ -73,13 +73,18 @@ public:
 
   std::shared_ptr<Ops<TensorType>> MakeSharedCopy(std::shared_ptr<Ops<TensorType>> me) override;
 
-  static void Initialise(TensorType &array, uint64_t in_size, uint64_t out_size,
-                         WeightsInitialisation mode = WeightsInitialisation::XAVIER_GLOROT,
-                         SizeType              seed = 123456789);
+  static void Initialise(
+      TensorType &          array,
+      uint64_t              in_size,
+      uint64_t              out_size,
+      WeightsInitialisation mode = WeightsInitialisation::XAVIER_GLOROT,
+      SizeType              seed = 123456789);
 
-  static void Initialise(TensorType &array, uint64_t data_size,
-                         WeightsInitialisation mode = WeightsInitialisation::XAVIER_GLOROT,
-                         SizeType              seed = 123456789);
+  static void Initialise(
+      TensorType &          array,
+      uint64_t              data_size,
+      WeightsInitialisation mode = WeightsInitialisation::XAVIER_GLOROT,
+      SizeType              seed = 123456789);
 
   TensorType const &GetWeights() const override;
 
@@ -106,11 +111,15 @@ public:
   OperationsCount ChargeForward() const override;
 
 private:
-  static void XavierInitialisation(TensorType &array, DataType normalising_factor,
-                                   SizeType seed = 123456789);
+  static void XavierInitialisation(
+      TensorType &array,
+      DataType    normalising_factor,
+      SizeType    seed = 123456789);
 
-  static void XavierInitialisationUniform(TensorType &array, DataType normalising_factor,
-                                          SizeType seed = 123456789);
+  static void XavierInitialisationUniform(
+      TensorType &array,
+      DataType    normalising_factor,
+      SizeType    seed = 123456789);
 
   static const DataType HALF;
 };

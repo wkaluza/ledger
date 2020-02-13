@@ -83,8 +83,10 @@ protected:
   OutputStream &WriteHeader(OutputStream &stream, char const *type_name) const;
   OutputStream &WriteValuePrefix(OutputStream &stream) const;
   OutputStream &WriteValuePrefix(OutputStream &stream, std::string const &suffix) const;
-  OutputStream &WriteValuePrefix(OutputStream &stream, std::string const &suffix,
-                                 Labels const &extra) const;
+  OutputStream &WriteValuePrefix(
+      OutputStream &     stream,
+      std::string const &suffix,
+      Labels const &     extra) const;
 
 private:
   std::string const name_;

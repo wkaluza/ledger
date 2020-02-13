@@ -49,8 +49,10 @@ TYPED_TEST(SqrtTest, forward_all_positive_test)
   TypeParam prediction(op.ComputeOutputShape({std::make_shared<const TensorType>(data)}));
   op.Forward({std::make_shared<const TensorType>(data)}, prediction);
 
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SqrtTest, backward_all_positive_test)
@@ -68,8 +70,10 @@ TYPED_TEST(SqrtTest, backward_all_positive_test)
   std::vector<TensorType> prediction =
       op.Backward({std::make_shared<const TensorType>(data)}, error);
 
-  ASSERT_TRUE(prediction.at(0).AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(0).AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(SqrtTest, forward_all_negative_test)

@@ -122,8 +122,11 @@ private:
  * @tparam Producer The thread safety model for the producer size of the queue
  * @tparam Consumer The thread safety model for the consumer size of the queue
  */
-template <typename T, std::size_t SIZE, typename ProducerIndex = MultiThreadedIndex<SIZE>,
-          typename ConsumerIndex = MultiThreadedIndex<SIZE>>
+template <
+    typename T,
+    std::size_t SIZE,
+    typename ProducerIndex = MultiThreadedIndex<SIZE>,
+    typename ConsumerIndex = MultiThreadedIndex<SIZE>>
 class Queue
 {
 public:
@@ -149,8 +152,10 @@ public:
   template <typename U>
   meta::EnableIfSame<T, meta::Decay<U>> Push(U &&element, std::size_t &count);
   template <typename U, typename R, typename P>
-  meta::EnableIfSame<T, meta::Decay<U>, bool> Push(U &&element, std::size_t &count,
-                                                   std::chrono::duration<R, P> const &duration);
+  meta::EnableIfSame<T, meta::Decay<U>, bool> Push(
+      U &&                               element,
+      std::size_t &                      count,
+      std::chrono::duration<R, P> const &duration);
   /// @}
 
   // Operators
@@ -299,7 +304,9 @@ meta::EnableIfSame<T, meta::Decay<U>> Queue<T, N, P, C>::Push(U &&element, std::
 template <typename T, std::size_t N, typename P, typename C>
 template <typename U, typename Rep, typename Per>
 meta::EnableIfSame<T, meta::Decay<U>, bool> Queue<T, N, P, C>::Push(
-    U &&element, std::size_t &count, std::chrono::duration<Rep, Per> const &duration)
+    U &&                                   element,
+    std::size_t &                          count,
+    std::chrono::duration<Rep, Per> const &duration)
 {
   if (!write_count_.Wait(duration))
   {

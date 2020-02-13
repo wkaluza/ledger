@@ -40,12 +40,14 @@ public:
   ~OutboundConversations() = default;
 
   // This is used to configure the system.
-  void AddConversationCreator(const Uri &                                   target,
-                              std::shared_ptr<IOutboundConversationCreator> creator);
+  void AddConversationCreator(
+      const Uri &                                   target,
+      std::shared_ptr<IOutboundConversationCreator> creator);
   void DeleteConversationCreator(const Uri &target);
 
   std::shared_ptr<OutboundConversation> startConversation(
-      Uri const &target_path, std::shared_ptr<google::protobuf::Message> const &initiator);
+      Uri const &                                       target_path,
+      std::shared_ptr<google::protobuf::Message> const &initiator);
 
 protected:
   std::map<std::string, std::shared_ptr<IOutboundConversationCreator>> creators;

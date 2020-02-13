@@ -121,8 +121,9 @@ public:
   void add(TYPE &assignee, std::string const &name, std::string const &help)
   {
     std::string const &name_local(name);
-    assigners_[name] = [name_local, &assignee, this](std::set<std::string> const &args,
-                                                     std::list<std::string> &     errs) mutable {
+    assigners_[name] = [name_local, &assignee, this](
+                           std::set<std::string> const &args,
+                           std::list<std::string> &     errs) mutable {
       if (args.find(name_local) == args.end())
       {
         errs.push_back("Missing required argument: " + name_local);

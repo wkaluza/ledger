@@ -60,8 +60,12 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> Weights<TensorType>::MakeShared
  * @param mode  An enum indicating which type of initialisation to perform
  */
 template <typename TensorType>
-void Weights<TensorType>::Initialise(TensorType &array, uint64_t in_size, uint64_t out_size,
-                                     WeightsInitialisation mode, SizeType seed)
+void Weights<TensorType>::Initialise(
+    TensorType &          array,
+    uint64_t              in_size,
+    uint64_t              out_size,
+    WeightsInitialisation mode,
+    SizeType              seed)
 {
   switch (mode)
   {
@@ -77,51 +81,56 @@ void Weights<TensorType>::Initialise(TensorType &array, uint64_t in_size, uint64
   }
   case WeightsInitialisation::XAVIER_GLOROT:
   {
-    XavierInitialisation(array,
-                         fetch::math::Sqrt(static_cast<DataType>(
-                             static_cast<DataType>(2) / static_cast<DataType>(in_size + out_size))),
-                         seed);
+    XavierInitialisation(
+        array,
+        fetch::math::Sqrt(static_cast<DataType>(
+            static_cast<DataType>(2) / static_cast<DataType>(in_size + out_size))),
+        seed);
     break;
   }
   case WeightsInitialisation::XAVIER_FAN_IN:
   {
-    XavierInitialisation(array,
-                         fetch::math::Sqrt(static_cast<DataType>(static_cast<DataType>(1) /
-                                                                 static_cast<DataType>(in_size))),
-                         seed);
+    XavierInitialisation(
+        array,
+        fetch::math::Sqrt(
+            static_cast<DataType>(static_cast<DataType>(1) / static_cast<DataType>(in_size))),
+        seed);
     break;
   }
   case WeightsInitialisation::XAVIER_FAN_OUT:
   {
-    XavierInitialisation(array,
-                         fetch::math::Sqrt(static_cast<DataType>(static_cast<DataType>(1) /
-                                                                 static_cast<DataType>(out_size))),
-                         seed);
+    XavierInitialisation(
+        array,
+        fetch::math::Sqrt(
+            static_cast<DataType>(static_cast<DataType>(1) / static_cast<DataType>(out_size))),
+        seed);
     break;
   }
   case WeightsInitialisation::XAVIER_GLOROT_UNIFORM:
   {
     XavierInitialisationUniform(
         array,
-        fetch::math::Sqrt(static_cast<DataType>(static_cast<DataType>(6) /
-                                                static_cast<DataType>(in_size + out_size))),
+        fetch::math::Sqrt(static_cast<DataType>(
+            static_cast<DataType>(6) / static_cast<DataType>(in_size + out_size))),
         seed);
     break;
   }
   case WeightsInitialisation::XAVIER_FAN_IN_UNIFORM:
   {
-    XavierInitialisationUniform(array,
-                                fetch::math::Sqrt(static_cast<DataType>(
-                                    static_cast<DataType>(3) / static_cast<DataType>(in_size))),
-                                seed);
+    XavierInitialisationUniform(
+        array,
+        fetch::math::Sqrt(
+            static_cast<DataType>(static_cast<DataType>(3) / static_cast<DataType>(in_size))),
+        seed);
     break;
   }
   case WeightsInitialisation::XAVIER_FAN_OUT_UNIFORM:
   {
-    XavierInitialisationUniform(array,
-                                fetch::math::Sqrt(static_cast<DataType>(
-                                    static_cast<DataType>(3) / static_cast<DataType>(out_size))),
-                                seed);
+    XavierInitialisationUniform(
+        array,
+        fetch::math::Sqrt(
+            static_cast<DataType>(static_cast<DataType>(3) / static_cast<DataType>(out_size))),
+        seed);
     break;
   }
   default:
@@ -136,8 +145,11 @@ void Weights<TensorType>::Initialise(TensorType &array, uint64_t in_size, uint64
  * @param mode  An enum indicating which type of initialisation to perform
  */
 template <typename TensorType>
-void Weights<TensorType>::Initialise(TensorType &array, uint64_t data_size,
-                                     WeightsInitialisation mode, SizeType seed)
+void Weights<TensorType>::Initialise(
+    TensorType &          array,
+    uint64_t              data_size,
+    WeightsInitialisation mode,
+    SizeType              seed)
 {
   switch (mode)
   {
@@ -153,10 +165,11 @@ void Weights<TensorType>::Initialise(TensorType &array, uint64_t data_size,
   }
   case WeightsInitialisation::XAVIER_GLOROT:
   {
-    XavierInitialisation(array,
-                         static_cast<DataType>(fetch::math::Sqrt(static_cast<DataType>(2) /
-                                                                 static_cast<DataType>(data_size))),
-                         seed);
+    XavierInitialisation(
+        array,
+        static_cast<DataType>(
+            fetch::math::Sqrt(static_cast<DataType>(2) / static_cast<DataType>(data_size))),
+        seed);
     break;
   }
   default:
@@ -187,8 +200,8 @@ void Weights<TensorType>::SetWeights(TensorType const &new_value)
  * which were updated
  */
 template <typename TensorType>
-std::pair<TensorType const, typename Weights<TensorType>::SizeSet const>
-Weights<TensorType>::GetSparseGradientsReferences() const
+std::pair<TensorType const, typename Weights<TensorType>::SizeSet const> Weights<
+    TensorType>::GetSparseGradientsReferences() const
 {
   return std::move(std::make_pair(*this->gradient_accumulation_, this->updated_rows_));
 }
@@ -234,8 +247,10 @@ OpType Weights<TensorType>::OperationType() const
  * @param weights
  */
 template <typename TensorType>
-void Weights<TensorType>::XavierInitialisation(TensorType &array, DataType normalising_factor,
-                                               SizeType seed)
+void Weights<TensorType>::XavierInitialisation(
+    TensorType &array,
+    DataType    normalising_factor,
+    SizeType    seed)
 {
   // TODO (665) this is a uniform distribution; in principle we should be using a guassian
   // distribution instead we use a unifrom from -std dev -> + std dev
@@ -248,8 +263,8 @@ void Weights<TensorType>::XavierInitialisation(TensorType &array, DataType norma
     auto ran_val = lfg.AsType<DataType>();  // random value in range 0 <-> 1
     ran_val      = static_cast<DataType>(ran_val - HALF);
     ran_val      = static_cast<DataType>(ran_val * DataType{2});  // random value in range -1 <-> +1
-    ran_val      = static_cast<DataType>(ran_val *
-                                    normalising_factor);  // random value in range -sigma <-> +sigma
+    ran_val      = static_cast<DataType>(
+        ran_val * normalising_factor);  // random value in range -sigma <-> +sigma
 
     *it = static_cast<DataType>(ran_val);
     ++it;
@@ -257,8 +272,10 @@ void Weights<TensorType>::XavierInitialisation(TensorType &array, DataType norma
 }
 
 template <typename TensorType>
-void Weights<TensorType>::XavierInitialisationUniform(TensorType &array,
-                                                      DataType normalising_factor, SizeType seed)
+void Weights<TensorType>::XavierInitialisationUniform(
+    TensorType &array,
+    DataType    normalising_factor,
+    SizeType    seed)
 {
   // TODO (#1562) this is based on uniform random generator, and it should be set to default
   // weight initialization method distribution instead we use a unifrom from -std dev -> + std dev
@@ -271,8 +288,8 @@ void Weights<TensorType>::XavierInitialisationUniform(TensorType &array,
     auto ran_val = lfg.AsType<DataType>();  // random value in range 0 <-> 1
     ran_val      = static_cast<DataType>(ran_val - HALF);
     ran_val      = static_cast<DataType>(ran_val * DataType{2});  // random value in range -1 <-> +1
-    ran_val      = static_cast<DataType>(ran_val *
-                                    normalising_factor);  // random value in range -sigma <-> +sigma
+    ran_val      = static_cast<DataType>(
+        ran_val * normalising_factor);  // random value in range -sigma <-> +sigma
 
     *it = static_cast<DataType>(ran_val);
     ++it;

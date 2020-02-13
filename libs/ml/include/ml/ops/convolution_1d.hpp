@@ -58,8 +58,8 @@ public:
 
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs,
-                                   TensorType const &   error_signal) override;
+  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
+      override;
 
   std::vector<typename TensorType::SizeType> ComputeOutputShape(
       VecTensorType const &inputs) const override;
@@ -83,27 +83,49 @@ public:
   OperationsCount ChargeBackward() const override;
 
 private:
-  void FillVerticalStride(TensorType const &input, TensorType &vertical_stride,
-                          SizeType output_channels, SizeType input_channels,
-                          SizeType kernel_height);
+  void FillVerticalStride(
+      TensorType const &input,
+      TensorType &      vertical_stride,
+      SizeType          output_channels,
+      SizeType          input_channels,
+      SizeType          kernel_height);
 
-  void ReverseFillVerticalStride(TensorType &input, TensorType const &vertical_stride,
-                                 SizeType output_channels, SizeType input_channels,
-                                 SizeType kernel_height);
+  void ReverseFillVerticalStride(
+      TensorType &      input,
+      TensorType const &vertical_stride,
+      SizeType          output_channels,
+      SizeType          input_channels,
+      SizeType          kernel_height);
 
-  void FillHorizontalStride(TensorType const &input, TensorType &horizontal_stride,
-                            SizeType output_height, SizeType input_channels, SizeType kernel_height,
-                            SizeType batch_size);
+  void FillHorizontalStride(
+      TensorType const &input,
+      TensorType &      horizontal_stride,
+      SizeType          output_height,
+      SizeType          input_channels,
+      SizeType          kernel_height,
+      SizeType          batch_size);
 
-  void ReverseFillHorizontalStride(TensorType &input, TensorType const &horizontal_stride,
-                                   SizeType output_height, SizeType input_channels,
-                                   SizeType kernel_height, SizeType batch_size);
+  void ReverseFillHorizontalStride(
+      TensorType &      input,
+      TensorType const &horizontal_stride,
+      SizeType          output_height,
+      SizeType          input_channels,
+      SizeType          kernel_height,
+      SizeType          batch_size);
 
-  void FillOutput(TensorType const &gemm_output, TensorType &output, SizeType output_channels,
-                  SizeType output_height, SizeType batch_size);
+  void FillOutput(
+      TensorType const &gemm_output,
+      TensorType &      output,
+      SizeType          output_channels,
+      SizeType          output_height,
+      SizeType          batch_size);
 
-  void ReverseFillOutput(TensorType &gemm_output, TensorType const &output,
-                         SizeType output_channels, SizeType output_height, SizeType batch_size);
+  void ReverseFillOutput(
+      TensorType &      gemm_output,
+      TensorType const &output,
+      SizeType          output_channels,
+      SizeType          output_height,
+      SizeType          batch_size);
 
   SizeType ComputeOutputHeight(SizeType input_height, SizeType kernel_height) const;
 

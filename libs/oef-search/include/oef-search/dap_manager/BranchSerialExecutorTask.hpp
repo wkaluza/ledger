@@ -25,15 +25,19 @@
 
 #include "oef-base/threading/TaskChainSerial.hpp"
 
-class BranchSerialExecutorTask
-  : virtual public BranchExecutorTask,
-    virtual public fetch::oef::base::TaskChainSerial<
-        IdentifierSequence, IdentifierSequence, BranchExecutorTask::NodeDataType, NodeExecutorTask>
+class BranchSerialExecutorTask : virtual public BranchExecutorTask,
+                                 virtual public fetch::oef::base::TaskChainSerial<
+                                     IdentifierSequence,
+                                     IdentifierSequence,
+                                     BranchExecutorTask::NodeDataType,
+                                     NodeExecutorTask>
 {
 public:
-  using BaseTask =
-      fetch::oef::base::TaskChainSerial<IdentifierSequence, IdentifierSequence,
-                                        BranchExecutorTask::NodeDataType, NodeExecutorTask>;
+  using BaseTask = fetch::oef::base::TaskChainSerial<
+      IdentifierSequence,
+      IdentifierSequence,
+      BranchExecutorTask::NodeDataType,
+      NodeExecutorTask>;
   using MessageHandler = BaseTask ::MessageHandler;
   using ErrorHandler   = BaseTask ::ErrorHandler;
 
@@ -42,9 +46,10 @@ public:
 
   static constexpr char const *LOGGING_NAME = "BranchSerialExecutorTask";
 
-  BranchSerialExecutorTask(std::shared_ptr<Branch>             root,
-                           std::shared_ptr<IdentifierSequence> identifier_sequence,
-                           std::shared_ptr<DapManager>         dap_manager)
+  BranchSerialExecutorTask(
+      std::shared_ptr<Branch>             root,
+      std::shared_ptr<IdentifierSequence> identifier_sequence,
+      std::shared_ptr<DapManager>         dap_manager)
     //    : BranchExecutorTask::Parent()
     : BranchExecutorTask(std::move(root))
     //    , BaseTask ::Parent()
@@ -80,8 +85,9 @@ public:
   bool operator==(const BranchSerialExecutorTask &other) = delete;
   bool operator<(const BranchSerialExecutorTask &other)  = delete;
 
-  std::shared_ptr<NodeExecutorTask> CreateTask(const BranchExecutorTask::NodeDataType &data,
-                                               std::shared_ptr<IdentifierSequence> input) override
+  std::shared_ptr<NodeExecutorTask> CreateTask(
+      const BranchExecutorTask::NodeDataType &data,
+      std::shared_ptr<IdentifierSequence>     input) override
   {
     return NodeExecutorFactory(data, input, dap_manager_);
   }

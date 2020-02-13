@@ -22,8 +22,11 @@
 
 using fetch::beacon::DkgOutput;
 
-DkgOutput::DkgOutput(PublicKey group_key, std::vector<PublicKey> key_shares,
-                     PrivateKey secret_share, CabinetList qual_members)
+DkgOutput::DkgOutput(
+    PublicKey              group_key,
+    std::vector<PublicKey> key_shares,
+    PrivateKey             secret_share,
+    CabinetList            qual_members)
   : qual{std::move(qual_members)}
   , group_public_key{std::move(group_key)}
   , public_key_shares{std::move(key_shares)}
@@ -31,6 +34,8 @@ DkgOutput::DkgOutput(PublicKey group_key, std::vector<PublicKey> key_shares,
 {}
 
 DkgOutput::DkgOutput(DkgKeyInformation const &keys, CabinetList qual_members)
-  : DkgOutput{keys.group_public_key, keys.public_key_shares, keys.private_key_share,
+  : DkgOutput{keys.group_public_key,
+              keys.public_key_shares,
+              keys.private_key_share,
               std::move(qual_members)}
 {}

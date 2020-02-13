@@ -67,13 +67,17 @@ BasicMiner::BasicMiner(uint32_t log2_num_lanes)
   , max_num_threads_{std::thread::hardware_concurrency()}
   , thread_pool_{max_num_threads_, "Miner"}
   , mining_pool_size_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "ledger_miner_mining_pool_size", "The current size of the mining pool")}
+        "ledger_miner_mining_pool_size",
+        "The current size of the mining pool")}
   , max_mining_pool_size_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "ledger_miner_max_mining_pool_size", "The max size of the mining pool")}
+        "ledger_miner_max_mining_pool_size",
+        "The max size of the mining pool")}
   , max_pending_pool_size_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "ledger_miner_max_pending_pool_size", "The max size of the pending pool")}
+        "ledger_miner_max_pending_pool_size",
+        "The max size of the pending pool")}
   , duplicate_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_miner_duplicate_total", "The number of duplicate txs on the frontend of the queue")}
+        "ledger_miner_duplicate_total",
+        "The number of duplicate txs on the frontend of the queue")}
   , duplicate_filtered_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_miner_duplicate_filtered_total",
         "The number of duplicate txs on the backend of the queue")}
@@ -126,8 +130,11 @@ void BasicMiner::EnqueueTransaction(chain::TransactionLayout const &layout)
  * @param num_lanes The number of lanes for the block
  * @param num_slices The number of slices for the block
  */
-void BasicMiner::GenerateBlock(Block &block, std::size_t num_lanes, std::size_t num_slices,
-                               MainChain const &chain)
+void BasicMiner::GenerateBlock(
+    Block &          block,
+    std::size_t      num_lanes,
+    std::size_t      num_slices,
+    MainChain const &chain)
 {
   FETCH_LOCK(mining_pool_lock_);
   assert(num_lanes == (1u << log2_num_lanes_));
@@ -221,8 +228,13 @@ void BasicMiner::GenerateBlock(Block &block, std::size_t num_lanes, std::size_t 
   std::size_t const remaining_transactions = mining_pool_.size();
   std::size_t const packed_transactions    = pool_size_before - remaining_transactions;
 
-  FETCH_LOG_INFO(LOGGING_NAME, "Finished block packing (packed: ", packed_transactions,
-                 " remaining: ", remaining_transactions, ")");
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Finished block packing (packed: ",
+      packed_transactions,
+      " remaining: ",
+      remaining_transactions,
+      ")");
 }
 
 /**
@@ -245,8 +257,12 @@ uint64_t BasicMiner::GetBacklog() const
  * @param interval The slice index interval to be used when selecting the next slice to populate
  * @param num_lanes The number of lanes of the block
  */
-void BasicMiner::GenerateSlices(Queue &transactions, Block &block, std::size_t offset,
-                                std::size_t interval, std::size_t num_lanes)
+void BasicMiner::GenerateSlices(
+    Queue &     transactions,
+    Block &     block,
+    std::size_t offset,
+    std::size_t interval,
+    std::size_t num_lanes)
 {
   // sort by fees
   transactions.Sort(SortByFee);
@@ -268,8 +284,11 @@ void BasicMiner::GenerateSlices(Queue &transactions, Block &block, std::size_t o
  * @param slice_index The slice number
  * @param num_lanes The number of lanes for the block
  */
-void BasicMiner::GenerateSlice(Queue &transactions, Block::Slice &      slice,
-                               std::size_t /*slice_index*/, std::size_t num_lanes)
+void BasicMiner::GenerateSlice(
+    Queue &       transactions,
+    Block::Slice &slice,
+    std::size_t /*slice_index*/,
+    std::size_t num_lanes)
 {
   BitVector slice_state{num_lanes};
 

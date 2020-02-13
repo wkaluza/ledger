@@ -117,11 +117,12 @@ void Parser::Tokenise(std::string const &source)
 
 bool Parser::IsCodeBlock(NodeKind block_kind) const
 {
-  return ((block_kind == NodeKind::MemberFunctionDefinition) ||
-          (block_kind == NodeKind::FreeFunctionDefinition) ||
-          (block_kind == NodeKind::WhileStatement) || (block_kind == NodeKind::ForStatement) ||
-          (block_kind == NodeKind::If) || (block_kind == NodeKind::ElseIf) ||
-          (block_kind == NodeKind::Else));
+  return (
+      (block_kind == NodeKind::MemberFunctionDefinition) ||
+      (block_kind == NodeKind::FreeFunctionDefinition) ||
+      (block_kind == NodeKind::WhileStatement) || (block_kind == NodeKind::ForStatement) ||
+      (block_kind == NodeKind::If) || (block_kind == NodeKind::ElseIf) ||
+      (block_kind == NodeKind::Else));
 }
 
 bool Parser::ParseBlock(BlockNodePtr const &block_node)
@@ -1366,9 +1367,10 @@ ExpressionNodePtr Parser::ParseExpressionStatement()
     {
       AddError("unrecognised token");
     }
-    else if ((token_->kind == Token::Kind::UnterminatedString) ||
-             (token_->kind == Token::Kind::UnterminatedComment) ||
-             (token_->kind == Token::Kind::MaxLinesReached))
+    else if (
+        (token_->kind == Token::Kind::UnterminatedString) ||
+        (token_->kind == Token::Kind::UnterminatedComment) ||
+        (token_->kind == Token::Kind::MaxLinesReached))
     {
       AddError("");
     }
@@ -1674,13 +1676,19 @@ ExpressionNodePtr Parser::ParseExpression(bool is_conditional_expression)
       break;
 
     case Token::Kind::Inc:
-      HandlePrefixPostfix(NodeKind::PrefixInc, OpInfo(7, Association::Right, 1),
-                          NodeKind::PostfixInc, OpInfo(8, Association::Left, 1));
+      HandlePrefixPostfix(
+          NodeKind::PrefixInc,
+          OpInfo(7, Association::Right, 1),
+          NodeKind::PostfixInc,
+          OpInfo(8, Association::Left, 1));
       break;
 
     case Token::Kind::Dec:
-      HandlePrefixPostfix(NodeKind::PrefixDec, OpInfo(7, Association::Right, 1),
-                          NodeKind::PostfixDec, OpInfo(8, Association::Left, 1));
+      HandlePrefixPostfix(
+          NodeKind::PrefixDec,
+          OpInfo(7, Association::Right, 1),
+          NodeKind::PostfixDec,
+          OpInfo(8, Association::Left, 1));
       break;
 
     case Token::Kind::LeftParenthesis:
@@ -1719,9 +1727,10 @@ ExpressionNodePtr Parser::ParseExpression(bool is_conditional_expression)
         {
           AddError("unrecognised token");
         }
-        else if ((token_->kind == Token::Kind::UnterminatedString) ||
-                 (token_->kind == Token::Kind::UnterminatedComment) ||
-                 (token_->kind == Token::Kind::MaxLinesReached))
+        else if (
+            (token_->kind == Token::Kind::UnterminatedString) ||
+            (token_->kind == Token::Kind::UnterminatedComment) ||
+            (token_->kind == Token::Kind::MaxLinesReached))
         {
           AddError("");
         }
@@ -1920,8 +1929,11 @@ void Parser::HandleNot()
   }
 }
 
-void Parser::HandlePrefixPostfix(NodeKind prefix_kind, OpInfo const &prefix_op_info,
-                                 NodeKind postfix_kind, OpInfo const &postfix_op_info)
+void Parser::HandlePrefixPostfix(
+    NodeKind      prefix_kind,
+    OpInfo const &prefix_op_info,
+    NodeKind      postfix_kind,
+    OpInfo const &postfix_op_info)
 {
   if (state_ == State::PreOperand)
   {
@@ -1960,8 +1972,11 @@ bool Parser::HandleDot()
   return true;
 }
 
-bool Parser::HandleOpener(NodeKind prefix_kind, NodeKind postfix_kind,
-                          Token::Kind closer_token_kind, std::string const &closer_token_text)
+bool Parser::HandleOpener(
+    NodeKind           prefix_kind,
+    NodeKind           postfix_kind,
+    Token::Kind        closer_token_kind,
+    std::string const &closer_token_text)
 {
   if (state_ == State::PreOperand)
   {
@@ -2118,8 +2133,11 @@ void Parser::HandleOp(NodeKind kind, OpInfo const &op_info)
   AddOp(kind, op_info);
 }
 
-void Parser::AddGroup(NodeKind kind, int arity, Token::Kind closer_token_kind,
-                      std::string const &closer_token_text)
+void Parser::AddGroup(
+    NodeKind           kind,
+    int                arity,
+    Token::Kind        closer_token_kind,
+    std::string const &closer_token_text)
 {
   IncrementGroupMembers();
   Expr expr;

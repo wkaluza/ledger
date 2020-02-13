@@ -108,8 +108,11 @@ ByteArray FormatPacket(Packet const &packet)
 
 void PopulateBuffer(Socket &sock, ByteArray &buffer, std::error_code &ec)
 {
-  asio::read(sock, asio::buffer(buffer.pointer(), buffer.size()),
-             asio::transfer_exactly(buffer.size()), ec);
+  asio::read(
+      sock,
+      asio::buffer(buffer.pointer(), buffer.size()),
+      asio::transfer_exactly(buffer.size()),
+      ec);
 }
 
 bool ReadPacket(Packet &packet, Socket &sock, std::error_code &ec)

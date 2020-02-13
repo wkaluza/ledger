@@ -96,8 +96,14 @@ mem_usage_result run_get_dynamic_proc_info(pid_t pid)
     vm_size_t                      size;
     mach_port_t                    object_name;
     count = VM_REGION_BASIC_INFO_COUNT_64;
-    error = vm_region_64(task, &address, &size, VM_REGION_BASIC_INFO, (vm_region_info_t)&b_info,
-                         &count, &object_name);
+    error = vm_region_64(
+        task,
+        &address,
+        &size,
+        VM_REGION_BASIC_INFO,
+        (vm_region_info_t)&b_info,
+        &count,
+        &object_name);
     if (error == KERN_SUCCESS)
     {
       if ((b_info.reserved != 0u) && size == (SHARED_TEXT_REGION_SIZE) &&

@@ -28,8 +28,11 @@ public:
   void EnqueueTransaction(fetch::chain::Transaction const &tx) override;
   void EnqueueTransaction(fetch::chain::TransactionLayout const &layout) override;
 
-  void GenerateBlock(fetch::ledger::Block &block, std::size_t num_lanes, std::size_t num_slices,
-                     fetch::ledger::MainChain const &chain) override;
+  void GenerateBlock(
+      fetch::ledger::Block &          block,
+      std::size_t                     num_lanes,
+      std::size_t                     num_slices,
+      fetch::ledger::MainChain const &chain) override;
 
   uint64_t GetBacklog() const override;
   /// @}

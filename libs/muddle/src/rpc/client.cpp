@@ -47,8 +47,14 @@ Client::Client(std::string name, MuddleEndpoint &endpoint, uint16_t service, uin
 
 bool Client::DeliverRequest(muddle::Address const &address, network::MessageBuffer const &data)
 {
-  FETCH_LOG_TRACE(LOGGING_NAME, "Client::DeliverRequest to: ", address.ToBase64(), " mdl ",
-                  &endpoint_, " msg: 0x", data.ToHex());
+  FETCH_LOG_TRACE(
+      LOGGING_NAME,
+      "Client::DeliverRequest to: ",
+      address.ToBase64(),
+      " mdl ",
+      &endpoint_,
+      " msg: 0x",
+      data.ToHex());
 
   bool success{false};
 
@@ -77,8 +83,16 @@ void Client::OnMessage(Packet const &packet, Address const &last_hop)
     return;
   }
 
-  FETCH_LOG_TRACE(LOGGING_NAME, "Client::OnMessage from: 0x", packet.GetSender().ToBase64(),
-                  " mdl ", &endpoint_, " msg: 0x", packet.GetPayload().ToHex(), " ctx: ", this);
+  FETCH_LOG_TRACE(
+      LOGGING_NAME,
+      "Client::OnMessage from: 0x",
+      packet.GetSender().ToBase64(),
+      " mdl ",
+      &endpoint_,
+      " msg: 0x",
+      packet.GetPayload().ToHex(),
+      " ctx: ",
+      this);
 
   try
   {

@@ -26,15 +26,23 @@
 
 #include <google/protobuf/message.h>
 
-OutboundDapConversationCreator::OutboundDapConversationCreator(const Uri &dap_uri, Core &core,
-                                                               const std::string &dap_name)
+OutboundDapConversationCreator::OutboundDapConversationCreator(
+    const Uri &        dap_uri,
+    Core &             core,
+    const std::string &dap_name)
 {
   worker = std::make_shared<OutboundConversationWorkerTask>(core, dap_uri, *this);
 
   worker->SetGroupId(worker->GetTaskId());
 
-  FETCH_LOG_INFO(LOGGING_NAME, "Creating dap conversation with ", dap_name, " @ ",
-                 dap_uri.ToString(), ", group ", worker->GetTaskId());
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Creating dap conversation with ",
+      dap_name,
+      " @ ",
+      dap_uri.ToString(),
+      ", group ",
+      worker->GetTaskId());
 
   worker->submit();
 }
@@ -45,10 +53,17 @@ OutboundDapConversationCreator::~OutboundDapConversationCreator()
 }
 
 std::shared_ptr<OutboundConversation> OutboundDapConversationCreator::start(
-    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &                                target_path,
+    std::shared_ptr<google::protobuf::Message> initiator)
 {
-  FETCH_LOG_INFO(LOGGING_NAME, "Starting dap conversation with ", target_path.host, ":",
-                 target_path.port, "/", target_path.path);
+  FETCH_LOG_INFO(
+      LOGGING_NAME,
+      "Starting dap conversation with ",
+      target_path.host,
+      ":",
+      target_path.port,
+      "/",
+      target_path.path);
   Lock lock(mutex_);
   auto this_id = ident++;
 
@@ -56,8 +71,8 @@ std::shared_ptr<OutboundConversation> OutboundDapConversationCreator::start(
 
   if (target_path.path == "execute")
   {
-    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(this_id, target_path,
-                                                                           initiator);
+    conv = std::make_shared<OutboundTypedConversation<IdentifierSequence>>(
+        this_id, target_path, initiator);
   }
   else if (target_path.path == "prepareConstraint" || target_path.path == "prepare")
   {
@@ -71,18 +86,18 @@ std::shared_ptr<OutboundConversation> OutboundDapConversationCreator::start(
   }
   else if (target_path.path == "update")
   {
-    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(this_id, target_path,
-                                                                       initiator);
+    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(
+        this_id, target_path, initiator);
   }
   else if (target_path.path == "describe")
   {
-    conv = std::make_shared<OutboundTypedConversation<DapDescription>>(this_id, target_path,
-                                                                       initiator);
+    conv = std::make_shared<OutboundTypedConversation<DapDescription>>(
+        this_id, target_path, initiator);
   }
   else if (target_path.path == "remove" || target_path.path == "removeRow")
   {
-    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(this_id, target_path,
-                                                                       initiator);
+    conv = std::make_shared<OutboundTypedConversation<Successfulness>>(
+        this_id, target_path, initiator);
   }
   else
   {

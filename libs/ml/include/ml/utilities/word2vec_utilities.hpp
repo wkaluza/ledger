@@ -28,30 +28,48 @@ TensorType const &GetEmbeddings(Graph<TensorType> const &g, std::string const &s
 
 template <class TensorType>
 std::vector<std::pair<math::SizeType, typename TensorType::Type>> GetWordIDAnalogies(
-    TensorType const &embeddings, math::SizeType const &word1, math::SizeType const &word2,
-    math::SizeType const &word3, math::SizeType k);
+    TensorType const &    embeddings,
+    math::SizeType const &word1,
+    math::SizeType const &word2,
+    math::SizeType const &word3,
+    math::SizeType        k);
 
 template <class TensorType>
-std::string WordAnalogyTest(dataloaders::Vocab const &vcb, TensorType const &embeddings,
-                            std::string const &word1, std::string const &word2,
-                            std::string const &word3, math::SizeType k);
+std::string WordAnalogyTest(
+    dataloaders::Vocab const &vcb,
+    TensorType const &        embeddings,
+    std::string const &       word1,
+    std::string const &       word2,
+    std::string const &       word3,
+    math::SizeType            k);
 
 template <class TensorType>
-std::string KNNTest(dataloaders::Vocab const &vcb, TensorType const &embeddings,
-                    std::string const &word0, math::SizeType k);
+std::string KNNTest(
+    dataloaders::Vocab const &vcb,
+    TensorType const &        embeddings,
+    std::string const &       word0,
+    math::SizeType            k);
 
 template <class TensorType>
-std::pair<std::string, float> AnalogiesFileTest(dataloaders::Vocab const &vcb,
-                                                TensorType const &        embeddings,
-                                                std::string const &       analogy_file,
-                                                bool                      verbose = false);
+std::pair<std::string, float> AnalogiesFileTest(
+    dataloaders::Vocab const &vcb,
+    TensorType const &        embeddings,
+    std::string const &       analogy_file,
+    bool                      verbose = false);
 
 template <class TensorType>
-void TestEmbeddings(Graph<TensorType> const &g, std::string const &skip_gram_name,
-                    dataloaders::Vocab const &vcb, std::string const &word0,
-                    std::string const &word1, std::string const &word2, std::string const &word3,
-                    math::SizeType K, std::string const &analogies_test_file, bool verbose = true,
-                    std::string const &outfile = "");
+void TestEmbeddings(
+    Graph<TensorType> const & g,
+    std::string const &       skip_gram_name,
+    dataloaders::Vocab const &vcb,
+    std::string const &       word0,
+    std::string const &       word1,
+    std::string const &       word2,
+    std::string const &       word3,
+    math::SizeType            K,
+    std::string const &       analogies_test_file,
+    bool                      verbose = true,
+    std::string const &       outfile = "");
 
 std::string ReadFile(std::string const &path);
 

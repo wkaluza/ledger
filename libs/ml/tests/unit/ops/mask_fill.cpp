@@ -56,8 +56,10 @@ TYPED_TEST(MaskFillTest, forward_test)
       prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(MaskFillTest, forward_test_mask_broadcasted)
@@ -83,8 +85,10 @@ TYPED_TEST(MaskFillTest, forward_test_mask_broadcasted)
       prediction);
 
   // test correct values
-  ASSERT_TRUE(prediction.AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                                  fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.AllClose(
+      gt,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(MaskFillTest, back_test)
@@ -113,10 +117,14 @@ TYPED_TEST(MaskFillTest, back_test)
       error_signal);
 
   // test correct values
-  ASSERT_TRUE(prediction.at(0).AllClose(gt_mask, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction.at(1).AllClose(gt_then, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(0).AllClose(
+      gt_mask,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(1).AllClose(
+      gt_then,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 TYPED_TEST(MaskFillTest, back_test_broadcast_mask)
@@ -145,10 +153,14 @@ TYPED_TEST(MaskFillTest, back_test_broadcast_mask)
       error_signal);
 
   // test correct values
-  ASSERT_TRUE(prediction.at(0).AllClose(gt_mask, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
-  ASSERT_TRUE(prediction.at(1).AllClose(gt_then, fetch::math::function_tolerance<DataType>(),
-                                        fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(0).AllClose(
+      gt_mask,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction.at(1).AllClose(
+      gt_then,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace

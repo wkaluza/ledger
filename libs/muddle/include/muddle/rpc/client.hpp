@@ -55,8 +55,11 @@ public:
   ~Client() override     = default;
 
   template <typename... Args>
-  Promise CallSpecificAddress(Address const &address, ProtocolId const &protocol,
-                              FunctionId const &function, Args &&... args)
+  Promise CallSpecificAddress(
+      Address const &   address,
+      ProtocolId const &protocol,
+      FunctionId const &function,
+      Args &&... args)
   {
     FETCH_LOG_DEBUG(LOGGING_NAME, "Service Client Calling ", protocol, ":", function);
 
@@ -75,13 +78,21 @@ public:
     params << service::SERVICE_FUNCTION_CALL << prom->id();
     service::PackCall(params, protocol, function, std::forward<Args>(args)...);
 
-    FETCH_LOG_TRACE(LOGGING_NAME, "Registering promise ", prom->id(), " with ", protocol, ':',
-                    function, " (call) ", &promises_);
+    FETCH_LOG_TRACE(
+        LOGGING_NAME,
+        "Registering promise ",
+        prom->id(),
+        " with ",
+        protocol,
+        ':',
+        function,
+        " (call) ",
+        &promises_);
 
     if (!DeliverRequest(address, params.data()))
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Call to ", protocol, ":", function, " prom=", prom->id(),
-                     " failed!");
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Call to ", protocol, ":", function, " prom=", prom->id(), " failed!");
 
       prom->Fail(serializers::SerializableException(
           service::error::COULD_NOT_DELIVER,

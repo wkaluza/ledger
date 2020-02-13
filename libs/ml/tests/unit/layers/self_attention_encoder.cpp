@@ -47,7 +47,10 @@ TYPED_TEST(SelfAttentionEncoder, input_output_dimension_test)  // Use the class 
   std::string mask  = g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Mask", {});
 
   std::string output = g.template AddNode<fetch::ml::layers::SelfAttentionEncoder<TypeParam>>(
-      "SelfAttentionEncoder", {input, mask}, static_cast<SizeType>(4), static_cast<SizeType>(12),
+      "SelfAttentionEncoder",
+      {input, mask},
+      static_cast<SizeType>(4),
+      static_cast<SizeType>(12),
       static_cast<SizeType>(24));
   TypeParam input_data = TypeParam({12, 25, 4});
   input_data.Fill(fetch::math::Type<DataType>("0.01"));
@@ -76,8 +79,8 @@ TYPED_TEST(SelfAttentionEncoder, backward_dimension_test)  // Use the class as a
   mask_data.Fill(DataType{1});
 
   TypeParam output(encoder.ComputeOutputShape({std::make_shared<TypeParam>(input_data)}));
-  encoder.Forward({std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(mask_data)},
-                  output);
+  encoder.Forward(
+      {std::make_shared<TypeParam>(input_data), std::make_shared<TypeParam>(mask_data)}, output);
 
   TypeParam error_signal(std::vector<typename TypeParam::SizeType>({12, 20, 5}));
 

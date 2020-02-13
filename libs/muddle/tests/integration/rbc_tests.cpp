@@ -70,10 +70,12 @@ public:
     OUT_OF_SEQUENCE_MSGS,
     WRONG_RANK
   };
-  FaultyRbc(Endpoint &endpoint, MuddleAddress address,
-            std::function<void(ConstByteArray const &address, ConstByteArray const &payload)>
-                                         broadcast_callback,
-            const std::vector<Failures> &failure)
+  FaultyRbc(
+      Endpoint &    endpoint,
+      MuddleAddress address,
+      std::function<void(ConstByteArray const &address, ConstByteArray const &payload)>
+                                   broadcast_callback,
+      const std::vector<Failures> &failure)
     : RBC{endpoint, std::move(address), std::move(broadcast_callback)}
   {
     for (auto f : failure)
@@ -311,10 +313,13 @@ protected:
 class FaultyRbcMember : public RbcMember
 {
 public:
-  FaultyRbcMember(uint16_t port_number, uint16_t index,
-                  const std::vector<FaultyRbc::Failures> &failure)
+  FaultyRbcMember(
+      uint16_t                                port_number,
+      uint16_t                                index,
+      const std::vector<FaultyRbc::Failures> &failure)
     : RbcMember{port_number, index}
-    , rbc_{muddle->GetEndpoint(), muddle_certificate->identity().identifier(),
+    , rbc_{muddle->GetEndpoint(),
+           muddle_certificate->identity().identifier(),
            [this](ConstByteArray const &, ConstByteArray const &payload) -> void {
              OnRbcMessage(payload);
            },
@@ -340,7 +345,8 @@ class HonestRbcMember : public RbcMember
 public:
   HonestRbcMember(uint16_t port_number, uint16_t index)
     : RbcMember{port_number, index}
-    , rbc_{muddle->GetEndpoint(), muddle_certificate->identity().identifier(),
+    , rbc_{muddle->GetEndpoint(),
+           muddle_certificate->identity().identifier(),
            [this](ConstByteArray const &, ConstByteArray const &payload) -> void {
              OnRbcMessage(payload);
            }}
@@ -359,9 +365,11 @@ private:
   RBC rbc_;
 };
 
-void GenerateRbcTest(uint32_t cabinet_size, uint32_t expected_completion_size,
-                     const std::vector<std::vector<FaultyRbc::Failures>> &failures     = {},
-                     uint8_t                                              num_messages = 1)
+void GenerateRbcTest(
+    uint32_t                                             cabinet_size,
+    uint32_t                                             expected_completion_size,
+    const std::vector<std::vector<FaultyRbc::Failures>> &failures     = {},
+    uint8_t                                              num_messages = 1)
 {
 
   RBC::CabinetMembers                     cabinet_members;
@@ -474,11 +482,13 @@ TEST(rbc, no_answer)
 TEST(rbc, too_many_no_answer)
 {
   // Three nodes withhold their answer messages which excludes the node from delivering the message
-  GenerateRbcTest(4, 2,
-                  {{FaultyRbc::Failures::BAD_MESSAGE},
-                   {FaultyRbc::Failures::NO_ANSWER},
-                   {FaultyRbc::Failures::NO_ANSWER},
-                   {FaultyRbc::Failures::NO_ANSWER}});
+  GenerateRbcTest(
+      4,
+      2,
+      {{FaultyRbc::Failures::BAD_MESSAGE},
+       {FaultyRbc::Failures::NO_ANSWER},
+       {FaultyRbc::Failures::NO_ANSWER},
+       {FaultyRbc::Failures::NO_ANSWER}});
 }
 
 TEST(rbc, bad_answer)

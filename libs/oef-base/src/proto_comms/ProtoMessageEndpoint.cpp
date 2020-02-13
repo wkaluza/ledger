@@ -51,5 +51,7 @@ void ProtoMessageEndpoint<TXType, Reader, Sender>::SetEndianness(
 }
 
 template class ProtoMessageEndpoint<std::shared_ptr<google::protobuf::Message>>;
-template class ProtoMessageEndpoint<std::pair<Uri, std::shared_ptr<google::protobuf::Message>>,
-                                    ProtoPathMessageReader, ProtoPathMessageSender>;
+template class ProtoMessageEndpoint<
+    std::pair<Uri, std::shared_ptr<google::protobuf::Message>>,
+    ProtoPathMessageReader,
+    ProtoPathMessageSender>;

@@ -52,10 +52,17 @@ public:
   using ConsensusInterface::NextBlockPtr;
 
   // Construction / Destruction
-  Consensus(StakeManagerPtr stake, BeaconSetupServicePtr beacon_setup, BeaconServicePtr beacon,
-            MainChain const &chain, StorageInterface &storage, Identity mining_identity,
-            uint64_t aeon_period, uint64_t max_cabinet_size, uint64_t block_interval_ms = 1000,
-            NotarisationPtr notarisation = NotarisationPtr{});
+  Consensus(
+      StakeManagerPtr       stake,
+      BeaconSetupServicePtr beacon_setup,
+      BeaconServicePtr      beacon,
+      MainChain const &     chain,
+      StorageInterface &    storage,
+      Identity              mining_identity,
+      uint64_t              aeon_period,
+      uint64_t              max_cabinet_size,
+      uint64_t              block_interval_ms = 1000,
+      NotarisationPtr       notarisation      = NotarisationPtr{});
   Consensus(Consensus const &) = delete;
   Consensus(Consensus &&)      = delete;
   ~Consensus() override        = default;

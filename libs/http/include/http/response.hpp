@@ -34,8 +34,10 @@ namespace http {
 class HTTPResponse : public std::enable_shared_from_this<HTTPResponse>
 {
 public:
-  explicit HTTPResponse(byte_array::ConstByteArray body = {},
-                        MimeType mime = {".html", "text/html"}, Status status = Status::SUCCESS_OK)
+  explicit HTTPResponse(
+      byte_array::ConstByteArray body   = {},
+      MimeType                   mime   = {".html", "text/html"},
+      Status                     status = Status::SUCCESS_OK)
     : body_(std::move(body))
     , mime_(std::move(mime))
     , status_(status)

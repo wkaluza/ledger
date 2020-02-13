@@ -100,8 +100,10 @@ public:
   NotarisationService()                            = delete;
   NotarisationService(NotarisationService const &) = delete;
 
-  NotarisationService(MuddleInterface &muddle, CertificatePtr certificate,
-                      BeaconSetupService &beacon_setup);
+  NotarisationService(
+      MuddleInterface &   muddle,
+      CertificatePtr      certificate,
+      BeaconSetupService &beacon_setup);
 
   /// State methods
   /// @{
@@ -119,18 +121,26 @@ public:
 
   /// Calls from other services
   /// @{
-  void               NotariseBlock(Block const &block);
-  void               SetAeonDetails(uint64_t round_start, uint64_t round_end, uint32_t threshold,
-                                    AeonNotarisationKeys const &cabinet_public_keys);
+  void NotariseBlock(Block const &block);
+  void SetAeonDetails(
+      uint64_t                    round_start,
+      uint64_t                    round_end,
+      uint32_t                    threshold,
+      AeonNotarisationKeys const &cabinet_public_keys);
   AggregateSignature GetAggregateNotarisation(Block const &block);
   /// @}
 
   /// Verifying notarised blocks
   /// @{
-  NotarisationResult Verify(BlockNumber const &block_number, BlockHash const &block_hash,
-                            AggregateSignature const &notarisation);
-  static bool        Verify(BlockHash const &block_hash, AggregateSignature const &notarisation,
-                            AeonNotarisationKeys const &signed_notarisation_key, uint32_t threshold);
+  NotarisationResult Verify(
+      BlockNumber const &       block_number,
+      BlockHash const &         block_hash,
+      AggregateSignature const &notarisation);
+  static bool Verify(
+      BlockHash const &           block_hash,
+      AggregateSignature const &  notarisation,
+      AeonNotarisationKeys const &signed_notarisation_key,
+      uint32_t                    threshold);
   /// @}
 
   std::weak_ptr<core::Runnable> GetWeakRunnable();

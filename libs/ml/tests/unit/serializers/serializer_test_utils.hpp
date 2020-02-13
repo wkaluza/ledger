@@ -60,9 +60,13 @@ std::shared_ptr<SPType> SerialiseDeserialiseBuild(LayerType &layer)
 }
 
 template <typename DataType, typename TensorType, typename LayerType>
-void TestLayerPredictionsEqual(LayerType &layer, LayerType &layer2, TensorType const &input,
-                               std::string const &input_name, std::string const &output_name,
-                               TensorType const &prediction0)
+void TestLayerPredictionsEqual(
+    LayerType &        layer,
+    LayerType &        layer2,
+    TensorType const & input,
+    std::string const &input_name,
+    std::string const &output_name,
+    TensorType const & prediction0)
 {
   // test equality
   layer.SetInput(input_name, input);
@@ -71,12 +75,16 @@ void TestLayerPredictionsEqual(LayerType &layer, LayerType &layer2, TensorType c
   layer2.SetInput(input_name, input);
   TensorType prediction2 = layer2.Evaluate(output_name, true);
 
-  EXPECT_TRUE(prediction.AllClose(prediction2, ::fetch::math::function_tolerance<DataType>(),
-                                  ::fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(prediction.AllClose(
+      prediction2,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 
   // sanity check - serialisation should not affect initial prediction
-  ASSERT_TRUE(prediction0.AllClose(prediction, ::fetch::math::function_tolerance<DataType>(),
-                                   ::fetch::math::function_tolerance<DataType>()));
+  ASSERT_TRUE(prediction0.AllClose(
+      prediction,
+      ::fetch::math::function_tolerance<DataType>(),
+      ::fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace serializer_test_utils

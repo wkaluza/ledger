@@ -60,52 +60,79 @@ struct BERTInterface
 
 template <class TensorType>
 std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel(
-    BERTConfig<TensorType> const &config, fetch::ml::Graph<TensorType> &g);
+    BERTConfig<TensorType> const &config,
+    fetch::ml::Graph<TensorType> &g);
 
 template <class TensorType>
-void EvaluateGraph(fetch::ml::Graph<TensorType> &g, std::vector<std::string> input_nodes,
-                   std::string const &output_node, std::vector<TensorType> input_data,
-                   TensorType output_data, bool verbose = true);
+void EvaluateGraph(
+    fetch::ml::Graph<TensorType> &g,
+    std::vector<std::string>      input_nodes,
+    std::string const &           output_node,
+    std::vector<TensorType>       input_data,
+    TensorType                    output_data,
+    bool                          verbose = true);
 
 template <class TensorType>
 TensorType LoadTensorFromFile(std::string const &file_name);
 
 template <class TensorType>
-void PutWeightInLayerNorm(fetch::ml::Graph<TensorType> &g, SizeType model_dims,
-                          std::string const &gamma_file_name, std::string const &beta_file_name,
-                          std::string const &gamma_weight_name,
-                          std::string const &beta_weight_name);
+void PutWeightInLayerNorm(
+    fetch::ml::Graph<TensorType> &g,
+    SizeType                      model_dims,
+    std::string const &           gamma_file_name,
+    std::string const &           beta_file_name,
+    std::string const &           gamma_weight_name,
+    std::string const &           beta_weight_name);
 
 template <class TensorType>
-void PutWeightInFullyConnected(fetch::ml::Graph<TensorType> &g, SizeType in_size, SizeType out_size,
-                               std::string const &weights_file_name,
-                               std::string const &bias_file_name, std::string const &weights_name,
-                               std::string const &bias_name);
+void PutWeightInFullyConnected(
+    fetch::ml::Graph<TensorType> &g,
+    SizeType                      in_size,
+    SizeType                      out_size,
+    std::string const &           weights_file_name,
+    std::string const &           bias_file_name,
+    std::string const &           weights_name,
+    std::string const &           bias_name);
 
 template <class TensorType>
 void PutWeightInMultiheadAttention(
-    fetch::ml::Graph<TensorType> &g, SizeType n_heads, SizeType model_dims,
-    std::string const &query_weights_file_name, std::string const &query_bias_file_name,
-    std::string const &key_weights_file_name, std::string const &key_bias_file_name,
-    std::string const &value_weights_file_name, std::string const &value_bias_file_name,
-    std::string const &query_weights_name, std::string const &query_bias_name,
-    std::string const &key_weights_name, std::string const &key_bias_name,
-    std::string const &value_weights_name, std::string const &value_bias_name,
-    std::string const &mattn_prefix, std::string const &layer);
+    fetch::ml::Graph<TensorType> &g,
+    SizeType                      n_heads,
+    SizeType                      model_dims,
+    std::string const &           query_weights_file_name,
+    std::string const &           query_bias_file_name,
+    std::string const &           key_weights_file_name,
+    std::string const &           key_bias_file_name,
+    std::string const &           value_weights_file_name,
+    std::string const &           value_bias_file_name,
+    std::string const &           query_weights_name,
+    std::string const &           query_bias_name,
+    std::string const &           key_weights_name,
+    std::string const &           key_bias_name,
+    std::string const &           value_weights_name,
+    std::string const &           value_bias_name,
+    std::string const &           mattn_prefix,
+    std::string const &           layer);
 
 template <class TensorType>
 std::pair<std::vector<std::string>, std::vector<std::string>> LoadPretrainedBertModel(
-    std::string const &file_path, BERTConfig<TensorType> const &config,
+    std::string const &           file_path,
+    BERTConfig<TensorType> const &config,
     fetch::ml::Graph<TensorType> &g);
 
 template <class TensorType>
-TensorType RunPseudoForwardPass(std::vector<std::string> input_nodes, std::string output_node,
-                                BERTConfig<TensorType> const &config,
-                                fetch::ml::Graph<TensorType> g, SizeType batch_size, bool verbose);
+TensorType RunPseudoForwardPass(
+    std::vector<std::string>      input_nodes,
+    std::string                   output_node,
+    BERTConfig<TensorType> const &config,
+    fetch::ml::Graph<TensorType>  g,
+    SizeType                      batch_size,
+    bool                          verbose);
 
 template <class TensorType>
-std::vector<TensorType> PrepareTensorForBert(TensorType const &            data,
-                                             BERTConfig<TensorType> const &config);
+std::vector<TensorType> PrepareTensorForBert(
+    TensorType const &            data,
+    BERTConfig<TensorType> const &config);
 }  // namespace utilities
 }  // namespace ml
 }  // namespace fetch

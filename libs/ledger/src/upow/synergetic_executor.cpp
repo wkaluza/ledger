@@ -60,8 +60,11 @@ SynergeticExecutor::SynergeticExecutor(StorageInterface &storage)
         "ledger_synergetic_executor_complete_duration")}
 {}
 
-void SynergeticExecutor::Verify(WorkQueue &solutions, ProblemData const &problem_data,
-                                std::size_t num_lanes, chain::Address const &miner)
+void SynergeticExecutor::Verify(
+    WorkQueue &           solutions,
+    ProblemData const &   problem_data,
+    std::size_t           num_lanes,
+    chain::Address const &miner)
 {
   std::unique_ptr<SynergeticContract> contract;
 
@@ -118,9 +121,12 @@ void SynergeticExecutor::Verify(WorkQueue &solutions, ProblemData const &problem
       contract->UpdateContractContext(ctx);
 
       // TODO(LDGR-622): charge limit
-      FeeManager::TransactionDetails tx_details{solution->address(), solution->address(),
-                                                shard_mask,          solution->address().display(),
-                                                CHARGE_RATE,         CHARGE_LIMIT};
+      FeeManager::TransactionDetails tx_details{solution->address(),
+                                                solution->address(),
+                                                shard_mask,
+                                                solution->address().display(),
+                                                CHARGE_RATE,
+                                                CHARGE_LIMIT};
 
       ContractExecutionResult result;
 
@@ -134,16 +140,24 @@ void SynergeticExecutor::Verify(WorkQueue &solutions, ProblemData const &problem
 
       if (SynergeticContract::Status::SUCCESS != status)
       {
-        FETCH_LOG_WARN(LOGGING_NAME, "Failed to complete contract: 0x", contract->digest().ToHex(),
-                       " Reason: ", ToString(status));
+        FETCH_LOG_WARN(
+            LOGGING_NAME,
+            "Failed to complete contract: 0x",
+            contract->digest().ToHex(),
+            " Reason: ",
+            ToString(status));
         return;
       }
       FETCH_LOG_DEBUG(LOGGING_NAME, "Calculated fee: ", result.charge);
       fee_manager_.Execute(tx_details, result, solution->block_index(), storage_);
 
-      fee_manager_.SettleFees(miner, result.fee, tx_details.contract_address,
-                              Log2(static_cast<uint32_t>(num_lanes)), solution->block_index(),
-                              storage_);
+      fee_manager_.SettleFees(
+          miner,
+          result.fee,
+          tx_details.contract_address,
+          Log2(static_cast<uint32_t>(num_lanes)),
+          solution->block_index(),
+          storage_);
 
       contract->Detach();
 

@@ -26,10 +26,11 @@ namespace meta {
 namespace detail {
 
 template <typename T>
-auto IsIterableImplementation(int)
-    -> decltype(std::begin(std::declval<T &>()) != std::end(std::declval<T &>()),
-                ++std::declval<decltype(std::begin(std::declval<T &>())) &>(),
-                *std::begin(std::declval<T &>()), std::true_type{});
+auto IsIterableImplementation(int) -> decltype(
+    std::begin(std::declval<T &>()) != std::end(std::declval<T &>()),
+    ++std::declval<decltype(std::begin(std::declval<T &>())) &>(),
+    *std::begin(std::declval<T &>()),
+    std::true_type{});
 
 template <typename T>
 std::false_type IsIterableImplementation(...);
@@ -37,7 +38,8 @@ std::false_type IsIterableImplementation(...);
 
 template <typename T, typename R>
 using IsIterable = std::enable_if_t<
-    std::is_same<decltype(detail::IsIterableImplementation<T>(0)), std::true_type>::value, R>;
+    std::is_same<decltype(detail::IsIterableImplementation<T>(0)), std::true_type>::value,
+    R>;
 
 template <typename T1, typename T2, typename R>
 using IsIterableTwoArg = std::enable_if_t<

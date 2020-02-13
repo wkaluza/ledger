@@ -51,8 +51,10 @@ void Clamp(Type const &min, Type const &max, Type &ret)
 //////////////////
 
 template <typename ArrayType>
-meta::IfIsMathArray<ArrayType, void> Clamp(typename ArrayType::Type const &min,
-                                           typename ArrayType::Type const &max, ArrayType &ret)
+meta::IfIsMathArray<ArrayType, void> Clamp(
+    typename ArrayType::Type const &min,
+    typename ArrayType::Type const &max,
+    ArrayType &                     ret)
 {
   auto ret_it = ret.begin();
   while (ret_it.is_valid())

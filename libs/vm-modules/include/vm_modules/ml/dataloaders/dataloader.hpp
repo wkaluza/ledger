@@ -51,11 +51,15 @@ public:
   };
 
   VMDataLoader(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
-  VMDataLoader(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
-               fetch::vm::Ptr<fetch::vm::String> const &mode);
+  VMDataLoader(
+      fetch::vm::VM *                          vm,
+      fetch::vm::TypeId                        type_id,
+      fetch::vm::Ptr<fetch::vm::String> const &mode);
 
-  static fetch::vm::Ptr<VMDataLoader> Constructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id,
-                                                  fetch::vm::Ptr<fetch::vm::String> const &mode);
+  static fetch::vm::Ptr<VMDataLoader> Constructor(
+      fetch::vm::VM *                          vm,
+      fetch::vm::TypeId                        type_id,
+      fetch::vm::Ptr<fetch::vm::String> const &mode);
 
   static void Bind(fetch::vm::Module &module, bool enable_experimental);
 
@@ -84,8 +88,9 @@ public:
    * Get the next training pair of data and labels from the dataloader
    * @return
    */
-  vm::Ptr<vm::Pair<vm::Ptr<math::VMTensor>,
-                   vm::Ptr<fetch::vm::Array<vm::Ptr<fetch::vm_modules::math::VMTensor>>>>>
+  vm::Ptr<vm::Pair<
+      vm::Ptr<math::VMTensor>,
+      vm::Ptr<fetch::vm::Array<vm::Ptr<fetch::vm_modules::math::VMTensor>>>>>
   GetNext();
 
   bool IsDone();

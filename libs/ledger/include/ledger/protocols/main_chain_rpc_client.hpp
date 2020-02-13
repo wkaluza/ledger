@@ -36,8 +36,11 @@ public:
 
   /// @name Main Chain Rpc Protocol
   /// @{
-  BlocksPromise     GetCommonSubChain(MuddleAddress peer, Digest start, Digest last_seen,
-                                      uint64_t limit) override;
+  BlocksPromise GetCommonSubChain(
+      MuddleAddress peer,
+      Digest        start,
+      Digest        last_seen,
+      uint64_t      limit) override;
   TraveloguePromise TimeTravel(MuddleAddress peer, Digest start) override;
   /// @}
 

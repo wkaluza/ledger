@@ -41,9 +41,12 @@ namespace storage {
  * in the document store
  *
  */
-template <std::size_t BLOCK_SIZE = 2048, typename A = FileBlockType<BLOCK_SIZE>,
-          typename B = KeyValueIndex<>, typename C = VersionedRandomAccessStack<A>,
-          typename D = FileObject<C>>
+template <
+    std::size_t BLOCK_SIZE = 2048,
+    typename A             = FileBlockType<BLOCK_SIZE>,
+    typename B             = KeyValueIndex<>,
+    typename C             = VersionedRandomAccessStack<A>,
+    typename D             = FileObject<C>>
 class DocumentStore
 {
 public:
@@ -68,16 +71,23 @@ public:
   DocumentStore &operator=(DocumentStore const &rhs) = delete;
   DocumentStore &operator=(DocumentStore &&rhs) = delete;
 
-  void Load(std::string const &doc_file, std::string const &doc_diff, std::string const &index_file,
-            std::string const &index_diff, bool const &create = true)
+  void Load(
+      std::string const &doc_file,
+      std::string const &doc_diff,
+      std::string const &index_file,
+      std::string const &index_diff,
+      bool const &       create = true)
   {
     FETCH_LOCK(mutex_);
     file_object_.Load(doc_file, doc_diff, create);
     key_index_.Load(index_file, index_diff, create);
   }
 
-  void New(std::string const &doc_file, std::string const &doc_diff, std::string const &index_file,
-           std::string const &index_diff)
+  void New(
+      std::string const &doc_file,
+      std::string const &doc_diff,
+      std::string const &index_file,
+      std::string const &index_diff)
   {
     FETCH_LOCK(mutex_);
     file_object_.New(doc_file, doc_diff);

@@ -67,16 +67,17 @@ void OefSearchEndpoint::setup()
 
   auto myGroupId = endpoint->GetIdentifier();
 
-  endpoint->SetOnCompleteHandler([myGroupId, myself_wp](bool /*success*/, unsigned long id, Uri uri,
-                                                        ConstCharArrayBuffer buffers) {
-    if (auto myself_sp = myself_wp.lock())
-    {
-      fetch::oef::base::Task::SetThreadGroupId(myGroupId);
-      FETCH_LOG_INFO(LOGGING_NAME, "GOT DATA with path: ", uri.path, ", id: ", id);
-      uri.port = static_cast<uint32_t>(id);
-      myself_sp->factory->ProcessMessageWithUri(uri, buffers);
-    }
-  });
+  endpoint->SetOnCompleteHandler(
+      [myGroupId, myself_wp](
+          bool /*success*/, unsigned long id, Uri uri, ConstCharArrayBuffer buffers) {
+        if (auto myself_sp = myself_wp.lock())
+        {
+          fetch::oef::base::Task::SetThreadGroupId(myGroupId);
+          FETCH_LOG_INFO(LOGGING_NAME, "GOT DATA with path: ", uri.path, ", id: ", id);
+          uri.port = static_cast<uint32_t>(id);
+          myself_sp->factory->ProcessMessageWithUri(uri, buffers);
+        }
+      });
 
   const Uri endpoint_uri = endpoint->GetAddress();
 
@@ -85,8 +86,13 @@ void OefSearchEndpoint::setup()
     {
       // myself_sp -> factory -> EndpointClosed();
       // myself_sp -> factory.reset();
-      FETCH_LOG_INFO(LOGGING_NAME, "Endpoint (id=", myGroupId, ", ", endpoint_uri.ToString(),
-                     ") called OnErrorHandler!");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Endpoint (id=",
+          myGroupId,
+          ", ",
+          endpoint_uri.ToString(),
+          ") called OnErrorHandler!");
       fetch::oef::base::Taskpool::GetDefaultTaskpool().lock()->CancelTaskGroup(myGroupId);
     }
   });
@@ -96,8 +102,13 @@ void OefSearchEndpoint::setup()
     {
       // myself_sp -> factory -> EndpointClosed();
       // myself_sp -> factory.reset();
-      FETCH_LOG_INFO(LOGGING_NAME, "Endpoint (id=", myGroupId, ", ", endpoint_uri.ToString(),
-                     ") called OnEofHandler!");
+      FETCH_LOG_INFO(
+          LOGGING_NAME,
+          "Endpoint (id=",
+          myGroupId,
+          ", ",
+          endpoint_uri.ToString(),
+          ") called OnEofHandler!");
       fetch::oef::base::Taskpool::GetDefaultTaskpool().lock()->CancelTaskGroup(myGroupId);
     }
   });
@@ -108,8 +119,13 @@ void OefSearchEndpoint::setup()
         {
           // myself_sp -> factory -> EndpointClosed();
           // myself_sp -> factory.reset();
-          FETCH_LOG_INFO(LOGGING_NAME, "Endpoint (id=", myGroupId, ", ", endpoint_uri.ToString(),
-                         ") called OnProtoErrorHandler!");
+          FETCH_LOG_INFO(
+              LOGGING_NAME,
+              "Endpoint (id=",
+              myGroupId,
+              ", ",
+              endpoint_uri.ToString(),
+              ") called OnProtoErrorHandler!");
           fetch::oef::base::Taskpool::GetDefaultTaskpool().lock()->CancelTaskGroup(myGroupId);
         }
         FETCH_LOG_INFO(LOGGING_NAME, "Proto error: ", message);

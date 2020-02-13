@@ -92,19 +92,30 @@ void VMGraph::AddPlaceholder(VMPtrString const &name)
   graph_.AddNode<fetch::ml::ops::PlaceHolder<MathTensorType>>(name->string(), {});
 }
 
-void VMGraph::AddFullyConnected(VMPtrString const &name, VMPtrString const &input_name, int in,
-                                int out)
+void VMGraph::AddFullyConnected(
+    VMPtrString const &name,
+    VMPtrString const &input_name,
+    int                in,
+    int                out)
 {
   graph_.AddNode<fetch::ml::layers::FullyConnected<MathTensorType>>(
       name->string(), {input_name->string()}, std::size_t(in), std::size_t(out));
 }
 
-void VMGraph::AddConv1D(VMPtrString const &name, VMPtrString const &input_name, int filters,
-                        int in_channels, int kernel_size, int stride_size)
+void VMGraph::AddConv1D(
+    VMPtrString const &name,
+    VMPtrString const &input_name,
+    int                filters,
+    int                in_channels,
+    int                kernel_size,
+    int                stride_size)
 {
   graph_.AddNode<fetch::ml::layers::Convolution1D<MathTensorType>>(
-      name->string(), {input_name->string()}, static_cast<SizeType>(filters),
-      static_cast<SizeType>(in_channels), static_cast<SizeType>(kernel_size),
+      name->string(),
+      {input_name->string()},
+      static_cast<SizeType>(filters),
+      static_cast<SizeType>(in_channels),
+      static_cast<SizeType>(kernel_size),
       static_cast<SizeType>(stride_size));
 }
 
@@ -115,29 +126,35 @@ void VMGraph::AddRelu(VMPtrString const &name, VMPtrString const &input_name)
 
 void VMGraph::AddSoftmax(VMPtrString const &name, VMPtrString const &input_name)
 {
-  graph_.AddNode<fetch::ml::ops::Softmax<fetch::math::Tensor<DataType>>>(name->string(),
-                                                                         {input_name->string()});
+  graph_.AddNode<fetch::ml::ops::Softmax<fetch::math::Tensor<DataType>>>(
+      name->string(), {input_name->string()});
 }
 
-void VMGraph::AddCrossEntropyLoss(VMPtrString const &name, VMPtrString const &input_name,
-                                  VMPtrString const &label_name)
+void VMGraph::AddCrossEntropyLoss(
+    VMPtrString const &name,
+    VMPtrString const &input_name,
+    VMPtrString const &label_name)
 {
   graph_.AddNode<fetch::ml::ops::CrossEntropyLoss<fetch::math::Tensor<DataType>>>(
       name->string(), {input_name->string(), label_name->string()});
 }
 
-void VMGraph::AddMeanSquareErrorLoss(VMPtrString const &name, VMPtrString const &input_name,
-                                     VMPtrString const &label_name)
+void VMGraph::AddMeanSquareErrorLoss(
+    VMPtrString const &name,
+    VMPtrString const &input_name,
+    VMPtrString const &label_name)
 {
   graph_.AddNode<fetch::ml::ops::MeanSquareErrorLoss<fetch::math::Tensor<DataType>>>(
       name->string(), {input_name->string(), label_name->string()});
 }
 
-void VMGraph::AddDropout(VMPtrString const &name, VMPtrString const &input_name,
-                         DataType const &prob)
+void VMGraph::AddDropout(
+    VMPtrString const &name,
+    VMPtrString const &input_name,
+    DataType const &   prob)
 {
-  graph_.AddNode<fetch::ml::ops::Dropout<MathTensorType>>(name->string(), {input_name->string()},
-                                                          prob);
+  graph_.AddNode<fetch::ml::ops::Dropout<MathTensorType>>(
+      name->string(), {input_name->string()}, prob);
 }
 
 void VMGraph::AddTranspose(VMPtrString const &name, VMPtrString const &input_name)
@@ -169,15 +186,15 @@ void VMGraph::Bind(Module &module, bool const enable_experimental)
         .CreateMemberFunction("addRelu", &VMGraph::AddRelu, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("addSoftmax", &VMGraph::AddSoftmax, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("addDropout", &VMGraph::AddDropout, vm::MAXIMUM_CHARGE)
-        .CreateMemberFunction("addCrossEntropyLoss", &VMGraph::AddCrossEntropyLoss,
-                              vm::MAXIMUM_CHARGE)
-        .CreateMemberFunction("addMeanSquareErrorLoss", &VMGraph::AddMeanSquareErrorLoss,
-                              vm::MAXIMUM_CHARGE)
+        .CreateMemberFunction(
+            "addCrossEntropyLoss", &VMGraph::AddCrossEntropyLoss, vm::MAXIMUM_CHARGE)
+        .CreateMemberFunction(
+            "addMeanSquareErrorLoss", &VMGraph::AddMeanSquareErrorLoss, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("addTranspose", &VMGraph::AddTranspose, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("addExp", &VMGraph::AddExp, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("serializeToString", &VMGraph::SerializeToString, vm::MAXIMUM_CHARGE)
-        .CreateMemberFunction("deserializeFromString", &VMGraph::DeserializeFromString,
-                              vm::MAXIMUM_CHARGE)
+        .CreateMemberFunction(
+            "deserializeFromString", &VMGraph::DeserializeFromString, vm::MAXIMUM_CHARGE)
         .CreateMemberFunction("setWeight", &VMGraph::SetWeight, vm::MAXIMUM_CHARGE);
   }
 }

@@ -244,8 +244,13 @@ void ThreadPoolImplementation::ProcessLoop(std::size_t index)
         // double check the emptiness of the queue because there is a race here
         if (!work_.IsEmpty())
         {
-          FETCH_LOG_DEBUG(LOGGING_NAME, "Restarting the inactive thread (thread: ", index,
-                          " queue: ", name_, ')');
+          FETCH_LOG_DEBUG(
+              LOGGING_NAME,
+              "Restarting the inactive thread (thread: ",
+              index,
+              " queue: ",
+              name_,
+              ')');
           continue;
         }
 
@@ -280,8 +285,8 @@ void ThreadPoolImplementation::ProcessLoop(std::size_t index)
   }
   catch (std::exception const &e)
   {
-    FETCH_LOG_ERROR(LOGGING_NAME,
-                    name_ + ": Thread_pool ProcessLoop is exiting, because: ", e.what());
+    FETCH_LOG_ERROR(
+        LOGGING_NAME, name_ + ": Thread_pool ProcessLoop is exiting, because: ", e.what());
     TODO_FAIL(name_ + ": ThreadPool: Should not get here!");
   }
   catch (...)
@@ -356,8 +361,8 @@ bool ThreadPoolImplementation::ExecuteWorkload(WorkItem const &workload)
     }
     catch (std::exception const &ex)
     {
-      FETCH_LOG_ERROR(LOGGING_NAME, "Caught exception in ThreadPool::ExecuteWorkload - ",
-                      ex.what());
+      FETCH_LOG_ERROR(
+          LOGGING_NAME, "Caught exception in ThreadPool::ExecuteWorkload - ", ex.what());
     }
   }
 

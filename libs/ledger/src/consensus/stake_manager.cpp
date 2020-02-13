@@ -62,7 +62,8 @@ void StakeManager::UpdateCurrentBlock(BlockIndex block_index)
 }
 
 StakeManager::CabinetPtr StakeManager::BuildCabinet(
-    Block const &current, uint64_t cabinet_size,
+    Block const &                             current,
+    uint64_t                                  cabinet_size,
     ConsensusInterface::Minerwhitelist const &whitelist)
 {
   CabinetPtr cabinet{};
@@ -77,7 +78,9 @@ StakeManager::CabinetPtr StakeManager::BuildCabinet(
 }
 
 StakeManager::CabinetPtr StakeManager::BuildCabinet(
-    uint64_t block_number, uint64_t entropy, uint64_t cabinet_size,
+    uint64_t                                  block_number,
+    uint64_t                                  entropy,
+    uint64_t                                  cabinet_size,
     ConsensusInterface::Minerwhitelist const &whitelist) const
 {
   auto snapshot = LookupStakeSnapshot(block_number);
@@ -139,8 +142,9 @@ StakeManager::CabinetPtr StakeManager::Reset(StakeSnapshot &&snapshot, uint64_t 
   return ResetInternal(std::make_shared<StakeSnapshot>(std::move(snapshot)), cabinet_size);
 }
 
-StakeManager::CabinetPtr StakeManager::ResetInternal(StakeSnapshotPtr &&snapshot,
-                                                     uint64_t           cabinet_size)
+StakeManager::CabinetPtr StakeManager::ResetInternal(
+    StakeSnapshotPtr &&snapshot,
+    uint64_t           cabinet_size)
 {
   // history
   stake_history_.clear();

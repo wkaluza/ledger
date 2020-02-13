@@ -119,9 +119,12 @@ public:
    *
    * The resulting block is garantueed (issue 30) to be valid.
    */
-  void GenerateBlock(std::size_t lane_count, std::size_t slice_count,
-                     Strategy strategy = Strategy::NOME, std::size_t batch_size = 1,
-                     std::size_t explore = 10)
+  void GenerateBlock(
+      std::size_t lane_count,
+      std::size_t slice_count,
+      Strategy    strategy   = Strategy::NOME,
+      std::size_t batch_size = 1,
+      std::size_t explore    = 10)
   {
     block_.clear();
     block_fees_.clear();
@@ -284,8 +287,11 @@ private:
    * This function identifies conflicts between transactions and uses
    * this to create the binary optimisation problem.
    */
-  void Init(std::size_t lane_count = 16, Strategy strategy = Strategy::NOME,
-            std::size_t batch_size = std::size_t(-1), uint64_t penalty = 10)
+  void Init(
+      std::size_t lane_count = 16,
+      Strategy    strategy   = Strategy::NOME,
+      std::size_t batch_size = std::size_t(-1),
+      uint64_t    penalty    = 10)
   {
 
     best_solution_energy_ = 0;
@@ -296,20 +302,24 @@ private:
     switch (strategy)
     {
     case Strategy::FEE_OCCUPANCY:
-      std::sort(unspent_.begin(), unspent_.end(),
-                [](std::shared_ptr<chain::TransactionItem> const &a,
-                   std::shared_ptr<chain::TransactionItem> const &b) {
-                  return (a->summary().fee / a->summary().resources.size()) <
-                         (b->summary().fee / b->summary().resources.size());
-                });
+      std::sort(
+          unspent_.begin(),
+          unspent_.end(),
+          [](std::shared_ptr<chain::TransactionItem> const &a,
+             std::shared_ptr<chain::TransactionItem> const &b) {
+            return (a->summary().fee / a->summary().resources.size()) <
+                   (b->summary().fee / b->summary().resources.size());
+          });
       break;
     case Strategy::FEE:
 
-      std::sort(unspent_.begin(), unspent_.end(),
-                [](std::shared_ptr<chain::TransactionItem> const &a,
-                   std::shared_ptr<chain::TransactionItem> const &b) {
-                  return (a->summary().fee) < (b->summary().fee);
-                });
+      std::sort(
+          unspent_.begin(),
+          unspent_.end(),
+          [](std::shared_ptr<chain::TransactionItem> const &a,
+             std::shared_ptr<chain::TransactionItem> const &b) {
+            return (a->summary().fee) < (b->summary().fee);
+          });
       break;
     case Strategy::RANDOM:
       std::random_shuffle(unspent_.begin(), unspent_.end());

@@ -37,15 +37,20 @@ namespace fetch {
 namespace ml {
 
 template <typename TensorType>
-TSNE<TensorType>::TSNE(TensorType const &input_matrix, TensorType const &output_matrix,
-                       DataType const &perplexity)
+TSNE<TensorType>::TSNE(
+    TensorType const &input_matrix,
+    TensorType const &output_matrix,
+    DataType const &  perplexity)
 {
   Init(input_matrix, output_matrix, perplexity);
 }
 
 template <typename TensorType>
-TSNE<TensorType>::TSNE(TensorType const &input_matrix, SizeType const &output_dimensions,
-                       DataType const &perplexity, SizeType const &random_seed)
+TSNE<TensorType>::TSNE(
+    TensorType const &input_matrix,
+    SizeType const &  output_dimensions,
+    DataType const &  perplexity,
+    SizeType const &  random_seed)
 {
   assert(input_matrix.shape().size() >= 2);
   TensorType output_matrix(
@@ -61,10 +66,13 @@ TSNE<TensorType>::TSNE(TensorType const &input_matrix, SizeType const &output_di
  * @param max_iters input Number of optimisation iterations
  */
 template <typename TensorType>
-void TSNE<TensorType>::Optimise(DataType const &learning_rate, SizeType const &max_iters,
-                                DataType const &initial_momentum, DataType const &final_momentum,
-                                SizeType const &final_momentum_steps,
-                                SizeType const &p_later_correction_iteration)
+void TSNE<TensorType>::Optimise(
+    DataType const &learning_rate,
+    SizeType const &max_iters,
+    DataType const &initial_momentum,
+    DataType const &final_momentum,
+    SizeType const &final_momentum_steps,
+    SizeType const &p_later_correction_iteration)
 {
   // Initialise variables
   output_symmetric_affinities_.Fill(DataType{0});
@@ -87,8 +95,8 @@ void TSNE<TensorType>::Optimise(DataType const &learning_rate, SizeType const &m
     CalculateSymmetricAffinitiesQ(output_matrix_, output_symmetric_affinities_, num);
 
     // Compute gradient
-    TensorType gradient = ComputeGradient(output_matrix_, input_symmetric_affinities_,
-                                          output_symmetric_affinities_, num);
+    TensorType gradient = ComputeGradient(
+        output_matrix_, input_symmetric_affinities_, output_symmetric_affinities_, num);
 
     // Perform the update
     if (iter >= final_momentum_steps)
@@ -121,8 +129,9 @@ void TSNE<TensorType>::Optimise(DataType const &learning_rate, SizeType const &m
     output_matrix_ = fetch::math::Add(output_matrix_, i_y);
 
     //  Y = Y - np.tile(np.mean(Y, 0), (n, 1))
-    TensorType y_mean = fetch::math::Divide(fetch::math::ReduceSum(output_matrix_, 0),
-                                            static_cast<DataType>(output_matrix_.shape().at(0)));
+    TensorType y_mean = fetch::math::Divide(
+        fetch::math::ReduceSum(output_matrix_, 0),
+        static_cast<DataType>(output_matrix_.shape().at(0)));
 
     output_matrix_ -= y_mean;
 
@@ -154,8 +163,10 @@ const TensorType TSNE<TensorType>::GetOutputMatrix() const
  * i.e. Sets initial values of TSNE and calculate P values
  */
 template <typename TensorType>
-void TSNE<TensorType>::Init(TensorType const &input_matrix, TensorType const &output_matrix,
-                            DataType const &perplexity)
+void TSNE<TensorType>::Init(
+    TensorType const &input_matrix,
+    TensorType const &output_matrix,
+    DataType const &  perplexity)
 {
   // Flatten input
   if (input_matrix.shape().size() != 2)
@@ -179,16 +190,16 @@ void TSNE<TensorType>::Init(TensorType const &input_matrix, TensorType const &ou
 
   // Find Pj|i values for given perplexity value within perplexity_tolerance
   input_pairwise_affinities_ = TensorType({input_data_size, input_data_size});
-  CalculatePairwiseAffinitiesP(input_matrix_, input_pairwise_affinities_, perplexity,
-                               perplexity_tolerance, max_tries);
+  CalculatePairwiseAffinitiesP(
+      input_matrix_, input_pairwise_affinities_, perplexity, perplexity_tolerance, max_tries);
 
   // Calculate input_symmetric_affinities from input_pairwise_affinities
   // Pij=(Pj|i+Pi|j)/sum(Pij)
   input_symmetric_affinities_ =
       fetch::math::Add(input_pairwise_affinities_, input_pairwise_affinities_.Transpose());
 
-  input_symmetric_affinities_ = fetch::math::Divide(input_symmetric_affinities_,
-                                                    fetch::math::Sum(input_symmetric_affinities_));
+  input_symmetric_affinities_ = fetch::math::Divide(
+      input_symmetric_affinities_, fetch::math::Sum(input_symmetric_affinities_));
   // Early exaggeration
   input_symmetric_affinities_ = fetch::math::Multiply(input_symmetric_affinities_, DataType{4});
 
@@ -222,8 +233,12 @@ void TSNE<TensorType>::RandomInitWeights(TensorType &output_matrix)
  * @param k i value excluded from sums from p(i,i)
  */
 template <typename TensorType>
-void TSNE<TensorType>::Hbeta(TensorType const &d, TensorType &p, DataType &entropy,
-                             DataType const &beta, SizeType const &k)
+void TSNE<TensorType>::Hbeta(
+    TensorType const &d,
+    TensorType &      p,
+    DataType &        entropy,
+    DataType const &  beta,
+    SizeType const &  k)
 {
   // p = -exp(d * beta)
   p = fetch::math::Exp(fetch::math::Multiply(DataType(-1), fetch::math::Multiply(d, beta)));
@@ -249,11 +264,12 @@ void TSNE<TensorType>::Hbeta(TensorType const &d, TensorType &p, DataType &entro
  * @param tolerance input Tolerance of perplexity value
  */
 template <typename TensorType>
-void TSNE<TensorType>::CalculatePairwiseAffinitiesP(TensorType const &input_matrix,
-                                                    TensorType &      pairwise_affinities,
-                                                    DataType const &  target_perplexity,
-                                                    DataType const &  tolerance,
-                                                    SizeType const &  max_tries)
+void TSNE<TensorType>::CalculatePairwiseAffinitiesP(
+    TensorType const &input_matrix,
+    TensorType &      pairwise_affinities,
+    DataType const &  target_perplexity,
+    DataType const &  tolerance,
+    SizeType const &  max_tries)
 {
   SizeType input_data_size = input_matrix.shape().at(0);
 
@@ -355,9 +371,10 @@ void TSNE<TensorType>::CalculatePairwiseAffinitiesP(TensorType const &input_matr
  * @param num output Precalculated values of Student-t based distribution
  */
 template <typename TensorType>
-void TSNE<TensorType>::CalculateSymmetricAffinitiesQ(TensorType const &output_matrix,
-                                                     TensorType &      output_symmetric_affinities,
-                                                     TensorType &      num)
+void TSNE<TensorType>::CalculateSymmetricAffinitiesQ(
+    TensorType const &output_matrix,
+    TensorType &      output_symmetric_affinities,
+    TensorType &      num)
 {
   /*
    * Compute Q pairwise affinities
@@ -394,8 +411,9 @@ void TSNE<TensorType>::CalculateSymmetricAffinitiesQ(TensorType const &output_ma
  * @return random DataType value
  */
 template <typename TensorType>
-typename TSNE<TensorType>::DataType TSNE<TensorType>::GetRandom(DataType /*mean*/,
-                                                                DataType /*standard_deviation*/)
+typename TSNE<TensorType>::DataType TSNE<TensorType>::GetRandom(
+    DataType /*mean*/,
+    DataType /*standard_deviation*/)
 {
   // TODO(issue 752): use normal distribution random instead
   return rng_.AsType<DataType>();
@@ -411,10 +429,11 @@ typename TSNE<TensorType>::DataType TSNE<TensorType>::GetRandom(DataType /*mean*
  * @param ret return value output_matrix shaped tensor of gradient values.
  */
 template <typename TensorType>
-TensorType TSNE<TensorType>::ComputeGradient(TensorType const &output_matrix,
-                                             TensorType const &input_symmetric_affinities,
-                                             TensorType const &output_symmetric_affinities,
-                                             TensorType const &num)
+TensorType TSNE<TensorType>::ComputeGradient(
+    TensorType const &output_matrix,
+    TensorType const &input_symmetric_affinities,
+    TensorType const &output_symmetric_affinities,
+    TensorType const &num)
 {
   assert(input_matrix_.shape().at(0) == output_matrix.shape().at(0));
 

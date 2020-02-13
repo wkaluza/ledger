@@ -113,8 +113,8 @@ void QueryExecutor::ExecuteStore(CompiledStatement const &stmt)
         SemanticPosition position = model->Reduce(obj);
         assert(semantic_search_module_->advertisement_register() != nullptr);
 
-        semantic_search_module_->advertisement_register()->AdvertiseAgent(agent_->id, mname,
-                                                                          position);
+        semantic_search_module_->advertisement_register()->AdvertiseAgent(
+            agent_->id, mname, position);
         agent_->RegisterVocabularyLocation(mname, position);
       },
       obj);
@@ -176,9 +176,10 @@ void QueryExecutor::ExecuteSet(CompiledStatement const &stmt)
       scope_objects.pop_back();
 
       {
-        QueryVariant s =
-            NewQueryVariant(last, TYPE_INSTANCE,
-                            x.token);  // TODO(private issue AEA-132): Nested shared_ptr
+        QueryVariant s = NewQueryVariant(
+            last,
+            TYPE_INSTANCE,
+            x.token);  // TODO(private issue AEA-132): Nested shared_ptr
         stack.push_back(s);
       }
 
@@ -281,15 +282,15 @@ void QueryExecutor::ExecuteSet(CompiledStatement const &stmt)
     auto model         = semantic_search_module_->GetModel(name_of_model);
     if (model == nullptr)
     {
-      error_tracker_.RaiseRuntimeError("Could not find model '" + name_of_model + "'.",
-                                       stmt[stmt.size() - 1].token);
+      error_tracker_.RaiseRuntimeError(
+          "Could not find model '" + name_of_model + "'.", stmt[stmt.size() - 1].token);
       return;
     }
 
     if (!model->Validate(last))
     {
-      error_tracker_.RaiseRuntimeError("Instance does not match model requirements.",
-                                       stmt[stmt.size() - 1].token);
+      error_tracker_.RaiseRuntimeError(
+          "Instance does not match model requirements.", stmt[stmt.size() - 1].token);
       // TODO(private issue AEA-138): List what is wrong
       return;
     }
@@ -473,8 +474,8 @@ void QueryExecutor::ExecuteDefine(CompiledStatement const &stmt)
 
       if (!semantic_search_module_->HasFunction(function_name))
       {
-        error_tracker_.RaiseRuntimeError("Function '" + function_name + "' does not exist.",
-                                         stack_[n]->token());
+        error_tracker_.RaiseRuntimeError(
+            "Function '" + function_name + "' does not exist.", stack_[n]->token());
         return;
       }
 
@@ -527,8 +528,8 @@ void QueryExecutor::ExecuteDefine(CompiledStatement const &stmt)
     stack_.pop_back();
 
     // TODO(private issue AEA-137): add some sanity checks here
-    semantic_search_module_->AddModel(static_cast<std::string>(key->As<Token>()),
-                                      last.vocabulary_schema());
+    semantic_search_module_->AddModel(
+        static_cast<std::string>(key->As<Token>()), last.vocabulary_schema());
   }
   else
   {

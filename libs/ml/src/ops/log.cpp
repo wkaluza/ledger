@@ -73,8 +73,9 @@ void Log<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
  * f'(input0)= error_signal/input0
  */
 template <class TensorType>
-std::vector<TensorType> Log<TensorType>::Backward(VecTensorType const &inputs,
-                                                  TensorType const &   error_signal)
+std::vector<TensorType> Log<TensorType>::Backward(
+    VecTensorType const &inputs,
+    TensorType const &   error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == this->ComputeOutputShape(inputs));

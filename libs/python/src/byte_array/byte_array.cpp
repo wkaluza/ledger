@@ -31,11 +31,15 @@ void BuildByteArray(pybind11::module &module)
       .def(py::init<std::string const &>())
       .def(py::init<fetch::byte_array::ByteArray const &>())
       .def(py::init<std::initializer_list<ByteArray::ValueType>>())
-      .def(py::init<fetch::byte_array::ByteArray const &, std::size_t const &,
-                    std::size_t const &>())
+      .def(py::init<
+           fetch::byte_array::ByteArray const &,
+           std::size_t const &,
+           std::size_t const &>())
       .def(py::init<fetch::byte_array::ByteArray::SuperType const &>())
-      .def(py::init<fetch::byte_array::ByteArray::SuperType const &, std::size_t const &,
-                    std::size_t const &>())
+      .def(py::init<
+           fetch::byte_array::ByteArray::SuperType const &,
+           std::size_t const &,
+           std::size_t const &>())
       .def(py::self + fetch::byte_array::ByteArray())
       .def("Resize", &ByteArray::Resize)
       .def("Reserve", &ByteArray::Reserve);

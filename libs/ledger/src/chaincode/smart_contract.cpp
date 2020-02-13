@@ -110,8 +110,8 @@ SmartContract::SmartContract(std::string const &source)
 {
   if (source_.empty())
   {
-    throw SmartContractException(SmartContractException::Category::COMPILATION,
-                                 {"No source present in contract"});
+    throw SmartContractException(
+        SmartContractException::Category::COMPILATION, {"No source present in contract"});
   }
 
   FETCH_LOG_DEBUG(LOGGING_NAME, "Constructing contract: 0x", contract_digest().ToHex());
@@ -150,8 +150,13 @@ SmartContract::SmartContract(std::string const &source)
     case FunctionDecoratorKind::WORK:
       break;
     case FunctionDecoratorKind::ON_INIT:
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Registering on_init: ", fn.name,
-                      " (Contract: ", contract_digest().ToBase64(), ')');
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Registering on_init: ",
+          fn.name,
+          " (Contract: ",
+          contract_digest().ToBase64(),
+          ')');
 
       // also record the function
       init_fn_name_ = fn.name;
@@ -160,16 +165,26 @@ SmartContract::SmartContract(std::string const &source)
       OnInitialise(this, &SmartContract::InvokeInit);
       break;
     case FunctionDecoratorKind::ACTION:
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Registering Action: ", fn.name,
-                      " (Contract: ", contract_digest().ToBase64(), ')');
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Registering Action: ",
+          fn.name,
+          " (Contract: ",
+          contract_digest().ToBase64(),
+          ')');
 
       // register the transaction handler
-      OnTransaction(fn.name,
-                    [this, name = fn.name](auto const &tx) { return InvokeAction(name, tx); });
+      OnTransaction(
+          fn.name, [this, name = fn.name](auto const &tx) { return InvokeAction(name, tx); });
       break;
     case FunctionDecoratorKind::QUERY:
-      FETCH_LOG_DEBUG(LOGGING_NAME, "Registering Query: ", fn.name,
-                      " (Contract: ", contract_digest().ToBase64(), ')');
+      FETCH_LOG_DEBUG(
+          LOGGING_NAME,
+          "Registering Query: ",
+          fn.name,
+          " (Contract: ",
+          contract_digest().ToBase64(),
+          ')');
 
       // register the query handler
       OnQuery(fn.name, [this, name = fn.name](auto const &request, auto &response) {
@@ -178,8 +193,8 @@ SmartContract::SmartContract(std::string const &source)
       break;
     case FunctionDecoratorKind::INVALID:
       FETCH_LOG_DEBUG(LOGGING_NAME, "Invalid function decorator found");
-      throw SmartContractException(SmartContractException::Category::COMPILATION,
-                                   {"Invalid decorator found in contract"});
+      throw SmartContractException(
+          SmartContractException::Category::COMPILATION, {"Invalid decorator found in contract"});
     }
   }
 }
@@ -344,8 +359,11 @@ void AddStringToParameterPack(vm::VM *vm, vm::ParameterPack &pack, variant::Vari
  * @param pack The reference to the parameter pack to be populated
  * @param obj structured data object represented by generic fetch::variant::Variant type
  */
-void AddStructuredDataObjectToParameterPack(vm::VM *vm, vm::TypeId expected_type_id,
-                                            vm::ParameterPack &pack, variant::Variant const &obj)
+void AddStructuredDataObjectToParameterPack(
+    vm::VM *                vm,
+    vm::TypeId              expected_type_id,
+    vm::ParameterPack &     pack,
+    variant::Variant const &obj)
 {
   if (!vm->IsDefaultSerializeConstructable(expected_type_id))
   {
@@ -369,9 +387,11 @@ void AddStructuredDataObjectToParameterPack(vm::VM *vm, vm::TypeId expected_type
  * @param pack The reference to the parameter pack to be populated
  * @param obj structured data object represented by generic MsgPack type
  */
-void AddStructuredDataObjectToParameterPack(vm::VM *vm, vm::TypeId expected_type_id,
-                                            vm::ParameterPack & /*pack*/,
-                                            msgpack::object const & /*obj*/)
+void AddStructuredDataObjectToParameterPack(
+    vm::VM *   vm,
+    vm::TypeId expected_type_id,
+    vm::ParameterPack & /*pack*/,
+    msgpack::object const & /*obj*/)
 {
   if (!vm->IsDefaultSerializeConstructable(expected_type_id))
   {
@@ -392,8 +412,11 @@ void AddStructuredDataObjectToParameterPack(vm::VM *vm, vm::TypeId expected_type
  * @param variant The input variant from which the value is extracted
  */
 template <typename T>
-void AddToParameterPack(vm::VM *vm, vm::ParameterPack &params, vm::TypeId expected_type_id,
-                        T const &variant)
+void AddToParameterPack(
+    vm::VM *           vm,
+    vm::ParameterPack &params,
+    vm::TypeId         expected_type_id,
+    T const &          variant)
 {
   switch (expected_type_id)
   {
@@ -480,8 +503,8 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
 
     if (msgpack::type::ARRAY != container.type)
     {
-      FETCH_LOG_WARN(LOGGING_NAME,
-                     "Incorrect format, expected array of arguments. Input: ", parameter_data);
+      FETCH_LOG_WARN(
+          LOGGING_NAME, "Incorrect format, expected array of arguments. Input: ", parameter_data);
       return {Status::FAILED};
     }
 
@@ -504,11 +527,14 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
 
   std::unordered_set<chain::Address> call_history{tx.contract_address()};
   vm::ContractInvocationHandler      contract_invocation_handler;
-  contract_invocation_handler =
-      [this, &contract_invocation_handler, tx, &call_history](
-          vm::VM *vm, std::string const &identity, Executable::Contract const & /* contract */,
-          Executable::Function const &function, fetch::vm::VariantArray parameters,
-          std::string &error, vm::Variant &output) -> bool {
+  contract_invocation_handler = [this, &contract_invocation_handler, tx, &call_history](
+                                    vm::VM *           vm,
+                                    std::string const &identity,
+                                    Executable::Contract const & /* contract */,
+                                    Executable::Function const &function,
+                                    fetch::vm::VariantArray     parameters,
+                                    std::string &               error,
+                                    vm::Variant &               output) -> bool {
     //
     auto const kind = vm::DetermineKind(function);
     if (kind != FunctionDecoratorKind::ACTION)
@@ -561,10 +587,10 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
 
     vm_modules::ledger::BindBalanceFunction(module, *loaded_contract);
     vm_modules::ledger::BindTransferFunction(module, *loaded_contract);
-    module.CreateFreeFunction("getContext",
-                              [&loaded_contract](vm::VM *) -> vm_modules::ledger::ContextPtr {
-                                return loaded_contract->context_;
-                              });
+    module.CreateFreeFunction(
+        "getContext", [&loaded_contract](vm::VM *) -> vm_modules::ledger::ContextPtr {
+          return loaded_contract->context_;
+        });
 
     vm::VM vm2{&module};
     loaded_contract->context_ =
@@ -585,8 +611,8 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
 
     vm::ParameterPack param_pack{vm2.registered_types(), std::move(parameters)};
 
-    ContractContext ctx{c.token_contract, called_contract_address, c.storage, c.state_adapter,
-                        c.block_index};
+    ContractContext ctx{
+        c.token_contract, called_contract_address, c.storage, c.state_adapter, c.block_index};
     ContractContextAttacher raii{*loaded_contract, ctx};
     c.state_adapter->PushContext(identity);
 
@@ -615,9 +641,12 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
   if (target_function == nullptr ||
       input_params.size() != static_cast<std::size_t>(target_function->num_parameters))
   {
-    FETCH_LOG_WARN(LOGGING_NAME,
-                   "Incorrect number of parameters provided for target function. Received: ",
-                   input_params.size(), " Expected: ", target_function->num_parameters);
+    FETCH_LOG_WARN(
+        LOGGING_NAME,
+        "Incorrect number of parameters provided for target function. Received: ",
+        input_params.size(),
+        " Expected: ",
+        target_function->num_parameters);
     return {Status::FAILED};
   }
 
@@ -670,8 +699,9 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
  * @param owner The owner identity of the contract (i.e. the creator of the contract)
  * @return The corresponding status result for the operation
  */
-Contract::Result SmartContract::InvokeInit(chain::Address const &    owner,
-                                           chain::Transaction const &tx)
+Contract::Result SmartContract::InvokeInit(
+    chain::Address const &    owner,
+    chain::Transaction const &tx)
 {
   // Get clean VM instance
   auto vm = std::make_unique<vm::VM>(module_.get());
@@ -736,8 +766,10 @@ Contract::Result SmartContract::InvokeInit(chain::Address const &    owner,
  * @param request The query request
  * @return The corresponding status result for the operation
  */
-SmartContract::Status SmartContract::InvokeQuery(std::string const &name, Query const &request,
-                                                 Query &response)
+SmartContract::Status SmartContract::InvokeQuery(
+    std::string const &name,
+    Query const &      request,
+    Query &            response)
 {
   // get clean VM instance
   auto vm = std::make_unique<vm::VM>(module_.get());
@@ -880,8 +912,9 @@ SmartContract::Status SmartContract::InvokeQuery(std::string const &name, Query 
         {
           response["status"] = "failed";
           response["result"] = "Failed to serialise object to JSON variant";
-          FETCH_LOG_WARN(LOGGING_NAME, "Failed to serialise object to JSON variant for " +
-                                           output.object->GetTypeName());
+          FETCH_LOG_WARN(
+              LOGGING_NAME,
+              "Failed to serialise object to JSON variant for " + output.object->GetTypeName());
           return Status::FAILED;
         }
       }

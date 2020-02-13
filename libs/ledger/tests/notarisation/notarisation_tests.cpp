@@ -74,8 +74,12 @@ struct NotarisationNode
   std::shared_ptr<StakeManager>              stake_manager;
   Consensus                                  consensus;
 
-  NotarisationNode(uint16_t port_number, uint16_t index, uint64_t cabinet_size,
-                   uint64_t aeon_period, double threshold)
+  NotarisationNode(
+      uint16_t port_number,
+      uint16_t index,
+      uint64_t cabinet_size,
+      uint64_t aeon_period,
+      double   threshold)
     : muddle_port{port_number}
     , event_manager{EventManager::New()}
     , network_manager{"NetworkManager" + std::to_string(index), 1}
@@ -83,18 +87,29 @@ struct NotarisationNode
     , muddle_certificate{CreateNewCertificate()}
     , muddle{muddle::CreateMuddleFake("Test", muddle_certificate, network_manager, "127.0.0.1")}
     , chain{ledger::MainChain::Mode::IN_MEMORY_DB}
-    , beacon_setup_service{new TrustedDealerSetupService{
-          *muddle, manifest_cache, muddle_certificate, threshold, aeon_period}}
-    , beacon_service{new BeaconService{*muddle, muddle_certificate, *beacon_setup_service,
+    , beacon_setup_service{new TrustedDealerSetupService{*muddle,
+                                                         manifest_cache,
+                                                         muddle_certificate,
+                                                         threshold,
+                                                         aeon_period}}
+    , beacon_service{new BeaconService{*muddle,
+                                       muddle_certificate,
+                                       *beacon_setup_service,
                                        event_manager}}
-    , notarisation_service{new NotarisationService{*muddle, muddle_certificate,
+    , notarisation_service{new NotarisationService{*muddle,
+                                                   muddle_certificate,
                                                    *beacon_setup_service}}
     , stake_manager{new StakeManager{}}
-    , consensus{stake_manager,  beacon_setup_service,
-                beacon_service, chain,
-                storage_unit,   muddle_certificate->identity(),
-                aeon_period,    cabinet_size,
-                1000,           notarisation_service}
+    , consensus{stake_manager,
+                beacon_setup_service,
+                beacon_service,
+                chain,
+                storage_unit,
+                muddle_certificate->identity(),
+                aeon_period,
+                cabinet_size,
+                1000,
+                notarisation_service}
   {
     consensus.UpdateCurrentBlock(*chain.GetHeaviestBlock());
 
@@ -224,7 +239,11 @@ TEST(notarisation, notarise_blocks)
   for (uint32_t i = 0; i < cabinet_size; ++i)
   {
     nodes[i]->beacon_setup_service->StartNewCabinet(
-        cabinet, round_start, start_time, prev_entropy, dealer.GetDkgKeys(nodes[i]->address()),
+        cabinet,
+        round_start,
+        start_time,
+        prev_entropy,
+        dealer.GetDkgKeys(nodes[i]->address()),
         dealer.GetNotarisationKeys(nodes[i]->address()));
   }
 

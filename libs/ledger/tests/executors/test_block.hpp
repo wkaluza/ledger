@@ -49,8 +49,11 @@ struct TestBlock
     return {digest};
   }
 
-  void GenerateBlock(uint32_t seed, uint32_t log2_num_lanes, std::size_t num_slices,
-                     Digest const &previous_hash)
+  void GenerateBlock(
+      uint32_t      seed,
+      uint32_t      log2_num_lanes,
+      std::size_t   num_slices,
+      Digest const &previous_hash)
   {
     std::mt19937 rng;
     rng.seed(seed);
@@ -171,8 +174,11 @@ struct TestBlock
     return values;
   }
 
-  static TestBlock Generate(std::size_t log2_num_lanes, std::size_t num_slices, uint32_t seed,
-                            Digest const &previous_hash = fetch::chain::ZERO_HASH)
+  static TestBlock Generate(
+      std::size_t   log2_num_lanes,
+      std::size_t   num_slices,
+      uint32_t      seed,
+      Digest const &previous_hash = fetch::chain::ZERO_HASH)
   {
     TestBlock block;
     block.GenerateBlock(seed, static_cast<uint32_t>(log2_num_lanes), num_slices, previous_hash);

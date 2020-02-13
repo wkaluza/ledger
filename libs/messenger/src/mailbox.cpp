@@ -49,8 +49,8 @@ void Mailbox::OnNewMessagePacket(muddle::Packet const &packet, Address const & /
   }
   catch (std::exception const &e)
   {
-    FETCH_LOG_ERROR("Mailbox",
-                    "Retrieved messages malformed: ", static_cast<std::string>(e.what()));
+    FETCH_LOG_ERROR(
+        "Mailbox", "Retrieved messages malformed: ", static_cast<std::string>(e.what()));
   }
 }
 
@@ -82,8 +82,8 @@ void Mailbox::SendMessage(Message message)
   serializers::MsgPackSerializer serializer;
   serializer << message;
 
-  message_endpoint_.Send(message.to.node, SERVICE_MSG_TRANSPORT, CHANNEL_MESSENGER_TRANSPORT,
-                         serializer.data());
+  message_endpoint_.Send(
+      message.to.node, SERVICE_MSG_TRANSPORT, CHANNEL_MESSENGER_TRANSPORT, serializer.data());
 }
 
 Mailbox::MessageList Mailbox::GetMessages(Address messenger)

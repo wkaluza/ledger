@@ -27,21 +27,26 @@
 #include <utility>
 
 template <typename IN_PROTO, typename OUT_PROTO, typename MIDDLE_PROTO>
-class DapSerialConversationTask
-  : virtual public fetch::oef::base::TaskChainSerial<IN_PROTO, OUT_PROTO,
-                                                     DapInputDataType<MIDDLE_PROTO>,
-                                                     DapConversationTask<IN_PROTO, OUT_PROTO>>
+class DapSerialConversationTask : virtual public fetch::oef::base::TaskChainSerial<
+                                      IN_PROTO,
+                                      OUT_PROTO,
+                                      DapInputDataType<MIDDLE_PROTO>,
+                                      DapConversationTask<IN_PROTO, OUT_PROTO>>
 {
 public:
-  using Parent =
-      fetch::oef::base::TaskChainSerial<IN_PROTO, OUT_PROTO, DapInputDataType<MIDDLE_PROTO>,
-                                        DapConversationTask<IN_PROTO, OUT_PROTO>>;
+  using Parent = fetch::oef::base::TaskChainSerial<
+      IN_PROTO,
+      OUT_PROTO,
+      DapInputDataType<MIDDLE_PROTO>,
+      DapConversationTask<IN_PROTO, OUT_PROTO>>;
   using TaskType = DapConversationTask<IN_PROTO, OUT_PROTO>;
 
   static constexpr char const *LOGGING_NAME = "DapSerialConversationTask";
 
-  DapSerialConversationTask(uint32_t msg_id, std::shared_ptr<OutboundConversations> outbounds,
-                            std::string protocol = "dap")
+  DapSerialConversationTask(
+      uint32_t                               msg_id,
+      std::shared_ptr<OutboundConversations> outbounds,
+      std::string                            protocol = "dap")
     : Parent::Parent()
     , Parent()
     , msg_id_{msg_id}
@@ -63,8 +68,9 @@ public:
   bool operator==(const DapSerialConversationTask &other) = delete;
   bool operator<(const DapSerialConversationTask &other)  = delete;
 
-  std::shared_ptr<TaskType> CreateTask(const DapInputDataType<MIDDLE_PROTO> &data,
-                                       std::shared_ptr<IN_PROTO>             input) override
+  std::shared_ptr<TaskType> CreateTask(
+      const DapInputDataType<MIDDLE_PROTO> &data,
+      std::shared_ptr<IN_PROTO>             input) override
   {
     return std::make_shared<DapConversationTask<IN_PROTO, OUT_PROTO>>(
         data.dap_name, data.path, msg_id_, input, outbounds, protocol_);

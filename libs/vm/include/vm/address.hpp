@@ -174,38 +174,41 @@ public:
     return lhs->address_ >= rhs->address_;
   }
 
-  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                      Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                         Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsLessThanChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                         Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsLessThanChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
+      override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsLessThanOrEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                                Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsLessThanOrEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/,
+      Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsGreaterThanChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                            Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsGreaterThanChargeEstimator(
+      Ptr<Object> const & /*lhso*/,
+      Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsGreaterThanOrEqualChargeEstimator(Ptr<Object> const & /*lhso*/,
-                                                   Ptr<Object> const & /*rhso*/) override
+  ChargeAmount IsGreaterThanOrEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/,
+      Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
@@ -220,8 +223,8 @@ public:
   {
     if (!chain::Address::Parse(obj.template As<byte_array::ConstByteArray>(), address_))
     {
-      vm_->RuntimeError("Unable to parse address during JSON deserialization of " + GetTypeName() +
-                        ".");
+      vm_->RuntimeError(
+          "Unable to parse address during JSON deserialization of " + GetTypeName() + ".");
     }
     return true;
   }

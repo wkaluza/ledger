@@ -70,11 +70,16 @@ public:
   P2PTrustInterface()          = default;
   virtual ~P2PTrustInterface() = default;
 
-  virtual void AddFeedback(IDENTITY const &peer_ident, TrustSubject subject,
-                           TrustQuality quality) = 0;
+  virtual void AddFeedback(
+      IDENTITY const &peer_ident,
+      TrustSubject    subject,
+      TrustQuality    quality) = 0;
 
-  virtual void AddFeedback(IDENTITY const &peer_ident, ConstByteArray const &object_ident,
-                           TrustSubject subject, TrustQuality quality) = 0;
+  virtual void AddFeedback(
+      IDENTITY const &      peer_ident,
+      ConstByteArray const &object_ident,
+      TrustSubject          subject,
+      TrustQuality          quality) = 0;
 
   virtual IdentitySet GetBestPeers(std::size_t maximum) const = 0;
   virtual PeerTrusts  GetPeersAndTrusts() const               = 0;

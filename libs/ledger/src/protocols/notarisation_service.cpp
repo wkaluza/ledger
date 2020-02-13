@@ -30,8 +30,10 @@ namespace ledger {
 
 char const *StateToString(NotarisationService::State state);
 
-NotarisationService::NotarisationService(MuddleInterface &muddle, CertificatePtr certificate,
-                                         BeaconSetupService &beacon_setup)
+NotarisationService::NotarisationService(
+    MuddleInterface &   muddle,
+    CertificatePtr      certificate,
+    BeaconSetupService &beacon_setup)
   : endpoint_{muddle.GetEndpoint()}
   , rpc_client_{"NotarisationService", endpoint_, SERVICE_MAIN_CHAIN, CHANNEL_RPC}
   , notarisation_protocol_{*this}
@@ -136,7 +138,9 @@ NotarisationService::State NotarisationService::OnCollectNotarisations()
   }
 
   notarisation_promise_ = rpc_client_.CallSpecificAddress(
-      *it, RPC_NOTARISATION, NotarisationServiceProtocol::GET_NOTARISATIONS,
+      *it,
+      RPC_NOTARISATION,
+      NotarisationServiceProtocol::GET_NOTARISATIONS,
       notarisation_collection_height_);
 
   // Note: this delay is effectively how long we wait for the network event to resolve
@@ -207,11 +211,13 @@ NotarisationService::State NotarisationService::OnVerifyNotarisations()
                   signed_not.ecdsa_signature))
           {
             // Verify notarisation
-            if (notarisation_unit->Verify(block_hash, signed_not.notarisation_share,
-                                          address_sig_pairs.first))
+            if (notarisation_unit->Verify(
+                    block_hash, signed_not.notarisation_share, address_sig_pairs.first))
             {
-              FETCH_LOG_DEBUG(LOGGING_NAME, "Added notarisation from node ",
-                              notarisation_unit->Index(address_sig_pairs.first));
+              FETCH_LOG_DEBUG(
+                  LOGGING_NAME,
+                  "Added notarisation from node ",
+                  notarisation_unit->Index(address_sig_pairs.first));
               existing_notarisations[address_sig_pairs.first] = address_sig_pairs.second;
             }
           }
@@ -239,10 +245,11 @@ NotarisationService::State NotarisationService::OnVerifyNotarisations()
       auto sig = notarisation_unit->ComputeAggregateSignature(notarisation_shares);
       assert(notarisation_unit->VerifyAggregateSignature(hash, sig));
 
-      FETCH_LOG_INFO(LOGGING_NAME, "Notarisation built for block number ",
-                     notarisation_collection_height_);
-      assert(notarisations_built_[notarisation_collection_height_].find(hash) ==
-             notarisations_built_[notarisation_collection_height_].end());
+      FETCH_LOG_INFO(
+          LOGGING_NAME, "Notarisation built for block number ", notarisation_collection_height_);
+      assert(
+          notarisations_built_[notarisation_collection_height_].find(hash) ==
+          notarisations_built_[notarisation_collection_height_].end());
       notarisations_built_[notarisation_collection_height_][hash] = sig;
     }
   }
@@ -349,9 +356,11 @@ void NotarisationService::NotariseBlock(Block const &block)
   FETCH_LOG_DEBUG(LOGGING_NAME, "Notarised block at height ", block.block_number);
 }
 
-void NotarisationService::SetAeonDetails(uint64_t round_start, uint64_t round_end,
-                                         uint32_t                    threshold,
-                                         AeonNotarisationKeys const &cabinet_public_keys)
+void NotarisationService::SetAeonDetails(
+    uint64_t                    round_start,
+    uint64_t                    round_end,
+    uint32_t                    threshold,
+    AeonNotarisationKeys const &cabinet_public_keys)
 {
   FETCH_LOCK(mutex_);
 
@@ -365,8 +374,8 @@ void NotarisationService::SetAeonDetails(uint64_t round_start, uint64_t round_en
     {
       public_notarisation_keys.insert({key.first, key.second.first});
     }
-    active_notarisation_unit_->SetAeonDetails(round_start, round_end, threshold,
-                                              public_notarisation_keys);
+    active_notarisation_unit_->SetAeonDetails(
+        round_start, round_end, threshold, public_notarisation_keys);
     assert(!active_notarisation_unit_->CanSign());
   }
 }
@@ -405,7 +414,8 @@ uint64_t NotarisationService::BlockNumberCutoff() const
 }
 
 NotarisationService::NotarisationResult NotarisationService::Verify(
-    BlockNumber const &block_number, BlockHash const &block_hash,
+    BlockNumber const &       block_number,
+    BlockHash const &         block_hash,
     AggregateSignature const &notarisation)
 {
   FETCH_LOCK(mutex_);
@@ -443,10 +453,11 @@ NotarisationService::NotarisationResult NotarisationService::Verify(
   return NotarisationResult::FAIL_VERIFICATION;
 }
 
-bool NotarisationService::Verify(BlockHash const &           block_hash,
-                                 AggregateSignature const &  notarisation,
-                                 AeonNotarisationKeys const &signed_notarisation_key,
-                                 uint32_t                    threshold)
+bool NotarisationService::Verify(
+    BlockHash const &           block_hash,
+    AggregateSignature const &  notarisation,
+    AeonNotarisationKeys const &signed_notarisation_key,
+    uint32_t                    threshold)
 {
   std::vector<NotarisationManager::PublicKey> notarisation_keys;
   for (auto const &key_sig_pair : signed_notarisation_key)
@@ -456,8 +467,8 @@ bool NotarisationService::Verify(BlockHash const &           block_hash,
 
   if (count(notarisation.second.begin(), notarisation.second.end(), 1) == threshold)
   {
-    return NotarisationManager::VerifyAggregateSignature(block_hash, notarisation,
-                                                         notarisation_keys);
+    return NotarisationManager::VerifyAggregateSignature(
+        block_hash, notarisation, notarisation_keys);
   }
   return false;
 }
