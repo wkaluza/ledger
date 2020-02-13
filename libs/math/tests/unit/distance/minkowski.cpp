@@ -31,8 +31,7 @@ namespace test {
 
 template <typename T>
 class MinkowskiTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MinkowskiTest, TensorFloatingTypes, );
 

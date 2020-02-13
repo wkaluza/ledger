@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class MaxPoolTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MaxPoolTest, fetch::math::test::TensorFloatingTypes, );
 

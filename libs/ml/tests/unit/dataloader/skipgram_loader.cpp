@@ -42,8 +42,7 @@ struct TrainingParams
 
 template <typename T>
 class SkipGramDataloaderTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SkipGramDataloaderTest, math::test::TensorFloatingTypes, );
 

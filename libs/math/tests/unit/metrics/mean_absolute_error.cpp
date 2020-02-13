@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class MeanAbsoluteErrorTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MeanAbsoluteErrorTest, TensorFloatingTypes, );
 

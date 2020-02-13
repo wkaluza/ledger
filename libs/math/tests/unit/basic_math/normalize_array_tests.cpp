@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class NormalizeArrayTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(NormalizeArrayTest, TensorFloatingTypes, );
 

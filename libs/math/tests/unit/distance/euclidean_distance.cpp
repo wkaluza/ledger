@@ -28,8 +28,7 @@ namespace math {
 namespace test {
 template <typename T>
 class EuclideanTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(EuclideanTest, TensorFloatingTypes, );
 

@@ -42,8 +42,7 @@ namespace test {
 
 template <typename T>
 class GraphTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(GraphTest, math::test::TensorFloatingTypes, );
 

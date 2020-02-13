@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class TensorConstructorTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TensorConstructorTest, IntAndFloatingTypes, );
 

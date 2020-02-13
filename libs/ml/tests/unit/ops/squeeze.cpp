@@ -31,8 +31,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class SqueezeTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SqueezeTest, fetch::math::test::TensorFloatingTypes, );
 

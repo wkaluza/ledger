@@ -414,8 +414,7 @@ static const TestCase
 };
 
 class JsonTests : public ::testing::TestWithParam<TestCase>
-{
-};
+{};
 
 TEST_P(JsonTests, CheckParsing)
 {

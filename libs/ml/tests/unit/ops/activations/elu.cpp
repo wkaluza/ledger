@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class EluTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(EluTest, math::test::HighPrecisionTensorFloatingTypes, );
 

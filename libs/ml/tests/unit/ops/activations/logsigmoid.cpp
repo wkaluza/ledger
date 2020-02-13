@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class LogSigmoidTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LogSigmoidTest, math::test::HighPrecisionTensorFloatingTypes, );
 

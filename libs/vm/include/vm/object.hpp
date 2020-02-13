@@ -55,12 +55,10 @@ static constexpr bool IsObject = std::is_base_of<Object, T>::value;
 
 template <typename T>
 struct IsPtrImpl : std::false_type
-{
-};
+{};
 template <typename T>
 struct IsPtrImpl<Ptr<T>> : std::true_type
-{
-};
+{};
 
 template <typename T>
 static constexpr bool IsPtr = IsPtrImpl<T>::value;

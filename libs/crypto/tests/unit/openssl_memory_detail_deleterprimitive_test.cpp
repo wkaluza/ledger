@@ -29,8 +29,7 @@ namespace detail {
 namespace {
 
 class DeleterPrimitiveTest : public testing::Test
-{
-};
+{};
 
 TEST_F(DeleterPrimitiveTest, test_BIGNUM_free)
 {

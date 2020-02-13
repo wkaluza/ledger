@@ -43,8 +43,7 @@ void test1(T max)
 
 template <typename T>
 class ExpTests : public ::testing::Test
-{
-};
+{};
 
 // TODO (private 1016)
 using MyTypes = ::testing::Types<double>;

@@ -30,8 +30,7 @@ namespace {
 
 template <typename T>
 class DivideTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(DivideTest, fetch::math::test::TensorFloatingTypes, );
 

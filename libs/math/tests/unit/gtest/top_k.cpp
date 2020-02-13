@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class TopKTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TopKTest, TensorFloatingTypes, );
 

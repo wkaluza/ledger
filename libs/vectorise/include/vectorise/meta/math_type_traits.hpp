@@ -26,8 +26,7 @@ namespace fetch {
 
 namespace vectorise {
 struct BaseVectorRegisterType
-{
-};
+{};
 }  // namespace vectorise
 
 namespace math {
@@ -95,8 +94,7 @@ using IfIsNotImplemented = fetch::meta::IfIsNotImplemented<DataType, ReturnType>
 
 template <typename A, typename ReturnType>
 struct IsMathImpl
-{
-};
+{};
 template <typename ReturnType>
 struct IsMathImpl<double, ReturnType>
 {

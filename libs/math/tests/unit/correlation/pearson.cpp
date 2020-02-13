@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class PearsonCorrelationTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PearsonCorrelationTest, TensorFloatingTypes, );
 

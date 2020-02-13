@@ -50,8 +50,7 @@ void TestThrow(std::string const &val)
 
 template <typename T>
 class TypeConstructionTest : public ::testing::Test
-{
-};
+{};
 
 TEST(TypeConstructionTest, one_construction)
 {

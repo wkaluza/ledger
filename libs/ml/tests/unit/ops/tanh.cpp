@@ -33,8 +33,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class TanHTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TanHTest, fetch::math::test::TensorFloatingTypes, );
 

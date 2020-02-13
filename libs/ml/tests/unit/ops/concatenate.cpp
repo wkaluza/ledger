@@ -30,8 +30,7 @@ namespace {
 
 template <typename T>
 class ConcatenateTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ConcatenateTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

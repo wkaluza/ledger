@@ -29,12 +29,10 @@ namespace test {
 
 template <typename T>
 class TsneFloatTests : public ::testing::Test
-{
-};
+{};
 template <typename T>
 class TsneFixedPointTests : public ::testing::Test
-{
-};
+{};
 
 // we do not test for fp32 since that tends to overflow
 TYPED_TEST_SUITE(TsneFloatTests, math::test::HighPrecisionTensorNoFixedPointFloatingTypes, );

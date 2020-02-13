@@ -94,8 +94,7 @@ TEST(SemanticSearchIndex, BasicOperations2D)
     FAIL() << "Was expecting exception" << std::endl;
   }
   catch (std::exception const &e)
-  {
-  }
+  {}
 
   // Testing search
   auto group0 = database_index.Find(0, {width * 2, width * 2});

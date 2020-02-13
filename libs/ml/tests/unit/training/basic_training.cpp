@@ -391,8 +391,7 @@ void CategoricalXorTest(bool add_softmax = false)
 
 template <typename T>
 class BasicTrainingTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(BasicTrainingTest, math::test::HighPrecisionTensorFloatingTypes, );
 

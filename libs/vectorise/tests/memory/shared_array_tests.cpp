@@ -32,8 +32,7 @@ using DataType   = uint64_t;
 using array_type = SharedArray<DataType>;
 
 class TestClass : public ::testing::TestWithParam<int>
-{
-};
+{};
 
 TEST_P(TestClass, basic_Test)
 {

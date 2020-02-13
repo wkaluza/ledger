@@ -664,8 +664,7 @@ TEST(FixedPointTest, Constants_64_64)
 
 template <typename T>
 class ConversionTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(ConversionTest, FixedPointTypes, );
 TYPED_TEST(ConversionTest, Conversion)
 {
@@ -713,8 +712,7 @@ TYPED_TEST(ConversionTest, Conversion)
 
 template <typename T>
 class BasicArithmeticTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(BasicArithmeticTest, FixedPointTypes, );
 TYPED_TEST(BasicArithmeticTest, Addition)
 {
@@ -877,8 +875,7 @@ TYPED_TEST(BasicArithmeticTest, Division)
 
 template <typename T>
 class BitOperationsTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(BitOperationsTest, FixedPointTypes, );
 TYPED_TEST(BitOperationsTest, ShiftLeft)
 {
@@ -910,8 +907,7 @@ TYPED_TEST(BitOperationsTest, ShiftRight)
 
 template <typename T>
 class ComparisonTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(ComparisonTest, FixedPointTypes, );
 TYPED_TEST(ComparisonTest, Comparison)
 {
@@ -1010,8 +1006,7 @@ TYPED_TEST(ComparisonTest, Comparison)
 
 template <typename T>
 class BasicTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(BasicTest, FixedPointTypes, );
 TYPED_TEST(BasicTest, Abs)
 {
@@ -1115,8 +1110,7 @@ TYPED_TEST(BasicTest, Fmod)
 
 template <typename T>
 class TranscendentalTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(TranscendentalTest, FixedPointTypes, );
 TYPED_TEST(TranscendentalTest, Exp)
 {
@@ -1435,8 +1429,7 @@ TYPED_TEST(TranscendentalTest, Sqrt)
 
 template <typename T>
 class TrigonometryTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(TrigonometryTest, FixedPointTypes, );
 TYPED_TEST(TrigonometryTest, Sin)
 {
@@ -1793,8 +1786,7 @@ TYPED_TEST(TrigonometryTest, ATan2)
 
 template <typename T>
 class HyperbolicTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(HyperbolicTest, FixedPointTypes, );
 TYPED_TEST(HyperbolicTest, SinH)
 {
@@ -1936,8 +1928,7 @@ TYPED_TEST(HyperbolicTest, ATanH)
 
 template <typename T>
 class NanInfinityTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(NanInfinityTest, FixedPointTypes, );
 TYPED_TEST(NanInfinityTest, nan_inf_tests)
 {

@@ -30,8 +30,7 @@ namespace {
 
 template <typename T>
 class AvgPool1DTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(AvgPool1DTest, fetch::math::test::TensorFloatingTypes, );
 

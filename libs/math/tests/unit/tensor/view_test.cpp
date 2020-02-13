@@ -30,8 +30,7 @@ namespace test {
 
 template <typename T>
 class TensorViewTests : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TensorViewTests, FloatIntAndUIntTypes, );
 

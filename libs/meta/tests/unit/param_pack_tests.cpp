@@ -38,8 +38,7 @@ using namespace ::testing;
 
 template <typename... Args>
 struct From
-{
-};
+{};
 template <typename... Args>
 struct To
 {
@@ -47,8 +46,7 @@ struct To
 };
 
 class ParamPackTests : public Test
-{
-};
+{};
 
 TEST_F(ParamPackTests, ConveyTypeParameterPack_count)
 {

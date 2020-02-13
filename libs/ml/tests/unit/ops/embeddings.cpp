@@ -31,8 +31,7 @@ namespace {
 
 template <typename T>
 class EmbeddingsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(EmbeddingsTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

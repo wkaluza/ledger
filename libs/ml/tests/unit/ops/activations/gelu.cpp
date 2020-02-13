@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class GeluTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(GeluTest, math::test::HighPrecisionTensorFloatingTypes, );
 

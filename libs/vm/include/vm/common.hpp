@@ -299,8 +299,7 @@ private:
 };
 
 struct InitialiserListPlaceholder
-{
-};
+{};
 
 struct SourceFile
 {

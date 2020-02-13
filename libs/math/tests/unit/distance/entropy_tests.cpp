@@ -27,8 +27,7 @@ namespace math {
 namespace test {
 template <typename T>
 class EntropyTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(EntropyTest, TensorFloatingTypes, );
 

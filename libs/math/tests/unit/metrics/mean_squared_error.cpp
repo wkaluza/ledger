@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class MeanSquareErrorTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MeanSquareErrorTest, TensorFloatingTypes, );
 

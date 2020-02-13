@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class TensorConcatenationTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TensorConcatenationTest, FloatIntAndUIntTypes, );
 

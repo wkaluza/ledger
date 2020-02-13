@@ -31,8 +31,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class TransposeTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TransposeTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class SubtractTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SubtractTest, fetch::math::test::TensorFloatingTypes, );
 

@@ -23,8 +23,7 @@ namespace {
 
 template <typename T>
 class LayersSaveParamsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LayersSaveParamsTest, ::fetch::math::test::TensorFloatingTypes, );
 

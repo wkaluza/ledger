@@ -28,8 +28,7 @@
 namespace {
 template <typename T>
 class AbsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(AbsTest, fetch::math::test::TensorFloatingTypes, );
 

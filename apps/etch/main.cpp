@@ -157,8 +157,7 @@ Ptr<String> Argv(VM *vm, TypeId /*type_id*/, int32_t index)
 
 // placeholder class
 struct System : public Object
-{
-};
+{};
 
 struct JsonStateMap : public IoObserverInterface
 {

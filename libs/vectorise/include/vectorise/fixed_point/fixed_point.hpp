@@ -160,8 +160,7 @@ struct TypeFromSize<8>
 };
 
 struct BaseFixedpointType
-{
-};
+{};
 
 template <uint16_t I, uint16_t F>
 class FixedPoint : public BaseFixedpointType
@@ -509,8 +508,7 @@ private:
   // this makes it simpler to create a fixed point object from
   // a native type without scaling
   struct NoScale
-  {
-  };
+  {};
 
   constexpr FixedPoint(Type n, const NoScale & /*unused*/)
     : data_(n)

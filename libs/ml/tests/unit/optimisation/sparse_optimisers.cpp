@@ -32,8 +32,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class SparseOptimisersTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SparseOptimisersTest, math::test::HighPrecisionTensorFloatingTypes, );
 

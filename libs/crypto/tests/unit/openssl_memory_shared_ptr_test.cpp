@@ -31,8 +31,7 @@ using ::testing::Return;
 using ::testing::StrictMock;
 
 struct TestType
-{
-};
+{};
 
 class MockDeleterPrimitive
 {

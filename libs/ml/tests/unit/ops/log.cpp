@@ -28,8 +28,7 @@
 namespace {
 template <typename T>
 class LogTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LogTest, fetch::math::test::TensorFloatingTypes, );
 

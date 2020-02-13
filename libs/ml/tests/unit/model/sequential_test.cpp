@@ -35,8 +35,7 @@ using SizeVector = fetch::math::SizeVector;
 
 template <typename T>
 class SequentialModelTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SequentialModelTest, math::test::HighPrecisionTensorFloatingTypes, );
 namespace sequential_details {

@@ -23,18 +23,15 @@ namespace {
 
 template <typename T>
 class SerializersTestWithInt : public ::testing::Test
-{
-};
+{};
 
 template <typename T>
 class SerializersTestNoInt : public ::testing::Test
-{
-};
+{};
 
 template <typename T>
 class GraphRebuildTest : public ::testing::Test
-{
-};
+{};
 
 // TYPED_TEST_SUITE(SaveParamsTest, ::fetch::math::test::TensorFloatingTypes,);
 TYPED_TEST_SUITE(SerializersTestWithInt, ::fetch::math::test::TensorIntAndFloatingTypes, );

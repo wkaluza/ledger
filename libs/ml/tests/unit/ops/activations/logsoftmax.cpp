@@ -32,8 +32,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class LogSoftmaxTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LogSoftmaxTest, math::test::HighPrecisionTensorFloatingTypes, );
 

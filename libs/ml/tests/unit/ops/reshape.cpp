@@ -31,8 +31,7 @@ using SizeType = fetch::math::SizeType;
 
 template <typename T>
 class ReshapeTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ReshapeTest, fetch::math::test::TensorFloatingTypes, );
 

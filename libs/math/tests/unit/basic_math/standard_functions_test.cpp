@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class StandardFunctionTests : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(StandardFunctionTests, TensorFloatingTypes, );
 

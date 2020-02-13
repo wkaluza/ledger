@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class PerplexityTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PerplexityTest, TensorFloatingTypes, );
 

@@ -31,8 +31,7 @@ namespace test {
 
 template <typename T>
 class NodeTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(NodeTest, math::test::TensorIntAndFloatingTypes, );
 

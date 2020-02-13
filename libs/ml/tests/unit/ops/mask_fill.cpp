@@ -29,8 +29,7 @@ namespace {
 
 template <typename T>
 class MaskFillTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MaskFillTest, fetch::math::test::TensorFloatingTypes, );
 

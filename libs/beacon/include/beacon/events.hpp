@@ -28,12 +28,10 @@ struct EventCabinetCompletedWork
 };
 
 struct EventInvalidSignature
-{
-};
+{};
 
 struct EventSignatureFromNonMember
-{
-};
+{};
 
 }  // namespace beacon
 }  // namespace fetch

@@ -170,8 +170,7 @@ bool Contract::ParseAsJson(chain::Transaction const &tx, variant::Variant &outpu
     success = true;
   }
   catch (json::JSONParseException const &)
-  {
-  }
+  {}
 
   if (success)
   {

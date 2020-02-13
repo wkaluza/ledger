@@ -30,8 +30,7 @@ namespace {
 
 template <typename T>
 class Convolution2DTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(Convolution2DTest, fetch::math::test::TensorFloatingTypes, );
 

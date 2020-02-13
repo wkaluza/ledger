@@ -66,8 +66,7 @@ std::shared_ptr<GraphType> BuildGraph(bool shared = false, bool time_distributed
 
 template <typename T>
 class FullyConnectedTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(FullyConnectedTest, math::test::TensorFloatingTypes, );
 

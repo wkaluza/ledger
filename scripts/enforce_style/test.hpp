@@ -20,8 +20,7 @@
 #include <iostream>
 
 namespace fetch {
-namespace useless_namespace {
-}
+namespace useless_namespace {}
 
 class helloWorld
 {

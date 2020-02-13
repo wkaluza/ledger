@@ -26,8 +26,7 @@
 
 template <typename T>
 class ShuffleTest : public ::testing::Test
-{
-};
+{};
 
 using MyTypes =
     ::testing::Types<int, float, double, fetch::fixed_point::fp32_t, fetch::fixed_point::fp64_t>;

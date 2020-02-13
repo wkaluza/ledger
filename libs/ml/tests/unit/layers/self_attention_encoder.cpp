@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class SelfAttentionEncoder : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SelfAttentionEncoder, math::test::HighPrecisionTensorFloatingTypes, );
 

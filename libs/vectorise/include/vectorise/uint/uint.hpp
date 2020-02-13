@@ -276,8 +276,7 @@ private:
                                                       bool             zero_content);  // NOLINT
 
   struct MaxValueConstructorEnabler
-  {
-  };
+  {};
 
   constexpr explicit UInt(MaxValueConstructorEnabler /*unused*/)
   {

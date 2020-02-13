@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class PReluOpTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PReluOpTest, fetch::math::test::TensorFloatingTypes, );
 

@@ -270,40 +270,32 @@ struct SignedIntegerSerializerImplementation
 template <typename D>
 struct IntegerSerializer<int8_t, D>
   : public SignedIntegerSerializerImplementation<int8_t, uint8_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<int16_t, D>
   : public SignedIntegerSerializerImplementation<int16_t, uint16_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<int32_t, D>
   : public SignedIntegerSerializerImplementation<int32_t, uint32_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<int64_t, D>
   : public SignedIntegerSerializerImplementation<int64_t, uint64_t, D>
-{
-};
+{};
 
 template <typename D>
 struct IntegerSerializer<uint8_t, D> : public UnsignedIntegerSerializerImplementation<uint8_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<uint16_t, D> : public UnsignedIntegerSerializerImplementation<uint16_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<uint32_t, D> : public UnsignedIntegerSerializerImplementation<uint32_t, D>
-{
-};
+{};
 template <typename D>
 struct IntegerSerializer<uint64_t, D> : public UnsignedIntegerSerializerImplementation<uint64_t, D>
-{
-};
+{};
 
 template <typename T, typename D, uint8_t C>
 struct SpecialTypeSerializer
@@ -326,14 +318,12 @@ struct SpecialTypeSerializer
 template <typename D>
 struct BooleanSerializer<std::true_type, D>
   : public SpecialTypeSerializer<std::true_type, D, TypeCodes::BOOL_TRUE>
-{
-};
+{};
 
 template <typename D>
 struct BooleanSerializer<std::false_type, D>
   : public SpecialTypeSerializer<std::false_type, D, TypeCodes::BOOL_FALSE>
-{
-};
+{};
 
 template <typename D>
 struct BooleanSerializer<bool, D>
@@ -563,18 +553,15 @@ public:
 
 template <typename D>
 struct StringSerializer<std::string, D> : public StringSerializerImplementation<std::string, D>
-{
-};
+{};
 template <typename D>
 struct StringSerializer<byte_array::ConstByteArray, D>
   : public StringSerializerImplementation<byte_array::ConstByteArray, D>
-{
-};
+{};
 template <typename D>
 struct StringSerializer<byte_array::ByteArray, D>
   : public StringSerializerImplementation<byte_array::ByteArray, D>
-{
-};
+{};
 
 template <typename V, typename D>
 struct ArraySerializer<std::vector<V>, D>

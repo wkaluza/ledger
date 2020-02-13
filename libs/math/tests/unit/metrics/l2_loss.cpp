@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class L2LossTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(L2LossTest, TensorFloatingTypes, );
 

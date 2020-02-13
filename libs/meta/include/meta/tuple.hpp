@@ -95,8 +95,7 @@ template <typename>
 struct Tuple;
 template <>
 struct Tuple<std::tuple<>> : TupleOperations<std::tuple<>>
-{
-};
+{};
 template <typename T, typename... Ts>
 struct Tuple<std::tuple<T, Ts...>> : TupleOperations<std::tuple<T, Ts...>>
 {
@@ -107,12 +106,10 @@ struct Tuple<std::tuple<T, Ts...>> : TupleOperations<std::tuple<T, Ts...>>
 
 template <typename T>
 struct IsStdTupleImpl : std::false_type
-{
-};
+{};
 template <typename... Args>
 struct IsStdTupleImpl<std::tuple<Args...>> : std::true_type
-{
-};
+{};
 
 }  // namespace internal
 

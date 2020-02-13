@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class LeakyReluTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LeakyReluTest, math::test::TensorFloatingTypes, );
 

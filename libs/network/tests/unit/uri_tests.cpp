@@ -67,8 +67,7 @@ static const TestCase TEST_CASES[] = {
     {"muddle://badIdentityName", "badIdentityName", Uri::Scheme::Muddle, false}};
 
 class UriTests : public ::testing::TestWithParam<TestCase>
-{
-};
+{};
 
 TEST_P(UriTests, CheckConstruction)
 {

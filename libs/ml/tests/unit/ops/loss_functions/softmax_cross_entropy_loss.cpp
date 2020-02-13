@@ -31,8 +31,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class SoftmaxCrossEntropyTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SoftmaxCrossEntropyTest, math::test::HighPrecisionTensorFloatingTypes, );
 

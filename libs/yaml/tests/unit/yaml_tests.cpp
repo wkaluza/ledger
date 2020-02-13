@@ -31,8 +31,7 @@ using namespace fetch::yaml;
 using namespace fetch::byte_array;
 
 class YamlTests : public ::testing::TestWithParam<TestCase>
-{
-};
+{};
 
 TEST_P(YamlTests, CheckParsing)
 {

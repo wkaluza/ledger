@@ -26,8 +26,7 @@
 namespace {
 template <typename T>
 class ConstantTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ConstantTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

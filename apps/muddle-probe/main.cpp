@@ -31,8 +31,7 @@
 #include <string>
 
 struct PingMessage
-{
-};
+{};
 
 namespace fetch {
 namespace serializers {

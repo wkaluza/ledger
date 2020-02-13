@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class SqrtTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SqrtTest, fetch::math::test::TensorFloatingTypes, );
 

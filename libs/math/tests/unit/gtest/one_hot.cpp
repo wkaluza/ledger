@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class OneHotTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(OneHotTest, TensorFloatingTypes, );
 

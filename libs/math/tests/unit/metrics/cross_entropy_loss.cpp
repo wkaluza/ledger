@@ -28,8 +28,7 @@ namespace test {
 
 template <typename T>
 class CrossEntropyTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(CrossEntropyTest, TensorFloatingTypes, );
 

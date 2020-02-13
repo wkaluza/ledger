@@ -33,8 +33,7 @@ namespace test {
 
 template <typename T>
 class C2vLoaderTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(C2vLoaderTest, math::test::TensorIntAndFloatingTypes, );
 

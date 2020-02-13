@@ -148,8 +148,7 @@ using IfIsSignedInteger = EnableIf<IsSignedInteger<T>, R>;
 
 template <typename A, typename R>
 struct IsNotImplementedImpl
-{
-};
+{};
 template <typename A, typename R>
 using IfIsNotImplemented = typename IsNotImplementedImpl<A, R>::Type;
 

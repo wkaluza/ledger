@@ -92,8 +92,7 @@ TEST(vectorise_sse_gtest, register_test3)
 
 template <typename T>
 class VectorRegisterTest : public ::testing::Test
-{
-};
+{};
 
 #ifdef __AVX2__
 using MyTypes = ::testing::Types<
@@ -262,8 +261,7 @@ TYPED_TEST(VectorRegisterTest, minmax_tests)
 
 template <typename T>
 class VectorReduceTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(VectorReduceTest, MyFPTypes, );
 TYPED_TEST(VectorReduceTest, reduce_tests)
@@ -371,8 +369,7 @@ TYPED_TEST(VectorReduceTest, reduce_tests)
 
 template <typename T>
 class VectorNaNInfTest : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(VectorNaNInfTest, MyFPTypes, );
 TYPED_TEST(VectorNaNInfTest, nan_inf_tests)
 {
@@ -532,8 +529,7 @@ TYPED_TEST(VectorNaNInfTest, nan_inf_tests)
 
 template <typename T>
 class VectorExpTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(VectorExpTest, MyFPTypes, );
 TYPED_TEST(VectorExpTest, exp_tests)

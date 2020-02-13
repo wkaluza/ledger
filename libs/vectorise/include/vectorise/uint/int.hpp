@@ -264,8 +264,7 @@ private:
   constexpr ContainerType &      base();
 
   struct MaxValueConstructorEnabler
-  {
-  };
+  {};
   constexpr explicit Int(MaxValueConstructorEnabler /*unused*/)
   {
     for (auto &itm : wide_)

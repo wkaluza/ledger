@@ -30,8 +30,7 @@ namespace {
 
 template <typename T>
 class ExpTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ExpTest, fetch::math::test::HighPrecisionTensorFloatingTypes, );
 

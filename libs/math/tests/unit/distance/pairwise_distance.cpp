@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class PairWiseDistanceTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PairWiseDistanceTest, TensorFloatingTypes, );
 

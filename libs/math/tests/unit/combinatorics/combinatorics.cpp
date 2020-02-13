@@ -33,8 +33,7 @@ using SizeType   = uint64_t;
 
 template <typename T>
 class CombinatoricsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(CombinatoricsTest, TensorFloatingTypes, );
 

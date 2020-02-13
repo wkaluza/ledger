@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class TopKOpTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TopKOpTest, fetch::math::test::TensorFloatingTypes, );
 

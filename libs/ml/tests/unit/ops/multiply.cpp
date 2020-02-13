@@ -32,8 +32,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class MultiplyTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MultiplyTest, fetch::math::test::TensorFloatingTypes, );
 

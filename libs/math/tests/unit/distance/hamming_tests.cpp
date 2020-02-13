@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class HammingTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(HammingTest, TensorFloatingTypes, );
 

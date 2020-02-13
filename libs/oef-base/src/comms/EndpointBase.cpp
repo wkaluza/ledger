@@ -168,8 +168,7 @@ void EndpointBase<TXType>::close()
       local_handler_copy();
     }
     catch (...)
-    {
-    }  // Ignore exceptions.
+    {}  // Ignore exceptions.
   }
 }
 template <typename TXType>
@@ -203,8 +202,7 @@ void EndpointBase<TXType>::eof()
       local_handler_copy();
     }
     catch (...)
-    {
-    }  // Ignore exceptions.
+    {}  // Ignore exceptions.
   }
 }
 
@@ -240,8 +238,7 @@ void EndpointBase<TXType>::error(std::error_code const &ec)
       local_handler_copy(ec);
     }
     catch (...)
-    {
-    }  // Ignore exceptions.
+    {}  // Ignore exceptions.
   }
 }
 
@@ -277,8 +274,7 @@ void EndpointBase<TXType>::proto_error(const std::string &msg)
       local_handler_copy(msg);
     }
     catch (...)
-    {
-    }  // Ignore exceptions.
+    {}  // Ignore exceptions.
   }
 }
 

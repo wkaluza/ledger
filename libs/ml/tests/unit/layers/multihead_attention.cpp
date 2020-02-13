@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class MultiheadAttention : public ::testing::Test
-{
-};
+{};
 
 // float32 tends to overflow here
 TYPED_TEST_SUITE(MultiheadAttention, math::test::HighPrecisionTensorFloatingTypes, );

@@ -44,7 +44,5 @@
 #endif
 
 namespace fetch {
-namespace oef {
-
-}  // namespace oef
+namespace oef {}  // namespace oef
 }  // namespace fetch

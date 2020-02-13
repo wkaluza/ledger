@@ -30,13 +30,11 @@ using namespace fetch::ml;
 
 template <typename T>
 class PlaceholderAllTest : public ::testing::Test
-{
-};
+{};
 
 template <typename T>
 class PlaceholderNonIntTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PlaceholderAllTest, fetch::math::test::TensorIntAndFloatingTypes, );
 TYPED_TEST_SUITE(PlaceholderNonIntTest, fetch::math::test::TensorFloatingTypes, );

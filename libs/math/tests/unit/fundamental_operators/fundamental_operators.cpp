@@ -28,18 +28,15 @@
 
 template <typename T>
 class FundamentalOperatorsUIntTypeTest : public ::testing::Test
-{
-};
+{};
 
 template <typename T>
 class FundamentalOperatorsIntTypeTest : public ::testing::Test
-{
-};
+{};
 
 template <typename T>
 class FundamentalOperatorsNonIntTypeTest : public ::testing::Test
-{
-};
+{};
 
 using MyUnsignIntegralTypes = ::testing::Types<uint32_t, uint64_t>;
 TYPED_TEST_SUITE(FundamentalOperatorsUIntTypeTest, MyUnsignIntegralTypes, );

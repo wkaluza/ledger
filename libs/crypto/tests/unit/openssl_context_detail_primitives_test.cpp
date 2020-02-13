@@ -30,8 +30,7 @@ namespace detail {
 namespace {
 
 class SessionPrimitiveTest : public ::testing::Test
-{
-};
+{};
 
 TEST_F(SessionPrimitiveTest, test_BN_CTX_start)
 {

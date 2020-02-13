@@ -36,8 +36,7 @@ using ::testing::Return;
 using ::testing::StrictMock;
 
 class TestType
-{
-};
+{};
 
 class MockDeleterPrimitive
 {

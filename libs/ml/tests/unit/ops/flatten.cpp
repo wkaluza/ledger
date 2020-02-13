@@ -31,8 +31,7 @@ namespace {
 
 template <typename T>
 class FlattenTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(FlattenTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

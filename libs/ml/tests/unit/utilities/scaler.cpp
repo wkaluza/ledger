@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class ScalerTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ScalerTest, math::test::TensorFloatingTypes, );
 

@@ -33,8 +33,7 @@ namespace test {
 
 template <typename T>
 class LayerNormTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(LayerNormTest, math::test::TensorFloatingTypes, );
 

@@ -31,8 +31,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class WeightsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(WeightsTest, math::test::TensorFloatingTypes, );
 

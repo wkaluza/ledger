@@ -53,13 +53,11 @@ protected:
 
 template <typename T>
 class IntegerGaugeTests : public GeneralGaugeTests<T>
-{
-};
+{};
 
 template <typename T>
 class FloatGaugeTests : public GeneralGaugeTests<T>
-{
-};
+{};
 
 TYPED_TEST_SUITE(IntegerGaugeTests, IntegerTypes, );
 TYPED_TEST_SUITE(FloatGaugeTests, FloatTypes, );

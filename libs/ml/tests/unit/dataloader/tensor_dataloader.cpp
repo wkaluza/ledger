@@ -31,8 +31,7 @@ namespace test {
 
 template <typename T>
 class TensorDataloaderTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TensorDataloaderTest, math::test::TensorFloatingTypes, );
 

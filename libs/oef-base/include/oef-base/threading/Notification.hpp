@@ -133,8 +133,7 @@ public:
       }
     }
     catch (...)
-    {
-    }
+    {}
   }
 
   NotificationBuilder &Then(Callback const &cb)

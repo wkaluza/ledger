@@ -30,8 +30,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class SliceTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SliceTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

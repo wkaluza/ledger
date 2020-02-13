@@ -35,8 +35,7 @@ namespace test {
 
 template <typename T>
 class PReluTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(PReluTest, math::test::TensorFloatingTypes, );
 

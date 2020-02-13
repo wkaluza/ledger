@@ -31,8 +31,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class WeightsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(WeightsTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

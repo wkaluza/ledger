@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class TrigTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TrigTest, HighPrecisionFloatingTypes, );
 

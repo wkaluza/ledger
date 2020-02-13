@@ -30,8 +30,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class MatrixMultiplyTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(MatrixMultiplyTest, fetch::math::test::TensorIntAndFloatingTypes, );
 

@@ -35,8 +35,7 @@ namespace meta {
 
 template <typename DataType, typename ReturnType>
 struct IsMathArrayImpl
-{
-};
+{};
 template <typename DataType, typename ContainerType /*template<class> class ContainerType*/,
           typename ReturnType>
 struct IsMathArrayImpl<Tensor<DataType, ContainerType>, ReturnType>

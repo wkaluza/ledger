@@ -21,6 +21,8 @@ BraceWrapping:
   BeforeCatch: true
   BeforeElse: true
   SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
 BreakBeforeBraces: Custom
 BreakConstructorInitializers: BeforeComma
 ColumnLimit: 100

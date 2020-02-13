@@ -95,8 +95,7 @@ public:
         is_due = Clock::now() >= (last_run_ + interval_);
       }
       catch (...)
-      {
-      }
+      {}
 
       mutex_.unlock();
     }

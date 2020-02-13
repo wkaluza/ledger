@@ -23,8 +23,7 @@ namespace {
 
 template <typename T>
 class OpsSaveParamsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(OpsSaveParamsTest, ::fetch::math::test::TensorFloatingTypes, );
 

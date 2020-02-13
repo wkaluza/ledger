@@ -33,8 +33,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class Convolution1DTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(Convolution1DTest, math::test::TensorFloatingTypes, );
 

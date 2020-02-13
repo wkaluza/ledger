@@ -33,8 +33,7 @@ namespace ml {
 namespace test {
 template <typename T>
 class ReluTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ReluTest, math::test::TensorFloatingTypes, );
 

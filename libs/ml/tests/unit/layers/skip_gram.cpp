@@ -32,8 +32,7 @@ namespace test {
 
 template <typename T>
 class SkipGramTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SkipGramTest, math::test::TensorFloatingTypes, );
 

@@ -21,8 +21,7 @@
 #include "gtest/gtest.h"
 
 class OefBaseUtilsTests : public testing::Test
-{
-};
+{};
 
 TEST_F(OefBaseUtilsTests, UriTest)
 {

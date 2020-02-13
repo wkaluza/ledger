@@ -72,21 +72,17 @@ template <typename F, typename Tag>
 struct CallableTraitsImpl;
 template <typename F>
 struct CallableTraitsImpl<F, free_or_static_member_fn_tag> : FreeOrStaticMemberFunctionTraits<F>
-{
-};
+{};
 template <typename F>
 struct CallableTraitsImpl<F, member_fn_tag> : MemberFunctionTraits<F>
-{
-};
+{};
 template <typename F>
 struct CallableTraitsImpl<F, const_member_fn_tag> : MemberFunctionTraits<F>
-{
-};
+{};
 template <typename F>
 struct CallableTraitsImpl<F, functor_tag>
   : MemberFunctionTraits<void, decltype(&std::remove_reference_t<F>::operator())>
-{
-};
+{};
 
 template <typename F>
 using CallableTraitsBase = CallableTraitsImpl<std::decay_t<F>, ClassifyCallable<F>>;

@@ -32,24 +32,18 @@ namespace {
 using namespace ::testing;
 
 struct A
-{
-};
+{};
 struct B
-{
-};
+{};
 struct C
-{
-};
+{};
 struct D
-{
-};
+{};
 struct E
-{
-};
+{};
 
 class TupleMetaTests : public Test
-{
-};
+{};
 
 using Input = std::tuple<A, B, C, D, E>;
 using Empty = std::tuple<>;

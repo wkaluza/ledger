@@ -35,8 +35,7 @@ namespace test {
 
 template <typename T>
 class ScaledDotProductAttention : public ::testing::Test
-{
-};
+{};
 TYPED_TEST_SUITE(ScaledDotProductAttention, math::test::HighPrecisionTensorFloatingTypes, );
 
 TYPED_TEST(ScaledDotProductAttention, input_output_dimension_check)  // Use the class as a subgraph

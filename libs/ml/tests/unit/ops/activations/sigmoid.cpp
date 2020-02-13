@@ -33,8 +33,7 @@ namespace test {
 
 template <typename T>
 class SigmoidTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(SigmoidTest, math::test::HighPrecisionTensorFloatingTypes, );
 

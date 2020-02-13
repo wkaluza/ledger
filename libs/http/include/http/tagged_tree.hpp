@@ -40,8 +40,7 @@ struct HtmlTags
 };
 
 struct TopLevelContentTag
-{
-};
+{};
 
 static TopLevelContentTag top_level_content;
 

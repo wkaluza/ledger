@@ -30,8 +30,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class OneHotOpTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(OneHotOpTest, fetch::math::test::TensorFloatingTypes, );
 

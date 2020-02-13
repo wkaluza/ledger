@@ -29,8 +29,7 @@ namespace test {
 
 template <typename T>
 class DistanceTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(DistanceTest, TensorFloatingTypes, );
 

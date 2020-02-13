@@ -30,8 +30,7 @@ using SizeType = fetch::math::SizeType;
 
 template <typename T>
 class TensorOperationsTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(TensorOperationsTest, fetch::math::test::FloatIntAndUIntTypes, );
 

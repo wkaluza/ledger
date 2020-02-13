@@ -31,8 +31,7 @@ using namespace fetch::ml;
 
 template <typename T>
 class ReduceMeanTest : public ::testing::Test
-{
-};
+{};
 
 TYPED_TEST_SUITE(ReduceMeanTest, fetch::math::test::TensorFloatingTypes, );
 
