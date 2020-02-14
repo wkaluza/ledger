@@ -25,8 +25,8 @@
 namespace fetch {
 
 template <typename K, typename H>
-std::unordered_set<K, H> operator
-    &(std::unordered_set<K, H> const &lhs, std::unordered_set<K, H> const &rhs)
+std::unordered_set<K, H> operator&(
+    std::unordered_set<K, H> const &lhs, std::unordered_set<K, H> const &rhs)
 {
   std::unordered_set<K, H> result;
 
@@ -52,8 +52,8 @@ std::set<K, H> operator&(std::set<K, H> const &lhs, std::set<K, H> const &rhs)
 }
 
 template <typename K, typename V, typename H>
-std::unordered_set<K, H> operator
-    &(std::unordered_set<K, H> const &lhs, std::unordered_map<K, V, H> const &rhs)
+std::unordered_set<K, H> operator&(
+    std::unordered_set<K, H> const &lhs, std::unordered_map<K, V, H> const &rhs)
 {
   std::unordered_set<K> result;
 
@@ -66,8 +66,8 @@ std::unordered_set<K, H> operator
 }
 
 template <typename K, typename V, typename H>
-std::unordered_set<K, H> operator
-    &(std::unordered_map<K, V, H> const &lhs, std::unordered_set<K, H> const &rhs)
+std::unordered_set<K, H> operator&(
+    std::unordered_map<K, V, H> const &lhs, std::unordered_set<K, H> const &rhs)
 {
   std::unordered_set<K> result;
 

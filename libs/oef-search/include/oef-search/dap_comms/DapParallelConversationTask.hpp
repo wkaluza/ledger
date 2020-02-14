@@ -78,8 +78,7 @@ public:
   bool operator<(const DapParallelConversationTask &other)  = delete;
 
   std::shared_ptr<TaskType> CreateTask(
-      const DapInputDataType<IN_PROTO> &data,
-      std::shared_ptr<IN_PROTO>         input) override
+      const DapInputDataType<IN_PROTO> &data, std::shared_ptr<IN_PROTO> input) override
   {
     return std::make_shared<DapConversationTask<IN_PROTO, OUT_PROTO>>(
         data.dap_name, data.path, ++msg_id_, input, outbounds, protocol_);

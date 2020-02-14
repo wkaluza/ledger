@@ -309,9 +309,7 @@ Status SynergeticContract::Work(vectorise::UInt<256> const &nonce, WorkScore &sc
 }
 
 Status SynergeticContract::Complete(
-    chain::Address const &     address,
-    BitVector const &          shards,
-    CompletionValidator const &validator)
+    chain::Address const &address, BitVector const &shards, CompletionValidator const &validator)
 {
   if (storage_ == nullptr)
   {

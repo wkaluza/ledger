@@ -101,9 +101,7 @@ public:
   NotarisationService(NotarisationService const &) = delete;
 
   NotarisationService(
-      MuddleInterface &   muddle,
-      CertificatePtr      certificate,
-      BeaconSetupService &beacon_setup);
+      MuddleInterface &muddle, CertificatePtr certificate, BeaconSetupService &beacon_setup);
 
   /// State methods
   /// @{

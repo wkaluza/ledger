@@ -61,9 +61,7 @@ constexpr char const *MERKLE_FILENAME_INDEX = "merkle_stack_index.db";
 }  // namespace
 
 StorageUnitClient::StorageUnitClient(
-    MuddleEndpoint &    muddle,
-    ShardConfigs const &shards,
-    uint32_t            log2_num_lanes)
+    MuddleEndpoint &muddle, ShardConfigs const &shards, uint32_t log2_num_lanes)
   : addresses_(GenerateAddressList(shards))
   , log2_num_lanes_(log2_num_lanes)
   , rpc_client_{std::make_shared<Client>("STUC", muddle, SERVICE_LANE_CTRL, CHANNEL_RPC)}
@@ -431,8 +429,7 @@ StorageUnitClient::TxLayouts StorageUnitClient::PollRecentTx(uint32_t max_to_pol
 }
 
 bool StorageUnitClient::GetTransaction(
-    byte_array::ConstByteArray const &digest,
-    chain::Transaction &              tx)
+    byte_array::ConstByteArray const &digest, chain::Transaction &tx)
 {
   ResourceID resource{digest};
 

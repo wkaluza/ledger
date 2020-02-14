@@ -57,10 +57,7 @@ struct Invoke
    * @UsedArgs are the unpacked arguments.
    */
   static void MemberFunction(
-      SerializerType &       result,
-      ClassType &            cls,
-      MemberFunctionPointer &m,
-      UsedArgs &... args)
+      SerializerType &result, ClassType &cls, MemberFunctionPointer &m, UsedArgs &... args)
   {
     auto                     ret = (cls.*m)(args...);
     serializers::SizeCounter counter;
@@ -81,10 +78,7 @@ template <typename ClassType, typename MemberFunctionPointer, typename... UsedAr
 struct Invoke<ClassType, MemberFunctionPointer, void, UsedArgs...>
 {
   static void MemberFunction(
-      SerializerType &       result,
-      ClassType &            cls,
-      MemberFunctionPointer &m,
-      UsedArgs &... args)
+      SerializerType &result, ClassType &cls, MemberFunctionPointer &m, UsedArgs &... args)
   {
     result << uint8_t(0);
     (cls.*m)(args...);

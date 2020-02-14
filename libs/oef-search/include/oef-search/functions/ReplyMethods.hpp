@@ -56,6 +56,4 @@ void SendExceptionReply(
     const std::exception &              e,
     std::shared_ptr<OefSearchEndpoint> &endpoint);
 void SendErrorReply(
-    const std::string &                 message,
-    const Uri &                         uri,
-    std::shared_ptr<OefSearchEndpoint> &endpoint);
+    const std::string &message, const Uri &uri, std::shared_ptr<OefSearchEndpoint> &endpoint);

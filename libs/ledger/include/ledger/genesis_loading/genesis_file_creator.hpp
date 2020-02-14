@@ -65,17 +65,13 @@ public:
 
   // Construction / Destruction
   GenesisFileCreator(
-      StorageUnitInterface &storage_unit,
-      CertificatePtr        certificate,
-      std::string const &   db_prefix);
+      StorageUnitInterface &storage_unit, CertificatePtr certificate, std::string const &db_prefix);
   GenesisFileCreator(GenesisFileCreator const &) = delete;
   GenesisFileCreator(GenesisFileCreator &&)      = delete;
   ~GenesisFileCreator()                          = default;
 
   Result LoadContents(
-      ConstByteArray const &contents,
-      bool                  proof_of_stake,
-      ConsensusParameters & params);
+      ConstByteArray const &contents, bool proof_of_stake, ConsensusParameters &params);
 
   // Operators
   GenesisFileCreator &operator=(GenesisFileCreator const &) = delete;

@@ -100,9 +100,7 @@ LayerType GetLayerType(std::string const &layer_name)
  * names of the nodes
  */
 std::pair<std::string, std::vector<std::string>> ReadArchitecture(
-    std::string const &               filename,
-    std::shared_ptr<GraphType> const &g,
-    SizeType                          line_num = 0)
+    std::string const &filename, std::shared_ptr<GraphType> const &g, SizeType line_num = 0)
 {
   char                     delimiter = ',';
   std::ifstream            file(filename);

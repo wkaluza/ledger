@@ -105,8 +105,7 @@ void MinMaxScaler<TensorType>::Normalise(TensorType const &input_tensor, TensorT
  */
 template <typename TensorType>
 void MinMaxScaler<TensorType>::DeNormalise(
-    TensorType const &input_tensor,
-    TensorType &      output_tensor)
+    TensorType const &input_tensor, TensorType &output_tensor)
 {
   output_tensor.Reshape(input_tensor.shape());
   SizeType batch_dim = input_tensor.shape().size() - 1;

@@ -557,10 +557,7 @@ VM::VM(Module *module)
 }
 
 bool VM::GenerateExecutable(
-    IR const &                ir,
-    std::string const &       name,
-    Executable &              executable,
-    std::vector<std::string> &errors)
+    IR const &ir, std::string const &name, Executable &executable, std::vector<std::string> &errors)
 {
   return generator_.GenerateExecutable(ir, name, executable, errors);
 }

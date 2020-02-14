@@ -42,8 +42,7 @@ fetch::math::meta::IfIsFixedPoint<T, T> Max(T const &a, T const &b)
 
 template <typename T>
 VectorRegister<T, 8 * sizeof(T)> Max(
-    VectorRegister<T, 8 * sizeof(T)> const &a,
-    VectorRegister<T, 8 * sizeof(T)> const &b)
+    VectorRegister<T, 8 * sizeof(T)> const &a, VectorRegister<T, 8 * sizeof(T)> const &b)
 {
   return VectorRegister<T, 8 * sizeof(T)>(fetch::vectorise::Max(a.data(), b.data()));
 }

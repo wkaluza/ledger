@@ -29,9 +29,7 @@ namespace layers {
 
 template <typename TensorType>
 MultiheadAttention<TensorType>::MultiheadAttention(
-    SizeType n_heads,
-    SizeType model_dim,
-    DataType dropout)
+    SizeType n_heads, SizeType model_dim, DataType dropout)
   : n_heads_(n_heads)
   , model_dim_(model_dim)
   , dropout_(dropout)

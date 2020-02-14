@@ -55,8 +55,7 @@ template <typename T>
 struct MapComparator<T, IfIsPrimitive<T>>
 {
   constexpr bool operator()(
-      fetch::vm::TemplateParameter1 const &lhs,
-      fetch::vm::TemplateParameter1 const &rhs) const
+      fetch::vm::TemplateParameter1 const &lhs, fetch::vm::TemplateParameter1 const &rhs) const
   {
     return lhs.primitive.Get<T>() < rhs.primitive.Get<T>();
   }
@@ -66,8 +65,7 @@ template <typename T>
 struct MapComparator<T, IfIsPtr<T>>
 {
   constexpr bool operator()(
-      fetch::vm::TemplateParameter1 const &lhs,
-      fetch::vm::TemplateParameter1 const &rhs) const
+      fetch::vm::TemplateParameter1 const &lhs, fetch::vm::TemplateParameter1 const &rhs) const
   {
     return lhs.object->IsLessThan(lhs.object, rhs.object);
   }
@@ -227,9 +225,7 @@ private:
 
   template <typename U, typename TemplateParameterType>
   IfIsPtr<U, bool> DeserializeElement(
-      TypeId                 type_id,
-      MsgPackSerializer &    buffer,
-      TemplateParameterType &v)
+      TypeId type_id, MsgPackSerializer &buffer, TemplateParameterType &v)
   {
     if (!vm_->IsDefaultSerializeConstructable(type_id))
     {

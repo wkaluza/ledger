@@ -72,8 +72,7 @@ void Maximum<T>::Forward(const VecTensorType &inputs, TensorType &output)
  */
 template <typename TensorType>
 std::vector<TensorType> Maximum<TensorType>::Backward(
-    const VecTensorType &inputs,
-    const TensorType &   error_signal)
+    const VecTensorType &inputs, const TensorType &error_signal)
 {
   assert(inputs.size() == 2);
   assert(inputs.at(0)->size() == inputs.at(1)->size());

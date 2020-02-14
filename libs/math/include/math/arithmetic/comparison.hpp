@@ -66,15 +66,13 @@ bool IsZero(T const &x)
 }
 
 inline bool IsNonZero(
-    float const &x,
-    float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
+    float const &x, float const &abs_tol = details::DEFAULT_ABSOLUTE_FLT_TOLERANCE)
 {
   return fabsf(x) > abs_tol;
 }
 
 inline bool IsNonZero(
-    double const &x,
-    double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
+    double const &x, double const &abs_tol = details::DEFAULT_ABSOLUTE_DBL_TOLERANCE)
 {
   return fabs(x) > abs_tol;
 }

@@ -45,8 +45,7 @@ class SimpleTokenAuthentication : public TokenAuthenticationInterface
 {
 public:
   explicit SimpleTokenAuthentication(
-      ConstByteArray token,
-      uint32_t       authentication_level = AuthenticationLevel::TOKEN_PRESENT);
+      ConstByteArray token, uint32_t authentication_level = AuthenticationLevel::TOKEN_PRESENT);
 
   uint32_t ValidateToken(ConstByteArray const &token) override;
 

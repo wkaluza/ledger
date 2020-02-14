@@ -31,9 +31,7 @@ void SendExceptionReply(
 }
 
 void SendErrorReply(
-    const std::string &                 message,
-    const Uri &                         uri,
-    std::shared_ptr<OefSearchEndpoint> &endpoint)
+    const std::string &message, const Uri &uri, std::shared_ptr<OefSearchEndpoint> &endpoint)
 {
   auto status = std::make_shared<Successfulness>();
   status->set_success(false);

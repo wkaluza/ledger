@@ -72,9 +72,7 @@ public:
     , commit_count_(CreateCounter(lane, "ledger_statedb_commit_total", "The total no. commit ops"))
     , revert_count_(CreateCounter(lane, "ledger_statedb_revert_total", "The total no. revert ops"))
     , current_hash_count_(CreateCounter(
-          lane,
-          "ledger_statedb_current_hash_total",
-          "The total no. current_hash ops"))
+          lane, "ledger_statedb_current_hash_total", "The total no. current_hash ops"))
     , hash_exists_count_(
           CreateCounter(lane, "ledger_statedb_hash_exist_total", "The total no. hash_exists ops"))
     , reset_count_(CreateCounter(lane, "ledger_statedb_reset_total", "The total no. reset ops"))
@@ -83,17 +81,11 @@ public:
     , has_lock_count_(
           CreateCounter(lane, "ledger_statedb_has_lock_total", "The total no. has lock ops"))
     , get_durations_(CreateHistogram(
-          lane,
-          "ledger_statedb_get_request_seconds",
-          "The histogram of get request durations"))
+          lane, "ledger_statedb_get_request_seconds", "The histogram of get request durations"))
     , set_durations_(CreateHistogram(
-          lane,
-          "ledger_statedb_set_request_seconds",
-          "The histogram of set request durations"))
+          lane, "ledger_statedb_set_request_seconds", "The histogram of set request durations"))
     , lock_durations_(CreateHistogram(
-          lane,
-          "ledger_statedb_lock_request_seconds",
-          "The histogram of lock request durations"))
+          lane, "ledger_statedb_lock_request_seconds", "The histogram of lock request durations"))
     , unlock_durations_(CreateHistogram(
           lane,
           "ledger_statedb_unlock_request_seconds",
@@ -116,9 +108,7 @@ public:
   }
 
   RevertibleDocumentStoreProtocol(
-      NewRevertibleDocumentStore *doc_store,
-      LaneType const &            lane,
-      LaneType const &            maxlanes)
+      NewRevertibleDocumentStore *doc_store, LaneType const &lane, LaneType const &maxlanes)
     : RevertibleDocumentStoreProtocol(doc_store, lane)
   {
     SetLaneLog2(maxlanes);
@@ -218,18 +208,14 @@ public:
 
 private:
   static telemetry::CounterPtr CreateCounter(
-      LaneType    lane,
-      char const *name,
-      char const *description)
+      LaneType lane, char const *name, char const *description)
   {
     return telemetry::Registry::Instance().CreateCounter(
         name, description, {{"lane", std::to_string(lane)}});
   }
 
   static telemetry::HistogramPtr CreateHistogram(
-      LaneType    lane,
-      char const *name,
-      char const *description)
+      LaneType lane, char const *name, char const *description)
   {
     return telemetry::Registry::Instance().CreateHistogram(
         {0.000001, 0.000002, 0.000003, 0.000004, 0.000005, 0.000006, 0.000007, 0.000008, 0.000009,

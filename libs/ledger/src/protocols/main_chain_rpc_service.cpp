@@ -73,9 +73,7 @@ MainChainRpcService::MainChainRpcService(
   , main_chain_protocol_(chain_)
   , rpc_client_(rpc_client)
   , state_machine_{std::make_shared<StateMachine>(
-        "MainChain",
-        State::SYNCHRONISING,
-        [](State state) { return ToString(state); })}
+        "MainChain", State::SYNCHRONISING, [](State state) { return ToString(state); })}
   , recv_block_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_mainchain_service_recv_block_total",
         "The number of received blocks from the network")}

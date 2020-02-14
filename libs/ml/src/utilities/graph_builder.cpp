@@ -93,9 +93,7 @@ namespace utilities {
 
 template <typename T>
 void BuildNodeAndInsertTrainables(
-    NodeSaveableParams<T> const &nsp,
-    std::string const &          name,
-    std::shared_ptr<Graph<T>>    g)
+    NodeSaveableParams<T> const &nsp, std::string const &name, std::shared_ptr<Graph<T>> g)
 {
   auto node = std::make_shared<Node<T>>();
   // construct the concrete op

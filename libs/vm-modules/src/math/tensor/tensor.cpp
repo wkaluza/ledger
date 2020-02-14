@@ -355,8 +355,7 @@ bool VMTensor::IsEqual(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 }
 
 ChargeAmount VMTensor::IsEqualChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.IsEqualChargeEstimator(lhso, rhso);
 }
@@ -411,8 +410,7 @@ void VMTensor::Subtract(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
 }
 
 ChargeAmount VMTensor::SubtractChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.SubtractChargeEstimator(lhso, rhso);
 }
@@ -425,8 +423,7 @@ void VMTensor::InplaceAdd(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rh
 }
 
 ChargeAmount VMTensor::InplaceAddChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceAddChargeEstimator(lhso, rhso);
 }
@@ -439,8 +436,7 @@ void VMTensor::InplaceSubtract(vm::Ptr<Object> const &lhso, vm::Ptr<Object> cons
 }
 
 ChargeAmount VMTensor::InplaceSubtractChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceSubtractChargeEstimator(lhso, rhso);
 }
@@ -453,8 +449,7 @@ void VMTensor::Multiply(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
 }
 
 ChargeAmount VMTensor::MultiplyChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.MultiplyChargeEstimator(lhso, rhso);
 }
@@ -467,8 +462,7 @@ void VMTensor::Divide(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso)
 }
 
 ChargeAmount VMTensor::DivideChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.DivideChargeEstimator(lhso, rhso);
 }
@@ -481,8 +475,7 @@ void VMTensor::InplaceMultiply(vm::Ptr<Object> const &lhso, vm::Ptr<Object> cons
 }
 
 ChargeAmount VMTensor::InplaceMultiplyChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceMultiplyChargeEstimator(lhso, rhso);
 }
@@ -495,8 +488,7 @@ void VMTensor::InplaceDivide(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const 
 }
 
 ChargeAmount VMTensor::InplaceDivideChargeEstimator(
-    vm::Ptr<Object> const &lhso,
-    vm::Ptr<Object> const &rhso)
+    vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
 {
   return estimator_.InplaceDivideChargeEstimator(lhso, rhso);
 }

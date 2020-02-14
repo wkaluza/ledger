@@ -57,9 +57,7 @@ public:
 
   template <typename T>
   void RegisterType(
-      std::string const &name,
-      bool               hidden = false,
-      SemanticReducer    cdr    = SemanticReducer{})
+      std::string const &name, bool hidden = false, SemanticReducer cdr = SemanticReducer{})
   {
     if (!hidden)
     {

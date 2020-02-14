@@ -289,9 +289,7 @@ ConsensusPtr CreateConsensus(
 }
 
 muddle::MuddlePtr CreateBeaconNetwork(
-    Config const &        cfg,
-    CertificatePtr        certificate,
-    NetworkManager const &nm)
+    Config const &cfg, CertificatePtr certificate, NetworkManager const &nm)
 {
   muddle::MuddlePtr network;
 
@@ -342,9 +340,7 @@ BeaconServicePtr CreateBeaconService(
 }
 
 muddle::MuddlePtr CreateMessengerNetwork(
-    Config const &cfg,
-    CertificatePtr const & /*certificate*/,
-    NetworkManager const & /*nm*/)
+    Config const &cfg, CertificatePtr const & /*certificate*/, NetworkManager const & /*nm*/)
 {
   muddle::MuddlePtr network;
 
@@ -374,9 +370,7 @@ Constellation::MailboxPtr CreateMessengerMailbox(Config const &cfg, muddle::Mudd
 }
 
 Constellation::MessengerAPIPtr CreateMessengerAPI(
-    Config const &             cfg,
-    muddle::MuddlePtr &        network,
-    Constellation::MailboxPtr &mailbox)
+    Config const &cfg, muddle::MuddlePtr &network, Constellation::MailboxPtr &mailbox)
 {
   Constellation::MessengerAPIPtr ret{nullptr};
 
@@ -583,8 +577,7 @@ bool Constellation::OnRestorePreviousData(ledger::GenesisFileCreator::ConsensusP
 }
 
 bool Constellation::OnBringUpExternalNetwork(
-    ledger::GenesisFileCreator::ConsensusParameters &params,
-    UriSet const &                                   initial_peers)
+    ledger::GenesisFileCreator::ConsensusParameters &params, UriSet const &initial_peers)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "OnBringUpExternalNetwork()");
 

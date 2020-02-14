@@ -157,8 +157,7 @@ std::pair<BeaconManager::Share, BeaconManager::Share> BeaconManager::GetReceived
 }
 
 void BeaconManager::AddCoefficients(
-    MuddleAddress const &           from,
-    std::vector<Coefficient> const &coefficients)
+    MuddleAddress const &from, std::vector<Coefficient> const &coefficients)
 {
   if (coefficients.size() == polynomial_degree_ + 1)
   {
@@ -292,8 +291,7 @@ std::vector<BeaconManager::Coefficient> BeaconManager::GetQualCoefficients()
 }
 
 void BeaconManager::AddQualCoefficients(
-    MuddleAddress const &           from,
-    std::vector<Coefficient> const &coefficients)
+    MuddleAddress const &from, std::vector<Coefficient> const &coefficients)
 {
   CabinetIndex from_index = identity_to_index_[from];
   if (coefficients.size() == polynomial_degree_ + 1)
@@ -362,8 +360,7 @@ BeaconManager::SharesExposedMap BeaconManager::ComputeQualComplaints(
 }
 
 BeaconManager::MuddleAddress BeaconManager::VerifyQualComplaint(
-    MuddleAddress const &  from,
-    ComplaintAnswer const &answer)
+    MuddleAddress const &from, ComplaintAnswer const &answer)
 {
   CabinetIndex from_index   = identity_to_index_[from];
   CabinetIndex victim_index = identity_to_index_[answer.first];
@@ -458,8 +455,7 @@ void BeaconManager::AddReconstructionShare(MuddleAddress const &address)
 }
 
 void BeaconManager::AddReconstructionShare(
-    MuddleAddress const &                  from,
-    std::pair<MuddleAddress, Share> const &share)
+    MuddleAddress const &from, std::pair<MuddleAddress, Share> const &share)
 {
   CabinetIndex from_index = identity_to_index_[from];
   FETCH_LOG_DEBUG(
@@ -651,8 +647,7 @@ void BeaconManager::Reset()
  */
 
 BeaconManager::AddResult BeaconManager::AddSignaturePart(
-    Identity const & from,
-    Signature const &signature)
+    Identity const &from, Signature const &signature)
 {
   auto it = identity_to_index_.find(from.identifier());
   auto iq = qual_.find(from.identifier());

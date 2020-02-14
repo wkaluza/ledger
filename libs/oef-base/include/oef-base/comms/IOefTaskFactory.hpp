@@ -37,8 +37,7 @@ public:
   using buffers = std::vector<buffer>;
 
   IOefTaskFactory(
-      std::shared_ptr<OefEndpoint>           the_endpoint,
-      std::shared_ptr<OutboundConversations> outbounds)
+      std::shared_ptr<OefEndpoint> the_endpoint, std::shared_ptr<OutboundConversations> outbounds)
     : outbounds(std::move(outbounds))
     , endpoint(the_endpoint)
   {}

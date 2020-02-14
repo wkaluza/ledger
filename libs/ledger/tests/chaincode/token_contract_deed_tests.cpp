@@ -68,9 +68,7 @@ protected:
   }
 
   static ConstByteArray CreateTxTransferData(
-      ConstByteArray const &from,
-      ConstByteArray const &to,
-      Amount const          amount)
+      ConstByteArray const &from, ConstByteArray const &to, Amount const amount)
   {
     Variant v_data{Variant::Object()};
     v_data["from"]   = from;

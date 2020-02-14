@@ -32,10 +32,7 @@ namespace math {
 namespace {
 template <typename DataType, typename ArrayType>
 static void ArangeImplementation(
-    DataType const &from,
-    DataType const &to,
-    DataType const &delta,
-    ArrayType &     ret)
+    DataType const &from, DataType const &to, DataType const &delta, ArrayType &ret)
 {
   auto N = SizeType((to - from) / delta);
   ret.Resize({N});
@@ -1327,8 +1324,7 @@ typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(SizeType index, SizeTy
  */
 template <typename T, typename C>
 typename Tensor<T, C>::ConstSliceType Tensor<T, C>::Slice(
-    std::vector<SizeType> indices,
-    std::vector<SizeType> axes) const
+    std::vector<SizeType> indices, std::vector<SizeType> axes) const
 {
   std::vector<std::vector<SizeType>> range;
 
@@ -1416,8 +1412,7 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(SizeType index, SizeType 
  */
 template <typename T, typename C>
 typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
-    std::pair<SizeType, SizeType> start_end_index,
-    SizeType                      axis)
+    std::pair<SizeType, SizeType> start_end_index, SizeType axis)
 {
   std::vector<SizeVector> range;
 
@@ -1449,8 +1444,7 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
  */
 template <typename T, typename C>
 typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
-    std::vector<SizeType> indices,
-    std::vector<SizeType> axes)
+    std::vector<SizeType> indices, std::vector<SizeType> axes)
 {
   std::vector<std::vector<SizeType>> range;
 
@@ -1493,9 +1487,7 @@ typename Tensor<T, C>::TensorSlice Tensor<T, C>::Slice(
 
 template <typename T, typename C>
 bool Tensor<T, C>::AllClose(
-    Tensor const &o,
-    Type const &  relative_tolerance,
-    Type const &  absolute_tolerance) const
+    Tensor const &o, Type const &relative_tolerance, Type const &absolute_tolerance) const
 {
   // Only enforcing number of elements
   // we allow for different shapes as long as element are in same order
@@ -1688,9 +1680,7 @@ Tensor<T, C> Tensor<T, C>::Concat(std::vector<Tensor> const &tensors, SizeType c
  */
 template <typename T, typename C>
 typename std::vector<Tensor<T, C>> Tensor<T, C>::Split(
-    Tensor const &    tensor,
-    SizeVector const &concat_points,
-    SizeType const    axis)
+    Tensor const &tensor, SizeVector const &concat_points, SizeType const axis)
 {
   std::vector<Tensor> ret{concat_points.size()};
 

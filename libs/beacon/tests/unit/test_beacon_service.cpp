@@ -72,10 +72,7 @@ struct TrustedDealerCabinetNode
   crypto::Identity                 identity;
 
   TrustedDealerCabinetNode(
-      uint16_t port_number,
-      uint16_t index,
-      double   threshold,
-      uint64_t aeon_period)
+      uint16_t port_number, uint16_t index, double threshold, uint64_t aeon_period)
     : event_manager{EventManager::New()}
     , muddle_port{port_number}
     , network_manager{"NetworkManager" + std::to_string(index), 1}
@@ -265,11 +262,7 @@ public:
       SharedEventManager    event_manager,
       bool                  load_and_reload_on_crash)
     : BeaconService(
-          muddle,
-          certificate,
-          beacon_setup,
-          std::move(event_manager),
-          load_and_reload_on_crash)
+          muddle, certificate, beacon_setup, std::move(event_manager), load_and_reload_on_crash)
   {}
 
   // getters/setters for the variables that should change

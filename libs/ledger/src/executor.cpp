@@ -80,10 +80,7 @@ Executor::Executor(StorageUnitPtr storage)
  * @return The status code for the operation
  */
 Executor::Result Executor::Execute(
-    Digest const &   digest,
-    BlockIndex       block,
-    SliceIndex       slice,
-    BitVector const &shards)
+    Digest const &digest, BlockIndex block, SliceIndex slice, BitVector const &shards)
 {
   telemetry::FunctionTimer const timer{*overall_duration_};
 

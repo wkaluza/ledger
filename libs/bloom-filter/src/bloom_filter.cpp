@@ -150,9 +150,8 @@ HashSource::Hashes md5(fetch::byte_array::ConstByteArray const &input)
 
 }  // namespace internal
 
-BasicBloomFilter::Functions const default_hash_functions{internal::raw_data,
-                                                         internal::fnv,
-                                                         internal::md5};
+BasicBloomFilter::Functions const default_hash_functions{
+    internal::raw_data, internal::fnv, internal::md5};
 
 BasicBloomFilter::BasicBloomFilter()
   : bits_(INITIAL_SIZE_IN_BITS)

@@ -198,16 +198,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<16, 16>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<16, 16>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<16, 16>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<32, 32>, 2, 2)
@@ -217,16 +211,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<32, 32>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<32, 32>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<32, 32>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<64, 64>, 2, 2)
@@ -236,16 +224,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<64, 64>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<64, 64>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossForward, fetch::fixed_point::FixedPoint<64, 64>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 template <class T, int I, int B>
@@ -291,16 +273,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoin
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 2, 2)
@@ -310,16 +286,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoin
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 2, 2)
@@ -329,16 +299,10 @@ BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoin
 BENCHMARK_TEMPLATE(BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    1000,
-    1000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_MeanSquareErrorLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    2000,
-    2000)
+    BM_MeanSquareErrorLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 template <class T, int I, int B>
@@ -387,82 +351,46 @@ BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossForward, double, 2000, 2000)
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<16, 16>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<16, 16>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<16, 16>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<16, 16>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<16, 16>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<32, 32>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<32, 32>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<32, 32>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<32, 32>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<32, 32>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<64, 64>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<64, 64>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<64, 64>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<64, 64>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossForward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossForward, fetch::fixed_point::FixedPoint<64, 64>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 template <class T, int I, int B>
@@ -508,82 +436,46 @@ BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossBackward, double, 2000, 2000)
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<16, 16>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<16, 16>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<32, 32>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<32, 32>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_TEMPLATE(BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 2, 2)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    10,
-    10)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 10, 10)
     ->Unit(benchmark::kMicrosecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    100,
-    100)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 100, 100)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    1000,
-    1000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 1000, 1000)
     ->Unit(benchmark::kMillisecond);
 BENCHMARK_TEMPLATE(
-    BM_SoftmaxCrossEntropyLossBackward,
-    fetch::fixed_point::FixedPoint<64, 64>,
-    2000,
-    2000)
+    BM_SoftmaxCrossEntropyLossBackward, fetch::fixed_point::FixedPoint<64, 64>, 2000, 2000)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();

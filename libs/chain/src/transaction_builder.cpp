@@ -261,8 +261,7 @@ TransactionBuilder &TransactionBuilder::Counter(CounterValue counter)
  * @return The current builder instance
  */
 TransactionBuilder &TransactionBuilder::TargetSmartContract(
-    Address const &  address,
-    BitVector const &shard_mask)
+    Address const &address, BitVector const &shard_mask)
 {
   partial_transaction_->contract_mode_    = Transaction::ContractMode::PRESENT;
   partial_transaction_->contract_address_ = address;
@@ -279,8 +278,7 @@ TransactionBuilder &TransactionBuilder::TargetSmartContract(
  * @return The current builder instance
  */
 TransactionBuilder &TransactionBuilder::TargetChainCode(
-    byte_array::ConstByteArray const &ref,
-    BitVector const &                 shard_mask)
+    byte_array::ConstByteArray const &ref, BitVector const &shard_mask)
 {
   partial_transaction_->contract_mode_    = Transaction::ContractMode::CHAIN_CODE;
   partial_transaction_->contract_address_ = Address{};

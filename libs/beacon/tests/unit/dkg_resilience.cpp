@@ -56,9 +56,7 @@ class HonestSetupService : public BeaconSetupService
 {
 public:
   HonestSetupService(
-      MuddleInterface &       endpoint,
-      const ProverPtr &       prover,
-      ManifestCacheInterface &manifest_cache)
+      MuddleInterface &endpoint, const ProverPtr &prover, ManifestCacheInterface &manifest_cache)
     : BeaconSetupService{endpoint, manifest_cache, prover}
   {}
 };
@@ -102,8 +100,7 @@ private:
   }
 
   void SendShares(
-      MuddleAddress const &                        destination,
-      std::pair<MessageShare, MessageShare> const &shares)
+      MuddleAddress const &destination, std::pair<MessageShare, MessageShare> const &shares)
   {
     fetch::serializers::SizeCounter counter;
     counter << shares;

@@ -58,8 +58,7 @@ void DataHolder<TensorType>::Forward(VecTensorType const &inputs, TensorType &ou
  */
 template <class TensorType>
 std::vector<TensorType> DataHolder<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.empty());

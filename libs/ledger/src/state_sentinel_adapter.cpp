@@ -36,9 +36,7 @@ constexpr char const *LOGGING_NAME = "StateSentinelAdapter";
  * @param scope The reference to the scope
  */
 StateSentinelAdapter::StateSentinelAdapter(
-    StorageInterface &storage,
-    ConstByteArray    scope,
-    BitVector const & shards)
+    StorageInterface &storage, ConstByteArray scope, BitVector const &shards)
   : StateAdapter(storage, std::move(scope), Mode::READ_WRITE)
   , shards_{shards}
 {
@@ -74,9 +72,7 @@ StateSentinelAdapter::~StateSentinelAdapter()
  * @return OK if the read was successful, PERMISSION_DENIED if the key is incorrect, otherwise ERROR
  */
 StateSentinelAdapter::Status StateSentinelAdapter::Read(
-    std::string const &key,
-    void *             data,
-    uint64_t &         size)
+    std::string const &key, void *data, uint64_t &size)
 {
   if (!IsAllowedResource(key))
   {
@@ -107,9 +103,7 @@ StateSentinelAdapter::Status StateSentinelAdapter::Read(
  * ERROR
  */
 StateSentinelAdapter::Status StateSentinelAdapter::Write(
-    std::string const &key,
-    void const *       data,
-    uint64_t           size)
+    std::string const &key, void const *data, uint64_t size)
 {
   if (!IsAllowedResource(key))
   {

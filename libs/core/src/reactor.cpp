@@ -48,8 +48,7 @@ namespace core {
 Reactor::Reactor(std::string name)
   : name_{std::move(name)}
   , runnables_time_{CreateHistogram(
-        "ledger_reactor_runnable_time",
-        "The histogram of runnables execution time")}
+        "ledger_reactor_runnable_time", "The histogram of runnables execution time")}
   , attach_total_{CreateCounter(
         "ledger_reactor_attach_total",
         "The total number of times a runnable was attached to the reactor")}
@@ -57,11 +56,9 @@ Reactor::Reactor(std::string name)
         "ledger_reactor_detach_total",
         "The total number of times a runnable was detached from the reactor")}
   , runnable_total_{CreateCounter(
-        "ledger_reactor_runnables_total",
-        "The total number of runnables processed")}
+        "ledger_reactor_runnables_total", "The total number of runnables processed")}
   , sleep_total_{CreateCounter(
-        "ledger_reactor_sleep_total",
-        "The total number of times the reactor has slept")}
+        "ledger_reactor_sleep_total", "The total number of times the reactor has slept")}
   , success_total_{CreateCounter(
         "ledger_reactor_success_total",
         "The total number of times the reactor has successfully executed a runable")}
@@ -69,17 +66,14 @@ Reactor::Reactor(std::string name)
         "ledger_reactor_failure_total",
         "The total number of times the reactor has failed to execute a runnable")}
   , expired_total_{CreateCounter(
-        "ledger_reactor_expired_total",
-        "The total number of expired runnables")}
+        "ledger_reactor_expired_total", "The total number of expired runnables")}
   , too_long_total_{CreateCounter(
-        "ledger_reactor_too_long_total",
-        "The total number of runnables that took too long")}
+        "ledger_reactor_too_long_total", "The total number of runnables that took too long")}
   , way_too_long_total_{CreateCounter(
         "ledger_reactor_way_too_long_total",
         "The total number of runnables that took way too long")}
   , work_queue_length_{CreateGauge(
-        "ledger_reactor_work_queue_length",
-        "The current size of the work queue")}
+        "ledger_reactor_work_queue_length", "The current size of the work queue")}
   , work_queue_max_length_{
         CreateGauge("ledger_reactor_max_work_queue_length", "The max size of the work queue")}
 {}

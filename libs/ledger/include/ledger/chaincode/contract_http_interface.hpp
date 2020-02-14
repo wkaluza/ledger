@@ -86,8 +86,7 @@ private:
   /// @name Transaction Handlers
   /// @{
   http::HTTPResponse OnTransaction(
-      http::HTTPRequest const &request,
-      ConstByteArray const &   expected_contract);
+      http::HTTPRequest const &request, ConstByteArray const &expected_contract);
   SubmitTxStatus SubmitJsonTx(http::HTTPRequest const &request, TxHashes &txs);
   SubmitTxStatus SubmitBulkTx(http::HTTPRequest const &request, TxHashes &txs);
   /// @}

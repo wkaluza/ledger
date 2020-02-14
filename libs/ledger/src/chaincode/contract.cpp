@@ -33,8 +33,7 @@ namespace ledger {
  * @return The corresponding status result for the operation
  */
 Contract::Result Contract::DispatchInitialise(
-    chain::Address const &    owner,
-    chain::Transaction const &tx)
+    chain::Address const &owner, chain::Transaction const &tx)
 {
   Result status{Status::OK};
 
@@ -55,9 +54,7 @@ Contract::Result Contract::DispatchInitialise(
  * @return The corresponding status result for the operation
  */
 Contract::Status Contract::DispatchQuery(
-    ContractName const &name,
-    Query const &       query,
-    Query &             response)
+    ContractName const &name, Query const &query, Query &response)
 {
   auto status{Status::NOT_FOUND};
 

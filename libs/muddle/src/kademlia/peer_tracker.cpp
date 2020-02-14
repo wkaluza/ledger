@@ -85,9 +85,7 @@ void PeerTracker::AddDesiredPeer(Address const &address, PeerTracker::Duration c
 }
 
 void PeerTracker::AddDesiredPeer(
-    Address const &              address,
-    network::Peer const &        hint,
-    PeerTracker::Duration const &expiry)
+    Address const &address, network::Peer const &hint, PeerTracker::Duration const &expiry)
 {
   assert(!address.empty());
   peer_table_.AddDesiredPeer(address, hint, expiry);

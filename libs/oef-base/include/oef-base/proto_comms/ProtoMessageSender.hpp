@@ -47,8 +47,8 @@ public:
   }
   ~ProtoMessageSender() override = default;
 
-  consumed_needed_pair CheckForSpace(const mutable_buffers &data, IMessageWriter<TXType>::TXQ &txq)
-      override;
+  consumed_needed_pair CheckForSpace(
+      const mutable_buffers &data, IMessageWriter<TXType>::TXQ &txq) override;
   void SetEndianness(fetch::oef::base::Endianness newstate)
   {
     endianness = newstate;

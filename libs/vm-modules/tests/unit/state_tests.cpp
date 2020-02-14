@@ -378,9 +378,7 @@ TEST_F(StateTests, test_serialisation_of_complex_type)
 
 template <typename T>
 std::enable_if_t<!IsPtr<T>> ArrayFromVariant(
-    Variant const &array,
-    int32_t        expected_size,
-    Ptr<Array<T>> &out)
+    Variant const &array, int32_t expected_size, Ptr<Array<T>> &out)
 {
   out = array.Get<Ptr<Array<T>>>();
   ASSERT_TRUE(out);

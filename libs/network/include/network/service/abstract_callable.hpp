@@ -158,9 +158,7 @@ void PackCall(
  */
 template <typename S>
 void PackCall(
-    S &                        serializer,
-    ProtocolHandlerType const &protocol,
-    FunctionHandlerType const &function)
+    S &serializer, ProtocolHandlerType const &protocol, FunctionHandlerType const &function)
 {
   serializer << protocol;
   serializer << function;

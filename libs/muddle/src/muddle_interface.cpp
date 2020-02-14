@@ -76,9 +76,7 @@ MuddlePtr CreateMuddle(
 }
 
 MuddlePtr CreateMuddle(
-    char const                     network[4],
-    network::NetworkManager const &nm,
-    std::string const &            external_address)
+    char const network[4], network::NetworkManager const &nm, std::string const &external_address)
 {
   return CreateMuddle(NetworkId{network}, nm, external_address);
 }

@@ -137,9 +137,7 @@ protected:
   DataType loss_;
 
   virtual void PrintStats(
-      SizeType epoch,
-      DataType loss,
-      DataType test_loss = fetch::math::numeric_max<DataType>());
+      SizeType epoch, DataType loss, DataType test_loss = fetch::math::numeric_max<DataType>());
 
 private:
   void TrainImplementation(DataType &loss, SizeType n_rounds = 1);

@@ -41,10 +41,7 @@ enum class ActivationType
 
 template <class T>
 std::string AddActivationNode(
-    ActivationType type,
-    Graph<T> *     g,
-    std::string    name,
-    std::string    input);
+    ActivationType type, Graph<T> *g, std::string name, std::string input);
 
 }  // namespace details
 }  // namespace ml

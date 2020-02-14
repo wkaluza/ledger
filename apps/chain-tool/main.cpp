@@ -226,9 +226,7 @@ class BlockChainForwardTree
 
   private:
     static bool RecurseInternal(
-        Stack &                      stack,
-        BlockChainForwardTree const &block_tree,
-        BlockChains &                chains);
+        Stack &stack, BlockChainForwardTree const &block_tree, BlockChains &chains);
   };
 
 public:
@@ -320,8 +318,7 @@ public:
   }
 
   std::tuple<BlockChain, int, std::string> GetHeaviestChain(
-      BlockChains const &   chains,
-      ChainHeadStore const &chain_head_store) const
+      BlockChains const &chains, ChainHeadStore const &chain_head_store) const
   {
     std::ostringstream s;
 
@@ -596,8 +593,7 @@ private:
 };
 
 BlockChains BlockChainForwardTree::RecursionContext::Recurse(
-    BlockHash const &            root,
-    BlockChainForwardTree const &block_tree)
+    BlockHash const &root, BlockChainForwardTree const &block_tree)
 {
   BlockChains chains;
 
@@ -637,9 +633,7 @@ BlockChains BlockChainForwardTree::RecursionContext::Recurse(
 }
 
 bool BlockChainForwardTree::RecursionContext::RecurseInternal(
-    Stack &                      stack,
-    BlockChainForwardTree const &block_tree,
-    BlockChains &                chains)
+    Stack &stack, BlockChainForwardTree const &block_tree, BlockChains &chains)
 {
   bool retval{false};
 

@@ -49,8 +49,7 @@ void TokenAuthenticationInterface::operator()(HTTPRequest &req)
 }
 
 SimpleTokenAuthentication::SimpleTokenAuthentication(
-    ConstByteArray token,
-    uint32_t       authentication_level)
+    ConstByteArray token, uint32_t authentication_level)
   : token_{std::move(token)}
   , authentication_level_{authentication_level}
 {}

@@ -121,9 +121,7 @@ OutputStream &Measurement::WriteValuePrefix(OutputStream &stream, std::string co
 }
 
 OutputStream &Measurement::WriteValuePrefix(
-    OutputStream &     stream,
-    std::string const &suffix,
-    Labels const &     extra) const
+    OutputStream &stream, std::string const &suffix, Labels const &extra) const
 {
   stream << name() << '_' << suffix << LabelRefs{labels_, extra};
   return stream;

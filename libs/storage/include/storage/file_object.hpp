@@ -53,8 +53,7 @@ struct FileBlockType
   static constexpr uint64_t UNDEFINED       = std::numeric_limits<uint64_t>::max();
 
   static_assert(
-      BS > META_DATA_BYTES,
-      "Block size needs to exceed the min requirement for metadata");
+      BS > META_DATA_BYTES, "Block size needs to exceed the min requirement for metadata");
 
   FileBlockType()
   {

@@ -191,8 +191,6 @@ TEST_P(ExecutionManagerTests, DISABLED_CheckIncrementalExecution)
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    Param,
-    ExecutionManagerTests,
-    ::testing::ValuesIn(BlockConfig::REDUCED_SET));
+    Param, ExecutionManagerTests, ::testing::ValuesIn(BlockConfig::REDUCED_SET));
 
 }  // namespace

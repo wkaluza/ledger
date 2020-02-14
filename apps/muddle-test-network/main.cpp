@@ -68,8 +68,7 @@ struct Node
   Node(uint16_t port, uint16_t http_port)
     : network_manager{std::make_shared<NetworkManager>("NetMgr" + std::to_string(port), 1)}
     , http_network_manager{std::make_shared<NetworkManager>(
-          "HttpMgr" + std::to_string(http_port),
-          1)}
+          "HttpMgr" + std::to_string(http_port), 1)}
     , http{*http_network_manager}
     , http_modules{std::make_shared<MuddleStatusModule>()}
 

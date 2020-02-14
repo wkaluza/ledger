@@ -87,8 +87,8 @@ public:
     return address_;
   }
 
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
-      override
+  void Send(
+      Address const &address, uint16_t service, uint16_t channel, Payload const &message) override
   {
     return Send(address, service, channel, msg_counter_++, message, MuddleEndpoint::OPTION_DEFAULT);
   }

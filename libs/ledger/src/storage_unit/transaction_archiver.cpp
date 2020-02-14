@@ -36,9 +36,7 @@ constexpr char const *LOGGING_NAME = "TxArchiver";
 }  // namespace
 
 TransactionArchiver::TransactionArchiver(
-    uint32_t                   lane,
-    TransactionPoolInterface & pool,
-    TransactionStoreInterface &archive)
+    uint32_t lane, TransactionPoolInterface &pool, TransactionStoreInterface &archive)
   : lane_{lane}
   , pool_{pool}
   , archive_{archive}
@@ -147,8 +145,8 @@ TransactionArchiver::State TransactionArchiver::OnFlushing()
   return State::FLUSHING;
 }
 
-telemetry::CounterPtr TransactionArchiver::CreateCounter(char const *name, char const *description)
-    const
+telemetry::CounterPtr TransactionArchiver::CreateCounter(
+    char const *name, char const *description) const
 {
   telemetry::Measurement::Labels labels{{"lane", std::to_string(lane_)}};
   return telemetry::Registry::Instance().CreateCounter(name, description, std::move(labels));

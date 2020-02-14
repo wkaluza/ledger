@@ -57,8 +57,7 @@ RandomArray(std::size_t n, fetch::fixed_point::FixedPoint<I, F> adj)
 // template for producing a random array of integer types
 template <typename T>
 fetch::meta::IfIsInteger<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(
-    std::size_t n,
-    T           adj)
+    std::size_t n, T adj)
 {
   Tensor<T, fetch::memory::SharedArray<T>> a1(n);
 
@@ -77,8 +76,7 @@ fetch::meta::IfIsInteger<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArra
 // template for producing a random array of float types
 template <typename T>
 fetch::meta::IfIsFloat<T, Tensor<T, fetch::memory::SharedArray<T>>> RandomArray(
-    std::size_t n,
-    T           adj)
+    std::size_t n, T adj)
 {
   Tensor<T, fetch::memory::SharedArray<T>> a1(n);
 

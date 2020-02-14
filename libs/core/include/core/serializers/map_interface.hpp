@@ -54,8 +54,7 @@ public:
   }
 
   bool AppendUsingFunction(
-      std::function<bool(Driver &)> key_serialize,
-      std::function<bool(Driver &)> value_serialize)
+      std::function<bool(Driver &)> key_serialize, std::function<bool(Driver &)> value_serialize)
   {
     ++pos_;
     if (pos_ > size_)

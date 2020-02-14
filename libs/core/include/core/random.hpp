@@ -35,9 +35,7 @@ struct Random
  */
 template <typename T>
 static void Shuffle(
-    LaggedFibonacciGenerator<> &gen,
-    std::vector<T> const &      in_vec,
-    std::vector<T> &            out_vec)
+    LaggedFibonacciGenerator<> &gen, std::vector<T> const &in_vec, std::vector<T> &out_vec)
 {
   out_vec = in_vec;
 
@@ -58,9 +56,7 @@ static void Shuffle(
  */
 template <typename T>
 static void Shuffle(
-    LinearCongruentialGenerator &gen,
-    std::vector<T> const &       in_vec,
-    std::vector<T> &             out_vec)
+    LinearCongruentialGenerator &gen, std::vector<T> const &in_vec, std::vector<T> &out_vec)
 {
   out_vec = in_vec;
 

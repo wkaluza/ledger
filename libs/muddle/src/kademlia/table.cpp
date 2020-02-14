@@ -40,10 +40,7 @@ KademliaTable::KademliaTable(Address const &own_address, NetworkId const &networ
 {}
 
 KademliaTable::Peers KademliaTable::FindPeerInternal(
-    KademliaAddress const &kam_address,
-    uint64_t               log_id,
-    bool                   scan_left,
-    bool                   scan_right)
+    KademliaAddress const &kam_address, uint64_t log_id, bool scan_left, bool scan_right)
 {
 
   // Checking that we are within bounds
@@ -136,10 +133,7 @@ KademliaTable::Peers KademliaTable::FindPeer(Address const &address)
 }
 
 KademliaTable::Peers KademliaTable::FindPeer(
-    Address const &address,
-    uint64_t       log_id,
-    bool           scan_left,
-    bool           scan_right)
+    Address const &address, uint64_t log_id, bool scan_left, bool scan_right)
 {
   // Computing the Kademlia distance and the
   // corresponding bucket.
@@ -148,10 +142,7 @@ KademliaTable::Peers KademliaTable::FindPeer(
 }
 
 KademliaTable::Peers KademliaTable::FindPeerByHammingInternal(
-    KademliaAddress const &kam_address,
-    uint64_t               hamming_id,
-    bool                   scan_left,
-    bool                   scan_right)
+    KademliaAddress const &kam_address, uint64_t hamming_id, bool scan_left, bool scan_right)
 {
   // TODO(tfr): Merge with other function.
   // Checking that we are within bounds
@@ -242,10 +233,7 @@ KademliaTable::Peers KademliaTable::FindPeerByHamming(Address const &address)
 }
 
 KademliaTable::Peers KademliaTable::FindPeerByHamming(
-    Address const &address,
-    uint64_t       hamming_id,
-    bool           scan_left,
-    bool           scan_right)
+    Address const &address, uint64_t hamming_id, bool scan_left, bool scan_right)
 {
   auto kam_address = KademliaAddress::Create(address);
   return FindPeerInternal(kam_address, hamming_id, scan_left, scan_right);
@@ -301,9 +289,7 @@ void KademliaTable::ReportLeaving(Uri const &uri)
 }
 
 void KademliaTable::ReportLiveliness(
-    Address const & address,
-    Address const & reporter,
-    PeerInfo const &info)
+    Address const &address, Address const &reporter, PeerInfo const &info)
 {
   // We never register our own address
   if (address == own_address())
@@ -690,9 +676,7 @@ KademliaTable::AddressSet KademliaTable::desired_peers() const
 }
 
 void KademliaTable::AddDesiredPeer(
-    Address const &      address,
-    network::Peer const &hint,
-    Duration const &     expiry)
+    Address const &address, network::Peer const &hint, Duration const &expiry)
 {
   PeerInfo info;
   {

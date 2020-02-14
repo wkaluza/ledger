@@ -54,9 +54,7 @@ public:
   static constexpr char const *LOGGING_NAME = "OutboundConversationWorkerTask";
 
   OutboundConversationWorkerTask(
-      Core &                              core,
-      const Uri &                         uri,
-      const IOutboundConversationCreator &conversation_creator)
+      Core &core, const Uri &uri, const IOutboundConversationCreator &conversation_creator)
     : uri(uri)
     , core(core)
     , conversation_creator_(conversation_creator)
@@ -66,8 +64,7 @@ public:
   ~OutboundConversationWorkerTask() override = default;
 
   fetch::oef::base::WorkloadProcessed process(
-      WorkloadP                       workload,
-      fetch::oef::base::WorkloadState state) override;
+      WorkloadP workload, fetch::oef::base::WorkloadState state) override;
 
 protected:
   virtual bool connect();

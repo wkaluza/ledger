@@ -155,8 +155,7 @@ void MeanSquareErrorLoss<TensorType>::Forward(VecTensorType const &inputs, Tenso
  */
 template <typename TensorType>
 std::vector<TensorType> MeanSquareErrorLoss<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(error_signal);
 

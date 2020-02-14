@@ -349,15 +349,12 @@ private:
   void PreAnnotatePersistentStatement(NodePtr const &persistent_statement_node);
   void PreAnnotateContractDefinition(BlockNodePtr const &contract_definition_node);
   void PreAnnotateContractFunction(
-      BlockNodePtr const &contract_definition_node,
-      NodePtr const &     function_node);
+      BlockNodePtr const &contract_definition_node, NodePtr const &function_node);
   void PreAnnotateStructDefinition(BlockNodePtr const &struct_definition_node);
   void PreAnnotateMemberFunctionDefinition(
-      BlockNodePtr const &struct_definition_node,
-      BlockNodePtr const &function_definition_node);
+      BlockNodePtr const &struct_definition_node, BlockNodePtr const &function_definition_node);
   void PreAnnotateMemberVarDeclarationStatement(
-      BlockNodePtr const &struct_definition_node,
-      NodePtr const &     var_statement_node);
+      BlockNodePtr const &struct_definition_node, NodePtr const &var_statement_node);
   void PreAnnotateFreeFunctionDefinition(BlockNodePtr const &function_definition_node);
   bool PreAnnotatePrototype(
       NodePtr const &         prototype_node,
@@ -383,17 +380,13 @@ private:
   void AnnotateForStatement(BlockNodePtr const &for_statement_node);
   void AnnotateIfStatement(NodePtr const &if_statement_node);
   void AnnotateUseStatement(
-      BlockNodePtr const &parent_block_node,
-      NodePtr const &     use_statement_node);
+      BlockNodePtr const &parent_block_node, NodePtr const &use_statement_node);
   void AnnotateUseAnyStatement(
-      BlockNodePtr const &parent_block_node,
-      NodePtr const &     use_any_statement_node);
+      BlockNodePtr const &parent_block_node, NodePtr const &use_any_statement_node);
   void AnnotateContractStatement(
-      BlockNodePtr const &parent_block_node,
-      NodePtr const &     contract_statement_node);
+      BlockNodePtr const &parent_block_node, NodePtr const &contract_statement_node);
   void AnnotateLocalVarStatement(
-      BlockNodePtr const &parent_block_node,
-      NodePtr const &     var_statement_node);
+      BlockNodePtr const &parent_block_node, NodePtr const &var_statement_node);
   void AnnotateReturnStatement(NodePtr const &return_statement_node);
   void AnnotateConditionalBlock(BlockNodePtr const &conditional_block_node);
   bool AnnotateTypeExpression(ExpressionNodePtr const &node);
@@ -420,9 +413,7 @@ private:
   bool TestBlock(BlockNodePtr const &block_node) const;
   bool IsWriteable(ExpressionNodePtr const &node);
   bool AnnotateArithmetic(
-      ExpressionNodePtr const &node,
-      ExpressionNodePtr const &lhs,
-      ExpressionNodePtr const &rhs);
+      ExpressionNodePtr const &node, ExpressionNodePtr const &lhs, ExpressionNodePtr const &rhs);
 
   FunctionPtr FindFunction(
       TypePtr const &               type,
@@ -430,24 +421,18 @@ private:
       ExpressionNodePtrArray const &parameter_nodes);
   TypePtr ConvertNode(ExpressionNodePtr const &node, TypePtr const &expected_type);
   TypePtr ConvertNode(
-      ExpressionNodePtr const &node,
-      TypePtr const &          expected_type,
-      TypePtr const &          type);
+      ExpressionNodePtr const &node, TypePtr const &expected_type, TypePtr const &type);
   TypePtr   ResolveReturnType(TypePtr const &return_type, TypePtr const &type);
   TypePtr   FindType(ExpressionNodePtr const &node);
   SymbolPtr FindSymbol(ExpressionNodePtr const &node);
   SymbolPtr SearchSymbols(std::string const &name);
   void      SetVariableExpression(
-           ExpressionNodePtr const &node,
-           VariablePtr const &      variable,
-           TypePtr const &          owner);
+           ExpressionNodePtr const &node, VariablePtr const &variable, TypePtr const &owner);
   void SetLVExpression(ExpressionNodePtr const &node, TypePtr const &type);
   void SetRVExpression(ExpressionNodePtr const &node, TypePtr const &type);
   void SetTypeExpression(ExpressionNodePtr const &node, TypePtr const &type);
   void SetFunctionGroupExpression(
-      ExpressionNodePtr const &node,
-      FunctionGroupPtr const & function_group,
-      TypePtr const &          owner);
+      ExpressionNodePtr const &node, FunctionGroupPtr const &function_group, TypePtr const &owner);
   bool CheckType(std::string const &type_name, TypeIndex type_index);
   void CreatePrimitiveType(
       std::string const &type_name,
@@ -456,15 +441,9 @@ private:
       TypeId             type_id,
       TypePtr &          type);
   void CreateMetaType(
-      std::string const &type_name,
-      TypeIndex          type_index,
-      TypeId             type_id,
-      TypePtr &          type);
+      std::string const &type_name, TypeIndex type_index, TypeId type_id, TypePtr &type);
   void CreateClassType(
-      std::string const &type_name,
-      TypeIndex          type_index,
-      TypeId             type_id,
-      TypePtr &          type);
+      std::string const &type_name, TypeIndex type_index, TypeId type_id, TypePtr &type);
   void CreateTemplateType(
       std::string const & type_name,
       TypeIndex           type_index,
@@ -550,9 +529,7 @@ private:
       TypeIdArray const &template_parameter_type_ids,
       TypePtr const &    type);
   void AddFunctionInfo(
-      FunctionPtr const &function,
-      Handler const &    handler,
-      ChargeAmount       static_charge);
+      FunctionPtr const &function, Handler const &handler, ChargeAmount static_charge);
   std::string BuildUniqueName(
       TypePtr const &     type,
       std::string const & function_name,

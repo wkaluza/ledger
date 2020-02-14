@@ -42,8 +42,7 @@ public:
 
   // Resource Mapping
   static storage::ResourceAddress CreateAddress(
-      ConstByteArray const &            scope,
-      byte_array::ConstByteArray const &key);
+      ConstByteArray const &scope, byte_array::ConstByteArray const &key);
 
   enum class Mode
   {

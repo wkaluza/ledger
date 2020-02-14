@@ -259,8 +259,7 @@ public:
    * @param address_hints The map of address => URI hint
    */
   virtual void ConnectTo(
-      AddressHints const &address_hints,
-      Duration const &    expire = NeverExpire()) = 0;
+      AddressHints const &address_hints, Duration const &expire = NeverExpire()) = 0;
 
   /**
    * Request that muddle disconnected from the specified address
@@ -339,9 +338,7 @@ MuddlePtr CreateMuddle(
     network::NetworkManager const &nm,
     std::string const &            external_address);
 MuddlePtr CreateMuddle(
-    char const                     network[4],
-    network::NetworkManager const &nm,
-    std::string const &            external_address);
+    char const network[4], network::NetworkManager const &nm, std::string const &external_address);
 
 }  // namespace muddle
 }  // namespace fetch

@@ -47,9 +47,7 @@ std::unique_ptr<Verifier> Verifier::Build(Identity const &identity)
  * @return true if the signature is valid for the payload, otherwise false
  */
 bool Verifier::Verify(
-    Identity const &      identity,
-    ConstByteArray const &data,
-    ConstByteArray const &signature)
+    Identity const &identity, ConstByteArray const &data, ConstByteArray const &signature)
 {
   // build a compatible verifier
   auto verifier = Build(identity);

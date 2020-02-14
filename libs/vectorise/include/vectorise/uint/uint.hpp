@@ -61,8 +61,7 @@ public:
     RESIDUAL_BITS     = WIDE_ELEMENTS * WIDE_ELEMENT_SIZE - UINT_SIZE,
   };
   static_assert(
-      S == (ELEMENTS * ELEMENT_SIZE),
-      "Size must be a multiple of 8 times the base type size.");
+      S == (ELEMENTS * ELEMENT_SIZE), "Size must be a multiple of 8 times the base type size.");
 
   using WideContainerType                   = core::Array<WideType, WIDE_ELEMENTS>;
   using ContainerType                       = BaseType[ELEMENTS];
@@ -241,8 +240,7 @@ public:
 
   template <typename T>
   constexpr meta::EnableIf<std::is_same<meta::Decay<T>, byte_array::ByteArray>::value, T> As(
-      platform::Endian endianess_of_output_data,
-      bool             include_leading_zeroes = false) const;
+      platform::Endian endianess_of_output_data, bool include_leading_zeroes = false) const;
 
   /////////////////
   /// constants ///
@@ -345,8 +343,8 @@ constexpr UInt<S> &UInt<S>::operator=(UInt const &v)
 
 template <uint16_t S>
 template <typename T>
-constexpr meta::IfIsAByteArray<T, UInt<S>>
-    &UInt<S>::FromArray(T const &arr, platform::Endian endianess_of_input_data)  // NOLINT
+constexpr meta::IfIsAByteArray<T, UInt<S>> &UInt<S>::FromArray(
+    T const &arr, platform::Endian endianess_of_input_data)  // NOLINT
 {
   FromArrayInternal(arr, endianess_of_input_data, true);
   return *this;
@@ -1177,8 +1175,7 @@ UInt<S>::operator std::string() const
 template <uint16_t S>
 template <typename T>
 constexpr meta::EnableIf<std::is_same<meta::Decay<T>, byte_array::ByteArray>::value, T> UInt<S>::As(
-    platform::Endian endianess_of_output_data,
-    bool             include_leading_zeroes) const
+    platform::Endian endianess_of_output_data, bool include_leading_zeroes) const
 {
   auto const size_{include_leading_zeroes ? size() : TrimmedSize()};
 

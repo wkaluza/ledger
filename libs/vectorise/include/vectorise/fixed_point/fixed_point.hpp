@@ -520,8 +520,7 @@ private:
   template <typename T, typename U>
   // NOLINTNEXTLINE
   friend constexpr math::meta::IfIsFixedPoint<T, T> fetch::math::AsType(
-      U val,
-      meta::IfIsFloat<U> *);
+      U val, meta::IfIsFloat<U> *);
 
   /**
    * helper function that checks no rounding error when casting
@@ -744,8 +743,7 @@ template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::_half{FixedPoint<I, F>::FromFloat(0.5)}; /* 0.5 */
 template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::TOLERANCE(
-    0,
-    FixedPoint<I, F>::BaseTypeInfo::tolerance); /* 0 */
+    0, FixedPoint<I, F>::BaseTypeInfo::tolerance); /* 0 */
 template <uint16_t I, uint16_t F>
 FixedPoint<I, F> const FixedPoint<I, F>::CONST_SMALLEST_FRACTION{
     FixedPoint<I, F>(0, FixedPoint<I, F>::SMALLEST_FRACTION)};
@@ -2539,8 +2537,7 @@ constexpr typename FixedPoint<I, F>::Type *FixedPoint<I, F>::pointer()
  */
 template <uint16_t I, uint16_t F>
 constexpr FixedPoint<I, F> FixedPoint<I, F>::Remainder(
-    FixedPoint<I, F> const &x,
-    FixedPoint<I, F> const &y)
+    FixedPoint<I, F> const &x, FixedPoint<I, F> const &y)
 {
   FixedPoint result = x / y;
   return x - Round(result) * y;
@@ -2554,8 +2551,7 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::Remainder(
  */
 template <uint16_t I, uint16_t F>
 constexpr FixedPoint<I, F> FixedPoint<I, F>::Fmod(
-    FixedPoint<I, F> const &x,
-    FixedPoint<I, F> const &y)
+    FixedPoint<I, F> const &x, FixedPoint<I, F> const &y)
 {
   FixedPoint result = Remainder(Abs(x), Abs(y));
   if (result < _0)
@@ -2993,8 +2989,7 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::Sqrt(FixedPoint<I, F> const &x)
  */
 template <uint16_t I, uint16_t F>
 constexpr FixedPoint<I, F> FixedPoint<I, F>::Pow(
-    FixedPoint<I, F> const &x,
-    FixedPoint<I, F> const &y)
+    FixedPoint<I, F> const &x, FixedPoint<I, F> const &y)
 {
   if (IsNaN(x) || IsNaN(y))
   {
@@ -3582,8 +3577,7 @@ constexpr FixedPoint<I, F> FixedPoint<I, F>::ATan(FixedPoint<I, F> const &x)
  */
 template <uint16_t I, uint16_t F>
 constexpr FixedPoint<I, F> FixedPoint<I, F>::ATan2(
-    FixedPoint<I, F> const &y,
-    FixedPoint<I, F> const &x)
+    FixedPoint<I, F> const &y, FixedPoint<I, F> const &x)
 {
   if (IsNaN(y) || IsNaN(x))
   {

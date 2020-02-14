@@ -37,8 +37,7 @@ L2Regulariser<TensorType>::L2Regulariser()
  */
 template <typename TensorType>
 void L2Regulariser<TensorType>::ApplyRegularisation(
-    TensorType &weight,
-    DataType    regularisation_rate)
+    TensorType &weight, DataType regularisation_rate)
 {
   auto coef = static_cast<DataType>(2 * regularisation_rate);
 

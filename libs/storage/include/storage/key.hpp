@@ -47,8 +47,7 @@ template <std::size_t V_BITS = 256, typename BlockTypeParam = uint64_t>
 struct Key
 {
   static_assert(
-      std::is_unsigned<BlockTypeParam>::value,
-      "The BlockType must be of unsigned integer type.");
+      std::is_unsigned<BlockTypeParam>::value, "The BlockType must be of unsigned integer type.");
   static_assert(
       meta::IsLog2(V_BITS) && (V_BITS >= 128),
       "Keys expected to be a cryptographic hash function output");

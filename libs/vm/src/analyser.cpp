@@ -287,9 +287,7 @@ void Analyser::CreateClassType(std::string const &name, TypeIndex type_index)
 }
 
 void Analyser::CreateTemplateType(
-    std::string const &   name,
-    TypeIndex             type_index,
-    TypeIndexArray const &allowed_types_index_array)
+    std::string const &name, TypeIndex type_index, TypeIndexArray const &allowed_types_index_array)
 {
   TypePtr type;
   CreateTemplateType(name, type_index, GetTypes(allowed_types_index_array), TypeIds::Unknown, type);
@@ -588,8 +586,7 @@ void Analyser::ValidateFunctionAnnotations(NodePtr const &function_node)
 }
 
 void Analyser::ValidateFunctionPrototype(
-    NodePtr const &            function_node,
-    LedgerRestrictionMetadata &metadata)
+    NodePtr const &function_node, LedgerRestrictionMetadata &metadata)
 {
   auto const &function_name_node = ConvertToExpressionNodePtr(function_node->children[1]);
   assert(function_name_node->function != nullptr);
@@ -1235,8 +1232,7 @@ void Analyser::PreAnnotateContractDefinition(BlockNodePtr const &contract_defini
 }
 
 void Analyser::PreAnnotateContractFunction(
-    BlockNodePtr const &contract_definition_node,
-    NodePtr const &     function_node)
+    BlockNodePtr const &contract_definition_node, NodePtr const &function_node)
 {
   ExpressionNodePtr contract_name_node =
       ConvertToExpressionNodePtr(contract_definition_node->children[0]);
@@ -1330,8 +1326,7 @@ void Analyser::PreAnnotateStructDefinition(BlockNodePtr const &struct_definition
 }
 
 void Analyser::PreAnnotateMemberFunctionDefinition(
-    BlockNodePtr const &struct_definition_node,
-    BlockNodePtr const &function_definition_node)
+    BlockNodePtr const &struct_definition_node, BlockNodePtr const &function_definition_node)
 {
   ExpressionNodePtr struct_name_node =
       ConvertToExpressionNodePtr(struct_definition_node->children[0]);
@@ -1427,8 +1422,7 @@ void Analyser::PreAnnotateMemberFunctionDefinition(
 }
 
 void Analyser::PreAnnotateMemberVarDeclarationStatement(
-    BlockNodePtr const &struct_definition_node,
-    NodePtr const &     var_statement_node)
+    BlockNodePtr const &struct_definition_node, NodePtr const &var_statement_node)
 {
   ExpressionNodePtr struct_name_node =
       ConvertToExpressionNodePtr(struct_definition_node->children[0]);
@@ -1868,8 +1862,7 @@ void Analyser::AnnotateIfStatement(NodePtr const &if_statement_node)
 }
 
 void Analyser::AnnotateUseStatement(
-    BlockNodePtr const &parent_block_node,
-    NodePtr const &     use_statement_node)
+    BlockNodePtr const &parent_block_node, NodePtr const &use_statement_node)
 {
   ExpressionNodePtr state_name_node = ConvertToExpressionNodePtr(use_statement_node->children[0]);
   NodePtr           list_node       = use_statement_node->children[1];
@@ -1923,8 +1916,7 @@ void Analyser::AnnotateUseStatement(
 }
 
 void Analyser::AnnotateUseAnyStatement(
-    BlockNodePtr const &parent_block_node,
-    NodePtr const &     use_any_statement_node)
+    BlockNodePtr const &parent_block_node, NodePtr const &use_any_statement_node)
 {
   if (use_any_node_)
   {
@@ -1949,8 +1941,7 @@ void Analyser::AnnotateUseAnyStatement(
 }
 
 void Analyser::AnnotateContractStatement(
-    BlockNodePtr const &parent_block_node,
-    NodePtr const &     contract_statement_node)
+    BlockNodePtr const &parent_block_node, NodePtr const &contract_statement_node)
 {
   ExpressionNodePtr contract_variable_node =
       ConvertToExpressionNodePtr(contract_statement_node->children[0]);
@@ -1992,8 +1983,7 @@ void Analyser::AnnotateContractStatement(
 }
 
 void Analyser::AnnotateLocalVarStatement(
-    BlockNodePtr const &parent_block_node,
-    NodePtr const &     var_statement_node)
+    BlockNodePtr const &parent_block_node, NodePtr const &var_statement_node)
 {
   ExpressionNodePtr  name_node = ConvertToExpressionNodePtr(var_statement_node->children[0]);
   std::string const &name      = name_node->text;
@@ -3005,9 +2995,7 @@ bool Analyser::IsWriteable(ExpressionNodePtr const &node)
 }
 
 bool Analyser::AnnotateArithmetic(
-    ExpressionNodePtr const &node,
-    ExpressionNodePtr const &lhs,
-    ExpressionNodePtr const &rhs)
+    ExpressionNodePtr const &node, ExpressionNodePtr const &lhs, ExpressionNodePtr const &rhs)
 {
   Operator const op = GetOperator(node->node_kind);
   if (lhs->IsNull() || rhs->IsNull())
@@ -3125,9 +3113,7 @@ TypePtr Analyser::ConvertNode(ExpressionNodePtr const &node, TypePtr const &expe
 }
 
 TypePtr Analyser::ConvertNode(
-    ExpressionNodePtr const &node,
-    TypePtr const &          expected_type,
-    TypePtr const &          type)
+    ExpressionNodePtr const &node, TypePtr const &expected_type, TypePtr const &type)
 {
   TypePtr const &input_type = node->type;
 
@@ -3352,9 +3338,7 @@ SymbolPtr Analyser::SearchSymbols(std::string const &name)
 }
 
 void Analyser::SetVariableExpression(
-    ExpressionNodePtr const &node,
-    VariablePtr const &      variable,
-    TypePtr const &          owner)
+    ExpressionNodePtr const &node, VariablePtr const &variable, TypePtr const &owner)
 {
   node->expression_kind = ExpressionKind::Variable;
   node->variable        = variable;
@@ -3382,9 +3366,7 @@ void Analyser::SetTypeExpression(ExpressionNodePtr const &node, TypePtr const &t
 }
 
 void Analyser::SetFunctionGroupExpression(
-    ExpressionNodePtr const &node,
-    FunctionGroupPtr const & function_group,
-    TypePtr const &          owner)
+    ExpressionNodePtr const &node, FunctionGroupPtr const &function_group, TypePtr const &owner)
 {
   node->expression_kind = ExpressionKind::FunctionGroup;
   node->function_group  = function_group;
@@ -3437,10 +3419,7 @@ void Analyser::CreatePrimitiveType(
 }
 
 void Analyser::CreateMetaType(
-    std::string const &type_name,
-    TypeIndex          type_index,
-    TypeId             type_id,
-    TypePtr &          type)
+    std::string const &type_name, TypeIndex type_index, TypeId type_id, TypePtr &type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3454,10 +3433,7 @@ void Analyser::CreateMetaType(
 }
 
 void Analyser::CreateClassType(
-    std::string const &type_name,
-    TypeIndex          type_index,
-    TypeId             type_id,
-    TypePtr &          type)
+    std::string const &type_name, TypeIndex type_index, TypeId type_id, TypePtr &type)
 {
   if (CheckType(type_name, type_index))
   {
@@ -3544,9 +3520,7 @@ void Analyser::CreateGroupType(
 }
 
 TypePtr Analyser::InternalCreateTemplateInstantiationType(
-    TypeKind            type_kind,
-    TypePtr const &     template_type,
-    TypePtrArray const &template_parameter_types)
+    TypeKind type_kind, TypePtr const &template_type, TypePtrArray const &template_parameter_types)
 {
   std::stringstream stream;
   stream << template_type->name + "<";
@@ -3780,9 +3754,7 @@ void Analyser::AddTypeInfo(
 }
 
 void Analyser::AddFunctionInfo(
-    FunctionPtr const &function,
-    Handler const &    handler,
-    ChargeAmount       static_charge)
+    FunctionPtr const &function, Handler const &handler, ChargeAmount static_charge)
 {
   function_info_array_.emplace_back(
       function->function_kind, function->unique_name, handler, static_charge);

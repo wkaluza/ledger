@@ -57,8 +57,8 @@ public:
 
   /// @name Executor Interface
   /// @{
-  Result Execute(Digest const &digest, BlockIndex block, SliceIndex slice, BitVector const &shards)
-      override;
+  Result Execute(
+      Digest const &digest, BlockIndex block, SliceIndex slice, BitVector const &shards) override;
   void SettleFees(
       chain::Address const &   miner,
       BlockIndex               block,

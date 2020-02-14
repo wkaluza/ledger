@@ -81,11 +81,7 @@ public:
   {}
 
   TaggedTree(
-      Tag           tag,
-      Content       content,
-      Children      children,
-      Params        params = {},
-      TaggingPolicy policy = {})
+      Tag tag, Content content, Children children, Params params = {}, TaggingPolicy policy = {})
     : tagging_policy_(std::move(policy))
     , tag_(std::move(tag))
     , params_(std::move(params))

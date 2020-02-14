@@ -71,9 +71,7 @@ public:
   virtual ~P2PTrustInterface() = default;
 
   virtual void AddFeedback(
-      IDENTITY const &peer_ident,
-      TrustSubject    subject,
-      TrustQuality    quality) = 0;
+      IDENTITY const &peer_ident, TrustSubject subject, TrustQuality quality) = 0;
 
   virtual void AddFeedback(
       IDENTITY const &      peer_ident,

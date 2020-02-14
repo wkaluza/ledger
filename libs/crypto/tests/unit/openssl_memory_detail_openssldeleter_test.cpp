@@ -109,8 +109,7 @@ TEST_F(OpenSSLDeleterTest, test_that_DeleterPrimitive_function_is_called_for_CON
 }
 
 TEST_F(
-    OpenSSLDeleterTest,
-    test_that_DeleterPrimitive_function_is_called_for_NON_const_qualified_type)
+    OpenSSLDeleterTest, test_that_DeleterPrimitive_function_is_called_for_NON_const_qualified_type)
 {
   TestType testValue;
 

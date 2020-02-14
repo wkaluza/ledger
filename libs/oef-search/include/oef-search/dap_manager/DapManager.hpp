@@ -143,9 +143,7 @@ public:
 
   template <typename IN_PROTO, typename OUT_PROTO>
   std::shared_ptr<fetch::oef::base::FutureComplexType<std::shared_ptr<OUT_PROTO>>> SingleDapCall(
-      std::string const &       dap_name,
-      std::string const &       path,
-      std::shared_ptr<IN_PROTO> in_proto)
+      std::string const &dap_name, std::string const &path, std::shared_ptr<IN_PROTO> in_proto)
   {
     auto future =
         std::make_shared<fetch::oef::base::FutureComplexType<std::shared_ptr<OUT_PROTO>>>();
@@ -258,8 +256,7 @@ public:
   }
 
   std::shared_ptr<fetch::oef::base::FutureComplexType<std::shared_ptr<IdentifierSequence>>> execute(
-      std::shared_ptr<Branch>            root,
-      const fetch::oef::pb::SearchQuery &query)
+      std::shared_ptr<Branch> root, const fetch::oef::pb::SearchQuery &query)
   {
     auto result = std::make_shared<
         fetch::oef::base::FutureComplexType<std::shared_ptr<IdentifierSequence>>>();
@@ -616,8 +613,7 @@ protected:
   }
 
   void SetDistanceInHeader(
-      fetch::oef::pb::SearchQuery &                      query,
-      std::function<void(fetch::oef::pb::SearchQuery &)> done)
+      fetch::oef::pb::SearchQuery &query, std::function<void(fetch::oef::pb::SearchQuery &)> done)
   {
     auto res = PlaneDistanceLookup(
         "geo",

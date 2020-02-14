@@ -223,8 +223,7 @@ void BuildMuddleStatus(Muddle const &muddle, variant::Variant &output, bool exte
  * @return The filtered map of muddle instances
  */
 MuddleRegistry::MuddleMap FilterInstances(
-    MuddleRegistry::MuddleMap const &map,
-    std::string const &              target_network)
+    MuddleRegistry::MuddleMap const &map, std::string const &target_network)
 {
   MuddleRegistry::MuddleMap filtered_map{};
 

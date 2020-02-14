@@ -71,8 +71,7 @@ void PReluOp<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
 //    f'(alpha)=-Relu(-x)=min(0,x); x>=0 f'(alpha)=0, x<0 f'(alpha)=x
 template <typename TensorType>
 std::vector<TensorType> PReluOp<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 2);
   assert(inputs.at(0)->size() == error_signal.size());

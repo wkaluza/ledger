@@ -76,8 +76,7 @@ void SoftmaxCrossEntropyLoss<TensorType>::Forward(VecTensorType const &inputs, T
 
 template <typename TensorType>
 std::vector<TensorType> SoftmaxCrossEntropyLoss<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(error_signal);
 

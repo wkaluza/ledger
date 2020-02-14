@@ -33,9 +33,7 @@ constexpr char const *LOGGING_NAME = "SynExecMgr";
 using ExecStatus = SynergeticExecutionManager::ExecStatus;
 
 SynergeticExecutionManager::SynergeticExecutionManager(
-    DAGPtr                 dag,
-    std::size_t            num_executors,
-    ExecutorFactory const &factory)
+    DAGPtr dag, std::size_t num_executors, ExecutorFactory const &factory)
   : dag_{std::move(dag)}
   , executors_(num_executors)
   , threads_{num_executors, "SynEx"}

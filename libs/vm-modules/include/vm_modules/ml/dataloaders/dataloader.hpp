@@ -52,14 +52,10 @@ public:
 
   VMDataLoader(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
   VMDataLoader(
-      fetch::vm::VM *                          vm,
-      fetch::vm::TypeId                        type_id,
-      fetch::vm::Ptr<fetch::vm::String> const &mode);
+      fetch::vm::VM *vm, fetch::vm::TypeId type_id, fetch::vm::Ptr<fetch::vm::String> const &mode);
 
   static fetch::vm::Ptr<VMDataLoader> Constructor(
-      fetch::vm::VM *                          vm,
-      fetch::vm::TypeId                        type_id,
-      fetch::vm::Ptr<fetch::vm::String> const &mode);
+      fetch::vm::VM *vm, fetch::vm::TypeId type_id, fetch::vm::Ptr<fetch::vm::String> const &mode);
 
   static void Bind(fetch::vm::Module &module, bool enable_experimental);
 

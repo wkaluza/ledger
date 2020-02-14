@@ -265,14 +265,11 @@ Router::Router(
   , bx_max_packet_length(
         CreateGauge("ledger_router_bx_max_packet_length", "The max broadcasted packet length"))
   , rx_packet_length(CreateHistogram(
-        "ledger_router_rx_packet_length",
-        "The histogram of received packet lengths"))
+        "ledger_router_rx_packet_length", "The histogram of received packet lengths"))
   , tx_packet_length(CreateHistogram(
-        "ledger_router_tx_packet_length",
-        "The histogram of transmitted packet lengths"))
+        "ledger_router_tx_packet_length", "The histogram of transmitted packet lengths"))
   , bx_packet_length(CreateHistogram(
-        "ledger_router_bx_packet_length",
-        "The histogram of broadcasted packet lengths"))
+        "ledger_router_bx_packet_length", "The histogram of broadcasted packet lengths"))
   , rx_packet_total_(
         CreateCounter("ledger_router_rx_packet_total", "The total number of received packets"))
   , tx_packet_total_(
@@ -298,28 +295,22 @@ Router::Router(
         "ledger_router_enqueued_packet_total",
         "The total number of enqueued packets to be dispatched"))
   , exchange_dispatch_total_(CreateCounter(
-        "ledger_router_exchange_packet_total",
-        "The total number of exchange packets dispatched"))
+        "ledger_router_exchange_packet_total", "The total number of exchange packets dispatched"))
   , subscription_dispatch_total_(CreateCounter(
         "ledger_router_subscription_packet_total",
         "The total number of subscription packets dispatched"))
   , dispatch_direct_total_(CreateCounter(
-        "ledger_router_direct_packet_total",
-        "The total number of direct packets dispatched"))
+        "ledger_router_direct_packet_total", "The total number of direct packets dispatched"))
   , dispatch_failure_total_(CreateCounter(
-        "ledger_router_dispatch_failure_total",
-        "The total number of dispatch failures"))
+        "ledger_router_dispatch_failure_total", "The total number of dispatch failures"))
   , dispatch_complete_total_(CreateCounter(
-        "ledger_router_dispatch_complete_total",
-        "The total number of completed dispatchs"))
+        "ledger_router_dispatch_complete_total", "The total number of completed dispatchs"))
   , foreign_packet_total_(
         CreateCounter("ledger_router_foreign_packet_total", "The total number of foreign packets"))
   , fraudulent_packet_total_(CreateCounter(
-        "ledger_router_fraudulent_packet_total",
-        "The total number of fraudulent packets"))
+        "ledger_router_fraudulent_packet_total", "The total number of fraudulent packets"))
   , routing_table_updates_total_(CreateCounter(
-        "ledger_router_table_updates_total",
-        "The total number of updates to the routing table"))
+        "ledger_router_table_updates_total", "The total number of updates to the routing table"))
   , echo_cache_trims_total_(CreateCounter(
         "ledger_router_echo_cache_trims_total",
         "The total number of times the echo cache was trimmed"))
@@ -327,11 +318,9 @@ Router::Router(
         "ledger_router_echo_cache_removal_total",
         "The total number of entries removed from the echo cache"))
   , normal_routing_total_(CreateCounter(
-        "ledger_router_normal_routing_total",
-        "The total number of normally routed packets"))
+        "ledger_router_normal_routing_total", "The total number of normally routed packets"))
   , informed_routing_total_(CreateCounter(
-        "ledger_router_informed_routing_total",
-        "The total number of informed routed packets"))
+        "ledger_router_informed_routing_total", "The total number of informed routed packets"))
   , speculative_routing_total_(CreateCounter(
         "ledger_router_speculative_routing_total",
         "The total number of speculatively routed packets"))
@@ -339,8 +328,7 @@ Router::Router(
         "ledger_router_failed_routing_total",
         "The total number of packets that have failed to be routed"))
   , connection_dropped_total_(CreateCounter(
-        "ledger_router_connection_dropped_total",
-        "The total number of connections dropped"))
+        "ledger_router_connection_dropped_total", "The total number of connections dropped"))
 {}
 
 /**
@@ -459,10 +447,7 @@ Address const &Router::GetAddress() const
  * @param message The message to be sent
  */
 void Router::Send(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel,
-    Payload const &message)
+    Address const &address, uint16_t service, uint16_t channel, Payload const &message)
 {
   // get the next counter for this message
   uint16_t const counter = GetNextCounter();
@@ -603,9 +588,7 @@ MuddleEndpoint::SubscriptionPtr Router::Subscribe(uint16_t service, uint16_t cha
  * @return A valid pointer if the successful, otherwise an invalid pointer
  */
 MuddleEndpoint::SubscriptionPtr Router::Subscribe(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel)
+    Address const &address, uint16_t service, uint16_t channel)
 {
   return registrar_.Register(address, service, channel);
 }
@@ -650,10 +633,7 @@ Router::Handle Router::LookupHandle(Packet::RawAddress const &raw_address) const
  * @param packet The packet to be routed
  */
 void Router::SendToConnection(
-    Handle           handle,
-    PacketPtr const &packet,
-    bool             external,
-    bool             reschedule_on_fail)
+    Handle handle, PacketPtr const &packet, bool external, bool reschedule_on_fail)
 {
   // internal method, we expect all inputs be valid at this stage
   assert(static_cast<bool>(packet));

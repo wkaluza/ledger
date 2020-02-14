@@ -136,8 +136,7 @@ void AvgPool2D<TensorType>::Forward(VecTensorType const &inputs, TensorType &out
  */
 template <typename TensorType>
 std::vector<TensorType> AvgPool2D<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == ComputeOutputShape(inputs));

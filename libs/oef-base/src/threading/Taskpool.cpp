@@ -351,8 +351,7 @@ void Taskpool::after(TaskP task, const Milliseconds &delay)
 }
 
 Taskpool::Timestamp Taskpool::lockless_getNextWakeTime(
-    const Timestamp &   current_time,
-    const Milliseconds &deflt)
+    const Timestamp &current_time, const Milliseconds &deflt)
 {
   Timestamp result = current_time + deflt;
   if (!future_tasks_.empty())

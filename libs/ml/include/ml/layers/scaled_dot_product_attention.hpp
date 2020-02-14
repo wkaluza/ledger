@@ -36,8 +36,7 @@ public:
 
   ScaledDotProductAttention() = default;
   explicit ScaledDotProductAttention(
-      SizeType dk,
-      DataType dropout = fetch::math::Type<DataType>("0.1"));
+      SizeType dk, DataType dropout = fetch::math::Type<DataType>("0.1"));
 
   std::shared_ptr<OpsSaveableParams> GetOpSaveableParams() override;
 

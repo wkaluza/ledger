@@ -80,8 +80,7 @@ void Multiply<T>::Forward(const VecTensorType &inputs, TensorType &output)
  */
 template <typename TensorType>
 std::vector<TensorType> Multiply<TensorType>::Backward(
-    const VecTensorType &inputs,
-    const TensorType &   error_signal)
+    const VecTensorType &inputs, const TensorType &error_signal)
 {
   assert(inputs.size() == 2);
   assert(

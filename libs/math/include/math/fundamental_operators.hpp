@@ -41,10 +41,7 @@ namespace details_vectorisation {
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Add(
-    ArrayType const &    array1,
-    ArrayType const &    array2,
-    memory::Range const &range,
-    ArrayType &          ret)
+    ArrayType const &array1, ArrayType const &array2, memory::Range const &range, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(array1.size() == array2.size());
@@ -82,9 +79,7 @@ meta::IfIsMathArray<ArrayType, void> Add(
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, ArrayType> Add(
-    ArrayType const &    array1,
-    ArrayType const &    array2,
-    memory::Range const &range)
+    ArrayType const &array1, ArrayType const &array2, memory::Range const &range)
 {
   ArrayType ret{array1.size()};
   Add(array1, array2, range, ret);
@@ -104,9 +99,7 @@ template <
     typename ArrayType,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Subtract(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(array.size() == ret.size());
@@ -128,10 +121,7 @@ meta::IfIsMathArray<ArrayType, void> Subtract(
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &    obj1,
-    ArrayType const &    obj2,
-    memory::Range const &range,
-    ArrayType &          ret)
+    ArrayType const &obj1, ArrayType const &obj2, memory::Range const &range, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(obj1.shape() == obj2.shape());
@@ -169,10 +159,7 @@ meta::IfIsMathArray<ArrayType, void> Multiply(
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Subtract(
-    ArrayType const &    obj1,
-    ArrayType const &    obj2,
-    memory::Range const &range,
-    ArrayType &          ret)
+    ArrayType const &obj1, ArrayType const &obj2, memory::Range const &range, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(obj1.size() == obj2.size());
@@ -212,9 +199,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(array.size() == ret.size());
@@ -274,10 +259,7 @@ meta::IfIsMathArray<ArrayType, void> Divide(T const &scalar, ArrayType const &ar
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Divide(
-    ArrayType const &    obj1,
-    ArrayType const &    obj2,
-    memory::Range const &range,
-    ArrayType &          ret)
+    ArrayType const &obj1, ArrayType const &obj2, memory::Range const &range, ArrayType &ret)
 {
   using VectorRegisterType = typename ArrayType::VectorRegisterType;
   assert(obj1.size() == obj2.size());
@@ -352,9 +334,7 @@ meta::IfIsMathArray<ArrayType, void> Add(ArrayType const &array, T const &scalar
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Add(
-    ArrayType const &array1,
-    ArrayType const &array2,
-    ArrayType &      ret)
+    ArrayType const &array1, ArrayType const &array2, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   if (array1.shape() == array2.shape())
@@ -404,9 +384,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Subtract(
-    T const &        scalar,
-    ArrayType const &array,
-    ArrayType &      ret)
+    T const &scalar, ArrayType const &array, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   assert(array.size() == ret.size());
@@ -435,9 +413,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Subtract(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   assert(array.size() == ret.size());
@@ -461,9 +437,7 @@ meta::IfIsMathArray<ArrayType, void> Subtract(
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Subtract(
-    ArrayType const &array1,
-    ArrayType const &array2,
-    ArrayType &      ret)
+    ArrayType const &array1, ArrayType const &array2, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   if (array1.shape() == array2.shape())
@@ -497,9 +471,7 @@ meta::IfIsMathArray<ArrayType, void> Subtract(
 
 template <typename ArrayType>
 fetch::math::meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &obj1,
-    ArrayType const &obj2,
-    ArrayType &      ret)
+    ArrayType const &obj1, ArrayType const &obj2, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   if (obj1.shape() == obj2.shape())
@@ -537,9 +509,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   using DataType = typename ArrayType::Type;
   assert(array.size() == ret.size());
@@ -719,9 +689,7 @@ meta::IfIsMathArray<ArrayType, ArrayType> Add(ArrayType const &array1, ArrayType
 }
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, ArrayType> Add(
-    ArrayType const &array1,
-    ArrayType const &array2,
-    ArrayType &      ret)
+    ArrayType const &array1, ArrayType const &array2, ArrayType &ret)
 {
   implementations::Add(array1, array2, ret);
   return ret;
@@ -778,9 +746,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, ArrayType> Subtract(
-    T const &        scalar,
-    ArrayType const &array,
-    ArrayType &      ret)
+    T const &scalar, ArrayType const &array, ArrayType &ret)
 {
   assert(array.shape() == ret.shape());
   implementations::Subtract(scalar, array, ret);
@@ -791,9 +757,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, ArrayType> Subtract(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   assert(array.shape() == ret.shape());
   implementations::Subtract(array, scalar, ret);
@@ -810,9 +774,7 @@ meta::IfIsMathArray<ArrayType, ArrayType> Subtract(ArrayType const &obj1, ArrayT
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, ArrayType> Subtract(
-    ArrayType const &obj1,
-    ArrayType const &obj2,
-    ArrayType &      ret)
+    ArrayType const &obj1, ArrayType const &obj2, ArrayType &ret)
 {
   implementations::Subtract(obj1, obj2, ret);
   return ret;
@@ -840,9 +802,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    T const &        scalar,
-    ArrayType const &array,
-    ArrayType &      ret)
+    T const &scalar, ArrayType const &array, ArrayType &ret)
 {
   implementations::Multiply(array, scalar, ret);
 }
@@ -852,9 +812,7 @@ template <
     typename T,
     typename = std::enable_if_t<fetch::math::meta::IsArithmetic<T>>>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &array,
-    T const &        scalar,
-    ArrayType &      ret)
+    ArrayType const &array, T const &scalar, ArrayType &ret)
 {
   Multiply(scalar, array, ret);
 }
@@ -880,9 +838,7 @@ meta::IfIsMathArray<ArrayType, ArrayType> Multiply(ArrayType const &array, T con
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Multiply(
-    ArrayType const &obj1,
-    ArrayType const &obj2,
-    ArrayType &      ret)
+    ArrayType const &obj1, ArrayType const &obj2, ArrayType &ret)
 {
   implementations::Multiply(obj1, obj2, ret);
 }
@@ -983,9 +939,7 @@ meta::IfIsMathArray<ArrayType, ArrayType> Divide(T const &scalar, ArrayType cons
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Divide(
-    ArrayType const &obj1,
-    ArrayType const &obj2,
-    ArrayType &      ret)
+    ArrayType const &obj1, ArrayType const &obj2, ArrayType &ret)
 {
   implementations::Divide(obj1, obj2, ret);
 }

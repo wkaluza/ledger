@@ -259,8 +259,7 @@ FETCH_ADD_OPERATOR(<, float, __m256, _CMP_LT_OQ)
 
 // Floats
 inline VectorRegister<float, 128> vector_zero_below_element(
-    VectorRegister<float, 128> const &a,
-    int const &                       n)
+    VectorRegister<float, 128> const &a, int const &n)
 {
   alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 >= n))),
                                         uint32_t(-(int32_t(1 >= n))),
@@ -274,8 +273,7 @@ inline VectorRegister<float, 128> vector_zero_below_element(
 }
 
 inline VectorRegister<float, 256> vector_zero_below_element(
-    VectorRegister<float, 256> const &a,
-    int const &                       n)
+    VectorRegister<float, 256> const &a, int const &n)
 {
   alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))),
                                         uint32_t(-(int32_t(1 >= n))),
@@ -293,8 +291,7 @@ inline VectorRegister<float, 256> vector_zero_below_element(
 }
 
 inline VectorRegister<float, 128> vector_zero_above_element(
-    VectorRegister<float, 128> const &a,
-    int const &                       n)
+    VectorRegister<float, 128> const &a, int const &n)
 {
   alignas(16) const uint32_t mask[4] = {uint32_t(-(int32_t(0 <= n))),
                                         uint32_t(-(int32_t(1 <= n))),
@@ -308,8 +305,7 @@ inline VectorRegister<float, 128> vector_zero_above_element(
 }
 
 inline VectorRegister<float, 256> vector_zero_above_element(
-    VectorRegister<float, 256> const &a,
-    int const &                       n)
+    VectorRegister<float, 256> const &a, int const &n)
 {
   alignas(32) const uint32_t mask[8] = {uint32_t(-(int32_t(0 >= n))),
                                         uint32_t(-(int32_t(1 >= n))),

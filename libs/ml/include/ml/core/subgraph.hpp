@@ -46,8 +46,8 @@ public:
   void Compile() override;
 
   void                    Forward(VecTensorType const &inputs, TensorType &output) override;
-  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
-      override;
+  std::vector<TensorType> Backward(
+      VecTensorType const &inputs, TensorType const &error_signal) override;
   void AddInputNode(std::string const &node_name);
   void SetOutputNode(std::string const &node_name);
 

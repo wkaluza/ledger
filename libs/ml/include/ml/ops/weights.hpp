@@ -112,14 +112,10 @@ public:
 
 private:
   static void XavierInitialisation(
-      TensorType &array,
-      DataType    normalising_factor,
-      SizeType    seed = 123456789);
+      TensorType &array, DataType normalising_factor, SizeType seed = 123456789);
 
   static void XavierInitialisationUniform(
-      TensorType &array,
-      DataType    normalising_factor,
-      SizeType    seed = 123456789);
+      TensorType &array, DataType normalising_factor, SizeType seed = 123456789);
 
   static const DataType HALF;
 };

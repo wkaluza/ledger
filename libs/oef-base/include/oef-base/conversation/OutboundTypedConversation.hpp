@@ -33,9 +33,7 @@ public:
   friend class OutboundConversationWorkerTask;
 
   OutboundTypedConversation(
-      std::size_t                                ident,
-      Uri                                        uri,
-      std::shared_ptr<google::protobuf::Message> initiator)
+      std::size_t ident, Uri uri, std::shared_ptr<google::protobuf::Message> initiator)
     : OutboundConversation()
   {
     this->SetIdentifier(ident);

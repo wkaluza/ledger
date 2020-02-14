@@ -160,8 +160,7 @@ bool ByteArrayWrapper::FromBase58(fetch::vm::Ptr<vm::String> const &value_b58)
 }
 
 bool ByteArrayWrapper::IsEqual(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -170,8 +169,7 @@ bool ByteArrayWrapper::IsEqual(
 }
 
 bool ByteArrayWrapper::IsNotEqual(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -180,8 +178,7 @@ bool ByteArrayWrapper::IsNotEqual(
 }
 
 bool ByteArrayWrapper::IsLessThan(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -190,8 +187,7 @@ bool ByteArrayWrapper::IsLessThan(
 }
 
 bool ByteArrayWrapper::IsLessThanOrEqual(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -200,8 +196,7 @@ bool ByteArrayWrapper::IsLessThanOrEqual(
 }
 
 bool ByteArrayWrapper::IsGreaterThan(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -210,8 +205,7 @@ bool ByteArrayWrapper::IsGreaterThan(
 }
 
 bool ByteArrayWrapper::IsGreaterThanOrEqual(
-    fetch::vm::Ptr<Object> const &lhso,
-    fetch::vm::Ptr<Object> const &rhso)
+    fetch::vm::Ptr<Object> const &lhso, fetch::vm::Ptr<Object> const &rhso)
 {
   ByteArrayWrapper &l{static_cast<ByteArrayWrapper &>(*lhso)};
   ByteArrayWrapper &r{static_cast<ByteArrayWrapper &>(*rhso)};
@@ -220,43 +214,37 @@ bool ByteArrayWrapper::IsGreaterThanOrEqual(
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsNotEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsLessThanChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsLessThanOrEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsGreaterThanChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }
 
 vm::ChargeAmount ByteArrayWrapper::IsGreaterThanOrEqualChargeEstimator(
-    fetch::vm::Ptr<Object> const & /*lhso*/,
-    fetch::vm::Ptr<Object> const & /*rhso*/)
+    fetch::vm::Ptr<Object> const & /*lhso*/, fetch::vm::Ptr<Object> const & /*rhso*/)
 {
   return 1;
 }

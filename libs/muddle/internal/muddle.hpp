@@ -185,8 +185,8 @@ public:
   void ConnectTo(Address const &address, Duration const &expire) override;
   void ConnectTo(Addresses const &addresses, Duration const &expire) override;
   void ConnectTo(network::Uri const &uri, Duration const &expire) override;
-  void ConnectTo(Address const &address, network::Uri const &uri_hint, Duration const &expire)
-      override;
+  void ConnectTo(
+      Address const &address, network::Uri const &uri_hint, Duration const &expire) override;
   void ConnectTo(AddressHints const &address_hints, Duration const &expire) override;
   void DisconnectFrom(Address const &address) override;
   void DisconnectFrom(Addresses const &addresses) override;

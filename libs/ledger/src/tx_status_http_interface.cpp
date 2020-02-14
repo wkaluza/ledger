@@ -37,8 +37,7 @@ using fetch::byte_array::FromHex;
 using fetch::variant::Variant;
 
 constexpr PublicTxStatus Convert(
-    TransactionStatus       tx_processing_pipeline_status,
-    ContractExecutionStatus contract_exec_status)
+    TransactionStatus tx_processing_pipeline_status, ContractExecutionStatus contract_exec_status)
 {
   switch (tx_processing_pipeline_status)
   {

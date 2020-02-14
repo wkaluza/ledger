@@ -40,8 +40,7 @@ TYPED_TEST_SUITE(TsneFixedPointTests, math::test::HighPrecisionTensorFixedPointT
 
 template <typename TypeParam>
 TypeParam RunTest(
-    typename TypeParam::SizeType n_output_feature_size,
-    typename TypeParam::SizeType n_data_size)
+    typename TypeParam::SizeType n_output_feature_size, typename TypeParam::SizeType n_data_size)
 {
   using SizeType   = fetch::math::SizeType;
   using DataType   = typename TypeParam::Type;

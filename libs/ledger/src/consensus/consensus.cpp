@@ -129,36 +129,28 @@ Consensus::Consensus(
   , block_interval_ms_{block_interval_ms}
   , notarisation_{std::move(notarisation)}
   , consensus_last_validate_block_failure_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "consensus_last_validate_block_failure",
-        "Number of miners that have made it into qual")}
+        "consensus_last_validate_block_failure", "Number of miners that have made it into qual")}
   , consensus_validate_block_failures_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_validate_block_failures_total",
-        "The total number of DKG failures")}
+        "consensus_validate_block_failures_total", "The total number of DKG failures")}
   , consensus_non_heaviest_blocks_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_non_heaviest_blocks_total",
-        "The total number of DKG failures")}
+        "consensus_non_heaviest_blocks_total", "The total number of DKG failures")}
   , failed_to_generate_entropy_total_{telemetry::Registry::Instance().CreateCounter(
-        "failed_to_generate_entropy_total",
-        "The total number of failures to generate entropy")}
+        "failed_to_generate_entropy_total", "The total number of failures to generate entropy")}
   , block_generation_exception_total_{telemetry::Registry::Instance().CreateCounter(
-        "block_generation_exception_total",
-        "The total number of exceptions at block generation")}
+        "block_generation_exception_total", "The total number of exceptions at block generation")}
   , block_generation_unknown_failure_total_{telemetry::Registry::Instance().CreateCounter(
         "block_generation_unknown_failure_total",
         "The total number of unknown failures at block generation")}
   , invalid_block_timing_total_{telemetry::Registry::Instance().CreateCounter(
-        "invalid_block_timing_total",
-        "The total number of invalid block timings")}
+        "invalid_block_timing_total", "The total number of invalid block timings")}
   , notarisation_is_not_ready_yet_total_{telemetry::Registry::Instance().CreateCounter(
-        "notarisation_is_not_ready_yet_total",
-        "The total number of unready notarisations")}
+        "notarisation_is_not_ready_yet_total", "The total number of unready notarisations")}
 {
   assert(stake_);
 }
 
 Consensus::WeightedQual QualWeightedByEntropy(
-    Consensus::BlockEntropy::Cabinet const &cabinet,
-    uint64_t                                entropy)
+    Consensus::BlockEntropy::Cabinet const &cabinet, uint64_t entropy)
 {
   Consensus::WeightedQual ret;
   ret.reserve(cabinet.size());

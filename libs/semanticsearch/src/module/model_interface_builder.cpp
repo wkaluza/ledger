@@ -36,8 +36,7 @@ ModelInterfaceBuilder::operator bool() const
 }
 
 ModelInterfaceBuilder &ModelInterfaceBuilder::Field(
-    std::string const &name,
-    std::string const &type)
+    std::string const &name, std::string const &type)
 {
   assert(factory_);
   auto field_model = factory_->GetField(type);
@@ -46,8 +45,7 @@ ModelInterfaceBuilder &ModelInterfaceBuilder::Field(
 }
 
 ModelInterfaceBuilder &ModelInterfaceBuilder::Field(
-    std::string const &   name,
-    ModelInterfaceBuilder proxy)
+    std::string const &name, ModelInterfaceBuilder proxy)
 {
   assert(proxy.model_ != nullptr);
   model_->Insert(name, proxy.model_);
@@ -55,8 +53,7 @@ ModelInterfaceBuilder &ModelInterfaceBuilder::Field(
 }
 
 ModelInterfaceBuilder &ModelInterfaceBuilder::Field(
-    std::string const &name,
-    ModelField const & model)
+    std::string const &name, ModelField const &model)
 {
   assert(model != nullptr);
   model_->Insert(name, model);

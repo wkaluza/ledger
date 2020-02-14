@@ -69,8 +69,7 @@ public:
   bool               operator<(const TaskChainParallel &other)  = delete;
 
   virtual std::shared_ptr<TaskType> CreateTask(
-      const TaskInputDataType &,
-      std::shared_ptr<IN_PROTO>)                                             = 0;
+      const TaskInputDataType &, std::shared_ptr<IN_PROTO>)                  = 0;
   virtual std::shared_ptr<IN_PROTO> GetInputProto(const TaskInputDataType &) = 0;
 
   virtual void Add(TaskInputDataType task)

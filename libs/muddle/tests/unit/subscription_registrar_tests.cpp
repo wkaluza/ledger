@@ -51,9 +51,7 @@ protected:
   }
 
   PacketPtr CreatePacket(
-      uint16_t               service,
-      uint16_t               channel,
-      Packet::Address const &address = Packet::Address{})
+      uint16_t service, uint16_t channel, Packet::Address const &address = Packet::Address{})
   {
     auto packet = std::make_shared<Packet>();
 

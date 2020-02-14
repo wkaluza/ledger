@@ -68,8 +68,7 @@ private:
 
 template <typename R, typename P>
 PeriodicRunnable::PeriodicRunnable(
-    std::string const &                name,
-    std::chrono::duration<R, P> const &period)
+    std::string const &name, std::chrono::duration<R, P> const &period)
   : PeriodicRunnable(name, std::chrono::duration_cast<Duration>(period))
 {}
 

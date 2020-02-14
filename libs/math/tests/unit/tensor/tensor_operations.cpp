@@ -36,8 +36,7 @@ TYPED_TEST_SUITE(TensorOperationsTest, fetch::math::test::FloatIntAndUIntTypes, 
 
 template <typename TypeParam>
 void ReshapeTest(
-    std::vector<SizeType> const &initial_shape,
-    std::vector<SizeType> const &final_shape)
+    std::vector<SizeType> const &initial_shape, std::vector<SizeType> const &final_shape)
 {
   fetch::math::Tensor<TypeParam> t1(initial_shape);
   fetch::math::Tensor<TypeParam> t2(final_shape);

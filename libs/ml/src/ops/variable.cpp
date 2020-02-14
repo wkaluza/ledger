@@ -102,8 +102,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> Variable<TensorType>::MakeShare
  */
 template <typename TensorType>
 std::vector<TensorType> Variable<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.empty());
@@ -175,8 +174,7 @@ void Variable<TensorType>::AddToGradient(TensorType const &extern_grad, SizeSet 
  */
 template <class TensorType>
 void Variable<TensorType>::AddToGradient(
-    TensorType const &extern_grad,
-    SizeVector const &rows_updated)
+    TensorType const &extern_grad, SizeVector const &rows_updated)
 {
 
   if (!this->value_frozen_)

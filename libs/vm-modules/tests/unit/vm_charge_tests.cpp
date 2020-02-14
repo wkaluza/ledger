@@ -58,17 +58,11 @@ public:
   }
 
   static void AffordableStatic(
-      VM * /*vm*/,
-      TypeId /*type_id*/,
-      uint8_t /*unused*/,
-      uint16_t /*unused*/)
+      VM * /*vm*/, TypeId /*type_id*/, uint8_t /*unused*/, uint16_t /*unused*/)
   {}
 
   static void TooExpensiveStatic(
-      VM * /*vm*/,
-      TypeId /*type_id*/,
-      uint8_t /*unused*/,
-      uint16_t /*unused*/)
+      VM * /*vm*/, TypeId /*type_id*/, uint8_t /*unused*/, uint16_t /*unused*/)
   {}
 
   void Affordable(uint8_t /*unused*/, uint16_t /*unused*/)
@@ -106,8 +100,8 @@ public:
     }
   }
 
-  ChargeAmount AddChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount AddChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return operator_charge;
   }
@@ -145,8 +139,8 @@ public:
     return lhs->x == rhs->x && lhs->y == rhs->y;
   }
 
-  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount IsEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return operator_charge;
   }
@@ -159,8 +153,8 @@ public:
     return lhs->x != rhs->x && lhs->y != rhs->y;
   }
 
-  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount IsNotEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return operator_charge;
   }
@@ -340,8 +334,7 @@ TEST_F(VmChargeTests, member_function_bind_with_charge_estimate_execution_fails_
 }
 
 TEST_F(
-    VmChargeTests,
-    member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+    VmChargeTests, member_function_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   toolkit.module()
       .CreateClassType<CustomType>("CustomType")
@@ -727,8 +720,7 @@ TEST_F(VmChargeTests, add_operator_bind_with_charge_estimate_execution_fails_whe
 }
 
 TEST_F(
-    VmChargeTests,
-    negate_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+    VmChargeTests, negate_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   using AffordableOperatorChargeCustomType = CustomTypeTemplate<affordable_charge>;
 
@@ -769,8 +761,7 @@ TEST_F(VmChargeTests, negate_operator_bind_with_charge_estimate_execution_fails_
 }
 
 TEST_F(
-    VmChargeTests,
-    negate_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
+    VmChargeTests, negate_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
 {
   using MaxOperatorChargeCustomType = CustomTypeTemplate<max_charge_amount>;
 
@@ -791,8 +782,7 @@ TEST_F(
 }
 
 TEST_F(
-    VmChargeTests,
-    isequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
+    VmChargeTests, isequal_operator_bind_with_charge_estimate_execution_succeeds_when_limit_obeyed)
 {
   using AffordableOperatorChargeCustomType = CustomTypeTemplate<affordable_charge>;
 
@@ -814,8 +804,7 @@ TEST_F(
 }
 
 TEST_F(
-    VmChargeTests,
-    isequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
+    VmChargeTests, isequal_operator_bind_with_charge_estimate_execution_fails_when_limit_exceeded)
 {
   using ExpensiveOperatorChargeCustomType = CustomTypeTemplate<expensive_charge>;
 
@@ -837,8 +826,7 @@ TEST_F(
 }
 
 TEST_F(
-    VmChargeTests,
-    isequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
+    VmChargeTests, isequal_operator_bind_with_charge_estimate_execution_fails_when_charge_overflows)
 {
   using MaxOperatorChargeCustomType = CustomTypeTemplate<max_charge_amount>;
 

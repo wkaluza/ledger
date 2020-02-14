@@ -91,10 +91,7 @@ private:
   SizeType    vocab_size_{};
 
   void Initialise(
-      TensorType &weights,
-      WeightsInit init_mode,
-      SizeType    dim_1_size,
-      SizeType    dim_2_size)
+      TensorType &weights, WeightsInit init_mode, SizeType dim_1_size, SizeType dim_2_size)
   {
     fetch::ml::ops::Weights<TensorType>::Initialise(weights, dim_1_size, dim_2_size, init_mode);
   }

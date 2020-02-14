@@ -61,9 +61,7 @@ public:
   void SetValidationRatio(fixed_point::fp32_t new_validation_ratio) override;
 
   void BuildVocabAndData(
-      std::vector<std::string> const &sents,
-      SizeType                        min_count  = 0,
-      bool                            build_data = true);
+      std::vector<std::string> const &sents, SizeType min_count = 0, bool build_data = true);
   void     BuildData(std::vector<std::string> const &sents, SizeType min_count = 0);
   void     SaveVocab(std::string const &filename);
   void     LoadVocab(std::string const &filename);

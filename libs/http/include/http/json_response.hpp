@@ -32,12 +32,10 @@ class Variant;
 namespace http {
 
 http::HTTPResponse CreateJsonResponse(
-    byte_array::ConstByteArray const &body,
-    Status                            status = Status::SUCCESS_OK);
+    byte_array::ConstByteArray const &body, Status status = Status::SUCCESS_OK);
 
 http::HTTPResponse CreateJsonResponse(
-    variant::Variant const &doc,
-    Status                  status = Status::SUCCESS_OK);
+    variant::Variant const &doc, Status status = Status::SUCCESS_OK);
 
 }  // namespace http
 }  // namespace fetch

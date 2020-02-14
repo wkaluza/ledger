@@ -31,9 +31,7 @@ namespace optimisers {
 
 template <class T, typename... Params>
 bool AddOptimiser(
-    OptimiserType                  type,
-    std::shared_ptr<Optimiser<T>> &optimiser_ptr,
-    Params... params)
+    OptimiserType type, std::shared_ptr<Optimiser<T>> &optimiser_ptr, Params... params)
 {
   switch (type)
   {

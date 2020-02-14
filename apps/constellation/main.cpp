@@ -186,10 +186,7 @@ bool HasVersionFlag(int argc, char **argv)
  * @return The new bootstrap pointer if one exists
  */
 BootstrapPtr CreateBootstrap(
-    Settings const & settings,
-    Config const &   config,
-    ProverPtr const &prover,
-    UriSet &         uris)
+    Settings const &settings, Config const &config, ProverPtr const &prover, UriSet &uris)
 {
   BootstrapPtr bootstrap{};
 

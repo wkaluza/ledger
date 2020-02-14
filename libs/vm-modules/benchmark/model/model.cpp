@@ -62,8 +62,7 @@ fetch::vm::Ptr<fetch::vm::String> vmString(VMPtr &vm, std::string const &str)
 }
 
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> vmTensor(
-    VMPtr &                      vm,
-    std::vector<SizeType> const &shape)
+    VMPtr &vm, std::vector<SizeType> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
@@ -76,9 +75,7 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(VMPtr &v
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
-    VMPtr &                vm,
-    std::vector<SizeType> &sizes,
-    std::vector<bool> &    activations)
+    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations)
 {
   if (sizes.size() != (activations.size() + 1))
   {
@@ -130,8 +127,7 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> vmSequentialModel(
 }
 
 fetch::vm::Ptr<fetch::vm::Array<uint64_t>> CreateArray(
-    std::shared_ptr<fetch::vm::VM> &vm,
-    std::vector<uint64_t> const &   values)
+    std::shared_ptr<fetch::vm::VM> &vm, std::vector<uint64_t> const &values)
 {
   std::size_t                                size = values.size();
   fetch::vm::Ptr<fetch::vm::Array<uint64_t>> array =

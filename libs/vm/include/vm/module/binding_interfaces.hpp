@@ -44,10 +44,7 @@ struct EtchInvocation
 
   template <typename Estimator, typename Callable, typename... ExtraArgs>
   static void InvokeHandler(
-      VM *        vm,
-      Estimator &&estimator,
-      Callable && callable,
-      ExtraArgs const &... extra_args)
+      VM *vm, Estimator &&estimator, Callable &&callable, ExtraArgs const &... extra_args)
   {
     using Config = PrepareInvocation<Invoker, Callable, EtchArgsTuple>;
 

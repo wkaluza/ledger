@@ -51,9 +51,7 @@ struct System : public fetch::vm::Object
   static int32_t Argc(fetch::vm::VM * /*vm*/, fetch::vm::TypeId /*type_id*/);
 
   static fetch::vm::Ptr<fetch::vm::String> Argv(
-      fetch::vm::VM *vm,
-      fetch::vm::TypeId /*type_id*/,
-      int32_t index);
+      fetch::vm::VM *vm, fetch::vm::TypeId /*type_id*/, int32_t index);
 
   static void Parse(int argc, char const *const *argv);
 

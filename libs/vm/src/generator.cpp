@@ -365,8 +365,7 @@ void Generator::CreateUserDefinedFreeFunctions(IRBlockNodePtr const &block_node)
 }
 
 IRFunctionPtr Generator::CreateFunction(
-    IRNodePtr const &     function_definition_node,
-    Executable::Function &exe_function)
+    IRNodePtr const &function_definition_node, Executable::Function &exe_function)
 {
   IRNodePtr       annotations_node = function_definition_node->children[0];
   AnnotationArray annotations;
@@ -579,8 +578,7 @@ void Generator::HandleFile(IRBlockNodePtr const &block_node)
 }
 
 void Generator::HandleMemberFunctionBody(
-    IRBlockNodePtr const &struct_definition_node,
-    IRBlockNodePtr const &function_definition_node)
+    IRBlockNodePtr const &struct_definition_node, IRBlockNodePtr const &function_definition_node)
 {
   IRExpressionNodePtr struct_name_node =
       ConvertToIRExpressionNodePtr(struct_definition_node->children[0]);
@@ -872,9 +870,7 @@ void Generator::HandleUseAnyStatement(IRNodePtr const &node)
 }
 
 void Generator::HandleUseVariable(
-    std::string const &        name,
-    uint16_t                   line,
-    IRExpressionNodePtr const &node)
+    std::string const &name, uint16_t line, IRExpressionNodePtr const &node)
 {
   IRVariablePtr variable     = node->variable;
   IRFunctionPtr function     = node->function;
@@ -1043,8 +1039,7 @@ void Generator::HandleInplaceAssignmentStatement(IRExpressionNodePtr const &node
 }
 
 void Generator::HandleVariableAssignmentStatement(
-    IRExpressionNodePtr const &lhs,
-    IRExpressionNodePtr const &rhs)
+    IRExpressionNodePtr const &lhs, IRExpressionNodePtr const &rhs)
 {
   IRVariablePtr const &variable = lhs->variable;
   uint16_t             opcode;
@@ -1068,9 +1063,7 @@ void Generator::HandleVariableAssignmentStatement(
 }
 
 void Generator::HandleVariableInplaceAssignmentStatement(
-    IRExpressionNodePtr const &node,
-    IRExpressionNodePtr const &lhs,
-    IRExpressionNodePtr const &rhs)
+    IRExpressionNodePtr const &node, IRExpressionNodePtr const &lhs, IRExpressionNodePtr const &rhs)
 {
   IRVariablePtr const &variable         = lhs->variable;
   bool                 lhs_is_primitive = variable->type->IsPrimitive();
@@ -1193,9 +1186,7 @@ void Generator::PushSelf(IRExpressionNodePtr const &node)
 }
 
 void Generator::HandleIndexedAssignmentStatement(
-    IRExpressionNodePtr const &node,
-    IRExpressionNodePtr const &lhs,
-    IRExpressionNodePtr const &rhs)
+    IRExpressionNodePtr const &node, IRExpressionNodePtr const &lhs, IRExpressionNodePtr const &rhs)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(lhs->children[0]);
@@ -1217,9 +1208,7 @@ void Generator::HandleIndexedAssignmentStatement(
 }
 
 void Generator::HandleIndexedInplaceAssignmentStatement(
-    IRExpressionNodePtr const &node,
-    IRExpressionNodePtr const &lhs,
-    IRExpressionNodePtr const &rhs)
+    IRExpressionNodePtr const &node, IRExpressionNodePtr const &lhs, IRExpressionNodePtr const &rhs)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(lhs->children[0]);
@@ -1819,8 +1808,7 @@ void Generator::HandleUnaryOp(IRExpressionNodePtr const &node)
 }
 
 Generator::Chain Generator::HandleConditionExpression(
-    IRBlockNodePtr const &     block_node,
-    IRExpressionNodePtr const &node)
+    IRBlockNodePtr const &block_node, IRExpressionNodePtr const &node)
 {
   if ((node->node_kind == NodeKind::And) || (node->node_kind == NodeKind::Or))
   {
@@ -1832,8 +1820,7 @@ Generator::Chain Generator::HandleConditionExpression(
 }
 
 Generator::Chain Generator::HandleShortCircuitOp(
-    IRNodePtr const &          parent_node,
-    IRExpressionNodePtr const &node)
+    IRNodePtr const &parent_node, IRExpressionNodePtr const &node)
 {
   IRExpressionNodePtr lhs = ConvertToIRExpressionNodePtr(node->children[0]);
   IRExpressionNodePtr rhs = ConvertToIRExpressionNodePtr(node->children[1]);
@@ -1889,9 +1876,7 @@ Generator::Chain Generator::HandleShortCircuitOp(
 }
 
 void Generator::FinaliseShortCircuitChain(
-    Chain const &chain,
-    bool         is_condition_chain,
-    uint16_t     destination_pc)
+    Chain const &chain, bool is_condition_chain, uint16_t destination_pc)
 {
   uint16_t opcode;
   if (is_condition_chain)
@@ -2029,8 +2014,7 @@ void Generator::HandleInvokeOp(IRExpressionNodePtr const &node)
 }
 
 void Generator::HandleVariablePrefixPostfixOp(
-    IRExpressionNodePtr const &node,
-    IRExpressionNodePtr const &operand)
+    IRExpressionNodePtr const &node, IRExpressionNodePtr const &operand)
 {
   IRVariablePtr const &variable          = operand->variable;
   bool                 is_local_variable = true;
@@ -2079,8 +2063,7 @@ void Generator::HandleVariablePrefixPostfixOp(
 }
 
 void Generator::HandleIndexedPrefixPostfixOp(
-    IRExpressionNodePtr const &node,
-    IRExpressionNodePtr const &operand)
+    IRExpressionNodePtr const &node, IRExpressionNodePtr const &operand)
 {
   // Arrange for the container object to be pushed on to the stack
   IRExpressionNodePtr container_node = ConvertToIRExpressionNodePtr(operand->children[0]);
@@ -2364,8 +2347,7 @@ bool Generator::ConstantComparator::operator()(Variant const &lhs, Variant const
 }
 
 bool Generator::LargeConstantComparator::operator()(
-    Executable::LargeConstant const &lhs,
-    Executable::LargeConstant const &rhs) const
+    Executable::LargeConstant const &lhs, Executable::LargeConstant const &rhs) const
 {
   if (lhs.type_id < rhs.type_id)
   {

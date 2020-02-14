@@ -61,8 +61,7 @@ public:
   }
 
   virtual void AddMemento(
-      std::string                                    dap_name,
-      std::shared_ptr<ConstructQueryMementoResponse> memento)
+      std::string dap_name, std::shared_ptr<ConstructQueryMementoResponse> memento)
   {
     mementos_.push_back(std::make_pair(std::move(dap_name), std::move(memento)));
   }

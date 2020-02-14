@@ -146,10 +146,7 @@ void Weights<TensorType>::Initialise(
  */
 template <typename TensorType>
 void Weights<TensorType>::Initialise(
-    TensorType &          array,
-    uint64_t              data_size,
-    WeightsInitialisation mode,
-    SizeType              seed)
+    TensorType &array, uint64_t data_size, WeightsInitialisation mode, SizeType seed)
 {
   switch (mode)
   {
@@ -248,9 +245,7 @@ OpType Weights<TensorType>::OperationType() const
  */
 template <typename TensorType>
 void Weights<TensorType>::XavierInitialisation(
-    TensorType &array,
-    DataType    normalising_factor,
-    SizeType    seed)
+    TensorType &array, DataType normalising_factor, SizeType seed)
 {
   // TODO (665) this is a uniform distribution; in principle we should be using a guassian
   // distribution instead we use a unifrom from -std dev -> + std dev
@@ -273,9 +268,7 @@ void Weights<TensorType>::XavierInitialisation(
 
 template <typename TensorType>
 void Weights<TensorType>::XavierInitialisationUniform(
-    TensorType &array,
-    DataType    normalising_factor,
-    SizeType    seed)
+    TensorType &array, DataType normalising_factor, SizeType seed)
 {
   // TODO (#1562) this is based on uniform random generator, and it should be set to default
   // weight initialization method distribution instead we use a unifrom from -std dev -> + std dev

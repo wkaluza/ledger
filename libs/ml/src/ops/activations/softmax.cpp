@@ -92,8 +92,7 @@ void Softmax<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
 
 template <typename TensorType>
 std::vector<TensorType> Softmax<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 1);
   assert(inputs.front()->shape() == error_signal.shape());

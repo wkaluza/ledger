@@ -88,9 +88,7 @@ Optimiser<TensorType>::Optimiser(
  */
 template <class TensorType>
 typename TensorType::Type Optimiser<TensorType>::Run(
-    std::vector<TensorType> const &data,
-    TensorType const &             labels,
-    SizeType                       batch_size)
+    std::vector<TensorType> const &data, TensorType const &labels, SizeType batch_size)
 {
   assert(!data.empty());
   // Get trailing dimensions
@@ -400,9 +398,7 @@ void Optimiser<TensorType>::IncrementBatchCounters(SizeType batch_size)
  */
 template <class TensorType>
 typename Optimiser<TensorType>::SizeType Optimiser<TensorType>::UpdateBatchSize(
-    SizeType const &batch_size,
-    SizeType const &data_size,
-    SizeType const &subset_size)
+    SizeType const &batch_size, SizeType const &data_size, SizeType const &subset_size)
 {
   SizeType updated_batch_size = batch_size;
   // If batch_size not specified do full batch

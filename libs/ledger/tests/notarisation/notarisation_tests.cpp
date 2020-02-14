@@ -87,18 +87,12 @@ struct NotarisationNode
     , muddle_certificate{CreateNewCertificate()}
     , muddle{muddle::CreateMuddleFake("Test", muddle_certificate, network_manager, "127.0.0.1")}
     , chain{ledger::MainChain::Mode::IN_MEMORY_DB}
-    , beacon_setup_service{new TrustedDealerSetupService{*muddle,
-                                                         manifest_cache,
-                                                         muddle_certificate,
-                                                         threshold,
-                                                         aeon_period}}
-    , beacon_service{new BeaconService{*muddle,
-                                       muddle_certificate,
-                                       *beacon_setup_service,
-                                       event_manager}}
-    , notarisation_service{new NotarisationService{*muddle,
-                                                   muddle_certificate,
-                                                   *beacon_setup_service}}
+    , beacon_setup_service{new TrustedDealerSetupService{
+          *muddle, manifest_cache, muddle_certificate, threshold, aeon_period}}
+    , beacon_service{new BeaconService{
+          *muddle, muddle_certificate, *beacon_setup_service, event_manager}}
+    , notarisation_service{new NotarisationService{
+          *muddle, muddle_certificate, *beacon_setup_service}}
     , stake_manager{new StakeManager{}}
     , consensus{stake_manager,
                 beacon_setup_service,

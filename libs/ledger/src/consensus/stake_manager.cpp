@@ -143,8 +143,7 @@ StakeManager::CabinetPtr StakeManager::Reset(StakeSnapshot &&snapshot, uint64_t 
 }
 
 StakeManager::CabinetPtr StakeManager::ResetInternal(
-    StakeSnapshotPtr &&snapshot,
-    uint64_t           cabinet_size)
+    StakeSnapshotPtr &&snapshot, uint64_t cabinet_size)
 {
   // history
   stake_history_.clear();

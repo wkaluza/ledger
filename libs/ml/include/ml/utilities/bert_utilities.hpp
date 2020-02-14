@@ -60,8 +60,7 @@ struct BERTInterface
 
 template <class TensorType>
 std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel(
-    BERTConfig<TensorType> const &config,
-    fetch::ml::Graph<TensorType> &g);
+    BERTConfig<TensorType> const &config, fetch::ml::Graph<TensorType> &g);
 
 template <class TensorType>
 void EvaluateGraph(
@@ -131,8 +130,7 @@ TensorType RunPseudoForwardPass(
 
 template <class TensorType>
 std::vector<TensorType> PrepareTensorForBert(
-    TensorType const &            data,
-    BERTConfig<TensorType> const &config);
+    TensorType const &data, BERTConfig<TensorType> const &config);
 }  // namespace utilities
 }  // namespace ml
 }  // namespace fetch

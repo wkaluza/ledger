@@ -93,16 +93,13 @@ BeaconService::BeaconService(
   , muddle_{muddle}
   , endpoint_{muddle_.GetEndpoint()}
   , state_machine_{std::make_shared<StateMachine>(
-        "BeaconService",
-        State::RELOAD_ON_STARTUP,
-        ToString)}
+        "BeaconService", State::RELOAD_ON_STARTUP, ToString)}
   , load_and_reload_on_crash_{load_and_reload_on_crash}
   , rpc_client_{"BeaconService", endpoint_, SERVICE_DKG, CHANNEL_RPC}
   , event_manager_{std::move(event_manager)}
   , beacon_protocol_{*this}
   , beacon_entropy_generated_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_entropy_generated_total",
-        "The total number of times entropy has been generated")}
+        "beacon_entropy_generated_total", "The total number of times entropy has been generated")}
   , beacon_entropy_future_signature_seen_total_{telemetry::Registry::Instance().CreateCounter(
         "beacon_entropy_future_signature_seen_total",
         "The total number of times entropy has been generated")}
@@ -110,20 +107,15 @@ BeaconService::BeaconService(
         "beacon_entropy_forced_to_time_out_total",
         "The total number of times entropy failed and timed out")}
   , beacon_entropy_last_requested_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_last_requested",
-        "The last entropy value requested from the beacon")}
+        "beacon_entropy_last_requested", "The last entropy value requested from the beacon")}
   , beacon_entropy_last_generated_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_last_generated",
-        "The last entropy value able to be generated")}
+        "beacon_entropy_last_generated", "The last entropy value able to be generated")}
   , beacon_entropy_current_round_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_entropy_current_round",
-        "The current round attempting to generate for.")}
+        "beacon_entropy_current_round", "The current round attempting to generate for.")}
   , beacon_state_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_state_gauge",
-        "State the beacon is in as integer")}
+        "beacon_state_gauge", "State the beacon is in as integer")}
   , beacon_most_recent_round_seen_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_most_recent_round_seen",
-        "Most recent round the beacon has seen")}
+        "beacon_most_recent_round_seen", "Most recent round the beacon has seen")}
   , beacon_collect_time_{telemetry::Registry::Instance().CreateHistogram(
         {0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1},
         "beacon_collect_time",

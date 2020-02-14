@@ -240,48 +240,42 @@ void Object::InplaceRightDivide(Ptr<Object> const & /* lhso*/, Variant const & /
 }
 
 ChargeAmount Object::IsEqualChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::IsNotEqualChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::IsLessThanChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::IsLessThanOrEqualChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::IsGreaterThanChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::IsGreaterThanOrEqualChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
@@ -294,160 +288,140 @@ ChargeAmount Object::NegateChargeEstimator(Ptr<Object> const & /* object */)
 }
 
 ChargeAmount Object::AddChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::LeftAddChargeEstimator(
-    Variant const & /* lhsv */,
-    Variant const & /* objectv */)
+    Variant const & /* lhsv */, Variant const & /* objectv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::RightAddChargeEstimator(
-    Variant const & /* objectv */,
-    Variant const & /* rhsv */)
+    Variant const & /* objectv */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceAddChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceRightAddChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Variant const & /* rhsv */)
+    Ptr<Object> const & /* lhso */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::SubtractChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::LeftSubtractChargeEstimator(
-    Variant const & /* lhsv */,
-    Variant const & /* objectv */)
+    Variant const & /* lhsv */, Variant const & /* objectv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::RightSubtractChargeEstimator(
-    Variant const & /* objectv */,
-    Variant const & /* rhsv */)
+    Variant const & /* objectv */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceSubtractChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceRightSubtractChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Variant const & /* rhsv */)
+    Ptr<Object> const & /* lhso */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::MultiplyChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::LeftMultiplyChargeEstimator(
-    Variant const & /* lhsv */,
-    Variant const & /* objectv */)
+    Variant const & /* lhsv */, Variant const & /* objectv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::RightMultiplyChargeEstimator(
-    Variant const & /* objectv */,
-    Variant const & /* rhsv */)
+    Variant const & /* objectv */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceMultiplyChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceRightMultiplyChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Variant const & /* rhsv */)
+    Ptr<Object> const & /* lhso */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::DivideChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::LeftDivideChargeEstimator(
-    Variant const & /* lhsv */,
-    Variant const & /* objectv */)
+    Variant const & /* lhsv */, Variant const & /* objectv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::RightDivideChargeEstimator(
-    Variant const & /* objectv */,
-    Variant const & /* rhsv */)
+    Variant const & /* objectv */, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceDivideChargeEstimator(
-    Ptr<Object> const & /* lhso */,
-    Ptr<Object> const & /* rhso */)
+    Ptr<Object> const & /* lhso */, Ptr<Object> const & /* rhso */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
 }
 
 ChargeAmount Object::InplaceRightDivideChargeEstimator(
-    Ptr<Object> const & /* lhso*/,
-    Variant const & /* rhsv */)
+    Ptr<Object> const & /* lhso*/, Variant const & /* rhsv */)
 {
   RuntimeError(std::string(__func__) + ": estimator not implemented");
   return OpcodeCharges::DEFAULT_OBJECT_CHARGE;

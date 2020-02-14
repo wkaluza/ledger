@@ -64,9 +64,7 @@ namespace serializers {
 
 template <class TensorType, typename D, class SP, typename MapType>
 void SerializeImplementation(
-    MapType &                                     map,
-    uint8_t                                       code,
-    std::shared_ptr<fetch::ml::OpsSaveableParams> op)
+    MapType &map, uint8_t code, std::shared_ptr<fetch::ml::OpsSaveableParams> op)
 {
   auto castnode = std::dynamic_pointer_cast<SP>(op);
   map.Append(code, *castnode);

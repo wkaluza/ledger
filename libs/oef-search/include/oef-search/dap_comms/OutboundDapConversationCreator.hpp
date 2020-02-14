@@ -40,8 +40,7 @@ public:
   OutboundDapConversationCreator(const Uri &dap_uri, Core &core, const std::string &dap_name);
   ~OutboundDapConversationCreator() override;
   std::shared_ptr<OutboundConversation> start(
-      const Uri &                                target_path,
-      std::shared_ptr<google::protobuf::Message> initiator) override;
+      const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator) override;
 
 protected:
 private:

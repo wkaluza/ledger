@@ -46,15 +46,13 @@ fetch::vm::Ptr<fetch::vm::String> VmString(VMPtr &vm, std::string const &str)
 }
 
 fetch::vm::Ptr<fetch::vm_modules::math::VMTensor> VmTensor(
-    VMPtr &                                   vm,
-    std::vector<fetch::math::SizeType> const &shape)
+    VMPtr &vm, std::vector<fetch::math::SizeType> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
 
 fetch::vm::Ptr<fetch::vm::Array<uint64_t>> VmArray(
-    std::shared_ptr<fetch::vm::VM> &vm,
-    std::vector<uint64_t> const &   values)
+    std::shared_ptr<fetch::vm::VM> &vm, std::vector<uint64_t> const &values)
 {
   std::size_t                                size = values.size();
   fetch::vm::Ptr<fetch::vm::Array<uint64_t>> array =
@@ -77,9 +75,7 @@ fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(VMPtr &v
 }
 
 fetch::vm::Ptr<fetch::vm_modules::ml::model::VMModel> VmSequentialModel(
-    VMPtr &                vm,
-    std::vector<SizeType> &sizes,
-    std::vector<bool> &    activations)
+    VMPtr &vm, std::vector<SizeType> &sizes, std::vector<bool> &activations)
 {
   if (sizes.size() != (activations.size() + 1))
   {
@@ -148,10 +144,7 @@ public:
   }
 
   ChargeAmount LayerAddDenseCharge(
-      VmModelPtr &       model,
-      VmStringPtr const &layer_type,
-      SizeType           input_size,
-      SizeType           output_size)
+      VmModelPtr &model, VmStringPtr const &layer_type, SizeType input_size, SizeType output_size)
   {
     return model->Estimator().LayerAddDense(layer_type, input_size, output_size);
   }
@@ -168,18 +161,13 @@ public:
   }
 
   ChargeAmount CompileSequentialCharge(
-      VmModelPtr &       model,
-      VmStringPtr const &loss,
-      VmStringPtr const &optimiser)
+      VmModelPtr &model, VmStringPtr const &loss, VmStringPtr const &optimiser)
   {
     return model->Estimator().CompileSequential(loss, optimiser);
   }
 
   ChargeAmount FitCharge(
-      VmModelPtr &       model,
-      VmTensorPtr const &data,
-      VmTensorPtr const &label,
-      SizeType           batch_size)
+      VmModelPtr &model, VmTensorPtr const &data, VmTensorPtr const &label, SizeType batch_size)
   {
     return model->Estimator().Fit(data, label, batch_size);
   }

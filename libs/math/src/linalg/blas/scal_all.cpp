@@ -27,10 +27,7 @@ namespace linalg {
 
 template <typename S, uint64_t V>
 void Blas<S, Signature(_x <= _n, _alpha, _x, _m), Computes(_x <= _alpha * _x), V>::operator()(
-    int const        n,
-    Type const       da,
-    TensorView<Type> dx,
-    int const        incx) const
+    int const n, Type const da, TensorView<Type> dx, int const incx) const
 {
   int i;
   if ((n <= 0) || (incx <= 0))

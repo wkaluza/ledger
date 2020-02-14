@@ -22,8 +22,7 @@
 #include <google/protobuf/message.h>
 
 ProtoMessageSender::consumed_needed_pair ProtoMessageSender::CheckForSpace(
-    const mutable_buffers &      data,
-    IMessageWriter<TXType>::TXQ &txq)
+    const mutable_buffers &data, IMessageWriter<TXType>::TXQ &txq)
 {
   CharArrayBuffer chars(data);
   std::ostream    os(&chars);

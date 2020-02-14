@@ -41,9 +41,7 @@ public:
 
   // Returns True or throws
   virtual bool perform(
-      const KarmaAccount &identifier,
-      const std::string & action,
-      bool                force = false) = 0;
+      const KarmaAccount &identifier, const std::string &action, bool force = false) = 0;
 
   virtual bool CouldPerform(const KarmaAccount &identifier, const std::string &action) = 0;
 

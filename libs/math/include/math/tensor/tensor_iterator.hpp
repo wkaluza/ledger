@@ -34,11 +34,7 @@ public:
    * @param array
    */
   TensorIterator(
-      T *      pointer,
-      SizeType size,
-      SizeType padded_size,
-      SizeType height,
-      SizeType padded_height)
+      T *pointer, SizeType size, SizeType padded_size, SizeType height, SizeType padded_height)
   {
     pointer_ = pointer;
     skip_    = padded_height - height;

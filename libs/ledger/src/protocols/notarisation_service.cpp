@@ -31,9 +31,7 @@ namespace ledger {
 char const *StateToString(NotarisationService::State state);
 
 NotarisationService::NotarisationService(
-    MuddleInterface &   muddle,
-    CertificatePtr      certificate,
-    BeaconSetupService &beacon_setup)
+    MuddleInterface &muddle, CertificatePtr certificate, BeaconSetupService &beacon_setup)
   : endpoint_{muddle.GetEndpoint()}
   , rpc_client_{"NotarisationService", endpoint_, SERVICE_MAIN_CHAIN, CHANNEL_RPC}
   , notarisation_protocol_{*this}

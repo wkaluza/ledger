@@ -200,8 +200,7 @@ public:
   /// @name Transaction Duplication Filtering
   /// @{
   DigestSet DetectDuplicateTransactions(
-      BlockHash const &           starting_hash,
-      TransactionLayoutSet const &transactions) const;
+      BlockHash const &starting_hash, TransactionLayoutSet const &transactions) const;
   /// @}
 
   // Operators
@@ -275,9 +274,7 @@ private:
   BlockPtr LookupBlock(BlockHash const &hash) const;
   bool     LookupBlockFromCache(BlockHash const &hash, BlockPtr &block) const;
   bool     LookupBlockFromStorage(
-          BlockHash const &hash,
-          BlockPtr &       block,
-          BlockHash *      next_hash = nullptr) const;
+          BlockHash const &hash, BlockPtr &block, BlockHash *next_hash = nullptr) const;
   bool IsBlockInCache(BlockHash const &hash) const;
   void AddBlockToCache(BlockPtr const &block) const;
   void AddBlockToBloomFilter(Block const &block) const;

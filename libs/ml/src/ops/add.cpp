@@ -67,8 +67,7 @@ void Add<TensorType>::Forward(VecTensorType const &inputs, TensorType &output)
 
 template <typename TensorType>
 std::vector<TensorType> Add<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 2);
   assert(inputs.at(0)->shape().size() == inputs.at(1)->shape().size());

@@ -35,8 +35,7 @@ namespace math {
 
 template <typename Type>
 fetch::meta::EnableIf<fetch::meta::IsInteger<Type> || fetch::meta::IsFloat<Type>, void> Log(
-    Type const &x,
-    Type &      ret)
+    Type const &x, Type &ret)
 {
   ret = static_cast<Type>(std::log(x));
 }
@@ -49,8 +48,7 @@ meta::IfIsFixedPoint<T, void> Log(T const &n, T &ret)
 
 template <typename Type>
 fetch::meta::EnableIf<fetch::meta::IsInteger<Type> || fetch::meta::IsFloat<Type>, void> Log2(
-    Type const &x,
-    Type &      ret)
+    Type const &x, Type &ret)
 {
   ret = std::log2(x);
 }
@@ -63,8 +61,7 @@ meta::IfIsFixedPoint<T, void> Log2(T const &n, T &ret)
 
 template <typename Type>
 fetch::meta::EnableIf<fetch::meta::IsInteger<Type> || fetch::meta::IsFloat<Type>, void> Log10(
-    Type const &x,
-    Type &      ret)
+    Type const &x, Type &ret)
 {
   ret = std::log10(x);
 }

@@ -40,9 +40,7 @@ using NextBlockPtr          = SimulatedPowConsensus::NextBlockPtr;
 using Status                = SimulatedPowConsensus::Status;
 
 SimulatedPowConsensus::SimulatedPowConsensus(
-    Identity         mining_identity,
-    uint64_t         block_interval_ms,
-    MainChain const &chain)
+    Identity mining_identity, uint64_t block_interval_ms, MainChain const &chain)
   : mining_identity_{std::move(mining_identity)}
   , block_interval_ms_{block_interval_ms}
   , chain_{chain}
@@ -194,8 +192,7 @@ void SimulatedPowConsensus::SetAeonPeriod(uint16_t /*aeon_period*/)
 {}
 
 void SimulatedPowConsensus::Reset(
-    StakeSnapshot const & /*snapshot*/,
-    StorageInterface & /*storage*/)
+    StakeSnapshot const & /*snapshot*/, StorageInterface & /*storage*/)
 {}
 
 void SimulatedPowConsensus::Reset(StakeSnapshot const & /*snapshot*/)

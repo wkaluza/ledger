@@ -64,9 +64,7 @@ bool EndpointBase<TXType>::connect(const Uri &uri, Core &core)
 
 template <typename TXType>
 EndpointBase<TXType>::EndpointBase(
-    std::size_t sendBufferSize,
-    std::size_t readBufferSize,
-    ConfigMap   configMap)
+    std::size_t sendBufferSize, std::size_t readBufferSize, ConfigMap configMap)
   : sendBuffer(sendBufferSize)
   , readBuffer(readBufferSize)
   , configMap_(std::move(configMap))
@@ -325,9 +323,7 @@ void EndpointBase<TXType>::go()
 
 template <typename TXType>
 void EndpointBase<TXType>::complete_sending(
-    StateTypeP             current,
-    std::error_code const &ec,
-    const size_t &         bytes)
+    StateTypeP current, std::error_code const &ec, const size_t &bytes)
 {
   try
   {
@@ -380,9 +376,7 @@ void EndpointBase<TXType>::create_messages()
 
 template <typename TXType>
 void EndpointBase<TXType>::complete_reading(
-    StateTypeP             current,
-    std::error_code const &ec,
-    const size_t &         bytes)
+    StateTypeP current, std::error_code const &ec, const size_t &bytes)
 {
   try
   {

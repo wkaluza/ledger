@@ -45,9 +45,7 @@ void ComplaintsManager::AddComplaintAgainst(MuddleAddress const &complaint_addre
 }
 
 void ComplaintsManager::AddComplaintsFrom(
-    MuddleAddress const & from,
-    ComplaintsList const &complaints,
-    Cabinet const &       cabinet)
+    MuddleAddress const &from, ComplaintsList const &complaints, Cabinet const &cabinet)
 {
   FETCH_LOCK(mutex_);
   // Check if we have received a complaints message from this node before and if not log that we
@@ -134,8 +132,7 @@ std::unordered_set<ComplaintsManager::MuddleAddress> ComplaintsManager::Complain
 }
 
 bool ComplaintsManager::FindComplaint(
-    MuddleAddress const &complaint_address,
-    MuddleAddress const &complainer_address) const
+    MuddleAddress const &complaint_address, MuddleAddress const &complainer_address) const
 {
   FETCH_LOCK(mutex_);
   assert(finished_);
@@ -189,8 +186,7 @@ void ComplaintAnswersManager::AddComplaintAgainst(MuddleAddress const &member)
 }
 
 void ComplaintAnswersManager::AddComplaintAnswerFrom(
-    MuddleAddress const &from,
-    Answer const &       complaint_answer)
+    MuddleAddress const &from, Answer const &complaint_answer)
 {
   FETCH_LOCK(mutex_);
   if (complaint_answers_received_.find(from) != complaint_answers_received_.end())
@@ -285,8 +281,7 @@ std::set<QualComplaintsManager::MuddleAddress> QualComplaintsManager::Complaints
 }
 
 void QualComplaintsManager::AddComplaintsFrom(
-    MuddleAddress const &                                   id,
-    std::unordered_map<MuddleAddress, ExposedShares> const &complaints)
+    MuddleAddress const &id, std::unordered_map<MuddleAddress, ExposedShares> const &complaints)
 {
   FETCH_LOCK(mutex_);
   if (complaints_received_.find(id) != complaints_received_.end())

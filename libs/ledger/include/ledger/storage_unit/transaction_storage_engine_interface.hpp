@@ -85,9 +85,7 @@ public:
   virtual TxLayouts GetRecent(uint32_t max_to_poll) = 0;
 
   virtual TxArray PullSubtree(
-      Digest const &partial_digest,
-      uint64_t      bit_count,
-      uint64_t      pull_limit) = 0;
+      Digest const &partial_digest, uint64_t bit_count, uint64_t pull_limit) = 0;
   /// @}
 };
 

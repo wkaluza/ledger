@@ -30,8 +30,7 @@ namespace ledger {
 using DAGNodesSerializer = fetch::serializers::MsgPackSerializer;
 
 DAGSyncService::DAGSyncService(
-    MuddleEndpoint &                      muddle_endpoint,
-    std::shared_ptr<ledger::DAGInterface> dag)
+    MuddleEndpoint &muddle_endpoint, std::shared_ptr<ledger::DAGInterface> dag)
   : muddle_endpoint_(muddle_endpoint)
   , client_(std::make_shared<Client>("R:DAGSync-L", muddle_endpoint_, SERVICE_DAG, CHANNEL_RPC))
   , state_machine_{std::make_shared<core::StateMachine<State>>("DAGSyncService", State::INITIAL)}

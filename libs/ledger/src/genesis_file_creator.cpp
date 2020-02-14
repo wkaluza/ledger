@@ -101,9 +101,7 @@ FileReadStatus ParseDocument(JSONDocument &document, ConstByteArray const &conte
 using ConsensusPtr = std::shared_ptr<fetch::ledger::ConsensusInterface>;
 
 GenesisFileCreator::GenesisFileCreator(
-    StorageUnitInterface &storage_unit,
-    CertificatePtr        certificate,
-    std::string const &   db_prefix)
+    StorageUnitInterface &storage_unit, CertificatePtr certificate, std::string const &db_prefix)
   : certificate_{std::move(certificate)}
   , storage_unit_{storage_unit}
   , db_name_{db_prefix + "_genesis_block"}
@@ -115,9 +113,7 @@ GenesisFileCreator::GenesisFileCreator(
  * @param name The path to the file to be loaded
  */
 GenesisFileCreator::Result GenesisFileCreator::LoadContents(
-    ConstByteArray const &contents,
-    bool                  proof_of_stake,
-    ConsensusParameters & params)
+    ConstByteArray const &contents, bool proof_of_stake, ConsensusParameters &params)
 {
   // Perform a check as to whether we have installed genesis before
   {

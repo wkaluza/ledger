@@ -70,8 +70,7 @@ std::shared_ptr<fetch::ml::ops::Ops<TensorType>> MaskFill<TensorType>::MakeShare
  */
 template <typename TensorType>
 void MaskFill<TensorType>::Forward(
-    const MaskFill::VecTensorType &inputs,
-    MaskFill::TensorType &         output)
+    const MaskFill::VecTensorType &inputs, MaskFill::TensorType &output)
 {
   assert(inputs.size() == 2);
   assert(output.shape() == this->ComputeOutputShape(inputs));
@@ -89,8 +88,7 @@ void MaskFill<TensorType>::Forward(
 
 template <typename TensorType>
 std::vector<TensorType> MaskFill<TensorType>::Backward(
-    const VecTensorType &inputs,
-    const TensorType &   error_signal)
+    const VecTensorType &inputs, const TensorType &error_signal)
 {
   assert(inputs.size() == 2);
   assert(error_signal.size() == inputs.at(1)->size());

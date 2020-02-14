@@ -316,8 +316,7 @@ private:
   }
 
   static UniquePointerType<ECDSA_SIG> Convert(
-      byte_array::ConstByteArray const &bin_sig,
-      eECDSAEncoding                    input_signature_binary_data_type)
+      byte_array::ConstByteArray const &bin_sig, eECDSAEncoding input_signature_binary_data_type)
   {
     switch (input_signature_binary_data_type)
     {

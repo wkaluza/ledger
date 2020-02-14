@@ -34,10 +34,7 @@ MainChainRpcClient::MainChainRpcClient(MuddleEndpoint &endpoint)
 {}
 
 BlocksPromise MainChainRpcClient::GetCommonSubChain(
-    MuddleAddress peer,
-    Digest        start,
-    Digest        last_seen,
-    uint64_t      limit)
+    MuddleAddress peer, Digest start, Digest last_seen, uint64_t limit)
 {
   auto promise = rpc_client_.CallSpecificAddress(
       peer, RPC_MAIN_CHAIN, MainChainProtocol::COMMON_SUB_CHAIN, start, last_seen, limit);

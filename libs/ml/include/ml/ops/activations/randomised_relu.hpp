@@ -39,9 +39,7 @@ public:
   using MyType        = RandomisedRelu<TensorType>;
 
   RandomisedRelu(
-      DataType        lower_bound,
-      DataType        upper_bound,
-      SizeType const &random_seed = 25102015);
+      DataType lower_bound, DataType upper_bound, SizeType const &random_seed = 25102015);
 
   explicit RandomisedRelu(SPType const &sp);
 
@@ -54,8 +52,8 @@ public:
 
   void Forward(VecTensorType const &inputs, TensorType &output) override;
 
-  std::vector<TensorType> Backward(VecTensorType const &inputs, TensorType const &error_signal)
-      override;
+  std::vector<TensorType> Backward(
+      VecTensorType const &inputs, TensorType const &error_signal) override;
 
   std::vector<SizeType> ComputeOutputShape(VecTensorType const &inputs) const override;
 

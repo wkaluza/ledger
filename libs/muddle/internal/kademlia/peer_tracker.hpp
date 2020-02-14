@@ -110,16 +110,14 @@ public:
   /// @{
   AddressSet GetDesiredPeers() const;
   void       AddDesiredPeer(
-            Address const & address,
-            Duration const &expiry = muddle::MuddleInterface::NeverExpire());
+            Address const &address, Duration const &expiry = muddle::MuddleInterface::NeverExpire());
   void AddDesiredPeer(
       Address const &      address,
       network::Peer const &hint,
       Duration const &     expiry =
           muddle::MuddleInterface::NeverExpire());  // TODO(tfr): change hint to URI
   void AddDesiredPeer(
-      Uri const &     uri,
-      Duration const &expiry = muddle::MuddleInterface::NeverExpire());
+      Uri const &uri, Duration const &expiry = muddle::MuddleInterface::NeverExpire());
   void RemoveDesiredPeer(Address const &address);
   void DownloadPeerDetails(Handle handle, Address const &address);
   /// @}

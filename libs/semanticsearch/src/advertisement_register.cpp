@@ -41,9 +41,7 @@ AdvertisementRegister::SharedModel AdvertisementRegister::GetAdvertisementModel(
 }
 
 void AdvertisementRegister::AdvertiseAgent(
-    AgentId                 aid,
-    std::string const &     name,
-    SemanticPosition const &position)
+    AgentId aid, std::string const &name, SemanticPosition const &position)
 {
   assert(HasModel(name));
   auto ad_model = GetAdvertisementModel(name);
@@ -51,18 +49,14 @@ void AdvertisementRegister::AdvertiseAgent(
 }
 
 AdvertisementRegister::AgentIdSet AdvertisementRegister::FindAgents(
-    std::string const &     name,
-    SemanticPosition const &position,
-    SemanticCoordinateType  depth)
+    std::string const &name, SemanticPosition const &position, SemanticCoordinateType depth)
 {
   auto ad_model = GetAdvertisementModel(name);
   return ad_model->FindAgents(position, depth);
 }
 
 AdvertisementRegister::AgentIdSet AdvertisementRegister::FindAgents(
-    std::string const &    name,
-    Vocabulary const &     object,
-    SemanticCoordinateType depth)
+    std::string const &name, Vocabulary const &object, SemanticCoordinateType depth)
 {
   auto ad_model = GetAdvertisementModel(name);
   auto position = ad_model->vocabulary_schema()->Reduce(object);
@@ -76,8 +70,7 @@ void AdvertisementRegister::OnAddModel(std::string const &name, VocabularySchema
 }
 
 bool AdvertisementRegister::CreateModelInternal(
-    std::string const &     name,
-    VocabularySchema const &object)
+    std::string const &name, VocabularySchema const &object)
 {
 
   SharedModel model          = std::make_shared<VocabularyAdvertisement>(object);

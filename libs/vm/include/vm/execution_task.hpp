@@ -35,10 +35,7 @@ struct ExecutionTask
   ConstByteArray parameters;
 
   bool DeserializeParameters(
-      vm::VM *                    vm,
-      ParameterPack &             params,
-      Executable *                exe,
-      Executable::Function const *f) const
+      vm::VM *vm, ParameterPack &params, Executable *exe, Executable::Function const *f) const
   {
     vm->LoadExecutable(exe);
 

@@ -48,9 +48,7 @@ public:
   using Mode           = LaneService::Mode;
 
   void Setup(
-      NetworkManager const &mgr,
-      ShardConfigs const &  configs,
-      Mode                  mode = Mode::LOAD_DATABASE)
+      NetworkManager const &mgr, ShardConfigs const &configs, Mode mode = Mode::LOAD_DATABASE)
   {
     // create all the lane pointers
     lanes_.resize(configs.size());

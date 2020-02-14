@@ -179,9 +179,7 @@ TensorType Graph<TensorType>::ForwardPropagate(std::string const &node_name, boo
  */
 template <typename TensorType>
 TensorType Graph<TensorType>::ForwardImplementation(
-    std::string const &node_name,
-    bool               is_training,
-    bool               evaluate_mode)
+    std::string const &node_name, bool is_training, bool evaluate_mode)
 {
   if (nodes_.find(node_name) != nodes_.end())
   {
@@ -329,9 +327,7 @@ void Graph<TensorType>::SetRegularisation(RegPtrType regulariser, DataType regul
  */
 template <typename TensorType>
 bool Graph<TensorType>::SetRegularisation(
-    std::string const &node_name,
-    RegPtrType         regulariser,
-    DataType           regularisation_rate)
+    std::string const &node_name, RegPtrType regulariser, DataType regularisation_rate)
 {
   NodePtrType t             = trainable_lookup_.at(node_name);
   auto        trainable_ptr = std::dynamic_pointer_cast<ops::Trainable<TensorType>>(t->GetOp());
@@ -434,8 +430,7 @@ void Graph<TensorType>::ApplyGradients(std::vector<TensorType> &grad)
  */
 template <typename TensorType>
 void Graph<TensorType>::ApplySparseGradients(
-    std::vector<TensorType> &grad,
-    std::vector<SizeSet> &   update_rows)
+    std::vector<TensorType> &grad, std::vector<SizeSet> &update_rows)
 {
   switch (graph_state_)
   {
@@ -725,8 +720,7 @@ void Graph<TensorType>::ResetGradients()
  */
 template <typename TensorType>
 void Graph<TensorType>::LinkNodesInGraph(
-    std::string const &             node_name,
-    std::vector<std::string> const &inputs)
+    std::string const &node_name, std::vector<std::string> const &inputs)
 {
   // assign inputs and outputs
   for (auto const &i : inputs)
@@ -850,8 +844,7 @@ void Graph<TensorType>::GetUpdatedRowsReferences(std::vector<SizeSet> &ret) cons
 template <typename TensorType>
 template <typename TensorIteratorType, typename VectorIteratorType>
 void Graph<TensorType>::ApplySparseGradients(
-    TensorIteratorType &grad_it,
-    VectorIteratorType &rows_it)
+    TensorIteratorType &grad_it, VectorIteratorType &rows_it)
 {
   using graph_func_signature =
       void (Graph<TensorType>::*)(TensorIteratorType &, VectorIteratorType &);
@@ -954,10 +947,7 @@ void Graph<TensorType>::RecursiveApply(ValType &val, GraphFunc graph_func) const
 template <typename TensorType>
 template <typename Val1Type, typename Val2Type, typename NodeFunc, typename GraphFunc>
 void Graph<TensorType>::RecursiveApplyTwo(
-    Val1Type &val_1,
-    Val2Type &val_2,
-    NodeFunc  node_func,
-    GraphFunc graph_func) const
+    Val1Type &val_1, Val2Type &val_2, NodeFunc node_func, GraphFunc graph_func) const
 {
   for (auto const &t : trainable_lookup_)
   {
@@ -981,8 +971,8 @@ void Graph<TensorType>::RecursiveApplyTwo(
  */
 template <typename TensorType>
 template <typename Val1Type, typename Val2Type, typename GraphFunc>
-void Graph<TensorType>::RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, GraphFunc graph_func)
-    const
+void Graph<TensorType>::RecursiveApplyTwo(
+    Val1Type &val_1, Val2Type &val_2, GraphFunc graph_func) const
 {
   // get gradients from subgraphs
   for (auto &node_pair : nodes_)
@@ -1068,9 +1058,7 @@ typename Graph<TensorType>::NodePtrType Graph<TensorType>::GetNode(
 template <typename TensorType>
 template <typename LookupFunction>
 void Graph<TensorType>::GetNamesRecursively(
-    std::vector<std::string> &ret,
-    LookupFunction            lookup_function,
-    std::string const &       level)
+    std::vector<std::string> &ret, LookupFunction lookup_function, std::string const &level)
 {
   for (auto const &t : (this->*lookup_function)())
   {

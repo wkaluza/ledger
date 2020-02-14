@@ -85,10 +85,7 @@ struct AssignParameters<POSITION, T, Ts...>
 {
   // Invoked on non-final parameter
   static void Assign(
-      Variant *              stack,
-      RegisteredTypes const &types,
-      T const &              parameter,
-      Ts const &... parameters)
+      Variant *stack, RegisteredTypes const &types, T const &parameter, Ts const &... parameters)
   {
     TypeId type_id = Getter<T>::GetTypeId(types, parameter);
     if (type_id != TypeIds::Unknown)
@@ -132,9 +129,7 @@ class ParameterPack
 public:
   // Construction / Destruction
   explicit ParameterPack(
-      RegisteredTypes const &registered_types,
-      VariantArray           params = {},
-      VM *                   vm     = nullptr)
+      RegisteredTypes const &registered_types, VariantArray params = {}, VM *vm = nullptr)
     : registered_types_{registered_types}
     , params_{std::move(params)}
     , vm_{vm}
@@ -702,10 +697,7 @@ private:
   /// @}
 
   void AddOpcodeInfo(
-      uint16_t     opcode,
-      std::string  unique_name,
-      Handler      handler,
-      ChargeAmount static_charge = 1)
+      uint16_t opcode, std::string unique_name, Handler handler, ChargeAmount static_charge = 1)
   {
     opcode_info_array_[opcode] =
         OpcodeInfo(std::move(unique_name), std::move(handler), static_charge);

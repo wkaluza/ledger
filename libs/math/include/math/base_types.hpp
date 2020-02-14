@@ -250,8 +250,7 @@ static constexpr meta::IfIsFloat<T, T> AsType(U val, meta::IfIsInteger<U> * /*un
 
 template <typename T, typename U>
 static constexpr meta::IfIsFixedPoint<T, T> AsType(
-    U val,
-    meta::IfIsInteger<U> * /*unused*/ = nullptr)
+    U val, meta::IfIsInteger<U> * /*unused*/ = nullptr)
 {
   return static_cast<T>(val);
 }

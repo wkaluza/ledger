@@ -67,8 +67,7 @@ void CrossEntropyLoss<TensorType>::Forward(VecTensorType const &inputs, TensorTy
 
 template <typename TensorType>
 std::vector<TensorType> CrossEntropyLoss<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(error_signal);
 

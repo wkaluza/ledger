@@ -46,9 +46,7 @@ using SizeType   = fetch::math::SizeType;
 ////////////////////////
 
 std::pair<std::string, std::string> Model(
-    fetch::ml::Graph<TensorType> &g,
-    SizeType                      embeddings_size,
-    SizeType                      vocab_size)
+    fetch::ml::Graph<TensorType> &g, SizeType embeddings_size, SizeType vocab_size)
 {
   g.AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Input", {});
   g.AddNode<fetch::ml::ops::PlaceHolder<TensorType>>("Context", {});

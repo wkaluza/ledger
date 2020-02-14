@@ -53,9 +53,7 @@ FakeIoObserver::Status FakeIoObserver::Read(std::string const &key, void *data, 
 }
 
 FakeIoObserver::Status FakeIoObserver::Write(
-    std::string const &key,
-    void const *       data,
-    uint64_t           size)
+    std::string const &key, void const *data, uint64_t size)
 {
   ConstByteArray const value{reinterpret_cast<uint8_t const *>(data), size};
 

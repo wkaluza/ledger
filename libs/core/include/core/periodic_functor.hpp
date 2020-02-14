@@ -60,9 +60,8 @@ PeriodicFunctor::PeriodicFunctor(
     Duration const &   interval,
     Class *            instance,
     void (Class::*member_function)())
-  : PeriodicFunctor(name, interval, [instance, member_function]() {
-    (instance->*member_function)();
-  })
+  : PeriodicFunctor(
+        name, interval, [instance, member_function]() { (instance->*member_function)(); })
 {}
 
 }  // namespace core

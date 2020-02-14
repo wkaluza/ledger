@@ -37,8 +37,7 @@ namespace examples {
  * @return
  */
 inline std::vector<std::string> GetAllTextFiles(
-    std::string const &dir_name,
-    std::string const &fileext = ".txt")
+    std::string const &dir_name, std::string const &fileext = ".txt")
 {
   std::vector<std::string> ret;
   DIR *                    d;

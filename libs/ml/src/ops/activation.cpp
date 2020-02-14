@@ -67,35 +67,17 @@ std::string AddActivationNode(ActivationType type, Graph<T> *g, std::string name
 ///////////////////////////////
 
 template std::string AddActivationNode<math::Tensor<int8_t>>(
-    ActivationType               type,
-    Graph<math::Tensor<int8_t>> *g,
-    std::string                  name,
-    std::string                  input);
+    ActivationType type, Graph<math::Tensor<int8_t>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<int16_t>>(
-    ActivationType                type,
-    Graph<math::Tensor<int16_t>> *g,
-    std::string                   name,
-    std::string                   input);
+    ActivationType type, Graph<math::Tensor<int16_t>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<int32_t>>(
-    ActivationType                type,
-    Graph<math::Tensor<int32_t>> *g,
-    std::string                   name,
-    std::string                   input);
+    ActivationType type, Graph<math::Tensor<int32_t>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<int64_t>>(
-    ActivationType                type,
-    Graph<math::Tensor<int64_t>> *g,
-    std::string                   name,
-    std::string                   input);
+    ActivationType type, Graph<math::Tensor<int64_t>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<float>>(
-    ActivationType              type,
-    Graph<math::Tensor<float>> *g,
-    std::string                 name,
-    std::string                 input);
+    ActivationType type, Graph<math::Tensor<float>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<double>>(
-    ActivationType               type,
-    Graph<math::Tensor<double>> *g,
-    std::string                  name,
-    std::string                  input);
+    ActivationType type, Graph<math::Tensor<double>> *g, std::string name, std::string input);
 template std::string AddActivationNode<math::Tensor<fixed_point::fp32_t>>(
     ActivationType                            type,
     Graph<math::Tensor<fixed_point::fp32_t>> *g,

@@ -37,9 +37,7 @@ namespace math {
  */
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> KlDivergence(
-    ArrayType const &         p,
-    ArrayType const &         q,
-    typename ArrayType::Type &ret)
+    ArrayType const &p, ArrayType const &q, typename ArrayType::Type &ret)
 {
   assert(p.shape().at(0) == q.shape().at(0));
   ret = Sum(Multiply(p, Log(Divide(p, q))));
@@ -47,8 +45,7 @@ meta::IfIsMathArray<ArrayType, void> KlDivergence(
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, typename ArrayType::Type> KlDivergence(
-    ArrayType const &p,
-    ArrayType const &q)
+    ArrayType const &p, ArrayType const &q)
 {
   typename ArrayType::Type ret;
   KlDivergence(p, q, ret);

@@ -157,8 +157,7 @@ public:
       math::SizeType const &                   inputs,
       math::SizeType const &                   hidden_nodes);
   void LayerAddDenseAutoInputs(
-      fetch::vm::Ptr<fetch::vm::String> const &layer,
-      math::SizeType const &                   hidden_nodes);
+      fetch::vm::Ptr<fetch::vm::String> const &layer, math::SizeType const &hidden_nodes);
   void LayerAddDenseActivation(
       fetch::vm::Ptr<fetch::vm::String> const &layer,
       math::SizeType const &                   inputs,
@@ -187,8 +186,7 @@ public:
   void LayerAddFlatten(fetch::vm::Ptr<fetch::vm::String> const &layer);
 
   void LayerAddDropout(
-      fetch::vm::Ptr<fetch::vm::String> const &layer,
-      math::DataType const &                   probability);
+      fetch::vm::Ptr<fetch::vm::String> const &layer, math::DataType const &probability);
 
   void LayerAddActivation(
       fetch::vm::Ptr<fetch::vm::String> const &layer,
@@ -255,8 +253,8 @@ private:
       math::SizeType const &                   stride_size,
       fetch::ml::details::ActivationType       activation);
 
-  void AssertLayerTypeMatches(SupportedLayerType layer, std::vector<SupportedLayerType> &&valids)
-      const;
+  void AssertLayerTypeMatches(
+      SupportedLayerType layer, std::vector<SupportedLayerType> &&valids) const;
 
   template <typename T>
   T ParseName(
@@ -276,9 +274,7 @@ private:
  */
 template <typename T>
 T VMModel::ParseName(
-    std::string const &             name,
-    std::map<std::string, T> const &dict,
-    std::string const &             errmsg) const
+    std::string const &name, std::map<std::string, T> const &dict, std::string const &errmsg) const
 {
   if (dict.find(name) == dict.end())
   {

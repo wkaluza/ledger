@@ -121,9 +121,7 @@ public:
   using NotarisationCallbackFunction = std::function<void(SharedNotarisationManager)>;
 
   BeaconSetupService(
-      MuddleInterface &       muddle,
-      ManifestCacheInterface &manifest_cache,
-      CertificatePtr          certificate);
+      MuddleInterface &muddle, ManifestCacheInterface &manifest_cache, CertificatePtr certificate);
   BeaconSetupService(BeaconSetupService const &) = delete;
   BeaconSetupService(BeaconSetupService &&)      = delete;
   virtual ~BeaconSetupService()                  = default;

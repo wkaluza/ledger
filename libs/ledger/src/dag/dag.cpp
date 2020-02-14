@@ -464,9 +464,7 @@ bool DAG::GetWork(DAGHash const &hash, Work &work)
 }
 
 std::shared_ptr<DAGNode> DAG::GetDAGNodeInternal(
-    DAGHash const &hash,
-    bool           including_loose,
-    bool &         was_loose)
+    DAGHash const &hash, bool including_loose, bool &was_loose)
 {
   // Find in node pool
   auto it2 = node_pool_.find(hash);

@@ -131,8 +131,7 @@ protected:
   }
 
   Contract::Result SendSmartAction(
-      ConstByteArray const &action,
-      ConstByteArray const &data = ConstByteArray{})
+      ConstByteArray const &action, ConstByteArray const &data = ConstByteArray{})
   {
     using fetch::chain::Address;
     using fetch::chain::TransactionBuilder;
@@ -207,8 +206,7 @@ protected:
   }
 
   Contract::Result InvokeInit(
-      Identity const &                 owner,
-      fetch::chain::Transaction const &tx = fetch::chain::Transaction{})
+      Identity const &owner, fetch::chain::Transaction const &tx = fetch::chain::Transaction{})
   {
     StateSentinelAdapter storage_adapter{*storage_, *contract_name_, shards_};
 

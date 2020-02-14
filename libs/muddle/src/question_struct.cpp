@@ -35,10 +35,7 @@ using ConfirmedAnswers = QuestionStruct::ConfirmedAnswers;
 QuestionStruct::QuestionStruct() = default;
 
 QuestionStruct::QuestionStruct(
-    Digest         question,
-    Answer         answer,
-    CertificatePtr certificate,
-    CabinetMembers current_cabinet)
+    Digest question, Answer answer, CertificatePtr certificate, CabinetMembers current_cabinet)
   : certificate_{std::move(certificate)}
   , self_{certificate_->identity().identifier()}
   , question_{std::move(question)}

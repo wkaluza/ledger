@@ -106,9 +106,7 @@ BlockCoordinator::BlockCoordinator(
   , certificate_{std::move(prover)}
   , mining_address_{certificate_->identity()}
   , state_machine_{std::make_shared<StateMachine>(
-        "BlockCoordinator",
-        State::RELOAD_STATE,
-        [](State state) { return ToString(state); })}
+        "BlockCoordinator", State::RELOAD_STATE, [](State state) { return ToString(state); })}
   , log2_num_lanes_{log2_num_lanes}
   , num_slices_{num_slices}
   , tx_wait_periodic_{TX_SYNC_NOTIFY_INTERVAL}
@@ -161,14 +159,11 @@ BlockCoordinator::BlockCoordinator(
         "ledger_block_coordinator_reset_state_total",
         "The total number of times in the reset state")}
   , executed_block_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_executed_block_total",
-        "The total number of executed blocks")}
+        "ledger_block_coordinator_executed_block_total", "The total number of executed blocks")}
   , mined_block_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_mined_block_total",
-        "The total number of mined blocks")}
+        "ledger_block_coordinator_mined_block_total", "The total number of mined blocks")}
   , executed_tx_count_{telemetry::Registry::Instance().CreateCounter(
-        "ledger_block_coordinator_executed_tx_total",
-        "The total number of executed transactions")}
+        "ledger_block_coordinator_executed_tx_total", "The total number of executed transactions")}
   , request_tx_count_{telemetry::Registry::Instance().CreateCounter(
         "ledger_block_coordinator_request_tx_total",
         "The total number of times an explicit request for transactions was made")}
@@ -176,11 +171,9 @@ BlockCoordinator::BlockCoordinator(
         "ledger_block_coordinator_invalidated_tx_total",
         "The total number of times a block was invalidated because transactions were not found")}
   , blocks_minted_{telemetry::Registry::Instance().CreateCounter(
-        "blocks_minted_total",
-        "Blocks minted")}
+        "blocks_minted_total", "Blocks minted")}
   , consensus_update_failure_total_{telemetry::Registry::Instance().CreateCounter(
-        "consensus_update_failure_total",
-        "Failures to update consensus")}
+        "consensus_update_failure_total", "Failures to update consensus")}
   , remove_block_total_{telemetry::Registry::Instance().CreateCounter(
         "ledger_block_coordinator_remove_block_total",
         "The total number of blocks removed from the chain by the block coordinator")}
@@ -201,20 +194,15 @@ BlockCoordinator::BlockCoordinator(
         "ledger_next_block_num",
         "The number of the next block which is scheduled to be executed by the block coordinator")}
   , block_hash_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "block_hash",
-        "The last seen block hash beginning")}
+        "block_hash", "The last seen block hash beginning")}
   , total_time_to_create_block_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "total_time_to_create_block",
-        "Total time required to create a block")}
+        "total_time_to_create_block", "Total time required to create a block")}
   , current_block_weight_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_block_weight",
-        "Weight of current block")}
+        "current_block_weight", "Weight of current block")}
   , last_block_interval_s_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "last_block_interval_s",
-        "Measured block interval")}
+        "last_block_interval_s", "Measured block interval")}
   , current_block_coord_state_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_block_coord_state",
-        "Current block coord state")}
+        "current_block_coord_state", "Current block coord state")}
 {
   // configure the state machine
   // clang-format off

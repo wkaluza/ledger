@@ -376,8 +376,8 @@ private:
 
   struct LargeConstantComparator
   {
-    bool operator()(Executable::LargeConstant const &lhs, Executable::LargeConstant const &rhs)
-        const;
+    bool operator()(
+        Executable::LargeConstant const &lhs, Executable::LargeConstant const &rhs) const;
   };
 
   using StringsMap        = std::unordered_map<std::string, uint16_t>;
@@ -427,15 +427,13 @@ private:
   void          CreateUserDefinedTypeMembers(IRBlockNodePtr const &block_node);
   void          CreateUserDefinedFreeFunctions(IRBlockNodePtr const &block_node);
   IRFunctionPtr CreateFunction(
-      IRNodePtr const &     function_definition_node,
-      Executable::Function &exe_function);
+      IRNodePtr const &function_definition_node, Executable::Function &exe_function);
   void CreateAnnotations(IRNodePtr const &node, AnnotationArray &annotations);
   void SetAnnotationLiteral(IRNodePtr const &node, AnnotationLiteral &literal);
   void HandleBlock(IRBlockNodePtr const &block_node);
   void HandleFile(IRBlockNodePtr const &block_node);
   void HandleMemberFunctionBody(
-      IRBlockNodePtr const &struct_definition_node,
-      IRBlockNodePtr const &function_definition_node);
+      IRBlockNodePtr const &struct_definition_node, IRBlockNodePtr const &function_definition_node);
   void HandleFreeFunctionBody(IRBlockNodePtr const &function_definition_node);
   void HandleFunctionBody(IRBlockNodePtr const &function_definition_node);
   void HandleWhileStatement(IRBlockNodePtr const &block_node);
@@ -454,8 +452,7 @@ private:
   void HandleMemberVariableOwner(IRExpressionNodePtr const &node);
 
   void HandleVariableAssignmentStatement(
-      IRExpressionNodePtr const &lhs,
-      IRExpressionNodePtr const &rhs);
+      IRExpressionNodePtr const &lhs, IRExpressionNodePtr const &rhs);
   void HandleVariableInplaceAssignmentStatement(
       IRExpressionNodePtr const &node,
       IRExpressionNodePtr const &lhs,
@@ -492,22 +489,17 @@ private:
   void  HandleBinaryOp(IRExpressionNodePtr const &node);
   void  HandleUnaryOp(IRExpressionNodePtr const &node);
   Chain HandleConditionExpression(
-      IRBlockNodePtr const &     block_node,
-      IRExpressionNodePtr const &node);
+      IRBlockNodePtr const &block_node, IRExpressionNodePtr const &node);
   Chain HandleShortCircuitOp(IRNodePtr const &parent_node, IRExpressionNodePtr const &node);
   void  FinaliseShortCircuitChain(
-       Chain const &chain,
-       bool         is_condition_chain,
-       uint16_t     destination_pc);
+       Chain const &chain, bool is_condition_chain, uint16_t destination_pc);
   void HandleIndexOp(IRExpressionNodePtr const &node);
   void HandleDotOp(IRExpressionNodePtr const &node);
   void HandleInvokeOp(IRExpressionNodePtr const &node);
   void HandleVariablePrefixPostfixOp(
-      IRExpressionNodePtr const &node,
-      IRExpressionNodePtr const &operand);
+      IRExpressionNodePtr const &node, IRExpressionNodePtr const &operand);
   void HandleIndexedPrefixPostfixOp(
-      IRExpressionNodePtr const &node,
-      IRExpressionNodePtr const &operand);
+      IRExpressionNodePtr const &node, IRExpressionNodePtr const &operand);
   void     ScopeEnter();
   void     ScopeLeave(IRBlockNodePtr const &block_node);
   uint16_t AddConstant(Variant const &c);

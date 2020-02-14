@@ -155,9 +155,7 @@ void VMModel::Init(std::string const &model_category)
 }
 
 Ptr<VMModel> VMModel::Constructor(
-    VM *                                     vm,
-    TypeId                                   type_id,
-    fetch::vm::Ptr<fetch::vm::String> const &model_category)
+    VM *vm, TypeId type_id, fetch::vm::Ptr<fetch::vm::String> const &model_category)
 {
   return Ptr<VMModel>{new VMModel(vm, type_id, model_category)};
 }
@@ -214,9 +212,7 @@ void VMModel::CompileSequentialWithMetrics(
 }
 
 void VMModel::CompileSequentialImplementation(
-    Ptr<String> const &            loss,
-    Ptr<String> const &            optimiser,
-    std::vector<MetricType> const &metrics)
+    Ptr<String> const &loss, Ptr<String> const &optimiser, std::vector<MetricType> const &metrics)
 {
   try
   {
@@ -517,8 +513,7 @@ VMModel::ModelEstimator &VMModel::Estimator()
 }
 
 void VMModel::AssertLayerTypeMatches(
-    SupportedLayerType                layer,
-    std::vector<SupportedLayerType> &&valids) const
+    SupportedLayerType layer, std::vector<SupportedLayerType> &&valids) const
 {
   static const std::map<SupportedLayerType, std::string> LAYER_NAMES_{
       {SupportedLayerType::DENSE, "dense"},
@@ -564,8 +559,7 @@ void VMModel::LayerAddDense(
 }
 
 void VMModel::LayerAddDenseAutoInputs(
-    const fetch::vm::Ptr<String> &layer,
-    const math::SizeType &        hidden_nodes)
+    const fetch::vm::Ptr<String> &layer, const math::SizeType &hidden_nodes)
 {
   LayerAddDenseActivationImplementation(
       layer, AUTODETECT_INPUTS, hidden_nodes, ActivationType::NOTHING);
@@ -730,8 +724,7 @@ void VMModel::LayerAddFlatten(const fetch::vm::Ptr<String> &layer)
 }
 
 void VMModel::LayerAddDropout(
-    const fetch::vm::Ptr<String> &layer,
-    const math::DataType &        probability)
+    const fetch::vm::Ptr<String> &layer, const math::DataType &probability)
 {
   try
   {
@@ -761,8 +754,7 @@ void VMModel::LayerAddDropout(
 }
 
 void VMModel::LayerAddActivation(
-    const fetch::vm::Ptr<String> &layer,
-    const fetch::vm::Ptr<String> &activation_name)
+    const fetch::vm::Ptr<String> &layer, const fetch::vm::Ptr<String> &activation_name)
 {
   try
   {
@@ -836,8 +828,7 @@ void VMModel::LayerAddReshape(
  * @param shape - input shape, min 2 dimensions, the trailing is batch size.
  */
 void VMModel::LayerAddInput(
-    const fetch::vm::Ptr<String> &                   layer,
-    const fetch::vm::Ptr<vm::Array<math::SizeType>> &shape)
+    const fetch::vm::Ptr<String> &layer, const fetch::vm::Ptr<vm::Array<math::SizeType>> &shape)
 {
   if (shape->elements.size() < 2)
   {

@@ -45,8 +45,7 @@ public:
 
   template <std::size_t S>
   using vector_kernel_signature_type = std::function<vectorise::VectorRegister<type, S>(
-      vectorise::VectorRegister<type, S> const,
-      vectorise::VectorRegister<type, S> const)>;
+      vectorise::VectorRegister<type, S> const, vectorise::VectorRegister<type, S> const)>;
   template <std::size_t S>
   using vector_reduce_signature_type =
       std::function<type(vectorise::VectorRegister<type, S> const)>;
@@ -89,11 +88,7 @@ public:
 
   template <typename G, typename... Args>
   static void SetPointers(
-      std::size_t  offset,
-      std::size_t  size,
-      type const **regs,
-      G &          next,
-      Args &&... remaining)
+      std::size_t offset, std::size_t size, type const **regs, G &next, Args &&... remaining)
   {
     assert(next.size() >= offset + size);
     *regs = next.pointer() + offset;
@@ -109,18 +104,12 @@ public:
   }
 
   static void SetPointers(
-      std::size_t /*offset*/,
-      std::size_t /*size*/,
-      VectorRegisterIteratorType * /*iters*/)
+      std::size_t /*offset*/, std::size_t /*size*/, VectorRegisterIteratorType * /*iters*/)
   {}
 
   template <class OP, class F1, class F2>
   type GenericRangedOpReduce(
-      Range const &range,
-      type const   initial_value,
-      OP &&        op,
-      F1 const &&  kernel,
-      F2 &&        hkernel)
+      Range const &range, type const initial_value, OP &&op, F1 const &&kernel, F2 &&hkernel)
   {
     std::size_t SF  = range.SIMDFromUpper<VectorRegisterType::E_BLOCK_COUNT>();
     std::size_t ST  = range.SIMDToLower<VectorRegisterType::E_BLOCK_COUNT>();
@@ -332,10 +321,7 @@ public:
 
   template <class F1, class F2>
   type Reduce(
-      Range const &range,
-      F1 const &&  kernel,
-      F2 &&        hkernel,
-      type const   initial_value = type(0))
+      Range const &range, F1 const &&kernel, F2 &&hkernel, type const initial_value = type(0))
   {
     std::size_t SF  = range.SIMDFromUpper<VectorRegisterType::E_BLOCK_COUNT>();
     std::size_t ST  = range.SIMDToLower<VectorRegisterType::E_BLOCK_COUNT>();

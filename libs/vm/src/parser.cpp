@@ -2134,10 +2134,7 @@ void Parser::HandleOp(NodeKind kind, OpInfo const &op_info)
 }
 
 void Parser::AddGroup(
-    NodeKind           kind,
-    int                arity,
-    Token::Kind        closer_token_kind,
-    std::string const &closer_token_text)
+    NodeKind kind, int arity, Token::Kind closer_token_kind, std::string const &closer_token_text)
 {
   IncrementGroupMembers();
   Expr expr;

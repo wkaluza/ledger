@@ -72,9 +72,7 @@ public:
 
 private:
   void Init(
-      TensorType const &input_matrix,
-      TensorType const &output_matrix,
-      DataType const &  perplexity);
+      TensorType const &input_matrix, TensorType const &output_matrix, DataType const &perplexity);
 
   void RandomInitWeights(TensorType &output_matrix);
 
@@ -93,9 +91,7 @@ private:
       SizeType const &  max_tries);
 
   void CalculateSymmetricAffinitiesQ(
-      TensorType const &output_matrix,
-      TensorType &      output_symmetric_affinities,
-      TensorType &      num);
+      TensorType const &output_matrix, TensorType &output_symmetric_affinities, TensorType &num);
 
   DataType GetRandom(DataType /*mean*/, DataType /*standard_deviation*/);
 

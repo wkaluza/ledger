@@ -58,8 +58,7 @@ private:
       "Histogram of HTTP request latencies")};
 
   CounterMapPtr status_counts_{Registry::Instance().CreateCounterMap(
-      "ledger_http_response_total",
-      "Histogram of HTTP request latencies")};
+      "ledger_http_response_total", "Histogram of HTTP request latencies")};
 };
 
 void TelemetryData::Update(HTTPRequest const &request, HTTPResponse const &response)

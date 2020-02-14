@@ -201,8 +201,8 @@ public:
     return dap_names_tmp_;
   }
 
-  bool MatchAttributeName(const std::string &attribute_pattern, const std::string &attribute_name)
-      const
+  bool MatchAttributeName(
+      const std::string &attribute_pattern, const std::string &attribute_name) const
   {
     if (attribute_pattern == "*")
     {

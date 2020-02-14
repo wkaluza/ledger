@@ -144,8 +144,7 @@ private:
   }
 
   static byte_array::ByteArray Convert(
-      EC_POINT const *const public_key,
-      eECDSAEncoding const  binary_data_format)
+      EC_POINT const *const public_key, eECDSAEncoding const binary_data_format)
   {
     UniquePointerType<EC_GROUP> group{createGroup()};
     context::Session<BN_CTX>    session;
@@ -164,8 +163,7 @@ private:
   }
 
   static UniquePointerType<EC_POINT> Convert(
-      byte_array::ConstByteArray const &key_data,
-      eECDSAEncoding const              binary_data_format)
+      byte_array::ConstByteArray const &key_data, eECDSAEncoding const binary_data_format)
   {
     switch (binary_data_format)
     {

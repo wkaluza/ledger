@@ -176,8 +176,7 @@ public:
 
   template <typename S>
   constexpr std::enable_if_t<std::is_integral<S>::value, T> const &Set(
-      S const &n,
-      T const &v) noexcept
+      S const &n, T const &v) noexcept
   {
     assert(pointer_ != nullptr);
     assert(n < padded_size());

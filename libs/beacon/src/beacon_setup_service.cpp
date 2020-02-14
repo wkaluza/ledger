@@ -74,9 +74,7 @@ std::string BeaconSetupService::NodeString()
 }
 
 BeaconSetupService::BeaconSetupService(
-    MuddleInterface &       muddle,
-    ManifestCacheInterface &manifest_cache,
-    CertificatePtr          certificate)
+    MuddleInterface &muddle, ManifestCacheInterface &manifest_cache, CertificatePtr certificate)
   : identity_{certificate->identity()}
   , manifest_cache_{manifest_cache}
   , muddle_{muddle}
@@ -86,47 +84,33 @@ BeaconSetupService::BeaconSetupService(
   , rbc_{ReliableBroadcastFactory()}
   , state_machine_{std::make_shared<StateMachine>("BeaconSetupService", State::IDLE, ToString)}
   , beacon_dkg_state_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_state_gauge",
-        "State the DKG is in as integer in [0, 10]")}
+        "beacon_dkg_state_gauge", "State the DKG is in as integer in [0, 10]")}
   , beacon_dkg_connections_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_connections_gauge",
-        "Connections the network has made as a prerequisite")}
+        "beacon_dkg_connections_gauge", "Connections the network has made as a prerequisite")}
   , beacon_dkg_all_connections_gauge_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_all_connections_gauge",
-        "Connections the network has made in general")}
+        "beacon_dkg_all_connections_gauge", "Connections the network has made in general")}
   , beacon_dkg_failures_required_to_complete_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_failures_required_to_complete",
-        "Failures before the DKG was successful")}
+        "beacon_dkg_failures_required_to_complete", "Failures before the DKG was successful")}
   , beacon_dkg_state_failed_on_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_state_failed_on",
-        "Last state the DKG failed on")}
+        "beacon_dkg_state_failed_on", "Last state the DKG failed on")}
   , beacon_dkg_time_allocated_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_time_allocated",
-        "Time allocated for the DKG to complete")}
+        "beacon_dkg_time_allocated", "Time allocated for the DKG to complete")}
   , beacon_dkg_reference_timepoint_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_reference_timepoint",
-        "The reference time point that members start DKG on")}
+        "beacon_dkg_reference_timepoint", "The reference time point that members start DKG on")}
   , beacon_dkg_aeon_setting_up_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_aeon_setting_up",
-        "The aeon currently under setup.")}
+        "beacon_dkg_aeon_setting_up", "The aeon currently under setup.")}
   , beacon_dkg_miners_in_qual_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "beacon_dkg_miners_in_qual",
-        "Number of miners that have made it into qual")}
+        "beacon_dkg_miners_in_qual", "Number of miners that have made it into qual")}
   , beacon_dkg_failures_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_dkg_failures_total",
-        "The total number of DKG failures")}
+        "beacon_dkg_failures_total", "The total number of DKG failures")}
   , beacon_dkg_aborts_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_dkg_aborts_total",
-        "The total number of DKG forced aborts")}
+        "beacon_dkg_aborts_total", "The total number of DKG forced aborts")}
   , beacon_dkg_successes_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_dkg_successes_total",
-        "The total number of DKG successes")}
+        "beacon_dkg_successes_total", "The total number of DKG successes")}
   , beacon_dkg_duplicate_creates_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_dkg_duplicate_creates_total",
-        "The total number of duplicate aeons created")}
+        "beacon_dkg_duplicate_creates_total", "The total number of duplicate aeons created")}
   , beacon_dkg_duplicate_triggers_total_{telemetry::Registry::Instance().CreateCounter(
-        "beacon_dkg_duplicate_triggers_total",
-        "The total number of duplicate trigger attempts")}
+        "beacon_dkg_duplicate_triggers_total", "The total number of duplicate trigger attempts")}
   , time_slot_map_{{BeaconSetupService::State::RESET, 0},
                    {BeaconSetupService::State::CONNECT_TO_ALL, 1},
                    {BeaconSetupService::State::WAIT_FOR_READY_CONNECTIONS, 1},
@@ -1132,8 +1116,7 @@ void BeaconSetupService::BroadcastReconstructionShares()
  * @param msg_ptr Pointer of DKGMessage
  */
 void BeaconSetupService::OnDkgMessage(
-    MuddleAddress const &              from,
-    const std::shared_ptr<DKGMessage> &msg_ptr)
+    MuddleAddress const &from, const std::shared_ptr<DKGMessage> &msg_ptr)
 {
   FETCH_LOCK(mutex_);
   if (state_machine_->state() == State::IDLE || !BasicMsgCheck(from, msg_ptr))
@@ -1239,8 +1222,7 @@ void BeaconSetupService::OnExposedShares(SharesMessage const &shares, MuddleAddr
 }
 
 void BeaconSetupService::OnNewSharesPacket(
-    muddle::Packet const &packet,
-    MuddleAddress const & last_hop)
+    muddle::Packet const &packet, MuddleAddress const &last_hop)
 {
   FETCH_UNUSED(last_hop);
 
@@ -1270,8 +1252,7 @@ void BeaconSetupService::OnNewSharesPacket(
  * @param shares Pair of secret shares
  */
 void BeaconSetupService::OnNewShares(
-    const MuddleAddress &                        from,
-    std::pair<MessageShare, MessageShare> const &shares)
+    const MuddleAddress &from, std::pair<MessageShare, MessageShare> const &shares)
 {
   FETCH_LOCK(mutex_);
 
@@ -1324,8 +1305,7 @@ void BeaconSetupService::OnNewShares(
  * @param from_id Muddle address of sender
  */
 void BeaconSetupService::OnNewCoefficients(
-    CoefficientsMessage const &msg,
-    MuddleAddress const &      from)
+    CoefficientsMessage const &msg, MuddleAddress const &from)
 {
   if (msg.phase() == static_cast<uint64_t>(State::WAIT_FOR_SHARES))
   {
@@ -1407,8 +1387,7 @@ void BeaconSetupService::OnComplaintAnswers(SharesMessage const &answer, MuddleA
  * @param from_id Muddle address of sender
  */
 void BeaconSetupService::OnQualComplaints(
-    SharesMessage const &shares_msg,
-    MuddleAddress const &from)
+    SharesMessage const &shares_msg, MuddleAddress const &from)
 {
   qual_complaints_manager_.AddComplaintsFrom(from, shares_msg.shares());
 }
@@ -1421,8 +1400,7 @@ void BeaconSetupService::OnQualComplaints(
  * @param from_id Muddle address of sender
  */
 void BeaconSetupService::OnReconstructionShares(
-    SharesMessage const &shares_msg,
-    MuddleAddress const &from)
+    SharesMessage const &shares_msg, MuddleAddress const &from)
 {
   if (reconstruction_shares_received_.find(from) == reconstruction_shares_received_.end())
   {
@@ -1445,8 +1423,7 @@ void BeaconSetupService::OnReconstructionShares(
  * @param from Muddle address of sender
  */
 void BeaconSetupService::OnNotarisationKey(
-    NotarisationKeyMessage const &key_msg,
-    MuddleAddress const &         from)
+    NotarisationKeyMessage const &key_msg, MuddleAddress const &from)
 {
   auto iter = valid_dkg_members_.find(from);
   if (iter == valid_dkg_members_.end() &&
@@ -1595,8 +1572,7 @@ void BeaconSetupService::CheckQualComplaints()
  * @return Bool of whether the message passes the test or not
  */
 bool BeaconSetupService::BasicMsgCheck(
-    MuddleAddress const &              from,
-    std::shared_ptr<DKGMessage> const &msg_ptr)
+    MuddleAddress const &from, std::shared_ptr<DKGMessage> const &msg_ptr)
 {
   if (!beacon_)
   {

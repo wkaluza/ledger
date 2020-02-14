@@ -76,8 +76,7 @@ void Concatenate<TensorType>::Forward(VecTensorType const &inputs, TensorType &o
  */
 template <typename TensorType>
 std::vector<TensorType> Concatenate<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   concat_points_.resize(inputs.size());
   auto c_it = concat_points_.begin();

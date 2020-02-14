@@ -127,9 +127,7 @@ BootstrapMonitor::BootstrapMonitor(
     std::string token,
     std::string host_name)
   : state_machine_{std::make_shared<StateMachine>(
-        "bootstrap",
-        State::Notify,
-        BootstrapMonitor::ToString)}
+        "bootstrap", State::Notify, BootstrapMonitor::ToString)}
   , entity_(std::move(entity))
   , network_name_(std::move(network_name))
   , discoverable_(discoverable)

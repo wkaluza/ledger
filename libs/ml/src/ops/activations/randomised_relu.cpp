@@ -27,9 +27,7 @@ namespace ops {
 
 template <typename TensorType>
 RandomisedRelu<TensorType>::RandomisedRelu(
-    DataType const  lower_bound,
-    DataType const  upper_bound,
-    SizeType const &random_seed)
+    DataType const lower_bound, DataType const upper_bound, SizeType const &random_seed)
   : lower_bound_(lower_bound)
   , upper_bound_(upper_bound)
   , bounds_mean_(static_cast<DataType>((upper_bound_ + lower_bound_) / DataType(2)))
@@ -99,8 +97,7 @@ void RandomisedRelu<TensorType>::Forward(VecTensorType const &inputs, TensorType
 
 template <typename TensorType>
 std::vector<TensorType> RandomisedRelu<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 1);
   assert(inputs.front()->shape() == error_signal.shape());

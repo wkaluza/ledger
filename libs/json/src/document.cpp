@@ -42,9 +42,7 @@ constexpr char const *LOGGING_NAME = "JSONDocument";
  * @param document The whole document
  */
 void JSONDocument::ExtractPrimitive(
-    Variant &             variant,
-    JSONToken const &     token,
-    ConstByteArray const &document)
+    Variant &variant, JSONToken const &token, ConstByteArray const &document)
 {
   bool success{false};
 

@@ -42,14 +42,11 @@ void SparseAdd(
 
 template <class TensorType>
 void SparseAdd(
-    TensorType const &                        src,
-    TensorType &                              dst,
-    std::vector<fetch::math::SizeType> const &update_rows);
+    TensorType const &src, TensorType &dst, std::vector<fetch::math::SizeType> const &update_rows);
 
 template <class TensorType>
 TensorType ToSparse(
-    TensorType const &                               src,
-    std::unordered_set<fetch::math::SizeType> const &update_rows);
+    TensorType const &src, std::unordered_set<fetch::math::SizeType> const &update_rows);
 
 template <class TensorType>
 TensorType FromSparse(

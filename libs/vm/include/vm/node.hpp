@@ -206,10 +206,7 @@ inline TypePtr ConvertToTypePtr(SymbolPtr const &symbol)
 struct Variable : public Symbol
 {
   Variable(
-      VariableKind variable_kind__,
-      std::string  name,
-      TypePtr      type__,
-      TypePtr      user_defined_type)
+      VariableKind variable_kind__, std::string name, TypePtr type__, TypePtr user_defined_type)
     : Symbol(SymbolKind::Variable, std::move(name), std::move(user_defined_type))
     , variable_kind{variable_kind__}
     , type{std::move(type__)}
@@ -229,10 +226,7 @@ using VariablePtr      = std::shared_ptr<Variable>;
 using VariablePtrArray = std::vector<VariablePtr>;
 
 inline VariablePtr CreateVariable(
-    VariableKind variable_kind,
-    std::string  name,
-    TypePtr      type,
-    TypePtr      user_defined_type)
+    VariableKind variable_kind, std::string name, TypePtr type, TypePtr user_defined_type)
 {
   return std::make_shared<Variable>(
       variable_kind, std::move(name), std::move(type), std::move(user_defined_type));

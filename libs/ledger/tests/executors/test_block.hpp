@@ -50,10 +50,7 @@ struct TestBlock
   }
 
   void GenerateBlock(
-      uint32_t      seed,
-      uint32_t      log2_num_lanes,
-      std::size_t   num_slices,
-      Digest const &previous_hash)
+      uint32_t seed, uint32_t log2_num_lanes, std::size_t num_slices, Digest const &previous_hash)
   {
     std::mt19937 rng;
     rng.seed(seed);

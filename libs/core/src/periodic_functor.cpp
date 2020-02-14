@@ -22,9 +22,7 @@ namespace fetch {
 namespace core {
 
 PeriodicFunctor::PeriodicFunctor(
-    std::string const &name,
-    Duration const &   interval,
-    Callback           callback)
+    std::string const &name, Duration const &interval, Callback callback)
   : PeriodicRunnable(name, interval)
   , callback_{std::move(callback)}
 {}

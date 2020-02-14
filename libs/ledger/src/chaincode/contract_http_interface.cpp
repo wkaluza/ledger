@@ -85,9 +85,7 @@ std::string GenerateTimestamp()
 }
 
 bool CreateTxFromJson(
-    Variant const &              tx_obj,
-    std::vector<ConstByteArray> &txs,
-    TransactionProcessor &       processor)
+    Variant const &tx_obj, std::vector<ConstByteArray> &txs, TransactionProcessor &processor)
 {
   auto tx = std::make_shared<chain::Transaction>();
 
@@ -142,8 +140,7 @@ constexpr char const *LOGGING_NAME = "ContractHttpInterface";
  * @param processor The reference to the (input) transaction processor
  */
 ContractHttpInterface::ContractHttpInterface(
-    StorageInterface &    storage,
-    TransactionProcessor &processor)
+    StorageInterface &storage, TransactionProcessor &processor)
   : storage_{storage}
   , processor_{processor}
   , access_log_{"access.log"}
@@ -315,8 +312,7 @@ http::HTTPResponse ContractHttpInterface::OnQuery(
  * @return The appropriate HTTPResponse to be returned to the client
  */
 http::HTTPResponse ContractHttpInterface::OnTransaction(
-    http::HTTPRequest const &request,
-    ConstByteArray const &   expected_contract)
+    http::HTTPRequest const &request, ConstByteArray const &expected_contract)
 {
   Variant json = Variant::Object();
 
@@ -400,8 +396,7 @@ http::HTTPResponse ContractHttpInterface::OnTransaction(
  * @see SubmitNativeTx
  */
 ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitJsonTx(
-    http::HTTPRequest const &request,
-    TxHashes &               txs)
+    http::HTTPRequest const &request, TxHashes &txs)
 {
   std::size_t submitted{0};
   std::size_t expected_count{0};
@@ -448,8 +443,7 @@ ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitJsonTx(
 }
 
 ContractHttpInterface::SubmitTxStatus ContractHttpInterface::SubmitBulkTx(
-    http::HTTPRequest const &request,
-    TxHashes &               txs)
+    http::HTTPRequest const &request, TxHashes &txs)
 {
   std::size_t                 submitted{0};
   std::vector<ConstByteArray> encoded_txs{};

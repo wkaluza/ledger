@@ -155,9 +155,7 @@ struct IRFunction
 };
 
 inline IRFunctionPtr CreateIRFunction(
-    FunctionKind function_kind,
-    std::string  name,
-    std::string  unique_name)
+    FunctionKind function_kind, std::string name, std::string unique_name)
 {
   return std::make_shared<IRFunction>(function_kind, std::move(name), std::move(unique_name));
 }
@@ -213,10 +211,7 @@ struct IRNode
 };
 
 inline IRNodePtr CreateIRBasicNode(
-    NodeKind       node_kind,
-    std::string    text,
-    uint16_t       line,
-    IRNodePtrArray children)
+    NodeKind node_kind, std::string text, uint16_t line, IRNodePtrArray children)
 {
   return std::make_shared<IRNode>(
       NodeCategory::Basic, node_kind, std::move(text), line, std::move(children));

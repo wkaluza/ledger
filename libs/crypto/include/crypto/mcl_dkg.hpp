@@ -170,10 +170,7 @@ PublicKey ComputeLHS(
     PrivateKey const &share1,
     PrivateKey const &share2);
 PublicKey ComputeLHS(
-    Generator const & G,
-    Generator const & H,
-    PrivateKey const &share1,
-    PrivateKey const &share2);
+    Generator const &G, Generator const &H, PrivateKey const &share1, PrivateKey const &share2);
 void      UpdateRHS(uint32_t rank, PublicKey &rhsG, std::vector<PublicKey> const &input);
 PublicKey ComputeRHS(uint32_t rank, std::vector<PublicKey> const &input);
 void      ComputeShares(
@@ -183,16 +180,12 @@ void      ComputeShares(
          std::vector<PrivateKey> const &b_i,
          uint32_t                       index);
 std::vector<PrivateKey> InterpolatePolynom(
-    std::vector<PrivateKey> const &a,
-    std::vector<PrivateKey> const &b);
+    std::vector<PrivateKey> const &a, std::vector<PrivateKey> const &b);
 
 // For signatures
 Signature SignShare(MessagePayload const &message, PrivateKey const &x_i);
 bool      VerifySign(
-         PublicKey const &     y,
-         MessagePayload const &message,
-         Signature const &     sign,
-         Generator const &     G);
+         PublicKey const &y, MessagePayload const &message, Signature const &sign, Generator const &G);
 Signature LagrangeInterpolation(std::unordered_map<CabinetIndex, Signature> const &shares);
 std::vector<DkgKeyInformation> TrustedDealerGenerateKeys(uint32_t cabinet_size, uint32_t threshold);
 std::pair<PrivateKey, PublicKey> GenerateKeyPair(Generator const &generator);
@@ -200,20 +193,15 @@ std::pair<PrivateKey, PublicKey> GenerateKeyPair(Generator const &generator);
 // For aggregate signatures. Note only the verification of the signatures is done using VerifySign
 // but one must compute the public key to verify with
 PrivateKey SignatureAggregationCoefficient(
-    PublicKey const &             notarisation_key,
-    std::vector<PublicKey> const &cabinet_notarisation_keys);
+    PublicKey const &notarisation_key, std::vector<PublicKey> const &cabinet_notarisation_keys);
 Signature AggregateSign(
-    MessagePayload const &     message,
-    AggregatePrivateKey const &aggregate_private_key);
+    MessagePayload const &message, AggregatePrivateKey const &aggregate_private_key);
 AggregateSignature ComputeAggregateSignature(
-    std::unordered_map<uint32_t, Signature> const &signatures,
-    uint32_t                                       cabinet_size);
+    std::unordered_map<uint32_t, Signature> const &signatures, uint32_t cabinet_size);
 PublicKey ComputeAggregatePublicKey(
-    SignerRecord const &          signers,
-    std::vector<PublicKey> const &cabinet_public_keys);
+    SignerRecord const &signers, std::vector<PublicKey> const &cabinet_public_keys);
 PublicKey ComputeAggregatePublicKey(
-    SignerRecord const &                   signers,
-    std::vector<AggregatePublicKey> const &cabinet_public_keys);
+    SignerRecord const &signers, std::vector<AggregatePublicKey> const &cabinet_public_keys);
 
 }  // namespace mcl
 }  // namespace crypto

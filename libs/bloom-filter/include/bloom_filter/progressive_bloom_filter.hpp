@@ -43,8 +43,7 @@ public:
   ProgressiveBloomFilter &operator=(ProgressiveBloomFilter &&) = default;
 
   std::pair<bool, std::size_t> Match(
-      fetch::byte_array::ConstByteArray const &element,
-      std::size_t                              element_index) const;
+      fetch::byte_array::ConstByteArray const &element, std::size_t element_index) const;
   void Add(
       fetch::byte_array::ConstByteArray const &element,
       std::size_t                              element_index,

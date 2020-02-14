@@ -132,8 +132,7 @@ void MaxPool2D<T>::Forward(const VecTensorType &inputs, TensorType &output)
  */
 template <typename TensorType>
 std::vector<TensorType> MaxPool2D<TensorType>::Backward(
-    const VecTensorType &inputs,
-    const TensorType &   error_signal)
+    const VecTensorType &inputs, const TensorType &error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == ComputeOutputShape(inputs));

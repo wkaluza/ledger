@@ -62,9 +62,7 @@ public:
       fetch::vm::Ptr<fetch::vm::Array<TensorType::SizeType>> const &shape);
 
   static fetch::vm::Ptr<VMTensor> StringConstructor(
-      fetch::vm::VM *                          vm,
-      fetch::vm::TypeId                        type_id,
-      fetch::vm::Ptr<fetch::vm::String> const &str);
+      fetch::vm::VM *vm, fetch::vm::TypeId type_id, fetch::vm::Ptr<fetch::vm::String> const &str);
   static fetch::vm::Ptr<VMTensor> EmptyConstructor(fetch::vm::VM *vm, fetch::vm::TypeId type_id);
 
   static void Bind(fetch::vm::Module &module, bool enable_experimental);
@@ -109,13 +107,13 @@ public:
 
   bool IsEqual(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
-  ChargeAmount IsEqualChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount IsEqualChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   bool IsNotEqual(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
-  ChargeAmount IsNotEqualChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount IsNotEqualChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void Negate(vm::Ptr<Object> &object) override;
 
@@ -127,46 +125,43 @@ public:
 
   void Add(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso) override;
 
-  ChargeAmount AddChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount AddChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void Subtract(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso) override;
 
-  ChargeAmount SubtractChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount SubtractChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void InplaceAdd(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
-  ChargeAmount InplaceAddChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount InplaceAddChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void InplaceSubtract(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   ChargeAmount InplaceSubtractChargeEstimator(
-      vm::Ptr<Object> const &lhso,
-      vm::Ptr<Object> const &rhso) override;
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void Multiply(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso) override;
 
-  ChargeAmount MultiplyChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount MultiplyChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void Divide(vm::Ptr<Object> &lhso, vm::Ptr<Object> &rhso) override;
 
-  ChargeAmount DivideChargeEstimator(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso)
-      override;
+  ChargeAmount DivideChargeEstimator(
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void InplaceMultiply(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   ChargeAmount InplaceMultiplyChargeEstimator(
-      vm::Ptr<Object> const &lhso,
-      vm::Ptr<Object> const &rhso) override;
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   void InplaceDivide(vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   ChargeAmount InplaceDivideChargeEstimator(
-      vm::Ptr<Object> const &lhso,
-      vm::Ptr<Object> const &rhso) override;
+      vm::Ptr<Object> const &lhso, vm::Ptr<Object> const &rhso) override;
 
   /////////////////////////
   /// MATRIX OPERATIONS ///

@@ -69,10 +69,7 @@ public:
    * @param message The message payload to be sent
    */
   virtual void Send(
-      Address const &address,
-      uint16_t       service,
-      uint16_t       channel,
-      Payload const &message) = 0;
+      Address const &address, uint16_t service, uint16_t channel, Payload const &message) = 0;
 
   /**
    * Send a message to a target address

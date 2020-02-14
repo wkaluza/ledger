@@ -129,9 +129,7 @@ protected:
 
 private:
   void ExecuteCall(
-      SerializerType &   result,
-      SerializerType     params,
-      CallContext const &context = CallContext())
+      SerializerType &result, SerializerType params, CallContext const &context = CallContext())
   {
     ProtocolHandlerType protocol_number;
     FunctionHandlerType function_number;

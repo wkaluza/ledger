@@ -200,9 +200,7 @@ std::string IfThen(std::string const &condition, std::string const &consequent)
 }
 
 std::string IfThenElse(
-    std::string const &condition,
-    std::string const &consequent,
-    std::string const &alternate)
+    std::string const &condition, std::string const &consequent, std::string const &alternate)
 {
   return "if (" + condition + ")\n" + consequent + "else\n" + alternate + "endif\n";
 }

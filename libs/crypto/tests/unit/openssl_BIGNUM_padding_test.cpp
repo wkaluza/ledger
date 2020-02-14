@@ -103,8 +103,7 @@ TEST_F(OpenSslBIGNUMPaddingTest, test_convert_from_bin_to_BN_with_prefix_padding
 }
 
 TEST_F(
-    OpenSslBIGNUMPaddingTest,
-    test_convert_from_bin_to_BN_with_suffix_padding_is_supposed_to_fail)
+    OpenSslBIGNUMPaddingTest, test_convert_from_bin_to_BN_with_suffix_padding_is_supposed_to_fail)
 {
   byte_array::ConstByteArray const x_bin({1, 2, 3, 4, 5});
   test_convert_from_bin_to_BN_with_padding(x_bin, 5, ePadding::suffix, false);

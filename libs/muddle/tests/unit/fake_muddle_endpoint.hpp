@@ -37,18 +37,15 @@ public:
   /// @name Testing Interface
   /// @{
   void SubmitPacket(
-      Address const &from,
-      uint16_t       service,
-      uint16_t       channel,
-      Payload const &payload);
+      Address const &from, uint16_t service, uint16_t channel, Payload const &payload);
   void SubmitPacket(Packet const &packet, Address const &last_hop);
   /// @}
 
   /// @name Muddle Endpoint Interface
   /// @{
   Address const &GetAddress() const override;
-  void Send(Address const &address, uint16_t service, uint16_t channel, Payload const &message)
-      override;
+  void           Send(
+                Address const &address, uint16_t service, uint16_t channel, Payload const &message) override;
   void Send(
       Address const &address,
       uint16_t       service,

@@ -54,14 +54,11 @@ public:
   /// @{
   Signature Sign(MessagePayload const &message);
   bool      Verify(
-           MessagePayload const &message,
-           Signature const &     signature,
-           MuddleAddress const & member);
+           MessagePayload const &message, Signature const &signature, MuddleAddress const &member);
   AggregateSignature ComputeAggregateSignature(
       std::unordered_map<MuddleAddress, Signature> const &cabinet_signatures);
   bool VerifyAggregateSignature(
-      MessagePayload const &    message,
-      AggregateSignature const &aggregate_signature);
+      MessagePayload const &message, AggregateSignature const &aggregate_signature);
   static bool VerifyAggregateSignature(
       MessagePayload const &        message,
       AggregateSignature const &    aggregate_signature,

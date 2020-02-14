@@ -54,9 +54,7 @@ public:
   CounterPtr CreateCounter(std::string name, std::string description, Labels labels = Labels{});
 
   CounterMapPtr CreateCounterMap(
-      std::string name,
-      std::string description,
-      Labels      labels = Labels{});
+      std::string name, std::string description, Labels labels = Labels{});
 
   template <typename T>
   GaugePtr<T> CreateGauge(std::string name, std::string description, Labels labels = Labels{});
@@ -112,9 +110,7 @@ private:
  */
 template <typename T>
 Registry::GaugePtr<T> Registry::CreateGauge(
-    std::string name,
-    std::string description,
-    Labels      labels)
+    std::string name, std::string description, Labels labels)
 {
   GaugePtr<T> gauge{};
 

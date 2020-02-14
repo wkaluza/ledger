@@ -48,10 +48,7 @@ using fetch::shards::ServiceIdentifier;
  * @param manifest The output manifest to be populated
  */
 void GenerateDefaultManifest(
-    std::string const &external_address,
-    uint16_t           port,
-    uint32_t           num_lanes,
-    Manifest &         manifest)
+    std::string const &external_address, uint16_t port, uint32_t num_lanes, Manifest &manifest)
 {
   Peer peer;
 

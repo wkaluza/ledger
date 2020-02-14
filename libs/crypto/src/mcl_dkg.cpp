@@ -120,10 +120,7 @@ PublicKey ComputeLHS(
 }
 
 PublicKey ComputeLHS(
-    Generator const & G,
-    Generator const & H,
-    PrivateKey const &share1,
-    PrivateKey const &share2)
+    Generator const &G, Generator const &H, PrivateKey const &share1, PrivateKey const &share2)
 {
   PublicKey tmpG;
   return ComputeLHS(tmpG, G, H, share1, share2);
@@ -193,8 +190,7 @@ void ComputeShares(
  * @return The vector of coefficients of the polynomial
  */
 std::vector<PrivateKey> InterpolatePolynom(
-    std::vector<PrivateKey> const &a,
-    std::vector<PrivateKey> const &b)
+    std::vector<PrivateKey> const &a, std::vector<PrivateKey> const &b)
 {
   std::size_t m = a.size();
   if ((b.size() != m) || (m == 0))
@@ -279,10 +275,7 @@ Signature SignShare(MessagePayload const &message, PrivateKey const &x_i)
  * @return
  */
 bool VerifySign(
-    PublicKey const &     y,
-    MessagePayload const &message,
-    Signature const &     sign,
-    Generator const &     G)
+    PublicKey const &y, MessagePayload const &message, Signature const &sign, Generator const &G)
 {
   Signature PH;
   bn::Fp12  e1, e2;
@@ -420,8 +413,7 @@ std::pair<PrivateKey, PublicKey> GenerateKeyPair(Generator const &generator)
  * @return Element of prime field
  */
 PrivateKey SignatureAggregationCoefficient(
-    PublicKey const &             notarisation_key,
-    std::vector<PublicKey> const &cabinet_notarisation_keys)
+    PublicKey const &notarisation_key, std::vector<PublicKey> const &cabinet_notarisation_keys)
 {
   PrivateKey coefficient;
 
@@ -455,8 +447,7 @@ PrivateKey SignatureAggregationCoefficient(
  * @return Signature
  */
 Signature AggregateSign(
-    MessagePayload const &     message,
-    AggregatePrivateKey const &aggregate_private_key)
+    MessagePayload const &message, AggregatePrivateKey const &aggregate_private_key)
 {
   auto signature = crypto::mcl::SignShare(message, aggregate_private_key.private_key);
   bn::G1::mul(signature, signature, aggregate_private_key.coefficient);
@@ -472,8 +463,7 @@ Signature AggregateSign(
  * aggregated
  */
 AggregateSignature ComputeAggregateSignature(
-    std::unordered_map<uint32_t, Signature> const &signatures,
-    uint32_t                                       cabinet_size)
+    std::unordered_map<uint32_t, Signature> const &signatures, uint32_t cabinet_size)
 {
   Signature    aggregate_signature;
   SignerRecord signers;
@@ -497,8 +487,7 @@ AggregateSignature ComputeAggregateSignature(
  * @return Aggregated public key
  */
 PublicKey ComputeAggregatePublicKey(
-    SignerRecord const &          signers,
-    std::vector<PublicKey> const &cabinet_public_keys)
+    SignerRecord const &signers, std::vector<PublicKey> const &cabinet_public_keys)
 {
   PublicKey aggregate_key;
   assert(signers.size() == cabinet_public_keys.size());
@@ -527,8 +516,7 @@ PublicKey ComputeAggregatePublicKey(
  * @return Aggregated public key
  */
 PublicKey ComputeAggregatePublicKey(
-    SignerRecord const &                   signers,
-    std::vector<AggregatePublicKey> const &cabinet_public_keys)
+    SignerRecord const &signers, std::vector<AggregatePublicKey> const &cabinet_public_keys)
 {
   PublicKey aggregate_key;
   assert(signers.size() == cabinet_public_keys.size());

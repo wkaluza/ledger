@@ -518,8 +518,7 @@ void Node<TensorType>::ResetCache(bool input_size_changed)
  */
 template <typename TensorType>
 void Node<TensorType>::SetNodeSaveableParams(
-    NodeSaveableParams<TensorType> const &       nsp,
-    std::shared_ptr<ops::Ops<TensorType>> const &op_ptr)
+    NodeSaveableParams<TensorType> const &nsp, std::shared_ptr<ops::Ops<TensorType>> const &op_ptr)
 {
   name_                 = nsp.name;
   cached_output_status_ = CachedOutputState::CHANGED_SIZE;

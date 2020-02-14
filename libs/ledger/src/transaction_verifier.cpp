@@ -60,18 +60,14 @@ std::string CreateMetricName(std::string const &prefix, std::string const &name)
 }
 
 telemetry::GaugePtr<uint64_t> CreateGauge(
-    std::string const &prefix,
-    std::string const &name,
-    std::string const &description)
+    std::string const &prefix, std::string const &name, std::string const &description)
 {
   std::string metric_name = CreateMetricName(prefix, name);
   return Registry::Instance().CreateGauge<uint64_t>(std::move(metric_name), description);
 }
 
 telemetry::CounterPtr CreateCounter(
-    std::string const &prefix,
-    std::string const &name,
-    std::string const &description)
+    std::string const &prefix, std::string const &name, std::string const &description)
 {
   std::string metric_name = CreateMetricName(prefix, name);
   return Registry::Instance().CreateCounter(std::move(metric_name), description);
@@ -87,9 +83,7 @@ telemetry::CounterPtr CreateCounter(
  * @param name The name of the verifier
  */
 TransactionVerifier::TransactionVerifier(
-    TransactionSink &  sink,
-    std::size_t        verifying_threads,
-    std::string const &name)
+    TransactionSink &sink, std::size_t verifying_threads, std::string const &name)
   : verifying_threads_(verifying_threads)
   , name_(name)
   , sink_(sink)
@@ -102,17 +96,11 @@ TransactionVerifier::TransactionVerifier(
   , verified_queue_max_length_(
         CreateGauge(name, "verified_queue_max_size", "The max size of the verified queue"))
   , unverified_tx_total_(CreateCounter(
-        name,
-        "unverified_transactions_total",
-        "The total number of unverified transactions seen"))
+        name, "unverified_transactions_total", "The total number of unverified transactions seen"))
   , verified_tx_total_(CreateCounter(
-        name,
-        "verified_transactions_total",
-        "The total number of verified transactions seen"))
+        name, "verified_transactions_total", "The total number of verified transactions seen"))
   , discarded_tx_total_(CreateCounter(
-        name,
-        "discarded_transactions_total",
-        "The total number of verified transactions seen"))
+        name, "discarded_transactions_total", "The total number of verified transactions seen"))
   , dispatched_tx_total_(CreateCounter(
         name,
         "dispatched_transactions_total",

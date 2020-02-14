@@ -72,8 +72,7 @@ void Flatten<TensorType>::Forward(VecTensorType const &inputs, TensorType &outpu
 
 template <class TensorType>
 std::vector<TensorType> Flatten<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 1);

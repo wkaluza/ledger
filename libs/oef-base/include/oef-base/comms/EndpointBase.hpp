@@ -120,9 +120,7 @@ public:
   } CallbackSet;
 
   void DoCallbacks(
-      CallbackSet        callbacks,
-      std::string const &msg = "",
-      std::error_code    ec  = std::error_code())
+      CallbackSet callbacks, std::string const &msg = "", std::error_code ec = std::error_code())
   {
     if ((callbacks & ON_ERROR) && onError)
     {

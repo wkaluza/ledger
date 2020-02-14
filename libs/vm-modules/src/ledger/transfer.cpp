@@ -43,10 +43,7 @@ void Transfer::Bind(Module &module)
 }
 
 TransferPtr Transfer::Constructor(
-    VM *              vm,
-    TypeId            type_id,
-    AddressPtr const &to,
-    NativeTokenAmount amount)
+    VM *vm, TypeId type_id, AddressPtr const &to, NativeTokenAmount amount)
 {
   return TransferPtr{new Transfer{vm, type_id, to, amount}};
 }

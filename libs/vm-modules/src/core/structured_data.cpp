@@ -49,9 +49,7 @@ using fetch::vm_modules::math::UInt256Wrapper;
 
 template <typename T>
 meta::EnableIf<vm::IsString<meta::Decay<T>>, Ptr<T>> FromByteArray(
-    VM *vm,
-    Ptr<String> const & /*name*/,
-    ConstByteArray const &array)
+    VM *vm, Ptr<String> const & /*name*/, ConstByteArray const &array)
 {
   ConstByteArray value_array;
   return Ptr<T>{new T{vm, static_cast<std::string>(array)}};
@@ -59,9 +57,7 @@ meta::EnableIf<vm::IsString<meta::Decay<T>>, Ptr<T>> FromByteArray(
 
 template <typename T>
 meta::EnableIf<IsAddress<meta::Decay<T>>, Ptr<T>> FromByteArray(
-    VM *                  vm,
-    Ptr<String> const &   name,
-    ConstByteArray const &array)
+    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
 {
   try
   {
@@ -84,9 +80,7 @@ meta::EnableIf<IsAddress<meta::Decay<T>>, Ptr<T>> FromByteArray(
 
 template <typename T>
 meta::EnableIf<std::is_same<ByteArrayWrapper, T>::value, Ptr<T>> FromByteArray(
-    VM *                  vm,
-    Ptr<String> const &   name,
-    ConstByteArray const &array)
+    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   ConstByteArray value_array{array.FromBase64()};
@@ -102,9 +96,7 @@ meta::EnableIf<std::is_same<ByteArrayWrapper, T>::value, Ptr<T>> FromByteArray(
 
 template <typename T>
 meta::EnableIf<std::is_same<UInt256Wrapper, T>::value, Ptr<T>> FromByteArray(
-    VM *                  vm,
-    Ptr<String> const &   name,
-    ConstByteArray const &array)
+    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   auto const     value_array{array.FromBase64()};
@@ -119,9 +111,7 @@ meta::EnableIf<std::is_same<UInt256Wrapper, T>::value, Ptr<T>> FromByteArray(
 
 template <typename T>
 meta::EnableIf<std::is_same<Fixed128, T>::value, Ptr<T>> FromByteArray(
-    VM *                  vm,
-    Ptr<String> const &   name,
-    ConstByteArray const &array)
+    VM *vm, Ptr<String> const &name, ConstByteArray const &array)
 {
   ConstByteArray value_array_base64;
   auto const     value_array{array.FromBase64()};
@@ -223,9 +213,7 @@ Ptr<StructuredData> StructuredData::Constructor(VM *vm, TypeId type_id)
 }
 
 vm::Ptr<StructuredData> StructuredData::ConstructorFromVariant(
-    vm::VM *                vm,
-    vm::TypeId              type_id,
-    variant::Variant const &data)
+    vm::VM *vm, vm::TypeId type_id, variant::Variant const &data)
 {
   Ptr<StructuredData> structured_data{};
 
@@ -533,8 +521,7 @@ void StructuredData::SetObjectArray(Ptr<String> const &s, Ptr<Array<Ptr<T>>> con
 
 template <typename T>
 StructuredData::IfIsSupportedRefType<T> StructuredData::SetObject(
-    Ptr<String> const &s,
-    Ptr<T> const &     value)
+    Ptr<String> const &s, Ptr<T> const &value)
 {
   try
   {

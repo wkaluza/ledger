@@ -27,9 +27,7 @@ class Transaction;
 
 bool FromJsonTransaction(variant::Variant const &src, Transaction &dst);
 bool ToJsonTransaction(
-    Transaction const &src,
-    variant::Variant & dst,
-    bool               include_metadata = false);
+    Transaction const &src, variant::Variant &dst, bool include_metadata = false);
 
 }  // namespace chain
 }  // namespace fetch

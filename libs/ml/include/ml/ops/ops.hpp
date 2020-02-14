@@ -51,8 +51,7 @@ public:
 
   virtual void                    Forward(VecTensorType const &inputs, TensorType &output) = 0;
   virtual std::vector<TensorType> Backward(
-      VecTensorType const &inputs,
-      TensorType const &   error_signal) = 0;
+      VecTensorType const &inputs, TensorType const &error_signal) = 0;
   /*
    * ComputeOutputShape is usually expensive function and should be used only for initialisation or
    * in ASSERT. On Forward you can use output.shape() and on Backward there is error_signal.shape()

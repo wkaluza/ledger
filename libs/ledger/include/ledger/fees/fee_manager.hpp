@@ -70,14 +70,9 @@ public:
   virtual ~FeeManager()          = default;
 
   bool CalculateChargeAndValidate(
-      TransactionDetails &             tx,
-      std::vector<Chargeable *> const &chargeables,
-      Result &                         result);
+      TransactionDetails &tx, std::vector<Chargeable *> const &chargeables, Result &result);
   void Execute(
-      TransactionDetails &tx,
-      Result &            result,
-      BlockIndex const &  block,
-      StorageInterface &  storage);
+      TransactionDetails &tx, Result &result, BlockIndex const &block, StorageInterface &storage);
   void SettleFees(
       chain::Address const &miner,
       TokenAmount           amount,

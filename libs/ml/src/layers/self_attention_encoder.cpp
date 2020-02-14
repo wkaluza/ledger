@@ -126,8 +126,7 @@ void SelfAttentionEncoder<TensorType>::SetOpSaveableParams(SPType const &sp)
 
 template <typename TensorType>
 std::string SelfAttentionEncoder<TensorType>::positionwise_feedforward(
-    std::string const &name,
-    std::string const &input)
+    std::string const &name, std::string const &input)
 {
   // position wise feedforward with gelu acitvation
   std::string ff_first_layer =

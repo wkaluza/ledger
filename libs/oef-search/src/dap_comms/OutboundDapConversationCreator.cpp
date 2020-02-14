@@ -27,9 +27,7 @@
 #include <google/protobuf/message.h>
 
 OutboundDapConversationCreator::OutboundDapConversationCreator(
-    const Uri &        dap_uri,
-    Core &             core,
-    const std::string &dap_name)
+    const Uri &dap_uri, Core &core, const std::string &dap_name)
 {
   worker = std::make_shared<OutboundConversationWorkerTask>(core, dap_uri, *this);
 
@@ -53,8 +51,7 @@ OutboundDapConversationCreator::~OutboundDapConversationCreator()
 }
 
 std::shared_ptr<OutboundConversation> OutboundDapConversationCreator::start(
-    const Uri &                                target_path,
-    std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
 {
   FETCH_LOG_INFO(
       LOGGING_NAME,

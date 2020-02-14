@@ -27,15 +27,13 @@ void OutboundConversations::DeleteConversationCreator(const Uri &target)
 }
 
 void OutboundConversations::AddConversationCreator(
-    const Uri &                                   target,
-    std::shared_ptr<IOutboundConversationCreator> creator)
+    const Uri &target, std::shared_ptr<IOutboundConversationCreator> creator)
 {
   creators[target.GetSocketAddress()] = creator;
 }
 
 std::shared_ptr<OutboundConversation> OutboundConversations::startConversation(
-    Uri const &                                       target_path,
-    std::shared_ptr<google::protobuf::Message> const &initiator)
+    Uri const &target_path, std::shared_ptr<google::protobuf::Message> const &initiator)
 {
   auto iter = creators.find(target_path.GetSocketAddress());
   if (iter != creators.end())

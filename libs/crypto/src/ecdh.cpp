@@ -36,9 +36,7 @@ namespace crypto {
  * @return true if successful, otherwise false
  */
 bool ComputeSharedKey(
-    ECDSASigner const &  signer,
-    ECDSAVerifier const &verifier,
-    ConstByteArray &     shared_key)
+    ECDSASigner const &signer, ECDSAVerifier const &verifier, ConstByteArray &shared_key)
 {
   bool success{false};
 
@@ -86,9 +84,7 @@ bool ComputeSharedKey(
  * @return true if successful, otherwise false
  */
 bool ComputeSharedKey(
-    Prover const &              prover,
-    Verifier const &            verifier,
-    byte_array::ConstByteArray &shared_key)
+    Prover const &prover, Verifier const &verifier, byte_array::ConstByteArray &shared_key)
 {
   bool success{false};
 

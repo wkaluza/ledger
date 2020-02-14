@@ -42,8 +42,7 @@ fetch::math::meta::IfIsFixedPoint<T, T> Min(T const &a, T const &b)
 
 template <typename T>
 VectorRegister<T, 8 * sizeof(T)> Min(
-    VectorRegister<T, 8 * sizeof(T)> const &a,
-    VectorRegister<T, 8 * sizeof(T)> const &b)
+    VectorRegister<T, 8 * sizeof(T)> const &a, VectorRegister<T, 8 * sizeof(T)> const &b)
 {
   return VectorRegister<T, 8 * sizeof(T)>(fetch::vectorise::Min(a.data(), b.data()));
 }

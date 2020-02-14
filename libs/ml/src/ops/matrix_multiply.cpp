@@ -120,8 +120,7 @@ void MatrixMultiply<T>::Forward(VecTensorType const &inputs, TensorType &output)
 
 template <typename T>
 std::vector<T> MatrixMultiply<T>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 2);
 
@@ -378,8 +377,7 @@ void MatrixMultiply<T>::UpdateContainersForward(VecTensorType const &inputs)
  */
 template <typename T>
 void MatrixMultiply<T>::UpdateContainersBackward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   if (!((inputs.at(0)->shape() == back_input_shape_1_) &&
         (inputs.at(1)->shape() == back_input_shape_2_)))
@@ -407,9 +405,7 @@ void MatrixMultiply<T>::UpdateContainersBackward(
  */
 template <typename TensorType>
 void MatrixMultiply<TensorType>::DotWithTranspose(
-    TensorType const &a,
-    TensorType const &b,
-    TensorType &      ret)
+    TensorType const &a, TensorType const &b, TensorType &ret)
 {
   if (!transpose_a_ && !transpose_b_)
   {

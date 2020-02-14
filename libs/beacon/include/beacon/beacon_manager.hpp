@@ -159,8 +159,7 @@ private:
   /// }
 
   void AddReconstructionShare(
-      MuddleAddress const &                  from,
-      std::pair<MuddleAddress, Share> const &share);
+      MuddleAddress const &from, std::pair<MuddleAddress, Share> const &share);
 };
 }  // namespace dkg
 

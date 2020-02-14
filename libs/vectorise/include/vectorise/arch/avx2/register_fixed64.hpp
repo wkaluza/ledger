@@ -787,16 +787,14 @@ inline VectorRegister<fixed_point::fp64_t, 256> operator/(
 }
 
 inline VectorRegister<fixed_point::fp64_t, 128> vector_zero_below_element(
-    VectorRegister<fixed_point::fp64_t, 128> const & /*a*/,
-    int const & /*n*/)
+    VectorRegister<fixed_point::fp64_t, 128> const & /*a*/, int const & /*n*/)
 {
   throw std::runtime_error("vector_zero_below_element not implemented.");
   return {fixed_point::fp64_t{}};
 }
 
 inline VectorRegister<fixed_point::fp64_t, 128> vector_zero_above_element(
-    VectorRegister<fixed_point::fp64_t, 128> const & /*a*/,
-    int const & /*n*/)
+    VectorRegister<fixed_point::fp64_t, 128> const & /*a*/, int const & /*n*/)
 {
   throw std::runtime_error("vector_zero_above_element not implemented.");
   return {fixed_point::fp64_t{}};

@@ -65,9 +65,7 @@ std::string GetEnvironmentVariableName(char const *prefix, std::string const &na
  * @return
  */
 char const *GetEnvironmentVariable(
-    char const *                        prefix,
-    std::string const &                 name,
-    detail::EnvironmentInterface const &env)
+    char const *prefix, std::string const &name, detail::EnvironmentInterface const &env)
 {
   // determine the environment variable name
   std::string env_name = GetEnvironmentVariableName(prefix, name);

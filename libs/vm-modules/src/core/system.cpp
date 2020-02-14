@@ -33,9 +33,7 @@ int32_t fetch::vm_modules::System::Argc(fetch::vm::VM * /*vm*/, fetch::vm::TypeI
 }
 
 fetch::vm::Ptr<fetch::vm::String> fetch::vm_modules::System::Argv(
-    fetch::vm::VM *vm,
-    fetch::vm::TypeId /*type_id*/,
-    int32_t index)
+    fetch::vm::VM *vm, fetch::vm::TypeId /*type_id*/, int32_t index)
 {
   return fetch::vm::Ptr<fetch::vm::String>{
       new fetch::vm::String{vm, params.script().at(static_cast<std::size_t>(index))}};

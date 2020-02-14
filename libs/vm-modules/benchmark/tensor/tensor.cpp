@@ -65,8 +65,7 @@ Ptr<Array<uint64_t>> CreateArray(std::shared_ptr<VM> &vm, std::vector<uint64_t> 
 }
 
 Ptr<fetch::vm_modules::math::VMTensor> CreateTensor(
-    std::shared_ptr<VM> &        vm,
-    std::vector<uint64_t> const &shape)
+    std::shared_ptr<VM> &vm, std::vector<uint64_t> const &shape)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(shape);
 }
@@ -189,8 +188,7 @@ BENCHMARK(BM_Construct)->Args({5, 1, 1, 1, 1000000, 1})->Unit(::benchmark::kMicr
 BENCHMARK(BM_Construct)->Args({5, 1, 1, 1, 1, 1000000})->Unit(::benchmark::kMicrosecond);
 
 Ptr<fetch::vm_modules::math::VMTensor> CreateTensorFromString(
-    std::shared_ptr<VM> &vm,
-    std::string const &  str)
+    std::shared_ptr<VM> &vm, std::string const &str)
 {
   return vm->CreateNewObject<fetch::vm_modules::math::VMTensor>(str);
 }

@@ -117,8 +117,7 @@ void Convolution1D<TensorType>::Forward(VecTensorType const &inputs, TensorType 
  */
 template <class TensorType>
 std::vector<TensorType> Convolution1D<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 2);
   // Input should be a 2D tensor [C x H x N]
@@ -192,8 +191,7 @@ std::vector<typename TensorType::SizeType> Convolution1D<TensorType>::ComputeOut
 
 template <class TensorType>
 math::SizeType Convolution1D<TensorType>::ComputeOutputHeight(
-    SizeType const input_height,
-    SizeType const kernel_height) const
+    SizeType const input_height, SizeType const kernel_height) const
 {
   // output_height=number of stride_size steps over input size
   SizeType output_height = ((input_height - kernel_height) / this->stride_size_) + 1;

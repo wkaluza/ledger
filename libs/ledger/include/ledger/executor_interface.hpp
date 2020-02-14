@@ -50,10 +50,7 @@ public:
   /// @name Executor Interface
   /// @{
   virtual Result Execute(
-      Digest const &   digest,
-      BlockIndex       block,
-      SliceIndex       slice,
-      BitVector const &shards) = 0;
+      Digest const &digest, BlockIndex block, SliceIndex slice, BitVector const &shards) = 0;
   virtual void SettleFees(
       chain::Address const &   miner,
       BlockIndex               block,

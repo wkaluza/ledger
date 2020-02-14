@@ -24,8 +24,7 @@ namespace fetch {
 namespace service {
 
 void ServiceClientInterface::ProcessRPCResult(
-    network::MessageBuffer const &msg,
-    service::SerializerType &     params)
+    network::MessageBuffer const &msg, service::SerializerType &params)
 {
   // extract the promise counter (or request number)
   PromiseCounter id;

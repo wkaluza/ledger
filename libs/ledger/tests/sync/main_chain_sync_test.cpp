@@ -120,11 +120,8 @@ protected:
   NiceMock<MockConsensus>          consensus_;
   NiceMock<MockTrustSystem>        trust_;
   MainChain                        chain_;
-  MainChainRpcService              rpc_service_{endpoint_,
-                                   rpc_client_,
-                                   chain_,
-                                   trust_,
-                                   CreateNonOwning(consensus_)};
+  MainChainRpcService              rpc_service_{
+      endpoint_, rpc_client_, chain_, trust_, CreateNonOwning(consensus_)};
 };
 
 namespace {
@@ -137,8 +134,7 @@ void AssertEq(char const *tick_phase, State actual, State expected, int line)
 }
 
 MainChainProtocol::Travelogue TimeTravel(
-    BlockGenerator::BlockPtr const &heaviest_block,
-    BlockGenerator::BlockPtrs       local_blocks)
+    BlockGenerator::BlockPtr const &heaviest_block, BlockGenerator::BlockPtrs local_blocks)
 {
   return {heaviest_block->hash,
           heaviest_block->block_number,

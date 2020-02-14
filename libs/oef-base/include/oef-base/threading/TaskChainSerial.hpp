@@ -41,9 +41,9 @@ public:
   using MessageHandler = std::function<void(std::shared_ptr<OUT_PROTO>)>;
   using ErrorHandler =
       std::function<void(const std::string &, const std::string &, const std::string &)>;
-  using TaskResultUpdate = std::function<
-      std::shared_ptr<OUT_PROTO>(std::shared_ptr<TaskChainSerial>, std::shared_ptr<OUT_PROTO>)>;
-  using Parent = StateMachineTask<TaskChainSerial>;
+  using TaskResultUpdate = std::function<std::shared_ptr<OUT_PROTO>(
+      std::shared_ptr<TaskChainSerial>, std::shared_ptr<OUT_PROTO>)>;
+  using Parent           = StateMachineTask<TaskChainSerial>;
 
   static constexpr char const *LOGGING_NAME = "TaskChainSerial";
 

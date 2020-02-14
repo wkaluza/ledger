@@ -65,8 +65,7 @@ void Subtract<TensorType>::Forward(VecTensorType const &inputs, TensorType &outp
 
 template <class TensorType>
 std::vector<TensorType> Subtract<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 2);

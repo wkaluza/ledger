@@ -45,8 +45,7 @@ using Labels = telemetry::Measurement::Labels;
  * @param lane The lane / shard being targetted
  */
 TransactionStorageProtocol::TransactionStorageProtocol(
-    TransactionStorageEngineInterface &storage,
-    uint32_t                           lane)
+    TransactionStorageEngineInterface &storage, uint32_t lane)
   : lane_{lane}
   , storage_{storage}
   , add_total_{CreateCounter("add")}

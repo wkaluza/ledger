@@ -30,9 +30,7 @@
 
 template <template <typename> class EndpointType>
 Oefv1Listener<EndpointType>::Oefv1Listener(
-    std::shared_ptr<Core> const &core,
-    unsigned short int           port,
-    ConfigMap                    endpointConfig)
+    std::shared_ptr<Core> const &core, unsigned short int port, ConfigMap endpointConfig)
   : listener(*core, port)
 {
   this->port           = port;

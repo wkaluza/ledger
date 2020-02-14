@@ -76,16 +76,10 @@ public:
   ConstByteArray Ping(Address const &address, PortList port);
   Peers          FindPeer(Address const &address);
   Peers          FindPeer(
-               Address const &address,
-               uint64_t       log_id,
-               bool           scan_left  = true,
-               bool           scan_right = true);
+               Address const &address, uint64_t log_id, bool scan_left = true, bool scan_right = true);
   Peers FindPeerByHamming(Address const &address);
   Peers FindPeerByHamming(
-      Address const &address,
-      uint64_t       hamming_id,
-      bool           scan_left  = true,
-      bool           scan_right = true);
+      Address const &address, uint64_t hamming_id, bool scan_left = true, bool scan_right = true);
   bool        HasPeerDetails(Address const &address);
   PeerInfo    GetPeerDetails(Address const &address);
   bool        HasUri(Uri const &uri) const;

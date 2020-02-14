@@ -208,9 +208,7 @@ private:
 
   template <typename U, typename TemplateParameterType>
   IfIsPtr<U, bool> DeserializeElement(
-      TypeId                 type_id,
-      MsgPackSerializer &    buffer,
-      TemplateParameterType &v)
+      TypeId type_id, MsgPackSerializer &buffer, TemplateParameterType &v)
   {
     if (!vm_->IsDefaultSerializeConstructable(type_id))
     {
@@ -226,9 +224,7 @@ private:
 
   template <typename U, typename TemplateParameterType>
   IfIsPrimitive<U, bool> DeserializeElement(
-      TypeId                 type_id,
-      MsgPackSerializer &    buffer,
-      TemplateParameterType &v)
+      TypeId type_id, MsgPackSerializer &buffer, TemplateParameterType &v)
   {
     U data;
     buffer >> data;

@@ -360,10 +360,7 @@ void AddStringToParameterPack(vm::VM *vm, vm::ParameterPack &pack, variant::Vari
  * @param obj structured data object represented by generic fetch::variant::Variant type
  */
 void AddStructuredDataObjectToParameterPack(
-    vm::VM *                vm,
-    vm::TypeId              expected_type_id,
-    vm::ParameterPack &     pack,
-    variant::Variant const &obj)
+    vm::VM *vm, vm::TypeId expected_type_id, vm::ParameterPack &pack, variant::Variant const &obj)
 {
   if (!vm->IsDefaultSerializeConstructable(expected_type_id))
   {
@@ -413,10 +410,7 @@ void AddStructuredDataObjectToParameterPack(
  */
 template <typename T>
 void AddToParameterPack(
-    vm::VM *           vm,
-    vm::ParameterPack &params,
-    vm::TypeId         expected_type_id,
-    T const &          variant)
+    vm::VM *vm, vm::ParameterPack &params, vm::TypeId expected_type_id, T const &variant)
 {
   switch (expected_type_id)
   {
@@ -700,8 +694,7 @@ Contract::Result SmartContract::InvokeAction(std::string const &name, chain::Tra
  * @return The corresponding status result for the operation
  */
 Contract::Result SmartContract::InvokeInit(
-    chain::Address const &    owner,
-    chain::Transaction const &tx)
+    chain::Address const &owner, chain::Transaction const &tx)
 {
   // Get clean VM instance
   auto vm = std::make_unique<vm::VM>(module_.get());
@@ -767,9 +760,7 @@ Contract::Result SmartContract::InvokeInit(
  * @return The corresponding status result for the operation
  */
 SmartContract::Status SmartContract::InvokeQuery(
-    std::string const &name,
-    Query const &      request,
-    Query &            response)
+    std::string const &name, Query const &request, Query &response)
 {
   // get clean VM instance
   auto vm = std::make_unique<vm::VM>(module_.get());

@@ -35,9 +35,7 @@ public:
 
   // Construction / Destruction
   SimulatedPowConsensus(
-      Identity         mining_identity,
-      uint64_t         block_interval_ms,
-      MainChain const &chain);
+      Identity mining_identity, uint64_t block_interval_ms, MainChain const &chain);
 
   SimulatedPowConsensus(SimulatedPowConsensus const &) = delete;
   SimulatedPowConsensus(SimulatedPowConsensus &&)      = delete;

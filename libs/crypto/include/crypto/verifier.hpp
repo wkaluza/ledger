@@ -36,9 +36,7 @@ public:
 
   static std::unique_ptr<Verifier> Build(Identity const &identity);
   static bool                      Verify(
-                           Identity const &      identity,
-                           ConstByteArray const &data,
-                           ConstByteArray const &signature);
+                           Identity const &identity, ConstByteArray const &data, ConstByteArray const &signature);
 
   Verifier()          = default;
   virtual ~Verifier() = default;

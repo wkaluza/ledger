@@ -32,9 +32,7 @@ template <
     typename ArrayType,
     typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNImplementation(
-    ArrayType                    array,
-    ArrayType                    vec,
-    typename ArrayType::SizeType k)
+    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
 {
   using DataType = typename ArrayType::Type;
   using SizeType = fetch::math::SizeType;
@@ -113,9 +111,7 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  */
 template <typename ArrayType>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNCosine(
-    ArrayType                    array,
-    ArrayType                    vec,
-    typename ArrayType::SizeType k)
+    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
 {
   return details::KNNImplementation<ArrayType, fetch::math::distance::Cosine>(array, vec, k);
 }
@@ -130,9 +126,7 @@ std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> K
  */
 template <typename ArrayType>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNNCosine(
-    ArrayType                    array,
-    typename ArrayType::SizeType idx,
-    typename ArrayType::SizeType k)
+    ArrayType array, typename ArrayType::SizeType idx, typename ArrayType::SizeType k)
 {
   ArrayType vec = array.slice(idx);
   return details::KNNImplementation<ArrayType, fetch::math::distance::Cosine>(array, vec, k);
@@ -153,9 +147,7 @@ template <
     typename ArrayType,
     typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNN(
-    ArrayType                    array,
-    ArrayType                    vec,
-    typename ArrayType::SizeType k)
+    ArrayType array, ArrayType vec, typename ArrayType::SizeType k)
 {
   return details::KNNImplementation<ArrayType, Distance>(array, vec, k);
 }
@@ -175,9 +167,7 @@ template <
     typename ArrayType,
     typename ArrayType::Type (*Distance)(ArrayType const &, ArrayType const &)>
 std::vector<std::pair<typename ArrayType::SizeType, typename ArrayType::Type>> KNN(
-    ArrayType                    array,
-    typename ArrayType::SizeType idx,
-    typename ArrayType::SizeType k)
+    ArrayType array, typename ArrayType::SizeType idx, typename ArrayType::SizeType k)
 {
   ArrayType vec = array.slice(idx);
   return details::KNNImplementation<ArrayType, Distance>(array, vec, k);

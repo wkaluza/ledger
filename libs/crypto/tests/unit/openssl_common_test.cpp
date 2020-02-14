@@ -57,8 +57,7 @@ class ECDSAAffineCoordinatesConversionTest : public testing::Test
 {
 protected:
   void test_convert_canonical_with_padding(
-      SharedPointerType<BIGNUM const> const &x,
-      SharedPointerType<BIGNUM const> const &y)
+      SharedPointerType<BIGNUM const> const &x, SharedPointerType<BIGNUM const> const &y)
   {
     ASSERT_GT(
         ECDSAAffineCoordinatesConversion<>::x_size,

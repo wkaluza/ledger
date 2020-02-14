@@ -134,11 +134,8 @@ protected:
   NiceMock<MockConsensus>          consensus_;
   NiceMock<MockTrustSystem>        trust_;
   MainChain                        chain_;
-  MainChainRpcService              rpc_service_{endpoint_,
-                                   rpc_client_,
-                                   chain_,
-                                   trust_,
-                                   CreateNonOwning(consensus_)};
+  MainChainRpcService              rpc_service_{
+      endpoint_, rpc_client_, chain_, trust_, CreateNonOwning(consensus_)};
 };
 
 namespace {

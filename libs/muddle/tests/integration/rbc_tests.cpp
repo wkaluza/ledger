@@ -314,9 +314,7 @@ class FaultyRbcMember : public RbcMember
 {
 public:
   FaultyRbcMember(
-      uint16_t                                port_number,
-      uint16_t                                index,
-      const std::vector<FaultyRbc::Failures> &failure)
+      uint16_t port_number, uint16_t index, const std::vector<FaultyRbc::Failures> &failure)
     : RbcMember{port_number, index}
     , rbc_{muddle->GetEndpoint(),
            muddle_certificate->identity().identifier(),

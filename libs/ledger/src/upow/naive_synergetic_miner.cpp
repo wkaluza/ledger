@@ -164,8 +164,7 @@ void NaiveSynergeticMiner::EnableMining(bool enable)
 }
 
 WorkPtr NaiveSynergeticMiner::MineSolution(
-    chain::Address const &contract_address,
-    ProblemData const &   problem_data)
+    chain::Address const &contract_address, ProblemData const &problem_data)
 {
   StateAdapter storage_adapter{storage_, "fetch.token"};
 

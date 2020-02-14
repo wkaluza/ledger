@@ -167,8 +167,7 @@ bool MuddleRegister::IsEmpty() const
 }
 
 MuddleRegister::UpdateStatus MuddleRegister::UpdateAddress(
-    ConnectionHandle handle,
-    Address const &  address)
+    ConnectionHandle handle, Address const &address)
 {
   UpdateStatus status{UpdateStatus::HANDLE_NOT_FOUND};
 

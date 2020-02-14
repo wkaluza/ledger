@@ -120,18 +120,14 @@ private:
   void UpdateCursor() override;
 
   static void createIdxUMapsFromCounter(
-      umap_str_int &counter,
-      umap_str_int &name_to_idx,
-      umap_int_str &idx_to_name);
+      umap_str_int &counter, umap_str_int &name_to_idx, umap_int_str &idx_to_name);
 
   static void addValueToCounter(umap_str_int &umap, const std::string &word);
 
   static std::vector<std::string> splitStringByChar(std::stringstream input, char const *sep);
 
   SizeType addToIdxUMaps(
-      std::string const &input,
-      umap_str_int &     name_to_idx,
-      umap_int_str &     idx_to_name);
+      std::string const &input, umap_str_int &name_to_idx, umap_int_str &idx_to_name);
 };
 
 }  // namespace dataloaders

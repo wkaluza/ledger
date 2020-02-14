@@ -33,8 +33,7 @@ namespace fetch {
  */
 template <typename K, typename H, typename E>
 std::unordered_set<K, H, E> operator+(
-    std::unordered_set<K, H, E>        input,
-    std::unordered_set<K, H, E> const &other)
+    std::unordered_set<K, H, E> input, std::unordered_set<K, H, E> const &other)
 {
   for (auto const &address : other)
   {

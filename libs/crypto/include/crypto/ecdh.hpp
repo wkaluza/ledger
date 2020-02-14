@@ -33,9 +33,7 @@ bool ComputeSharedKey(
     byte_array::ConstByteArray &shared_key);
 
 bool ComputeSharedKey(
-    Prover const &              prover,
-    Verifier const &            verifier,
-    byte_array::ConstByteArray &shared_key);
+    Prover const &prover, Verifier const &verifier, byte_array::ConstByteArray &shared_key);
 
 }  // namespace crypto
 }  // namespace fetch

@@ -41,9 +41,7 @@ public:
 
   // Construction / Destruction
   TransactionVerifier(
-      TransactionSink &  sink,
-      std::size_t        verifying_threads,
-      std::string const &name);
+      TransactionSink &sink, std::size_t verifying_threads, std::string const &name);
   TransactionVerifier(TransactionVerifier const &) = delete;
   TransactionVerifier(TransactionVerifier &&)      = delete;
   ~TransactionVerifier();

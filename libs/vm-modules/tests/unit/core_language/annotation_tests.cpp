@@ -803,8 +803,7 @@ TEST_F(EtchFunctionDefinitionAnnotationTests, objective_function_must_have_Int64
 }
 
 TEST_F(
-    EtchFunctionDefinitionAnnotationTests,
-    synergetic_annotations_are_forbidden_if_clear_is_missing)
+    EtchFunctionDefinitionAnnotationTests, synergetic_annotations_are_forbidden_if_clear_is_missing)
 {
   static char const *TEXT = R"(
     @problem
@@ -873,8 +872,7 @@ TEST_F(
 }
 
 TEST_F(
-    EtchFunctionDefinitionAnnotationTests,
-    synergetic_annotations_are_forbidden_if_work_is_missing)
+    EtchFunctionDefinitionAnnotationTests, synergetic_annotations_are_forbidden_if_work_is_missing)
 {
   static char const *TEXT = R"(
     @clear
@@ -1207,8 +1205,7 @@ TEST_F(
 }
 
 TEST_F(
-    EtchMemberFunctionDefinitionAnnotationTests,
-    DISABLED_annotated_member_functions_are_forbidden)
+    EtchMemberFunctionDefinitionAnnotationTests, DISABLED_annotated_member_functions_are_forbidden)
 {
   static char const *TEXT1 = R"(
     struct Clazz

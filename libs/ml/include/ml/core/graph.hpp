@@ -93,9 +93,7 @@ public:
 
   template <class OperationType, typename... Params>
   std::string AddNode(
-      std::string const &             node_name,
-      std::vector<std::string> const &inputs,
-      Params... params);
+      std::string const &node_name, std::vector<std::string> const &inputs, Params... params);
 
   void         ResetCompile();
   virtual void Compile();
@@ -177,9 +175,7 @@ private:
   friend class model::ModelInterface<TensorType>;
 
   TensorType ForwardImplementation(
-      std::string const &node_name,
-      bool               is_training,
-      bool               evaluate_mode);
+      std::string const &node_name, bool is_training, bool evaluate_mode);
 
   template <typename OperationType>
   bool UpdateVariableName(std::string const &name, std::string &ret);
@@ -188,13 +184,11 @@ private:
 
   template <class OperationType, typename... Params>
   meta::IfIsShareable<TensorType, OperationType, NodePtrType> DuplicateNode(
-      std::string const &node_name,
-      std::string &      updated_name);
+      std::string const &node_name, std::string &updated_name);
 
   template <class OperationType, typename... Params>
   meta::IfIsNotShareable<TensorType, OperationType, NodePtrType> DuplicateNode(
-      std::string const &node_name,
-      std::string &      updated_name);
+      std::string const &node_name, std::string &updated_name);
 
   void ResetGraphCache(bool input_size_changed, std::shared_ptr<Node<T>> n = {});
 
@@ -220,8 +214,8 @@ private:
   void RecursiveApply(ValType &val, GraphFunc graph_func) const;
 
   template <typename Val1Type, typename Val2Type, typename NodeFunc, typename GraphFunc>
-  void RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, NodeFunc node_func, GraphFunc graph_func)
-      const;
+  void RecursiveApplyTwo(
+      Val1Type &val_1, Val2Type &val_2, NodeFunc node_func, GraphFunc graph_func) const;
 
   template <typename Val1Type, typename Val2Type, typename GraphFunc>
   void RecursiveApplyTwo(Val1Type &val_1, Val2Type &val_2, GraphFunc graph_func) const;
@@ -233,9 +227,7 @@ private:
 
   template <typename LookupFunction>
   void GetNamesRecursively(
-      std::vector<std::string> &ret,
-      LookupFunction            lookup_function,
-      std::string const &       level = "");
+      std::vector<std::string> &ret, LookupFunction lookup_function, std::string const &level = "");
 };
 
 //////////////////////
@@ -257,9 +249,7 @@ private:
 template <typename TensorType>
 template <class OperationType, typename... Params>
 std::string Graph<TensorType>::AddNode(
-    std::string const &             node_name,
-    std::vector<std::string> const &inputs,
-    Params... params)
+    std::string const &node_name, std::vector<std::string> const &inputs, Params... params)
 {
   if (!IsValidNodeName(node_name))
   {

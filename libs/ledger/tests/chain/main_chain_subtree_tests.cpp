@@ -62,9 +62,7 @@ protected:
 
 public:
   Blocks GetAncestorInLimit(
-      MainChain::BehaviourWhenLimit behaviour,
-      BlockPtr const &              b1,
-      BlockPtr const &              b3)
+      MainChain::BehaviourWhenLimit behaviour, BlockPtr const &b1, BlockPtr const &b3)
   {
     constexpr uint64_t subchain_length_limit = 2;
 
@@ -343,8 +341,7 @@ TEST_F(MainChainSubTreeTests, ComplicatedSubTrees)
 }
 
 TEST_F(
-    MainChainSubTreeTests,
-    Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Including_Ancestor)
+    MainChainSubTreeTests, Check_Common_Ancestor_With_Limit_Exceeded_Yields_Path_Including_Ancestor)
 {
   // Simple tree structure
   //

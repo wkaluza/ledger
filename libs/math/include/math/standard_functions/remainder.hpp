@@ -60,9 +60,7 @@ meta::IfIsArithmetic<Type, Type> Remainder(Type const &x)
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Remainder(
-    ArrayType const &array1,
-    ArrayType const &array2,
-    ArrayType &      ret)
+    ArrayType const &array1, ArrayType const &array2, ArrayType &ret)
 {
   assert(ret.shape() == array1.shape());
   assert(ret.shape() == array2.shape());
@@ -80,8 +78,7 @@ meta::IfIsMathArray<ArrayType, void> Remainder(
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, ArrayType> Remainder(
-    ArrayType const &array1,
-    ArrayType const &array2)
+    ArrayType const &array1, ArrayType const &array2)
 {
   assert(array2.shape() == array1.shape());
   ArrayType ret{array1.shape()};

@@ -34,10 +34,7 @@ public:
   static Ptr<IState> ConstructorFromAddress(VM *vm, TypeId type_id, Ptr<Address> const &name);
 
   static Ptr<IState> ConstructIntrinsic(
-      VM *               vm,
-      TypeId             type_id,
-      TypeId             template_param_type_id,
-      Ptr<String> const &name);
+      VM *vm, TypeId type_id, TypeId template_param_type_id, Ptr<String> const &name);
 
   virtual TemplateParameter1 Get()                                                   = 0;
   virtual TemplateParameter1 GetWithDefault(TemplateParameter1 const &default_value) = 0;

@@ -74,10 +74,7 @@ private:
 };
 
 inline ExecutionItem::ExecutionItem(
-    Digest           digest,
-    BlockIndex       block,
-    SliceIndex       slice,
-    BitVector const &shards)
+    Digest digest, BlockIndex block, SliceIndex slice, BitVector const &shards)
   : digest_(std::move(digest))
   , block_{block}
   , slice_{slice}

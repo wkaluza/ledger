@@ -312,8 +312,7 @@ private:
 
   template <typename G>
   std::enable_if_t<IsPrimitive<G>, bool> ApplySerialize(
-      MsgPackSerializer &   buffer,
-      std::vector<G> const &data)
+      MsgPackSerializer &buffer, std::vector<G> const &data)
   {
     // Creating new array
     auto constructor  = buffer.NewArrayConstructor();
@@ -363,8 +362,7 @@ private:
 
   template <typename G>
   std::enable_if_t<IsPrimitive<G>, bool> ApplyDeserialize(
-      MsgPackSerializer &buffer,
-      std::vector<G> &   data)
+      MsgPackSerializer &buffer, std::vector<G> &data)
   {
     auto array = buffer.NewArrayDeserializer();
 

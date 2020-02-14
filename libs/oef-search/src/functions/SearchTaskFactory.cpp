@@ -189,9 +189,7 @@ void SearchTaskFactory::HandleQuery(fetch::oef::pb::SearchQuery &query, const Ur
 }
 
 void SearchTaskFactory::ExecuteQuery(
-    std::shared_ptr<Branch> &          root,
-    const fetch::oef::pb::SearchQuery &query,
-    const Uri &                        current_uri)
+    std::shared_ptr<Branch> &root, const fetch::oef::pb::SearchQuery &query, const Uri &current_uri)
 {
   auto                             this_sp = shared_from_this();
   std::weak_ptr<SearchTaskFactory> this_wp = this_sp;

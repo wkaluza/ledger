@@ -32,9 +32,7 @@ namespace utilities {
 
 template <typename T>
 void BuildNodeAndInsertTrainables(
-    NodeSaveableParams<T> const &nsp,
-    std::string const &          name,
-    std::shared_ptr<Graph<T>>    g);
+    NodeSaveableParams<T> const &nsp, std::string const &name, std::shared_ptr<Graph<T>> g);
 
 template <typename T>
 void BuildGraph(GraphSaveableParams<T> const &sp, std::shared_ptr<Graph<T>> ret)

@@ -69,9 +69,7 @@ protected:
   virtual bool        Connect();
   virtual void        Write(asio::streambuf const &buffer, std::error_code &ec);
   virtual std::size_t ReadUntil(
-      asio::streambuf &buffer,
-      char const *     delimiter,
-      std::error_code &ec);
+      asio::streambuf &buffer, char const *delimiter, std::error_code &ec);
   virtual void ReadExactly(asio::streambuf &buffer, std::size_t length, std::error_code &ec);
   /// @}
 

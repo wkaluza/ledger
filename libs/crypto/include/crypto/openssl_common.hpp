@@ -120,9 +120,7 @@ public:
   }
 
   static void ConvertFromCanonical(
-      byte_array::ConstByteArray const &bin_data,
-      BIGNUM *const                     x,
-      BIGNUM *const                     y)
+      byte_array::ConstByteArray const &bin_data, BIGNUM *const x, BIGNUM *const y)
   {
 
     if (BN_bin2bn(bin_data.pointer(), static_cast<int>(x_size), x) == nullptr)

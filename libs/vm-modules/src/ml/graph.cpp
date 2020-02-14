@@ -93,10 +93,7 @@ void VMGraph::AddPlaceholder(VMPtrString const &name)
 }
 
 void VMGraph::AddFullyConnected(
-    VMPtrString const &name,
-    VMPtrString const &input_name,
-    int                in,
-    int                out)
+    VMPtrString const &name, VMPtrString const &input_name, int in, int out)
 {
   graph_.AddNode<fetch::ml::layers::FullyConnected<MathTensorType>>(
       name->string(), {input_name->string()}, std::size_t(in), std::size_t(out));
@@ -131,27 +128,21 @@ void VMGraph::AddSoftmax(VMPtrString const &name, VMPtrString const &input_name)
 }
 
 void VMGraph::AddCrossEntropyLoss(
-    VMPtrString const &name,
-    VMPtrString const &input_name,
-    VMPtrString const &label_name)
+    VMPtrString const &name, VMPtrString const &input_name, VMPtrString const &label_name)
 {
   graph_.AddNode<fetch::ml::ops::CrossEntropyLoss<fetch::math::Tensor<DataType>>>(
       name->string(), {input_name->string(), label_name->string()});
 }
 
 void VMGraph::AddMeanSquareErrorLoss(
-    VMPtrString const &name,
-    VMPtrString const &input_name,
-    VMPtrString const &label_name)
+    VMPtrString const &name, VMPtrString const &input_name, VMPtrString const &label_name)
 {
   graph_.AddNode<fetch::ml::ops::MeanSquareErrorLoss<fetch::math::Tensor<DataType>>>(
       name->string(), {input_name->string(), label_name->string()});
 }
 
 void VMGraph::AddDropout(
-    VMPtrString const &name,
-    VMPtrString const &input_name,
-    DataType const &   prob)
+    VMPtrString const &name, VMPtrString const &input_name, DataType const &prob)
 {
   graph_.AddNode<fetch::ml::ops::Dropout<MathTensorType>>(
       name->string(), {input_name->string()}, prob);

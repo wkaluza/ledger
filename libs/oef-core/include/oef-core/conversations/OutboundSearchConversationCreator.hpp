@@ -45,8 +45,7 @@ public:
       std::shared_ptr<OutboundConversations> outbounds);
   ~OutboundSearchConversationCreator() override;
   std::shared_ptr<OutboundConversation> start(
-      const Uri &                                target_path,
-      std::shared_ptr<google::protobuf::Message> initiator) override;
+      const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator) override;
 
 protected:
 private:

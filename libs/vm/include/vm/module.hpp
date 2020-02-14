@@ -78,8 +78,7 @@ public:
     // non-default ctors
     template <typename ReturnType, typename Arg1, typename... Args>
     ClassInterface &CreateConstructor(
-        ReturnType (*constructor)(VM *, TypeId, Arg1, Args...),
-        ChargeAmount static_charge = 1)
+        ReturnType (*constructor)(VM *, TypeId, Arg1, Args...), ChargeAmount static_charge = 1)
     {
       return InternalCreateConstructor(
           constructor, static_charge, ChargeEstimator<Arg1, Args...>{});
@@ -87,16 +86,14 @@ public:
 
     template <typename Estimator, typename ReturnType, typename Arg1, typename... Args>
     ClassInterface &CreateConstructor(
-        ReturnType (*constructor)(VM *, TypeId, Arg1, Args...),
-        Estimator estimator)
+        ReturnType (*constructor)(VM *, TypeId, Arg1, Args...), Estimator estimator)
     {
       return InternalCreateConstructor(constructor, 0, ChargeEstimator<Arg1, Args...>{estimator});
     }
 
     template <typename Constructor>
     ClassInterface &CreateSerializeDefaultConstructor(
-        Constructor  constructor,
-        ChargeAmount static_charge = 1)
+        Constructor constructor, ChargeAmount static_charge = 1)
     {
       using ReturnType = typename meta::CallableTraits<Constructor>::ReturnType;
       using Params     = typename meta::CallableTraits<Constructor>::ArgsTupleType;
@@ -129,8 +126,7 @@ public:
 
     template <typename CPPType>
     ClassInterface &CreateCPPCopyConstructor(
-        CPPCopyConstructor<CPPType> constructor,
-        ChargeAmount                static_charge = 1)
+        CPPCopyConstructor<CPPType> constructor, ChargeAmount static_charge = 1)
     {
       // Note that unlike all the other functions, we need to be able to do the look up in the
       // native C++ type and not the VM type.
@@ -156,9 +152,7 @@ public:
 
     template <typename Callable>
     ClassInterface &CreateStaticMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        ChargeAmount       static_charge = 1)
+        std::string const &name, Callable callable, ChargeAmount static_charge = 1)
     {
       using Traits        = typename meta::CallableTraits<Callable>;
       using Params        = typename Traits::ArgsTupleType;
@@ -170,18 +164,14 @@ public:
 
     template <typename Estimator, typename Callable>
     ClassInterface &CreateStaticMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        Estimator          estimator)
+        std::string const &name, Callable callable, Estimator estimator)
     {
       return InternalCreateStaticMemberFunction(name, callable, 0, estimator);
     }
 
     template <typename Callable>
     ClassInterface &CreateMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        ChargeAmount       static_charge = 1)
+        std::string const &name, Callable callable, ChargeAmount static_charge = 1)
     {
       using Traits     = typename meta::CallableTraits<Callable>;
       using EtchParams = typename Traits::ArgsTupleType;
@@ -196,9 +186,7 @@ public:
 
     template <typename Estimator, typename Callable>
     ClassInterface &CreateMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        Estimator          estimator)
+        std::string const &name, Callable callable, Estimator estimator)
     {
       return InternalCreateMemberFunction(name, callable, 0, estimator);
     }
@@ -296,9 +284,7 @@ public:
   private:
     template <typename Estimator, typename Callable>
     ClassInterface &InternalCreateConstructor(
-        Callable     callable,
-        ChargeAmount static_charge,
-        Estimator    estimator)
+        Callable callable, ChargeAmount static_charge, Estimator estimator)
     {
       using Traits      = typename meta::CallableTraits<Callable>;
       using ReturnType  = typename Traits::ReturnType;
@@ -332,10 +318,7 @@ public:
 
     template <typename Estimator, typename Callable>
     ClassInterface &InternalCreateStaticMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        ChargeAmount       static_charge,
-        Estimator          estimator)
+        std::string const &name, Callable callable, ChargeAmount static_charge, Estimator estimator)
     {
       using Traits      = typename meta::CallableTraits<Callable>;
       using Params      = typename Traits::ArgsTupleType;
@@ -442,10 +425,7 @@ public:
 
     template <typename Estimator, typename Callable>
     ClassInterface &InternalCreateMemberFunction(
-        std::string const &name,
-        Callable           callable,
-        ChargeAmount       static_charge,
-        Estimator          estimator)
+        std::string const &name, Callable callable, ChargeAmount static_charge, Estimator estimator)
     {
       using EtchParams = typename meta::CallableTraits<Callable>::ArgsTupleType;
       using ReturnType = typename meta::CallableTraits<Callable>::ReturnType;
@@ -484,9 +464,7 @@ public:
 
   template <typename Callable>
   void CreateFreeFunction(
-      std::string const &name,
-      Callable           callable,
-      ChargeAmount       static_charge = 1)
+      std::string const &name, Callable callable, ChargeAmount static_charge = 1)
   {
     using Traits        = typename meta::CallableTraits<Callable>;
     using Params        = typename Traits::ArgsTupleType;
@@ -561,10 +539,7 @@ public:
 private:
   template <typename Estimator, typename Callable>
   void InternalCreateFreeFunction(
-      std::string const &name,
-      Callable           callable,
-      ChargeAmount       static_charge,
-      Estimator          estimator)
+      std::string const &name, Callable callable, ChargeAmount static_charge, Estimator estimator)
   {
     using Traits      = typename meta::CallableTraits<Callable>;
     using ReturnType  = typename Traits::ReturnType;

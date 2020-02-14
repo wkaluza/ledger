@@ -60,8 +60,7 @@ public:
       math::SizeType const &                   inputs,
       math::SizeType const &                   hidden_nodes);
   ChargeAmount LayerAddDenseAutoInputs(
-      fetch::vm::Ptr<fetch::vm::String> const &layer,
-      math::SizeType const &                   hidden_nodes);
+      fetch::vm::Ptr<fetch::vm::String> const &layer, math::SizeType const &hidden_nodes);
   ChargeAmount LayerAddDenseActivation(
       fetch::vm::Ptr<fetch::vm::String> const &layer,
       math::SizeType const &                   inputs,
@@ -99,8 +98,7 @@ public:
   ChargeAmount LayerAddFlatten(fetch::vm::Ptr<fetch::vm::String> const &layer);
 
   ChargeAmount LayerAddDropout(
-      fetch::vm::Ptr<fetch::vm::String> const &layer,
-      math::DataType const &                   probability);
+      fetch::vm::Ptr<fetch::vm::String> const &layer, math::DataType const &probability);
 
   ChargeAmount LayerAddActivation(
       fetch::vm::Ptr<fetch::vm::String> const &layer,

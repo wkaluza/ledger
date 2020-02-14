@@ -86,8 +86,7 @@ public:
   /// @{
   TransactionBuilder &TargetSmartContract(Address const &address, BitVector const &shard_mask);
   TransactionBuilder &TargetChainCode(
-      byte_array::ConstByteArray const &ref,
-      BitVector const &                 shard_mask);
+      byte_array::ConstByteArray const &ref, BitVector const &shard_mask);
   TransactionBuilder &Action(byte_array::ConstByteArray const &action);
   TransactionBuilder &Data(byte_array::ConstByteArray const &data);
   /// @}

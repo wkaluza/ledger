@@ -28,10 +28,7 @@ FakeMuddleEndpoint::FakeMuddleEndpoint(Address address, NetworkId const &network
 {}
 
 void FakeMuddleEndpoint::SubmitPacket(
-    Address const &from,
-    uint16_t       service,
-    uint16_t       channel,
-    Payload const &payload)
+    Address const &from, uint16_t service, uint16_t channel, Payload const &payload)
 {
   // build up the muddle packet
   Packet packet{from, network_id_.value()};
@@ -71,10 +68,7 @@ FakeMuddleEndpoint::Address const &FakeMuddleEndpoint::GetAddress() const
 }
 
 void FakeMuddleEndpoint::Send(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel,
-    Payload const &message)
+    Address const &address, uint16_t service, uint16_t channel, Payload const &message)
 {
   FETCH_UNUSED(address);
   FETCH_UNUSED(service);
@@ -134,8 +128,7 @@ void FakeMuddleEndpoint::Broadcast(uint16_t service, uint16_t channel, Payload c
 }
 
 FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(
-    uint16_t service,
-    uint16_t channel)
+    uint16_t service, uint16_t channel)
 {
   auto subscription = std::make_shared<Subscription>();
 
@@ -151,9 +144,7 @@ FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(
 }
 
 FakeMuddleEndpoint::SubscriptionPtr FakeMuddleEndpoint::Subscribe(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel)
+    Address const &address, uint16_t service, uint16_t channel)
 {
   FETCH_UNUSED(address);
   FETCH_UNUSED(service);

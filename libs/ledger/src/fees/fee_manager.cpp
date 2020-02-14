@@ -69,9 +69,7 @@ FeeManager::FeeManager(TokenContract &token_contract, std::string const &histogr
 {}
 
 bool FeeManager::CalculateChargeAndValidate(
-    TransactionDetails &             tx,
-    std::vector<Chargeable *> const &chargeables,
-    Result &                         result)
+    TransactionDetails &tx, std::vector<Chargeable *> const &chargeables, Result &result)
 {
   bool success = true;
 
@@ -120,10 +118,7 @@ bool FeeManager::CalculateChargeAndValidate(
 }
 
 void FeeManager::Execute(
-    TransactionDetails &tx,
-    Result &            result,
-    BlockIndex const &  block,
-    StorageInterface &  storage)
+    TransactionDetails &tx, Result &result, BlockIndex const &block, StorageInterface &storage)
 {
   telemetry::FunctionTimer const timer{*deduct_fees_duration_};
 

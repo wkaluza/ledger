@@ -33,9 +33,7 @@ namespace math {
  * @param axis is the axis to squeeze.
  */
 inline bool ShapeFromSqueeze(
-    SizeVector const &a,
-    SizeVector &      b,
-    SizeType const &  axis = SizeType(-1))
+    SizeVector const &a, SizeVector &b, SizeType const &axis = SizeType(-1))
 {
   SizeType i = 0;
   b.clear();
@@ -114,10 +112,7 @@ namespace reduce_details {
 
 template <typename F, typename T, typename C>
 void Reduce(
-    F                               fnc,
-    ConstTensorSliceIterator<T, C> &it_a,
-    TensorSliceIterator<T, C> &     it_b,
-    SizeType const &                N)
+    F fnc, ConstTensorSliceIterator<T, C> &it_a, TensorSliceIterator<T, C> &it_b, SizeType const &N)
 {
   while (bool(it_a) && bool(it_b))
   {

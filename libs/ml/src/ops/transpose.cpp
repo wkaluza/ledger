@@ -78,8 +78,7 @@ void Transpose<TensorType>::Forward(VecTensorType const &inputs, TensorType &out
 
 template <class TensorType>
 std::vector<TensorType> Transpose<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   FETCH_UNUSED(inputs);
   assert(inputs.size() == 1);

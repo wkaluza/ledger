@@ -63,9 +63,7 @@ SubscriptionRegistrar::SubscriptionRegistrar(NetworkId const &network)
  * @return A valid subscription pointer if successful, otherwise an invalid pointer
  */
 SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel)
+    Address const &address, uint16_t service, uint16_t channel)
 {
   SubscriptionPtr subscription;
 
@@ -89,8 +87,7 @@ SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(
  * @return A valid subscription pointer if successful, otherwise an invalid pointer
  */
 SubscriptionRegistrar::SubscriptionPtr SubscriptionRegistrar::Register(
-    uint16_t service,
-    uint16_t channel)
+    uint16_t service, uint16_t channel)
 {
   SubscriptionPtr subscription;
 

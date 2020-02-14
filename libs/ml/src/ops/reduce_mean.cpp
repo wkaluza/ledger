@@ -83,8 +83,7 @@ void ReduceMean<TensorType>::Forward(VecTensorType const &inputs, TensorType &ou
  */
 template <typename TensorType>
 std::vector<TensorType> ReduceMean<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 1);
   assert(error_signal.shape() == this->ComputeOutputShape(inputs));

@@ -24,8 +24,7 @@ namespace fetch {
 namespace semanticsearch {
 
 bool BuiltinQueryFunction::ValidateSignature(
-    std::type_index const &             ret,
-    std::vector<std::type_index> const &args)
+    std::type_index const &ret, std::vector<std::type_index> const &args)
 {
   bool val = (ret == return_type_);
   val      = val && ((args.size() == arguments_.size()));

@@ -174,41 +174,38 @@ public:
     return lhs->address_ >= rhs->address_;
   }
 
-  ChargeAmount IsEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount IsEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsNotEqualChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount IsNotEqualChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
-  ChargeAmount IsLessThanChargeEstimator(Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/)
-      override
+  ChargeAmount IsLessThanChargeEstimator(
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
   ChargeAmount IsLessThanOrEqualChargeEstimator(
-      Ptr<Object> const & /*lhso*/,
-      Ptr<Object> const & /*rhso*/) override
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
   ChargeAmount IsGreaterThanChargeEstimator(
-      Ptr<Object> const & /*lhso*/,
-      Ptr<Object> const & /*rhso*/) override
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }
 
   ChargeAmount IsGreaterThanOrEqualChargeEstimator(
-      Ptr<Object> const & /*lhso*/,
-      Ptr<Object> const & /*rhso*/) override
+      Ptr<Object> const & /*lhso*/, Ptr<Object> const & /*rhso*/) override
   {
     return OpcodeCharges::DEFAULT_OBJECT_CHARGE;
   }

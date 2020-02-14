@@ -191,10 +191,7 @@ class RBCMessageImpl final : public Parent
 {
 public:
   explicit RBCMessageImpl(
-      uint16_t          channel = 0,
-      uint32_t          id      = 0,
-      uint8_t           counter = 0,
-      SerialisedMessage msg     = "")
+      uint16_t channel = 0, uint32_t id = 0, uint8_t counter = 0, SerialisedMessage msg = "")
     : Parent{TYPE, channel, id, counter, msg}
   {}
 

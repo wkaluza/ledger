@@ -70,16 +70,12 @@ TransactionStoreSyncService::TransactionStoreSyncService(
     TrimCacheCallback                  trim_cache_callback)
   : trim_cache_callback_(std::move(trim_cache_callback))
   , state_machine_{std::make_shared<core::StateMachine<State>>(
-        "TransactionStoreSyncService",
-        State::INITIAL)}
+        "TransactionStoreSyncService", State::INITIAL)}
   , tx_finder_protocol_(tx_finder_protocol)
   , cfg_{cfg}
   , muddle_(muddle)
   , client_(std::make_shared<Client>(
-        "R:TxSync-L" + std::to_string(cfg_.lane_id),
-        muddle,
-        SERVICE_LANE,
-        CHANNEL_RPC))
+        "R:TxSync-L" + std::to_string(cfg_.lane_id), muddle, SERVICE_LANE, CHANNEL_RPC))
   , store_(store)
   , verifier_(*this, cfg_.verification_threads, "TxV-L" + std::to_string(cfg_.lane_id))
   , stored_transactions_{telemetry::Registry::Instance().CreateCounter(
@@ -98,11 +94,9 @@ TransactionStoreSyncService::TransactionStoreSyncService(
         "ledger_tx_store_sync_service_subtree_failure_total",
         "The total number of subtree request failures observed")}
   , current_tss_state_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_tss_state",
-        "The state in the state machine of the tx store")}
+        "current_tss_state", "The state in the state machine of the tx store")}
   , current_tss_peers_{telemetry::Registry::Instance().CreateGauge<uint64_t>(
-        "current_tss_peers",
-        "The number of peers the sync can use")}
+        "current_tss_peers", "The number of peers the sync can use")}
 {
   state_machine_->RegisterHandler(State::INITIAL, this, &TransactionStoreSyncService::OnInitial);
   state_machine_->RegisterHandler(

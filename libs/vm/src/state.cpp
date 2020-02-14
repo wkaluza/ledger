@@ -336,10 +336,7 @@ Ptr<IState> IState::ConstructorFromAddress(VM *vm, TypeId type_id, Ptr<Address> 
 }
 
 Ptr<IState> IState::ConstructIntrinsic(
-    VM *               vm,
-    TypeId             type_id,
-    TypeId             template_param_type_id,
-    Ptr<String> const &name)
+    VM *vm, TypeId type_id, TypeId template_param_type_id, Ptr<String> const &name)
 {
   return TypeIdAsCanonicalType<StateFactory>(
       template_param_type_id, vm, type_id, template_param_type_id, name);

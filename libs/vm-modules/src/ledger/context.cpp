@@ -27,10 +27,7 @@ namespace ledger {
 using namespace fetch::vm;
 
 Context::Context(
-    VM *                             vm,
-    TypeId                           type_id,
-    fetch::chain::Transaction const &tx,
-    BlockIndex                       block_index)
+    VM *vm, TypeId type_id, fetch::chain::Transaction const &tx, BlockIndex block_index)
   : Object{vm, type_id}
   , transaction_{vm->CreateNewObject<vm_modules::ledger::Transaction>(tx)}
   , block_{vm->CreateNewObject<Block>(block_index)}

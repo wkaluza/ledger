@@ -41,9 +41,7 @@ NotarisationManager::Signature NotarisationManager::Sign(MessagePayload const &m
 }
 
 bool NotarisationManager::Verify(
-    MessagePayload const &message,
-    Signature const &     signature,
-    MuddleAddress const & member)
+    MessagePayload const &message, Signature const &signature, MuddleAddress const &member)
 {
   uint32_t member_index = identity_to_index_[member];
   return crypto::mcl::VerifySign(
@@ -63,8 +61,7 @@ NotarisationManager::AggregateSignature NotarisationManager::ComputeAggregateSig
 }
 
 bool NotarisationManager::VerifyAggregateSignature(
-    MessagePayload const &    message,
-    AggregateSignature const &aggregate_signature)
+    MessagePayload const &message, AggregateSignature const &aggregate_signature)
 {
   if (aggregate_signature.second.size() != cabinet_public_keys_.size())
   {

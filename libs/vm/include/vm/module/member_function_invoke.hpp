@@ -34,10 +34,7 @@ struct VmMemberFunctionInvoker
 {
   template <typename Estimator>
   static void Invoke(
-      VM *            vm,
-      Estimator &&    estimator,
-      Callable &&     callable,
-      EtchArgsTuple &&etch_arguments)
+      VM *vm, Estimator &&estimator, Callable &&callable, EtchArgsTuple &&etch_arguments)
   {
     using OwningType     = typename meta::CallableTraits<Callable>::OwningType;
     auto const offset    = sp_offset + 1;
@@ -68,10 +65,7 @@ struct VmMemberFunctionInvoker<sp_offset, void, Callable, EtchArgsTuple>
 {
   template <typename Estimator>
   static void Invoke(
-      VM *            vm,
-      Estimator &&    estimator,
-      Callable &&     callable,
-      EtchArgsTuple &&etch_arguments)
+      VM *vm, Estimator &&estimator, Callable &&callable, EtchArgsTuple &&etch_arguments)
   {
     using OwningType  = typename meta::CallableTraits<Callable>::OwningType;
     auto const offset = sp_offset + 1;

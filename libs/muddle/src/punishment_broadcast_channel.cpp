@@ -89,8 +89,7 @@ bool PunishmentBroadcastChannel::ResetCabinet(CabinetMembers const &cabinet)
  *
  */
 void PunishmentBroadcastChannel::SetQuestion(
-    ConstByteArray const &question,
-    ConstByteArray const &answer)
+    ConstByteArray const &question, ConstByteArray const &answer)
 {
   FETCH_LOCK(lock_);
   previous_question_ = std::move(question_);

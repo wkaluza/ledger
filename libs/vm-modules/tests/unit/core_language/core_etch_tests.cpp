@@ -387,8 +387,7 @@ TEST_F(
 }
 
 TEST_F(
-    CoreEtchTests,
-    boolean_or_operator_executes_both_operands_if_first_operand_evaluates_to_false)
+    CoreEtchTests, boolean_or_operator_executes_both_operands_if_first_operand_evaluates_to_false)
 {
   static char const *TEXT = R"(
     function returns_true() : Bool
@@ -415,8 +414,7 @@ TEST_F(
 }
 
 TEST_F(
-    CoreEtchTests,
-    boolean_and_operator_executes_both_operands_if_first_operand_evaluates_to_true)
+    CoreEtchTests, boolean_and_operator_executes_both_operands_if_first_operand_evaluates_to_true)
 {
   static char const *TEXT = R"(
     function returns_true() : Bool
@@ -637,9 +635,7 @@ std::vector<std::string> render(std::string const &x)
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    ValidNumericLiterals,
-    CoreEtchValidNumericLiteralsTests,
-    ValuesIn(render("")));
+    ValidNumericLiterals, CoreEtchValidNumericLiteralsTests, ValuesIn(render("")));
 
 INSTANTIATE_TEST_SUITE_P(
     ValidNumericLiteralsEngineeringNotationUppercaseZeroImplicitPlus,

@@ -117,8 +117,7 @@ protected:
   void OnInitialise(InitialiseHandler &&handler);
   template <typename C>
   void OnInitialise(
-      C *instance,
-      Result (C::*func)(chain::Address const &, chain::Transaction const &));
+      C *instance, Result (C::*func)(chain::Address const &, chain::Transaction const &));
   /// @}
 
   /// @name Transaction Handlers
@@ -126,9 +125,7 @@ protected:
   void OnTransaction(std::string const &name, TransactionHandler &&handler);
   template <typename C>
   void OnTransaction(
-      std::string const &name,
-      C *                instance,
-      Result (C::*func)(chain::Transaction const &));
+      std::string const &name, C *instance, Result (C::*func)(chain::Transaction const &));
   /// @}
 
   /// @name Query Handler Registration
@@ -186,8 +183,7 @@ private:
  */
 template <typename C>
 void Contract::OnInitialise(
-    C *instance,
-    Result (C::*func)(chain::Address const &, chain::Transaction const &))
+    C *instance, Result (C::*func)(chain::Address const &, chain::Transaction const &))
 {
   OnInitialise([instance, func](chain::Address const &owner, chain::Transaction const &tx) {
     return (instance->*func)(owner, tx);
@@ -204,9 +200,7 @@ void Contract::OnInitialise(
  */
 template <typename C>
 void Contract::OnTransaction(
-    std::string const &name,
-    C *                instance,
-    Result (C::*func)(chain::Transaction const &))
+    std::string const &name, C *instance, Result (C::*func)(chain::Transaction const &))
 {
   // create the function handler and pass it to the normal function
   OnTransaction(
@@ -223,9 +217,7 @@ void Contract::OnTransaction(
  */
 template <typename C>
 void Contract::OnQuery(
-    std::string const &name,
-    C *                instance,
-    Status (C::*func)(Query const &, Query &))
+    std::string const &name, C *instance, Status (C::*func)(Query const &, Query &))
 {
   OnQuery(name, [instance, func](Query const &query, Query &response) {
     return (instance->*func)(query, response);

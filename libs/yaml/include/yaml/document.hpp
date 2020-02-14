@@ -150,9 +150,7 @@ private:
 
   void        Tokenise(ConstByteArray const &document);
   static void ExtractPrimitive(
-      Variant &             variant,
-      YamlToken const &     token,
-      ConstByteArray const &document);
+      Variant &variant, YamlToken const &token, ConstByteArray const &document);
   static YamlObject *FindInStack(std::vector<YamlObject> &stack, uint ident);
 
   std::vector<uint16_t>    counters_{};

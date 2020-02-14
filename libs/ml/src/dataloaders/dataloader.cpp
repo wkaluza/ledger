@@ -51,8 +51,7 @@ void DataLoader<TensorType>::SetDataSize(std::pair<TensorType, std::vector<Tenso
  */
 template <typename TensorType>
 typename DataLoader<TensorType>::ReturnType DataLoader<TensorType>::PrepareBatch(
-    fetch::math::SizeType batch_size,
-    bool &                is_done_set)
+    fetch::math::SizeType batch_size, bool &is_done_set)
 {
   if (size_not_set_)
   {

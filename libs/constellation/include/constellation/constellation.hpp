@@ -184,8 +184,7 @@ private:
   bool OnBringUpLaneServices();
   bool OnRestorePreviousData(ledger::GenesisFileCreator::ConsensusParameters &params);
   bool OnBringUpExternalNetwork(
-      ledger::GenesisFileCreator::ConsensusParameters &params,
-      UriSet const &                                   initial_peers);
+      ledger::GenesisFileCreator::ConsensusParameters &params, UriSet const &initial_peers);
   bool OnRunning(core::WeakRunnable const &bootstrap_monitor);
   void OnTearDownExternalNetwork();
   void OnTearDownLaneServices();

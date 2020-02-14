@@ -45,10 +45,7 @@ public:
   using shared_client_type = std::shared_ptr<client_type>;
 
   MultiLaneDBClient(
-      uint32_t                        lanes,
-      std::string const &             host,
-      uint16_t                        port,
-      fetch::network::NetworkManager &tm)
+      uint32_t lanes, std::string const &host, uint16_t port, fetch::network::NetworkManager &tm)
   {
     id_ = "my-fetch-id";
     for (uint32_t i = 0; i < lanes; ++i)

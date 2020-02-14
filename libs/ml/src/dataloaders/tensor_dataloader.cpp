@@ -51,8 +51,7 @@ typename TensorDataLoader<TensorType>::ReturnType TensorDataLoader<TensorType>::
 
 template <typename TensorType>
 bool TensorDataLoader<TensorType>::AddData(
-    std::vector<TensorType> const &data,
-    TensorType const &             labels)
+    std::vector<TensorType> const &data, TensorType const &labels)
 {
   one_sample_label_shape_                                        = labels.shape();
   one_sample_label_shape_.at(one_sample_label_shape_.size() - 1) = 1;

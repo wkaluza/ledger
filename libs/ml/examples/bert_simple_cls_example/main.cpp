@@ -44,9 +44,7 @@ using WeightsInitType = fetch::ml::ops::WeightsInitialisation;
 using ActivationType  = fetch::ml::details::ActivationType;
 
 std::pair<std::vector<TensorType>, TensorType> PrepareToyClsDataset(
-    SizeType                      size,
-    BERTConfig<TensorType> const &config,
-    SizeType                      seed = 1337);
+    SizeType size, BERTConfig<TensorType> const &config, SizeType seed = 1337);
 
 int main()
 {
@@ -120,9 +118,7 @@ int main()
 }
 
 std::pair<std::vector<TensorType>, TensorType> PrepareToyClsDataset(
-    SizeType                      size,
-    BERTConfig<TensorType> const &config,
-    SizeType                      seed)
+    SizeType size, BERTConfig<TensorType> const &config, SizeType seed)
 {
   // create a toy cls dataset that generated balanced training data for the aforementioned
   // classification task

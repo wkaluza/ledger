@@ -126,8 +126,7 @@ void Convolution2D<TensorType>::Forward(VecTensorType const &inputs, TensorType 
  */
 template <class TensorType>
 std::vector<TensorType> Convolution2D<TensorType>::Backward(
-    VecTensorType const &inputs,
-    TensorType const &   error_signal)
+    VecTensorType const &inputs, TensorType const &error_signal)
 {
   assert(inputs.size() == 2);
   // Input should be a 4D tensor [C x H x W x N]
@@ -225,8 +224,7 @@ std::vector<typename TensorType::SizeType> Convolution2D<TensorType>::ComputeOut
 
 template <class TensorType>
 math::SizeType Convolution2D<TensorType>::ComputeOutputDim(
-    SizeType const input_dim,
-    SizeType const kernel_dim) const
+    SizeType const input_dim, SizeType const kernel_dim) const
 {
   SizeType output_dim = (input_dim - kernel_dim + this->stride_size_) / this->stride_size_;
 

@@ -260,8 +260,7 @@ FETCH_ADD_OPERATOR(<, double, __m256d, _CMP_LT_OQ)
 // FREE FUNCTIONS
 
 inline VectorRegister<double, 128> vector_zero_below_element(
-    VectorRegister<double, 128> const &a,
-    int const &                        n)
+    VectorRegister<double, 128> const &a, int const &n)
 {
   alignas(16) uint64_t mask[2] = {uint64_t(-(int64_t(0 >= n))), uint64_t(-(int64_t(1 >= n)))};
 
@@ -272,8 +271,7 @@ inline VectorRegister<double, 128> vector_zero_below_element(
 }
 
 inline VectorRegister<double, 256> vector_zero_above_element(
-    VectorRegister<double, 256> const &a,
-    int const &                        n)
+    VectorRegister<double, 256> const &a, int const &n)
 {
   alignas(32) uint64_t mask[4] = {uint64_t(-(int64_t(0 <= n))), uint64_t(-(int64_t(1 <= n)))};
 
@@ -354,32 +352,28 @@ inline double reduce(VectorRegister<double, 256> const &x)
 }
 
 inline bool all_less_than(
-    VectorRegister<double, 128> const &x,
-    VectorRegister<double, 128> const &y)
+    VectorRegister<double, 128> const &x, VectorRegister<double, 128> const &y)
 {
   __m128i r = _mm_castpd_si128((x < y).data());
   return _mm_movemask_epi8(r) == 0xFFFF;
 }
 
 inline bool all_less_than(
-    VectorRegister<double, 256> const &x,
-    VectorRegister<double, 256> const &y)
+    VectorRegister<double, 256> const &x, VectorRegister<double, 256> const &y)
 {
   __m256i r = _mm256_castpd_si256((x < y).data());
   return _mm256_movemask_epi8(r) == 0xFFFF;
 }
 
 inline bool any_less_than(
-    VectorRegister<double, 128> const &x,
-    VectorRegister<double, 128> const &y)
+    VectorRegister<double, 128> const &x, VectorRegister<double, 128> const &y)
 {
   __m128i r = _mm_castpd_si128((x < y).data());
   return _mm_movemask_epi8(r) != 0;
 }
 
 inline bool any_less_than(
-    VectorRegister<double, 256> const &x,
-    VectorRegister<double, 256> const &y)
+    VectorRegister<double, 256> const &x, VectorRegister<double, 256> const &y)
 {
   __m256i r = _mm256_castpd_si256((x < y).data());
   return _mm256_movemask_epi8(r) != 0;

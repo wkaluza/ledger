@@ -32,8 +32,7 @@
 #include <google/protobuf/message.h>
 
 OutboundSearchConversationCreator::OutboundSearchConversationCreator(
-    const Uri &search_uri,
-    Core &     core)
+    const Uri &search_uri, Core &core)
   : search_uri_(search_uri)
 {
   worker = std::make_shared<OutboundConversationWorkerTask>(core, search_uri, *this);
@@ -61,8 +60,7 @@ OutboundSearchConversationCreator::~OutboundSearchConversationCreator()
 }
 
 std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
-    const Uri &                                target_path,
-    std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
 {
   FETCH_LOG_INFO(
       LOGGING_NAME, "Starting search to search conversation with ", search_uri_.ToString(), " ...");

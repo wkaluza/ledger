@@ -214,8 +214,7 @@ TransactionLayoutQueue::Iterator TransactionLayoutQueue::Erase(ConstIterator ite
 }
 
 TransactionLayoutQueue::Iterator TransactionLayoutQueue::Erase(
-    ConstIterator first,
-    ConstIterator last)
+    ConstIterator first, ConstIterator last)
 {
   // remove the associated digests from the set
   for (auto itr = first; itr != last; ++itr)

@@ -48,9 +48,7 @@ AddressList GenerateAddressList(ShardConfigs const &shards)
 }  // namespace
 
 LaneRemoteControl::LaneRemoteControl(
-    MuddleEndpoint &    endpoint,
-    ShardConfigs const &shards,
-    uint32_t            log2_num_lanes)
+    MuddleEndpoint &endpoint, ShardConfigs const &shards, uint32_t log2_num_lanes)
   : addresses_(GenerateAddressList(shards))
   , rpc_client_("SADM", endpoint, SERVICE_LANE_CTRL, CHANNEL_RPC)
 {

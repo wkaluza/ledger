@@ -431,8 +431,7 @@ typename GraphW2VLoader<TensorType>::ReturnType GraphW2VLoader<TensorType>::GetN
 
 template <typename TensorType>
 bool GraphW2VLoader<TensorType>::AddData(
-    std::vector<TensorType> const &input,
-    TensorType const &             label)
+    std::vector<TensorType> const &input, TensorType const &label)
 {
   FETCH_UNUSED(input);
   FETCH_UNUSED(label);
@@ -446,9 +445,7 @@ bool GraphW2VLoader<TensorType>::AddData(
  */
 template <typename TensorType>
 void GraphW2VLoader<TensorType>::BuildVocabAndData(
-    std::vector<std::string> const &sents,
-    SizeType                        min_count,
-    bool                            build_data)
+    std::vector<std::string> const &sents, SizeType min_count, bool build_data)
 {
   // build vocab from sentences
   std::cout << "building vocab and data" << std::endl;
@@ -501,8 +498,7 @@ void GraphW2VLoader<TensorType>::BuildVocabAndData(
 
 template <typename TensorType>
 void GraphW2VLoader<TensorType>::BuildData(
-    std::vector<std::string> const &sents,
-    SizeType                        min_count)
+    std::vector<std::string> const &sents, SizeType min_count)
 {
   assert(vocab_->GetWordCount() >= 0);
 
@@ -634,8 +630,7 @@ typename GraphW2VLoader<TensorType>::SizeType GraphW2VLoader<TensorType>::Window
  */
 template <typename TensorType>
 std::vector<std::string> GraphW2VLoader<TensorType>::PreprocessString(
-    std::string const &s,
-    SizeType           length_limit)
+    std::string const &s, SizeType length_limit)
 {
   std::string result;
   result.reserve(s.size());

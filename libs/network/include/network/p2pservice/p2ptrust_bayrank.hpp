@@ -291,12 +291,7 @@ protected:
   }
 
   void updateGaussian(
-      bool            honest,
-      Gaussian &      s,
-      Gaussian const &ref,
-      double          beta,
-      double          drift,
-      double          eps)
+      bool honest, Gaussian &s, Gaussian const &ref, double beta, double drift, double eps)
   {
     // Calculate new distribution for g1 assuming that g1 won with g2.
     // beta corresponds to a measure of how difficult the game is to master.

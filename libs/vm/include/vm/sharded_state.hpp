@@ -30,9 +30,7 @@ public:
   // Factory
   static Ptr<IShardedState> ConstructorFromString(VM *vm, TypeId type_id, Ptr<String> const &name);
   static Ptr<IShardedState> ConstructorFromAddress(
-      VM *                vm,
-      TypeId              type_id,
-      Ptr<Address> const &name);
+      VM *vm, TypeId type_id, Ptr<Address> const &name);
 
   IShardedState(VM *vm, TypeId type_id)
     : Object(vm, type_id)
@@ -48,11 +46,9 @@ public:
   virtual TemplateParameter1 GetFromString(Ptr<String> const &key)   = 0;
   virtual TemplateParameter1 GetFromAddress(Ptr<Address> const &key) = 0;
   virtual TemplateParameter1 GetFromStringWithDefault(
-      Ptr<String> const &       key,
-      TemplateParameter1 const &default_value) = 0;
+      Ptr<String> const &key, TemplateParameter1 const &default_value) = 0;
   virtual TemplateParameter1 GetFromAddressWithDefault(
-      Ptr<Address> const &      key,
-      TemplateParameter1 const &default_value)                                          = 0;
+      Ptr<Address> const &key, TemplateParameter1 const &default_value)                 = 0;
   virtual void SetFromString(Ptr<String> const &key, TemplateParameter1 const &value)   = 0;
   virtual void SetFromAddress(Ptr<Address> const &key, TemplateParameter1 const &value) = 0;
 };

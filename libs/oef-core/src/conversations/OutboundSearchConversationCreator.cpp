@@ -110,8 +110,7 @@ OutboundSearchConversationCreator::~OutboundSearchConversationCreator()
 }
 
 std::shared_ptr<OutboundConversation> OutboundSearchConversationCreator::start(
-    const Uri &                                target_path,
-    std::shared_ptr<google::protobuf::Message> initiator)
+    const Uri &target_path, std::shared_ptr<google::protobuf::Message> initiator)
 {
   FETCH_LOG_INFO(LOGGING_NAME, "Starting search conversation");
   Lock lock(mutex_);

@@ -39,8 +39,7 @@ void TCPClientImplementation::Connect(byte_array::ConstByteArray const &host, ui
 }
 
 void TCPClientImplementation::Connect(
-    byte_array::ConstByteArray const &host,
-    byte_array::ConstByteArray const &port)
+    byte_array::ConstByteArray const &host, byte_array::ConstByteArray const &port)
 {
   SelfType self = shared_from_this();
 
@@ -154,9 +153,7 @@ bool TCPClientImplementation::is_alive() const
 }
 
 void TCPClientImplementation::Send(
-    MessageBuffer const &omsg,
-    Callback const &     success,
-    Callback const &     fail)
+    MessageBuffer const &omsg, Callback const &success, Callback const &fail)
 {
   MessageType msg;
   msg.buffer  = omsg.Copy();

@@ -228,8 +228,7 @@ inline VectorRegister<int8_t, 256> operator-(VectorRegister<int8_t, 256> const &
 }
 
 inline VectorRegister<int8_t, 128> operator*(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   __m256i a16 = _mm256_cvtepi8_epi16(a.data());
   __m256i b16 = _mm256_cvtepi8_epi16(b.data());
@@ -238,8 +237,7 @@ inline VectorRegister<int8_t, 128> operator*(
 }
 
 inline VectorRegister<int8_t, 256> operator*(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   auto ahi = VectorRegister<int8_t, 128>(_mm256_extractf128_si256(a.data(), 1));
   auto alo = VectorRegister<int8_t, 128>(_mm256_extractf128_si256(a.data(), 0));
@@ -278,8 +276,7 @@ FETCH_ADD_OPERATOR(==, int8_t, 256, __m256i, _mm256_cmpeq_epi8)
 #undef FETCH_ADD_OPERATOR
 
 inline VectorRegister<int8_t, 128> operator/(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   // TODO(private 440): SSE implementation required
   alignas(16) int8_t d1[16];
@@ -301,8 +298,7 @@ inline VectorRegister<int8_t, 128> operator/(
 }
 
 inline VectorRegister<int8_t, 256> operator/(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   // TODO(private 440): SSE implementation required
   alignas(32) int8_t d1[32];
@@ -324,57 +320,49 @@ inline VectorRegister<int8_t, 256> operator/(
 }
 
 inline VectorRegister<int8_t, 128> operator!=(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   return ~(a == b);
 }
 
 inline VectorRegister<int8_t, 256> operator!=(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   return ~(a == b);
 }
 
 inline VectorRegister<int8_t, 128> operator<(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   return b > a;
 }
 
 inline VectorRegister<int8_t, 256> operator<(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   return b > a;
 }
 
 inline VectorRegister<int8_t, 128> operator<=(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   return (a < b) | (a == b);
 }
 
 inline VectorRegister<int8_t, 256> operator<=(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   return (a < b) | (a == b);
 }
 
 inline VectorRegister<int8_t, 128> operator>=(
-    VectorRegister<int8_t, 128> const &a,
-    VectorRegister<int8_t, 128> const &b)
+    VectorRegister<int8_t, 128> const &a, VectorRegister<int8_t, 128> const &b)
 {
   return (a > b) | (a == b);
 }
 
 inline VectorRegister<int8_t, 256> operator>=(
-    VectorRegister<int8_t, 256> const &a,
-    VectorRegister<int8_t, 256> const &b)
+    VectorRegister<int8_t, 256> const &a, VectorRegister<int8_t, 256> const &b)
 {
   return (a > b) | (a == b);
 }
@@ -490,16 +478,14 @@ inline int8_t reduce(VectorRegister<int8_t, 256> const &x)
 }
 
 inline bool all_less_than(
-    VectorRegister<int8_t, 128> const &x,
-    VectorRegister<int8_t, 128> const &y)
+    VectorRegister<int8_t, 128> const &x, VectorRegister<int8_t, 128> const &y)
 {
   __m128i r = (x < y).data();
   return _mm_movemask_epi8(r) == 0xFFFF;
 }
 
 inline bool all_less_than(
-    VectorRegister<int8_t, 256> const &x,
-    VectorRegister<int8_t, 256> const &y)
+    VectorRegister<int8_t, 256> const &x, VectorRegister<int8_t, 256> const &y)
 {
   __m256i r    = (x < y).data();
   auto    mask = static_cast<uint32_t>(_mm256_movemask_epi8(r));
@@ -507,16 +493,14 @@ inline bool all_less_than(
 }
 
 inline bool any_less_than(
-    VectorRegister<int8_t, 128> const &x,
-    VectorRegister<int8_t, 128> const &y)
+    VectorRegister<int8_t, 128> const &x, VectorRegister<int8_t, 128> const &y)
 {
   __m128i r = (x < y).data();
   return _mm_movemask_epi8(r) != 0;
 }
 
 inline bool any_less_than(
-    VectorRegister<int8_t, 256> const &x,
-    VectorRegister<int8_t, 256> const &y)
+    VectorRegister<int8_t, 256> const &x, VectorRegister<int8_t, 256> const &y)
 {
   __m256i r = (x < y).data();
   return _mm256_movemask_epi8(r) != 0;

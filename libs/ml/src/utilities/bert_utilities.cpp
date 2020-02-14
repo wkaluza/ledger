@@ -104,8 +104,7 @@ void PutWeightInFullyConnected(
 
 template <class TensorType>
 std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel(
-    BERTConfig<TensorType> const &config,
-    fetch::ml::Graph<TensorType> &g)
+    BERTConfig<TensorType> const &config, fetch::ml::Graph<TensorType> &g)
 {
   using DataType   = typename TensorType::Type;
   using SizeVector = typename TensorType::SizeVector;
@@ -561,8 +560,7 @@ TensorType RunPseudoForwardPass(
 
 template <class TensorType>
 std::vector<TensorType> PrepareTensorForBert(
-    TensorType const &            data,
-    BERTConfig<TensorType> const &config)
+    TensorType const &data, BERTConfig<TensorType> const &config)
 {
   using DataType       = typename TensorType::Type;
   SizeType max_seq_len = config.max_seq_len;
@@ -761,28 +759,22 @@ template void PutWeightInFullyConnected<math::Tensor<fixed_point::fp128_t>>(
 
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<int8_t>>(
-    BERTConfig<math::Tensor<int8_t>> const &,
-    fetch::ml::Graph<math::Tensor<int8_t>> &);
+    BERTConfig<math::Tensor<int8_t>> const &, fetch::ml::Graph<math::Tensor<int8_t>> &);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<int16_t>>(
-    BERTConfig<math::Tensor<int16_t>> const &,
-    fetch::ml::Graph<math::Tensor<int16_t>> &);
+    BERTConfig<math::Tensor<int16_t>> const &, fetch::ml::Graph<math::Tensor<int16_t>> &);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<int32_t>>(
-    BERTConfig<math::Tensor<int32_t>> const &config,
-    fetch::ml::Graph<math::Tensor<int32_t>> &g);
+    BERTConfig<math::Tensor<int32_t>> const &config, fetch::ml::Graph<math::Tensor<int32_t>> &g);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<int64_t>>(
-    BERTConfig<math::Tensor<int64_t>> const &config,
-    fetch::ml::Graph<math::Tensor<int64_t>> &g);
+    BERTConfig<math::Tensor<int64_t>> const &config, fetch::ml::Graph<math::Tensor<int64_t>> &g);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<float>>(
-    BERTConfig<math::Tensor<float>> const &config,
-    fetch::ml::Graph<math::Tensor<float>> &g);
+    BERTConfig<math::Tensor<float>> const &config, fetch::ml::Graph<math::Tensor<float>> &g);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<double>>(
-    BERTConfig<math::Tensor<double>> const &config,
-    fetch::ml::Graph<math::Tensor<double>> &g);
+    BERTConfig<math::Tensor<double>> const &config, fetch::ml::Graph<math::Tensor<double>> &g);
 template std::pair<std::vector<std::string>, std::vector<std::string>> MakeBertModel<
     math::Tensor<fixed_point::fp32_t>>(
     BERTConfig<math::Tensor<fixed_point::fp32_t>> const &config,
@@ -1159,28 +1151,22 @@ template math::Tensor<fixed_point::fp128_t> RunPseudoForwardPass<
     bool                                                  verbose);
 
 template std::vector<math::Tensor<int8_t>> PrepareTensorForBert(
-    math::Tensor<int8_t> const &            data,
-    BERTConfig<math::Tensor<int8_t>> const &config);
+    math::Tensor<int8_t> const &data, BERTConfig<math::Tensor<int8_t>> const &config);
 
 template std::vector<math::Tensor<int16_t>> PrepareTensorForBert(
-    math::Tensor<int16_t> const &            data,
-    BERTConfig<math::Tensor<int16_t>> const &config);
+    math::Tensor<int16_t> const &data, BERTConfig<math::Tensor<int16_t>> const &config);
 
 template std::vector<math::Tensor<int32_t>> PrepareTensorForBert(
-    math::Tensor<int32_t> const &            data,
-    BERTConfig<math::Tensor<int32_t>> const &config);
+    math::Tensor<int32_t> const &data, BERTConfig<math::Tensor<int32_t>> const &config);
 
 template std::vector<math::Tensor<int64_t>> PrepareTensorForBert(
-    math::Tensor<int64_t> const &            data,
-    BERTConfig<math::Tensor<int64_t>> const &config);
+    math::Tensor<int64_t> const &data, BERTConfig<math::Tensor<int64_t>> const &config);
 
 template std::vector<math::Tensor<float>> PrepareTensorForBert(
-    math::Tensor<float> const &            data,
-    BERTConfig<math::Tensor<float>> const &config);
+    math::Tensor<float> const &data, BERTConfig<math::Tensor<float>> const &config);
 
 template std::vector<math::Tensor<double>> PrepareTensorForBert(
-    math::Tensor<double> const &            data,
-    BERTConfig<math::Tensor<double>> const &config);
+    math::Tensor<double> const &data, BERTConfig<math::Tensor<double>> const &config);
 
 template std::vector<math::Tensor<fixed_point::fp32_t>> PrepareTensorForBert(
     math::Tensor<fixed_point::fp32_t> const &            data,

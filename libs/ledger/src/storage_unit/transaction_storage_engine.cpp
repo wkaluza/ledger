@@ -44,9 +44,7 @@ TransactionStorageEngine::TransactionStorageEngine(uint32_t log2_num_lanes, uint
  * @param create Flag to signal if the file should be created if it doesn't exist
  */
 void TransactionStorageEngine::New(
-    std::string const &doc_file,
-    std::string const &index_file,
-    bool const &       create)
+    std::string const &doc_file, std::string const &index_file, bool const &create)
 {
   archive_.New(doc_file, index_file, create);
 }
@@ -59,9 +57,7 @@ void TransactionStorageEngine::New(
  * @param create Flag to signal if the file should be created if it doesn't exist
  */
 void TransactionStorageEngine::Load(
-    std::string const &doc_file,
-    std::string const &index_file,
-    bool const &       create)
+    std::string const &doc_file, std::string const &index_file, bool const &create)
 {
   archive_.Load(doc_file, index_file, create);
 }
@@ -175,9 +171,7 @@ TxLayouts TransactionStorageEngine::GetRecent(uint32_t max_to_poll)
  * @return The extracted subtree of transactions from the store
  */
 TxArray TransactionStorageEngine::PullSubtree(
-    Digest const &partial_digest,
-    uint64_t      bit_count,
-    uint64_t      pull_limit)
+    Digest const &partial_digest, uint64_t bit_count, uint64_t pull_limit)
 {
   return archive_.PullSubtree(partial_digest, bit_count, pull_limit);
 }

@@ -33,8 +33,7 @@ public:
   using VisitNodeExitStates                 = typename Visitor<Queue>::VisitNodeExitStates;
 
   PopulateActionsVisitorDescentPass(
-      std::shared_ptr<DapManager> dap_manager,
-      std::shared_ptr<DapStore>   dap_store);
+      std::shared_ptr<DapManager> dap_manager, std::shared_ptr<DapStore> dap_store);
   virtual ~PopulateActionsVisitorDescentPass() = default;
 
   virtual VisitNodeExitStates VisitNode(Branch &node, uint32_t depth) override;

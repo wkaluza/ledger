@@ -255,8 +255,8 @@ public:
   ConstSliceType Slice() const;
   ConstSliceType Slice(SizeType index, SizeType axis = 0) const;
   ConstSliceType Slice(SizeVector indices, SizeVector axes) const;
-  ConstSliceType Slice(SizeVector const &begins, SizeVector const &ends, SizeVector const &strides)
-      const;
+  ConstSliceType Slice(
+      SizeVector const &begins, SizeVector const &ends, SizeVector const &strides) const;
   TensorSlice Slice();
   TensorSlice Slice(SizeType index, SizeType axis = 0);
   TensorSlice Slice(std::pair<SizeType, SizeType> start_end_index, SizeType axis = 0);
@@ -284,9 +284,7 @@ public:
   static Tensor              Stack(std::vector<TensorType> const &tensors);
   static Tensor              Concat(std::vector<Tensor> const &tensors, SizeType axis);
   static std::vector<Tensor> Split(
-      Tensor const &    tensor,
-      SizeVector const &concat_points,
-      SizeType          axis);
+      Tensor const &tensor, SizeVector const &concat_points, SizeType axis);
 
   void Sort();
   void Sort(memory::Range const &range);
@@ -837,8 +835,7 @@ void Tensor<T, C>::Set(Args... args)
 template <typename T, typename C>
 template <typename S>
 fetch::meta::IfIsUnsignedInteger<S, void> Tensor<T, C>::Set(
-    std::vector<S> const &indices,
-    Type const &          val)
+    std::vector<S> const &indices, Type const &val)
 {
   if (indices.size() != shape_.size())
   {
@@ -995,10 +992,7 @@ struct Tensor<T, C>::TensorSetter
 
   // Computing index
   static SizeType IndexOf(
-      SizeVector const &stride,
-      SizeVector const &shape,
-      TSType const &    index,
-      Args &&... args)
+      SizeVector const &stride, SizeVector const &shape, TSType const &index, Args &&... args)
   {
     if (SizeType(index) >= shape[N])
     {
@@ -1209,8 +1203,7 @@ Tensor<T, C> Tensor<T, C>::TensorSliceImplementation<STensor>::Copy() const
 template <typename T, typename C>
 template <typename STensor>
 typename Tensor<T, C>::ConstSliceType Tensor<T, C>::TensorSliceImplementation<STensor>::Slice(
-    SizeType i,
-    SizeType axis) const
+    SizeType i, SizeType axis) const
 {
   std::vector<SizeType> new_axes(axes_);
 

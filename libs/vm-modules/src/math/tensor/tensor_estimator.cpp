@@ -88,10 +88,7 @@ ChargeAmount TensorEstimator::AtThree(uint64_t /*idx1*/, uint64_t /*idx2*/, uint
 }
 
 ChargeAmount TensorEstimator::AtFour(
-    uint64_t /*idx1*/,
-    uint64_t /*idx2*/,
-    uint64_t /*idx3*/,
-    uint64_t /*idx4*/)
+    uint64_t /*idx1*/, uint64_t /*idx2*/, uint64_t /*idx3*/, uint64_t /*idx4*/)
 {
   return LOW_CHARGE;
 }
@@ -102,18 +99,13 @@ ChargeAmount TensorEstimator::SetAtOne(uint64_t /*idx1*/, DataType const & /*val
 }
 
 ChargeAmount TensorEstimator::SetAtTwo(
-    uint64_t /*idx1*/,
-    uint64_t /*idx2*/,
-    DataType const & /*value*/)
+    uint64_t /*idx1*/, uint64_t /*idx2*/, DataType const & /*value*/)
 {
   return LOW_CHARGE;
 }
 
 ChargeAmount TensorEstimator::SetAtThree(
-    uint64_t /*idx1*/,
-    uint64_t /*idx2*/,
-    uint64_t /*idx3*/,
-    DataType const & /*value*/)
+    uint64_t /*idx1*/, uint64_t /*idx2*/, uint64_t /*idx3*/, DataType const & /*value*/)
 {
   return LOW_CHARGE;
 }
@@ -294,8 +286,7 @@ ChargeAmount TensorEstimator::NegateChargeEstimator(vm::Ptr<Object> const & /*ob
 }
 
 ChargeAmount TensorEstimator::IsEqualChargeEstimator(
-    vm::Ptr<Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -307,8 +298,7 @@ ChargeAmount TensorEstimator::IsEqualChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::IsNotEqualChargeEstimator(
-    vm::Ptr<Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -320,8 +310,7 @@ ChargeAmount TensorEstimator::IsNotEqualChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::AddChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -332,8 +321,7 @@ ChargeAmount TensorEstimator::AddChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::SubtractChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -345,8 +333,7 @@ ChargeAmount TensorEstimator::SubtractChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::InplaceAddChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -358,8 +345,7 @@ ChargeAmount TensorEstimator::InplaceAddChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::InplaceSubtractChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -371,8 +357,7 @@ ChargeAmount TensorEstimator::InplaceSubtractChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::MultiplyChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -384,8 +369,7 @@ ChargeAmount TensorEstimator::MultiplyChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::DivideChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -396,8 +380,7 @@ ChargeAmount TensorEstimator::DivideChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::InplaceMultiplyChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());
@@ -409,8 +392,7 @@ ChargeAmount TensorEstimator::InplaceMultiplyChargeEstimator(
 }
 
 ChargeAmount TensorEstimator::InplaceDivideChargeEstimator(
-    vm::Ptr<vm::Object> const & /*lhso*/,
-    vm::Ptr<Object> const & /*rhso*/)
+    vm::Ptr<vm::Object> const & /*lhso*/, vm::Ptr<Object> const & /*rhso*/)
 {
   SizeType padded_size = fetch::math::Tensor<DataType>::PaddedSizeFromShape(tensor_.shape());
   SizeType size        = fetch::math::Tensor<DataType>::SizeFromShape(tensor_.shape());

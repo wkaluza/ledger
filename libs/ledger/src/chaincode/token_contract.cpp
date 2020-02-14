@@ -49,9 +49,7 @@ std::string ConvertToString(T const &value)
 }
 
 bool IsOperationValid(
-    WalletRecord const &      record,
-    chain::Transaction const &tx,
-    Deed::Operation const &   operation)
+    WalletRecord const &record, chain::Transaction const &tx, Deed::Operation const &operation)
 {
   // perform validation checks
   if (record.deed)
@@ -165,9 +163,7 @@ bool TokenContract::SubtractTokens(chain::Address const &address, uint64_t amoun
 }
 
 bool TokenContract::TransferTokens(
-    chain::Transaction const &tx,
-    chain::Address const &    to,
-    uint64_t                  amount)
+    chain::Transaction const &tx, chain::Address const &to, uint64_t amount)
 {
   // look up the state record (to see if there is a deed associated with this address)
   WalletRecord from_record{};

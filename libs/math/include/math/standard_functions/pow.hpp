@@ -54,9 +54,7 @@ meta::IfIsArithmetic<Type, Type> Pow(Type const &x, Type const &exponent)
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, void> Pow(
-    ArrayType const &               array1,
-    typename ArrayType::Type const &exponent,
-    ArrayType &                     ret)
+    ArrayType const &array1, typename ArrayType::Type const &exponent, ArrayType &ret)
 {
   assert(ret.shape() == array1.shape());
   auto arr_it = array1.cbegin();
@@ -72,8 +70,7 @@ meta::IfIsMathArray<ArrayType, void> Pow(
 
 template <typename ArrayType>
 meta::IfIsMathArray<ArrayType, ArrayType> Pow(
-    ArrayType const &               array1,
-    typename ArrayType::Type const &exponent)
+    ArrayType const &array1, typename ArrayType::Type const &exponent)
 {
   ArrayType ret{array1.shape()};
   Pow(array1, exponent, ret);

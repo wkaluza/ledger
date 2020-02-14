@@ -62,9 +62,7 @@ ModelEstimator &ModelEstimator::operator=(ModelEstimator &&other) noexcept
  * @return
  */
 ChargeAmount ModelEstimator::LayerAddDense(
-    Ptr<String> const &layer,
-    SizeType const &   inputs,
-    SizeType const &   hidden_nodes)
+    Ptr<String> const &layer, SizeType const &inputs, SizeType const &hidden_nodes)
 {
   SizeType size{0};
   SizeType padded_size{0};
@@ -97,8 +95,7 @@ ChargeAmount ModelEstimator::LayerAddDense(
 }
 
 ModelEstimator::ChargeAmount ModelEstimator::LayerAddDenseAutoInputs(
-    const fetch::vm::Ptr<String> &layer,
-    const math::SizeType &        hidden_nodes)
+    const fetch::vm::Ptr<String> &layer, const math::SizeType &hidden_nodes)
 {
   FETCH_UNUSED(layer);
   FETCH_UNUSED(hidden_nodes);
@@ -160,9 +157,7 @@ ChargeAmount ModelEstimator::LayerAddConv(
 }
 
 ChargeAmount ModelEstimator::LayerAddPool(
-    Ptr<String> const &layer,
-    SizeType const &   kernel_size,
-    SizeType const &   stride_size)
+    Ptr<String> const &layer, SizeType const &kernel_size, SizeType const &stride_size)
 {
   FETCH_UNUSED(layer);
   FETCH_UNUSED(kernel_size);
@@ -207,8 +202,7 @@ ChargeAmount ModelEstimator::LayerAddFlatten(Ptr<fetch::vm::String> const &layer
 }
 
 ChargeAmount ModelEstimator::LayerAddDropout(
-    const fetch::vm::Ptr<String> &layer,
-    const math::DataType &        probability)
+    const fetch::vm::Ptr<String> &layer, const math::DataType &probability)
 {
   FETCH_UNUSED(layer);
   FETCH_UNUSED(probability);
@@ -216,8 +210,7 @@ ChargeAmount ModelEstimator::LayerAddDropout(
 }
 
 ChargeAmount ModelEstimator::LayerAddActivation(
-    const fetch::vm::Ptr<String> &layer,
-    const fetch::vm::Ptr<String> &activation)
+    const fetch::vm::Ptr<String> &layer, const fetch::vm::Ptr<String> &activation)
 {
   FETCH_UNUSED(layer);
   FETCH_UNUSED(activation);
@@ -225,8 +218,7 @@ ChargeAmount ModelEstimator::LayerAddActivation(
 }
 
 ModelEstimator::ChargeAmount ModelEstimator::LayerAddInput(
-    fetch::vm::Ptr<String> const &                   layer,
-    fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape)
+    fetch::vm::Ptr<String> const &layer, fetch::vm::Ptr<vm::Array<math::SizeType>> const &shape)
 {
   FETCH_UNUSED(layer);
   FETCH_UNUSED(shape);
@@ -243,8 +235,7 @@ ChargeAmount ModelEstimator::LayerAddReshape(
 }
 
 ChargeAmount ModelEstimator::CompileSequential(
-    Ptr<String> const &loss,
-    Ptr<String> const &optimiser)
+    Ptr<String> const &loss, Ptr<String> const &optimiser)
 {
   DataType optimiser_construction_impact{"0.0"};
 
@@ -369,9 +360,7 @@ ChargeAmount ModelEstimator::CompileSequentialWithMetrics(
 }
 
 ChargeAmount ModelEstimator::Fit(
-    Ptr<math::VMTensor> const &data,
-    Ptr<math::VMTensor> const &labels,
-    SizeType const &           batch_size)
+    Ptr<math::VMTensor> const &data, Ptr<math::VMTensor> const &labels, SizeType const &batch_size)
 {
   FETCH_UNUSED(labels);
 

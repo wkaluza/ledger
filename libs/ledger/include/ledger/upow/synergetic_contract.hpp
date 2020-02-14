@@ -96,9 +96,7 @@ public:
   Status DefineProblem(ProblemData const &problem_data);
   Status Work(vectorise::UInt<256> const &nonce, WorkScore &score);
   Status Complete(
-      chain::Address const &     address,
-      BitVector const &          shards,
-      CompletionValidator const &validator);
+      chain::Address const &address, BitVector const &shards, CompletionValidator const &validator);
   /// @}
 
   /// @name Synergetic State Access

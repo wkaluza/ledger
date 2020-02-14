@@ -297,32 +297,23 @@ std::string ReadFile(std::string const &path)
 }
 
 template math::Tensor<int8_t> const &GetEmbeddings(
-    Graph<math::Tensor<int8_t>> const &g,
-    std::string const &                skip_gram_name);
+    Graph<math::Tensor<int8_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<int16_t> const &GetEmbeddings(
-    Graph<math::Tensor<int16_t>> const &g,
-    std::string const &                 skip_gram_name);
+    Graph<math::Tensor<int16_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<int32_t> const &GetEmbeddings(
-    Graph<math::Tensor<int32_t>> const &g,
-    std::string const &                 skip_gram_name);
+    Graph<math::Tensor<int32_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<int64_t> const &GetEmbeddings(
-    Graph<math::Tensor<int64_t>> const &g,
-    std::string const &                 skip_gram_name);
+    Graph<math::Tensor<int64_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<float> const &GetEmbeddings(
-    Graph<math::Tensor<float>> const &g,
-    std::string const &               skip_gram_name);
+    Graph<math::Tensor<float>> const &g, std::string const &skip_gram_name);
 template math::Tensor<double> const &GetEmbeddings(
-    Graph<math::Tensor<double>> const &g,
-    std::string const &                skip_gram_name);
+    Graph<math::Tensor<double>> const &g, std::string const &skip_gram_name);
 template math::Tensor<fixed_point::fp32_t> const &GetEmbeddings(
-    Graph<math::Tensor<fixed_point::fp32_t>> const &g,
-    std::string const &                             skip_gram_name);
+    Graph<math::Tensor<fixed_point::fp32_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<fixed_point::fp64_t> const &GetEmbeddings(
-    Graph<math::Tensor<fixed_point::fp64_t>> const &g,
-    std::string const &                             skip_gram_name);
+    Graph<math::Tensor<fixed_point::fp64_t>> const &g, std::string const &skip_gram_name);
 template math::Tensor<fixed_point::fp128_t> const &GetEmbeddings(
-    Graph<math::Tensor<fixed_point::fp128_t>> const &g,
-    std::string const &                              skip_gram_name);
+    Graph<math::Tensor<fixed_point::fp128_t>> const &g, std::string const &skip_gram_name);
 
 template std::vector<std::pair<math::SizeType, typename math::Tensor<int8_t>::Type>>
 GetWordIDAnalogies<math::Tensor<int8_t>>(

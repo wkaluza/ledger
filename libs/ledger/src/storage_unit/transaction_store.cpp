@@ -125,9 +125,7 @@ uint64_t TransactionStore::GetCount() const
  * @return The extracted subtree of transactions from the store
  */
 TxArray TransactionStore::PullSubtree(
-    Digest const &partial_digest,
-    uint64_t      bit_count,
-    uint64_t      pull_limit)
+    Digest const &partial_digest, uint64_t bit_count, uint64_t pull_limit)
 {
   TxArray ret{};
 

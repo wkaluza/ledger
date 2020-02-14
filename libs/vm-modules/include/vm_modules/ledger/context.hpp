@@ -28,19 +28,14 @@ class Context : public vm::Object
 {
 public:
   Context(
-      vm::VM *                         vm,
-      vm::TypeId                       type_id,
-      fetch::chain::Transaction const &tx,
-      BlockIndex                       block_index);
+      vm::VM *vm, vm::TypeId type_id, fetch::chain::Transaction const &tx, BlockIndex block_index);
 
   TransactionPtr transaction() const;
   BlockPtr       block() const;
 
   static void       Bind(fetch::vm::Module &module);
   static ContextPtr Factory(
-      vm::VM *                         vm,
-      fetch::chain::Transaction const &tx,
-      BlockIndex                       block_index);
+      vm::VM *vm, fetch::chain::Transaction const &tx, BlockIndex block_index);
 
 private:
   TransactionPtr transaction_;

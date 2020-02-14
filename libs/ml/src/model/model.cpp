@@ -216,8 +216,7 @@ void Model<TensorType>::Predict(TensorType &input, TensorType &output)
 
 template <typename TensorType>
 typename Model<TensorType>::DataVectorType Model<TensorType>::Evaluate(
-    dataloaders::DataLoaderMode dl_mode,
-    SizeType                    batch_size)
+    dataloaders::DataLoaderMode dl_mode, SizeType batch_size)
 {
   if (!compiled_)
   {

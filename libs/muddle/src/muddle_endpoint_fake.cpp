@@ -60,10 +60,7 @@ PacketPtr const &FakeMuddleEndpoint::Sign(PacketPtr const &p) const
 
 // Construction / Destruction
 FakeMuddleEndpoint::FakeMuddleEndpoint(
-    NetworkId network_id,
-    Address   address,
-    Prover *  certificate,
-    bool      sign_broadcasts)
+    NetworkId network_id, Address address, Prover *certificate, bool sign_broadcasts)
   : network_id_{network_id}
   , address_{std::move(address)}
   , certificate_{certificate}
@@ -102,10 +99,7 @@ Address const &FakeMuddleEndpoint::GetAddress() const
 }
 
 void FakeMuddleEndpoint::Send(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel,
-    Payload const &message)
+    Address const &address, uint16_t service, uint16_t channel, Payload const &message)
 {
   return Send(address, service, channel, msg_counter_++, message, MuddleEndpoint::OPTION_DEFAULT);
 }
@@ -167,9 +161,7 @@ SubscriptionPtr FakeMuddleEndpoint::Subscribe(uint16_t service, uint16_t channel
 }
 
 SubscriptionPtr FakeMuddleEndpoint::Subscribe(
-    Address const &address,
-    uint16_t       service,
-    uint16_t       channel)
+    Address const &address, uint16_t service, uint16_t channel)
 {
   return registrar_.Register(address, service, channel);
 }

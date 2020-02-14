@@ -85,8 +85,7 @@ private:
   using Variant = variant::Variant;
 
   http::HTTPResponse GetGeneralStatus(
-      http::ViewParameters const & /*params*/,
-      http::HTTPRequest const & /*request*/)
+      http::ViewParameters const & /*params*/, http::HTTPRequest const & /*request*/)
   {
     // create the system response
     Variant response    = Variant::Object();
@@ -98,8 +97,7 @@ private:
   }
 
   http::HTTPResponse GetChainStatus(
-      http::ViewParameters const & /*params*/,
-      http::HTTPRequest const &request)
+      http::ViewParameters const & /*params*/, http::HTTPRequest const &request)
   {
     static const std::size_t CHAIN_QUERY_LIMIT = 2000;
 
@@ -148,8 +146,7 @@ private:
   }
 
   http::HTTPResponse GetBacklogStatus(
-      http::ViewParameters const & /*params*/,
-      http::HTTPRequest const & /*request*/)
+      http::ViewParameters const & /*params*/, http::HTTPRequest const & /*request*/)
   {
     variant::Variant data = variant::Variant::Object();
     data["backlog"]       = packer_.GetBacklog();
@@ -158,8 +155,7 @@ private:
   }
 
   http::HTTPResponse GetStateMachineStatus(
-      http::ViewParameters const & /*params*/,
-      http::HTTPRequest const & /*request*/)
+      http::ViewParameters const & /*params*/, http::HTTPRequest const & /*request*/)
   {
     variant::Variant data = variant::Variant::Object();
 
@@ -176,9 +172,7 @@ private:
   }
 
   Variant GenerateForwardChain(
-      ConstByteArray const &start_hash,
-      std::size_t           limit,
-      bool                  include_transactions)
+      ConstByteArray const &start_hash, std::size_t limit, bool include_transactions)
   {
     auto travelogue = chain_.TimeTravel(start_hash, limit);
 
@@ -216,9 +210,7 @@ private:
   }
 
   void PopulateJsonFromBlock(
-      Variant &               output,
-      ledger::BlockPtr const &block,
-      bool                    include_transactions)
+      Variant &output, ledger::BlockPtr const &block, bool include_transactions)
   {
     // format the block number
     output                 = Variant::Object();

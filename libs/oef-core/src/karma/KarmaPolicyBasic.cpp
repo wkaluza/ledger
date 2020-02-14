@@ -111,9 +111,7 @@ KarmaAccount KarmaPolicyBasic::GetAccount(const std::string &pubkey, const std::
 }
 
 void KarmaPolicyBasic::upgrade(
-    KarmaAccount &     account,
-    const std::string &pubkey,
-    const std::string &ip)
+    KarmaAccount &account, const std::string &pubkey, const std::string &ip)
 {
   auto k = GetAccount(pubkey, ip);
   std::swap(account, k);
@@ -199,8 +197,7 @@ const std::string &KarmaPolicyBasic::getPolicy(const std::string &action) const
 }
 
 KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(
-    KARMA              currentBalance,
-    const std::string &actions)
+    KARMA currentBalance, const std::string &actions)
 {
   auto policies = getPolicies(actions);
   auto worst    = currentBalance;
@@ -227,8 +224,7 @@ KarmaPolicyBasic::KARMA KarmaPolicyBasic::afterwards(
 }
 
 KarmaPolicyBasic::KARMA KarmaPolicyBasic::parseEffect(
-    KARMA              currentBalance,
-    const std::string &effect)
+    KARMA currentBalance, const std::string &effect)
 {
   switch (effect[0])
   {

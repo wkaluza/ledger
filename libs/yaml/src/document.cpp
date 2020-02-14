@@ -40,9 +40,7 @@ namespace yaml {
  * @param document The whole document
  */
 void YamlDocument::ExtractPrimitive(
-    Variant &             variant,
-    YamlToken const &     token,
-    ConstByteArray const &document)
+    Variant &variant, YamlToken const &token, ConstByteArray const &document)
 {
   bool        success{false};
   char const *str = nullptr;

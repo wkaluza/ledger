@@ -102,10 +102,7 @@ Router::PacketPtr FormatDirect(
 }  // namespace
 
 DirectMessageService::DirectMessageService(
-    Address         address,
-    Router &        router,
-    MuddleRegister &reg,
-    PeerConnectionList & /*peers*/)
+    Address address, Router &router, MuddleRegister &reg, PeerConnectionList & /*peers*/)
   : address_{std::move(address)}
   , name_{GenerateLoggingName(BASE_NAME, router.network_id())}
   , router_{router}
@@ -180,9 +177,7 @@ void DirectMessageService::OnDirectMessage(Handle handle, PacketPtr const &packe
 }
 
 void DirectMessageService::OnRoutingMessage(
-    Handle                handle,
-    PacketPtr const &     packet,
-    RoutingMessage const &msg)
+    Handle handle, PacketPtr const &packet, RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingMessage");
 
@@ -205,9 +200,7 @@ void DirectMessageService::OnRoutingMessage(
 }
 
 void DirectMessageService::OnRoutingPing(
-    Handle                handle,
-    PacketPtr const &     packet,
-    RoutingMessage const &msg)
+    Handle handle, PacketPtr const &packet, RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingPing (conn: ", handle, ")");
   FETCH_UNUSED(packet);
@@ -223,9 +216,7 @@ void DirectMessageService::OnRoutingPing(
 }
 
 void DirectMessageService::OnRoutingPong(
-    Handle                handle,
-    PacketPtr const &     packet,
-    RoutingMessage const &msg)
+    Handle handle, PacketPtr const &packet, RoutingMessage const &msg)
 {
   FETCH_LOG_TRACE(logging_name_, "OnRoutingPong (conn: ", handle, ")");
   FETCH_UNUSED(msg);
@@ -261,9 +252,7 @@ void DirectMessageService::OnRoutingPong(
 }
 
 void DirectMessageService::OnRoutingRequest(
-    Handle                handle,
-    PacketPtr const &     packet,
-    RoutingMessage const &msg)
+    Handle handle, PacketPtr const &packet, RoutingMessage const &msg)
 {
   FETCH_UNUSED(msg);
   FETCH_LOG_TRACE(logging_name_, "OnRoutingRequest (conn: ", handle, ")");
@@ -324,9 +313,7 @@ char const *DirectMessageService::ToString(UpdateStatus status)
 }
 
 DirectMessageService::UpdateStatus DirectMessageService::UpdateReservation(
-    Address const &address,
-    Handle         handle,
-    Handle *       previous_handle)
+    Address const &address, Handle handle, Handle *previous_handle)
 {
   UpdateStatus status{UpdateStatus::DUPLICATE};
 

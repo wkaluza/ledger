@@ -38,9 +38,7 @@ namespace ml {
 
 template <typename TensorType>
 TSNE<TensorType>::TSNE(
-    TensorType const &input_matrix,
-    TensorType const &output_matrix,
-    DataType const &  perplexity)
+    TensorType const &input_matrix, TensorType const &output_matrix, DataType const &perplexity)
 {
   Init(input_matrix, output_matrix, perplexity);
 }
@@ -164,9 +162,7 @@ const TensorType TSNE<TensorType>::GetOutputMatrix() const
  */
 template <typename TensorType>
 void TSNE<TensorType>::Init(
-    TensorType const &input_matrix,
-    TensorType const &output_matrix,
-    DataType const &  perplexity)
+    TensorType const &input_matrix, TensorType const &output_matrix, DataType const &perplexity)
 {
   // Flatten input
   if (input_matrix.shape().size() != 2)
@@ -234,11 +230,7 @@ void TSNE<TensorType>::RandomInitWeights(TensorType &output_matrix)
  */
 template <typename TensorType>
 void TSNE<TensorType>::Hbeta(
-    TensorType const &d,
-    TensorType &      p,
-    DataType &        entropy,
-    DataType const &  beta,
-    SizeType const &  k)
+    TensorType const &d, TensorType &p, DataType &entropy, DataType const &beta, SizeType const &k)
 {
   // p = -exp(d * beta)
   p = fetch::math::Exp(fetch::math::Multiply(DataType(-1), fetch::math::Multiply(d, beta)));
@@ -372,9 +364,7 @@ void TSNE<TensorType>::CalculatePairwiseAffinitiesP(
  */
 template <typename TensorType>
 void TSNE<TensorType>::CalculateSymmetricAffinitiesQ(
-    TensorType const &output_matrix,
-    TensorType &      output_symmetric_affinities,
-    TensorType &      num)
+    TensorType const &output_matrix, TensorType &output_symmetric_affinities, TensorType &num)
 {
   /*
    * Compute Q pairwise affinities
@@ -412,8 +402,7 @@ void TSNE<TensorType>::CalculateSymmetricAffinitiesQ(
  */
 template <typename TensorType>
 typename TSNE<TensorType>::DataType TSNE<TensorType>::GetRandom(
-    DataType /*mean*/,
-    DataType /*standard_deviation*/)
+    DataType /*mean*/, DataType /*standard_deviation*/)
 {
   // TODO(issue 752): use normal distribution random instead
   return rng_.AsType<DataType>();
