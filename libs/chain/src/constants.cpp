@@ -39,61 +39,50 @@ Protected<GenesisState> genesis_state{};
 
 Digest GetGenesisDigest()
 {
-  Digest digest = genesis_state.Apply([](GenesisState const &state) { return state.digest; });
+  return genesis_state.Apply([](GenesisState const &state) {
+    if (state.digest.empty())
+    {
+      throw std::logic_error("Genesis has not been initialised");
+    }
 
-  if (digest.empty())
-  {
-    throw std::logic_error("Genesis has not been initialised");
-  }
-
-  return digest;
+    return state.digest;
+  });
 }
 
 Digest GetGenesisMerkleRoot()
 {
-  Digest merkle_root =
-      genesis_state.Apply([](GenesisState const &state) { return state.merkle_root; });
+  return genesis_state.Apply([](GenesisState const &state) {
+    if (state.merkle_root.empty())
+    {
+      throw std::logic_error("Genesis has not been initialised");
+    }
 
-  if (merkle_root.empty())
-  {
-    throw std::logic_error("Genesis has not been initialised");
-  }
-
-  return merkle_root;
+    return state.merkle_root;
+  });
 }
 
 void SetGenesisDigest(Digest const &digest)
 {
-  bool const updated = genesis_state.Apply([&digest](GenesisState &state) {
-    if (state.digest.empty())
+  genesis_state.ApplyVoid([&digest](GenesisState &state) {
+    if (!state.digest.empty())
     {
-      state.digest = digest;
-      return true;
+      throw std::logic_error("Genesis has already been initialised");
     }
-    return false;
-  });
 
-  if (!updated)
-  {
-    throw std::logic_error("Genesis has already been initialised");
-  }
+    state.digest = digest;
+  });
 }
 
 void SetGenesisMerkleRoot(Digest const &digest)
 {
-  bool const updated = genesis_state.Apply([&digest](GenesisState &state) {
-    if (state.merkle_root.empty())
+  genesis_state.ApplyVoid([&digest](GenesisState &state) {
+    if (!state.merkle_root.empty())
     {
-      state.merkle_root = digest;
-      return true;
+      throw std::logic_error("Genesis has already been initialised");
     }
-    return false;
-  });
 
-  if (!updated)
-  {
-    throw std::logic_error("Genesis has already been initialised");
-  }
+    state.merkle_root = digest;
+  });
 }
 
 void InitialiseTestConstants()
