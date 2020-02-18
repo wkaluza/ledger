@@ -71,7 +71,7 @@ bool DeedFromVariant(Variant const &variant_deed, DeedPtr &deed)
     return false;
   }
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   v_thresholds.IterateObject(
       [&thresholds](ConstByteArray const &operation, Variant const &v_threshold) -> bool {
         thresholds[operation] = v_threshold.As<Deed::Weight>();

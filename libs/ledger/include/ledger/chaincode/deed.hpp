@@ -35,13 +35,13 @@ namespace ledger {
 class Deed
 {
 public:
-  using Weight             = uint64_t;
-  using Threshold          = Weight;
-  using Operation          = byte_array::ConstByteArray;
-  using Signees            = std::unordered_map<chain::Address, Weight>;
-  using OperationTresholds = std::unordered_map<Operation, Threshold>;
-  using Weights            = std::unordered_map<Weight, uint64_t>;
-  using MandatorityMatrix  = std::unordered_map<Threshold, Weights>;
+  using Weight              = uint64_t;
+  using Threshold           = Weight;
+  using Operation           = byte_array::ConstByteArray;
+  using Signees             = std::unordered_map<chain::Address, Weight>;
+  using OperationThresholds = std::unordered_map<Operation, Threshold>;
+  using Weights             = std::unordered_map<Weight, uint64_t>;
+  using MandatorityMatrix   = std::unordered_map<Threshold, Weights>;
 
   static Operation const TRANSFER;
   static Operation const STAKE;
@@ -56,7 +56,7 @@ public:
   Deed(Deed const &) = default;
   Deed(Deed &&)      = default;
 
-  Deed(Signees signees, OperationTresholds thresholds);
+  Deed(Signees signees, OperationThresholds thresholds);
 
   Deed &operator=(Deed const &right) = default;
   Deed &operator=(Deed &&right) = default;
@@ -64,12 +64,12 @@ public:
   bool operator==(Deed const &right) const;
   bool operator!=(Deed const &right) const;
 
-  Signees const &           signees() const;
-  OperationTresholds const &operation_thresholds() const;
+  Signees const &            signees() const;
+  OperationThresholds const &operation_thresholds() const;
 
 private:
-  Signees            signees_;
-  OperationTresholds operation_thresholds_;
+  Signees             signees_;
+  OperationThresholds operation_thresholds_;
   // Derived data:
   Weight full_weight_{0};
 

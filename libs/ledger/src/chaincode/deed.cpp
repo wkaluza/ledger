@@ -100,7 +100,7 @@ Deed::Operation const Deed::STAKE{"stake"};
 Deed::Operation const Deed::AMEND{"amend"};
 Deed::Operation const Deed::EXECUTE{"execute"};
 
-Deed::Deed(Signees signees, OperationTresholds thresholds)
+Deed::Deed(Signees signees, OperationThresholds thresholds)
   : signees_{std::move(signees)}
   , operation_thresholds_{std::move(thresholds)}
   , full_weight_{SigneesFullWeight(signees_)}
@@ -253,7 +253,7 @@ Deed::Signees const &Deed::signees() const
   return signees_;
 }
 
-Deed::OperationTresholds const &Deed::operation_thresholds() const
+Deed::OperationThresholds const &Deed::operation_thresholds() const
 {
   return operation_thresholds_;
 }

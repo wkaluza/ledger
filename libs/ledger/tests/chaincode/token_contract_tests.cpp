@@ -54,7 +54,7 @@ struct Entity
 using ConstByteArray = byte_array::ConstByteArray;
 using Entities       = std::vector<Entity>;
 using SigneesPtr     = std::shared_ptr<Deed::Signees>;
-using ThresholdsPtr  = std::shared_ptr<Deed::OperationTresholds>;
+using ThresholdsPtr  = std::shared_ptr<Deed::OperationThresholds>;
 
 class TokenContractTests : public ContractTest
 {
@@ -284,7 +284,7 @@ TEST_F(TokenContractTests, QueryDeed)
   (*signees)[entities[1].address] = 5;
   (*signees)[entities[2].address] = 5;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 7;
   (*thresholds)["amend"]    = 12;
 
@@ -311,7 +311,7 @@ TEST_F(TokenContractTests, CheckDeedCreation)
   (*signees)[entities[1].address] = 2;
   (*signees)[entities[2].address] = 2;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 3;
   (*thresholds)["amend"]    = 5;
 
@@ -336,7 +336,7 @@ TEST_F(TokenContractTests, CheckDeedAmend)
   (*signees)[entities[1].address] = 5;
   (*signees)[entities[2].address] = 5;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 7;
   (*thresholds)["amend"]    = 12;
 
@@ -349,7 +349,7 @@ TEST_F(TokenContractTests, CheckDeedAmend)
   (*signees_modif)[entities[2].address] = 2;
   (*signees_modif)[entities[3].address] = 2;
 
-  ThresholdsPtr thresholds_modif{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds_modif{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds_modif)["transfer"] = 5;
   (*thresholds_modif)["amend"]    = 6;
 
@@ -372,7 +372,7 @@ TEST_F(TokenContractTests, CheckDeedDeletion)
   (*signees)[entities[1].address] = 5;
   (*signees)[entities[2].address] = 5;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 7;
   (*thresholds)["amend"]    = 12;
 
@@ -406,7 +406,7 @@ TEST_F(TokenContractTests, CheckDeedAmendDoesNotAffectBalance)
   (*signees)[entities[1].address] = 5;
   (*signees)[entities[2].address] = 5;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 7;
   (*thresholds)["amend"]    = 12;
 
@@ -422,7 +422,7 @@ TEST_F(TokenContractTests, CheckDeedAmendDoesNotAffectBalance)
   (*signees_modif)[entities[2].address] = 2;
   (*signees_modif)[entities[3].address] = 2;
 
-  ThresholdsPtr thresholds_modif{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds_modif{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds_modif)["transfer"] = 5;
   (*thresholds_modif)["amend"]    = 6;
 
@@ -456,7 +456,7 @@ TEST_F(TokenContractTests, DISABLED_CheckTransferIsAuthorisedByPreexistingDeed)
   (*signees)[entities[1].address] = 5;
   (*signees)[entities[2].address] = 5;
 
-  ThresholdsPtr thresholds{std::make_shared<Deed::OperationTresholds>()};
+  ThresholdsPtr thresholds{std::make_shared<Deed::OperationThresholds>()};
   (*thresholds)["transfer"] = 7;
   (*thresholds)["amend"]    = 12;
 

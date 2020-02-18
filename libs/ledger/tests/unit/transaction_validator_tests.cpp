@@ -82,8 +82,8 @@ public:
   }
 
 private:
-  Deed::Signees            signees_;
-  Deed::OperationTresholds thresholds_;
+  Deed::Signees             signees_;
+  Deed::OperationThresholds thresholds_;
 };
 
 class TransactionValidatorTests : public ::testing::Test

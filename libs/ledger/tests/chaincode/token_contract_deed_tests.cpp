@@ -131,7 +131,7 @@ TEST_F(TokenContractDeedTests, is_sane_basic)
   signees[ADDRESSES[1]] = 2;
   signees[ADDRESSES[2]] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["0"] = 1;
   thresholds["1"] = 6;
 
@@ -148,7 +148,7 @@ TEST_F(TokenContractDeedTests, comparison)
   signees[ADDRESSES[1]] = 2;
   signees[ADDRESSES[2]] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["0"] = 1;
   thresholds["1"] = 6;
 
@@ -162,7 +162,7 @@ TEST_F(TokenContractDeedTests, comparison)
   signees_modif[ADDRESSES[1]] = 2;
   signees_modif[ADDRESSES[2]] = 4;
 
-  Deed::OperationTresholds thresholds_modif;
+  Deed::OperationThresholds thresholds_modif;
   thresholds_modif["0"] = 1;
   thresholds_modif["1"] = 7;
 
@@ -176,7 +176,7 @@ TEST_F(TokenContractDeedTests, is_sane_fails_when_empty_thresholds)
   Deed::Signees signees;
   signees[ADDRESSES[0]] = 1;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   EXPECT_FALSE((Deed{signees, thresholds}.IsSane()));
 
   thresholds["abc"] = 1;
@@ -187,7 +187,7 @@ TEST_F(TokenContractDeedTests, is_sane_fails_when_empty_signees)
 {
   Deed::Signees signees;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["abc"] = 1;
   // Expected to **FAIL** due to empty signees
   EXPECT_FALSE((Deed{signees, thresholds}.IsSane()));
@@ -208,7 +208,7 @@ TEST_F(TokenContractDeedTests, infer_mandatory_weights)
   signees[ADDRESSES[4]] = 20;
   signees[ADDRESSES[5]] = 20;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["a"] = 43;
   thresholds["b"] = 60;
   thresholds["c"] = 62;
@@ -237,7 +237,7 @@ TEST_F(TokenContractDeedTests, infer_mandatory_weights_2)
   signees[ADDRESSES[9]]  = 3;
   signees[ADDRESSES[10]] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["a"] = 17;
   thresholds["b"] = 15;
   thresholds["c"] = 13;
@@ -259,7 +259,7 @@ TEST_F(TokenContractDeedTests, is_sane_fails_when_some_thresholds_are_zero)
   Deed::Signees signees;
   signees[ADDRESSES[0]] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["a"] = 1;
   thresholds["b"] = 0;
   thresholds["c"] = 1;
@@ -283,7 +283,7 @@ TEST_F(TokenContractDeedTests, verify_basic_scenario)
   signees[Address{keys[1].identity()}] = 2;
   signees[Address{keys[2].identity()}] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["op0"] = 1;
   thresholds["op1"] = 4;
   thresholds["op2"] = 5;
@@ -316,7 +316,7 @@ TEST_F(TokenContractDeedTests, verify_ignores_signatory_not_defined_in_deed_as_s
   signees[Address{keys[1].identity()}] = 2;
   signees[Address{keys[2].identity()}] = 3;
 
-  Deed::OperationTresholds thresholds;
+  Deed::OperationThresholds thresholds;
   thresholds["op0"] = 1;
   thresholds["op1"] = 4;
   thresholds["op2"] = 5;
