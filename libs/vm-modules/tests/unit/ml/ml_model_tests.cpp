@@ -103,8 +103,8 @@ public:
   std::stringstream stdout;
   VmTestToolkit     toolkit{&stdout};
 
-  void TestValidLayerAdding(std::string const &test_case_source,
-                            bool               ignore_charge_estimation = false)
+  void TestValidLayerAdding(
+      std::string const &test_case_source, bool ignore_charge_estimation = false)
   {
     std::string const src =
         std::regex_replace(ADD_VALID_LAYER_TEST_SOURCE, std::regex("<<TOKEN>>"), test_case_source);
@@ -119,11 +119,11 @@ public:
     }
   }
 
-  void TestValidThreeDimLayerAdding(std::string const &test_case_source,
-                                    bool               ignore_charge_estimation = false)
+  void TestValidThreeDimLayerAdding(
+      std::string const &test_case_source, bool ignore_charge_estimation = false)
   {
-    std::string const src = std::regex_replace(ADD_THREE_DIM_VALID_LAYER_TEST_SOURCE,
-                                               std::regex("<<TOKEN>>"), test_case_source);
+    std::string const src = std::regex_replace(
+        ADD_THREE_DIM_VALID_LAYER_TEST_SOURCE, std::regex("<<TOKEN>>"), test_case_source);
     ASSERT_TRUE(toolkit.Compile(src));
     if (ignore_charge_estimation)
     {
@@ -135,11 +135,11 @@ public:
     }
   }
 
-  void TestValidFourDimLayerAdding(std::string const &test_case_source,
-                                   bool               ignore_charge_estimation = false)
+  void TestValidFourDimLayerAdding(
+      std::string const &test_case_source, bool ignore_charge_estimation = false)
   {
-    std::string const src = std::regex_replace(ADD_FOUR_DIM_VALID_LAYER_TEST_SOURCE,
-                                               std::regex("<<TOKEN>>"), test_case_source);
+    std::string const src = std::regex_replace(
+        ADD_FOUR_DIM_VALID_LAYER_TEST_SOURCE, std::regex("<<TOKEN>>"), test_case_source);
     ASSERT_TRUE(toolkit.Compile(src));
     if (ignore_charge_estimation)
     {
@@ -153,8 +153,8 @@ public:
 
   void TestInvalidLayerAdding(std::string const &test_case_source)
   {
-    std::string const src = std::regex_replace(ADD_INVALID_LAYER_TEST_SOURCE,
-                                               std::regex("<<TOKEN>>"), test_case_source);
+    std::string const src = std::regex_replace(
+        ADD_INVALID_LAYER_TEST_SOURCE, std::regex("<<TOKEN>>"), test_case_source);
     ASSERT_TRUE(toolkit.Compile(src));
     // Invalid layer adding parameters (activation, layer type, parameter values) must not cause
     // unhandled exception/runtime crash, but should raise VM RuntimeError and cause a safe stop.
@@ -163,15 +163,15 @@ public:
 
   void TestAddingUncompilableLayer(std::string const &test_case_source)
   {
-    std::string const src = std::regex_replace(ADD_INVALID_LAYER_TEST_SOURCE,
-                                               std::regex("<<TOKEN>>"), test_case_source);
+    std::string const src = std::regex_replace(
+        ADD_INVALID_LAYER_TEST_SOURCE, std::regex("<<TOKEN>>"), test_case_source);
     // Wrong number of arguments in layer adding parameters or calling uncompatible ".compile()"
     // method for a model must end in model compilation error and safe stop.
     ASSERT_FALSE(toolkit.Compile(src));
   }
 
-  void TestActivation(std::string const &input, std::string const &activation,
-                      std::string const &expected)
+  void TestActivation(
+      std::string const &input, std::string const &activation, std::string const &expected)
   {
     std::string src =
         std::regex_replace(ACTIVATION_LAYER_TEST_SOURCE, std::regex("<<ACTIVATION>>"), activation);
@@ -474,26 +474,26 @@ TEST_F(VMModelTests, model_add_dense_relu)
 
 TEST_F(VMModelTests, model_add_conv1d_noact)
 {
-  TestValidThreeDimLayerAdding(R"(model.add("conv1d", 10u64, 10u64, 10u64, 10u64);)",
-                               IGNORE_CHARGE_ESTIMATION);
+  TestValidThreeDimLayerAdding(
+      R"(model.add("conv1d", 10u64, 10u64, 10u64, 10u64);)", IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_conv1d_relu)
 {
-  TestValidThreeDimLayerAdding(R"(model.add("conv1d", 10u64, 10u64, 10u64, 10u64, "relu");)",
-                               IGNORE_CHARGE_ESTIMATION);
+  TestValidThreeDimLayerAdding(
+      R"(model.add("conv1d", 10u64, 10u64, 10u64, 10u64, "relu");)", IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_conv2d_noact)
 {
-  TestValidFourDimLayerAdding(R"(model.add("conv2d", 10u64, 10u64, 10u64, 10u64);)",
-                              IGNORE_CHARGE_ESTIMATION);
+  TestValidFourDimLayerAdding(
+      R"(model.add("conv2d", 10u64, 10u64, 10u64, 10u64);)", IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_conv2d_relu)
 {
-  TestValidFourDimLayerAdding(R"(model.add("conv2d", 10u64, 10u64, 10u64, 10u64, "relu");)",
-                              IGNORE_CHARGE_ESTIMATION);
+  TestValidFourDimLayerAdding(
+      R"(model.add("conv2d", 10u64, 10u64, 10u64, 10u64, "relu");)", IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_dropout)
@@ -508,8 +508,8 @@ TEST_F(VMModelTests, model_add_flatten)
 
 TEST_F(VMModelTests, model_add_embeddings)
 {
-  TestValidLayerAdding(R"(model.addExperimental("embeddings", 2u64, 3u64, true);)",
-                       IGNORE_CHARGE_ESTIMATION);
+  TestValidLayerAdding(
+      R"(model.addExperimental("embeddings", 2u64, 3u64, true);)", IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_activation)
@@ -525,13 +525,14 @@ TEST_F(VMModelTests, model_add_activation)
 
 TEST_F(VMModelTests, model_add_input)
 {
-  TestValidLayerAdding(R"(
+  TestValidLayerAdding(
+      R"(
                        var data_shape = Array<UInt64>(2);
                        data_shape[0] = 10u64;
                        data_shape[1] = 250u64;
                        model.addExperimental("input", data_shape);
                        model.add("activation", "softmax");)",
-                       IGNORE_CHARGE_ESTIMATION);
+      IGNORE_CHARGE_ESTIMATION);
 }
 
 TEST_F(VMModelTests, model_add_invalid_layer_type)
@@ -854,8 +855,10 @@ TEST_F(VMModelTests, conv1d_sequential_model_test)
   gt(4, 0) = fetch::math::Type<DataType>("+3.157947287");
   // the actual model output is {5, 1, 1}
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
 }
 
 TEST_F(VMModelTests, conv2d_sequential_model_test)
@@ -928,8 +931,10 @@ TEST_F(VMModelTests, conv2d_sequential_model_test)
   gt(4, 0) = fetch::math::Type<DataType>("+10.291701029");
   // the actual model output is {5, 1, 1, 1}
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
 }
 
 TEST_F(VMModelTests, model_with_metric)
@@ -1163,8 +1168,10 @@ TEST_F(VMModelTests, model_sequential_conv_maxpool)
   gt(4, 0) = fetch::math::Type<DataType>("0.810748917");
   // the actual model output is {5, 1, 1}
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
 }
 
 TEST_F(VMModelTests, model_sequential_conv_maxpool_wrong_pooling_kernel_size)
@@ -1263,16 +1270,17 @@ TEST_F(VMModelTests, model_sequential_flatten_tensor_data)
   ASSERT_TRUE(toolkit.Compile(SRC_METRIC));
   ASSERT_TRUE(toolkit.Run(&res, ChargeAmount{0}));
   // we expect data columns to be sequentially concatenated
-  ASSERT_EQ(stdout.str(),
-            "0.500000000;"
-            "6.199999999;"
-            "-99.099999999;"
-            "7.099999999;"
-            "7.099999999;"
-            "14328.099999999;"
-            "9.099999999;"
-            "4.000000000;"
-            "10.000000000;");
+  ASSERT_EQ(
+      stdout.str(),
+      "0.500000000;"
+      "6.199999999;"
+      "-99.099999999;"
+      "7.099999999;"
+      "7.099999999;"
+      "14328.099999999;"
+      "9.099999999;"
+      "4.000000000;"
+      "10.000000000;");
   auto const tensor            = res.Get<Ptr<fetch::vm_modules::math::VMTensor>>();
   auto const constructed_shape = tensor->shape();
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({9, 1});
@@ -1301,9 +1309,10 @@ TEST_F(VMModelTests, model_sequential_flatten_2d_in_2d_out)
   Variant res;
   ASSERT_TRUE(toolkit.Compile(SRC_METRIC));
   ASSERT_TRUE(toolkit.Run(&res, ChargeAmount{0}));
-  ASSERT_EQ(stdout.str(),
-            "0.500000000, 7.099999999, 9.099999999;"
-            "6.199999999, 7.099999999, 4.000000000;");
+  ASSERT_EQ(
+      stdout.str(),
+      "0.500000000, 7.099999999, 9.099999999;"
+      "6.199999999, 7.099999999, 4.000000000;");
   auto const tensor            = res.Get<Ptr<fetch::vm_modules::math::VMTensor>>();
   auto const constructed_shape = tensor->shape();
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({2, 3});
@@ -1344,8 +1353,10 @@ TEST_F(VMModelTests, model_sequential_reshape_2d_in_2d_out)
   gt(2, 0) = fetch::math::Type<DataType>("+9.1");
   gt(3, 0) = fetch::math::Type<DataType>("+6.2");
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
   EXPECT_TRUE(constructed_shape == gt.shape());
 }
 
@@ -1414,8 +1425,10 @@ TEST_F(VMModelTests, model_sequential_reshape_3d_in_2d_out)
   gt(5, 0) = fetch::math::Type<DataType>("+4.0");
 
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
   EXPECT_TRUE(constructed_shape == gt.shape());
 }
 
@@ -1455,8 +1468,10 @@ TEST_F(VMModelTests, model_sequential_reshape_2d_in_3d_out)
   gt(1, 1) = fetch::math::Type<DataType>("+6.2");
   // the actual model output is {2, 2, 1}
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({2, 2, 1});
   EXPECT_TRUE(constructed_shape == expected.shape());
 }
@@ -1500,8 +1515,10 @@ TEST_F(VMModelTests, model_sequential_reshape_5d_in_3d_out)
   gt(1, 1) = fetch::math::Type<DataType>("+6.2");
   // the actual model output is {2, 2, 1}
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({2, 2, 1});
   EXPECT_TRUE(constructed_shape == expected.shape());
 }
@@ -1546,8 +1563,10 @@ TEST_F(VMModelTests, model_sequential_reshape_2d_in_8d_out)
   gt(0, 1) = fetch::math::Type<DataType>("+8.0999");
   gt(1, 1) = fetch::math::Type<DataType>("+6.2");
   ASSERT_TRUE((prediction->GetTensor())
-                  .AllClose(gt, fetch::math::function_tolerance<DataType>(),
-                            fetch::math::function_tolerance<DataType>()));
+                  .AllClose(
+                      gt,
+                      fetch::math::function_tolerance<DataType>(),
+                      fetch::math::function_tolerance<DataType>()));
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({2, 2, 1, 1, 1, 1, 1, 1});
   EXPECT_TRUE(constructed_shape == expected.shape());
 }
@@ -1576,13 +1595,14 @@ TEST_F(VMModelTests, model_sequential_flatten_4d_in_2d_out)
   Variant res;
   ASSERT_TRUE(toolkit.Compile(SRC_METRIC));
   ASSERT_TRUE(toolkit.Run(&res, ChargeAmount{0}));
-  ASSERT_EQ(stdout.str(),
-            "0.500000000;"
-            "6.199999999;"
-            "7.099999999;"
-            "7.099999999;"
-            "9.099999999;"
-            "4.000000000;");
+  ASSERT_EQ(
+      stdout.str(),
+      "0.500000000;"
+      "6.199999999;"
+      "7.099999999;"
+      "7.099999999;"
+      "9.099999999;"
+      "4.000000000;");
   auto const tensor            = res.Get<Ptr<fetch::vm_modules::math::VMTensor>>();
   auto const constructed_shape = tensor->shape();
   fetch::math::Tensor<fetch::fixed_point::fp64_t> expected({6, 1});

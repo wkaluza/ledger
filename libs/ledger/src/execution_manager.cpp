@@ -54,9 +54,12 @@ using telemetry::Registry;
  *
  * @param num_executors The specified number of executors (and threads)
  */
-ExecutionManager::ExecutionManager(std::size_t num_executors, uint32_t log2_num_lanes,
-                                   StorageUnitPtr storage, ExecutorFactory const &factory,
-                                   TransactionStatusPtr tx_status_cache)
+ExecutionManager::ExecutionManager(
+    std::size_t            num_executors,
+    uint32_t               log2_num_lanes,
+    StorageUnitPtr         storage,
+    ExecutorFactory const &factory,
+    TransactionStatusPtr   tx_status_cache)
   : log2_num_lanes_{log2_num_lanes}
   , storage_{std::move(storage)}
   , thread_pool_{network::MakeThreadPool(num_executors, "Executor")}
@@ -74,7 +77,8 @@ ExecutionManager::ExecutionManager(std::size_t num_executors, uint32_t log2_num_
          0.00001,  0.00002,  0.00003,  0.00004,  0.00005,  0.00006,  0.00007,  0.00008,  0.00009,
          0.0001,   0.0002,   0.0003,   0.0004,   0.0005,   0.0006,   0.0007,   0.0008,   0.0009,
          0.001,    0.01,     0.1,      1,        10.,      100.},
-        "ledger_exec_mgr_block_duration", "The execution duration in seconds for blocks"))
+        "ledger_exec_mgr_block_duration",
+        "The execution duration in seconds for blocks"))
 {
   // create all the executor metrics
   Registry::Instance().CreateHistogram(
@@ -267,8 +271,12 @@ void ExecutionManager::DispatchExecution(ExecutionItem &item)
     // determine what the status is
     if (ExecutorInterface::Status::SUCCESS != result.status)
     {
-      FETCH_LOG_WARN(LOGGING_NAME, "Error executing tx: 0x", item.digest().ToHex(),
-                     " status: ", ledger::ToString(result.status));
+      FETCH_LOG_WARN(
+          LOGGING_NAME,
+          "Error executing tx: 0x",
+          item.digest().ToHex(),
+          " status: ",
+          ledger::ToString(result.status));
     }
 
     counters_.ApplyVoid([](auto &counters) {
@@ -490,9 +498,9 @@ void ExecutionManager::MonitorThreadEntrypoint()
     case MonitorState::RUNNING:
     {
       // wait for the execution to complete
-      bool const finished =
-          counters_.Wait([](auto const &counters) -> bool { return counters.remaining == 0; },
-                         std::chrono::seconds{2});
+      bool const finished = counters_.Wait(
+          [](auto const &counters) -> bool { return counters.remaining == 0; },
+          std::chrono::seconds{2});
 
       if (!finished)
       {
@@ -548,15 +556,31 @@ void ExecutionManager::MonitorThreadEntrypoint()
         {
           if ((num_stalls + num_errors + num_fatal_errors) != 0u)
           {
-            FETCH_LOG_WARN(LOGGING_NAME, "Slice ", current_slice,
-                           " Execution Status - Complete: ", num_complete, " Stalls: ", num_stalls,
-                           " Errors: ", num_errors, " Fatal Errors: ", num_fatal_errors);
+            FETCH_LOG_WARN(
+                LOGGING_NAME,
+                "Slice ",
+                current_slice,
+                " Execution Status - Complete: ",
+                num_complete,
+                " Stalls: ",
+                num_stalls,
+                " Errors: ",
+                num_errors,
+                " Fatal Errors: ",
+                num_fatal_errors);
           }
           else
           {
-            FETCH_LOG_DEBUG(LOGGING_NAME, "Slice ", current_slice,
-                            " Execution Status - Complete: ", num_complete, " Stalls: ", num_stalls,
-                            " Errors: ", num_errors);
+            FETCH_LOG_DEBUG(
+                LOGGING_NAME,
+                "Slice ",
+                current_slice,
+                " Execution Status - Complete: ",
+                num_complete,
+                " Stalls: ",
+                num_stalls,
+                " Errors: ",
+                num_errors);
           }
         }
 
@@ -615,9 +639,12 @@ void ExecutionManager::MonitorThreadEntrypoint()
             });
 
             // get the first one and settle the fees
-            idle_executors_.front()->SettleFees(last_block_miner, last_block_number,
-                                                aggregate_block_fees, log2_num_lanes_,
-                                                aggregated_stake_events);
+            idle_executors_.front()->SettleFees(
+                last_block_miner,
+                last_block_number,
+                aggregate_block_fees,
+                log2_num_lanes_,
+                aggregated_stake_events);
             fees_settled_count_->increment();
             break;
           }

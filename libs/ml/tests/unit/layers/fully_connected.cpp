@@ -45,17 +45,31 @@ std::shared_ptr<GraphType> BuildGraph(bool shared = false, bool time_distributed
 
   std::string input = g->template AddNode<PlaceHolderType>("Input", {});
 
-  std::string intermediate =
-      g->template AddNode<FCType>("FC1", {input}, 10u, 10u, ActivationType::NOTHING, RegType::NONE,
-                                  DataType{0}, WeightsInitType::XAVIER_GLOROT, time_distributed);
+  std::string intermediate = g->template AddNode<FCType>(
+      "FC1",
+      {input},
+      10u,
+      10u,
+      ActivationType::NOTHING,
+      RegType::NONE,
+      DataType{0},
+      WeightsInitType::XAVIER_GLOROT,
+      time_distributed);
   std::string layer_name = "FC2";
   if (shared)
   {
     layer_name = "FC1";
   }
   std::string output = g->template AddNode<FCType>(
-      layer_name, {intermediate}, 10u, 10u, ActivationType::NOTHING, RegType::NONE, DataType{0},
-      WeightsInitType::XAVIER_GLOROT, time_distributed);
+      layer_name,
+      {intermediate},
+      10u,
+      10u,
+      ActivationType::NOTHING,
+      RegType::NONE,
+      DataType{0},
+      WeightsInitType::XAVIER_GLOROT,
+      time_distributed);
 
   std::string label = g->template AddNode<PlaceHolderType>("Label", {});
   std::string error = g->template AddNode<MSEType>("Error", {output, label});
@@ -85,8 +99,9 @@ TYPED_TEST(FullyConnectedTest, set_input_and_evaluate_test)  // Use the class as
   // todo: weights and biases can be set with fc.SetInput(name + "_Weights", weights_data) etc.
 }
 
-TYPED_TEST(FullyConnectedTest,
-           set_input_and_evaluate_test_time_distributed)  // Use the class as a subgraph
+TYPED_TEST(
+    FullyConnectedTest,
+    set_input_and_evaluate_test_time_distributed)  // Use the class as a subgraph
 {
   using TensorType      = TypeParam;
   using DataType        = typename TensorType::Type;
@@ -95,9 +110,15 @@ TYPED_TEST(FullyConnectedTest,
   using ActivationType  = fetch::ml::details::ActivationType;
   using FullyConnected  = fetch::ml::layers::FullyConnected<TypeParam>;
 
-  FullyConnected fc(10u, 5u, ActivationType::NOTHING, RegType::NONE, DataType{0},
-                    WeightsInitType::XAVIER_GLOROT, FullyConnected::TIME_DISTRIBUTED);
-  TypeParam      input_data(std::vector<typename TypeParam::SizeType>({10, 10, 2}));
+  FullyConnected fc(
+      10u,
+      5u,
+      ActivationType::NOTHING,
+      RegType::NONE,
+      DataType{0},
+      WeightsInitType::XAVIER_GLOROT,
+      FullyConnected::TIME_DISTRIBUTED);
+  TypeParam input_data(std::vector<typename TypeParam::SizeType>({10, 10, 2}));
   fc.SetInput("TimeDistributed_FullyConnected_Input", input_data);
   fc.Compile();
   TypeParam output = fc.Evaluate("TimeDistributed_FullyConnected_MatrixMultiply", true);
@@ -153,9 +174,14 @@ TYPED_TEST(FullyConnectedTest, ops_backward_test_time_distributed)  // Use the c
   using WeightsInitType = fetch::ml::ops::WeightsInitialisation;
   using ActivationType  = fetch::ml::details::ActivationType;
 
-  fetch::ml::layers::FullyConnected<TypeParam> fc(50u, 10u, ActivationType::NOTHING, RegType::NONE,
-                                                  DataType{0}, WeightsInitType::XAVIER_GLOROT,
-                                                  true);
+  fetch::ml::layers::FullyConnected<TypeParam> fc(
+      50u,
+      10u,
+      ActivationType::NOTHING,
+      RegType::NONE,
+      DataType{0},
+      WeightsInitType::XAVIER_GLOROT,
+      true);
   TypeParam input_data(std::vector<typename TypeParam::SizeType>({50, 10, 2}));
 
   TypeParam output(fc.ComputeOutputShape({std::make_shared<TypeParam>(input_data)}));
@@ -211,18 +237,20 @@ TYPED_TEST(FullyConnectedTest, share_weight_backward_test)
   TensorType pred_not_shared = g_not_shared->Evaluate("FC2");
   TensorType pred_shared     = g_shared->Evaluate("FC1_Copy_1");
 
-  EXPECT_TRUE(pred_shared.AllClose(pred_not_shared, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(pred_shared.AllClose(
+      pred_not_shared,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   // SGD is chosen to be the optimizer to reflect the gradient throw change in weights after 1
   // iteration of training. Run 1 iteration of SGD to train on g shared
   auto                                            lr = DataType{1};
-  fetch::ml::optimisers::SGDOptimiser<TensorType> g_shared_optimiser(g_shared, {"Input"}, "Label",
-                                                                     "Error", lr);
+  fetch::ml::optimisers::SGDOptimiser<TensorType> g_shared_optimiser(
+      g_shared, {"Input"}, "Label", "Error", lr);
   g_shared_optimiser.Run({data}, data, 1);
   // Run 1 iteration of SGD to train on g not shared
-  fetch::ml::optimisers::SGDOptimiser<TensorType> g_not_shared_optimiser(g_not_shared, {"Input"},
-                                                                         "Label", "Error", lr);
+  fetch::ml::optimisers::SGDOptimiser<TensorType> g_not_shared_optimiser(
+      g_not_shared, {"Input"}, "Label", "Error", lr);
   g_not_shared_optimiser.Run({data}, data, 1);
 
   // check that all weights are equal
@@ -296,19 +324,21 @@ TYPED_TEST(FullyConnectedTest, share_weight_backward_test_time_distributed)
   TensorType pred_not_shared = g_not_shared->Evaluate("FC2");
   TensorType pred_shared     = g_shared->Evaluate("FC1_Copy_1");
 
-  EXPECT_TRUE(pred_shared.AllClose(pred_not_shared, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
+  EXPECT_TRUE(pred_shared.AllClose(
+      pred_not_shared,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 
   //   SGD is chosen to be the optimizer to reflect the gradient throw change in weights after 1
   //   iteration of training. Run 1 iteration of SGD to train on g shared
   auto                                            lr = fetch::math::Type<DataType>("0.01");
-  fetch::ml::optimisers::SGDOptimiser<TensorType> g_shared_optimiser(g_shared, {"Input"}, "Label",
-                                                                     "Error", lr);
+  fetch::ml::optimisers::SGDOptimiser<TensorType> g_shared_optimiser(
+      g_shared, {"Input"}, "Label", "Error", lr);
   DataType shared_loss = g_shared_optimiser.Run({data}, data, 1);
 
   //   Run 1 iteration of SGD to train on g not shared
-  fetch::ml::optimisers::SGDOptimiser<TensorType> g_not_shared_optimiser(g_not_shared, {"Input"},
-                                                                         "Label", "Error", lr);
+  fetch::ml::optimisers::SGDOptimiser<TensorType> g_not_shared_optimiser(
+      g_not_shared, {"Input"}, "Label", "Error", lr);
   DataType not_shared_loss = g_not_shared_optimiser.Run({data}, data, 1);
 
   EXPECT_EQ(shared_loss, not_shared_loss);
@@ -412,10 +442,10 @@ TYPED_TEST(FullyConnectedTest, share_weight_cache_clearining_check)
   auto g_shared_weights_after = g->GetWeights();
 
   // check weights and biases are the same
-  EXPECT_TRUE(g_shared_weights_after.at(0).AllClose(g_shared_weights_after.at(2), DataType{0},
-                                                    DataType{0}));
-  EXPECT_TRUE(g_shared_weights_after.at(1).AllClose(g_shared_weights_after.at(3), DataType{0},
-                                                    DataType{0}));
+  EXPECT_TRUE(g_shared_weights_after.at(0).AllClose(
+      g_shared_weights_after.at(2), DataType{0}, DataType{0}));
+  EXPECT_TRUE(g_shared_weights_after.at(1).AllClose(
+      g_shared_weights_after.at(3), DataType{0}, DataType{0}));
 
   // check layer predictions are the same
   EXPECT_FALSE(fc1_pred.AllClose(fc1_pred_after, DataType{0}, DataType{0}));
@@ -431,8 +461,9 @@ TYPED_TEST(FullyConnectedTest, node_forward_test)  // Use the class as a Node
 
   std::shared_ptr<fetch::ml::Node<TypeParam>> placeholder =
       std::make_shared<fetch::ml::Node<TypeParam>>(
-          fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-          []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>(); });
+          fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+            return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>();
+          });
   std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TypeParam>>(placeholder->GetOp())
       ->SetData(data);
 
@@ -460,8 +491,9 @@ TYPED_TEST(FullyConnectedTest, node_backward_test)  // Use the class as a Node
   TypeParam                                   data({5, 10, 2});
   std::shared_ptr<fetch::ml::Node<TypeParam>> placeholder =
       std::make_shared<fetch::ml::Node<TypeParam>>(
-          fetch::ml::OpType::OP_PLACEHOLDER, "Input",
-          []() { return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>(); });
+          fetch::ml::OpType::OP_PLACEHOLDER, "Input", []() {
+            return std::make_shared<fetch::ml::ops::PlaceHolder<TypeParam>>();
+          });
   std::dynamic_pointer_cast<fetch::ml::ops::PlaceHolder<TypeParam>>(placeholder->GetOp())
       ->SetData(data);
 
@@ -495,8 +527,8 @@ TYPED_TEST(FullyConnectedTest, graph_forward_test)  // Use the class as a Node
   fetch::ml::Graph<TypeParam> g;
 
   g.template AddNode<fetch::ml::ops::PlaceHolder<TypeParam>>("Input", {});
-  g.template AddNode<fetch::ml::layers::FullyConnected<TypeParam>>("FullyConnected", {"Input"}, 50u,
-                                                                   42u);
+  g.template AddNode<fetch::ml::layers::FullyConnected<TypeParam>>(
+      "FullyConnected", {"Input"}, 50u, 42u);
 
   TypeParam data({5, 10, 2});
   g.SetInput("Input", data);
@@ -569,8 +601,10 @@ TYPED_TEST(FullyConnectedTest, training_should_change_output)
   std::cout << "prediction.ToString(): " << prediction.ToString() << std::endl;
   std::cout << "prediction3.ToString(): " << prediction3.ToString() << std::endl;
 
-  EXPECT_FALSE(prediction.AllClose(prediction3, fetch::math::function_tolerance<DataType>(),
-                                   fetch::math::function_tolerance<DataType>()));
+  EXPECT_FALSE(prediction.AllClose(
+      prediction3,
+      fetch::math::function_tolerance<DataType>(),
+      fetch::math::function_tolerance<DataType>()));
 }
 
 }  // namespace test

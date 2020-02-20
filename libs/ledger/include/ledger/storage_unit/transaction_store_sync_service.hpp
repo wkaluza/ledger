@@ -103,10 +103,12 @@ public:
     std::chrono::milliseconds fetch_object_wait_duration{5000};
   };
 
-  TransactionStoreSyncService(Config const &cfg, MuddleEndpoint &muddle,
-                              TransactionStorageEngineInterface &store,
-                              TxFinderProtocol *                 tx_finder_protocol,
-                              TrimCacheCallback                  trim_cache_callback);
+  TransactionStoreSyncService(
+      Config const &                     cfg,
+      MuddleEndpoint &                   muddle,
+      TransactionStorageEngineInterface &store,
+      TxFinderProtocol *                 tx_finder_protocol,
+      TrimCacheCallback                  trim_cache_callback);
   ~TransactionStoreSyncService() override = default;
 
   void Start()

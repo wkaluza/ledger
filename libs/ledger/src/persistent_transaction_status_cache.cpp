@@ -241,10 +241,12 @@ void PersistentTransactionStatusCache::Update(Digest digest, TransactionStatus s
   // this method should not be used to update the execution status
   if (status == TransactionStatus::EXECUTED)
   {
-    FETCH_LOG_WARN("TransactionStatusCache",
-                   "Using inappropriate method to update contract "
-                   "execution result. (tx digest: 0x",
-                   digest.ToHex(), ")");
+    FETCH_LOG_WARN(
+        "TransactionStatusCache",
+        "Using inappropriate method to update contract "
+        "execution result. (tx digest: 0x",
+        digest.ToHex(),
+        ")");
 
     throw std::runtime_error(
         "TransactionStatusCache::Update(...): Using inappropriate method to update"
@@ -300,8 +302,8 @@ TxStatus PersistentTransactionStatusCache::LookupStatus(Digest const &digest) co
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Error looking up status for tx: 0x", digest.ToHex(), " : ",
-                   ex.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Error looking up status for tx: 0x", digest.ToHex(), " : ", ex.what());
   }
 
   return status;
@@ -321,8 +323,8 @@ void PersistentTransactionStatusCache::UpdateStatus(Digest const &digest, TxStat
   }
   catch (std::exception const &ex)
   {
-    FETCH_LOG_WARN(LOGGING_NAME, "Error saving status for tx: 0x", digest.ToHex(), " : ",
-                   ex.what());
+    FETCH_LOG_WARN(
+        LOGGING_NAME, "Error saving status for tx: 0x", digest.ToHex(), " : ", ex.what());
   }
 }
 

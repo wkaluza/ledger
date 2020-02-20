@@ -58,8 +58,12 @@ public:
   using ExecutorFactory = std::function<ExecutorPtr()>;
 
   // Construction / Destruction
-  ExecutionManager(std::size_t num_executors, uint32_t log2_num_lanes, StorageUnitPtr storage,
-                   ExecutorFactory const &factory, TransactionStatusPtr tx_status_cache);
+  ExecutionManager(
+      std::size_t            num_executors,
+      uint32_t               log2_num_lanes,
+      StorageUnitPtr         storage,
+      ExecutorFactory const &factory,
+      TransactionStatusPtr   tx_status_cache);
 
   /// @name Execution Manager Interface
   /// @{

@@ -30,11 +30,14 @@ namespace ml {
 namespace layers {
 
 template <typename TensorType>
-FullyConnected<TensorType>::FullyConnected(SizeType in, SizeType out,
-                                           details::ActivationType       activation_type,
-                                           fetch::ml::RegularisationType regulariser,
-                                           DataType regularisation_rate, WeightsInit init_mode,
-                                           bool time_distributed)
+FullyConnected<TensorType>::FullyConnected(
+    SizeType                      in,
+    SizeType                      out,
+    details::ActivationType       activation_type,
+    fetch::ml::RegularisationType regulariser,
+    DataType                      regularisation_rate,
+    WeightsInit                   init_mode,
+    bool                          time_distributed)
   : total_inputs_(in)
   , total_outputs_(out)
   , time_distributed_(time_distributed)
@@ -143,8 +146,8 @@ void FullyConnected<TensorType>::CompleteShapeDeduction()
 
   // initialize weight with specified method.
   TensorType weights_data(weights_shape);
-  fetch::ml::ops::Weights<TensorType>::Initialise(weights_data, total_inputs_, total_outputs_,
-                                                  init_mode_);
+  fetch::ml::ops::Weights<TensorType>::Initialise(
+      weights_data, total_inputs_, total_outputs_, init_mode_);
   TensorType bias_data = TensorType(this->batch_output_shape_);
 
   this->SetInput(weights_name_, weights_data);
@@ -241,14 +244,15 @@ math::SizeVector FullyConnected<TensorType>::ComputeOutputShape(VecTensorType co
     {
       total_in_size *= inputs.front()->shape(i);
     }
-    assert((this->total_inputs_ == AUTODETECT_INPUTS_COUNT) ||
-           (total_in_size == this->total_inputs_));
+    assert(
+        (this->total_inputs_ == AUTODETECT_INPUTS_COUNT) || (total_in_size == this->total_inputs_));
     return {this->total_outputs_, inputs.front()->shape(inputs.front()->shape().size() - 1)};
   }
 
   assert(inputs.front()->shape().size() == 3);
   assert(inputs.front()->shape(0) == total_inputs_);
-  return {this->total_outputs_, inputs.front()->shape(inputs.front()->shape().size() - 2),
+  return {this->total_outputs_,
+          inputs.front()->shape(inputs.front()->shape().size() - 2),
           inputs.front()->shape(inputs.front()->shape().size() - 1)};
 }
 
@@ -263,8 +267,9 @@ math::SizeVector FullyConnected<TensorType>::ComputeBatchOutputShape(
     return this->batch_output_shape_;
   }
 
-  assert((this->total_inputs_ == AUTODETECT_INPUTS_COUNT) ||
-         (input_shapes.front().at(0) == total_inputs_));
+  assert(
+      (this->total_inputs_ == AUTODETECT_INPUTS_COUNT) ||
+      (input_shapes.front().at(0) == total_inputs_));
 
   this->SetBatchInputShapes(input_shapes);
   if (input_shapes.front().size() == 3)
@@ -300,8 +305,9 @@ std::shared_ptr<fetch::ml::Node<TensorType>> FullyConnected<TensorType>::FindNod
       return candidate;
     }
   }
-  throw std::runtime_error("There is no node with op type " +
-                           std::to_string(static_cast<int>(code)) + " in this graph.");
+  throw std::runtime_error(
+      "There is no node with op type " + std::to_string(static_cast<int>(code)) +
+      " in this graph.");
 }
 
 ///////////////////////////////

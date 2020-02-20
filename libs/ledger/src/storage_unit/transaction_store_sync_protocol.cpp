@@ -50,8 +50,8 @@ using Labels = fetch::telemetry::Measurement::Labels;
  * @param tp The thread pool instance to be used
  * @param store The object store to be used
  */
-TransactionStoreSyncProtocol::TransactionStoreSyncProtocol(TransactionStorageEngineInterface &store,
-                                                           uint32_t lane_id)
+TransactionStoreSyncProtocol::TransactionStoreSyncProtocol(
+    TransactionStorageEngineInterface &store, uint32_t lane_id)
   : lane_(lane_id)
   , store_(store)
   , object_count_total_{CreateCounter("object_count")}
@@ -97,11 +97,14 @@ void TransactionStoreSyncProtocol::TrimCache()
       CachedObject::Clock::now() - std::chrono::milliseconds(MAX_CACHE_LIFETIME_MS);
 
   // generate the next cache version
-  std::copy_if(cache_.begin(), cache_.end(), std::back_inserter(next_cache),
-               [cut_off](CachedObject const &object) {
-                 // filter out object that are old enough
-                 return object.created > cut_off;
-               });
+  std::copy_if(
+      cache_.begin(),
+      cache_.end(),
+      std::back_inserter(next_cache),
+      [cut_off](CachedObject const &object) {
+        // filter out object that are old enough
+        return object.created > cut_off;
+      });
 
   auto const next_cache_size = next_cache.size();
   auto const curr_cache_size = cache_.size();
@@ -109,8 +112,14 @@ void TransactionStoreSyncProtocol::TrimCache()
   if (next_cache_size != curr_cache_size)
   {
     FETCH_LOG_VARIABLE(lane_);
-    FETCH_LOG_DEBUG(LOGGING_NAME, "Lane ", lane_, ": New cache size: ", next_cache_size,
-                    " Old cache size: ", curr_cache_size);
+    FETCH_LOG_DEBUG(
+        LOGGING_NAME,
+        "Lane ",
+        lane_,
+        ": New cache size: ",
+        next_cache_size,
+        " Old cache size: ",
+        curr_cache_size);
   }
 
   // replace the old cache
@@ -176,8 +185,8 @@ TSSP::TxArray TransactionStoreSyncProtocol::PullObjects(service::CallContext con
  *
  * @return: the subtree the client is requesting as a vector (size limited)
  */
-TSSP::TxArray TransactionStoreSyncProtocol::PullSubtree(byte_array::ConstByteArray const &rid,
-                                                        uint64_t                          bit_count)
+TSSP::TxArray TransactionStoreSyncProtocol::PullSubtree(
+    byte_array::ConstByteArray const &rid, uint64_t bit_count)
 {
   pull_subtree_total_->increment();
 
@@ -252,7 +261,9 @@ telemetry::HistogramPtr TransactionStoreSyncProtocol::CreateHistogram(char const
        0.001,    0.01,     0.1,      1,        2,        3,        4,        5,        6,
        7,        8,        9,        10.,      20.,      30.,      40.,      50.,      60.,
        70.,      80.,      90.,      100.},
-      name.str(), description.str(), labels);
+      name.str(),
+      description.str(),
+      labels);
 }
 
 }  // namespace ledger
