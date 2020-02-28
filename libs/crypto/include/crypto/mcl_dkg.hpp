@@ -47,6 +47,8 @@ struct MCLInitialiser
       bn::initPairing();
     }
   }
+
+private:
   static std::atomic<bool> was_initialised;
 };
 }  // namespace details
